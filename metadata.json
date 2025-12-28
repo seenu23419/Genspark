@@ -1,0 +1,8 @@
+{
+  "name": " GenSpark",
+  "description": "An AI-powered coding intelligence platform featuring lessons, a real-time compiler, interactive quizzes, and personalized challenges.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
