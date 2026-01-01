@@ -13,28 +13,23 @@ class AuthService {
   private sanitizeEmail(email: string): string {
     if (!email) throw new Error("Email is required");
 
-    // STRICT SANITIZATION:
-    // Remove quotes, spaces, and any non-ASCII characters.
-    // We only allow: a-z, A-Z, 0-9, @, ., +, -, _, %
-    let clean = email.replace(/[^a-zA-Z0-9@.+_%\-]/g, '').toLowerCase();
-
-    // Ensure no leading/trailing dots or special chars (basic cleanup)
-    clean = clean.trim();
-
-    // Basic structure check
-    if (!clean.includes('@') || !clean.includes('.')) {
-      throw new Error(`Invalid email format. Please check "${clean}"`);
-    }
-
-    return clean;
+    // Aggressive sanitization:
+    // 1. Trim whitespace
+    // 2. Convert to lowercase
+    // 3. Normalize characters (handles homoglyphs/accents)
+    // 4. Remove ALL non-printable characters and control characters
+    return email
+      .trim()
+      .toLowerCase()
+      .normalize('NFKC')
+      .replace(/[\x00-\x1F\x7F-\x9F\u200B-\u200D\uFEFF]/g, '');
   }
 
   // --- OAuth (Google / GitHub) ---
   async signInWithOAuth(provider: 'google' | 'github'): Promise<void> {
-    // FIXED: Explicitly set redirect URL to http://localhost:3000
-    // This matches the "Authorized Redirect URI" typically set in Google Cloud Console for development.
-    // Using window.location.origin can cause mismatches if running on 127.0.0.1 or random ports.
-    const redirectUrl = 'http://localhost:3000';
+    // FIXED: Use window.location.origin to support both Localhost and Production (Netlify/Vercel)
+    // This dynamically handles http://localhost:3000 vs https://your-app.netlify.app
+    const redirectUrl = window.location.origin;
 
     const { error } = await supabaseDB.supabase.auth.signInWithOAuth({
       provider: provider,
@@ -76,6 +71,15 @@ class AuthService {
     const cleanEmail = this.sanitizeEmail(email);
     const cleanName = name.trim();
 
+    // Diagnostic logging for invisible characters
+    const charCodes = Array.from(cleanEmail).map(c => c.charCodeAt(0));
+    console.log("Signup Debug:", {
+      email: cleanEmail,
+      length: cleanEmail.length,
+      charCodes,
+      name: cleanName
+    });
+
     // Attempt Sign Up
     const { data, error } = await supabaseDB.supabase.auth.signUp({
       email: cleanEmail,
@@ -88,20 +92,6 @@ class AuthService {
     if (error) {
       // Remove aggressive error masking to see the real issue
       throw error;
-    }
-
-    // Manually ensure profile exists in our public table
-    if (data.user) {
-      try {
-        await supabaseDB.insertOne({
-          _id: data.user.id,
-          email: cleanEmail,
-          name: cleanName,
-          avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${cleanName}`
-        });
-      } catch (dbError) {
-        console.warn("Profile creation handled by DB trigger or failed:", dbError);
-      }
     }
 
     return {
@@ -123,10 +113,13 @@ class AuthService {
     if (error) throw error;
     if (!data.user) throw new Error("Login failed");
 
-    const profile = await supabaseDB.findOne({ _id: data.user.id });
-    if (!profile) throw new Error("Profile not found in database.");
-
-    return profile;
+    // OPTIMIZATION: Do not block login with profile fetching.
+    // AuthContext's onAuthStateChange listener will fetch the profile in the background.
+    return {
+      _id: data.user.id,
+      email: cleanEmail,
+      name: data.user.user_metadata?.full_name || 'User'
+    } as User;
   }
 
   async signOut(): Promise<void> {

@@ -88,14 +88,19 @@ class SupabaseService {
 
   // --- Data Transformation Layer ---
   // Converts SQL Normalized Data -> React Application State
-  private async formatUserForApp(profile: any): Promise<User | null> {
+  private async formatUserForApp(profile: any, preFetchedProgress?: any[]): Promise<User | null> {
     if (!profile) return null;
 
-    // Fetch Progress separately (Scalable approach)
-    const { data: progressData } = await this.supabase
-      .from('user_progress')
-      .select('lesson_id, status')
-      .eq('user_id', profile.id);
+    let progressData = preFetchedProgress;
+
+    // If not pre-fetched, fetch now (Scalable approach)
+    if (!progressData) {
+      const { data } = await this.supabase
+        .from('user_progress')
+        .select('lesson_id, status')
+        .eq('user_id', profile.id);
+      progressData = data || [];
+    }
 
     const completedIds = progressData
       ?.filter((p: any) => p.status === 'completed')
@@ -108,7 +113,9 @@ class SupabaseService {
     return {
       _id: profile.id,
       email: profile.email,
-      name: profile.name,
+      firstName: profile.first_name,
+      lastName: profile.last_name,
+      name: profile.name || (profile.first_name ? `${profile.first_name} ${profile.last_name || ''}`.trim() : 'User'),
       avatar: profile.avatar,
       xp: profile.xp || 0,
       streak: profile.streak || 0,
@@ -120,7 +127,8 @@ class SupabaseService {
       completedLessonIds: completedIds,
       unlockedLessonIds: unlockedIds,
       createdAt: new Date(profile.created_at),
-      provider: 'email' // simplified for UI
+      provider: 'email', // simplified for UI
+      onboardingCompleted: profile.onboarding_completed || false
     };
   }
 
@@ -129,10 +137,29 @@ class SupabaseService {
   async findOne(query: { email?: string, _id?: string }): Promise<User | null> {
     if (!this.isConfigured) return null;
 
-    let builder = this.supabase.from('users').select('*');
+    // OPTIMIZATION: Parallel Fetching if ID is known
+    if (query._id) {
+      const profilePromise = this.supabase
+        .from('users')
+        .select('id, email, name, avatar, xp, streak, is_pro, subscription_tier, created_at')
+        .eq('id', query._id)
+        .single();
 
-    if (query._id) builder = builder.eq('id', query._id);
-    else if (query.email) builder = builder.eq('email', query.email);
+      const progressPromise = this.supabase
+        .from('user_progress')
+        .select('lesson_id, status')
+        .eq('user_id', query._id);
+
+      const [profileResult, progressResult] = await Promise.all([profilePromise, progressPromise]);
+
+      if (profileResult.error || !profileResult.data) return null;
+
+      return this.formatUserForApp(profileResult.data, progressResult.data || []);
+    }
+
+    // Fallback for Email query (Sequential)
+    let builder = this.supabase.from('users').select('id, email, name, first_name, last_name, avatar, xp, streak, is_pro, subscription_tier, onboarding_completed, created_at');
+    if (query.email) builder = builder.eq('email', query.email);
     else return null;
 
     const { data, error } = await builder.single();
@@ -142,33 +169,36 @@ class SupabaseService {
   }
 
   /**
-   * Insert User (Usually handled by Auth Trigger, but here for manual fallback)
+   * Insert User (Utility function, primarily handled by Auth Trigger)
    */
   async insertOne(userData: Partial<User>): Promise<User> {
     if (!this.isConfigured) throw new Error("Database not configured");
 
-    // 1. Insert Profile
+    if (!userData._id) throw new Error("User ID is required for profile creation");
+
     const { data: profile, error } = await this.supabase
       .from('users')
-      .upsert({
-        id: userData._id, // Ideally passed from Auth
+      .insert({
+        id: userData._id,
         email: userData.email,
         name: userData.name,
+        first_name: userData.firstName,
+        last_name: userData.lastName,
         avatar: userData.avatar,
-        xp: 0,
-        created_at: new Date()
+        xp: userData.xp || 0,
+        created_at: userData.createdAt || new Date()
       })
-      .select()
+      .select('id, email, name, first_name, last_name, avatar, xp, streak, is_pro, subscription_tier, onboarding_completed, created_at')
       .single();
 
     if (error) throw error;
 
     // 2. Initialize First Lesson
-    await this.supabase.from('user_progress').insert({
+    await this.supabase.from('user_progress').upsert({
       user_id: profile.id,
       lesson_id: 'c1',
       status: 'unlocked'
-    });
+    }, { onConflict: 'user_id, lesson_id' });
 
     return (await this.formatUserForApp(profile))!;
   }
@@ -186,6 +216,9 @@ class SupabaseService {
     if (updates.streak !== undefined) profileUpdates.streak = updates.streak;
     if (updates.isPro !== undefined) profileUpdates.is_pro = updates.isPro;
     if (updates.avatar !== undefined) profileUpdates.avatar = updates.avatar;
+    if (updates.firstName !== undefined) profileUpdates.first_name = updates.firstName;
+    if (updates.lastName !== undefined) profileUpdates.last_name = updates.lastName;
+    if (updates.onboardingCompleted !== undefined) profileUpdates.onboarding_completed = updates.onboardingCompleted;
 
     if (Object.keys(profileUpdates).length > 0) {
       await this.supabase.from('users').update(profileUpdates).eq('id', id);
@@ -240,15 +273,115 @@ class SupabaseService {
     // Count how many users have more XP than the current user
     const { count, error } = await this.supabase
       .from('users')
-      .select('*', { count: 'exact', head: true })
+      .select('xp', { count: 'exact', head: true })
       .gt('xp', xp);
 
     if (error) {
       return 0;
     }
 
-    // Rank is number of people above you + 1
     return (count || 0) + 1;
+  }
+
+
+  // --- Chat Persistence Layer ---
+
+  /**
+   * Fetch all chat sessions for a user
+   */
+  async getChatSessions(userId: string): Promise<{ id: string; title: string; created_at: string }[]> {
+    if (!this.isConfigured) return [];
+
+    const { data, error } = await this.supabase
+      .from('chat_sessions')
+      .select('id, title, created_at')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching chat sessions:', error);
+      return [];
+    }
+    return data || [];
+  }
+
+  /**
+   * Create a new chat session
+   */
+  async createChatSession(userId: string, title: string): Promise<{ id: string; title: string; created_at: string } | null> {
+    if (!this.isConfigured) return null;
+
+    const { data, error } = await this.supabase
+      .from('chat_sessions')
+      .insert({ user_id: userId, title: title.substring(0, 50) }) // Limit title length
+      .select('id, title, created_at')
+      .single();
+
+    if (error) {
+      console.error('Error creating chat session:', error);
+      return null;
+    }
+    return data;
+  }
+
+  /**
+   * Delete a chat session and its messages (cascade usually handles messages, but good to know)
+   */
+  async deleteChatSession(sessionId: string): Promise<boolean> {
+    if (!this.isConfigured) return false;
+
+    const { error } = await this.supabase
+      .from('chat_sessions')
+      .delete()
+      .eq('id', sessionId);
+
+    if (error) {
+      console.error('Error deleting chat session:', error);
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Fetch messages for a specific session
+   */
+  async getChatMessages(sessionId: string): Promise<{ id: string; role: 'user' | 'assistant'; content: string; created_at: string }[]> {
+    if (!this.isConfigured) return [];
+
+    const { data, error } = await this.supabase
+      .from('messages')
+      .select('id, role, content, created_at')
+      .eq('session_id', sessionId)
+      .order('created_at', { ascending: true });
+
+    if (error) {
+      console.error('Error fetching messages:', error);
+      return [];
+    }
+    return data || [];
+  }
+
+  /**
+   * Add a message to a session
+   */
+  async addChatMessage(sessionId: string, role: 'user' | 'assistant', content: string): Promise<{ id: string } | null> {
+    if (!this.isConfigured) return null;
+
+    const { data, error } = await this.supabase
+      .from('messages')
+      .insert({
+        session_id: sessionId,
+        role,
+        content
+      })
+      .select('id')
+      .single();
+
+    if (error) {
+      console.error('Error adding message:', error);
+      return null;
+    }
+    return data;
   }
 }
 

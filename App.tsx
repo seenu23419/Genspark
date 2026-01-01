@@ -1,286 +1,162 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Screen, User, Language, Lesson } from './types';
+import React, { Suspense, lazy } from 'react';
+import { createBrowserRouter, RouterProvider, Navigate, Outlet, useLocation } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Layout from './components/Layout';
 import Splash from './screens/auth/Splash';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { Loader2 } from 'lucide-react';
+import { Screen } from './types';
+
+// Lazy Load Screens
 import Welcome from './screens/auth/Welcome';
 import Login from './screens/auth/Login';
 import Signup from './screens/auth/Signup';
-import ForgotPassword from './screens/auth/ForgotPassword';
-import OTP from './screens/auth/OTP';
 import Home from './screens/home/Home';
-import Explore from './screens/explore/Explore';
-import AIChat from './screens/chat/AIChat';
-import Compiler from './screens/compiler/Compiler';
-import Quiz from './screens/quiz/Quiz';
-import QuizResult from './screens/quiz/QuizResult';
-import ChallengesList from './screens/challenges/ChallengesList';
-import ChallengeDetail from './screens/challenges/ChallengeDetail';
+import LearnHub from './screens/learn/LearnHub';
+import PracticeHub from './screens/practice/PracticeHub';
 import Profile from './screens/profile/Profile';
-import Settings from './screens/profile/Settings';
-import Progress from './screens/profile/Progress';
-import Analytics from './screens/profile/Analytics';
-import LessonsList from './screens/lessons/LessonsList';
-import LessonView from './screens/lessons/LessonView';
-import SubscriptionPlan from './screens/subscription/SubscriptionPlan';
-import { authService } from './services/authService';
-import { supabaseDB } from './services/supabaseService';
-import { CURRICULUM } from './constants';
+const ForgotPassword = lazy(() => import('./screens/auth/ForgotPassword'));
+const OTP = lazy(() => import('./screens/auth/OTP'));
+const Onboarding = lazy(() => import('./screens/auth/Onboarding'));
+const ChallengesList = lazy(() => import('./screens/challenges/ChallengesList'));
+const ChallengeDetail = lazy(() => import('./screens/challenges/ChallengeDetail'));
+const Settings = lazy(() => import('./screens/profile/Settings'));
+const Progress = lazy(() => import('./screens/profile/Progress'));
+const Analytics = lazy(() => import('./screens/profile/Analytics'));
+const LessonsList = lazy(() => import('./screens/lessons/LessonsList'));
+const LessonView = lazy(() => import('./screens/lessons/LessonView'));
+const SubscriptionPlan = lazy(() => import('./screens/subscription/SubscriptionPlan'));
 
-const App: React.FC = () => {
-  const [currentScreen, setCurrentScreen] = useState<Screen>('SPLASH');
-  const [isInitializing, setIsInitializing] = useState(true);
-  const [user, setUser] = useState<User | null>(null);
-  const [pendingEmail, setPendingEmail] = useState<string>('');
-  const hasInitialized = useRef(false);
+// Query Client for React Query
+const queryClient = new QueryClient();
 
-  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
-  const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
-  const [lessonPhase, setLessonPhase] = useState<'content' | 'practice'>('content');
-  const [lastQuizResult, setLastQuizResult] = useState<{ score: number; total: number; xp: number } | null>(null);
+// Loading Fallback
+// Minimal Loading Fallback
+const ScreenLoader = () => (
+  <div className="fixed inset-0 bg-[#0a0b14] z-[9999]" />
+);
 
-  useEffect(() => {
-    if (hasInitialized.current) return;
-    hasInitialized.current = true;
+// --- PROTECTED ROUTE WRAPPER ---
+const ProtectedRoute = () => {
+  const { user, loading } = useAuth();
+  const location = useLocation();
 
-    // CRITICAL FIX: Check for OAuth errors in URL immediately.
-    // If Google redirects back with an error (like 403 or configuration mismatch), 
-    // the URL will contain #error=... or ?error=...
-    // We must catch this before 'initApp' hangs on session retrieval.
-    const checkForOAuthErrors = () => {
-      const hash = window.location.hash;
-      const search = window.location.search;
-      if (hash.includes('error=') || search.includes('error=')) {
-        console.warn("OAuth Error detected in URL. Skipping session check to show Welcome screen error.");
-        setIsInitializing(false);
-        setCurrentScreen('WELCOME');
-        return true;
-      }
-      return false;
-    };
+  if (loading) return <Splash />;
+  if (!user) return <Navigate to="/welcome" state={{ from: location }} replace />;
 
-    if (checkForOAuthErrors()) return;
+  // Derive screen name for Layout highlights
+  const path = location.pathname;
+  let screen: Screen = 'HOME';
+  if (path === '/learn') screen = 'LEARN';
+  else if (path.startsWith('/practice')) screen = 'PRACTICE';
+  else if (path.startsWith('/profile') || path.startsWith('/settings') || path.startsWith('/progress')) screen = 'PROFILE';
+  else if (path.startsWith('/lessons') || path.startsWith('/lesson') || path.startsWith('/quiz')) screen = 'LEARN';
+  else if (path.startsWith('/challenge')) screen = 'PRACTICE';
 
-    const initApp = async () => {
-      console.log("GenSpark: Loading Core Engine...");
-      const startTime = Date.now();
+  // Redirect to onboarding if name is missing and not already there
+  if (!user.firstName && path !== '/onboarding' && path !== '/settings') {
+    return <Navigate to="/onboarding" replace />;
+  }
 
-      try {
-        const sessionUser = await authService.getCurrentUser();
-        if (sessionUser) {
-          console.log("GenSpark: Session Restored", sessionUser.email);
-          setUser(sessionUser);
-          setCurrentScreen('HOME');
-        } else {
-          setCurrentScreen('WELCOME');
-        }
-      } catch (err) {
-        console.error("GenSpark: Initialization Error", err);
-        setCurrentScreen('WELCOME');
-      } finally {
-        const elapsedTime = Date.now() - startTime;
-        // Keep splash for exactly 6s as requested for branding
-        const splashDelay = Math.max(0, 6000 - elapsedTime);
+  // If onboarding is done, prevent going back to onboarding screen
+  if (user.firstName && path === '/onboarding') {
+    return <Navigate to="/" replace />;
+  }
 
-        setTimeout(() => {
-          setIsInitializing(false);
-        }, splashDelay);
-      }
-    };
-
-    initApp();
-
-    // Safety fallback: Force remove splash screen after 12 seconds max
-    // This handles cases where promises might hang indefinitely
-    const safetyTimer = setTimeout(() => {
-      setIsInitializing((prev) => {
-        if (prev) {
-          console.warn("GenSpark: Force clearing splash screen due to timeout.");
-          return false;
-        }
-        return prev;
-      });
-    }, 12000);
-
-    const unsubscribe = authService.onAuthStateChange((updatedUser) => {
-      setUser(updatedUser);
-      // We use a functional update for screen transitions to avoid closure staleness
-      setCurrentScreen(prev => {
-        if (updatedUser) {
-          const authScreens: Screen[] = ['WELCOME', 'LOGIN', 'SIGNUP', 'SPLASH', 'OTP', 'FORGOT_PASSWORD'];
-          if (authScreens.includes(prev)) return 'HOME';
-        }
-        return prev;
-      });
-    });
-
-    return () => {
-      clearTimeout(safetyTimer);
-      if (typeof unsubscribe === 'function') unsubscribe();
-    };
-  }, []);
-
-  const handleLogout = async () => {
-    try {
-      await authService.signOut();
-      setUser(null);
-      setCurrentScreen('WELCOME');
-    } catch (err) {
-      console.error("Logout failed", err);
-    }
-  };
-
-  const handleQuizComplete = async (score: number, earnedXp: number) => {
-    if (!user || !activeLesson) return;
-
-    setLastQuizResult({ score, total: activeLesson.quizQuestions.length, xp: earnedXp });
-
-    if (score === activeLesson.quizQuestions.length) {
-      const isFirstTime = !user.completedLessonIds.includes(activeLesson.id);
-      if (isFirstTime) {
-        const newCompleted = [...user.completedLessonIds, activeLesson.id];
-        const nextId = activeLesson.id.replace(/\d+$/, (n) => (parseInt(n) + 1).toString());
-        const newUnlocked = Array.from(new Set([...user.unlockedLessonIds, nextId]));
-
-        const updated = await supabaseDB.updateOne(user._id, {
-          xp: user.xp + earnedXp,
-          lessonsCompleted: user.lessonsCompleted + 1,
-          completedLessonIds: newCompleted,
-          unlockedLessonIds: newUnlocked
-        });
-        setUser(updated);
-      }
-    }
-    setCurrentScreen('QUIZ_RESULT');
-  };
-
-  const handleNextLesson = () => {
-    if (!selectedLanguage || !activeLesson) return;
-    const modules = CURRICULUM[selectedLanguage.id] || [];
-    let allLessons: Lesson[] = [];
-    modules.forEach(m => allLessons = [...allLessons, ...m.lessons]);
-
-    const currentIndex = allLessons.findIndex(l => l.id === activeLesson.id);
-    if (currentIndex !== -1 && currentIndex < allLessons.length - 1) {
-      const nextLesson = allLessons[currentIndex + 1];
-      if (user?.unlockedLessonIds.includes(nextLesson.id)) {
-        setActiveLesson(nextLesson);
-        setLessonPhase('content');
-        setCurrentScreen('LESSON_VIEW');
-      } else {
-        setCurrentScreen('LESSONS');
-      }
-    } else {
-      setCurrentScreen('LESSONS');
-    }
-  };
-
-  const renderScreen = () => {
-    switch (currentScreen) {
-      case 'WELCOME':
-        return (
-          <Welcome
-            onLoginSuccess={(u) => { setUser(u); setCurrentScreen('HOME'); }}
-            onGoToLogin={() => setCurrentScreen('LOGIN')}
-            onGoToSignup={() => setCurrentScreen('SIGNUP')}
-          />
-        );
-      case 'LOGIN':
-        return (
-          <Login
-            onLogin={(u) => { setUser(u); setCurrentScreen('HOME'); }}
-            onSignup={() => setCurrentScreen('SIGNUP')}
-            onForgotPassword={() => setCurrentScreen('FORGOT_PASSWORD')}
-            onBack={() => setCurrentScreen('WELCOME')}
-          />
-        );
-      case 'SIGNUP':
-        return (
-          <Signup
-            onSignup={(u) => {
-              setPendingEmail(u.email);
-              setCurrentScreen('OTP');
-            }}
-            onLogin={() => setCurrentScreen('LOGIN')}
-            onBack={() => setCurrentScreen('WELCOME')}
-          />
-        );
-      case 'FORGOT_PASSWORD':
-        return <ForgotPassword onBack={() => setCurrentScreen('LOGIN')} />;
-      case 'OTP':
-        return <OTP email={pendingEmail} onVerify={() => setCurrentScreen('HOME')} />;
-      case 'HOME':
-        return user ? <Home user={user} setScreen={setCurrentScreen} /> : null;
-      case 'EXPLORE':
-        return <Explore onSelectLanguage={(l) => { setSelectedLanguage(l); setCurrentScreen('LESSONS'); }} onBack={() => setCurrentScreen('HOME')} />;
-      case 'LESSONS':
-        return selectedLanguage && user ? (
-          <LessonsList
-            language={selectedLanguage}
-            unlockedLessonIds={user.unlockedLessonIds}
-            completedLessonIds={user.completedLessonIds}
-            onBack={() => setCurrentScreen('EXPLORE')}
-            onSelectLesson={(l) => { setActiveLesson(l); setLessonPhase('content'); setCurrentScreen('LESSON_VIEW'); }}
-          />
-        ) : null;
-      case 'LESSON_VIEW':
-        return activeLesson ? (
-          <LessonView
-            lesson={activeLesson}
-            initialTab={lessonPhase}
-            onBack={() => setCurrentScreen('LESSONS')}
-            onStartQuiz={() => setCurrentScreen('QUIZ')}
-            onNextLesson={handleNextLesson}
-          />
-        ) : null;
-      case 'CHAT':
-        return <AIChat user={user} onBack={() => setCurrentScreen('HOME')} />;
-      case 'COMPILER':
-        return <Compiler />;
-      case 'QUIZ':
-        return activeLesson ? <Quiz questions={activeLesson.quizQuestions} onComplete={handleQuizComplete} /> : null;
-      case 'QUIZ_RESULT':
-        return lastQuizResult ? (
-          <QuizResult
-            score={lastQuizResult.score}
-            total={lastQuizResult.total}
-            xp={lastQuizResult.xp}
-            onContinue={() => { setLessonPhase('practice'); setCurrentScreen('LESSON_VIEW'); }}
-            onRetry={() => setCurrentScreen('QUIZ')}
-          />
-        ) : null;
-      case 'CHALLENGES':
-        return <ChallengesList onSelect={(c) => setCurrentScreen('CHALLENGE_DETAIL')} />;
-      case 'PROFILE':
-        return user ? <Profile user={user} setScreen={setCurrentScreen} onLogout={handleLogout} /> : null;
-      case 'SETTINGS':
-        return <Settings user={user} setScreen={setCurrentScreen} />;
-      case 'PROGRESS':
-        return user ? <Progress user={user} /> : null;
-      case 'ANALYTICS':
-        return <Analytics />;
-      case 'SUBSCRIPTION':
-        return user ? (
-          <SubscriptionPlan
-            user={user}
-            onSuccess={(u) => { setUser(u); setCurrentScreen('HOME'); }}
-            onBack={() => setCurrentScreen('HOME')}
-          />
-        ) : null;
-      default:
-        // If logged in, default to HOME, else WELCOME
-        if (user) return <Home user={user} setScreen={setCurrentScreen} />;
-        return <Welcome onLoginSuccess={(u) => { setUser(u); setCurrentScreen('HOME'); }} onGoToLogin={() => setCurrentScreen('LOGIN')} onGoToSignup={() => setCurrentScreen('SIGNUP')} />;
-    }
-  };
-
-  if (isInitializing) {
-    return <Splash />;
+  // Isolate Onboarding from Layout (No Bottom Nav)
+  if (path === '/onboarding') {
+    return (
+      <Suspense fallback={<ScreenLoader />}>
+        <Outlet />
+      </Suspense>
+    );
   }
 
   return (
-    <Layout currentScreen={currentScreen} setScreen={setCurrentScreen} user={user}>
-      {renderScreen()}
+    <Layout currentScreen={screen} setScreen={() => { }} user={user}>
+      <Suspense fallback={<ScreenLoader />}>
+        <Outlet />
+      </Suspense>
     </Layout>
+  );
+};
+
+// --- PUBLIC ROUTE WRAPPER (Redirect if logged in) ---
+const PublicRoute = () => {
+  const { user, loading } = useAuth();
+  if (loading) return <Splash />;
+  if (user) return <Navigate to="/" replace />;
+
+  return (
+    <Suspense fallback={<ScreenLoader />}>
+      <Outlet />
+    </Suspense>
+  );
+};
+
+// --- ROUTER CONFIGURATION ---
+const router = createBrowserRouter([
+  {
+    path: "/",
+    errorElement: <ErrorBoundary />,
+    element: <ProtectedRoute />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "onboarding", element: <Onboarding /> },
+      { path: "learn", element: <LearnHub /> },
+      { path: "practice/*", element: <PracticeHub /> },
+      { path: "profile", element: <Profile /> },
+      { path: "settings", element: <Settings onBack={() => window.history.back()} /> },
+
+      // Secondary / Detail Routes (Accessed from main tabs)
+      { path: "progress", element: <Progress /> },
+      { path: "lessons/:langId", element: <LessonsList /> },
+      { path: "lesson/:lessonId", element: <LessonView /> },
+      { path: "quiz/:quizId", element: <Quiz /> },
+      { path: "challenge/:challengeId", element: <ChallengeDetail /> },
+      { path: "subscription", element: <SubscriptionPlan /> },
+    ]
+  },
+  {
+    element: <PublicRoute />,
+    children: [
+      {
+        path: "welcome", element: <Welcome
+          onLoginSuccess={() => router.navigate('/')}
+          onGoToLogin={() => router.navigate('/login')}
+          onGoToSignup={() => router.navigate('/signup')}
+        />
+      },
+      {
+        path: "login", element: <Login
+          onLogin={() => router.navigate('/')}
+          onSignup={() => router.navigate('/signup')}
+          onForgotPassword={() => router.navigate('/forgot-password')}
+          onBack={() => router.navigate('/welcome')}
+        />
+      },
+      {
+        path: "signup", element: <Signup
+          onSignup={() => router.navigate('/')}
+          onLogin={() => router.navigate('/login')}
+          onBack={() => router.navigate('/welcome')}
+        />
+      },
+      { path: "otp", element: <OTP email="" onVerify={() => router.navigate('/')} /> },
+      { path: "forgot-password", element: <ForgotPassword onBack={() => router.navigate('/login')} /> },
+    ]
+  },
+  { path: "*", element: <Navigate to="/" replace /> }
+]);
+
+const App: React.FC = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </QueryClientProvider>
   );
 };
 

@@ -1,5 +1,5 @@
 
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, AreaChart, Area } from 'recharts';
 import { ArrowLeft, Zap, Target, TrendingUp } from 'lucide-react';
 
@@ -13,11 +13,22 @@ const data = [
   { name: 'Sun', time: 70, xp: 320, accuracy: 82 },
 ];
 
-const Analytics: React.FC = () => {
+interface AnalyticsProps {
+  onBack?: () => void;
+}
+
+const Analytics: React.FC<AnalyticsProps> = ({ onBack: propOnBack }) => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    if (propOnBack) propOnBack();
+    else navigate(-1);
+  };
+
   return (
     <div className="p-6 md:p-10 max-w-6xl mx-auto space-y-10 pb-24">
       <header className="flex items-center gap-4">
-        <button onClick={() => window.history.back()} className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-all">
+        <button onClick={handleBack} className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-all">
           <ArrowLeft size={20} />
         </button>
         <div>
@@ -40,10 +51,10 @@ const Analytics: React.FC = () => {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} opacity={0.5} />
-                <XAxis dataKey="name" stroke="#94a3b8" axisLine={false} tickLine={false} tick={{fontSize: 12, fontWeight: 'bold'}} dy={10} />
-                <YAxis stroke="#94a3b8" axisLine={false} tickLine={false} tick={{fontSize: 12}} />
-                <Tooltip 
-                  cursor={{fill: '#1e293b'}}
+                <XAxis dataKey="name" stroke="#94a3b8" axisLine={false} tickLine={false} tick={{ fontSize: 12, fontWeight: 'bold' }} dy={10} />
+                <YAxis stroke="#94a3b8" axisLine={false} tickLine={false} tick={{ fontSize: 12 }} />
+                <Tooltip
+                  cursor={{ fill: '#1e293b' }}
                   contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '12px', color: '#fff', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.5)' }}
                   itemStyle={{ color: '#818cf8', fontWeight: 'bold' }}
                 />
@@ -67,14 +78,14 @@ const Analytics: React.FC = () => {
               <AreaChart data={data}>
                 <defs>
                   <linearGradient id="colorTime" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} opacity={0.5} />
-                <XAxis dataKey="name" stroke="#94a3b8" axisLine={false} tickLine={false} tick={{fontSize: 12, fontWeight: 'bold'}} dy={10} />
-                <YAxis stroke="#94a3b8" axisLine={false} tickLine={false} tick={{fontSize: 12}} />
-                <Tooltip 
+                <XAxis dataKey="name" stroke="#94a3b8" axisLine={false} tickLine={false} tick={{ fontSize: 12, fontWeight: 'bold' }} dy={10} />
+                <YAxis stroke="#94a3b8" axisLine={false} tickLine={false} tick={{ fontSize: 12 }} />
+                <Tooltip
                   contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '12px', color: '#fff', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.5)' }}
                   itemStyle={{ color: '#10b981', fontWeight: 'bold' }}
                 />
@@ -102,9 +113,9 @@ const Analytics: React.FC = () => {
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} opacity={0.5} />
-                <XAxis dataKey="name" stroke="#94a3b8" axisLine={false} tickLine={false} tick={{fontSize: 12, fontWeight: 'bold'}} dy={10} />
-                <YAxis stroke="#94a3b8" axisLine={false} tickLine={false} domain={[0, 100]} tick={{fontSize: 12}} />
-                <Tooltip 
+                <XAxis dataKey="name" stroke="#94a3b8" axisLine={false} tickLine={false} tick={{ fontSize: 12, fontWeight: 'bold' }} dy={10} />
+                <YAxis stroke="#94a3b8" axisLine={false} tickLine={false} domain={[0, 100]} tick={{ fontSize: 12 }} />
+                <Tooltip
                   contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '12px', color: '#fff', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.5)' }}
                   itemStyle={{ color: '#ef4444', fontWeight: 'bold' }}
                 />

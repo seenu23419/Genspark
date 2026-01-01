@@ -1,22 +1,40 @@
 
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+import { Star, Trophy, Target, BookOpen, ArrowLeft } from 'lucide-react';
 import { User } from '../../types';
-import { Star, Trophy, Target, BookOpen } from 'lucide-react';
 
 interface ProgressProps {
-  user: User;
+  user?: User;
+  onBack?: () => void;
 }
 
-const Progress: React.FC<ProgressProps> = ({ user }) => {
+const Progress: React.FC<ProgressProps> = ({ user: propUser, onBack: propOnBack }) => {
+  const { user: authUser } = useAuth();
+  const navigate = useNavigate();
+  const user = propUser || authUser;
+
+  const handleBack = () => {
+    if (propOnBack) propOnBack();
+    else navigate(-1);
+  };
+
+  if (!user) return null;
+
   const levelProgress = (user.xp % 1000) / 10;
   const currentLevel = Math.floor(user.xp / 1000) + 1;
 
   return (
     <div className="p-6 md:p-10 max-w-4xl mx-auto space-y-10">
-      <div>
-        <h1 className="text-3xl font-bold text-white">Learning Progress</h1>
-        <p className="text-slate-400">You're in the top 5% of learners this month!</p>
-      </div>
+      <header className="flex items-center gap-4">
+        <button onClick={handleBack} className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-all">
+          <ArrowLeft size={20} />
+        </button>
+        <div>
+          <h1 className="text-3xl font-bold text-white">Learning Progress</h1>
+          <p className="text-slate-400">You're in the top 5% of learners this month!</p>
+        </div>
+      </header>
 
       {/* Main Level Progress */}
       <div className="bg-slate-900 border border-slate-800 p-8 rounded-[2.5rem] relative overflow-hidden">
@@ -31,9 +49,9 @@ const Progress: React.FC<ProgressProps> = ({ user }) => {
               <p className="text-slate-400 font-bold">{user.xp} / {(currentLevel * 1000)} XP</p>
             </div>
           </div>
-          
+
           <div className="w-full h-4 bg-slate-800 rounded-full overflow-hidden">
-            <div 
+            <div
               className="h-full bg-gradient-to-r from-indigo-600 to-purple-500 rounded-full transition-all duration-1000"
               style={{ width: `${levelProgress}%` }}
             ></div>

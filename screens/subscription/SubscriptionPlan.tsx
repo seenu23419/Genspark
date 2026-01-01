@@ -1,18 +1,29 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 import { Check, Zap, ShieldCheck, Crown, ArrowLeft, Loader2, Star, Percent } from 'lucide-react';
 import { supabaseDB } from '../../services/supabaseService';
 import { User } from '../../types';
 
 interface SubscriptionPlanProps {
-  user: User;
-  onSuccess: (updatedUser: User) => void;
-  onBack: () => void;
+  user?: User;
+  onSuccess?: (updatedUser: User) => void;
+  onBack?: () => void;
 }
 
-const SubscriptionPlan: React.FC<SubscriptionPlanProps> = ({ user, onSuccess, onBack }) => {
+const SubscriptionPlan: React.FC<SubscriptionPlanProps> = ({ user: propUser, onSuccess, onBack: propOnBack }) => {
+  const { user: authUser, refreshProfile } = useAuth();
+  const navigate = useNavigate();
+  const user = propUser || authUser;
+
   const [isProcessing, setIsProcessing] = useState(false);
   const [billingCycle, setBillingCycle] = useState<'Monthly' | 'Yearly'>('Monthly');
+
+  const handleBack = () => {
+    if (propOnBack) propOnBack();
+    else navigate(-1);
+  };
 
   const handleSubscribe = async () => {
     setIsProcessing(true);
@@ -30,7 +41,12 @@ const SubscriptionPlan: React.FC<SubscriptionPlanProps> = ({ user, onSuccess, on
         billingCycle: billingCycle,
         nextBillingDate: nextDate
       });
-      onSuccess(updatedUser);
+      if (onSuccess) {
+        onSuccess(updatedUser);
+      } else {
+        await refreshProfile();
+        navigate('/profile');
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -49,7 +65,7 @@ const SubscriptionPlan: React.FC<SubscriptionPlanProps> = ({ user, onSuccess, on
     <div className="min-h-screen bg-[#0a0b14] p-6 md:p-12 flex flex-col items-center animate-in fade-in duration-500">
       <div className="max-w-5xl w-full">
         <header className="flex items-center justify-between mb-12">
-          <button onClick={onBack} className="p-3 bg-slate-900/50 border border-slate-800 text-slate-400 hover:text-white rounded-2xl transition-all active:scale-90">
+          <button onClick={handleBack} className="p-3 bg-slate-900/50 border border-slate-800 text-slate-400 hover:text-white rounded-2xl transition-all active:scale-90">
             <ArrowLeft size={20} />
           </button>
           <div className="flex items-center gap-2">
@@ -72,20 +88,20 @@ const SubscriptionPlan: React.FC<SubscriptionPlanProps> = ({ user, onSuccess, on
         {/* Cycle Toggle */}
         <div className="flex justify-center mb-12">
           <div className="bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800 flex items-center relative">
-            <button 
+            <button
               onClick={() => setBillingCycle('Monthly')}
               className={`relative z-10 px-8 py-3 rounded-xl font-bold text-sm transition-all duration-300 ${billingCycle === 'Monthly' ? 'text-white' : 'text-slate-500'}`}
             >
               Monthly
             </button>
-            <button 
+            <button
               onClick={() => setBillingCycle('Yearly')}
               className={`relative z-10 px-8 py-3 rounded-xl font-bold text-sm transition-all duration-300 ${billingCycle === 'Yearly' ? 'text-white' : 'text-slate-500'}`}
             >
               Yearly
               <span className="absolute -top-3 -right-2 bg-emerald-500 text-[8px] px-2 py-0.5 rounded-full text-black font-black uppercase tracking-tighter shadow-lg shadow-emerald-500/20">Save 20%</span>
             </button>
-            <div 
+            <div
               className={`absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] bg-indigo-600 rounded-xl transition-transform duration-500 ease-out ${billingCycle === 'Yearly' ? 'translate-x-full' : 'translate-x-0'}`}
             ></div>
           </div>
@@ -98,7 +114,7 @@ const SubscriptionPlan: React.FC<SubscriptionPlanProps> = ({ user, onSuccess, on
               <p className="text-slate-500 text-sm">Perfect for hobbyists</p>
             </div>
             <div className="text-5xl font-black text-white">₹0</div>
-            
+
             <ul className="space-y-5 flex-1 pt-4">
               <FeatureItem text="GenSpark Flash AI" checked />
               <FeatureItem text="Standard XP Rate" checked />
@@ -117,15 +133,15 @@ const SubscriptionPlan: React.FC<SubscriptionPlanProps> = ({ user, onSuccess, on
               <div className="absolute -top-4 right-10 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-[10px] font-black uppercase tracking-[0.2em] px-5 py-2 rounded-full shadow-2xl border border-white/10">
                 Premium Choice
               </div>
-              
+
               <div>
                 <h3 className="text-2xl font-black text-white mb-2 uppercase tracking-tighter flex items-center gap-2">
-                  Pro 
+                  Pro
                   <Crown size={24} className="text-yellow-500" />
                 </h3>
                 <p className="text-indigo-300 text-sm">For elite developers</p>
               </div>
-              
+
               <div className="flex items-baseline gap-1">
                 <span className="text-5xl font-black text-white">₹{billingCycle === 'Monthly' ? '49' : '499'}</span>
                 <span className="text-slate-500 font-bold uppercase tracking-widest text-xs">/ {billingCycle === 'Monthly' ? 'month' : 'year'}</span>
@@ -145,7 +161,7 @@ const SubscriptionPlan: React.FC<SubscriptionPlanProps> = ({ user, onSuccess, on
                 ))}
               </div>
 
-              <button 
+              <button
                 onClick={handleSubscribe}
                 disabled={isProcessing}
                 className="w-full py-5 bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 bg-[length:200%_auto] hover:bg-right transition-all duration-500 text-white rounded-2xl font-black text-lg shadow-2xl shadow-indigo-600/40 flex items-center justify-center gap-3 active:scale-[0.98]"

@@ -5,100 +5,189 @@ export interface MediaPart {
 }
 
 // Safely access environment variables
-const getApiKey = (): string => {
+const getApiKey = (provider: 'gemini' | 'openai'): string => {
   try {
-    return (
-      (typeof (import.meta as any).env !== 'undefined' ? (import.meta as any).env.VITE_GEMINI_API_KEY : '') ||
-      (typeof process !== 'undefined' && process.env ? (process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY || process.env.API_KEY) : '') ||
-      ''
-    );
+    if (provider === 'gemini') {
+      return (
+        (typeof (import.meta as any).env !== 'undefined' ? (import.meta as any).env.VITE_GEMINI_API_KEY : '') ||
+        (typeof process !== 'undefined' && process.env ? (process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY || process.env.API_KEY) : '') ||
+        ''
+      );
+    } else {
+      return (
+        (typeof (import.meta as any).env !== 'undefined' ? (import.meta as any).env.VITE_OPENAI_API_KEY : '') ||
+        (typeof process !== 'undefined' && process.env ? (process.env.OPENAI_API_KEY || process.env.VITE_OPENAI_API_KEY) : '') ||
+        ''
+      );
+    }
   } catch {
     return '';
   }
 };
 
 export class GenSparkAIService {
-  private apiKey: string = '';
+  private geminiKey: string = '';
+  private openaiKey: string = '';
 
   constructor() {
-    this.apiKey = getApiKey();
+    this.geminiKey = getApiKey('gemini');
+    this.openaiKey = getApiKey('openai');
   }
 
   async *generateChatStream(message: string, isPro: boolean = false, history: any[] = [], attachment?: MediaPart) {
-    if (!this.apiKey) {
-      this.apiKey = getApiKey();
-    }
+    if (!this.geminiKey) this.geminiKey = getApiKey('gemini');
+    if (!this.openaiKey) this.openaiKey = getApiKey('openai');
 
-    if (!this.apiKey || this.apiKey === 'PLACEHOLDER_API_KEY') {
-      yield "GenSpark AI: I'm currently in 'offline mode' because the Gemini API key is missing or invalid. Please add your API key to the .env.local file to activate me! 🚀";
-      return;
-    }
+    // OPTIMIZATION: Limit context to last 10 messages (5 turns) for performance and cost
+    const recentHistory = history.slice(-10);
 
-    // Diagnostic: Try to list models once to see what's available
-    try {
-      const diagUrl = `https://generativelanguage.googleapis.com/v1beta/models?key=${this.apiKey}`;
-      const diagResp = await fetch(diagUrl);
-      if (diagResp.ok) {
-        const diagData = await diagResp.json();
-        console.log("GenSpark AI: Available Models:", diagData.models?.map((m: any) => m.name));
+    // Strategy: Try OpenAI first (highest reasoning), then Gemini fallback
+    if (this.openaiKey && this.openaiKey !== 'PLACEHOLDER_API_KEY') {
+      try {
+        console.log("GenSpark AI: Attempting with OpenAI...");
+        yield* this.generateOpenAIStream(message, isPro, recentHistory, attachment);
+        return;
+      } catch (e: any) {
+        console.warn("GenSpark AI: OpenAI failed, falling back to Gemini.", e.message);
       }
-    } catch (e) { }
+    }
 
-    // Based on diagnostic: gemini-2.0-flash-lite is available and might have less quota pressure.
-    const models = ['gemini-2.0-flash-lite', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+    if (this.geminiKey && this.geminiKey !== 'PLACEHOLDER_API_KEY') {
+      try {
+        console.log("GenSpark AI: Attempting with Gemini...");
+        yield* this.generateGeminiStream(message, isPro, recentHistory, attachment);
+        return;
+      } catch (e: any) {
+        console.error("GenSpark AI: Gemini also failed.", e.message);
+        yield `Connection error: ${e.message || "I encountered an issue processing your request."}`;
+      }
+    } else if (!this.openaiKey || this.openaiKey === 'PLACEHOLDER_API_KEY') {
+      // Offline mode message
+      const isDev = (import.meta as any).env.DEV;
+      if (isDev) {
+        yield "GenSpark AI: I'm currently in 'offline mode' because your API keys are missing in `.env.local`. Please add `VITE_GEMINI_API_KEY` to activate me! 🚀";
+      } else {
+        yield "GenSpark AI: I'm currently in 'offline mode' in production. **Fix Needed**: Please add your `VITE_GEMINI_API_KEY` to your Netlify Environment Variables.";
+      }
+    }
+  }
+
+  private async *generateOpenAIStream(message: string, isPro: boolean, history: any[], attachment?: MediaPart) {
+    const url = "https://api.openai.com/v1/chat/completions";
+    const systemPrompt = this.getSystemPrompt(isPro);
+
+    const messages: any[] = [
+      { role: "system", content: systemPrompt },
+      ...history.map(h => ({
+        role: h.role === 'model' || h.role === 'assistant' ? 'assistant' : 'user',
+        content: h.parts ? h.parts[0].text : h.content
+      })),
+      {
+        role: "user",
+        content: attachment
+          ? [
+            { type: "text", text: message },
+            { type: "image_url", image_url: { url: `data:${attachment.mimeType};base64,${attachment.data}` } }
+          ]
+          : message
+      }
+    ];
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${this.openaiKey}`
+      },
+      body: JSON.stringify({
+        model: isPro ? "gpt-4o" : "gpt-4o-mini",
+        messages,
+        stream: true,
+        max_tokens: 4096
+      })
+    });
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.error?.message || response.statusText);
+    }
+
+    const reader = response.body?.getReader();
+    if (!reader) throw new Error("Failed to get response reader");
+
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop() || '';
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (trimmed === 'data: [DONE]') return;
+        if (trimmed.startsWith('data: ')) {
+          try {
+            const dataString = trimmed.substring(6);
+            if (dataString === '[DONE]') return;
+            const json = JSON.parse(dataString);
+            const content = json.choices?.[0]?.delta?.content;
+            if (content) yield content;
+          } catch (e) { }
+        }
+      }
+    }
+  }
+
+  private async *generateGeminiStream(message: string, isPro: boolean, history: any[], attachment?: MediaPart) {
+    const models = ['gemini-2.0-flash-lite', 'gemini-1.5-flash', 'gemini-1.5-pro'];
+    const systemPrompt = this.getSystemPrompt(isPro);
     let lastError = '';
-
-    const systemPrompt = `You are GenSpark AI, an intelligent and friendly coding companion. ${isPro ? "The user is a PRO member; provide expert-level depth." : ""}
-              
-    Guidelines:
-    1. **Style**: ChatGPT-like formatting (markdown, headings, lists).
-    2. **Tone**: Encouraging, enthusiastic. 
-    3. **Emojis**: Use frequently! 🚀💡✅🐛.
-    4. **Code**: Always use Markdown code blocks.
-    5. **Visuals**: Analyze images thoroughly if provided.`;
 
     for (const modelName of models) {
       try {
-        console.log(`GenSpark AI: Attempting with model ${modelName}...`);
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:streamGenerateContent?alt=sse&key=${this.apiKey}`;
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:streamGenerateContent?alt=sse&key=${this.geminiKey}`;
 
-        // Merge system prompt into first user message to avoid 'system' role compatibility issues
-        const updatedHistory = [...history];
-        if (updatedHistory.length === 0) {
-          updatedHistory.push({
-            role: 'user',
-            parts: [{ text: `[SYSTEM INSTRUCTION: ${systemPrompt}]\n\nUser: ${message}` }]
-          });
+        let contents = [];
+        if (history.length === 0) {
+          const parts: any[] = [{ text: `${systemPrompt}\n\nUser Message: ${message}` }];
           if (attachment) {
-            updatedHistory[0].parts.push({ inlineData: { mimeType: attachment.mimeType, data: attachment.data } });
+            parts.push({ inlineData: { mimeType: attachment.mimeType, data: attachment.data } });
           }
+          contents.push({ role: 'user', parts });
         } else {
-          // Insert system prompt at the very beginning of the history if not already there
-          updatedHistory[0].parts[0].text = `[SYSTEM INSTRUCTION: ${systemPrompt}]\n\n${updatedHistory[0].parts[0].text}`;
-          updatedHistory.push({
-            role: 'user',
-            parts: attachment ? [
-              { text: message },
-              { inlineData: { mimeType: attachment.mimeType, data: attachment.data } }
-            ] : [{ text: message }]
-          });
+          contents = JSON.parse(JSON.stringify(history));
+          if (contents[0].role === 'user') {
+            contents[0].parts[0].text = `[Instruction: ${systemPrompt}]\n\n${contents[0].parts[0].text}`;
+          }
+          const currentParts: any[] = [{ text: message }];
+          if (attachment) {
+            currentParts.push({ inlineData: { mimeType: attachment.mimeType, data: attachment.data } });
+          }
+          contents.push({ role: 'user', parts: currentParts });
         }
 
         const response = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            contents: updatedHistory,
-            generationConfig: { temperature: 0.7, maxOutputTokens: 2048 }
+            contents,
+            generationConfig: { temperature: 0.8, maxOutputTokens: 4096 },
+            safetySettings: [
+              { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
+              { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
+              { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
+              { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" }
+            ]
           })
         });
 
         if (!response.ok) {
           const err = await response.json().catch(() => ({}));
-          console.warn(`Model ${modelName} failed:`, err?.error?.message || response.status);
-          lastError = err?.error?.message || `HTTP ${response.status}`;
-          if (response.status === 404 || response.status === 400 || response.status === 429) continue;
-          throw new Error(lastError);
+          throw new Error(err.error?.message || response.statusText);
         }
 
         const reader = response.body?.getReader();
@@ -117,13 +206,19 @@ export class GenSparkAIService {
 
           for (const line of lines) {
             const trimmed = line.trim();
-            if (trimmed.startsWith('data: ')) {
-              try {
-                const dataStr = trimmed.substring(6).trim();
-                const json = JSON.parse(dataStr);
-                const text = json.candidates?.[0]?.content?.parts?.[0]?.text;
-                if (text) yield text;
-              } catch (e) { }
+            if (!trimmed || !trimmed.startsWith('data: ')) continue;
+
+            const dataStr = trimmed.substring(6);
+            if (dataStr === '[DONE]') return;
+
+            try {
+              const json = JSON.parse(dataStr);
+              // Gemini SSE format can be slightly different depending on model/version
+              const text = json.candidates?.[0]?.content?.parts?.[0]?.text;
+              if (text) yield text;
+            } catch (e) {
+              // Ignore partial JSON chunks common in streaming
+              continue;
             }
           }
         }
@@ -133,8 +228,17 @@ export class GenSparkAIService {
         if (modelName === models[models.length - 1]) throw err;
       }
     }
+  }
 
-    yield `Connection error: ${lastError || "I encountered an issue processing your request."}`;
+  private getSystemPrompt(isPro: boolean): string {
+    return `You are GenSpark AI, an intelligent coding tutor. ${isPro ? "The user is a PRO member." : ""}
+              
+    CRITICAL RULES:
+    1. **NO FULL SOLUTIONS**: Never provide the full corrected code for a student's problem. 
+    2. **HINTS ONLY**: Provide incremental hints, explain the logic, and suggest steps.
+    3. **EXPLAIN ERRORS**: When a user provides an error, explain WHY it happened in simple terms.
+    4. **ENCOURAGE**: Be positive and help them figure it out themselves.
+    5. **Markdown**: Use clear formatting, headers, and small code snippets (one or two lines) for demonstration.`;
   }
 }
 

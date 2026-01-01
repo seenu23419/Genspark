@@ -37,8 +37,8 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBack }) => {
 
   return (
     <div className="min-h-screen bg-[#0a0b14] flex items-center justify-center p-6 relative overflow-hidden">
-      <div className="max-w-md w-full relative z-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-        <button onClick={onBack} className="flex items-center gap-2 text-slate-500 hover:text-white mb-8 group transition-colors">
+      <div className="max-w-md w-full relative z-10 flex flex-col max-h-[90vh] overflow-y-auto no-scrollbar py-8 px-2 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <button onClick={onBack} className="flex items-center gap-2 text-slate-500 hover:text-white mb-8 group transition-colors shrink-0 w-fit">
           <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
           <span className="text-xs font-black uppercase tracking-widest">Back to Login</span>
         </button>
@@ -69,8 +69,8 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBack }) => {
 
             <div className="relative group">
               <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-400 transition-colors" size={18} />
-              <input 
-                type="text" 
+              <input
+                type="text"
                 inputMode="email"
                 required
                 value={email}
@@ -80,10 +80,10 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBack }) => {
               />
             </div>
 
-            <button 
+            <button
               type="submit"
               disabled={isLoading || !email}
-              className="w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-black text-lg transition-all active:scale-[0.98] shadow-xl shadow-indigo-600/20 flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full h-14 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-black text-lg transition-all active:scale-[0.98] shadow-xl shadow-indigo-600/20 flex items-center justify-center gap-2 disabled:opacity-50"
             >
               {isLoading ? <Loader2 className="animate-spin" size={20} /> : "Send Recovery Link"}
             </button>

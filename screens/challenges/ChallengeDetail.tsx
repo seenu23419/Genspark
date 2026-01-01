@@ -1,20 +1,47 @@
 
 import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Play, Info, CheckCircle2, Star } from 'lucide-react';
+import { CHALLENGES } from '../../constants';
 import { Challenge } from '../../types';
 
 interface ChallengeDetailProps {
-  challenge: Challenge | null;
-  onSolve: () => void;
+  challenge?: Challenge | null;
+  onSolve?: () => void;
+  onBack?: () => void;
 }
 
-const ChallengeDetail: React.FC<ChallengeDetailProps> = ({ challenge, onSolve }) => {
-  if (!challenge) return null;
+const ChallengeDetail: React.FC<ChallengeDetailProps> = ({ challenge: propChallenge, onSolve: propOnSolve, onBack: propOnBack }) => {
+  const { challengeId } = useParams();
+  const navigate = useNavigate();
+
+  const challenge = propChallenge || CHALLENGES.find(c => c.id === challengeId);
+
+  const handleBack = () => {
+    if (propOnBack) propOnBack();
+    else navigate('/challenges');
+  };
+
+  const handleSolve = () => {
+    if (propOnSolve) propOnSolve();
+    else navigate('/compiler'); // Usually challenges lead to compiler
+  };
+
+  if (!challenge) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 text-center">
+        <h2 className="text-2xl font-bold text-white mb-4">Challenge Not Found</h2>
+        <button onClick={handleBack} className="text-indigo-400 hover:text-white transition-colors flex items-center gap-2">
+          <ArrowLeft size={20} /> Back to Challenges
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="h-full bg-slate-950 flex flex-col">
       <header className="p-4 border-b border-slate-800 bg-slate-900 flex items-center gap-4">
-        <button onClick={() => window.history.back()} className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl">
+        <button onClick={handleBack} className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl">
           <ArrowLeft size={20} />
         </button>
         <h2 className="text-lg font-bold text-white">Challenge Description</h2>
@@ -31,10 +58,9 @@ const ChallengeDetail: React.FC<ChallengeDetailProps> = ({ challenge, onSolve })
               </div>
             </div>
             <div className="flex items-center gap-4 text-sm font-bold">
-              <span className={`px-3 py-1 rounded-full uppercase tracking-widest ${
-                challenge.difficulty === 'Easy' ? 'bg-emerald-400/10 text-emerald-400' :
+              <span className={`px-3 py-1 rounded-full uppercase tracking-widest ${challenge.difficulty === 'Easy' ? 'bg-emerald-400/10 text-emerald-400' :
                 challenge.difficulty === 'Medium' ? 'bg-yellow-400/10 text-yellow-400' : 'bg-red-400/10 text-red-400'
-              }`}>
+                }`}>
                 {challenge.difficulty}
               </span>
               <span className="text-slate-500">•</span>
@@ -78,8 +104,8 @@ const ChallengeDetail: React.FC<ChallengeDetailProps> = ({ challenge, onSolve })
           </section>
 
           <div className="pt-10 sticky bottom-0 bg-slate-950 pb-10">
-            <button 
-              onClick={onSolve}
+            <button
+              onClick={handleSolve}
               className="w-full py-5 bg-indigo-600 text-white rounded-3xl font-bold text-xl flex items-center justify-center gap-4 hover:bg-indigo-500 transition-all shadow-2xl shadow-indigo-600/20 active:scale-95"
             >
               <Play size={24} fill="currentColor" />

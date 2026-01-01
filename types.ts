@@ -1,23 +1,25 @@
 
-export type Screen = 
-  | 'SPLASH' 
-  | 'WELCOME' 
-  | 'LOGIN' 
-  | 'SIGNUP' 
+export type Screen =
+  | 'SPLASH'
+  | 'WELCOME'
+  | 'LOGIN'
+  | 'SIGNUP'
   | 'FORGOT_PASSWORD'
   | 'RESET_PASSWORD'
-  | 'OTP' 
-  | 'HOME' 
-  | 'EXPLORE' 
-  | 'CHAT' 
-  | 'COMPILER' 
-  | 'QUIZ' 
-  | 'QUIZ_RESULT' 
-  | 'CHALLENGES' 
-  | 'CHALLENGE_DETAIL' 
-  | 'PROFILE' 
-  | 'SETTINGS' 
-  | 'PROGRESS' 
+  | 'OTP'
+  | 'HOME'
+  | 'LEARN'
+  | 'PRACTICE'
+  | 'EXPLORE'
+  | 'CHAT'
+  | 'COMPILER'
+  | 'QUIZ'
+  | 'QUIZ_RESULT'
+  | 'CHALLENGES'
+  | 'CHALLENGE_DETAIL'
+  | 'PROFILE'
+  | 'SETTINGS'
+  | 'PROGRESS'
   | 'ANALYTICS'
   | 'LESSONS'
   | 'LESSON_VIEW'
@@ -27,7 +29,9 @@ export type Screen =
 // Added missing fields to User interface to support authentication and subscription tracking
 export interface User {
   _id: string; // Internal database ID
-  name: string;
+  firstName?: string;
+  lastName?: string;
+  name: string; // Display name (can be firstName + lastName)
   email: string;
   password?: string; // Only for local email/password accounts
   provider?: 'google' | 'github' | 'email'; // Identity Provider
@@ -38,12 +42,15 @@ export interface User {
   completedLessonIds: string[];
   unlockedLessonIds: string[];
   createdAt: Date;
+  onboardingCompleted: boolean;
   isPro?: boolean;
   subscriptionTier?: 'Free' | 'Pro';
-  billingCycle?: 'Monthly' | 'Yearly' | 'None'; 
-  nextBillingDate?: Date; 
+  billingCycle?: 'Monthly' | 'Yearly' | 'None';
+  nextBillingDate?: Date;
   avatar?: string;
   lastLogin?: Date;
+  lastLessonId?: string;
+  lastLanguageId?: string;
 }
 
 export interface Language {
@@ -60,6 +67,14 @@ export interface ChatMessage {
   content: string;
   timestamp: Date;
   status?: 'sent' | 'delivered' | 'read';
+}
+
+export interface ChatSession {
+  id: string;
+  userId: string;
+  title: string;
+  createdAt: string; // ISO String from DB
+  messages?: ChatMessage[];
 }
 
 export interface QuizQuestion {

@@ -1,26 +1,44 @@
 
 import React, { useState } from 'react';
 import { Search, Filter, ChevronRight, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { LANGUAGES } from '../../constants';
-import { Language, Screen } from '../../types';
+import { Language } from '../../types';
 
 interface ExploreProps {
-  onSelectLanguage: (lang: Language) => void;
-  onBack: () => void;
+  onSelectLanguage?: (lang: Language) => void;
+  onBack?: () => void;
 }
 
-const Explore: React.FC<ExploreProps> = ({ onSelectLanguage, onBack }) => {
+const Explore: React.FC<ExploreProps> = ({ onSelectLanguage, onBack: propOnBack }) => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredLanguages = LANGUAGES.filter(lang => 
+  const filteredLanguages = LANGUAGES.filter(lang =>
     lang.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleSelectLanguage = (lang: Language) => {
+    if (onSelectLanguage) {
+      onSelectLanguage(lang);
+    } else {
+      navigate(`/lessons/${lang.id}`);
+    }
+  };
+
+  const handleBack = () => {
+    if (propOnBack) {
+      propOnBack();
+    } else {
+      navigate('/');
+    }
+  };
 
   return (
     <div className="p-6 md:p-10 max-w-6xl mx-auto space-y-8 pb-24">
       <header className="flex flex-col md:flex-row md:items-center gap-6">
-        <button 
-          onClick={onBack}
+        <button
+          onClick={handleBack}
           className="self-start p-3 bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-indigo-500/50 rounded-2xl transition-all flex items-center gap-2 group shadow-xl"
         >
           <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
@@ -36,8 +54,8 @@ const Explore: React.FC<ExploreProps> = ({ onSelectLanguage, onBack }) => {
       <div className="flex flex-col md:flex-row gap-4">
         <div className="relative flex-1">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
-          <input 
-            type="text" 
+          <input
+            type="text"
             placeholder="Search language or framework..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -52,24 +70,24 @@ const Explore: React.FC<ExploreProps> = ({ onSelectLanguage, onBack }) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredLanguages.map((lang) => (
-          <div 
+          <div
             key={lang.id}
-            onClick={() => onSelectLanguage(lang)}
+            onClick={() => handleSelectLanguage(lang)}
             className="group bg-slate-900 border border-slate-800 rounded-3xl p-6 hover:border-indigo-500/50 hover:bg-slate-800/50 transition-all cursor-pointer flex flex-col shadow-lg"
           >
             <div className="flex justify-between items-start mb-6">
               <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center p-3">
-                <img 
-                  src={lang.icon} 
-                  alt={lang.name} 
-                  className="w-full h-full object-contain filter group-hover:drop-shadow-[0_0_8px_rgba(99,102,241,0.5)] transition-all" 
+                <img
+                  src={lang.icon}
+                  alt={lang.name}
+                  className="w-full h-full object-contain filter group-hover:drop-shadow-[0_0_8px_rgba(99,102,241,0.5)] transition-all"
                 />
               </div>
               <div className="bg-slate-800 text-slate-400 px-3 py-1 rounded-full text-[10px] font-bold uppercase">
                 {lang.level}
               </div>
             </div>
-            
+
             <h3 className="text-xl font-bold text-white mb-2">{lang.name}</h3>
             <p className="text-slate-500 text-sm mb-6 flex-grow">
               {lang.stats}
