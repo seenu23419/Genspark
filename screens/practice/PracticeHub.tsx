@@ -84,11 +84,11 @@ const PracticeHub: React.FC = () => {
                 <div className="max-w-5xl mx-auto flex flex-col gap-3">
                     <div className="flex items-end justify-between">
                         <div>
-                            <h1 className="text-3xl font-black text-white tracking-tighter uppercase italic">PRACTICE HUB</h1>
+                            <h1 className="text-3xl font-black text-white tracking-tighter uppercase italic">PRACTICE PLAYGROUND</h1>
                         </div>
                         <div className="text-right pb-1">
                             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest shrink-0">
-                                {completedProblems} of {totalProblems} problems completed
+                                {completedProblems} of {totalProblems} tasks solved
                             </span>
                         </div>
                     </div>
@@ -228,7 +228,7 @@ const PracticeHub: React.FC = () => {
                                                         : 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 active:bg-indigo-700'
                                                         }`}
                                                 >
-                                                    {isCompleted ? 'SOLVED' : 'START PROBLEM'}
+                                                    {isCompleted ? 'SOLVED ✓' : 'CODE TASK'}
                                                 </button>
                                             </div>
                                         </div>
