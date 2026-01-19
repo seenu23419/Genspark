@@ -1,0 +1,37 @@
+[
+    {
+        "id": "fs-l1",
+        "title": "LEVEL 1: Full Stack Architecture",
+        "lessons": [
+            {
+                "id": "fs1.1",
+                "title": "1.1 Client-Server Model",
+                "duration": "25 min",
+                "difficultyLevel": "Intermediate",
+                "topics": [
+                    "Frontend",
+                    "Backend",
+                    "API"
+                ],
+                "content": "# Becoming a Full Stack Developer\n\nA full stack developer handles both the presentation layer (UI) and the logic layer (Server).\n\n### Key Concepts\n- **Frontend**: HTML/CSS/React.\n- **Backend**: Node.js/Python/Go.\n- **Database**: PostgreSQL/MongoDB.",
+                "syntax": "Client <-> API <-> DB",
+                "fullProgram": "// API Request Example\nfetch('https://api.example.com/data')\n  .then(res => res.json())\n  .then(data => console.log(data));",
+                "expectedOutput": "Loaded data",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which part of the stack is responsible for UI?",
+                        "options": [
+                            "Backend",
+                            "Frontend",
+                            "Database",
+                            "DevOps"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Frontend is what the user sees and interacts with."
+                    }
+                ]
+            }
+        ]
+    }
+]

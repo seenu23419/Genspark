@@ -1,0 +1,37 @@
+[
+    {
+        "id": "htmlcss-l1",
+        "title": "LEVEL 1: Structure & Style",
+        "lessons": [
+            {
+                "id": "hc1.1",
+                "title": "1.1 Intro to HTML5",
+                "duration": "10 min",
+                "difficultyLevel": "Beginner",
+                "topics": [
+                    "Tags",
+                    "Elements",
+                    "Attributes"
+                ],
+                "content": "# Web Fundamentals\n\nHTML provides the structure, and CSS provides the style.\n\n### Key Concepts\n- **Tags**: `<h1`, `<p`, etc.\n- **Attributes**: `id`, `class`.\n- **Nesting**: Putting elements inside elements.",
+                "syntax": "<h1>Hello</h1>",
+                "fullProgram": "<!DOCTYPE html>\n<html>\n<body>\n  <h1>Welcome</h1>\n  <p>GenSpark Learn</p>\n</body>\n</html>",
+                "expectedOutput": "A rendered webpage",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does HTML stand for?",
+                        "options": [
+                            "Hyper Text Markup Language",
+                            "Home Tool Markup Language",
+                            "Hyperlinks and Text Markup",
+                            "High Tech Multi Language"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Hyper Text Markup Language is the correct name."
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -230,15 +230,84 @@ export class GenSparkAIService {
     }
   }
 
+  async fixCode(language: string, code: string, error: string): Promise<{ explanation: string; fixedCode: string; tips: string }> {
+    const prompt = `
+      You are an expert coding tutor.
+      The user has written the following ${language} code:
+      \`\`\`${language}
+      ${code}
+      \`\`\`
+      
+      They encountered this error:
+      "${error}"
+      
+      Please analyze the code and the error.
+      Return ONLY a JSON object with this structure:
+      {
+        "explanation": "Brief explanation of what was wrong",
+        "fixedCode": "The corrected code ONLY",
+        "tips": "One short tip to avoid this in future"
+      }
+      Do NOT wrap the JSON in markdown blocks. Just raw JSON.
+    `;
+
+    // Re-use the existing stream logic but buffer it, or create a simple generation method
+    // For simplicity, we'll collect the stream output
+    let fullResponse = '';
+    const stream = this.generateChatStream(prompt, false); // Assuming free tier logic for fix
+
+    for await (const chunk of stream) {
+      fullResponse += chunk;
+    }
+
+    // Clean up response if it contains markdown code blocks
+    fullResponse = fullResponse.replace(/```json/g, '').replace(/```/g, '').trim();
+
+    try {
+      return JSON.parse(fullResponse);
+    } catch (e) {
+      console.error("AI Fix JSON Parse Error", e);
+      return {
+        explanation: "Could not parse AI response.",
+        fixedCode: code,
+        tips: "Try again."
+      };
+    }
+  }
+
   private getSystemPrompt(isPro: boolean): string {
-    return `You are GenSpark AI, an intelligent coding tutor. ${isPro ? "The user is a PRO member." : ""}
-              
-    CRITICAL RULES:
-    1. **NO FULL SOLUTIONS**: Never provide the full corrected code for a student's problem. 
-    2. **HINTS ONLY**: Provide incremental hints, explain the logic, and suggest steps.
-    3. **EXPLAIN ERRORS**: When a user provides an error, explain WHY it happened in simple terms.
-    4. **ENCOURAGE**: Be positive and help them figure it out themselves.
-    5. **Markdown**: Use clear formatting, headers, and small code snippets (one or two lines) for demonstration.`;
+    return `You are a patient, supportive coding mentor. Your role is to help learners understand and fix their code.
+
+AI MENTOR PHILOSOPHY:
+- Never give full corrected code or copy-paste solutions
+- Never rewrite user code
+- Help users think critically and solve problems independently
+- Explain WHAT went wrong, WHY it happened, and HOW to think about fixing it
+
+WHEN ANALYZING ERRORS:
+1. Identify the exact line/concept that failed
+2. Explain the compiler/runtime error message in simple terms
+3. Explain what programming concept was violated (e.g., "arrays are 0-indexed", "functions need return types", etc.)
+4. Guide the user to fix it themselves - don't provide the fix
+5. Be encouraging and calm
+
+RESPONSE FORMAT (Plain text only):
+- NO code blocks from user's code
+- NO syntax highlighting
+- NO markdown code fences
+- Use plain, conversational language
+- At most 2-3 lines of example pseudocode if needed for illustration
+
+TONE:
+- Calm and patient (never condescending)
+- Teacher-like and clear
+- Encouraging ("You're on the right track", "Good thinking")
+- No spoon-feeding
+
+EXAMPLE ERROR ANALYSIS:
+User Error: "undefined variable 'x'"
+❌ BAD: "Just declare x = 0 at the top"
+✅ GOOD: "It looks like 'x' was used on line 5 but never declared. In C, all variables must be declared with their type before they're used. Where in your code should x be declared, and what type should it be?"`;
   }
 }
 

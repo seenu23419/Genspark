@@ -1,24 +1,40 @@
 
 import { Language, Challenge, LessonModule } from './types';
 import { C_CURRICULUM } from './data/cCurriculum';
+import { JAVA_CURRICULUM } from './data/javaCurriculum';
+import { PYTHON_CURRICULUM } from './data/pythonCurriculum';
+import { JAVASCRIPT_CURRICULUM } from './data/javascriptCurriculum';
+import { CPP_CURRICULUM } from './data/cppCurriculum';
+import { SQL_CURRICULUM } from './data/sqlCurriculum';
+import { HTMLCSS_CURRICULUM } from './data/htmlcssCurriculum';
+import { DSA_CURRICULUM } from './data/dsaCurriculum';
+import { FULLSTACK_CURRICULUM } from './data/fullstackCurriculum';
 
 export const LANGUAGES: Language[] = [
-  { id: 'c', name: 'C Programming', icon: 'https://cdn.simpleicons.org/c/A8B9CC', level: 'Beginner to Advanced', stats: '40 Lessons • 40 Quizzes' },
-  { id: 'java', name: 'Java', icon: 'https://cdn.simpleicons.org/openjdk/white', level: 'Intermediate to Advanced', stats: '60 Lessons • 15 Quizzes' },
-  { id: 'python', name: 'Python', icon: 'https://cdn.simpleicons.org/python/3776AB', level: 'Beginner to Advanced', stats: '80 Lessons • 20 Quizzes' },
-  { id: 'javascript', name: 'JavaScript', icon: 'https://cdn.simpleicons.org/javascript/F7DF1E', level: 'Fullstack Ready', stats: '90 Lessons • 25 Quizzes' },
-  { id: 'cpp', name: 'C++', icon: 'https://cdn.simpleicons.org/cplusplus/00599C', level: 'Competitive Coding', stats: '55 Lessons • 18 Quizzes' },
-  { id: 'sql', name: 'SQL', icon: 'https://upload.wikimedia.org/wikipedia/commons/8/87/Sql_data_base_with_logo.png', level: 'Database Mastery', stats: '30 Lessons • 10 Quizzes' },
-  { id: 'htmlcss', name: 'HTML & CSS', icon: 'https://cdn.simpleicons.org/html5/E34F26', level: 'Web Design', stats: '40 Lessons • 10 Quizzes' },
-  { id: 'dsa', name: 'DSA', icon: 'https://img.icons8.com/external-flatart-icons-outline-flatarticons/64/4338ca/external-data-structure-big-data-flatart-icons-outline-flatarticons.png', level: 'Interview Prep', stats: '100 Lessons • 40 Quizzes' },
-  { id: 'fullstack', name: 'Full Stack', icon: 'https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/64/external-web-development-coding-kiranshastry-lineal-color-kiranshastry.png', level: 'Project Based', stats: '120 Lessons • 30 Quizzes' },
+  { id: 'c', name: 'C Programming', icon: '/icons/c_official.svg', level: 'Beginner to Advanced', stats: '40 Lessons • 40 Quizzes' },
+  { id: 'java', name: 'Java', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg', level: 'Intermediate to Advanced', stats: '60 Lessons • 15 Quizzes' },
+  { id: 'python', name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg', level: 'Beginner to Advanced', stats: '44 Lessons • 44 Quizzes' },
+  { id: 'javascript', name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg', level: 'Fullstack Ready', stats: '90 Lessons • 25 Quizzes' },
+  { id: 'cpp', name: 'C++', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg', level: 'Competitive Coding', stats: '55 Lessons • 18 Quizzes' },
+  { id: 'sql', name: 'SQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg', level: 'Database Mastery', stats: '30 Lessons • 10 Quizzes' },
+  { id: 'htmlcss', name: 'HTML & CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg', level: 'Web Design', stats: '40 Lessons • 10 Quizzes' },
+  { id: 'dsa', name: 'DSA', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/thealgorithms/thealgorithms-original.svg', level: 'Interview Prep', stats: '100 Lessons • 40 Quizzes' },
+  { id: 'fullstack', name: 'Full Stack', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg', level: 'Project Based', stats: '120 Lessons • 30 Quizzes' },
 ];
 
 export const CURRICULUM: Record<string, LessonModule[]> = {
   'c': C_CURRICULUM,
-  'java': [],
-  'python': [],
+  'java': JAVA_CURRICULUM,
+  'python': PYTHON_CURRICULUM,
+  'javascript': JAVASCRIPT_CURRICULUM,
+  'cpp': CPP_CURRICULUM,
+  'sql': SQL_CURRICULUM,
+  'htmlcss': HTMLCSS_CURRICULUM,
+  'dsa': DSA_CURRICULUM,
+  'fullstack': FULLSTACK_CURRICULUM,
 };
+
+export { PYTHON_CURRICULUM };
 
 export const CHALLENGES: Challenge[] = [
   {

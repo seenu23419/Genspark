@@ -1,124 +1,250 @@
-import React, { useState } from 'react';
-import { Terminal, Lightbulb, RotateCcw, Play, ChevronRight, CheckCircle2, ListFilter } from 'lucide-react';
-import Compiler from '../compiler/Compiler';
-import { PRACTICE_TOPICS, PracticeProblem } from '../../data/practiceProblems';
+import React, { useMemo, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { usePractice } from '../../contexts/PracticeContext';
 
 const PracticeHub: React.FC = () => {
-    const [activeTopicId, setActiveTopicId] = useState(PRACTICE_TOPICS[0].id);
-    const [selectedProblem, setSelectedProblem] = useState<PracticeProblem | null>(null);
-    const [showHint, setShowHint] = useState(false);
+    const navigate = useNavigate();
+    const { topics, loading, getProblemStatus, progress, refreshProgress } = usePractice();
+    const [activeTopicId, setActiveTopicId] = useState<string | null>(null);
 
-    const activeTopic = PRACTICE_TOPICS.find(t => t.id === activeTopicId) || PRACTICE_TOPICS[0];
+    useEffect(() => {
+        refreshProgress();
+    }, []);
+
+    // Initial Topic Selection
+    useEffect(() => {
+        if (topics.length > 0 && !activeTopicId) {
+            setActiveTopicId(topics[0].id);
+        }
+    }, [topics]);
+
+    const activeTopic = useMemo(() => {
+        return topics.find(t => t.id === activeTopicId) || topics[0];
+    }, [topics, activeTopicId]);
+
+    const filteredProblems = activeTopic?.problems || [];
+
+    // Minimalist Loading State
+    if (loading && topics.length === 0) {
+        return (
+            <div className="h-full flex flex-col items-center justify-center bg-slate-950 gap-4">
+                <div className="w-12 h-12 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin" />
+                <p className="text-slate-500 font-black text-[10px] uppercase tracking-[0.2em] animate-pulse">Initializing Hub...</p>
+            </div>
+        );
+    }
+
+    if (topics.length === 0) {
+        return (
+            <div className="h-full flex flex-col items-center justify-center bg-slate-950 p-10 text-center">
+                <div className="w-24 h-24 bg-slate-900 rounded-[2.5rem] border border-white/5 flex items-center justify-center mb-8 shadow-2xl">
+                    <div className="w-10 h-10 rounded-full bg-slate-800 animate-pulse" />
+                </div>
+                <h2 className="text-2xl font-black text-white mb-2 uppercase tracking-tight italic">No Content Found</h2>
+                <p className="text-slate-500 text-xs font-medium max-w-xs italic leading-relaxed">
+                    We couldn't synchronize the practice modules. Please check your network or refresh the session.
+                </p>
+                <button
+                    onClick={() => window.location.reload()}
+                    className="mt-10 px-10 py-4 bg-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-2xl shadow-indigo-600/20 active:scale-95 transition"
+                >
+                    Retry Connection
+                </button>
+            </div>
+        );
+    }
+
+    // Total stats
+    const totalProblems = topics.flatMap(t => t.problems).length;
+
+    // DEMO FIX: Read directly from localStorage + Context to ensure count is never 0 if work was done
+    const getLocalCount = () => {
+        try {
+            const raw = localStorage.getItem('practice_progress_local');
+            if (!raw) return 0;
+            const parsed = JSON.parse(raw);
+            return Object.values(parsed).filter((p: any) => p.status === 'completed').length;
+        } catch (e) { return 0; }
+    };
+
+    const contextCount = topics.flatMap(t => t.problems).filter(p => getProblemStatus(p.id) === 'COMPLETED').length;
+    const completedProblems = Math.max(contextCount, getLocalCount());
+
+    const progressPercent = totalProblems > 0 ? (completedProblems / totalProblems) * 100 : 0;
+
+    // Force refresh on mount
+    useEffect(() => {
+        refreshProgress();
+    }, [refreshProgress]);
 
     return (
-        <div className="h-full flex flex-col bg-slate-950 overflow-hidden">
-            {/* Header / Topic Tabs */}
-            <div className="bg-slate-900/50 backdrop-blur-xl border-b border-slate-800 sticky top-0 z-30">
-                <div className="flex items-center gap-2 p-4 overflow-x-auto no-scrollbar scroll-smooth">
-                    {PRACTICE_TOPICS.map(topic => (
-                        <button
-                            key={topic.id}
-                            onClick={() => {
-                                setActiveTopicId(topic.id);
-                                setSelectedProblem(null);
-                                setShowHint(false);
-                            }}
-                            className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest whitespace-nowrap transition-all border ${activeTopicId === topic.id
-                                ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-600/20'
-                                : 'bg-slate-900 border-slate-800 text-slate-500 hover:text-slate-300'
-                                }`}
-                        >
-                            {topic.title}
-                        </button>
-                    ))}
+        <div className="h-full flex flex-col bg-slate-950 font-sans overflow-hidden">
+            {/* 1. Header (Static) */}
+            <div className="shrink-0 bg-slate-950 px-6 pt-10 pb-4">
+                <div className="max-w-5xl mx-auto flex flex-col gap-3">
+                    <div className="flex items-end justify-between">
+                        <div>
+                            <h1 className="text-3xl font-black text-white tracking-tighter uppercase italic">PRACTICE HUB</h1>
+                        </div>
+                        <div className="text-right pb-1">
+                            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest shrink-0">
+                                {completedProblems} of {totalProblems} problems completed
+                            </span>
+                        </div>
+                    </div>
+                    {/* Progress Bar */}
+                    <div className="h-1 w-full bg-slate-900 rounded-full overflow-hidden">
+                        <div
+                            className="h-full bg-indigo-500 transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(79,70,229,0.5)]"
+                            style={{ width: `${progressPercent}%` }}
+                        />
+                    </div>
                 </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto no-scrollbar pb-24">
-                {!selectedProblem ? (
-                    <div className="p-6 md:p-10 space-y-6 max-w-4xl mx-auto">
-                        <header className="space-y-1">
-                            <div className="flex items-center gap-2 text-indigo-400">
-                                <ListFilter size={16} />
-                                <span className="text-[10px] font-black uppercase tracking-[0.2em]">{activeTopic.title}</span>
-                            </div>
-                            <h2 className="text-2xl md:text-3xl font-black text-white">Select a Practice Problem</h2>
-                            <p className="text-slate-500 text-sm md:text-base">Master each concept with guided coding challenges.</p>
-                        </header>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {activeTopic.problems.map((problem, idx) => (
-                                <div
-                                    key={problem.id}
-                                    onClick={() => setSelectedProblem(problem)}
-                                    className="group bg-slate-900 border border-slate-800 p-6 rounded-3xl hover:border-indigo-500/50 hover:bg-slate-800/40 transition-all cursor-pointer shadow-xl relative overflow-hidden"
-                                >
-                                    <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                                        <Terminal size={60} />
-                                    </div>
-                                    <div className="flex justify-between items-start mb-4">
-                                        <span className="text-[10px] font-black text-slate-600 bg-slate-950 px-3 py-1 rounded-full border border-slate-800">Challenge {idx + 1}</span>
-                                    </div>
-                                    <h3 className="text-lg font-black text-white mb-2 group-hover:text-indigo-400 transition-colors">{problem.title}</h3>
-                                    <p className="text-slate-500 text-xs leading-relaxed line-clamp-2">{problem.description}</p>
-                                    <div className="mt-6 flex items-center text-indigo-400 text-[10px] font-black uppercase tracking-widest group-hover:translate-x-1 transition-transform">
-                                        Solve Now <ChevronRight size={14} />
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                ) : (
-                    <div className="h-full flex flex-col md:flex-row animate-in fade-in slide-in-from-right-4 duration-500">
-                        {/* Problem Context Panel */}
-                        <div className="w-full md:w-1/3 bg-slate-900/30 border-r border-slate-800 p-6 md:p-8 space-y-8 overflow-y-auto no-scrollbar">
-                            <button
-                                onClick={() => {
-                                    setSelectedProblem(null);
-                                    setShowHint(false);
-                                }}
-                                className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors text-xs font-black uppercase tracking-widest"
-                            >
-                                <ChevronRight className="rotate-180" size={16} /> Back to List
-                            </button>
-
-                            <div className="space-y-2">
-                                <span className="text-indigo-400 text-[10px] font-black uppercase tracking-[0.2em]">{activeTopic.title}</span>
-                                <h3 className="text-2xl font-black text-white leading-tight">{selectedProblem.title}</h3>
-                            </div>
-
-                            <div className="space-y-4">
-                                <h4 className="text-xs font-black uppercase tracking-widest text-slate-500">Task</h4>
-                                <div className="p-5 bg-slate-950/50 border border-slate-800 rounded-2xl text-slate-300 text-sm leading-relaxed font-medium">
-                                    {selectedProblem.description}
-                                </div>
-                            </div>
-
-                            <div className="space-y-4">
+            {/* 2. Topic Selector (Sticky) */}
+            <div className="shrink-0 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-30">
+                <div className="px-6 py-2 max-w-5xl mx-auto">
+                    <div className="flex items-center gap-6 overflow-x-auto no-scrollbar py-2">
+                        {topics.map((topic) => {
+                            if (!topic) return null; // Defensive check
+                            const isActive = activeTopicId === topic.id;
+                            return (
                                 <button
-                                    onClick={() => setShowHint(!showHint)}
-                                    className="flex items-center gap-2 text-amber-500 hover:text-amber-400 transition-colors text-xs font-black uppercase tracking-widest"
+                                    key={topic.id}
+                                    onClick={() => setActiveTopicId(topic.id)}
+                                    className={`shrink-0 flex flex-col items-center gap-1.5 transition-all duration-300 group`}
                                 >
-                                    <Lightbulb size={16} /> {showHint ? 'Hide Hint' : 'Need a Hint?'}
+                                    <span className={`text-[10px] font-black uppercase tracking-[0.2em] transition-colors ${isActive ? 'text-white' : 'text-slate-600 group-hover:text-slate-400'}`}>
+                                        {topic.title}
+                                    </span>
+                                    <div className={`h-0.5 rounded-full transition-all duration-300 ${isActive ? 'w-full bg-indigo-500 shadow-[0_0_8px_rgba(79,70,229,1)]' : 'w-0 bg-transparent'}`} />
                                 </button>
-                                {showHint && (
-                                    <div className="p-4 bg-amber-500/5 border border-amber-500/10 rounded-xl text-amber-200/70 text-xs italic animate-in fade-in slide-in-from-top-2">
-                                        {selectedProblem.hint}
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Compiler Panel */}
-                        <div className="flex-1 min-h-[500px] relative">
-                            <Compiler initialCode={selectedProblem.initialCode} />
-                        </div>
+                            );
+                        })}
                     </div>
-                )}
+                </div>
+            </div>
+
+            {/* 2. Problem List (Only Scrollable Area) */}
+            <div className="flex-1 overflow-y-auto no-scrollbar bg-slate-950 pb-32">
+                <div className="px-6 py-8 max-w-5xl mx-auto">
+                    {filteredProblems.length > 0 ? (
+                        <div className="grid grid-cols-1 gap-4">
+                            {filteredProblems.map((problem) => {
+                                if (!problem) return null; // Defensive check
+                                // Robust Status Check (Context + LocalStorage Fallback)
+                                const getRealStatus = (pid: string) => {
+                                    if (!pid) return 'NOT_STARTED'; // Safety
+                                    // 1. Check Context
+                                    const ctxStatus = getProblemStatus(pid);
+                                    if (ctxStatus === 'COMPLETED') return 'COMPLETED';
+
+                                    // 2. Check LocalStorage (Force Green if locally done)
+                                    try {
+                                        const raw = localStorage.getItem('practice_progress_local');
+                                        if (raw) {
+                                            const parsed = JSON.parse(raw);
+                                            if (parsed[pid]?.status === 'completed') return 'COMPLETED';
+                                        }
+                                    } catch (e) { }
+
+                                    return ctxStatus;
+                                };
+
+                                const status = getRealStatus(problem.id);
+                                const isCompleted = status === 'COMPLETED';
+                                const isInProgress = status === 'IN_PROGRESS';
+
+                                const accentColor = isCompleted ? 'bg-emerald-500' : (isInProgress ? 'bg-blue-500' : 'bg-slate-600 shadow-[0_0_10px_rgba(71,85,105,0.2)]');
+                                const statusText = isCompleted ? 'COMPLETED ✓' : (isInProgress ? 'IN PROGRESS' : 'NOT STARTED');
+                                const statusColor = isCompleted ? 'text-emerald-400 border-emerald-500/20 bg-emerald-500/5' : (isInProgress ? 'text-blue-400 border-blue-500/20 bg-blue-500/5' : 'text-slate-500 border-white/5 bg-slate-800/50');
+
+                                return (
+                                    <div
+                                        key={problem.id}
+                                        onClick={() => navigate(`/practice/problem/${problem.id}`)}
+                                        className="bg-slate-900/30 border border-white/5 rounded-2xl p-6 relative transition-all active:scale-[0.98] cursor-pointer group hover:bg-slate-900/50"
+                                    >
+                                        {/* Status Dot (Top-Right) */}
+                                        <div className="absolute top-6 right-6 flex flex-col items-end gap-1">
+                                            <div className={`w-2.5 h-2.5 rounded-full shadow-inner ${isCompleted
+                                                ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]'
+                                                : isInProgress
+                                                    ? 'bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.3)]'
+                                                    : 'bg-slate-700'
+                                                }`} />
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            {/* Meta Row */}
+                                            <div className="flex items-center gap-2">
+                                                <span className={`text-[8px] font-black uppercase tracking-widest ${problem.difficulty === 'easy' ? 'text-emerald-500' : problem.difficulty === 'medium' ? 'text-amber-500' : 'text-rose-500'}`}>
+                                                    {problem.difficulty}
+                                                </span>
+                                                <div className="w-1 h-1 rounded-full bg-slate-800" />
+                                                <span className="text-[8px] font-black text-slate-600 uppercase tracking-widest">
+                                                    {problem.concept || 'C LANGUAGE'}
+                                                </span>
+                                            </div>
+
+                                            {/* Title */}
+                                            <div>
+                                                <h3 className={`text-lg font-bold group-hover:text-indigo-400 transition-colors tracking-tight ${isCompleted ? 'text-emerald-400' : 'text-white'}`}>
+                                                    {problem.title}
+                                                </h3>
+                                            </div>
+
+                                            {/* Short Description & Microcopy */}
+                                            <div className="space-y-2">
+                                                <p className="text-slate-500 text-[11px] font-medium line-clamp-1 italic">
+                                                    {problem.description}
+                                                </p>
+                                                <div className="flex items-center gap-3 text-[9px] text-slate-500 flex-wrap">
+                                                    {problem.estimatedTime && (
+                                                        <span className="flex items-center gap-1">
+                                                            <span>⏱</span>
+                                                            <span className="font-medium">{problem.estimatedTime}–{problem.estimatedTime + 1} min</span>
+                                                        </span>
+                                                    )}
+                                                    {problem.relatedLesson && (
+                                                        <span className="flex items-center gap-1">
+                                                            <span>📖</span>
+                                                            <span className="font-medium line-clamp-1">{problem.relatedLesson}</span>
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            {/* CTA Button */}
+                                            <div className="pt-3">
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        navigate(`/practice/problem/${problem.id}`);
+                                                    }}
+                                                    className={`px-6 py-2.5 rounded-xl font-black text-[9px] uppercase tracking-widest transition-all ${isCompleted
+                                                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.1)]'
+                                                        : 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 active:bg-indigo-700'
+                                                        }`}
+                                                >
+                                                    {isCompleted ? 'SOLVED' : 'START PROBLEM'}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    ) : (
+                        <div className="flex flex-col items-center justify-center p-12 text-center">
+                            <h3 className="text-xl font-black text-white/20 uppercase tracking-tighter">No problems in this topic</h3>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
 };
-
 
 export default PracticeHub;

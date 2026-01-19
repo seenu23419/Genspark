@@ -1,0 +1,199 @@
+/* Mobile Coding Workspace Styles */
+
+/* Optimize for mobile viewing and touch */
+@media (max-width: 768px) {
+  /* Increase touch targets */
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Reduce padding on small screens */
+  .px-4, .px-6 {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  /* Optimize text sizes for small screens */
+  h1 {
+    font-size: 14px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  .text-sm {
+    font-size: 12px;
+  }
+
+  .text-xs {
+    font-size: 10px;
+  }
+}
+
+/* Smooth animations */
+.animate-in {
+  animation: fadeInSlideUp 0.3s ease-out;
+}
+
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Status indicator pulse */
+.status-pulse {
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Smooth collapse/expand */
+.feedback-panel-expand {
+  transition: height 0.3s ease-in-out;
+}
+
+/* Prevent layout shifts */
+.sticky-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Monaco editor container */
+.monaco-container {
+  width: 100%;
+  height: 100%;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+@media (min-width: 640px) {
+  .monaco-container {
+    font-size: 13px;
+  }
+}
+
+/* Error panel styling */
+.error-panel-inline {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Button hover states */
+button:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Success modal */
+.success-modal {
+  animation: successPop 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes successPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Feedback panel smooth scroll */
+.feedback-content {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Scrollbar styling for feedback panel */
+.feedback-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.feedback-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.feedback-content::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.3);
+  border-radius: 2px;
+}
+
+.feedback-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.5);
+}
+
+/* Firefox scrollbar */
+.feedback-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 116, 139, 0.3) transparent;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+  button {
+    border-width: 2px;
+  }
+
+  .border {
+    border-width: 2px;
+  }
+}
+
+/* Dark mode (always on for this app) */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #020617;
+    color: #f1f5f9;
+  }
+}
+
+/* Print styles (for reference) */
+@media print {
+  .sticky-bar,
+  .action-bar,
+  button {
+    display: none;
+  }
+}

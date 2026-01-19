@@ -1,149 +1,177 @@
-
-import React from 'react';
-import {
-  Flame,
-  Star,
-  ArrowRight,
-  Target,
-  Sparkles
-} from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { User } from '../../types';
+import React, { useMemo } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
+import { useCurriculum } from '../../contexts/useCurriculum';
+// Unused imports removed
 import { CURRICULUM, LANGUAGES } from '../../constants';
+import { LayoutDashboard, Lock, CheckCircle2, Play, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Home: React.FC = () => {
-  const { user, loading } = useAuth();
-  const navigate = useNavigate();
+    const { user, loading } = useAuth();
+    const { data: curriculumData } = useCurriculum();
+    const navigate = useNavigate();
 
-  if (loading || !user) return null;
+    // -- State --
+    // Track selected path locally to allow browsing different courses
+    // Initialize with user's last language or default to first available
+    const [selectedPathId, setSelectedPathId] = React.useState<string | null>(null);
 
-  // Find Contextual Lesson Info
-  const lastLessonId = user.lastLessonId || 'c1';
-  const lastLanguageId = user.lastLanguageId || 'c';
+    React.useEffect(() => {
+        if (user && !selectedPathId) {
+            setSelectedPathId(user.lastLanguageId || 'c');
+        }
+    }, [user, selectedPathId]);
 
-  const currentLanguage = LANGUAGES.find(l => l.id === lastLanguageId) || LANGUAGES[0];
+    const handlePathSelect = (pathId: string) => {
+        setSelectedPathId(pathId);
+    };
 
-  let currentLesson: any = null;
-  let totalLessonsInLang = 0;
+    // -- Derived Data --
+    const currentPath = useMemo(() => {
+        if (!selectedPathId) return null;
+        return (LANGUAGES as any).find((l: any) => l.id === selectedPathId) || (LANGUAGES as any)[0];
+    }, [selectedPathId]);
 
-  const modules = (CURRICULUM as any)[lastLanguageId] || [];
-  modules.forEach((m: any) => {
-    totalLessonsInLang += m.lessons.length;
-    const found = m.lessons.find((l: any) => l.id === lastLessonId);
-    if (found) currentLesson = found;
-  });
+    const modules = useMemo(() => {
+        if (!currentPath) return [];
+        return (curriculumData[currentPath.id] || (CURRICULUM as any)[currentPath.id] || []) as any[];
+    }, [currentPath, curriculumData]);
 
-  const completedCount = user.completedLessonIds?.filter(id => {
-    return modules.some((m: any) => m.lessons.some((l: any) => l.id === id));
-  }).length || 0;
+    const completedLessonIds = user?.completedLessonIds || [];
 
-  const progressPercent = Math.round((completedCount / (totalLessonsInLang || 1)) * 100);
+    // Check if level is unlocked
+    const isLevelUnlocked = (levelIndex: number): boolean => {
+        if (levelIndex === 0) return true;
+        // Simple logic: if previous level checks out, unlock current.
+        // For a more robust app, might check all lessons in previous level.
+        if (currentPath?.id === 'c') return true; // C is fully open in this demo phase
+        const prevLevel = modules[levelIndex - 1];
+        if (!prevLevel) return false;
+        // Check if ANY lesson in previous level is done (lax rule) or ALL (strict)
+        // Using strict rule:
+        return prevLevel.lessons.every((l: any) => completedLessonIds.includes(l.id));
+    };
 
-  if (!user) return null;
+    // Find current lesson for "Continue Learning"
+    const currentLesson = useMemo(() => {
+        if (!user || !curriculumData) return null;
+        // Determine the relevant language for "Continue Learning"
+        // Priority: selectedPathId if it matches user's active, otherwise user's last active
+        const langId = user.lastLanguageId || 'c';
 
-  return (
-    <div className="p-5 md:p-10 space-y-8 max-w-5xl mx-auto pb-24">
-      {/* Top Section: Greeting & Pro */}
-      <header className="flex items-center justify-between p-1 animate-in fade-in slide-in-from-top-4 duration-700">
-        <div className="space-y-1">
-          <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight leading-tight">
-            Hi, <span className="text-indigo-500">{user.firstName || (user.name || 'User').split(' ')[0]} 👋</span>
-          </h1>
-          <p className="text-slate-500 font-bold text-xs md:text-sm uppercase tracking-widest leading-relaxed">Let's build something great today</p>
+        const mods = (curriculumData[langId] || (CURRICULUM as any)[langId] || []);
+        const allLessons = mods.flatMap((m: any) => m.lessons);
+
+        const lastLessonId = user.lastLessonId || 'c1';
+        // If last lesson is completed, try to find next. If not, return it.
+        // For simplicity in this view, we just return the 'last visited' one or the first one.
+        return allLessons.find((l: any) => l.id === lastLessonId) || allLessons[0];
+    }, [user, curriculumData]);
+
+
+    if (loading || !user) return null;
+
+    return (
+        <div className="min-h-screen bg-slate-950 text-white pb-24 font-sans">
+            {/* Minimal background - no gradients, clean and professional */}
+            <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/5 blur-[100px] rounded-full opacity-30" />
+            </div>
+
+            <div className="relative z-10 max-w-6xl mx-auto px-6 pt-10">
+
+                {/* 1. Header - Professional and clean */}
+                <header className="mb-14">
+                    <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider mb-3">
+                        {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
+                    </p>
+                    <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-2">
+                        Welcome back, {user.firstName || 'Developer'}
+                    </h1>
+                    <p className="text-slate-400 text-lg max-w-2xl">
+                        Continue your learning journey and master new skills.
+                    </p>
+                </header>
+
+                {/* 2. Quick Actions - Minimal, professional */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
+                    <div className="p-4 bg-slate-900/50 border border-slate-800 rounded-lg hover:border-slate-700 transition-colors">
+                        <div className="text-sm text-slate-500 font-medium mb-1">Current Streak</div>
+                        <div className="text-2xl font-bold text-white">7 days</div>
+                    </div>
+                    <div className="p-4 bg-slate-900/50 border border-slate-800 rounded-lg hover:border-slate-700 transition-colors">
+                        <div className="text-sm text-slate-500 font-medium mb-1">Lessons Completed</div>
+                        <div className="text-2xl font-bold text-white">{modules.reduce((sum, m) => sum + m.lessons.filter((l: any) => completedLessonIds.includes(l.id)).length, 0)}</div>
+                    </div>
+                    <div className="p-4 bg-slate-900/50 border border-slate-800 rounded-lg hover:border-slate-700 transition-colors">
+                        <div className="text-sm text-slate-500 font-medium mb-1">Active Tracks</div>
+                        <div className="text-2xl font-bold text-white">{(LANGUAGES as any).length}</div>
+                    </div>
+                </div>
+
+                {/* 3. Hero: Continue Learning - Clean and focused */}
+                <section className="mb-16">
+                    <div className="relative overflow-hidden rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-sm">
+                        <div className="p-8 md:p-12 flex flex-col md:flex-row items-center gap-12">
+                            <div className="flex-1 space-y-6">
+                                <div>
+                                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 leading-tight">
+                                        {currentLesson?.title || 'Introduction to Programming'}
+                                    </h2>
+                                    <p className="text-slate-400 text-base leading-relaxed max-w-lg">
+                                        Pick up exactly where you left off. Continue learning and build your skills.
+                                    </p>
+                                </div>
+
+                                <button
+                                    onClick={() => navigate(`/lesson/${currentLesson?.id || 'c1'}`)}
+                                    className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200"
+                                >
+                                    <Play size={18} className="fill-current" />
+                                    Resume Lesson
+                                </button>
+                            </div>
+
+                            {/* Decorative minimal graphic */}
+                            <div className="hidden md:flex items-center justify-center w-48 h-48 flex-shrink-0">
+                                <div className="w-full h-full border border-slate-800 rounded-lg bg-slate-950/50 flex items-center justify-center">
+                                    <LayoutDashboard size={56} className="text-slate-600" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* 4. Minimal Context Switcher */}
+                <div className="mt-12 pt-8 border-t border-slate-900/50 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-3 overflow-x-auto max-w-full pb-2 md:pb-0 scrollbar-hide">
+                        <span className="text-xs font-bold text-slate-600 uppercase tracking-wider flex-shrink-0">
+                            Switch Path:
+                        </span>
+                        {(LANGUAGES as any).map((lang: any) => (
+                            <button
+                                key={lang.id}
+                                onClick={() => handlePathSelect(lang.id)}
+                                className={`flex-shrink-0 px-3 py-1.5 rounded-md text-xs font-bold transition-all ${selectedPathId === lang.id
+                                    ? 'bg-indigo-500/10 text-indigo-400 ring-1 ring-indigo-500/20'
+                                    : 'text-slate-500 hover:text-slate-300 hover:bg-slate-900'
+                                    }`}
+                            >
+                                {lang.name}
+                            </button>
+                        ))}
+                    </div>
+
+                    <button
+                        onClick={() => navigate('/learn')}
+                        className="text-xs font-bold text-slate-500 hover:text-indigo-400 transition-colors flex-shrink-0"
+                    >
+                        Browse Curriculum →
+                    </button>
+                </div>
+            </div>
         </div>
-
-        <button
-          onClick={() => navigate('/subscription')}
-          className="bg-indigo-600/10 hover:bg-indigo-600/20 text-indigo-400 border border-indigo-500/20 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2 group"
-        >
-          <Sparkles size={12} className="group-hover:rotate-12 transition-transform" />
-          Pro
-        </button>
-      </header>
-
-      {/* Main Focus: Resume Learning */}
-      <section
-        onClick={() => navigate(`/lesson/${lastLessonId}`)}
-        className="group relative bg-slate-900 border-2 border-slate-800 p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden cursor-pointer hover:border-indigo-500/50 transition-all shadow-2xl active:scale-[0.98]"
-      >
-        <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
-
-        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
-          <div className="flex flex-col md:flex-row items-center md:items-center gap-5 md:gap-6 text-center md:text-left">
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-slate-800 rounded-2xl md:rounded-3xl flex items-center justify-center p-3 md:p-4 border border-slate-700 group-hover:bg-indigo-600/10 group-hover:border-indigo-500/30 transition-all">
-              <img src={currentLanguage.icon} alt={currentLanguage.name} className="w-full h-full object-contain" />
-            </div>
-            <div>
-              <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
-                <span className="text-[9px] md:text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em]">{currentLanguage.name}</span>
-                <div className="h-1 w-1 rounded-full bg-slate-700"></div>
-                <span className="text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-widest">{progressPercent}% Complete</span>
-              </div>
-              <h2 className="text-xl md:text-3xl font-black text-white leading-tight">
-                {currentLesson?.title?.split('. ')[1] || currentLesson?.title || 'Current Topic'}
-              </h2>
-              <div className="mt-3 md:mt-4 flex items-center justify-center md:justify-start gap-2 text-indigo-400 font-black text-xs md:text-sm group-hover:translate-x-2 transition-transform">
-                Resume Topic <ArrowRight size={16} />
-              </div>
-            </div>
-          </div>
-
-          <div className="w-24 h-24 md:w-32 md:h-32 relative shrink-0">
-            <svg className="w-full h-full -rotate-90">
-              <circle cx="50%" cy="50%" r="42%" fill="transparent" stroke="currentColor" strokeWidth="10" className="text-slate-800" />
-              <circle cx="50%" cy="50%" r="42%" fill="transparent" stroke="currentColor" strokeWidth="10" strokeDasharray="264" strokeDashoffset={264 * (1 - progressPercent / 100)} className="text-indigo-500 shadow-indigo-500" strokeLinecap="round" />
-            </svg>
-            <div className="absolute inset-0 flex items-center justify-center font-black text-white text-base md:text-xl">
-              {progressPercent}%
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Progress & Motivation Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-        {/* Daily XP Goal */}
-        <div className="bg-slate-900 border border-slate-800 p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] flex flex-col justify-between hover:border-emerald-500/30 transition-all shadow-xl group">
-          <div>
-            <div className="flex items-center justify-between mb-6 md:mb-8">
-              <p className="text-slate-500 text-[10px] md:text-xs font-black uppercase tracking-widest">Daily XP Goal</p>
-              <span className="text-emerald-400 font-black text-sm md:text-base group-hover:scale-110 transition-transform">{user.xp % 500} / 500</span>
-            </div>
-            <div className="w-full bg-slate-800 h-2.5 md:h-4 rounded-full overflow-hidden mb-4 shadow-inner">
-              <div
-                className="bg-emerald-500 h-full rounded-full shadow-[0_0_20px_rgba(16,185,129,0.5)] transition-all duration-1000 ease-out"
-                style={{ width: `${(user.xp % 500) / 5}%` }}
-              ></div>
-            </div>
-          </div>
-          <p className="text-[11px] md:text-sm text-slate-400 font-medium">Get <span className="text-white font-bold">{500 - (user.xp % 500)} XP</span> to hit your goal</p>
-        </div>
-
-        {/* Streak & Milestone */}
-        <div className="bg-slate-900 border-2 border-slate-800 p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] flex items-center justify-between hover:border-orange-500/30 transition-all shadow-xl">
-          <div className="space-y-4">
-            <div className="space-y-1">
-              <p className="text-slate-500 text-[10px] md:text-xs font-black uppercase tracking-widest">Current Streak</p>
-              <div className="flex items-center gap-3">
-                <Flame className="text-orange-500" size={24} fill="currentColor" />
-                <h3 className="text-2xl md:text-4xl font-black text-white">{user.streak} Days</h3>
-              </div>
-            </div>
-            <div className="space-y-1">
-              <p className="text-slate-500 text-[9px] md:text-[10px] font-black uppercase tracking-widest">Next Milestone</p>
-              <div className="flex items-center gap-2 text-white font-bold text-xs md:text-sm">
-                <Target size={14} className="text-indigo-400" /> 7 Day Streak
-              </div>
-            </div>
-          </div>
-          <div className="w-20 h-20 md:w-24 md:h-24 bg-orange-500/5 rounded-full border-2 md:border-4 border-orange-500/10 flex items-center justify-center text-orange-500 animate-pulse">
-            <Star className="w-8 h-8 md:w-10 md:h-10" fill="currentColor" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Home;

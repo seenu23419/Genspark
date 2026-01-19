@@ -1,0 +1,429 @@
+[
+    {
+        "id": "cpp-l1",
+        "title": "LEVEL 1: C++ Foundations",
+        "lessons": [
+            {
+                "id": "cpp1",
+                "title": "1. Introduction to Programming & C++",
+                "duration": "20 mins",
+                "difficultyLevel": "Beginner",
+                "topics": [
+                    "Programming Basics",
+                    "Compilers",
+                    "IDE Setup"
+                ],
+                "content": "# Introduction to Programming & C++\n\nWelcome to the world of C++! C++ is one of the most powerful and widely used programming languages in the world. It is a high-performance, compiled language used for everything from operating systems and game engines to high-frequency trading applications.\n\n---\n\n## What is Programming?\nProgramming is the process of giving instructions to a computer to perform specific tasks. Computers don't understand human languages; they understand **Machine Code** (binary: 0s and 1s).\n\n## What is a Compiler & Linker?\nSince we write code in a human-readable format (Source Code), we need tools to convert it into something the computer can run.\n\n### 1. The Compiler\nA compiler is a special program that translates your C++ code into **Object Code** (machine language).\n\n### 2. The Linker\nThe linker takes the object code and combines it with necessary library files to create a final **Executable File** (.exe on Windows).\n\n---\n\n## How C++ Works (Source to Executable)\n1.  **Preprocessing**: Handles directives like `#include` and replaces macros.\n2.  **Compilation**: Translates source code into assembly.\n3.  **Assembly**: Translates assembly into machine-readable object code.\n4.  **Linking**: Combines object files into a single runnable program.\n\n---\n\n## IDE Setup\nTo write C++, you need an **IDE** (Integrated Development Environment). Common choices are:\n- **VS Code** (with C++ extension)\n- **Code::Blocks**\n- **Visual Studio** (Community Edition)\n\n**Key Benefit**: C++ gives you direct control over hardware and memory, which is why it's incredibly fast.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does a compiler do?",
+                        "options": [
+                            "Runs the program directly",
+                            "Translates source code into object code",
+                            "Deletes the source code",
+                            "Connects the computer to the internet"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "A compiler translates high-level source code into machine-readable object code."
+                    }
+                ]
+            },
+            {
+                "id": "cpp2",
+                "title": "2. C++ Basics & Program Structure",
+                "duration": "25 mins",
+                "difficultyLevel": "Beginner",
+                "topics": [
+                    "Structure",
+                    "iostream",
+                    "cin/cout",
+                    "Comments"
+                ],
+                "content": "# C++ Basics & Program Structure\n\nEvery C++ program follows a specific structure. Let's look at the basic \"Hello World\" program.\n\n---\n\n## Structure of a C++ Program\n\n```cpp\n#include <iostream>  // Preprocessor directive\n\nint main() {         // Main function - execution starts here\n    std::cout << \"Hello World!\"; // Statement to print text\n    return 0;        // End of function\n}\n```\n\n### Breakdown:\n1.  `#include <iostream>`: This line imports the **Input/Output Stream** library, which allows us to print text to the screen.\n2.  `int main()`: This is the entry point of every C++ program.\n3.  `std::cout`: Stands for \"Character Output\". The `<<` operator sends data to it.\n4.  `;` (Semicolon): Every instruction in C++ must end with a semicolon.\n\n---\n\n## Standard Input & Output\n- **cout**: Used for output (printing to screen).\n- **cin**: Used for input (reading from keyboard).\n\n```cpp\nint age;\nstd::cout << \"Enter your age: \";\nstd::cin >> age;\n```\n\n---\n\n## Comments\nComments are used to explain the code and are ignored by the compiler.\n- **Single-line**: Starts with `//` \n- **Multi-line**: Starts with `/*` and ends with `*/`",
+                "fullProgram": "#include <iostream>\n\nint main() {\n    std::cout << \"Hello GenSpark!\" << std::endl;\n    std::cout << \"Learning C++ is exciting.\";\n    return 0;\n}",
+                "expectedOutput": "Hello GenSpark!\nLearning C++ is exciting.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which header file is needed for cout and cin?",
+                        "options": [
+                            "<stdio.h>",
+                            "<iostream>",
+                            "<string>",
+                            "<math.h>"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "<iostream> is the standard header for input and output operations in C++."
+                    }
+                ]
+            },
+            {
+                "id": "cpp3",
+                "title": "3. Data Types & Variables",
+                "duration": "30 mins",
+                "difficultyLevel": "Beginner",
+                "topics": [
+                    "Variables",
+                    "Data Types",
+                    "Constants"
+                ],
+                "content": "# Data Types & Variables\n\nVariables are containers for storing data values. In C++, every variable must have a specific **Data Type**.\n\n---\n\n## Primitive Data Types\n\n### 🔥 int (Integer)\n\n• **Size**: 4 bytes (32 bits)\n\n• **Range**: -2,147,483,648 to 2,147,483,647\n\n• **Purpose**: Used to store whole numbers (no decimal part)\n\n• **Examples**: `-10, 0, 25, 1000, 45000`\n\n```cpp\nint age = 22;\nint score = -5;\nint max_value = 2147483647;\n```\n\n---\n\n### ⚡ float (Single Precision Decimal)\n\n• **Size**: 4 bytes (32 bits)\n\n• **Range**: Approximately ±3.4e-38 to ±3.4e+38\n\n• **Precision**: 6-7 significant digits\n\n• **Purpose**: Used to store decimal numbers with lower precision\n\n• **Examples**: `3.14f, -0.5f, 99.99f`\n\n```cpp\nfloat price = 19.99f;\nfloat temperature = -4.5f;\nfloat pi = 3.14f;\n```\n\n---\n\n### 💠 double (Double Precision Decimal)\n\n• **Size**: 8 bytes (64 bits)\n\n• **Range**: Approximately ±1.7e-308 to ±1.7e+308\n\n• **Precision**: 15-17 significant digits\n\n• **Purpose**: Used to store decimal numbers with HIGH precision (default for decimals)\n\n• **Examples**: `3.14159265, -0.123456789, 9.99999`\n\n```cpp\ndouble pi = 3.14159265;\ndouble area = 153.86;\ndouble scientific_value = 1.23e-5;\n```\n\n---\n\n### 📝 char (Single Character)\n\n• **Size**: 1 byte (8 bits)\n\n• **Range**: -128 to 127 (ASCII characters)\n\n• **Purpose**: Used to store single characters or small integer values\n\n• **Examples**: `'A', 'z', '@', '5', '\\n'`\n\n```cpp\nchar grade = 'A';\nchar symbol = '@';\nchar newline = '\\n';\nchar digit = '7';\n```\n\n---\n\n### ✅ bool (Boolean)\n\n• **Size**: 1 byte (1 bit is used, rest is padding)\n\n• **Values**: `true` (1) or `false` (0)\n\n• **Purpose**: Used to store logical values for conditional statements\n\n• **Examples**: `true, false`\n\n```cpp\nbool isOpen = true;\nbool isEmpty = false;\nbool condition = (5 > 3); // evaluates to true\n```\n\n---\n\n### 📦 string (Text/Multiple Characters)\n\n• **Size**: Variable (depends on content)\n\n• **Range**: No specific limit (depends on available memory)\n\n• **Purpose**: Used to store sequences of characters (text)\n\n• **Examples**: `\"Hello\", \"GenSpark\", \"C++ Programming\"`\n\n• **Note**: Part of C++ Standard Library (requires `#include <string>`)\n\n```cpp\nstd::string name = \"GenSpark\";\nstd::string message = \"Welcome to C++\";\nstd::string empty_string = \"\";\n```\n\n---\n\n## Size of Data Types\n\nYou can check the size using the `sizeof()` operator:\n\n```cpp\nstd::cout << \"int size: \" << sizeof(int) << \" bytes\\n\";\nstd::cout << \"float size: \" << sizeof(float) << \" bytes\\n\";\nstd::cout << \"double size: \" << sizeof(double) << \" bytes\\n\";\nstd::cout << \"char size: \" << sizeof(char) << \" byte\\n\";\nstd::cout << \"bool size: \" << sizeof(bool) << \" byte\\n\";\n```\n\n---\n\n## Variable Declaration & Initialization\n\n```cpp\nint score = 100;    // Declaration and Initialization\nchar grade;\ngrade = 'A';        // Assignment\n\nfloat height = 5.9f;\ndouble price = 99.99;\nbool isValid = true;\n```\n\n## Constants\nIf you want to ensure a variable's value never changes, use the `const` keyword.\n\n```cpp\nconst float PI = 3.14159;      // Cannot be modified\nconst int MAX_STUDENTS = 50;   // Constant integer\nconst char DELIMITER = ',';\n```\n\n---\n\n## Common Types of Errors\n1.  **Syntax Errors**: Typos or missing semicolons.\n2.  **Logic Errors**: Code runs, but gives the wrong result.\n3.  **Runtime Errors**: Code crashes during execution (e.g., dividing by zero).\n4.  **Type Mismatch Errors**: Assigning wrong data type to a variable.",
+                "fullProgram": "#include <iostream>\n#include <string>\n\nint main() {\n    int age = 22;                          // 4 bytes\n    float temperature = 98.6f;             // 4 bytes\n    double price = 19.99;                  // 8 bytes\n    char initial = 'G';                    // 1 byte\n    bool isOpen = true;                    // 1 byte\n    std::string name = \"GenSpark\";         // Variable bytes\n\n    std::cout << \"Name: \" << name << \"\\n\";\n    std::cout << \"Age: \" << age << \" (\" << sizeof(age) << \" bytes)\" << \"\\n\";\n    std::cout << \"Temperature: \" << temperature << \" (\" << sizeof(temperature) << \" bytes)\" << \"\\n\";\n    std::cout << \"Price: \" << price << \" (\" << sizeof(price) << \" bytes)\" << \"\\n\";\n    std::cout << \"Initial: \" << initial << \" (\" << sizeof(initial) << \" byte)\" << \"\\n\";\n    std::cout << \"Is Open: \" << isOpen << \" (\" << sizeof(isOpen) << \" byte)\" << \"\\n\";\n    return 0;\n}",
+                "expectedOutput": "Name: GenSpark\nAge: 22 (4 bytes)\nTemperature: 98.6 (4 bytes)\nPrice: 19.99 (8 bytes)\nInitial: G (1 byte)\nIs Open: 1 (1 byte)",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which data type is used to store decimal values with high precision?",
+                        "options": [
+                            "int",
+                            "char",
+                            "double",
+                            "bool"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "'double' is used for high-precision floating point numbers. It uses 8 bytes."
+                    },
+                    {
+                        "id": 2,
+                        "text": "How many bytes does an 'int' typically occupy?",
+                        "options": [
+                            "1 byte",
+                            "2 bytes",
+                            "4 bytes",
+                            "8 bytes"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "An 'int' typically occupies 4 bytes (32 bits) on most modern systems."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Which primitive data type is used to store a single character?",
+                        "options": [
+                            "string",
+                            "char",
+                            "bool",
+                            "float"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "'char' is used to store a single character and occupies 1 byte."
+                    }
+                ]
+            },
+            {
+                "id": "cpp4",
+                "title": "4. C++ Operators",
+                "duration": "25 mins",
+                "difficultyLevel": "Beginner",
+                "topics": [
+                    "Arithmetic",
+                    "Relational",
+                    "Logical",
+                    "Assignment"
+                ],
+                "content": "# C++ Operators\n\nOperators are symbols used to perform operations on variables and values.\n\n---\n\n## 1. Arithmetic Operators\nUsed for mathematical calculations.\n- `+` Addition\n- `-` Subtraction\n- `*` Multiplication\n- `/` Division\n- `%` Modulus (remainder of division)\n\n## 2. Relational (Comparison) Operators\nUsed to compare two values (returns true or false).\n- `==` Equal to\n- `!=` Not equal to\n- `>` Greater than\n- `<` Less than\n- `>=` Greater than or equal to\n\n## 3. Logical Operators\nUsed to combine multiple conditions.\n- `&&` Logical AND (true if both are true)\n- `||` Logical OR (true if at least one is true)\n- `!` Logical NOT (reverses the result)\n\n## 4. Increment & Decrement\n- `++` Increases value by 1\n- `--` Decreases value by 1",
+                "fullProgram": "#include <iostream>\n\nint main() {\n    int a = 10, b = 3;\n    \n    std::cout << \"Sum: \" << (a + b) << \"\\n\";\n    std::cout << \"Remainder: \" << (a % b) << \"\\n\";\n    std::cout << \"Is a > b? \" << (a > b) << \" (1 means true)\";\n    \n    return 0;\n}",
+                "expectedOutput": "Sum: 13\nRemainder: 1\nIs a > b? 1 (1 means true)",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the result of 10 % 3?",
+                        "options": [
+                            "3",
+                            "1",
+                            "0",
+                            "3.33"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "10 divided by 3 is 3 with a remainder of 1. % is the modulus operator."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "cpp-l2",
+        "title": "LEVEL 2: Control Flow & Functions",
+        "lessons": [
+            {
+                "id": "cpp5",
+                "title": "5. Conditional Statements",
+                "duration": "25 mins",
+                "difficultyLevel": "Beginner",
+                "topics": [
+                    "if-else",
+                    "else-if ladder",
+                    "switch",
+                    "Ternary"
+                ],
+                "content": "# Conditional Statements\n\nConditional statements allow your program to make decisions and execute different blocks of code based on whether a condition is true or false.\n\n---\n\n## 1. The if Statement\nThe most basic form of decision-making.\n\n```cpp\nif (condition) {\n    // Code to execute if condition is true\n}\n```\n\n## 2. The if-else Statement\nProvides an alternative if the condition is false.\n\n```cpp\nif (age >= 18) {\n    std::cout << \"Adult\";\n} else {\n    std::cout << \"Minor\";\n}\n```\n\n## 3. The else-if Ladder\nUsed to check multiple conditions sequentially.\n\n## 4. The switch Statement\nA more efficient way to check a single variable against multiple constant values.\n\n```cpp\nswitch (choice) {\n    case 1: std::cout << \"Option 1\"; break;\n    case 2: std::cout << \"Option 2\"; break;\n    default: std::cout << \"Invalid\";\n}\n```\n\n**Note**: Always use `break` in a switch case to prevent \"falling through\" to the next case.",
+                "fullProgram": "#include <iostream>\n\nint main() {\n    int num;\n    std::cout << \"Enter a number: \";\n    std::cin >> num;\n\n    if (num > 0) {\n        std::cout << \"Positive\";\n    } else if (num < 0) {\n        std::cout << \"Negative\";\n    } else {\n        std::cout << \"Zero\";\n    }\n    \n    return 0;\n}",
+                "expectedOutput": "Enter a number: 10\nPositive",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does 'break' do in a switch statement?",
+                        "options": [
+                            "Ends the program",
+                            "Exits the switch block",
+                            "Skips the next line",
+                            "Restarts the loop"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "'break' is used to terminate the current case and jump out of the switch block."
+                    }
+                ]
+            },
+            {
+                "id": "cpp6",
+                "title": "6. Loops & Iteration",
+                "duration": "30 mins",
+                "difficultyLevel": "Beginner",
+                "topics": [
+                    "for",
+                    "while",
+                    "do-while",
+                    "break/continue"
+                ],
+                "content": "# Loops & Iteration\n\nLoops are used to repeat a block of code multiple times. This is essential for working with lists of data or performing repetitive tasks.\n\n---\n\n## 1. The for Loop\nBest when you know exactly how many times the loop should run.\n\n```cpp\nfor (int i = 0; i < 5; i++) {\n    std::cout << i << \" \";\n}\n```\n\n## 2. The while Loop\nRepeat code as long as a condition is true. Check condition *before* executing.\n\n```cpp\nwhile (condition) {\n    // code\n}\n```\n\n## 3. The do-while Loop\nSimilar to while, but code runs at least **once** because the condition is checked *after* execution.\n\n---\n\n## Loop Control\n- **break**: Exits the loop immediately.\n- **continue**: Skips the rest of the current iteration and jumps to the next one.",
+                "fullProgram": "#include <iostream>\n\nint main() {\n    std::cout << \"Counting to 5:\\n\";\n    for (int i = 1; i <= 5; i++) {\n        std::cout << i << \" \";\n    }\n    \n    std::cout << \"\\n\\nEven numbers up to 10:\\n\";\n    int j = 2;\n    while (j <= 10) {\n        std::cout << j << \" \";\n        j += 2;\n    }\n    \n    return 0;\n}",
+                "expectedOutput": "Counting to 5:\n1 2 3 4 5 \n\nEven numbers up to 10:\n2 4 6 8 10",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which loop is guaranteed to run at least once?",
+                        "options": [
+                            "for",
+                            "while",
+                            "do-while",
+                            "foreach"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "The 'do-while' loop checks the condition after the first execution."
+                    }
+                ]
+            },
+            {
+                "id": "cpp7",
+                "title": "7. Functions: Modular Programming",
+                "duration": "35 mins",
+                "difficultyLevel": "Beginner",
+                "topics": [
+                    "Declaration",
+                    "Parameters",
+                    "Return Type",
+                    "Recursion"
+                ],
+                "content": "# Functions: Modular Programming\n\nFunctions are blocks of code that perform specific tasks. They help in breaking down heavy problems into smaller, manageable, and reusable pieces.\n\n---\n\n## 1. Function Structure\n\n```cpp\nreturn_type function_name(parameter_list) {\n    // code to execute\n    return value; \n}\n```\n\n## 2. Parameters & Arguments\nYou can pass data into functions using parameters.\n- **Call by Value**: Passes a copy of the data. Changes inside function don't affect original variable.\n- **Call by Reference**: Passes the memory address. Changes *do* affect the original variable.\n\n## 3. Recursion\nA function that calls itself is called a recursive function. It must have a **Base Case** to stop the recursion.\n\n```cpp\nint factorial(int n) {\n    if (n <= 1) return 1; // Base case\n    return n * factorial(n - 1); // Recursive call\n}\n```",
+                "fullProgram": "#include <iostream>\n\n// Global function declaration\nint add(int a, int b) {\n    return a + b;\n}\n\nvoid greet() {\n    std::cout << \"Welcome to C++ Functions!\\n\";\n}\n\nint main() {\n    greet();\n    int result = add(10, 20);\n    std::cout << \"Sum is: \" << result;\n    return 0;\n}",
+                "expectedOutput": "Welcome to C++ Functions!\nSum is: 30",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is a function that calls itself called?",
+                        "options": [
+                            "Looping function",
+                            "Recursive function",
+                            "Inline function",
+                            "Void function"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Recursion occurs when a function calls itself to solve smaller instances of the same problem."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "cpp-l3",
+        "title": "LEVEL 3: Data Structures & Pointers",
+        "lessons": [
+            {
+                "id": "cpp8",
+                "title": "8. Arrays in C++",
+                "duration": "30 mins",
+                "difficultyLevel": "Beginner",
+                "topics": [
+                    "1D Array",
+                    "2D Array",
+                    "Memory",
+                    "Operations"
+                ],
+                "content": "# Arrays in C++\n\nAn array is a collection of elements of the **same data type** stored at contiguous memory locations.\n\n---\n\n## 1. One-Dimensional (1D) Arrays\n\n```cpp\nint numbers[5] = {10, 20, 30, 40, 50};\n```\n- **Indexing**: Arrays start at index **0**.\n- **Accessing**: `numbers[0]` is 10, `numbers[4]` is 50.\n\n## 2. Two-Dimensional (2D) Arrays\nCommonly used for grids and matrices.\n\n```cpp\nint matrix[2][3] = {\n    {1, 2, 3},\n    {4, 5, 6}\n};\n```\n\n## 3. Passing Arrays to Functions\nArrays are passed by **reference** (pointer to the first element) by default.\n\n```cpp\nvoid printArray(int arr[], int size) {\n    for(int i = 0; i < size; i++) std::cout << arr[i];\n}\n```",
+                "fullProgram": "#include <iostream>\n\nint main() {\n    int scores[3] = {85, 92, 78};\n    \n    std::cout << \"Scores: \";\n    for(int i = 0; i < 3; i++) {\n        std::cout << scores[i] << \" \";\n    }\n    \n    int matrix[2][2] = {{1, 2}, {3, 4}};\n    std::cout << \"\\nMatrix element [1][0]: \" << matrix[1][0];\n    \n    return 0;\n}",
+                "expectedOutput": "Scores: 85 92 78 \nMatrix element [1][0]: 3",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the index of the first element in a C++ array?",
+                        "options": [
+                            "1",
+                            "0",
+                            "-1",
+                            "Any number"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "C++ uses zero-based indexing, so the first element is always at index 0."
+                    }
+                ]
+            },
+            {
+                "id": "cpp9",
+                "title": "9. C++ Pointers & Memory",
+                "duration": "40 mins",
+                "difficultyLevel": "Intermediate",
+                "topics": [
+                    "Pointers",
+                    "Addresses",
+                    "Dereferencing",
+                    "Dynamic Memory"
+                ],
+                "content": "# Pointers & Memory Management\n\nA pointer is a variable that stores the **memory address** of another variable.\n\n---\n\n## 1. Pointer Basics\n- `&`: Address-of operator (gets the address).\n- `*`: Dereference operator (gets the value at that address).\n\n```cpp\nint val = 10;\nint* ptr = &val;  // ptr now stores address of val\nstd::cout << *ptr; // Prints 10 (value at address)\n```\n\n## 2. Dynamic Memory Management\nIn C++, you can allocate memory during runtime using `new` and free it using `delete`.\n\n```cpp\nint* dPtr = new int; // Allocate 1 integer in Heap memory\n*dPtr = 50;\ndelete dPtr;         // Free memory to prevent memory leaks\n```\n\n## 3. Pointers and Arrays\nThe name of an array is actually a constant pointer to its first element.\n\n```cpp\nint arr[3] = {1, 2, 3};\nint* p = arr; \nstd::cout << *(p + 1); // Prints arr[1] (2)\n```",
+                "fullProgram": "#include <iostream>\n\nint main() {\n    int age = 25;\n    int* pAge = &age;\n\n    std::cout << \"Value of age: \" << age << \"\\n\";\n    std::cout << \"Address of age (&age): \" << &age << \"\\n\";\n    std::cout << \"Value through pointer (*pAge): \" << *pAge << \"\\n\";\n\n    *pAge = 30; // Modify age using pointer\n    std::cout << \"New age: \" << age;\n    \n    return 0;\n}",
+                "expectedOutput": "Value of age: 25\nAddress of age (&age): [ADDRESS]\nValue through pointer (*pAge): 25\nNew age: 30",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which operator is used to get the memory address of a variable?",
+                        "options": [
+                            "*",
+                            "&",
+                            "->",
+                            "#"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "The address-of operator (&) returns the memory address where a variable is stored."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "cpp-l4",
+        "title": "LEVEL 4: Object-Oriented Programming (OOP)",
+        "lessons": [
+            {
+                "id": "cpp10",
+                "title": "10. Classes, Objects & Constructors",
+                "duration": "40 mins",
+                "difficultyLevel": "Intermediate",
+                "topics": [
+                    "Classes",
+                    "Objects",
+                    "Access Specifiers",
+                    "Constructors"
+                ],
+                "content": "# Classes & Objects\n\nObject-Oriented Programming (OOP) is a paradigm that uses **Objects** to represent real-world entities. A **Class** is a blueprint for an object.\n\n---\n\n## 1. Class Structure\n\n```cpp\nclass Student {\npublic:\n    string name;  // Attribute\n    int age;     // Attribute\n\n    void display() { // Method\n        cout << name << \" \" << age;\n    }\n};\n```\n\n## 2. Access Specifiers\n- **public**: Members are accessible from outside the class.\n- **private**: Members are ONLY accessible within the class.\n- **protected**: Members are accessible in the class and its inherited classes.\n\n## 3. Constructors & Destructors\n- **Constructor**: A special method called automatically when an object is created. Usually used for initialization.\n- **Destructor**: Called when an object is destroyed. Starts with `~`.\n\n```cpp\nclass Car {\npublic:\n    Car() { cout << \"Car created!\"; }  // Constructor\n    ~Car() { cout << \"Car destroyed!\"; } // Destructor\n};\n```",
+                "fullProgram": "#include <iostream>\n#include <string>\n\nclass Dog {\npublic:\n    std::string breed;\n    \n    // Constructor\n    Dog(std::string b) {\n        breed = b;\n    }\n    \n    void bark() {\n        std::cout << breed << \" says: Woof!\\n\";\n    }\n};\n\nint main() {\n    Dog myDog(\"Golden Retriever\");\n    myDog.bark();\n    return 0;\n}",
+                "expectedOutput": "Golden Retriever says: Woof!",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the purpose of a constructor?",
+                        "options": [
+                            "To destroy an object",
+                            "To initialize an object's data",
+                            "To print values to the screen",
+                            "To delete the class"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Constructors are special member functions that initialize an object's properties when it is instantiated."
+                    }
+                ]
+            },
+            {
+                "id": "cpp11",
+                "title": "11. The 4 Pillars of OOP",
+                "duration": "45 mins",
+                "difficultyLevel": "Intermediate",
+                "topics": [
+                    "Inheritance",
+                    "Polymorphism",
+                    "Encapsulation",
+                    "Abstraction"
+                ],
+                "content": "# The 4 Pillars of OOP\n\nTo master OOP, you must understand these four fundamental concepts:\n\n---\n\n## 1. Encapsulation\nGrouping data and methods together into a single unit (Class) and restricting direct access to object components (using `private`).\n\n## 2. Abstraction\nHiding complex implementation details and showing only necessary features. In C++, this is achieved using **Header files** and **Abstract classes**.\n\n## 3. Inheritance\nAllows a class (Child) to acquire properties and methods from another class (Parent).\n\n```cpp\nclass Animal { ... };\nclass Dog : public Animal { ... }; // Dog inherits from Animal\n```\n\n## 4. Polymorphism\n\"Many forms.\" It allows objects to be treated as instances of their parent class while performing their own specific actions.\n- **Overloading**: Multiple functions with same name but different parameters.\n- **Overriding**: Redefining a parent class method in a child class.",
+                "fullProgram": "#include <iostream>\n\nclass Shape {\npublic:\n    virtual void draw() {\n        std::cout << \"Drawing a generic shape...\\n\";\n    }\n};\n\nclass Circle : public Shape {\npublic:\n    void draw() override {\n        std::cout << \"Drawing a Circle!\\n\";\n    }\n};\n\nint main() {\n    Shape* s = new Circle();\n    s->draw(); // Calls Circle's draw() due to polymorphism\n    delete s;\n    return 0;\n}",
+                "expectedOutput": "Drawing a Circle!",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which pillar allows a child class to use the features of a parent class?",
+                        "options": [
+                            "Encapsulation",
+                            "Abstraction",
+                            "Inheritance",
+                            "Polymorphism"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Inheritance is the mechanism by which one class acquires the properties and behaviors of another."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "cpp-l5",
+        "title": "LEVEL 5: STL & Advanced C++",
+        "lessons": [
+            {
+                "id": "cpp12",
+                "title": "12. Standard Template Library (STL)",
+                "duration": "45 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "Containers",
+                    "Vectors",
+                    "Maps",
+                    "STL Algorithms"
+                ],
+                "content": "# Standard Template Library (STL)\n\nThe STL is a powerful set of C++ template classes that provide general-purpose classes and functions with templates that implement many popular and commonly used algorithms and data structures.\n\n---\n\n## 1. Containers\nObjects that store data.\n- **Vector**: A dynamic array that can resize itself. \n- **Map**: Stores data in (key, value) pairs.\n- **Set**: Stores unique elements in a sorted order.\n\n## 2. Vectors\nThe most commonly used STL container.\n\n```cpp\nvector<int> v = {1, 2, 3};\nv.push_back(4); // Adds 4 to the end\n```\n\n## 3. Algorithms\nSTL provides pre-built functions for searching and sorting.\n\n```cpp\nsort(v.begin(), v.end());\n```",
+                "fullProgram": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    std::vector<int> nums = {5, 2, 8, 1, 9};\n    \n    // Using STL Algorithm to sort\n    std::sort(nums.begin(), nums.end());\n    \n    std::cout << \"Sorted Vector: \";\n    for(int n : nums) {\n        std::cout << n << \" \";\n    }\n    \n    return 0;\n}",
+                "expectedOutput": "Sorted Vector: 1 2 5 8 9",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which STL container is a dynamic array?",
+                        "options": [
+                            "std::list",
+                            "std::map",
+                            "std::vector",
+                            "std::stack"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Vectors are sequence containers representing arrays that can change in size."
+                    }
+                ]
+            },
+            {
+                "id": "cpp13",
+                "title": "13. Templates & Error Handling",
+                "duration": "50 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "Templates",
+                    "Exceptions",
+                    "try/catch",
+                    "File I/O"
+                ],
+                "content": "# Templates & Error Handling\n\n## 1. Templates\nTemplates allow you to write generic code that works with any data type.\n\n```cpp\ntemplate <typename T>\nT myMax(T x, T y) {\n   return (x > y) ? x : y;\n}\n```\n\n## 2. Exception Handling\nUsed to handle runtime errors gracefully so the program doesn't crash.\n- **try**: Block where code is tested.\n- **throw**: Signals that an error occurred.\n- **catch**: Block where the error is handled.\n\n```cpp\ntry {\n    if (divisor == 0) throw \"Division by zero!\";\n} catch (const char* msg) {\n    cerr << msg << endl;\n}\n```\n\n## 3. File I/O\nUse `fstream` to read and write to files.\n- **ofstream**: Output file stream (Writing).\n- **ifstream**: Input file stream (Reading).",
+                "fullProgram": "#include <iostream>\n#include <string>\n\ntemplate <typename T>\nvoid swapValues(T &a, T &b) {\n    T temp = a;\n    a = b;\n    b = temp;\n}\n\nint main() {\n    int x = 10, y = 20;\n    swapValues(x, y);\n    std::cout << \"x: \" << x << \", y: \" << y;\n    return 0;\n}",
+                "expectedOutput": "x: 20, y: 10",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does 'T' represent in a template function?",
+                        "options": [
+                            "Total",
+                            "A specific data type (Generic)",
+                            "A Terminal",
+                            "A Time constant"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "T is a placeholder for a data type that will be specified when the function is called."
+                    }
+                ]
+            }
+        ]
+    }
+]

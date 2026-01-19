@@ -1,0 +1,712 @@
+[
+    {
+        "id": "python-l1",
+        "title": "LEVEL 1: PYTHON BASICS (ZERO LEVEL)",
+        "subtitle": "🎯 Understand basic syntax and write simple programs",
+        "lessons": [
+            {
+                "id": "py1.1",
+                "title": "1.1 What is Python?",
+                "duration": "15 mins",
+                "topics": ["What is Python", "Why Python", "Use Cases"],
+                "content": "**What is Python?**\n\nPython is a high-level, general-purpose programming language focused on readability and developer productivity.\n\n**Key Characteristics:**\n- **High-level**: Hides low-level memory management\n- **Interpreted**: Run scripts directly, no compilation step\n- **Dynamically Typed**: Types checked at runtime\n- **Large Ecosystem**: Millions of packages available\n- **Readable Syntax**: English-like code with minimal boilerplate\n\n**Why Learn Python?**\n1. Fast to write - Ideas in fewer lines\n2. Easy to read - Code is self-documenting\n3. Huge community - Billions of lines written\n4. Versatile - Web, data science, ML, automation\n5. Beginner-friendly - No memory pointers\n6. Industry adoption - Google, Netflix, Instagram use it\n\n**Common Use Cases:**\n- Web API Backend (FastAPI, Django)\n- Data Analysis (pandas, matplotlib)\n- Machine Learning (TensorFlow, PyTorch)\n- Automation (Scripts, task scheduling)\n- Scientific Computing (NumPy, SciPy)\n- Teaching (Best for learning fundamentals)",
+                "fullProgram": "# Run this in Python REPL\nprint('Hello, World!')\nprint(type(42))\nprint(type('text'))",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Is Python compiled or interpreted?",
+                        "options": ["Compiled", "Interpreted", "Both", "Neither"],
+                        "correctAnswer": 1,
+                        "explanation": "Python is interpreted. You run 'python script.py' and the interpreter executes code directly."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Name two real-world uses of Python.",
+                        "options": ["Only games", "Web backends and data science", "Only hardware", "Only teaching"],
+                        "correctAnswer": 1,
+                        "explanation": "Python is used in web development, data science, ML, automation, and scientific computing."
+                    }
+                ]
+            },
+            {
+                "id": "py1.2",
+                "title": "1.2 Features of Python",
+                "duration": "15 mins",
+                "topics": ["Simple syntax", "Readability", "Interpreted", "Dynamically typed"],
+                "content": "**Core Features That Make Python Special**\n\n**1. Simple & Readable Syntax**\n- Code reads almost like English\n- Uses indentation, not braces\n- Less boilerplate than Java, C++\n\n```python\n# Python - Simple\nif age >= 18:\n    print('Adult')\nelse:\n    print('Minor')\n```\n\n**2. Interpreted Language**\n- No separate compilation\n- Run directly: `python script.py`\n- Errors appear at runtime\n- Great for quick prototyping\n\n**3. Dynamically Typed**\n- Don't declare types upfront\n- Type determined at runtime\n- Can reassign to different types\n\n```python\nx = 42        # x is int\nx = 'hello'   # now x is str\n```\n\n**4. Powerful Standard Library**\n- Built-in modules: os, sys, json, datetime\n- Don't reinvent wheels\n\n**5. Cross-Platform**\n- Write once, run anywhere\n- Windows, Mac, Linux supported\n\n**6. Object-Oriented & Functional**\n- Supports multiple paradigms\n- Classes, functions, lambdas\n- Flexible programming style",
+                "fullProgram": "# Feature demonstration\nx = 10\nprint(f'x is {x} and type is {type(x)}')\n\nx = 'now a string'\nprint(f'x is {x} and type is {type(x)}')\n\nimport sys\nprint(f'Python version: {sys.version}')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What feature allows you to assign different types to the same variable?",
+                        "options": ["Static typing", "Dynamic typing", "Type conversion", "Type checking"],
+                        "correctAnswer": 1,
+                        "explanation": "Dynamic typing allows reassigning variables to different types without errors."
+                    }
+                ]
+            },
+            {
+                "id": "py1.3",
+                "title": "1.3 Installing Python & IDE Setup",
+                "duration": "20 mins",
+                "topics": ["Download Python", "VS Code setup", "PyCharm setup", "Virtual Environment"],
+                "content": "**Step 1: Download & Install Python**\n\n1. Go to python.org and download Python 3.11+\n2. **Windows**: Check \"Add Python to PATH\" during install\n3. **Verify**: Open terminal and type `python --version`\n\n**Step 2: Choose an IDE**\n\n**Option A: VS Code (Lightweight)**\n1. Download from code.visualstudio.com\n2. Install extension: Python (by Microsoft)\n3. Create `hello.py` and run it\n\n**Option B: PyCharm (Feature-Rich)**\n1. Download from jetbrains.com/pycharm\n2. Create new project\n3. Auto-configures virtual environment\n\n**Step 3: Virtual Environment**\n\n```bash\n# Create venv\npython -m venv venv\n\n# Activate (Windows PowerShell)\n.\\venv\\Scripts\\Activate\n\n# Activate (Mac/Linux)\nsource venv/bin/activate\n\n# Install packages\npip install requests pandas numpy\n```\n\n**Step 4: Your First Program**\n\n1. Create `hello.py`:\n```python\nprint('Hello, World!')\n```\n\n2. Run: `python hello.py`\n3. Output: `Hello, World!`",
+                "fullProgram": "import sys\nimport os\n\nprint(f'Python executable: {sys.executable}')\nprint(f'Python version: {sys.version}')\nprint(f'Current directory: {os.getcwd()}')\n\n# Check if in virtual environment\nif hasattr(sys, 'real_prefix') or sys.base_prefix != sys.prefix:\n    print('Virtual environment: YES')\nelse:\n    print('Virtual environment: NO')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What command creates a virtual environment?",
+                        "options": ["python install venv", "python -m venv venv", "pip create venv", "python venv --new"],
+                        "correctAnswer": 1,
+                        "explanation": "Use `python -m venv venv` to create a virtual environment."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Why use a virtual environment?",
+                        "options": ["To make Python faster", "To isolate project dependencies", "To fix bugs", "Not important"],
+                        "correctAnswer": 1,
+                        "explanation": "Virtual environments isolate dependencies so projects don't conflict with each other."
+                    }
+                ]
+            },
+            {
+                "id": "py1.4",
+                "title": "1.4 Python Syntax & Indentation",
+                "duration": "15 mins",
+                "topics": ["Indentation rules", "Code blocks", "Meaningful whitespace"],
+                "content": "**Python's Golden Rule: Indentation Matters**\n\nUnlike Java or C which use braces `{}`, Python uses **indentation** to define code blocks.\n\n**Example:**\n\n```python\nif True:\n    print('This is indented - inside the if block')\n    print('Also indented')\nprint('Not indented - outside the if block')\n```\n\n**Indentation Rules:**\n1. Use spaces or tabs (not mixed!)\n2. Standard: 4 spaces per level\n3. All code in a block must indent equally\n4. Inconsistent indentation = IndentationError\n\n**Common Code Blocks:**\n\n```python\n# If statement\nif x > 0:\n    print('positive')\n\n# Loop\nfor i in range(5):\n    print(i)\n\n# Function\ndef greet(name):\n    print(f'Hello, {name}')\n\n# Class\nclass Person:\n    def __init__(self, name):\n        self.name = name\n```\n\n**Pro Tip:**\nMost IDEs auto-indent for you. Make sure your editor is set to 4 spaces for Python (not tabs).",
+                "fullProgram": "# Correct indentation example\nfor i in range(1, 4):\n    print(f'Number: {i}')\n    if i == 2:\n        print('  Found two!')\n    print(f'Done with {i}')\n\nprint('Loop complete')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What character defines code blocks in Python?",
+                        "options": ["Braces {}", "Semicolons ;", "Indentation", "Parentheses ()"],
+                        "correctAnswer": 2,
+                        "explanation": "Python uses indentation (whitespace) to define code blocks, not braces like Java."
+                    }
+                ]
+            },
+            {
+                "id": "py1.5",
+                "title": "1.5 Comments (Single-line & Multi-line)",
+                "duration": "10 mins",
+                "topics": ["Single-line comments", "Multi-line comments", "Docstrings"],
+                "content": "**Comments: Notes in Your Code**\n\nComments are ignored by the interpreter and help explain code.\n\n**Single-Line Comments**\n\nUse `#` to start a comment:\n\n```python\n# This is a comment\nx = 5  # This is also a comment\nprint(x)  # Comment at the end of a line\n```\n\n**Multi-Line Comments**\n\nUse multiple `#` or triple quotes:\n\n```python\n# This is a multi-line comment\n# that spans multiple lines\n# explaining complex logic\n\n# OR use triple quotes (not technically a comment, but acts like one)\n'''\nThis is also a multi-line comment\nthat spans multiple lines\n'''\n```\n\n**Docstrings**\n\nSpecial strings that document functions and classes:\n\n```python\ndef add(a, b):\n    '''Add two numbers and return result.'''\n    return a + b\n\nclass Calculator:\n    '''\n    A simple calculator class.\n    Supports basic arithmetic operations.\n    '''\n    pass\n```\n\n**Best Practices:**\n- Write comments for WHY, not WHAT\n- Keep comments up-to-date with code\n- Use clear, concise English\n- Don't over-comment obvious code",
+                "fullProgram": "# Bad comment - explains the obvious\nx = 5  # Set x to 5\n\n# Good comment - explains the why\nMAX_RETRIES = 3  # Limit retries to prevent infinite loops\n\ndef calculate_discount(price, percent):\n    '''Calculate discount on price.\n    Args:\n        price: Original price\n        percent: Discount percentage\n    Returns:\n        Discounted price\n    '''\n    return price * (1 - percent / 100)",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "How do you write a single-line comment?",
+                        "options": ["// comment", "# comment", "<!-- comment -->", "-- comment"],
+                        "correctAnswer": 1,
+                        "explanation": "Use # to start a single-line comment in Python."
+                    }
+                ]
+            },
+            {
+                "id": "py1.6",
+                "title": "1.6 Variables & Naming Rules",
+                "duration": "15 mins",
+                "topics": ["Variable assignment", "Naming conventions", "Valid identifiers"],
+                "content": "**Variables: Containers for Data**\n\nA variable stores a value in memory under a name.\n\n**Basic Assignment**\n\n```python\nname = 'Alice'        # String\nage = 25              # Integer\nheight = 5.8          # Float\nis_student = True     # Boolean\n```\n\n**Python Naming Rules**\n\n1. **Must start** with letter or underscore\n2. **Can contain** letters, digits, underscores\n3. **Case-sensitive**: `Name` ≠ `name`\n4. **Avoid keywords**: `if`, `for`, `class`, etc.\n\n**Valid Names:**\n```python\nuser_name = 'Bob'\nuser_age = 30\n_private_var = 100\nvar123 = 'ok'\n```\n\n**Invalid Names:**\n```python\n123var = 'no'        # Starts with digit\nuser-name = 'no'     # Contains hyphen\nclass = 'no'         # Reserved keyword\n```\n\n**Naming Conventions (PEP 8)**\n\n- **Variables & functions**: `snake_case` - lowercase with underscores\n  ```python\n  user_name, calculate_total()\n  ```\n- **Constants**: `UPPER_CASE`\n  ```python\n  MAX_SIZE = 100\n  ```\n- **Classes**: `PascalCase` - capitalize first letter of each word\n  ```python\n  class UserProfile:\n  ```\n\n**Multiple Assignment**\n\n```python\n# Multiple variables at once\nx = y = z = 0\n\n# Unpacking\na, b = 1, 2\nname, age = 'Alice', 25\n```",
+                "fullProgram": "# Variable examples\nuser_name = 'Alice'\nuser_age = 25\nis_active = True\n\nprint(f'Name: {user_name}')\nprint(f'Age: {user_age}')\nprint(f'Active: {is_active}')\n\n# Type checking\nprint(type(user_name))\nprint(type(user_age))\nprint(type(is_active))",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which is a valid variable name?",
+                        "options": ["123name", "_name123", "name-123", "for"],
+                        "correctAnswer": 1,
+                        "explanation": "Variable names can start with underscore or letter, contain digits. '_name123' is valid."
+                    },
+                    {
+                        "id": 2,
+                        "text": "What naming convention is used for variables in Python (PEP 8)?",
+                        "options": ["camelCase", "snake_case", "PascalCase", "UPPER_CASE"],
+                        "correctAnswer": 1,
+                        "explanation": "Python convention (PEP 8) uses snake_case for variables and functions."
+                    }
+                ]
+            },
+            {
+                "id": "py1.7",
+                "title": "1.7 Data Types: int, float, complex, str, bool",
+                "duration": "25 mins",
+                "topics": ["int", "float", "complex", "str", "bool"],
+                "content": "**Core Data Types**\n\n**1. int (Integer)**\n\nWhole numbers without decimal points.\n\n```python\nage = 25\ntemperature = -10\nbig_number = 999999999\nhexadecimal = 0xFF\nbinary = 0b1010\n\nprint(type(25))  # <class 'int'>\n```\n\n**2. float (Floating-Point)**\n\nNumbers with decimal points.\n\n```python\nprice = 19.99\ngpa = 3.85\npi = 3.14159\nscientific = 1.5e-3  # 0.0015\n\nprint(type(19.99))  # <class 'float'>\n```\n\n**3. complex (Complex Numbers)**\n\nNumbers with real and imaginary parts (rarely used).\n\n```python\nz = 3 + 4j  # 3 is real, 4j is imaginary\nprint(z.real)  # 3.0\nprint(z.imag)  # 4.0\n```\n\n**4. str (String)**\n\nText data, immutable sequences of characters.\n\n```python\nname = 'Alice'\ngreeting = \"Hello, World!\"\nmultiline = '''Line 1\nLine 2\nLine 3'''\n\n# Indexing\nprint(name[0])    # 'A'\nprint(name[-1])   # 'e'\n\n# Slicing\nprint(name[1:3])  # 'li'\n```\n\n**5. bool (Boolean)**\n\nTrue or False values.\n\n```python\nis_online = True\nis_admin = False\n\n# Expressions evaluate to bool\nprint(5 > 3)      # True\nprint(5 == 3)     # False\nprint(5 < 3)      # False\n```\n\n**Type Hierarchy**\n\nIn Python:\n- `int` and `float` are numeric types\n- `str` is text\n- `bool` is actually a subclass of `int` (True == 1, False == 0)",
+                "fullProgram": "# Data types demonstration\nage = 25              # int\nheight = 5.8          # float\npi = 3 + 0.14159j     # complex\nname = 'Alice'        # str\nis_student = True     # bool\n\nprint(f'age: {age}, type: {type(age)}')\nprint(f'height: {height}, type: {type(height)}')\nprint(f'pi: {pi}, type: {type(pi)}')\nprint(f'name: {name}, type: {type(name)}')\nprint(f'is_student: {is_student}, type: {type(is_student)}')\n\n# bool is actually int\nprint(True == 1)    # True\nprint(False == 0)   # True",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the type of 42.5?",
+                        "options": ["int", "float", "str", "bool"],
+                        "correctAnswer": 1,
+                        "explanation": "42.5 has a decimal point, so it's a float."
+                    },
+                    {
+                        "id": 2,
+                        "text": "What is the type of True?",
+                        "options": ["int", "str", "bool", "NoneType"],
+                        "correctAnswer": 2,
+                        "explanation": "True is a boolean value. (Note: bool is actually a subclass of int.)"
+                    }
+                ]
+            },
+            {
+                "id": "py1.8",
+                "title": "1.8 Type Casting",
+                "duration": "15 mins",
+                "topics": ["int()", "float()", "str()", "bool()", "Type conversion"],
+                "content": "**Type Casting: Converting Between Types**\n\nSometimes you need to convert data from one type to another.\n\n**int() - Convert to Integer**\n\n```python\n# From string\nnum = int('42')\nprint(num)  # 42\n\n# From float (truncates decimal)\nnum = int(3.99)\nprint(num)  # 3 (not rounded)\n\n# From bool\nnum = int(True)\nprint(num)  # 1\nnum = int(False)\nprint(num)  # 0\n```\n\n**float() - Convert to Float**\n\n```python\n# From string\nnum = float('3.14')\nprint(num)  # 3.14\n\n# From int\nnum = float(42)\nprint(num)  # 42.0\n\n# From bool\nnum = float(True)\nprint(num)  # 1.0\n```\n\n**str() - Convert to String**\n\n```python\n# From int\ntext = str(42)\nprint(text)  # '42'\n\n# From float\ntext = str(3.14)\nprint(text)  # '3.14'\n\n# From bool\ntext = str(True)\nprint(text)  # 'True'\n```\n\n**bool() - Convert to Boolean**\n\n```python\n# Falsy values: False, 0, 0.0, '', None\nprint(bool(0))        # False\nprint(bool(''))       # False\nprint(bool([]))       # False\n\n# Truthy values: everything else\nprint(bool(1))        # True\nprint(bool('hello'))  # True\nprint(bool([1,2]))    # True\n```\n\n**Common Use Cases**\n\n```python\n# User input is always string\nage_str = input('Enter age: ')  # '25' (string)\nage = int(age_str)              # 25 (integer)\n\n# Combining types\ntotal = 10 + float('5.5')  # Must convert string to float\nprint(total)  # 15.5\n```",
+                "fullProgram": "# Type casting examples\nprint('=== int() ===')\nprint(int('42'))      # String to int\nprint(int(3.99))      # Float to int (truncates)\nprint(int(True))      # Bool to int\n\nprint('\\n=== float() ===')\nprint(float('3.14'))  # String to float\nprint(float(42))      # Int to float\n\nprint('\\n=== str() ===')\nprint(str(42))        # Int to string\nprint(str(3.14))      # Float to string\n\nprint('\\n=== bool() ===')\nprint(bool(0))        # 0 is False\nprint(bool(1))        # Any non-zero is True\nprint(bool(''))       # Empty string is False\nprint(bool('hello'))  # Non-empty string is True",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does int(3.99) return?",
+                        "options": ["3", "4", "3.99", "Error"],
+                        "correctAnswer": 0,
+                        "explanation": "int() truncates (cuts off) the decimal part. 3.99 becomes 3."
+                    },
+                    {
+                        "id": 2,
+                        "text": "What does bool('') return?",
+                        "options": ["True", "False", "''", "Error"],
+                        "correctAnswer": 1,
+                        "explanation": "Empty string is a falsy value, so bool('') is False."
+                    }
+                ]
+            },
+            {
+                "id": "py1.9",
+                "title": "1.9 Input & Output (input(), print())",
+                "duration": "15 mins",
+                "topics": ["print() function", "input() function", "Formatting output"],
+                "content": "**Output: print() Function**\n\nDisplays text or values to the console.\n\n```python\n# Simple print\nprint('Hello, World!')\n\n# Multiple values (space-separated)\nprint('Hello', 'World', 123)\n# Output: Hello World 123\n\n# Custom separator\nprint('a', 'b', 'c', sep='-')\n# Output: a-b-c\n\n# Custom end character\nprint('Hello', end='!\\n')\nprint('World')\n# Output:\n# Hello!\n# World\n```\n\n**String Formatting**\n\n```python\n# Method 1: f-strings (Python 3.6+, recommended)\nname = 'Alice'\nage = 25\nprint(f'Name: {name}, Age: {age}')\n\n# Method 2: .format()\nprint('Name: {}, Age: {}'.format(name, age))\n\n# Method 3: % operator (old style)\nprint('Name: %s, Age: %d' % (name, age))\n```\n\n**Input: input() Function**\n\nReads user input from the keyboard.\n\n```python\n# input() always returns a string\nname = input('Enter your name: ')\nprint(f'Hello, {name}')\n\n# For numbers, convert to int/float\nage_str = input('Enter your age: ')\nage = int(age_str)  # Convert to int\n\n# Or in one line\nage = int(input('Enter your age: '))\n```\n\n**Common Mistake**\n\n```python\n# WRONG - input returns a string\nnum = input('Enter a number: ')  # User enters: 5\nresult = num + 10  # Error! Can't add string + int\n\n# CORRECT\nnum = int(input('Enter a number: '))\nresult = num + 10  # Works!\n```",
+                "fullProgram": "# Output examples\nprint('=== Basic Output ===')\nprint('Hello, World!')\nprint(42, 3.14, True)\n\nprint('\\n=== Formatted Output ===')\nname = 'Bob'\nage = 30\nprint(f'Name: {name}, Age: {age}')\n\nprint('\\n=== User Input ===')\nuser_name = input('What is your name? ')\nprint(f'Nice to meet you, {user_name}!')\n\n# Numeric input\nnum = int(input('Enter a number: '))\nprint(f'You entered: {num}, doubled: {num * 2}')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does input() return?",
+                        "options": ["int", "float", "str", "bool"],
+                        "correctAnswer": 2,
+                        "explanation": "input() always returns a string, even if user types a number."
+                    },
+                    {
+                        "id": 2,
+                        "text": "How do you format variables in a string?",
+                        "options": ["print('Hello' + name)", "print(f'Hello {name}')", "print('Hello', name)", "All work"],
+                        "correctAnswer": 1,
+                        "explanation": "f-strings (f'...{variable}...') are the modern, recommended way to format strings."
+                    }
+                ]
+            },
+            {
+                "id": "py1.10",
+                "title": "1.10 Operators: Arithmetic, Relational, Logical, Assignment",
+                "duration": "25 mins",
+                "topics": ["Arithmetic operators", "Relational operators", "Logical operators", "Assignment operators"],
+                "content": "**Operators: Performing Actions on Data**\n\n**Arithmetic Operators**\n\n```python\na = 10\nb = 3\n\nprint(a + b)   # 13 (addition)\nprint(a - b)   # 7  (subtraction)\nprint(a * b)   # 30 (multiplication)\nprint(a / b)   # 3.333... (division, returns float)\nprint(a // b)  # 3  (floor division, rounds down)\nprint(a % b)   # 1  (modulo, remainder)\nprint(a ** b)  # 1000 (exponentiation)\n```\n\n**Relational (Comparison) Operators**\n\nReturn True or False.\n\n```python\nprint(5 == 5)   # True (equal)\nprint(5 != 3)   # True (not equal)\nprint(5 > 3)    # True (greater than)\nprint(5 < 10)   # True (less than)\nprint(5 >= 5)   # True (greater or equal)\nprint(5 <= 10)  # True (less or equal)\n```\n\n**Logical Operators**\n\n```python\n# and: both must be True\nprint(True and True)    # True\nprint(True and False)   # False\n\n# or: at least one must be True\nprint(True or False)    # True\nprint(False or False)   # False\n\n# not: inverts the value\nprint(not True)         # False\nprint(not False)        # True\n\n# Practical example\nage = 25\nif age >= 18 and age <= 65:\n    print('Working age')\n```\n\n**Assignment Operators**\n\n```python\nx = 10\n\nx += 5      # x = x + 5 → x = 15\nx -= 3      # x = x - 3 → x = 12\nx *= 2      # x = x * 2 → x = 24\nx /= 4      # x = x / 4 → x = 6.0\nx //= 2     # x = x // 2 → x = 3.0\nx %= 2      # x = x % 2 → x = 1.0\n```\n\n**Operator Precedence** (high to low)\n\n1. `**` (exponentiation)\n2. `*, /, //, %` (multiplication/division)\n3. `+, -` (addition/subtraction)\n4. Comparison operators\n5. `not`\n6. `and`\n7. `or`",
+                "fullProgram": "# Operator demonstrations\nprint('=== Arithmetic ===')\nprint(f'10 + 3 = {10 + 3}')\nprint(f'10 - 3 = {10 - 3}')\nprint(f'10 * 3 = {10 * 3}')\nprint(f'10 / 3 = {10 / 3}')\nprint(f'10 // 3 = {10 // 3}')\nprint(f'10 % 3 = {10 % 3}')\nprint(f'2 ** 3 = {2 ** 3}')\n\nprint('\\n=== Comparison ===')\nprint(f'10 > 5: {10 > 5}')\nprint(f'10 == 10: {10 == 10}')\nprint(f'10 != 5: {10 != 5}')\n\nprint('\\n=== Logical ===')\nprint(f'True and False: {True and False}')\nprint(f'True or False: {True or False}')\nprint(f'not True: {not True}')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is 10 // 3?",
+                        "options": ["3.333...", "3", "4", "Error"],
+                        "correctAnswer": 1,
+                        "explanation": "// is floor division. 10 // 3 = 3 (rounds down)."
+                    },
+                    {
+                        "id": 2,
+                        "text": "What is 10 % 3?",
+                        "options": ["3.333...", "3", "1", "Error"],
+                        "correctAnswer": 2,
+                        "explanation": "% is modulo (remainder). 10 % 3 = 1 because 10 divided by 3 leaves remainder 1."
+                    }
+                ]
+            },
+            {
+                "id": "py1.11",
+                "title": "1.11 Python Keywords",
+                "duration": "10 mins",
+                "topics": ["Reserved words", "Cannot be used as variable names"],
+                "content": "**Python Keywords: Reserved Words**\n\nThese words are reserved and cannot be used as variable names.\n\n**Control Flow Keywords**\n```\nif, elif, else       # Conditional execution\nfor, while           # Loops\nbreak, continue      # Loop control\npass                 # Do nothing placeholder\nreturn               # Return from function\n```\n\n**Function & Class Keywords**\n```\ndef                  # Define function\nclass                # Define class\nwith                 # Context manager\ntry, except, else, finally  # Exception handling\nraise                # Raise exception\n```\n\n**Import Keywords**\n```\nimport               # Import module\nfrom                 # Import from module\nas                   # Alias\n```\n\n**Data Keywords**\n```\nTrue, False, None    # Boolean and null values\nand, or, not         # Logical operators\nis, in               # Membership/identity\n```\n\n**Other Keywords**\n```\nlambda               # Anonymous function\nyield                # Generator\nassert               # Assertion\ndel                  # Delete\nglobal, nonlocal     # Scope modifiers\n```\n\n**View All Keywords**\n\n```python\nimport keyword\nprint(keyword.kwlist)\n# Output: ['False', 'None', 'True', 'and', 'as', 'assert', ...]\n```\n\n**Important**: If you try to use a keyword as a variable name, you'll get a syntax error.",
+                "fullProgram": "import keyword\n\nprint('Python Keywords:')\nprint(keyword.kwlist)\n\nprint(f'\\nTotal keywords: {len(keyword.kwlist)}')\n\n# Try to use a keyword as variable (this will error)\n# for = 5  # SyntaxError: invalid syntax",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Can you use 'if' as a variable name?",
+                        "options": ["Yes", "No", "Only in functions", "Only in classes"],
+                        "correctAnswer": 1,
+                        "explanation": "'if' is a Python keyword and cannot be used as a variable name. It will cause a SyntaxError."
+                    }
+                ]
+            },
+            {
+                "id": "py1.12",
+                "title": "1.12 Basic Programs: Hello World, Sum, Swap",
+                "duration": "20 mins",
+                "topics": ["Hello World", "Sum of two numbers", "Swap two numbers"],
+                "content": "**Program 1: Hello World**\n\nThe simplest program:\n\n```python\nprint('Hello, World!')\n```\n\nThis is often the first program people write when learning a new language.\n\n---\n\n**Program 2: Sum of Two Numbers**\n\n```python\n# Method 1: Hard-coded values\nnum1 = 10\nnum2 = 20\nsum_result = num1 + num2\nprint(f'Sum: {sum_result}')\n\n# Method 2: User input\nnum1 = int(input('Enter first number: '))\nnum2 = int(input('Enter second number: '))\nsum_result = num1 + num2\nprint(f'Sum: {sum_result}')\n```\n\nOutput:\n```\nEnter first number: 5\nEnter second number: 10\nSum: 15\n```\n\n---\n\n**Program 3: Swap Two Numbers**\n\nExchange the values of two variables.\n\n```python\n# Method 1: Using temporary variable\na = 5\nb = 10\nprint(f'Before: a={a}, b={b}')\n\ntemp = a\na = b\nb = temp\n\nprint(f'After: a={a}, b={b}')\n```\n\n```python\n# Method 2: Python's elegant way (tuple unpacking)\na = 5\nb = 10\nprint(f'Before: a={a}, b={b}')\n\na, b = b, a  # Swap in one line!\n\nprint(f'After: a={a}, b={b}')\n```\n\nOutput:\n```\nBefore: a=5, b=10\nAfter: a=10, b=5\n```\n\n**Why swap?**\n- Useful in sorting algorithms\n- Essential for many data structure operations\n- Tests your understanding of variable assignment",
+                "fullProgram": "# Program 1: Hello World\nprint('=== Hello World ===')\nprint('Hello, World!')\n\n# Program 2: Sum\nprint('\\n=== Sum of Two Numbers ===')\nnum1 = int(input('Enter first number: '))\nnum2 = int(input('Enter second number: '))\nprint(f'Sum: {num1 + num2}')\n\n# Program 3: Swap\nprint('\\n=== Swap Two Numbers ===')\na = int(input('Enter a: '))\nb = int(input('Enter b: '))\nprint(f'Before swap: a={a}, b={b}')\na, b = b, a\nprint(f'After swap: a={a}, b={b}')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the output of: a, b = b, a?",
+                        "options": ["Error", "Nothing", "Swaps a and b", "Duplicates a and b"],
+                        "correctAnswer": 2,
+                        "explanation": "This is Python's elegant tuple unpacking. It swaps the values of a and b in one line."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "python-l2",
+        "title": "LEVEL 2: CONTROL FLOW & DATA STRUCTURES",
+        "subtitle": "🎯 Control program logic and store data efficiently",
+        "lessons": [
+            {
+                "id": "py2.1",
+                "title": "2.1 Control Flow: if, elif, else, nested if",
+                "duration": "25 mins",
+                "topics": ["if statement", "if-else", "if-elif-else", "nested if"],
+                "content": "**Conditional Statements**\n\nExecute different code based on conditions.\n\n**if Statement**\n\n```python\nif condition:\n    # Code executes only if condition is True\n    print('Condition is true')\n\n# Example\nage = 18\nif age >= 18:\n    print('You are an adult')\n```\n\n**if-else**\n\n```python\nif condition:\n    # Executes if True\n    print('True branch')\nelse:\n    # Executes if False\n    print('False branch')\n\n# Example\ntemperature = 25\nif temperature > 30:\n    print('Hot')\nelse:\n    print('Not hot')\n```\n\n**if-elif-else**\n\nMultiple conditions:\n\n```python\nif score >= 90:\n    grade = 'A'\nelif score >= 80:\n    grade = 'B'\nelif score >= 70:\n    grade = 'C'\nelif score >= 60:\n    grade = 'D'\nelse:\n    grade = 'F'\n\nprint(f'Grade: {grade}')\n```\n\n**Nested if**\n\nif statement inside another if:\n\n```python\nage = 25\nhas_license = True\n\nif age >= 18:\n    if has_license:\n        print('You can drive')\n    else:\n        print('Get a license')\nelse:\n    print('Too young to drive')\n```\n\n**Comparison Operators in Conditions**\n\n```python\nx = 10\n\nif x == 10:           # Equal\nif x != 5:            # Not equal\nif x > 5:             # Greater than\nif x < 15:            # Less than\nif x >= 10:           # Greater or equal\nif x <= 20:           # Less or equal\nif x > 5 and x < 15:  # Multiple conditions\n```",
+                "fullProgram": "# Program: Check if number is positive, negative, or zero\nnum = int(input('Enter a number: '))\n\nif num > 0:\n    print('Positive')\nelif num < 0:\n    print('Negative')\nelse:\n    print('Zero')\n\n# Nested if: Check age and student status\nage = int(input('Enter age: '))\nis_student = input('Are you a student? (yes/no): ').lower() == 'yes'\n\nif age < 18:\n    print('You are underage')\nelse:\n    if is_student:\n        print('Adult student')\n    else:\n        print('Adult')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "How many elif clauses can you have?",
+                        "options": ["0", "1", "Unlimited", "Maximum 3"],
+                        "correctAnswer": 2,
+                        "explanation": "You can have unlimited elif clauses. They're checked in order until one is True."
+                    }
+                ]
+            },
+            {
+                "id": "py2.2",
+                "title": "2.2 Match-Case Statement (Python 3.10+)",
+                "duration": "15 mins",
+                "topics": ["Match expression", "Case patterns", "Default case"],
+                "content": "**Match-Case: Cleaner Alternative to if-elif-else**\n\nIntroduced in Python 3.10, provides pattern matching.\n\n**Basic Syntax**\n\n```python\nmatch value:\n    case pattern1:\n        # Code if pattern1 matches\n    case pattern2:\n        # Code if pattern2 matches\n    case _:\n        # Default case (if nothing matches)\n```\n\n**Example: Grade Lookup**\n\n```python\ngrade_point = 'B'\n\nmatch grade_point:\n    case 'A':\n        print('Excellent')\n    case 'B':\n        print('Good')\n    case 'C':\n        print('Average')\n    case 'D':\n        print('Below Average')\n    case 'F':\n        print('Fail')\n    case _:\n        print('Invalid grade')\n```\n\n**Multiple Patterns**\n\n```python\nday_code = 1\n\nmatch day_code:\n    case 0 | 6:  # 0 OR 6\n        print('Weekend')\n    case 1 | 2 | 3 | 4 | 5:  # Weekday\n        print('Weekday')\n    case _:\n        print('Invalid')\n```\n\n**Note**: If using Python < 3.10, use if-elif-else instead. Match-case is not available.\n\n**When to Use**\n- Multiple specific values to check\n- Code is cleaner and more readable\n- Replaces long if-elif-else chains",
+                "fullProgram": "# Match-case example (Python 3.10+)\nstatus = 'success'\n\nmatch status:\n    case 'success':\n        print('Operation succeeded')\n    case 'error':\n        print('An error occurred')\n    case 'pending':\n        print('Operation is pending')\n    case _:\n        print('Unknown status')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What Python version introduced match-case?",
+                        "options": ["3.8", "3.9", "3.10", "3.11"],
+                        "correctAnswer": 2,
+                        "explanation": "Match-case was introduced in Python 3.10 as a new feature for pattern matching."
+                    }
+                ]
+            },
+            {
+                "id": "py2.3",
+                "title": "2.3 Loops: for, while, nested loops",
+                "duration": "25 mins",
+                "topics": ["for loop", "while loop", "nested loops", "Loop with else"],
+                "content": "**Loops: Repeat Code Multiple Times**\n\n**for Loop: Iterate Over Sequences**\n\n```python\n# Iterate over a list\nfruits = ['apple', 'banana', 'orange']\nfor fruit in fruits:\n    print(fruit)\n\n# Iterate over range\nfor i in range(5):  # 0, 1, 2, 3, 4\n    print(i)\n\n# Iterate with start and stop\nfor i in range(1, 5):  # 1, 2, 3, 4\n    print(i)\n\n# Iterate with step\nfor i in range(0, 10, 2):  # 0, 2, 4, 6, 8\n    print(i)\n```\n\n**while Loop: Repeat Until Condition False**\n\n```python\ncount = 0\nwhile count < 5:\n    print(count)\n    count += 1\n\n# Password check\npassword = ''\nwhile password != 'secret':\n    password = input('Enter password: ')\nprint('Correct!')\n```\n\n**Nested Loops**\n\n```python\n# Multiplication table\nfor i in range(1, 4):\n    for j in range(1, 4):\n        print(f'{i} x {j} = {i * j}')\n\n# Output:\n# 1 x 1 = 1\n# 1 x 2 = 2\n# ...\n```\n\n**break, continue, pass**\n\n```python\n# break: Exit loop immediately\nfor i in range(10):\n    if i == 5:\n        break  # Exit at 5\n    print(i)\n\n# continue: Skip to next iteration\nfor i in range(10):\n    if i % 2 == 0:\n        continue  # Skip even numbers\n    print(i)  # Prints: 1, 3, 5, 7, 9\n\n# pass: Do nothing (placeholder)\nfor i in range(5):\n    if i == 2:\n        pass  # Do nothing here\n    print(i)\n```\n\n**Loop with else**\n\n```python\n# else executes if loop completes normally (not via break)\nfor i in range(5):\n    print(i)\nelse:\n    print('Loop completed normally')\n\n# else does NOT execute if break is used\nfor i in range(5):\n    if i == 2:\n        break\n    print(i)\nelse:\n    print('This won\\'t print')  # break was used\n```",
+                "fullProgram": "# Loop demonstrations\nprint('=== for loop ===')\nfor i in range(3):\n    print(f'Iteration {i}')\n\nprint('\\n=== while loop ===')\ncount = 0\nwhile count < 3:\n    print(f'Count: {count}')\n    count += 1\n\nprint('\\n=== break ===')\nfor i in range(10):\n    if i == 5:\n        break\n    print(i)\n\nprint('\\n=== continue ===')\nfor i in range(5):\n    if i == 2:\n        continue\n    print(i)\n\nprint('\\n=== nested loops ===')\nfor i in range(2):\n    for j in range(3):\n        print(f'i={i}, j={j}')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does range(5) produce?",
+                        "options": ["1,2,3,4,5", "0,1,2,3,4", "0,1,2,3,4,5", "5"],
+                        "correctAnswer": 1,
+                        "explanation": "range(5) produces 0, 1, 2, 3, 4. It starts at 0 and goes up to (but not including) 5."
+                    },
+                    {
+                        "id": 2,
+                        "text": "What does 'break' do in a loop?",
+                        "options": ["Skips the current iteration", "Exits the loop immediately", "Pauses the loop", "Restarts the loop"],
+                        "correctAnswer": 1,
+                        "explanation": "'break' terminates the loop immediately. 'continue' skips to the next iteration."
+                    }
+                ]
+            },
+            {
+                "id": "py2.4",
+                "title": "2.4 Data Structures: List, Tuple, Set, Dictionary",
+                "duration": "30 mins",
+                "topics": ["List creation and methods", "Tuple immutability", "Set operations", "Dictionary key-value pairs"],
+                "content": "**Collections: Store Multiple Values**\n\n**List: Ordered, Mutable, Indexed**\n\n```python\n# Create a list\nfruits = ['apple', 'banana', 'cherry']\nnumbers = [1, 2, 3, 4, 5]\nmixed = [1, 'hello', 3.14, True]\n\n# Indexing (0-based)\nprint(fruits[0])      # 'apple'\nprint(fruits[-1])     # 'cherry' (last element)\n\n# Slicing\nprint(fruits[0:2])    # ['apple', 'banana']\n\n# Methods\nfruits.append('orange')       # Add to end\nfruits.insert(1, 'kiwi')      # Insert at index\nfruits.remove('banana')       # Remove by value\nfruits.pop()                  # Remove last element\nfruits.sort()                 # Sort in place\nprint(len(fruits))            # Length\n```\n\n**Tuple: Ordered, Immutable, Indexed**\n\n```python\n# Create a tuple (use parentheses)\npoint = (3, 4)\ncolors = ('red', 'green', 'blue')\n\n# Access like lists\nprint(point[0])       # 3\n\n# Cannot modify\n# point[0] = 5  # TypeError\n\n# Useful for:\n# - Returning multiple values from functions\n# - Dictionary keys (lists can't be keys)\n# - Data that shouldn't change\n```\n\n**Set: Unordered, Unique, No Duplicates**\n\n```python\n# Create a set\ncolors = {'red', 'green', 'blue'}\nnumbers = {1, 2, 3, 3, 4, 4}  # Duplicates removed\nprint(numbers)  # {1, 2, 3, 4}\n\n# Set operations\nset1 = {1, 2, 3}\nset2 = {3, 4, 5}\n\nprint(set1 & set2)    # {3} - intersection\nprint(set1 | set2)    # {1,2,3,4,5} - union\nprint(set1 - set2)    # {1,2} - difference\n\n# Useful for removing duplicates\ndata = [1, 2, 2, 3, 3, 3]\nunique = list(set(data))  # [1, 2, 3]\n```\n\n**Dictionary: Key-Value Pairs, Unordered (Python 3.7+)**\n\n```python\n# Create a dictionary\nperson = {'name': 'Alice', 'age': 25, 'city': 'NYC'}\n\n# Access by key\nprint(person['name'])      # 'Alice'\nprint(person.get('age'))   # 25\n\n# Add/modify\nperson['email'] = 'alice@example.com'\nperson['age'] = 26\n\n# Iterate\nfor key, value in person.items():\n    print(f'{key}: {value}')\n\n# Methods\nprint(person.keys())       # dict_keys(...)\nprint(person.values())     # dict_values(...)\nperson.pop('city')         # Remove key\n```",
+                "fullProgram": "# Data structures demo\nprint('=== LIST ===')\nfruits = ['apple', 'banana', 'cherry']\nfruits.append('orange')\nprint(f'Fruits: {fruits}')\nprint(f'First: {fruits[0]}, Last: {fruits[-1]}')\n\nprint('\\n=== TUPLE ===')\npoint = (3, 4)\nprint(f'Point: {point}, X: {point[0]}, Y: {point[1]}')\n\nprint('\\n=== SET ===')\nnumbers = {1, 2, 3, 3, 4, 4}\nprint(f'Unique numbers: {numbers}')\n\nprint('\\n=== DICTIONARY ===')\nperson = {'name': 'Alice', 'age': 25}\nperson['city'] = 'NYC'\nfor key, value in person.items():\n    print(f'{key}: {value}')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the key difference between list and tuple?",
+                        "options": ["Speed", "Mutability - list can be changed, tuple cannot", "Size", "No difference"],
+                        "correctAnswer": 1,
+                        "explanation": "Lists are mutable (can be changed). Tuples are immutable (cannot be modified after creation)."
+                    },
+                    {
+                        "id": 2,
+                        "text": "What does a set do with duplicates?",
+                        "options": ["Keeps all", "Removes duplicates", "Throws error", "Keeps count"],
+                        "correctAnswer": 1,
+                        "explanation": "Sets automatically remove duplicates. {1,1,2,2} becomes {1,2}."
+                    }
+                ]
+            },
+            {
+                "id": "py2.5",
+                "title": "2.5 List Comprehension & Iteration",
+                "duration": "20 mins",
+                "topics": ["List comprehension syntax", "Filtering with comprehension", "Nested comprehension"],
+                "content": "**List Comprehension: Elegant Iteration**\n\nCreate lists in a concise, Pythonic way.\n\n**Basic Syntax**\n\n```python\n# Traditional way\nsquares = []\nfor x in range(5):\n    squares.append(x ** 2)\nprint(squares)  # [0, 1, 4, 9, 16]\n\n# List comprehension (more concise)\nsquares = [x ** 2 for x in range(5)]\nprint(squares)  # [0, 1, 4, 9, 16]\n```\n\n**General Pattern**\n\n```python\n[expression for item in iterable]\n```\n\n**With Condition (Filter)**\n\n```python\n# Get even numbers\nevens = [x for x in range(10) if x % 2 == 0]\nprint(evens)  # [0, 2, 4, 6, 8]\n\n# Filter strings\nwords = ['hello', 'world', 'python']\nlong_words = [w for w in words if len(w) > 5]\nprint(long_words)  # ['python']\n```\n\n**Nested List Comprehension**\n\n```python\n# Multiplication table (list of lists)\ntable = [[x * y for y in range(1, 4)] for x in range(1, 4)]\nprint(table)\n# [[1, 2, 3], [2, 4, 6], [3, 6, 9]]\n\n# Flatten a 2D list\nmatrix = [[1, 2], [3, 4], [5, 6]]\nflat = [x for row in matrix for x in row]\nprint(flat)  # [1, 2, 3, 4, 5, 6]\n```\n\n**Dictionary Comprehension**\n\n```python\n# Create dictionary from list\nnumbers = [1, 2, 3, 4, 5]\nsquare_dict = {x: x**2 for x in numbers}\nprint(square_dict)  # {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}\n```\n\n**Set Comprehension**\n\n```python\n# Create set with comprehension\nunique_lengths = {len(word) for word in ['a', 'bb', 'ccc', 'bb']}\nprint(unique_lengths)  # {1, 2, 3}\n```",
+                "fullProgram": "# List comprehension examples\nprint('=== Basic ===')\nsquares = [x**2 for x in range(5)]\nprint(f'Squares: {squares}')\n\nprint('\\n=== With condition ===')\nevens = [x for x in range(10) if x % 2 == 0]\nprint(f'Evens: {evens}')\n\nprint('\\n=== String filtering ===')\nwords = ['hello', 'world', 'python', 'a', 'code']\nlong_words = [w for w in words if len(w) > 3]\nprint(f'Long words: {long_words}')\n\nprint('\\n=== Dictionary comprehension ===')\nsquare_dict = {x: x**2 for x in range(1, 4)}\nprint(f'Squares dict: {square_dict}')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does [x for x in range(5)] produce?",
+                        "options": ["1,2,3,4,5", "[0,1,2,3,4]", "5", "range(5)"],
+                        "correctAnswer": 1,
+                        "explanation": "This list comprehension creates [0,1,2,3,4] - a list with numbers from range(5)."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "python-l3",
+        "title": "LEVEL 3: FUNCTIONS & MODULES",
+        "subtitle": "🎯 Write reusable and organized code",
+        "lessons": [
+            {
+                "id": "py3.1",
+                "title": "3.1 What is a Function?",
+                "duration": "20 mins",
+                "topics": ["Function definition", "Why functions", "DRY principle"],
+                "content": "**Functions: Reusable Code Blocks**\n\nA function is a reusable block of code that performs a specific task.\n\n**Why Functions?**\n- **DRY (Don't Repeat Yourself)**: Write once, use many times\n- **Readability**: Code is easier to understand\n- **Maintainability**: Changes in one place affect all uses\n- **Testing**: Easy to test individual pieces\n\n**Basic Syntax**\n\n```python\ndef greet(name):\n    print(f'Hello, {name}!')\n\ngreet('Alice')  # Output: Hello, Alice!\ngreet('Bob')    # Output: Hello, Bob!\n```\n\n**Function Components**\n\n1. **def keyword**: Starts function definition\n2. **Function name**: Describes what it does (snake_case)\n3. **Parameters**: Inputs to the function\n4. **Body**: Indented code that executes\n5. **Return**: Optional output\n\n**Example with Return**\n\n```python\ndef add(a, b):\n    return a + b\n\nresult = add(5, 3)\nprint(result)  # Output: 8\n```\n\n**Key Benefits**\n\n✅ Code reusability\n✅ Reduced redundancy\n✅ Easier debugging\n✅ Better organization\n✅ Cleaner code",
+                "fullProgram": "def greet(name):\n    '''Greet someone by name.'''\n    return f'Hello, {name}!'\n\ndef add(a, b):\n    '''Add two numbers.'''\n    return a + b\n\nprint(greet('Alice'))\nprint(f'5 + 3 = {add(5, 3)}')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the purpose of a function?",
+                        "options": ["To confuse code", "To reuse code blocks", "To slow down programs", "None"],
+                        "correctAnswer": 1,
+                        "explanation": "Functions allow you to write code once and use it multiple times."
+                    }
+                ]
+            },
+            {
+                "id": "py3.2",
+                "title": "3.2 Function Arguments & Parameters",
+                "duration": "25 mins",
+                "topics": ["Positional arguments", "Keyword arguments", "Default values", "Variable-length"],
+                "content": "**Function Arguments**\n\n**Positional Arguments**\n\nArguments matched by position:\n\n```python\ndef subtract(a, b):\n    return a - b\n\nprint(subtract(10, 3))  # 7 (a=10, b=3)\nprint(subtract(3, 10))  # -7 (a=3, b=10) - ORDER MATTERS\n```\n\n**Keyword Arguments**\n\nArguments matched by name:\n\n```python\ndef subtract(a, b):\n    return a - b\n\nprint(subtract(a=10, b=3))  # 7\nprint(subtract(b=3, a=10))  # 7 - ORDER DOESN'T MATTER\n```\n\n**Default Values**\n\nParameters can have default values:\n\n```python\ndef greet(name='Guest'):\n    print(f'Hello, {name}!')\n\ngreet()           # Hello, Guest!\ngreet('Alice')    # Hello, Alice!\n```\n\n**Variable-Length Arguments**\n\n```python\ndef add_all(*numbers):\n    '''Add any number of arguments.'''\n    return sum(numbers)\n\nprint(add_all(1, 2, 3))        # 6\nprint(add_all(1, 2, 3, 4, 5))  # 15\n```\n\n**Keyword Variable-Length**\n\n```python\ndef create_user(**info):\n    '''Accept keyword arguments.'''\n    for key, value in info.items():\n        print(f'{key}: {value}')\n\ncreate_user(name='Alice', age=25, city='NYC')\n```",
+                "fullProgram": "def create_user(name, age=0, **kwargs):\n    print(f'Name: {name}')\n    print(f'Age: {age}')\n    for key, value in kwargs.items():\n        print(f'{key}: {value}')\n\ncreate_user('Alice', 25, city='NYC', job='Engineer')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What do *args represent?",
+                        "options": ["Multiplication", "Variable-length positional arguments", "Keyword args", "Error"],
+                        "correctAnswer": 1,
+                        "explanation": "*args allows a function to accept any number of positional arguments as a tuple."
+                    }
+                ]
+            },
+            {
+                "id": "py3.3",
+                "title": "3.3 Return Statement & Scope",
+                "duration": "20 mins",
+                "topics": ["Return values", "Multiple returns", "Variable scope", "Local vs global"],
+                "content": "**Return Statement**\n\nFunctions return values using `return`:\n\n```python\ndef multiply(a, b):\n    return a * b\n\nresult = multiply(4, 5)\nprint(result)  # 20\n```\n\n**No Return = None**\n\n```python\ndef no_return():\n    print('I do nothing')\n\nresult = no_return()\nprint(result)  # None\n```\n\n**Multiple Returns**\n\n```python\ndef divide(a, b):\n    if b == 0:\n        return None  # Early return\n    return a / b\n\nprint(divide(10, 2))  # 5.0\nprint(divide(10, 0))  # None\n```\n\n**Return Multiple Values (Tuple)**\n\n```python\ndef get_info():\n    name = 'Alice'\n    age = 25\n    return name, age  # Returns tuple\n\nname, age = get_info()  # Unpacking\nprint(f'{name} is {age}')\n```\n\n**Variable Scope**\n\n```python\nx = 'global'  # Global scope\n\ndef test():\n    x = 'local'  # Local scope\n    print(x)     # local\n\ntest()\nprint(x)  # global\n```\n\n**Global Keyword**\n\n```python\nx = 10\n\ndef increment():\n    global x  # Access global variable\n    x += 1\n\nincrement()\nprint(x)  # 11\n```",
+                "fullProgram": "def divide_safe(a, b):\n    if b == 0:\n        return None\n    return a / b\n\ndef get_user_info():\n    return 'Alice', 25, 'NYC'\n\nprint(divide_safe(10, 2))   # 5.0\nprint(divide_safe(10, 0))   # None\n\nname, age, city = get_user_info()\nprint(f'{name} ({age}) from {city}')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does a function return if no return statement?",
+                        "options": ["0", "False", "None", "Error"],
+                        "correctAnswer": 2,
+                        "explanation": "If no return statement, function returns None implicitly."
+                    }
+                ]
+            },
+            {
+                "id": "py3.4",
+                "title": "3.4 Lambda Functions & Recursion",
+                "duration": "20 mins",
+                "topics": ["Lambda syntax", "Anonymous functions", "Recursion", "Base cases"],
+                "content": "**Lambda Functions: One-Line Functions**\n\nAnonymous functions for simple operations:\n\n```python\n# Regular function\ndef square(x):\n    return x ** 2\n\n# Lambda equivalent\nsquare = lambda x: x ** 2\nprint(square(5))  # 25\n```\n\n**Lambda with map()**\n\n```python\nnumbers = [1, 2, 3, 4, 5]\nsquared = list(map(lambda x: x ** 2, numbers))\nprint(squared)  # [1, 4, 9, 16, 25]\n```\n\n**Lambda with filter()**\n\n```python\nnumbers = [1, 2, 3, 4, 5, 6]\nevens = list(filter(lambda x: x % 2 == 0, numbers))\nprint(evens)  # [2, 4, 6]\n```\n\n**Recursion: Function Calls Itself**\n\n```python\ndef factorial(n):\n    if n <= 1:  # Base case\n        return 1\n    return n * factorial(n - 1)  # Recursive call\n\nprint(factorial(5))  # 120 (5*4*3*2*1)\n```\n\n**Fibonacci Sequence**\n\n```python\ndef fib(n):\n    if n <= 1:\n        return n  # Base cases\n    return fib(n - 1) + fib(n - 2)  # Recursion\n\nprint(fib(6))  # 8\n```\n\n**Important**: Always have a base case to prevent infinite recursion!",
+                "fullProgram": "# Lambda example\nmultiply = lambda x, y: x * y\nprint(multiply(3, 4))  # 12\n\n# Recursion example\ndef factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n - 1)\n\nprint(factorial(5))  # 120\n\n# Using lambda with map\nnumbers = [1, 2, 3, 4, 5]\ndoubled = list(map(lambda x: x * 2, numbers))\nprint(doubled)  # [2, 4, 6, 8, 10]",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is a lambda function?",
+                        "options": ["Complex function", "Anonymous one-line function", "Function type", "Error"],
+                        "correctAnswer": 1,
+                        "explanation": "Lambda is an anonymous function written in one line using 'lambda' keyword."
+                    }
+                ]
+            },
+            {
+                "id": "py3.5",
+                "title": "3.5 Modules & Imports",
+                "duration": "20 mins",
+                "topics": ["import statement", "from...import", "Module aliases", "Standard library"],
+                "content": "**Modules: Reusable Python Files**\n\nA module is a Python file containing functions, classes, and variables.\n\n**Import Entire Module**\n\n```python\nimport math\n\nprint(math.sqrt(16))    # 4.0\nprint(math.pi)          # 3.14159...\nprint(math.ceil(4.3))   # 5\n```\n\n**Import Specific Items**\n\n```python\nfrom math import sqrt, pi\n\nprint(sqrt(16))  # 4.0\nprint(pi)        # 3.14159...\n```\n\n**Import with Alias**\n\n```python\nimport numpy as np\n\narr = np.array([1, 2, 3])\nprint(arr)  # [1 2 3]\n```\n\n**Common Standard Library Modules**\n\n```python\nimport os              # Operating system\nimport sys             # System\nimport json            # JSON handling\nimport datetime        # Date and time\nimport random          # Random numbers\nimport time            # Time operations\n```\n\n**Example: datetime Module**\n\n```python\nfrom datetime import datetime, timedelta\n\nnow = datetime.now()\nprint(now)  # 2026-01-18 10:30:45.123456\n\ntomorrow = now + timedelta(days=1)\nprint(tomorrow)\n```\n\n**Example: random Module**\n\n```python\nimport random\n\nprint(random.randint(1, 10))      # Random int 1-10\nprint(random.choice(['a', 'b', 'c']))  # Random choice\n```",
+                "fullProgram": "import math\nimport random\nfrom datetime import datetime\n\nprint(f'Square root of 16: {math.sqrt(16)}')\nprint(f'Pi: {math.pi}')\nprint(f'Random 1-10: {random.randint(1, 10)}')\nprint(f'Now: {datetime.now()}')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "How do you import specific items from a module?",
+                        "options": ["import x", "from module import x", "import from module x", "x = module"],
+                        "correctAnswer": 1,
+                        "explanation": "'from module import item' imports specific items from a module."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "python-l4",
+        "title": "LEVEL 4: OBJECT-ORIENTED PROGRAMMING & FILE HANDLING",
+        "subtitle": "🎯 Build structured applications with classes and file operations",
+        "lessons": [
+            {
+                "id": "py4.1",
+                "title": "4.1 Classes & Objects",
+                "duration": "25 mins",
+                "topics": ["Class definition", "Objects", "Attributes", "Methods"],
+                "content": "**Object-Oriented Programming (OOP)**\n\nOrganize code using classes and objects.\n\n**Class Definition**\n\n```python\nclass Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n    \n    def greet(self):\n        return f'Hello, I am {self.name}'\n```\n\n**Creating Objects (Instances)**\n\n```python\nalice = Person('Alice', 25)\nbob = Person('Bob', 30)\n\nprint(alice.name)       # Alice\nprint(alice.greet())    # Hello, I am Alice\nprint(bob.age)          # 30\n```\n\n**__init__ Method**\n\nSpecial method called when object is created (constructor):\n\n```python\nclass Car:\n    def __init__(self, brand, color):\n        self.brand = brand\n        self.color = color\n\nmy_car = Car('Toyota', 'Red')\nprint(my_car.brand)  # Toyota\n```\n\n**Attributes & Methods**\n\n```python\nclass Student:\n    school = 'GenSpark'  # Class attribute (shared)\n    \n    def __init__(self, name, grade):\n        self.name = name          # Instance attribute\n        self.grade = grade\n    \n    def study(self):\n        return f'{self.name} is studying'\n\nstudent = Student('Alice', 10)\nprint(student.school)   # GenSpark (class attribute)\nprint(student.study())  # Alice is studying\n```",
+                "fullProgram": "class Dog:\n    def __init__(self, name, breed):\n        self.name = name\n        self.breed = breed\n    \n    def bark(self):\n        return f'{self.name} says: Woof!'\n    \n    def info(self):\n        return f'{self.name} is a {self.breed}'\n\ndog = Dog('Buddy', 'Golden Retriever')\nprint(dog.info())\nprint(dog.bark())",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does __init__ do?",
+                        "options": ["Ends class", "Initializes object", "Deletes object", "Error"],
+                        "correctAnswer": 1,
+                        "explanation": "__init__ is the constructor, called when an object is created to initialize attributes."
+                    }
+                ]
+            },
+            {
+                "id": "py4.2",
+                "title": "4.2 Inheritance & Polymorphism",
+                "duration": "25 mins",
+                "topics": ["Inheritance", "Parent/child classes", "Override methods", "Polymorphism"],
+                "content": "**Inheritance: Code Reuse Through Classes**\n\nChild classes inherit from parent classes:\n\n```python\nclass Animal:\n    def __init__(self, name):\n        self.name = name\n    \n    def speak(self):\n        return f'{self.name} makes a sound'\n\nclass Dog(Animal):  # Dog inherits from Animal\n    def speak(self):\n        return f'{self.name} barks: Woof!'\n\ndog = Dog('Buddy')\nprint(dog.speak())  # Buddy barks: Woof!\n```\n\n**Method Overriding**\n\nChild class overrides parent method:\n\n```python\nclass Cat(Animal):\n    def speak(self):\n        return f'{self.name} meows: Meow!'\n\ncat = Cat('Whiskers')\nprint(cat.speak())  # Whiskers meows: Meow!\n```\n\n**super() Keyword**\n\nCall parent method:\n\n```python\nclass Vehicle:\n    def __init__(self, brand):\n        self.brand = brand\n\nclass Car(Vehicle):\n    def __init__(self, brand, model):\n        super().__init__(brand)  # Call parent __init__\n        self.model = model\n\ncar = Car('Toyota', 'Camry')\nprint(car.brand)   # Toyota\nprint(car.model)   # Camry\n```\n\n**Polymorphism: Same Method, Different Behavior**\n\n```python\ndef make_speak(animal):\n    print(animal.speak())\n\ndog = Dog('Buddy')\ncat = Cat('Whiskers')\n\nmake_speak(dog)   # Buddy barks: Woof!\nmake_speak(cat)   # Whiskers meows: Meow!\n```",
+                "fullProgram": "class Animal:\n    def __init__(self, name):\n        self.name = name\n    \n    def speak(self):\n        return 'Some sound'\n\nclass Dog(Animal):\n    def speak(self):\n        return f'{self.name} barks'\n\nclass Cat(Animal):\n    def speak(self):\n        return f'{self.name} meows'\n\ndog = Dog('Rex')\ncat = Cat('Whiskers')\n\nprint(dog.speak())\nprint(cat.speak())",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is inheritance?",
+                        "options": ["Money", "Child class gets parent class code", "Error", "Loop"],
+                        "correctAnswer": 1,
+                        "explanation": "Inheritance allows child classes to inherit attributes and methods from parent classes."
+                    }
+                ]
+            },
+            {
+                "id": "py4.3",
+                "title": "4.3 File Handling: Reading & Writing",
+                "duration": "25 mins",
+                "topics": ["File modes", "read()", "write()", "with statement"],
+                "content": "**File Operations**\n\n**File Modes**\n\n```\n'r'  - Read (default)\n'w'  - Write (overwrites)\n'a'  - Append\n'x'  - Create new file\n'b'  - Binary mode\n```\n\n**Reading Files**\n\n```python\n# Read entire file\nwith open('file.txt', 'r') as file:\n    content = file.read()\n    print(content)\n\n# Read line by line\nwith open('file.txt', 'r') as file:\n    for line in file:\n        print(line.strip())\n\n# Read as list of lines\nwith open('file.txt', 'r') as file:\n    lines = file.readlines()\n    print(lines[0])  # First line\n```\n\n**Writing Files**\n\n```python\n# Write (overwrites existing)\nwith open('output.txt', 'w') as file:\n    file.write('Hello, World!')\n    file.write('\\nLine 2')\n\n# Append to file\nwith open('output.txt', 'a') as file:\n    file.write('\\nLine 3 - appended')\n```\n\n**Why 'with' Statement?**\n\nAutomatically closes file:\n\n```python\n# BAD - file not closed\nfile = open('data.txt', 'r')\ncontent = file.read()\n\n# GOOD - with auto-closes\nwith open('data.txt', 'r') as file:\n    content = file.read()\n```",
+                "fullProgram": "# Writing to file\nwith open('data.txt', 'w') as file:\n    file.write('Line 1\\n')\n    file.write('Line 2\\n')\n    file.write('Line 3\\n')\n\n# Reading from file\nwith open('data.txt', 'r') as file:\n    content = file.read()\n    print(content)\n\n# Appending\nwith open('data.txt', 'a') as file:\n    file.write('Line 4 - appended\\n')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does 'w' mode do when opening a file?",
+                        "options": ["Read", "Write and overwrite", "Append", "Error"],
+                        "correctAnswer": 1,
+                        "explanation": "'w' mode opens file for writing. If file exists, it overwrites the content."
+                    }
+                ]
+            },
+            {
+                "id": "py4.4",
+                "title": "4.4 Exception Handling",
+                "duration": "20 mins",
+                "topics": ["try/except", "Multiple exceptions", "finally", "Custom exceptions"],
+                "content": "**Exception Handling: Handle Errors Gracefully**\n\n**Basic try/except**\n\n```python\ntry:\n    x = 10 / 0\nexcept ZeroDivisionError:\n    print('Cannot divide by zero!')\n```\n\n**Multiple Exceptions**\n\n```python\ntry:\n    num = int(input('Enter number: '))\n    result = 10 / num\nexcept ValueError:\n    print('That is not a number!')\nexcept ZeroDivisionError:\n    print('Cannot divide by zero!')\n```\n\n**else Clause**\n\n```python\ntry:\n    num = int(input('Enter number: '))\n    result = 10 / num\nexcept:\n    print('Error occurred')\nelse:\n    print(f'Result: {result}')  # Only if no exception\n```\n\n**finally Clause**\n\n```python\ntry:\n    file = open('data.txt', 'r')\n    content = file.read()\nexcept FileNotFoundError:\n    print('File not found')\nfinally:\n    file.close()  # Always executes\n```\n\n**Custom Exceptions**\n\n```python\nclass InvalidAgeError(Exception):\n    pass\n\ndef set_age(age):\n    if age < 0:\n        raise InvalidAgeError('Age cannot be negative')\n    return age\n\ntry:\n    age = set_age(-5)\nexcept InvalidAgeError as e:\n    print(e)  # Age cannot be negative\n```",
+                "fullProgram": "def divide(a, b):\n    try:\n        result = a / b\n    except ZeroDivisionError:\n        return 'Error: Cannot divide by zero'\n    except TypeError:\n        return 'Error: Invalid input type'\n    else:\n        return f'Result: {result}'\n    finally:\n        print('Division attempt completed')\n\nprint(divide(10, 2))\nprint(divide(10, 0))\nprint(divide('a', 2))",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does finally block do?",
+                        "options": ["Run if error", "Never runs", "Always runs", "Optional"],
+                        "correctAnswer": 2,
+                        "explanation": "finally block always executes, even if exception occurs. Good for cleanup."
+                    }
+                ]
+            },
+            {
+                "id": "py4.5",
+                "title": "4.5 Working with CSV & JSON",
+                "duration": "20 mins",
+                "topics": ["CSV files", "JSON format", "Parsing data", "Writing data"],
+                "content": "**CSV: Comma-Separated Values**\n\n```python\nimport csv\n\n# Reading CSV\nwith open('data.csv', 'r') as file:\n    reader = csv.reader(file)\n    for row in reader:\n        print(row)  # Each row is a list\n\n# DictReader - rows as dictionaries\nwith open('data.csv', 'r') as file:\n    reader = csv.DictReader(file)\n    for row in reader:\n        print(row['name'], row['age'])\n```\n\n**Writing CSV**\n\n```python\nimport csv\n\nwith open('output.csv', 'w', newline='') as file:\n    writer = csv.writer(file)\n    writer.writerow(['name', 'age', 'city'])\n    writer.writerow(['Alice', 25, 'NYC'])\n    writer.writerow(['Bob', 30, 'LA'])\n```\n\n**JSON: JavaScript Object Notation**\n\n```python\nimport json\n\n# Python dict to JSON string\ndata = {'name': 'Alice', 'age': 25, 'city': 'NYC'}\njson_string = json.dumps(data)\nprint(json_string)  # {\"name\": \"Alice\", ...}\n\n# JSON string to Python dict\njson_data = json.loads(json_string)\nprint(json_data['name'])  # Alice\n```\n\n**Reading/Writing JSON Files**\n\n```python\nimport json\n\n# Write JSON to file\nwith open('data.json', 'w') as file:\n    json.dump({'name': 'Alice', 'age': 25}, file)\n\n# Read JSON from file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n    print(data['name'])\n```",
+                "fullProgram": "import json\nimport csv\n\n# JSON example\nuser_data = {\n    'name': 'Alice',\n    'age': 25,\n    'skills': ['Python', 'JavaScript', 'SQL']\n}\n\njson_string = json.dumps(user_data, indent=2)\nprint('JSON:', json_string)\n\n# CSV example\nwith open('users.csv', 'w', newline='') as f:\n    writer = csv.writer(f)\n    writer.writerow(['name', 'age'])\n    writer.writerow(['Alice', 25])\n    writer.writerow(['Bob', 30])",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is JSON used for?",
+                        "options": ["Java", "Data format", "Loops", "Functions"],
+                        "correctAnswer": 1,
+                        "explanation": "JSON is a human-readable data format used for APIs and data interchange."
+                    }
+                ]
+            },
+            {
+                "id": "py4.6",
+                "title": "4.6 Regular Expressions (Regex)",
+                "duration": "20 mins",
+                "topics": ["Pattern matching", "re module", "search/findall", "Substitution"],
+                "content": "**Regular Expressions: Pattern Matching**\n\n**Basic Syntax**\n\n```python\nimport re\n\n# Match - check if pattern at start\nmatch = re.match(r'hello', 'hello world')\nprint(match)  # Match object if found\n\n# Search - find pattern anywhere\nsearch = re.search(r'world', 'hello world')\nprint(search)  # Match object if found\n\n# Findall - find all matches\nfinds = re.findall(r'\\d+', 'Phone: 123-456-7890')\nprint(finds)  # ['123', '456', '7890']\n```\n\n**Common Patterns**\n\n```\n.     - Any character\n\\d    - Digit (0-9)\n\\w    - Word character (a-z, A-Z, 0-9, _)\n\\s    - Whitespace\n+     - One or more\n*     - Zero or more\n?     - Zero or one\n[]    - Character set\n^     - Start of string\n$     - End of string\n```\n\n**Substitution**\n\n```python\nimport re\n\ntext = 'I have 3 apples and 5 oranges'\nresult = re.sub(r'\\d+', 'X', text)\nprint(result)  # I have X apples and X oranges\n```\n\n**Email Validation**\n\n```python\nimport re\n\ndef is_email(email):\n    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'\n    return bool(re.match(pattern, email))\n\nprint(is_email('alice@example.com'))   # True\nprint(is_email('invalid.email'))       # False\n```",
+                "fullProgram": "import re\n\n# Find all digits\ntext = 'My phone is 555-123-4567'\ndigits = re.findall(r'\\d+', text)\nprint('Digits:', digits)  # ['555', '123', '4567']\n\n# Replace pattern\ntext2 = 'cat dog cat bird cat'\nresult = re.sub(r'cat', 'mouse', text2)\nprint('Replaced:', result)\n\n# Validate email\nemail = 'user@example.com'\nif re.match(r'^[\\w.-]+@[\\w.-]+\\.\\w+$', email):\n    print('Valid email')\nelse:\n    print('Invalid email')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does \\d+ match in regex?",
+                        "options": ["One letter", "One or more digits", "Space", "Error"],
+                        "correctAnswer": 1,
+                        "explanation": "\\d matches digits, and + means one or more. So \\d+ matches one or more consecutive digits."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "python-l5",
+        "title": "LEVEL 5: ADVANCED PYTHON & LIBRARIES",
+        "subtitle": "🎯 Master advanced concepts and professional libraries",
+        "lessons": [
+            {
+                "id": "py5.1",
+                "title": "5.1 Decorators & Generators",
+                "duration": "25 mins",
+                "topics": ["Function decorators", "Generators", "yield keyword", "Advanced patterns"],
+                "content": "**Decorators: Enhance Functions**\n\nDecorators wrap functions to modify behavior:\n\n```python\ndef my_decorator(func):\n    def wrapper():\n        print('Before')\n        func()\n        print('After')\n    return wrapper\n\n@my_decorator\ndef say_hello():\n    print('Hello!')\n\nsay_hello()\n# Output:\n# Before\n# Hello!\n# After\n```\n\n**Decorator with Arguments**\n\n```python\ndef repeat(times):\n    def decorator(func):\n        def wrapper():\n            for _ in range(times):\n                func()\n        return wrapper\n    return decorator\n\n@repeat(3)\ndef greet():\n    print('Hi!')\n\ngreet()\n# Output:\n# Hi!\n# Hi!\n# Hi!\n```\n\n**Generators: Memory-Efficient Iteration**\n\n```python\ndef count_up(n):\n    i = 1\n    while i <= n:\n        yield i  # Pauses here, resumes at i+1\n        i += 1\n\nfor num in count_up(3):\n    print(num)  # 1, 2, 3\n```\n\n**Generator vs List**\n\n```python\n# List - stores all in memory\nlist_squares = [x**2 for x in range(1000000)]\n\n# Generator - lazy evaluation\ndef gen_squares(n):\n    for x in range(n):\n        yield x ** 2\n\ngen = gen_squares(1000000)  # No computation yet\n```",
+                "fullProgram": "def limit_calls(max_calls):\n    def decorator(func):\n        def wrapper():\n            if wrapper.calls < max_calls:\n                wrapper.calls += 1\n                return func()\n            return 'Limit reached'\n        wrapper.calls = 0\n        return wrapper\n    return decorator\n\n@limit_calls(3)\ndef greet():\n    return 'Hello!'\n\nprint(greet())  # Hello!\nprint(greet())  # Hello!\nprint(greet())  # Hello!\nprint(greet())  # Limit reached",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does a decorator do?",
+                        "options": ["Error", "Modifies function behavior", "Deletes function", "Copies function"],
+                        "correctAnswer": 1,
+                        "explanation": "Decorators wrap functions to modify or extend their behavior without changing the original code."
+                    }
+                ]
+            },
+            {
+                "id": "py5.2",
+                "title": "5.2 Working with NumPy",
+                "duration": "25 mins",
+                "topics": ["NumPy arrays", "Array operations", "Linear algebra", "Vectorization"],
+                "content": "**NumPy: Numerical Computing**\n\nFast, efficient numerical operations:\n\n```python\nimport numpy as np\n\n# Create arrays\narr = np.array([1, 2, 3, 4, 5])\nprint(arr)  # [1 2 3 4 5]\n\n# 2D array\nmatrix = np.array([[1, 2, 3], [4, 5, 6]])\nprint(matrix)  # 2x3 matrix\n```\n\n**Array Operations**\n\n```python\nimport numpy as np\n\narr = np.array([1, 2, 3, 4, 5])\n\nprint(arr + 1)       # [2 3 4 5 6]\nprint(arr * 2)       # [2 4 6 8 10]\nprint(np.sqrt(arr))  # [1. 1.41... 1.73...]\nprint(np.sum(arr))   # 15\nprint(np.mean(arr))  # 3.0\n```\n\n**Useful Functions**\n\n```python\nimport numpy as np\n\n# Range\narr = np.arange(0, 10, 2)  # [0 2 4 6 8]\n\n# Zeros and ones\nzeros = np.zeros(5)  # [0. 0. 0. 0. 0.]\nones = np.ones(5)    # [1. 1. 1. 1. 1.]\n\n# Random\nrandom_arr = np.random.rand(5)  # Random 0-1\n\n# Reshape\narr = np.arange(12).reshape(3, 4)  # 3x4 matrix\n```",
+                "fullProgram": "import numpy as np\n\n# Create arrays\narr1 = np.array([1, 2, 3, 4, 5])\narr2 = np.array([10, 20, 30, 40, 50])\n\n# Element-wise operations\nprint('Addition:', arr1 + arr2)\nprint('Multiplication:', arr1 * 2)\nprint('Square root:', np.sqrt(arr1))\n\n# Statistics\nprint('Sum:', np.sum(arr1))\nprint('Mean:', np.mean(arr1))\nprint('Std Dev:', np.std(arr1))",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is NumPy used for?",
+                        "options": ["Networking", "Numerical computing", "Web scraping", "Databases"],
+                        "correctAnswer": 1,
+                        "explanation": "NumPy is a library for numerical computing with fast operations on arrays."
+                    }
+                ]
+            },
+            {
+                "id": "py5.3",
+                "title": "5.3 Pandas: Data Manipulation",
+                "duration": "25 mins",
+                "topics": ["DataFrames", "Series", "Data cleaning", "Data analysis"],
+                "content": "**Pandas: Data Analysis**\n\nWork with structured data easily:\n\n```python\nimport pandas as pd\n\n# Create DataFrame\ndata = {\n    'name': ['Alice', 'Bob', 'Charlie'],\n    'age': [25, 30, 28],\n    'city': ['NYC', 'LA', 'Chicago']\n}\ndf = pd.DataFrame(data)\nprint(df)\n```\n\n**DataFrame Operations**\n\n```python\nimport pandas as pd\n\ndf = pd.read_csv('data.csv')\n\n# Select column\nnames = df['name']\n\n# Filter rows\nseniors = df[df['age'] > 25]\n\n# Statistics\ndf['age'].mean()    # Average age\ndf['age'].sum()     # Total age\n\n# Group by\nby_city = df.groupby('city')['age'].mean()\n```\n\n**Data Cleaning**\n\n```python\nimport pandas as pd\n\ndf = pd.read_csv('data.csv')\n\n# Check for missing values\ndf.isnull()  # Boolean dataframe\n\n# Drop missing values\ndf.dropna()\n\n# Fill missing values\ndf.fillna(0)\n\n# Rename columns\ndf.rename(columns={'old_name': 'new_name'})\n```",
+                "fullProgram": "import pandas as pd\n\n# Create sample data\ndata = {\n    'name': ['Alice', 'Bob', 'Charlie', 'Diana'],\n    'age': [25, 30, 28, 26],\n    'salary': [50000, 60000, 55000, 52000]\n}\n\ndf = pd.DataFrame(data)\nprint('DataFrame:')\nprint(df)\n\nprint('\\nAverage age:', df['age'].mean())\nprint('\\nSalary > 52000:')\nprint(df[df['salary'] > 52000])",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is a DataFrame in Pandas?",
+                        "options": ["A frame for art", "Tabular data structure", "A loop", "A function"],
+                        "correctAnswer": 1,
+                        "explanation": "A DataFrame is a 2D data structure (like a spreadsheet) for working with structured data."
+                    }
+                ]
+            },
+            {
+                "id": "py5.4",
+                "title": "5.4 Web Scraping with BeautifulSoup",
+                "duration": "20 mins",
+                "topics": ["HTML parsing", "Extracting data", "Web requests", "Data collection"],
+                "content": "**Web Scraping: Extract Data from Websites**\n\n**Getting HTML**\n\n```python\nimport requests\nfrom bs4 import BeautifulSoup\n\n# Download web page\nresponse = requests.get('https://example.com')\nhtml = response.text\n\n# Parse HTML\nsoup = BeautifulSoup(html, 'html.parser')\n```\n\n**Finding Elements**\n\n```python\nfrom bs4 import BeautifulSoup\n\nsoup = BeautifulSoup(html, 'html.parser')\n\n# Find single element\ntitle = soup.find('h1')\nprint(title.text)\n\n# Find all elements\nlinks = soup.find_all('a')\nfor link in links:\n    print(link.text)\n```\n\n**Extracting Data**\n\n```python\nfrom bs4 import BeautifulSoup\n\nsoup = BeautifulSoup(html, 'html.parser')\n\n# Get text\ntext = soup.find('p').text\n\n# Get attributes\nlink = soup.find('a')\nhref = link['href']\n\n# Select by class or ID\nelement = soup.select('.class-name')\nelement = soup.select('#id-name')\n```\n\n**Ethical Scraping**\n\n- ✅ Check robots.txt\n- ✅ Respect rate limits\n- ✅ Use API if available\n- ✅ Follow website's ToS",
+                "fullProgram": "import requests\nfrom bs4 import BeautifulSoup\n\n# Example with mock HTML\nhtml = '''\n<html>\n<body>\n<h1>Welcome</h1>\n<p class=\"intro\">Hello World</p>\n<a href=\"/page1\">Page 1</a>\n<a href=\"/page2\">Page 2</a>\n</body>\n</html>\n'''\n\nsoup = BeautifulSoup(html, 'html.parser')\n\n# Find elements\nprint('Title:', soup.find('h1').text)\nprint('Text:', soup.find('p').text)\n\n# Find all links\nlinks = soup.find_all('a')\nfor link in links:\n    print('Link:', link.text, '->', link['href'])",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does BeautifulSoup do?",
+                        "options": ["Cleans dishes", "Parses HTML", "Makes soup", "Networks"],
+                        "correctAnswer": 1,
+                        "explanation": "BeautifulSoup is a library for parsing and extracting data from HTML/XML documents."
+                    }
+                ]
+            },
+            {
+                "id": "py5.5",
+                "title": "5.5 Multithreading & Multiprocessing",
+                "duration": "20 mins",
+                "topics": ["Threads", "Processes", "Concurrency", "Async operations"],
+                "content": "**Multithreading: Run Code Concurrently**\n\n```python\nimport threading\nimport time\n\ndef task(name):\n    for i in range(3):\n        print(f'{name}: {i}')\n        time.sleep(1)\n\n# Create threads\nt1 = threading.Thread(target=task, args=('Thread1',))\nt2 = threading.Thread(target=task, args=('Thread2',))\n\n# Start threads\nt1.start()\nt2.start()\n\n# Wait for completion\nt1.join()\nt2.join()\n\nprint('Done')\n```\n\n**Multiprocessing: True Parallelism**\n\n```python\nimport multiprocessing\nimport time\n\ndef cpu_task(n):\n    return sum(i**2 for i in range(n))\n\nif __name__ == '__main__':\n    with multiprocessing.Pool(4) as pool:\n        results = pool.map(cpu_task, [1000000, 2000000, 3000000, 4000000])\n    print(results)\n```\n\n**When to Use**\n\n- **Threading**: I/O bound (network, files, database)\n- **Multiprocessing**: CPU bound (heavy computation)\n\n**GIL (Global Interpreter Lock)**\n\nPython's threading has limitations:\n- ✅ Good for I/O operations\n- ❌ Limited for CPU-heavy work (use multiprocessing)",
+                "fullProgram": "import threading\nimport time\n\ndef download(url, name):\n    print(f'Downloading {name} from {url}')\n    time.sleep(2)  # Simulate download\n    print(f'{name} complete')\n\n# Create threads\nthreads = []\nfor i in range(3):\n    t = threading.Thread(target=download, args=(f'url{i}', f'file{i}'))\n    threads.append(t)\n    t.start()\n\n# Wait for all to complete\nfor t in threads:\n    t.join()\n\nprint('All downloads complete')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "When should you use multithreading vs multiprocessing?",
+                        "options": ["Never", "Threading for I/O, multiprocessing for CPU", "Only multiprocessing", "Only threading"],
+                        "correctAnswer": 1,
+                        "explanation": "Use threading for I/O-bound tasks (network, files). Use multiprocessing for CPU-bound tasks."
+                    }
+                ]
+            },
+            {
+                "id": "py5.6",
+                "title": "5.6 Building REST APIs with Flask",
+                "duration": "25 mins",
+                "topics": ["Flask basics", "Routes", "Request/Response", "JSON APIs"],
+                "content": "**Flask: Lightweight Web Framework**\n\n**Basic Setup**\n\n```python\nfrom flask import Flask, jsonify, request\n\napp = Flask(__name__)\n\n@app.route('/')\ndef hello():\n    return 'Hello, World!'\n\nif __name__ == '__main__':\n    app.run(debug=True)\n```\n\n**Routes & Methods**\n\n```python\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n# GET request\n@app.route('/users', methods=['GET'])\ndef get_users():\n    return {'users': ['Alice', 'Bob']}\n\n# POST request\n@app.route('/users', methods=['POST'])\ndef create_user():\n    data = request.json\n    return {'message': f'User {data[\"name\"]} created'}, 201\n\n# GET with parameter\n@app.route('/users/<int:user_id>', methods=['GET'])\ndef get_user(user_id):\n    return {'id': user_id, 'name': 'Alice'}\n```\n\n**JSON Responses**\n\n```python\nfrom flask import Flask, jsonify\n\napp = Flask(__name__)\n\n@app.route('/api/data')\ndef get_data():\n    data = {'name': 'Alice', 'age': 25}\n    return jsonify(data)  # Auto converts to JSON\n```",
+                "fullProgram": "from flask import Flask, jsonify, request\n\napp = Flask(__name__)\n\nusers = [\n    {'id': 1, 'name': 'Alice'},\n    {'id': 2, 'name': 'Bob'}\n]\n\n@app.route('/api/users', methods=['GET'])\ndef get_users():\n    return jsonify(users)\n\n@app.route('/api/users/<int:user_id>', methods=['GET'])\ndef get_user(user_id):\n    user = next((u for u in users if u['id'] == user_id), None)\n    if user:\n        return jsonify(user)\n    return {'error': 'Not found'}, 404\n\n@app.route('/api/users', methods=['POST'])\ndef create_user():\n    data = request.json\n    new_user = {'id': len(users) + 1, 'name': data['name']}\n    users.append(new_user)\n    return jsonify(new_user), 201\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does Flask do?",
+                        "options": ["Holds liquid", "Web framework", "Database", "Compiler"],
+                        "correctAnswer": 1,
+                        "explanation": "Flask is a lightweight Python web framework for building web applications and APIs."
+                    }
+                ]
+            },
+            {
+                "id": "py5.7",
+                "title": "5.7 Virtual Environments & Deployment",
+                "duration": "20 mins",
+                "topics": ["venv setup", "requirements.txt", "Deployment basics", "Docker intro"],
+                "content": "**Virtual Environments (Recap & Advanced)**\n\n```bash\n# Create venv\npython -m venv myproject\n\n# Activate (Windows)\n.\\myproject\\Scripts\\Activate\n\n# Activate (Mac/Linux)\nsource myproject/bin/activate\n\n# Install packages\npip install requests pandas flask\n\n# Save dependencies\npip freeze > requirements.txt\n\n# Install from requirements\npip install -r requirements.txt\n```\n\n**requirements.txt Example**\n\n```\nFlask==2.3.0\npandas==2.0.0\nNumPy==1.24.0\nrequests==2.31.0\nBeautifulSoup4==4.12.0\n```\n\n**Deployment Basics**\n\n1. **Local Development**\n   - Use venv\n   - Test thoroughly\n   - Version code\n\n2. **Production**\n   - Use requirements.txt\n   - Set environment variables\n   - Use WSGI server (Gunicorn, uWSGI)\n   - Add monitoring & logging\n\n**Docker Introduction**\n\n```dockerfile\nFROM python:3.10\nWORKDIR /app\nCOPY requirements.txt .\nRUN pip install -r requirements.txt\nCOPY . .\nCMD [\"python\", \"app.py\"]\n```",
+                "fullProgram": "# Example: Create and use venv\n# Commands to run in terminal:\n\n# python -m venv venv\n# .\\venv\\Scripts\\Activate (Windows)\n# source venv/bin/activate (Mac/Linux)\n\n# pip install flask pandas requests\n# pip freeze > requirements.txt\n\n# To deploy:\n# pip install -r requirements.txt\n# python app.py\n\nprint('Virtual environment setup complete!')\nprint('Use: pip freeze > requirements.txt')\nprint('Deploy: pip install -r requirements.txt')",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Why use requirements.txt?",
+                        "options": ["Store passwords", "List dependencies", "Run code", "Debug"],
+                        "correctAnswer": 1,
+                        "explanation": "requirements.txt lists all project dependencies, making it easy to reproduce the environment elsewhere."
+                    }
+                ]
+            },
+            {
+                "id": "py5.8",
+                "title": "5.8 Final Projects & Best Practices",
+                "duration": "30 mins",
+                "topics": ["Project structure", "Code organization", "Testing", "Documentation"],
+                "content": "**Project Structure Best Practice**\n\n```\nmy_project/\n├── venv/                 # Virtual environment\n├── src/\n│   ├── __init__.py\n│   ├── main.py          # Entry point\n│   ├── utils.py         # Helper functions\n│   └── models.py        # Data models\n├── tests/\n│   ├── test_main.py\n│   └── test_utils.py\n├── requirements.txt     # Dependencies\n├── README.md            # Documentation\n└── .gitignore           # Git ignore file\n```\n\n**Writing Tests**\n\n```python\nimport unittest\n\nclass TestMath(unittest.TestCase):\n    def test_addition(self):\n        self.assertEqual(2 + 2, 4)\n    \n    def test_subtraction(self):\n        self.assertEqual(5 - 2, 3)\n\nif __name__ == '__main__':\n    unittest.main()\n```\n\n**Code Quality**\n\n- ✅ Use meaningful names\n- ✅ Write docstrings\n- ✅ Follow PEP 8\n- ✅ Write tests\n- ✅ Handle errors\n- ✅ Use version control\n\n**Final Project Ideas**\n\n1. **Todo App**: Database + CLI + JSON export\n2. **Web Scraper**: Extract data, save to CSV/JSON\n3. **Weather API**: Fetch data, display formatted\n4. **Chat Bot**: NLP, conversation patterns\n5. **Data Dashboard**: Pandas + Flask + visualization",
+                "fullProgram": "# Example: Todo app structure\n\nclass Todo:\n    def __init__(self, title, done=False):\n        self.title = title\n        self.done = done\n    \n    def mark_done(self):\n        self.done = True\n    \n    def __str__(self):\n        status = '✓' if self.done else ' '\n        return f'[{status}] {self.title}'\n\nclass TodoList:\n    def __init__(self):\n        self.todos = []\n    \n    def add(self, title):\n        self.todos.append(Todo(title))\n    \n    def list_todos(self):\n        for todo in self.todos:\n            print(todo)\n\n# Usage\ntodos = TodoList()\ntodos.add('Learn Python')\ntodos.add('Build project')\ntodos.list_todos()",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is a good project structure?",
+                        "options": ["All files in root", "src/ tests/ docs/", "Randomly organized", "One big file"],
+                        "correctAnswer": 1,
+                        "explanation": "Good structure has separate folders for source, tests, and docs for maintainability."
+                    }
+                ]
+            }
+        ]
+    }
+]

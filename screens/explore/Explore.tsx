@@ -22,7 +22,7 @@ const Explore: React.FC<ExploreProps> = ({ onSelectLanguage, onBack: propOnBack 
     if (onSelectLanguage) {
       onSelectLanguage(lang);
     } else {
-      navigate(`/lessons/${lang.id}`);
+      navigate(`/track/${lang.id}`);
     }
   };
 
@@ -35,7 +35,7 @@ const Explore: React.FC<ExploreProps> = ({ onSelectLanguage, onBack: propOnBack 
   };
 
   return (
-    <div className="p-6 md:p-10 max-w-6xl mx-auto space-y-8 pb-24">
+    <div className="p-6 md:p-10 max-w-6xl mx-auto space-y-8 pb-24 bg-[#0a0b14] min-h-screen">
       <header className="flex flex-col md:flex-row md:items-center gap-6">
         <button
           onClick={handleBack}
@@ -62,7 +62,7 @@ const Explore: React.FC<ExploreProps> = ({ onSelectLanguage, onBack: propOnBack 
             className="w-full pl-12 pr-4 py-4 bg-slate-900 border border-slate-800 rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-white transition-all shadow-lg"
           />
         </div>
-        <button className="px-6 py-4 bg-slate-900 border border-slate-800 rounded-2xl text-slate-400 flex items-center justify-center gap-2 hover:bg-slate-800 transition-all">
+        <button onClick={() => { }} className="px-6 py-4 bg-slate-900 border border-slate-800 rounded-2xl text-slate-400 flex items-center justify-center gap-2 hover:bg-slate-800 transition-all">
           <Filter size={20} />
           Filters
         </button>
@@ -93,7 +93,9 @@ const Explore: React.FC<ExploreProps> = ({ onSelectLanguage, onBack: propOnBack 
               {lang.stats}
             </p>
 
-            <button className="flex items-center gap-2 text-indigo-400 font-bold text-sm group-hover:gap-3 transition-all">
+            <button
+              onClick={() => handleSelectLanguage(lang)}
+              className="flex items-center gap-2 text-indigo-400 font-bold text-sm group-hover:gap-3 transition-all">
               View Curriculum <ChevronRight size={16} />
             </button>
           </div>

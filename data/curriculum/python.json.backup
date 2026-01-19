@@ -1,0 +1,184 @@
+[
+    {
+        "id": "python-l1",
+        "title": "LEVEL 1: Foundations",
+        "lessons": [
+            {
+                "id": "py1.1",
+                "title": "1.1 What is Python & Why Use It?",
+                "duration": "15 mins",
+                "topics": [
+                    "What is Python",
+                    "Why Python",
+                    "Use Cases",
+                    "Python Philosophy"
+                ],
+                "content": "**What is Python?**\n\nPython is a high-level, general-purpose programming language focused on readability and developer productivity.\n\nKey characteristics:\n- High-level: Hides low-level memory management. Write logic, not byte-manipulation.\n- Interpreted: Run scripts directly with 'python script.py'. No separate compilation step.\n- Dynamically Typed: Variables hold objects. Types checked at runtime, not compile-time.\n- Large Ecosystem: Standard library + millions of packages (requests, pandas, fastapi, numpy).\n- Readable Syntax: Clean, English-like code. Less boilerplate than C, Java, or C++.\n\nExample of Python simplicity:\nprint(\"Hello, world!\")\n\nWhy Learn Python?\n1. Fast to write: Ideas in fewer lines than Java.\n2. Easy to read: Even unfamiliar code is quickly understandable.\n3. Huge community: Billions of lines written, thousands of tutorials, active forums.\n4. Versatile: Web backends, data science, ML, automation, scientific computing, games.\n5. Beginner-friendly: No memory pointers, no manual garbage collection.\n6. Industry adoption: Google, Netflix, Instagram, Spotify, Microsoft use Python.\n\nCommon Use Cases:\n- Web API Backend: FastAPI, Django for REST APIs.\n- Data Analysis: pandas, matplotlib, seaborn.\n- Machine Learning: scikit-learn, TensorFlow, PyTorch.\n- Automation: Scripts for DevOps, testing, task scheduling.\n- Scientific Computing: NumPy, SciPy simulations.\n- Teaching: Ideal for learning programming fundamentals.\n\nPython Philosophy:\nRun 'import this' in Python to see 20 guiding principles:\n- \"Beautiful is better than ugly\"\n- \"Explicit is better than implicit\"\n- \"Simple is better than complex\"\n- \"Readability counts\"\n\nSummary:\nPython is a high-level, readable language with a huge ecosystem. Excels at rapid development, data work, and teaching.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Is Python a compiled or interpreted language?",
+                        "options": [
+                            "Compiled with separate compilation step",
+                            "Interpreted \u2014 executed directly by interpreter",
+                            "Both equally",
+                            "Neither"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Python is typically interpreted. You run \"python script.py\" and the interpreter reads and executes code directly. No explicit separate compilation step like Java or C."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Name two real-world uses of Python.",
+                        "options": [
+                            "Only building games",
+                            "Web backends and data science",
+                            "Only hardware programming",
+                            "Only for teaching"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Python is widely used in web development (FastAPI, Django), data science (pandas, scikit-learn), machine learning, automation, and scientific computing."
+                    },
+                    {
+                        "id": 3,
+                        "text": "What does \"dynamically typed\" mean?",
+                        "options": [
+                            "You must declare types before using variables",
+                            "Types are checked at runtime; you can rebind names to different types",
+                            "Python requires compilation for type checking",
+                            "Types are never checked"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Dynamic typing means Python checks variable types at runtime, not compile-time. You can assign x = 5 (int) and later x = \"hello\" (str) without issues."
+                    },
+                    {
+                        "id": 4,
+                        "text": "Why is Python considered \"readable\"?",
+                        "options": [
+                            "It requires fewer keywords than other languages",
+                            "Syntax close to English; indentation is meaningful; less boilerplate",
+                            "It automatically fixes bugs",
+                            "Only because it is slower"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Python prioritizes clear syntax close to English, uses indentation (not braces) to show structure, and avoids unnecessary ceremony. Even unfamiliar code is relatively easy to understand."
+                    },
+                    {
+                        "id": 5,
+                        "text": "True or False: Python is good for quick automation scripts.",
+                        "options": [
+                            "True",
+                            "False"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "True. Python is excellent for writing quick automation scripts due to its simplicity, large standard library (file I/O, subprocess, scheduling), and ease of prototyping."
+                    }
+                ]
+            },
+            {
+                "id": "py1.2",
+                "title": "1.2 Install Python & Setup (venv, pip, Running Scripts)",
+                "duration": "20 mins",
+                "topics": [
+                    "Downloading Python",
+                    "Virtual Environments (venv)",
+                    "Package Manager (pip)",
+                    "Running Scripts"
+                ],
+                "content": "**Step 1: Download & Install Python**\n\n1. Go to python.org and download the latest stable version (Python 3.11+).\n2. On Windows:\n   - Run the installer.\n   - CRITICAL: Check the box \"Add Python to PATH\".\n   - Click \"Install Now\".\n   - Verify: Open PowerShell and type: python --version\n3. On macOS/Linux:\n   - macOS: Use brew install python3\n   - Linux: sudo apt-get install python3 (Ubuntu/Debian)\n\n**Step 2: REPL vs Scripts**\n\nREPL (Read-Eval-Print Loop):\n- Type 'python' in terminal to enter interactive mode.\n- Useful for quick experiments: >>> 2 + 2 \u2192 4\n- Each line executes immediately; no file needed.\n- Press Ctrl+D to exit.\n\nScripts:\n- Save code in a .py file (e.g., hello.py).\n- Run with: python hello.py\n- Best for organized, reusable programs.\n\n**Step 3: Create a Virtual Environment (venv)**\n\nWhy venv? Different projects need different package versions. venv isolates dependencies so Project A and Project B don't conflict.\n\nCreate venv (Windows PowerShell):\npython -m venv venv\n\nCreate venv (macOS/Linux):\npython3 -m venv venv\n\nThis creates a folder 'venv' with an isolated Python interpreter.\n\nActivate venv (Windows PowerShell):\n.\\venv\\Scripts\\Activate\n\nActivate venv (macOS/Linux):\nsource venv/bin/activate\n\nAfter activation, terminal prompt changes (e.g., (venv) C:\\Users\\...>). This indicates venv is active.\n\nDeactivate (if needed):\ndeactivate\n\n**Step 4: Install Packages with pip**\n\npip is Python's package manager. It installs packages into the active venv.\n\nInstall a package:\npip install requests\n\nThis fetches 'requests' library from PyPI and installs it into your venv.\n\nCheck installed packages:\npip list\n\nSave dependencies to a file (for sharing projects):\npip freeze > requirements.txt\n\nInstall dependencies from a file:\npip install -r requirements.txt\n\n**Step 5: Run Your First Script**\n\n1. Create a file hello.py:\nprint(\"Hello, world!\")\n\n2. Run it:\npython hello.py\n\nOutput: Hello, world!\n\n**Complete Workflow:**\n\nmkdir my_project\ncd my_project\npython -m venv venv\n.\\venv\\Scripts\\Activate (Windows)\npip install requests\npython hello.py\ndeactivate\n\n**Key Takeaway:**\nAlways create and activate a venv before working on Python projects. This keeps dependencies isolated and reproducible.",
+                "fullProgram": "name = input(\"Your name: \")\nprint(\"Hello,\", name)",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What command creates a virtual environment?",
+                        "options": [
+                            "python install venv",
+                            "python -m venv venv",
+                            "pip create venv",
+                            "python venv --new"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "The correct command is \"python -m venv venv\". This uses Python's built-in venv module to create a folder with an isolated interpreter."
+                    },
+                    {
+                        "id": 2,
+                        "text": "How do you activate a venv on Windows PowerShell?",
+                        "options": [
+                            "activate venv",
+                            ".\\\\venv\\\\Scripts\\\\Activate",
+                            "source venv/bin/activate",
+                            "python activate venv"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "On Windows PowerShell, activate with \".\\\\venv\\\\Scripts\\\\Activate\". On macOS/Linux, use \"source venv/bin/activate\"."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Why use a virtual environment (venv)?",
+                        "options": [
+                            "To make Python run faster",
+                            "To isolate project dependencies and avoid version conflicts",
+                            "To automatically fix bugs",
+                            "It is optional and not important"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "A venv isolates dependencies. Each project can have different package versions without conflicts. This makes projects reproducible."
+                    },
+                    {
+                        "id": 4,
+                        "text": "How do you install a package inside an active venv?",
+                        "options": [
+                            "install requests",
+                            "python install requests",
+                            "pip install requests",
+                            "pip --install requests"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Use \"pip install requests\" (with venv active). The pip command automatically installs into the active venv's site-packages directory."
+                    },
+                    {
+                        "id": 5,
+                        "text": "How do you run a Python script named \"hello.py\"?",
+                        "options": [
+                            "run hello.py",
+                            "python hello.py",
+                            "execute hello.py",
+                            "compile hello.py"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Use \"python hello.py\". This tells the Python interpreter to read and execute the hello.py file."
+                    }
+                ]
+            },
+            {
+                "id": "py1.3",
+                "title": "1.3 Basic Types: int, float, str, bool, None",
+                "duration": "30 mins",
+                "topics": [
+                    "Data Types Overview",
+                    "int (Integer)",
+                    "float (Floating-Point)",
+                    "str (String)",
+                    "bool (Boolean)",
+                    "None"
+                ],
+                "content": "**Data Types: The Foundation**\n\nIn Python, every value is an object with a type.\n\nCore immutable types:\n- int: integer numbers\n- float: floating-point (decimal) numbers\n- str: text strings (Unicode)\n- bool: boolean values (True / False)\n- NoneType: single value None (represents no value)\n\n---\n\n**int (Integer) \u2014 Precise Facts**\n\nWhat it is:\nWhole numbers without fractional parts. Examples: -100, 0, 42, 999999999.\n\n---",
+                "fullProgram": "a = float(input(\"a: \"))\nb = float(input(\"b: \"))\nop = input(\"op (+,-,*,/): \")\n\nif op == \"+\": print(a + b)\nelif op == \"-\": print(a - b)\nelif op == \"*\": print(a * b)\nelif op == \"/\": print(a / b if b != 0 else \"Error\")",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the type of the value 42?",
+                        "options": [
+                            "float",
+                            "int",
+                            "str",
+                            "bool"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "The literal 42 (without a decimal point) is an integer (int). If it were 42.0 with a decimal, it would be a float."
+                    }
+                ]
+            }
+        ]
+    }
+]

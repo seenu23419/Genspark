@@ -1,303 +1,246 @@
+/**
+ * LOGIN SCREEN - Minimal High-Conversion Design
+ * Clean, dark theme, mobile-optimized for fast, frictionless login
+ */
 
-import React, { useState } from 'react';
-import { Mail, Lock, Loader2, AlertCircle, ArrowRight, Shield, ArrowLeft } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Loader2, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { authService } from '../../services/authService';
-import { User } from '../../types';
 import { useNavigate } from 'react-router-dom';
 
-interface LoginProps {
-  onLogin: (user: User) => void;
-  onSignup: () => void;
-  onForgotPassword: () => void;
-  onBack: () => void;
-}
-
-const Login: React.FC<LoginProps> = ({ onLogin, onSignup, onForgotPassword, onBack }) => {
-  const { signInWithGoogle } = useAuth();
+const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { signInWithGoogle, user } = useAuth();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [loadingProvider, setLoadingProvider] = useState<'google' | null>(null);
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
-  const [showTerms, setShowTerms] = useState(false);
-  const [showPrivacy, setShowPrivacy] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
-  const handleOAuth = async (provider: 'google') => {
-    if (!acceptedTerms) {
-      setError("Please check the 'I accept Terms' box below to continue.");
-      return;
+  // Validation
+  const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isEmailValid = email.length > 0 && isValidEmail(email);
+  const isPasswordValid = password.length >= 6;
+  const isFormValid = isEmailValid && isPasswordValid;
+
+  useEffect(() => {
+    if (user) {
+      navigate('/', { replace: true });
     }
-    try {
-      setLoadingProvider(provider);
-      setError(null);
-      console.log("Initiating OAuth for:", provider);
-      if (provider === 'google') await signInWithGoogle();
-    } catch (err: any) {
-      console.error("OAuth Error:", err);
-      setError(err.message?.replace("AuthApiError: ", "") || "Social login failed.");
-      setLoadingProvider(null);
-    }
-  };
+  }, [user, navigate]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const clean = e.target.value.replace(/[^a-zA-Z0-9@.+_%\-]/g, '').toLowerCase();
-    setEmail(clean);
+    setEmail(e.target.value.toLowerCase().trim());
     if (error) setError(null);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+    if (error) setError(null);
+  };
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!acceptedTerms) {
-      setError("Please check the 'I accept Terms' box below to log in.");
+
+    if (!isFormValid) {
+      setError('Please enter a valid email and password');
       return;
     }
-    setError(null);
+
     setIsLoading(true);
+    setError(null);
 
     try {
       const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Request timed out. Please check your connection.")), 10000)
+        setTimeout(() => reject(new Error('Connection timeout. Please try again.')), 12000)
       );
 
       const loginPromise = authService.signIn(email, password);
-
-      const user = await Promise.race([loginPromise, timeoutPromise]);
-      navigate('/');
+      await Promise.race([loginPromise, timeoutPromise]);
     } catch (err: any) {
-      console.error(err);
-      setError(err.message || "Invalid credentials. Please verify your email and password.");
+      const errorMsg = err.message || 'Invalid email or password';
+      setError(errorMsg);
+      console.error('Login error:', err);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleGoogleLogin = async () => {
+    setIsGoogleLoading(true);
+    setError(null);
+
+    try {
+      await signInWithGoogle();
+    } catch (err: any) {
+      setIsGoogleLoading(false);
+      const errorMsg = err.message?.replace('AuthApiError: ', '') || 'Google login failed';
+      setError(errorMsg);
+      console.error('Google login error:', err);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#0a0b14] flex items-center justify-center p-6 relative overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none opacity-20">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-600/20 rounded-full blur-[120px]"></div>
-      </div>
+    <div className="fixed inset-0 bg-slate-950 overflow-y-auto">
+      <div className="min-h-full flex flex-col items-center justify-center px-6 py-12">
+        <div className="w-full max-w-sm space-y-6">
 
-      <div className="max-w-md w-full relative z-10 flex flex-col max-h-[90vh] overflow-y-auto no-scrollbar py-8 px-2 animate-in fade-in slide-in-from-bottom-4 duration-700">
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors group mb-8 shrink-0 w-fit"
-        >
-          <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-          <span className="text-xs font-black uppercase tracking-widest">Back</span>
-        </button>
-
-        <div className="mb-8 md:mb-10 text-center">
-          <div className="w-20 h-20 md:w-32 md:h-32 bg-black/40 backdrop-blur-xl rounded-[1.5rem] md:rounded-3xl border border-white/10 flex items-center justify-center shadow-2xl shadow-indigo-500/20 mx-auto mb-6 transition-all duration-700 overflow-hidden">
+          {/* Logo - Centered with breathing room */}
+          <div className="flex justify-center pt-4 pb-1">
             <img
-              src="/logo.png"
-              alt="GenSpark Logo"
-              className="w-full h-full object-cover select-none pointer-events-none"
-            />
-          </div>
-          <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">Welcome Back</h2>
-          <p className="text-slate-500 font-medium mt-1 md:mt-2 text-sm md:text-base">Log in to continue your journey.</p>
-        </div>
-
-        {error && (
-          <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-center gap-3 text-red-400 text-sm animate-in shake duration-500">
-            <AlertCircle size={18} />
-            {error}
-          </div>
-        )}
-
-        {/* EMAIL & PASSWORD FORM (FIRST) */}
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <div className="relative group">
-            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-400 transition-colors" size={18} />
-            <input
-              type="text"
-              inputMode="email"
-              required
-              value={email}
-              onChange={handleEmailChange}
-              placeholder="Email address"
-              className="w-full pl-12 pr-4 py-3 md:py-4 bg-slate-900 border border-slate-800 rounded-2xl focus:ring-2 focus:ring-indigo-500/50 focus:outline-none text-white transition-all font-medium text-sm md:text-base"
+              src="/icons/logo.png"
+              alt="GenSpark"
+              className="h-44 w-44 object-contain"
+              draggable={false}
             />
           </div>
 
-          <div className="relative group">
-            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-400 transition-colors" size={18} />
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                if (error) setError(null);
-              }}
-              placeholder="Password"
-              className="w-full pl-12 pr-32 py-3 md:py-4 bg-slate-900 border border-slate-800 rounded-2xl focus:ring-2 focus:ring-indigo-500/50 focus:outline-none text-white transition-all font-medium text-sm md:text-base"
-            />
+          {/* Headline + Subtext */}
+          <div className="text-center space-y-2">
+            <h1 className="text-3xl font-bold text-white tracking-tight">
+              Welcome back
+            </h1>
+            <p className="text-sm text-slate-400">
+              Log in to continue learning
+            </p>
+          </div>
+
+          {/* Error message */}
+          {error && (
+            <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg flex items-start gap-2">
+              <AlertCircle size={16} className="text-red-400 mt-0.5 flex-shrink-0" />
+              <p className="text-xs text-red-300 leading-relaxed">{error}</p>
+            </div>
+          )}
+
+          {/* Login Form */}
+          <form onSubmit={handleLogin} className="space-y-5">
+            {/* Email field - Clean, consistent styling */}
+            <div>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={handleEmailChange}
+                placeholder="Email address"
+                disabled={isLoading || isGoogleLoading}
+                className="w-full px-4 py-3.5 bg-slate-900 border border-slate-800 rounded-lg text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              />
+            </div>
+
+            {/* Password field - Eye icon perfectly centered */}
+            <div className="space-y-2">
+              <div className="relative">
+                <input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={handlePasswordChange}
+                  placeholder="Password"
+                  disabled={isLoading || isGoogleLoading}
+                  className="w-full px-4 py-3.5 pr-11 bg-slate-900 border border-slate-800 rounded-lg text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  disabled={isLoading || isGoogleLoading}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors disabled:opacity-50"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+
+              {/* Forgot password - Right-aligned, muted */}
+              <div className="text-right">
+                <button
+                  type="button"
+                  onClick={() => navigate('/forgot-password')}
+                  disabled={isLoading || isGoogleLoading}
+                  className="text-xs text-slate-500 hover:text-slate-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Forgot password?
+                </button>
+              </div>
+            </div>
+
+            {/* Primary CTA - Log In (Most Prominent) */}
             <button
-              type="button"
-              onClick={onForgotPassword}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-400 transition-colors bg-slate-900 px-2 py-1 rounded-lg"
+              type="submit"
+              disabled={!isFormValid || isLoading || isGoogleLoading}
+              className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 disabled:bg-slate-800 disabled:text-slate-600 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20"
             >
-              Forgot?
+              {isLoading ? (
+                <>
+                  <Loader2 size={16} className="animate-spin" />
+                  <span>Logging in...</span>
+                </>
+              ) : (
+                'Log in'
+              )}
             </button>
+          </form>
+
+          {/* Divider Section - "or continue with" */}
+          <div className="relative flex items-center gap-3 py-2">
+            <div className="flex-1 h-px bg-slate-800"></div>
+            <span className="text-xs text-slate-500 font-medium">or continue with</span>
+            <div className="flex-1 h-px bg-slate-800"></div>
           </div>
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full h-12 md:h-14 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-black text-base md:text-lg transition-all active:scale-[0.98] shadow-xl shadow-indigo-600/20 flex items-center justify-center gap-2 group disabled:opacity-50"
-          >
-            {isLoading ? <Loader2 className="animate-spin" size={20} /> : (
-              <>
-                Log In
-                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-              </>
-            )}
-          </button>
-        </form>
-
-        {/* GOOGLE BUTTON (SECOND) */}
-        <div className="relative pt-8">
-          <div className="absolute inset-x-0 top-8 flex items-center"><div className="w-full border-t-2 border-dotted border-slate-800/60"></div></div>
-          <span className="relative px-4 mx-auto block w-fit bg-[#0a0b14] text-slate-500 font-black text-xs tracking-[0.3em] mb-6">OR</span>
-
+          {/* Secondary Authentication - Google (Less Prominent) */}
           <button
             type="button"
-            onClick={() => handleOAuth('google')}
-            disabled={!!loadingProvider}
-            className="w-full h-12 md:h-14 bg-white/5 hover:bg-white/10 text-white rounded-2xl font-bold text-xs md:text-sm flex items-center justify-center gap-3 transition-all active:scale-[0.98] border border-white/10 group mt-4 disabled:opacity-50"
+            onClick={handleGoogleLogin}
+            disabled={isLoading || isGoogleLoading}
+            className="w-full py-3.5 bg-transparent border border-slate-800 hover:border-slate-700 hover:bg-slate-900/50 rounded-lg text-slate-300 text-sm font-medium flex items-center justify-center gap-3 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loadingProvider === 'google' ? <Loader2 className="animate-spin text-slate-400" size={20} /> : (
+            {isGoogleLoading ? (
               <>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                Continue with Google
+                <Loader2 size={18} className="animate-spin" />
+                <span>Connecting...</span>
+              </>
+            ) : (
+              <>
+                <svg className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(1, 0, 0, 1, 27.009766, -39.238281)">
+                    <path fill="#4285F4" d="M -3.264 51.509 C -3.264 50.719 -3.334 49.969 -3.454 49.239 L -14.754 49.239 L -14.754 53.749 L -8.284 53.749 C -8.574 55.229 -9.424 56.479 -10.684 57.329 L -10.684 60.329 L -6.824 60.329 C -4.564 58.239 -3.264 55.159 -3.264 51.509 Z" />
+                    <path fill="#34A853" d="M -14.754 63.239 C -11.514 63.239 -8.804 62.159 -6.824 60.329 L -10.684 57.329 C -11.764 58.049 -13.134 58.489 -14.754 58.489 C -17.884 58.489 -20.534 56.379 -21.484 53.529 L -25.464 53.529 L -25.464 56.619 C -23.494 60.539 -19.444 63.239 -14.754 63.239 Z" />
+                    <path fill="#FBBC05" d="M -21.484 53.529 C -21.754 52.809 -21.904 52.039 -21.904 51.239 C -21.904 50.439 -21.754 49.669 -21.484 48.949 L -21.484 45.859 L -25.464 45.859 C -26.284 47.479 -26.754 49.299 -26.754 51.239 C -26.754 53.179 -26.284 54.999 -25.464 56.619 L -21.484 53.529 Z" />
+                    <path fill="#EA4335" d="M -14.754 43.989 C -13.004 43.989 -11.404 44.599 -10.154 45.789 L -6.734 42.369 C -8.804 40.429 -11.514 39.239 -14.754 39.239 C -19.444 39.239 -23.494 41.939 -25.464 45.859 L -21.484 48.949 C -20.534 46.099 -17.884 43.989 -14.754 43.989 Z" />
+                  </g>
+                </svg>
+                <span>Continue with Google</span>
               </>
             )}
           </button>
-        </div>
 
-        {/* SIGN UP OPTION (THIRD) */}
-        <div className="mt-10 text-center">
-          <p className="text-slate-500 text-sm font-medium">
-            New to GenSpark?{' '}
+          {/* Bottom signup link - Lowest priority */}
+          <p className="text-center text-sm text-slate-500 pt-2">
+            Don't have an account?{' '}
             <button
-              onClick={onSignup}
-              className="text-indigo-400 font-bold hover:text-indigo-300 transition-colors hover:underline decoration-2 underline-offset-4"
+              onClick={() => navigate('/signup')}
+              disabled={isLoading || isGoogleLoading}
+              className="text-slate-400 hover:text-white font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Sign Up
+              Sign up
+            </button>
+          </p>
+
+          <p className="text-center text-[10px] text-slate-600 pt-4 uppercase tracking-widest font-semibold">
+            By logging in, you agree to our{' '}
+            <button
+              onClick={() => navigate('/privacy')}
+              className="text-slate-500 hover:text-indigo-400 transition-colors underline"
+            >
+              Privacy Policy
             </button>
           </p>
         </div>
-
-        {/* TERMS & CONDITIONS (FOURTH) */}
-        <div className="mt-10 pt-6 border-t-2 border-dotted border-slate-800/60">
-          <label className="flex items-start gap-3 cursor-pointer group">
-            <div className="relative mt-1">
-              <input
-                type="checkbox"
-                checked={acceptedTerms}
-                onChange={(e) => {
-                  setAcceptedTerms(e.target.checked);
-                  if (error) setError(null);
-                }}
-                className="peer sr-only"
-              />
-              <div className="w-5 h-5 border-2 border-slate-700 rounded-md bg-slate-900 transition-all peer-checked:bg-indigo-600 peer-checked:border-indigo-600 group-hover:border-slate-500"></div>
-              <div className="absolute inset-0 flex items-center justify-center text-white scale-0 transition-transform peer-checked:scale-100">
-                <Shield size={12} fill="currentColor" />
-              </div>
-            </div>
-            <span className="text-xs text-slate-500 font-medium leading-relaxed select-none">
-              By logging in, I accept the <button type="button" onClick={(e) => { e.stopPropagation(); setShowTerms(true); }} className="text-indigo-400 font-bold hover:underline">Terms of Service</button> and <button type="button" onClick={(e) => { e.stopPropagation(); setShowPrivacy(true); }} className="text-indigo-400 font-bold hover:underline">Privacy Policy</button>.
-            </span>
-          </label>
-        </div>
       </div>
-
-      {/* Terms of Service Modal */}
-      {showTerms && (
-        <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-[100] flex items-center justify-center p-4 animate-in fade-in duration-300">
-          <div className="bg-[#0f111a] border border-white/10 w-full max-w-2xl max-h-[80vh] rounded-[2.5rem] relative flex flex-col shadow-2xl overflow-hidden">
-            <div className="p-8 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
-              <div>
-                <h3 className="text-2xl font-black text-white flex items-center gap-3">
-                  <Shield className="text-indigo-500" size={24} />
-                  Terms of Service
-                </h3>
-                <p className="text-slate-500 text-xs mt-1 font-bold uppercase tracking-widest">Last updated: January 2025</p>
-              </div>
-              <button onClick={() => setShowTerms(false)} className="p-3 bg-white/5 hover:bg-white/10 rounded-2xl text-slate-400 hover:text-white transition-all">
-                <Shield size={24} className="rotate-45" />
-              </button>
-            </div>
-
-            <div className="flex-1 overflow-y-auto p-8 space-y-8 no-scrollbar">
-              <section className="space-y-3">
-                <h4 className="text-lg font-bold text-white flex items-center gap-2">1. Acceptance of Terms</h4>
-                <p className="text-slate-400 leading-relaxed text-sm">
-                  By accessing or using GenSpark, you agree to be bound by these Terms of Service.
-                </p>
-              </section>
-              <section className="space-y-3">
-                <h4 className="text-lg font-bold text-white flex items-center gap-2">2. Description of Service</h4>
-                <p className="text-slate-400 leading-relaxed text-sm">
-                  GenSpark offers interactive coding lessons and AI-assisted tutoring.
-                </p>
-              </section>
-            </div>
-
-            <div className="p-6 bg-white/[0.02] border-t border-white/5">
-              <button
-                onClick={() => setShowTerms(false)}
-                className="w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-black transition-all shadow-lg"
-              >
-                I Understand
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Privacy Policy Modal */}
-      {showPrivacy && (
-        <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-[100] flex items-center justify-center p-4 animate-in fade-in duration-300">
-          <div className="bg-[#0f111a] border border-white/10 w-full max-w-2xl max-h-[80vh] rounded-[2.5rem] relative flex flex-col shadow-2xl overflow-hidden">
-            <div className="p-8 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
-              <div>
-                <h3 className="text-2xl font-black text-white flex items-center gap-3">
-                  <Shield className="text-emerald-500" size={24} />
-                  Privacy Policy
-                </h3>
-                <p className="text-slate-500 text-xs mt-1 font-bold uppercase tracking-widest">Your Data, Your Control</p>
-              </div>
-              <button onClick={() => setShowPrivacy(false)} className="p-3 bg-white/5 hover:bg-white/10 rounded-2xl text-slate-400 hover:text-white transition-all">
-                <Shield size={24} className="rotate-45" />
-              </button>
-            </div>
-
-            <div className="flex-1 overflow-y-auto p-8 space-y-8 no-scrollbar">
-              <section className="space-y-3">
-                <h4 className="text-lg font-bold text-white">Data We Collect</h4>
-                <p className="text-slate-400 leading-relaxed text-sm">
-                  We value your privacy. Your code and conversations are used only to personalize your learning experience.
-                </p>
-              </section>
-            </div>
-
-            <div className="p-6 bg-white/[0.02] border-t border-white/5">
-              <button
-                onClick={() => setShowPrivacy(false)}
-                className="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl font-black transition-all shadow-lg"
-              >
-                Close Policy
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

@@ -1,0 +1,341 @@
+[
+    {
+        "id": "js-level-1",
+        "title": "LEVEL 1: JavaScript Basics (Zero Level)",
+        "description": "Understand fundamentals & write simple programs",
+        "lessons": [
+            {
+                "id": "js1.1",
+                "title": "1.1 What is JavaScript?",
+                "duration": "15 mins",
+                "difficultyLevel": "Beginner",
+                "topics": ["JavaScript Basics", "Introduction", "History"],
+                "content": "# What is JavaScript?\n\nJavaScript is a lightweight, dynamic programming language that brings interactivity to web browsers.\n\n## Definition\n\nJavaScript is:\n\n• **🔥 Programming Language**: Uses syntax like C, Java, Python\n\n• **⚡ Interpreted Language**: Runs directly in browser without compilation\n\n• **💠 Dynamic Typing**: Data types can change at runtime\n\n• **📝 Event-Driven**: Responds to user actions (clicks, typing, etc.)\n\n• **✅ Client-Side**: Runs on user's browser, not server\n\n## History\n\n• **1995**: Created by Brendan Eich in 10 days\n\n• **Originally Named**: Mocha → LiveScript → JavaScript\n\n• **Purpose**: Add interactivity to static HTML pages\n\n• **ES6 (2015)**: Major update that modernized the language\n\n## Why JavaScript?\n\n### ✨ Universal\n- Runs in every browser (Chrome, Firefox, Safari, Edge)\n- No installation needed\n- Works on desktop, mobile, servers (Node.js)\n\n### 🚀 Powerful\n- Build complete applications\n- Create interactive user interfaces\n- Handle real-time data\n- Communicate with servers\n\n### 📦 Easy to Learn\n- Simple syntax\n- Immediate feedback\n- Large community\n- Tons of libraries & frameworks\n\n## Real-World Applications\n\n**Web Applications:**\n- Facebook, Google Maps, Netflix\n- Gmail, Slack, Figma\n- VS Code (built with JavaScript)\n\n**Mobile Apps:**\n- React Native, Flutter (can use JS)\n- Electron (desktop apps)\n\n**Backend:**\n- Node.js servers\n- Database operations\n- API creation\n\n## JavaScript Today\n\nJavaScript has evolved from simple form validation to:\n- Full-stack web development\n- Real-time chat applications\n- Machine learning in browser\n- Game development\n- IoT (Internet of Things)",
+                "fullProgram": "// Your first JavaScript program!\nconsole.log(\"Hello, JavaScript!\");\nconsole.log(\"Welcome to the JavaScript journey!\");\n\n// Display alert\nalert(\"JavaScript is awesome!\");",
+                "expectedOutput": "Console:\nHello, JavaScript!\nWelcome to the JavaScript journey!\n\nBrowser:\nAlert box showing: JavaScript is awesome!",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Who created JavaScript?",
+                        "options": ["Guido van Rossum", "Brendan Eich", "Bjarne Stroustrup", "Dennis Ritchie"],
+                        "correctAnswer": 1,
+                        "explanation": "Brendan Eich created JavaScript in 1995 at Netscape."
+                    }
+                ]
+            },
+            {
+                "id": "js1.2",
+                "title": "1.2 Variables (var, let, const)",
+                "duration": "25 mins",
+                "difficultyLevel": "Beginner",
+                "topics": ["Variables", "var", "let", "const"],
+                "content": "# Variables in JavaScript\n\nVariables are containers that store data values.\n\n## Three Ways to Declare Variables\n\n### 🔥 var (Old Way - Avoid)\n\n```javascript\nvar name = 'John';\nvar age = 25;\nname = 'Jane';  // Can reassign\nvar name = 'Bob';  // Can redeclare\n```\n\n### ⚡ let (Modern - Recommended)\n\n```javascript\nlet score = 90;\nscore = 95;  // Can reassign\n// let score = 85;  // Error - cannot redeclare\n```\n\n### 💠 const (Modern - Best for Constants)\n\n```javascript\nconst PI = 3.14159;\n// PI = 3.14;  // Error - cannot reassign\nconst person = { name: 'John' };\nperson.age = 25;  // OK - modifying property\n```\n\n## Comparison Table\n\n| Feature | var | let | const |\n| **Scope** | Function | Block | Block |\n| **Reassign** | Yes | Yes | No |\n| **Redeclare** | Yes | No | No |\n| **Use** | Avoid | Variables | Constants |",
+                "fullProgram": "// Variable examples\nconst PI = 3.14159;\nlet radius = 5;\nlet area = PI * radius * radius;\n\nconsole.log('Radius:', radius);\nconsole.log('Area:', area);\n\nradius = 10;  // Reassign\narea = PI * radius * radius;\nconsole.log('New Radius:', radius);\nconsole.log('New Area:', area);",
+                "expectedOutput": "Radius: 5\nArea: 78.53975\nNew Radius: 10\nNew Area: 314.159",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which keyword is best for storing constants?",
+                        "options": ["var", "let", "const", "static"],
+                        "correctAnswer": 2,
+                        "explanation": "const is used for constants that won't change."
+                    }
+                ]
+            },
+            {
+                "id": "js1.3",
+                "title": "1.3 Data Types (Number, String, Boolean, Null, Undefined)",
+                "duration": "30 mins",
+                "difficultyLevel": "Beginner",
+                "topics": ["Data Types", "Primitives", "Objects"],
+                "content": "# Data Types in JavaScript\n\nJavaScript has dynamic typing - variables can hold any data type.\n\n## Primitive Types\n\n### 🔥 Number\n\n```javascript\nconst age = 25;\nconst height = 5.9;\nconst result = 10 / 3;  // 3.333...\nconsole.log(typeof age);  // \"number\"\n```\n\n### ⚡ String\n\n```javascript\nconst name = 'John';        // Single quotes\nconst text = \"Hello\";       // Double quotes\nconst message = `Hi ${name}`; // Template literal\n```\n\n### 💠 Boolean\n\n```javascript\nconst isActive = true;\nconst isDeleted = false;\nconsole.log(typeof isActive);  // \"boolean\"\n```\n\n### 📝 Undefined\n\n```javascript\nlet x;  // No value assigned\nconsole.log(x);  // undefined\n```\n\n### 📦 Null\n\n```javascript\nlet user = null;  // Intentionally empty\nconsole.log(user);  // null\n```\n\n### 🎯 Object\n\n```javascript\nconst person = {\n    name: 'John',\n    age: 30,\n    city: 'New York'\n};\nconsole.log(person.name);  // John\n```\n\n### 🔔 Array\n\n```javascript\nconst colors = ['red', 'green', 'blue'];\nconsole.log(colors[0]);  // red\nconsole.log(colors.length);  // 3\n```",
+                "fullProgram": "// Data types example\nconst age = 25;\nconst name = 'Alice';\nconst isStudent = true;\nconst gpa = 3.8;\n\nconsole.log('Age:', age, '- Type:', typeof age);\nconsole.log('Name:', name, '- Type:', typeof name);\nconsole.log('Is Student:', isStudent, '- Type:', typeof isStudent);\n\nconst person = {\n    name: name,\n    age: age,\n    gpa: gpa\n};\n\nconsole.log('Person:', person);\n\nconst scores = [90, 85, 95, 88];\nconsole.log('Scores:', scores);\nconsole.log('First score:', scores[0]);\nconsole.log('Number of scores:', scores.length);",
+                "expectedOutput": "Age: 25 - Type: number\nName: Alice - Type: string\nIs Student: true - Type: boolean\nPerson: { name: 'Alice', age: 25, gpa: 3.8 }\nScores: [ 90, 85, 95, 88 ]\nFirst score: 90\nNumber of scores: 4",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What data type does the expression 'Hello' + 5 return?",
+                        "options": ["number", "string", "error", "undefined"],
+                        "correctAnswer": 1,
+                        "explanation": "In JavaScript, string + number results in a string: 'Hello5'"
+                    }
+                ]
+            },
+            {
+                "id": "js1.4",
+                "title": "1.4 Operators (Arithmetic, Comparison, Logical)",
+                "duration": "35 mins",
+                "difficultyLevel": "Beginner",
+                "topics": ["Arithmetic", "Comparison", "Logical"],
+                "content": "# Operators in JavaScript\n\n## Arithmetic Operators\n\n### 🔥 Basic Operations\n\n```javascript\nconst a = 20, b = 8;\nconsole.log(a + b);     // 28 (addition)\nconsole.log(a - b);     // 12 (subtraction)\nconsole.log(a * b);     // 160 (multiplication)\nconsole.log(a / b);     // 2.5 (division)\nconsole.log(a % b);     // 4 (modulus/remainder)\nconsole.log(a ** 2);    // 400 (exponentiation)\n```\n\n### ⚡ Increment & Decrement\n\n```javascript\nlet x = 5;\nconsole.log(x++);       // 5 (use then increment)\nconsole.log(x);         // 6\nconsole.log(++x);       // 7 (increment then use)\n```\n\n## Comparison Operators\n\n**Return true or false**\n\n```javascript\nconsole.log(10 > 5);      // true (greater than)\nconsole.log(10 < 5);      // false (less than)\nconsole.log(10 >= 10);    // true\nconsole.log(10 <= 5);     // false\nconsole.log(10 === 10);   // true (strict equal)\nconsole.log(10 == '10');  // true (loose equal)\nconsole.log(10 !== 5);    // true (not equal)\n```\n\n## Logical Operators\n\n### 🔥 AND (&&)\n\n```javascript\nconsole.log(true && true);    // true\nconsole.log(true && false);   // false\nif (age >= 18 && hasLicense) {\n    console.log('Can drive');\n}\n```\n\n### ⚡ OR (||)\n\n```javascript\nconsole.log(false || true);   // true\nconsole.log(false || false);  // false\nif (hasLicense || hasParent) {\n    console.log('Can go');\n}\n```\n\n### 💠 NOT (!)\n\n```javascript\nconsole.log(!true);           // false\nif (!isRaining) {\n    console.log('Go outside');\n}\n```",
+                "fullProgram": "// Operators example\nconst a = 20, b = 8;\n\nconsole.log('Arithmetic:');\nconsole.log('20 + 8 =', a + b);   // 28\nconsole.log('20 - 8 =', a - b);   // 12\nconsole.log('20 * 8 =', a * b);   // 160\nconsole.log('20 / 8 =', a / b);   // 2.5\nconsole.log('20 % 8 =', a % b);   // 4\n\nconsole.log('\\nComparison:');\nconsole.log('20 > 8 =', a > b);      // true\nconsole.log('20 < 8 =', a < b);      // false\nconsole.log('20 === 20 =', a === a); // true\n\nconsole.log('\\nLogical:');\nconst canDrive = (a >= 18) && (b >= 4);\nconsole.log('Can drive:', canDrive);  // true\n\nconst hasJob = true, hasHome = false;\nconsole.log('Stable:', hasJob || hasHome);  // true",
+                "expectedOutput": "Arithmetic:\n20 + 8 = 28\n20 - 8 = 12\n20 * 8 = 160\n20 / 8 = 2.5\n20 % 8 = 4\n\nComparison:\n20 > 8 = true\n20 < 8 = false\n20 === 20 = true\n\nLogical:\nCan drive: true\nStable: true",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the difference between == and ===?",
+                        "options": ["No difference", "=== is strict (checks type)", "== is stricter", "Both check type"],
+                        "correctAnswer": 1,
+                        "explanation": "=== checks both type and value, == only checks value (type coercion)."
+                    }
+                ]
+            },
+            {
+                "id": "js1.5",
+                "title": "1.5 Input & Output (alert, prompt, console.log)",
+                "duration": "25 mins",
+                "difficultyLevel": "Beginner",
+                "topics": ["Input", "Output", "User Interaction"],
+                "content": "# Input & Output\n\n## Output Methods\n\n### 🔥 console.log()\n\n**Display in console**\n\n```javascript\nconsole.log('Hello World');\nconsole.log(42);\nconsole.log({ name: 'John', age: 30 });\nconsole.log([1, 2, 3]);\n```\n\n### ⚡ alert()\n\n**Show popup**\n\n```javascript\nalert('Welcome!');\nalert('You have ' + 5 + ' messages');\n```\n\n### 💠 document.write()\n\n**Write to HTML**\n\n```javascript\ndocument.write('Hello');\ndocument.write('<h1>Heading</h1>');\n```\n\n## Input Methods\n\n### 🔥 prompt()\n\n**Ask user for input**\n\n```javascript\nconst name = prompt('What is your name?');\nconst age = prompt('Enter age:', '18');\nconsole.log('Name: ' + name + ', Age: ' + age);\n\n// Returns string (convert if needed)\nconst num = Number(prompt('Enter number'));\n```\n\n### ⚡ confirm()\n\n**Yes/No dialog**\n\n```javascript\nconst deleteIt = confirm('Are you sure?');\nif (deleteIt) {\n    console.log('Deleted!');\n} else {\n    console.log('Cancelled');\n}\n```\n\n### 💠 HTML Input\n\n```html\n<input type=\"text\" id=\"nameInput\">\n<button onclick=\"getName()\">Submit</button>\n\n<script>\n    function getName() {\n        const name = document.getElementById('nameInput').value;\n        console.log(name);\n    }\n</script>\n```",
+                "fullProgram": "// Input/Output example\nconst name = prompt('What is your name?');\nconst ageStr = prompt('How old are you?');\nconst age = Number(ageStr);\n\nif (name && !isNaN(age)) {\n    const nextYear = age + 1;\n    \n    console.log('Name: ' + name);\n    console.log('Current age: ' + age);\n    console.log('Next year: ' + nextYear);\n    \n    alert('Hello ' + name + '! You will be ' + nextYear + ' next year.');\n} else {\n    alert('Please enter valid information');\n}",
+                "expectedOutput": "User enters: Alice, 25\n\nConsole:\nName: Alice\nCurrent age: 25\nNext year: 26\n\nAlert: Hello Alice! You will be 26 next year.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What data type does prompt() return?",
+                        "options": ["number", "string", "null if cancelled", "both string and null"],
+                        "correctAnswer": 3,
+                        "explanation": "prompt() returns a string if user enters text, or null if they click Cancel."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "js-level-2",
+        "title": "LEVEL 2: Control Flow & Core Logic",
+        "description": "Make decisions and repeat tasks",
+        "lessons": [
+            {
+                "id": "js2.1",
+                "title": "2.1 Conditional Statements (if, else-if, switch)",
+                "duration": "35 mins",
+                "difficultyLevel": "Beginner",
+                "topics": ["if", "else-if", "switch", "Conditionals"],
+                "content": "# Conditional Statements\n\n## if Statement\n\n**Execute code if condition is true**\n\n```javascript\nif (condition) {\n    // code runs if true\n}\n\nconst age = 18;\nif (age >= 18) {\n    console.log('You are an adult');\n}\n```\n\n## if-else Statement\n\n**Choose between two paths**\n\n```javascript\nif (condition) {\n    // runs if true\n} else {\n    // runs if false\n}\n\nconst score = 45;\nif (score >= 50) {\n    console.log('Pass');\n} else {\n    console.log('Fail');\n}\n```\n\n## else-if Ladder\n\n**Multiple conditions**\n\n```javascript\nif (condition1) {\n    // block 1\n} else if (condition2) {\n    // block 2\n} else if (condition3) {\n    // block 3\n} else {\n    // default\n}\n\nconst marks = 75;\nif (marks >= 90) {\n    console.log('Grade A');\n} else if (marks >= 80) {\n    console.log('Grade B');\n} else if (marks >= 70) {\n    console.log('Grade C');\n} else {\n    console.log('Fail');\n}\n```\n\n## switch Statement\n\n**Multi-way selection**\n\n```javascript\nswitch (expression) {\n    case value1:\n        // code\n        break;\n    case value2:\n        // code\n        break;\n    default:\n        // code\n}\n\nconst day = 3;\nswitch (day) {\n    case 1:\n        console.log('Monday');\n        break;\n    case 2:\n        console.log('Tuesday');\n        break;\n    case 3:\n        console.log('Wednesday');\n        break;\n    default:\n        console.log('Invalid');\n}\n```\n\n## Ternary Operator\n\n**Shorthand if-else**\n\n```javascript\nconst age = 20;\nconst status = age >= 18 ? 'Adult' : 'Minor';\nconsole.log(status);  // Adult\n```",
+                "fullProgram": "// Conditional examples\n\n// if-else\nconst num = 15;\nif (num % 2 === 0) {\n    console.log(num + ' is even');\n} else {\n    console.log(num + ' is odd');\n}\n\n// else-if ladder\nconst score = 85;\nif (score >= 90) {\n    console.log('Grade: A');\n} else if (score >= 80) {\n    console.log('Grade: B');\n} else if (score >= 70) {\n    console.log('Grade: C');\n} else if (score >= 60) {\n    console.log('Grade: D');\n} else {\n    console.log('Grade: F');\n}\n\n// switch\nconst day = 5;\nswitch (day) {\n    case 1:\n    case 2:\n    case 3:\n    case 4:\n    case 5:\n        console.log('Weekday');\n        break;\n    case 6:\n    case 7:\n        console.log('Weekend');\n        break;\n    default:\n        console.log('Invalid day');\n}\n\n// ternary\nconst canVote = 20 >= 18 ? 'Yes' : 'No';\nconsole.log('Can vote:', canVote);",
+                "expectedOutput": "15 is odd\nGrade: B\nWeekday\nCan vote: Yes",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What happens if you forget 'break' in a switch case?",
+                        "options": ["Error", "Falls through to next case", "Nothing", "Program stops"],
+                        "correctAnswer": 1,
+                        "explanation": "Without break, execution continues to the next case (fall-through behavior)."
+                    }
+                ]
+            },
+            {
+                "id": "js2.2",
+                "title": "2.2 Loops (for, while, do-while)",
+                "duration": "35 mins",
+                "difficultyLevel": "Beginner",
+                "topics": ["for loop", "while loop", "do-while", "Iteration"],
+                "content": "# Loops\n\n## for Loop\n\n**Repeat a fixed number of times**\n\n```javascript\nfor (initialization; condition; increment) {\n    // code runs repeatedly\n}\n\nfor (let i = 1; i <= 5; i++) {\n    console.log(i);\n}\n// Output: 1, 2, 3, 4, 5\n```\n\n**Loop through array**\n\n```javascript\nconst colors = ['red', 'green', 'blue'];\nfor (let i = 0; i < colors.length; i++) {\n    console.log(colors[i]);\n}\n```\n\n## while Loop\n\n**Repeat while condition is true**\n\n```javascript\nwhile (condition) {\n    // code\n    // update condition\n}\n\nlet count = 1;\nwhile (count <= 5) {\n    console.log(count);\n    count++;\n}\n```\n\n## do-while Loop\n\n**Execute once, then check condition**\n\n```javascript\ndo {\n    // code (always runs at least once)\n} while (condition);\n\nlet x = 1;\ndo {\n    console.log(x);\n    x++;\n} while (x <= 3);\n```\n\n## for...of Loop\n\n**Loop through array values**\n\n```javascript\nconst fruits = ['apple', 'banana', 'orange'];\nfor (let fruit of fruits) {\n    console.log(fruit);\n}\n```\n\n## Loop Control\n\n### break\n\n**Exit loop**\n\n```javascript\nfor (let i = 1; i <= 10; i++) {\n    if (i === 5) break;  // Exit when i = 5\n    console.log(i);\n}\n// Output: 1, 2, 3, 4\n```\n\n### continue\n\n**Skip iteration**\n\n```javascript\nfor (let i = 1; i <= 5; i++) {\n    if (i === 3) continue;  // Skip 3\n    console.log(i);\n}\n// Output: 1, 2, 4, 5\n```",
+                "fullProgram": "// Loop examples\n\n// for loop - print 1 to 5\nconsole.log('for loop:');\nfor (let i = 1; i <= 5; i++) {\n    console.log(i);\n}\n\n// while loop - sum of first 5 numbers\nconsole.log('\\nwhile loop - sum:');\nlet sum = 0;\nlet i = 1;\nwhile (i <= 5) {\n    sum += i;\n    i++;\n}\nconsole.log('Sum:', sum);  // 15\n\n// for...of loop - iterate array\nconsole.log('\\nfor...of loop:');\nconst numbers = [10, 20, 30, 40];\nfor (let num of numbers) {\n    console.log(num);\n}\n\n// Loop with break and continue\nconsole.log('\\nBreak and continue:');\nfor (let i = 1; i <= 10; i++) {\n    if (i === 5) break;         // Exit at 5\n    if (i % 2 === 0) continue;  // Skip even\n    console.log(i);\n}\n// Output: 1, 3",
+                "expectedOutput": "for loop:\n1\n2\n3\n4\n5\n\nwhile loop - sum:\nSum: 15\n\nfor...of loop:\n10\n20\n30\n40\n\nBreak and continue:\n1\n3",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the difference between break and continue?",
+                        "options": ["Same thing", "break exits loop, continue skips iteration", "continue exits, break skips", "No difference"],
+                        "correctAnswer": 1,
+                        "explanation": "break completely exits the loop, continue skips current iteration and moves to next."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "js-level-3",
+        "title": "LEVEL 3: Functions & Objects",
+        "description": "Write reusable and structured code",
+        "lessons": [
+            {
+                "id": "js3.1",
+                "title": "3.1 Functions (Declaration, Expression, Arrow)",
+                "duration": "35 mins",
+                "difficultyLevel": "Intermediate",
+                "topics": ["Functions", "Parameters", "Return Values"],
+                "content": "# Functions\n\n## Function Declaration\n\n**Define a reusable block of code**\n\n```javascript\nfunction greet(name) {\n    return 'Hello, ' + name + '!';\n}\n\nconst message = greet('John');\nconsole.log(message);  // Hello, John!\n```\n\n**Multiple parameters**\n\n```javascript\nfunction add(a, b) {\n    return a + b;\n}\n\nconsole.log(add(5, 3));  // 8\n```\n\n## Function Expression\n\n**Store function in variable**\n\n```javascript\nconst multiply = function(x, y) {\n    return x * y;\n};\n\nconsole.log(multiply(4, 5));  // 20\n```\n\n## Arrow Functions\n\n**Modern ES6 syntax**\n\n```javascript\nconst square = (num) => {\n    return num * num;\n};\n\nconsole.log(square(5));  // 25\n\n// Shorthand (one line)\nconst double = (x) => x * 2;\nconsole.log(double(10));  // 20\n```\n\n## Default Parameters\n\n```javascript\nfunction introduce(name, age = 18) {\n    console.log(name + ' is ' + age);\n}\n\nintroduce('John');        // John is 18\nintroduce('Alice', 25);   // Alice is 25\n```\n\n## Return Values\n\n```javascript\nfunction max(a, b) {\n    if (a > b) {\n        return a;\n    } else {\n        return b;\n    }\n}\n\nconsole.log(max(10, 20));  // 20\n```",
+                "fullProgram": "// Function examples\n\n// Function declaration\nfunction calculateArea(radius) {\n    const PI = 3.14159;\n    return PI * radius * radius;\n}\n\nconsole.log('Area with radius 5:', calculateArea(5));\n\n// Function expression\nconst celsius_to_fahrenheit = function(celsius) {\n    return (celsius * 9/5) + 32;\n};\n\nconsole.log('0°C in Fahrenheit:', celsius_to_fahrenheit(0));\n\n// Arrow function\nconst factorial = (n) => {\n    if (n === 0) return 1;\n    return n * factorial(n - 1);\n};\n\nconsole.log('Factorial of 5:', factorial(5));\n\n// Function with default parameter\nconst greet = (name, greeting = 'Hello') => {\n    return greeting + ', ' + name + '!';\n};\n\nconsole.log(greet('John'));\nconsole.log(greet('Alice', 'Hi'));",
+                "expectedOutput": "Area with radius 5: 78.53975\n0°C in Fahrenheit: 32\nFactorial of 5: 120\nHello, John!\nHi, Alice!",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the main difference between function declaration and arrow functions?",
+                        "options": ["Same thing", "Arrow functions are shorter syntax", "Arrow functions don't have 'this'", "All are correct"],
+                        "correctAnswer": 3,
+                        "explanation": "Arrow functions are ES6 syntax, shorter, and have different 'this' binding."
+                    }
+                ]
+            },
+            {
+                "id": "js3.2",
+                "title": "3.2 Objects & Properties",
+                "duration": "30 mins",
+                "difficultyLevel": "Intermediate",
+                "topics": ["Objects", "Properties", "Methods"],
+                "content": "# Objects\n\n## Object Creation\n\n**Using literal notation**\n\n```javascript\nconst person = {\n    name: 'John',\n    age: 30,\n    city: 'New York'\n};\n\nconsole.log(person.name);       // John\nconsole.log(person['age']);     // 30\n```\n\n## Object Properties\n\n**Add/modify properties**\n\n```javascript\nconst car = { brand: 'Toyota' };\ncar.model = 'Camry';            // Add property\ncar.year = 2023;\ncar.brand = 'Honda';            // Modify property\n\nconsole.log(car);  // { brand: 'Honda', model: 'Camry', year: 2023 }\n```\n\n## Object Methods\n\n**Functions as properties**\n\n```javascript\nconst student = {\n    name: 'Alice',\n    age: 20,\n    greet: function() {\n        return 'Hi, I am ' + this.name;\n    }\n};\n\nconsole.log(student.greet());  // Hi, I am Alice\n```\n\n## Looping Objects\n\n```javascript\nconst user = {\n    name: 'Bob',\n    email: 'bob@example.com',\n    age: 25\n};\n\nfor (let key in user) {\n    console.log(key + ': ' + user[key]);\n}\n```",
+                "fullProgram": "// Object examples\n\n// Create object\nconst book = {\n    title: 'JavaScript Guide',\n    author: 'John Doe',\n    pages: 350,\n    price: 29.99\n};\n\nconsole.log('Book:', book);\nconsole.log('Title:', book.title);\nconsole.log('Price: $' + book.price);\n\n// Add methods\nbook.getInfo = function() {\n    return this.title + ' by ' + this.author;\n};\n\nconsole.log('Info:', book.getInfo());\n\n// Loop through properties\nconsole.log('\\nAll properties:');\nfor (let key in book) {\n    if (typeof book[key] !== 'function') {\n        console.log(key + ': ' + book[key]);\n    }\n}\n\n// Array of objects\nconst students = [\n    { name: 'Alice', score: 90 },\n    { name: 'Bob', score: 85 },\n    { name: 'Charlie', score: 95 }\n];\n\nfor (let student of students) {\n    console.log(student.name + ' scored ' + student.score);\n}",
+                "expectedOutput": "Book: { title: 'JavaScript Guide', author: 'John Doe', pages: 350, price: 29.99 }\nTitle: JavaScript Guide\nPrice: $29.99\nInfo: JavaScript Guide by John Doe\n\nAll properties:\ntitle: JavaScript Guide\nauthor: John Doe\npages: 350\nprice: 29.99\nAlice scored 90\nBob scored 85\nCharlie scored 95",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "How do you access object property 'name' from object 'person'?",
+                        "options": ["person->name", "person.name", "person[name]", "Both B and C"],
+                        "correctAnswer": 3,
+                        "explanation": "person.name and person['name'] both work for accessing properties."
+                    }
+                ]
+            },
+            {
+                "id": "js3.3",
+                "title": "3.3 Arrays & Methods",
+                "duration": "35 mins",
+                "difficultyLevel": "Intermediate",
+                "topics": ["Arrays", "Array Methods", "Iteration"],
+                "content": "# Arrays & Methods\n\n## Array Basics\n\n```javascript\nconst colors = ['red', 'green', 'blue'];\nconsole.log(colors[0]);       // red\nconsole.log(colors.length);   // 3\n```\n\n## Common Array Methods\n\n### 🔥 push() & pop()\n\n```javascript\nconst fruits = ['apple', 'banana'];\nfruits.push('orange');  // Add at end\nconsole.log(fruits);    // ['apple', 'banana', 'orange']\n\nfruits.pop();           // Remove last\nconsole.log(fruits);    // ['apple', 'banana']\n```\n\n### ⚡ shift() & unshift()\n\n```javascript\nconst arr = [1, 2, 3];\narr.unshift(0);         // Add at start\nconsole.log(arr);       // [0, 1, 2, 3]\n\narr.shift();            // Remove first\nconsole.log(arr);       // [1, 2, 3]\n```\n\n### 💠 map() - Transform\n\n```javascript\nconst numbers = [1, 2, 3, 4];\nconst doubled = numbers.map(n => n * 2);\nconsole.log(doubled);   // [2, 4, 6, 8]\n```\n\n### 📝 filter() - Select\n\n```javascript\nconst numbers = [1, 2, 3, 4, 5, 6];\nconst even = numbers.filter(n => n % 2 === 0);\nconsole.log(even);      // [2, 4, 6]\n```\n\n### 📦 reduce() - Combine\n\n```javascript\nconst numbers = [1, 2, 3, 4];\nconst sum = numbers.reduce((acc, n) => acc + n, 0);\nconsole.log(sum);       // 10\n```\n\n### ✅ forEach() - Loop\n\n```javascript\nconst colors = ['red', 'green', 'blue'];\ncolors.forEach(color => console.log(color));\n```",
+                "fullProgram": "// Array methods example\n\nconst numbers = [1, 2, 3, 4, 5];\n\n// map - double each number\nconst doubled = numbers.map(n => n * 2);\nconsole.log('Doubled:', doubled);\n\n// filter - get even numbers\nconst evenNumbers = numbers.filter(n => n % 2 === 0);\nconsole.log('Even:', evenNumbers);\n\n// reduce - sum all\nconst sum = numbers.reduce((total, n) => total + n, 0);\nconsole.log('Sum:', sum);\n\n// Array of objects\nconst students = [\n    { name: 'Alice', score: 90 },\n    { name: 'Bob', score: 75 },\n    { name: 'Charlie', score: 88 }\n];\n\n// Get names\nconst names = students.map(s => s.name);\nconsole.log('Names:', names);\n\n// Find high scorers\nconst highScorers = students.filter(s => s.score >= 85);\nconsole.log('High scorers:', highScorers);\n\n// Calculate average\nconst totalScore = students.reduce((sum, s) => sum + s.score, 0);\nconst average = totalScore / students.length;\nconsole.log('Average score:', average);",
+                "expectedOutput": "Doubled: [ 2, 4, 6, 8, 10 ]\nEven: [ 2, 4 ]\nSum: 15\nNames: [ 'Alice', 'Bob', 'Charlie' ]\nHigh scorers: [ { name: 'Alice', score: 90 }, { name: 'Charlie', score: 88 } ]\nAverage score: 84.33333333333333",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does the map() method do?",
+                        "options": ["Creates a map", "Transforms each element", "Filters array", "Combines array"],
+                        "correctAnswer": 1,
+                        "explanation": "map() transforms each element using a function and returns new array."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "js-level-4",
+        "title": "LEVEL 4: Advanced JavaScript (ES6+ & Core Concepts)",
+        "description": "Master modern JavaScript & internals",
+        "lessons": [
+            {
+                "id": "js4.1",
+                "title": "4.1 Hoisting, Scope & Closures",
+                "duration": "40 mins",
+                "difficultyLevel": "Advanced",
+                "topics": ["Hoisting", "Scope", "Closures"],
+                "content": "# Hoisting, Scope & Closures\n\n## Hoisting\n\n**Declarations are moved to top**\n\n```javascript\nconsole.log(x);  // undefined (not error!)\nvar x = 5;\n\n// What actually happens:\n// var x;           // hoisted\n// console.log(x);  // undefined\n// x = 5;\n```\n\n**Function hoisting**\n\n```javascript\ngreet();  // Works! Function hoisted\n\nfunction greet() {\n    console.log('Hello');\n}\n\n// Arrow functions NOT hoisted\n// sayHi();  // Error!\nconst sayHi = () => console.log('Hi');\n```\n\n## Scope\n\n### Global Scope\n\n```javascript\nlet global = 'I am global';\n\nfunction test() {\n    console.log(global);  // Accessible\n}\n\ntest();  // I am global\n```\n\n### Local/Block Scope\n\n```javascript\nfunction outer() {\n    let x = 10;  // Function scope\n    \n    if (true) {\n        let y = 20;  // Block scope\n        console.log(x, y);  // 10, 20\n    }\n    \n    // console.log(y);  // Error - y not defined\n}\n```\n\n## Closures\n\n**Function remembers outer scope**\n\n```javascript\nfunction counter() {\n    let count = 0;  // Private variable\n    \n    return function() {\n        count++;\n        return count;\n    };\n}\n\nconst myCounter = counter();\nconsole.log(myCounter());  // 1\nconsole.log(myCounter());  // 2\nconsole.log(myCounter());  // 3\n```\n\n**Practical use**\n\n```javascript\nfunction makeMultiplier(multiplier) {\n    return function(number) {\n        return number * multiplier;\n    };\n}\n\nconst double = makeMultiplier(2);\nconst triple = makeMultiplier(3);\n\nconsole.log(double(5));  // 10\nconsole.log(triple(5));  // 15\n```",
+                "fullProgram": "// Hoisting example\nconsole.log('=== Hoisting ===');\nconsole.log(a);  // undefined (hoisted)\nvar a = 10;\nconsole.log(a);  // 10\n\n// Scope example\nconsole.log('\\n=== Scope ===');\nlet globalVar = 'global';\n\nfunction testScope() {\n    let localVar = 'local';\n    console.log(globalVar, localVar);\n}\n\ntestScope();  // global local\n// console.log(localVar);  // Error\n\n// Closure example\nconsole.log('\\n=== Closure ===');\nfunction createBankAccount(initialBalance) {\n    let balance = initialBalance;\n    \n    return {\n        deposit: function(amount) {\n            balance += amount;\n            return balance;\n        },\n        withdraw: function(amount) {\n            balance -= amount;\n            return balance;\n        },\n        getBalance: function() {\n            return balance;\n        }\n    };\n}\n\nconst account = createBankAccount(1000);\nconsole.log('Initial:', account.getBalance());     // 1000\nconsole.log('After deposit 500:', account.deposit(500));    // 1500\nconsole.log('After withdraw 200:', account.withdraw(200));  // 1300",
+                "expectedOutput": "=== Hoisting ===\nundefined\n10\n\n=== Scope ===\nglobal local\n\n=== Closure ===\nInitial: 1000\nAfter deposit 500: 1500\nAfter withdraw 200: 1300",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is hoisting?",
+                        "options": ["Moving code around", "Declarations moved to top", "Variables disappear", "Functions deleted"],
+                        "correctAnswer": 1,
+                        "explanation": "Hoisting moves variable and function declarations to the top of their scope."
+                    }
+                ]
+            },
+            {
+                "id": "js4.2",
+                "title": "4.2 this Keyword & Prototypes",
+                "duration": "35 mins",
+                "difficultyLevel": "Advanced",
+                "topics": ["this", "Prototypes", "Inheritance"],
+                "content": "# this Keyword & Prototypes\n\n## Understanding 'this'\n\n### Global Context\n\n```javascript\nconsole.log(this);  // window (in browser)\n```\n\n### In Object\n\n```javascript\nconst person = {\n    name: 'John',\n    greet: function() {\n        console.log('Hello, ' + this.name);\n    }\n};\n\nperson.greet();  // Hello, John\n```\n\n### In Constructor\n\n```javascript\nfunction Car(brand) {\n    this.brand = brand;\n}\n\nconst myCar = new Car('Toyota');\nconsole.log(myCar.brand);  // Toyota\n```\n\n## Prototypes\n\n**Every object has prototype**\n\n```javascript\nconst arr = [1, 2, 3];\nconsole.log(arr.length);  // Inherited from prototype\n```\n\n**Prototype chain**\n\n```javascript\nfunction Animal(name) {\n    this.name = name;\n}\n\nAnimal.prototype.speak = function() {\n    console.log(this.name + ' makes sound');\n};\n\nconst dog = new Animal('Dog');\ndog.speak();  // Dog makes sound\n```\n\n## Inheritance via Prototypes\n\n```javascript\nfunction Vehicle(brand) {\n    this.brand = brand;\n}\n\nVehicle.prototype.info = function() {\n    console.log('Brand: ' + this.brand);\n};\n\nfunction Car(brand, model) {\n    Vehicle.call(this, brand);\n    this.model = model;\n}\n\nCar.prototype = Object.create(Vehicle.prototype);\nCar.prototype.constructor = Car;\n\nconst tesla = new Car('Tesla', 'Model 3');\ntesla.info();  // Brand: Tesla\n```",
+                "fullProgram": "// this keyword example\nconsole.log('=== this in Object ===');\nconst student = {\n    name: 'Alice',\n    age: 20,\n    info: function() {\n        console.log(this.name + ' is ' + this.age);\n    }\n};\n\nstudent.info();  // Alice is 20\n\n// Constructor function\nconsole.log('\\n=== Constructor ===');\nfunction Person(name, age) {\n    this.name = name;\n    this.age = age;\n    this.greet = function() {\n        return 'Hi, I am ' + this.name;\n    };\n}\n\nconst person1 = new Person('Bob', 25);\nconsole.log(person1.greet());  // Hi, I am Bob\n\n// Prototypes\nconsole.log('\\n=== Prototypes ===');\nfunction Animal(type) {\n    this.type = type;\n}\n\nAnimal.prototype.describe = function() {\n    return 'This is a ' + this.type;\n};\n\nconst cat = new Animal('cat');\nconsole.log(cat.describe());  // This is a cat",
+                "expectedOutput": "=== this in Object ===\nAlice is 20\n\n=== Constructor ===\nHi, I am Bob\n\n=== Prototypes ===\nThis is a cat",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does 'this' refer to in an object method?",
+                        "options": ["Global object", "The object itself", "The function", "Undefined"],
+                        "correctAnswer": 1,
+                        "explanation": "'this' inside a method refers to the object the method belongs to."
+                    }
+                ]
+            },
+            {
+                "id": "js4.3",
+                "title": "4.3 ES6+ Features (Destructuring, Spread, Template Literals)",
+                "duration": "40 mins",
+                "difficultyLevel": "Advanced",
+                "topics": ["ES6", "Destructuring", "Spread", "Template Literals"],
+                "content": "# ES6+ Features\n\n## Template Literals\n\n**Use backticks with ${}**\n\n```javascript\nconst name = 'John';\nconst age = 30;\n\nconst message = `${name} is ${age} years old`;\nconsole.log(message);  // John is 30 years old\n\nconst multiline = `\nHello\nWorld\nMultiline!\n`;\n```\n\n## Destructuring\n\n### Array Destructuring\n\n```javascript\nconst colors = ['red', 'green', 'blue'];\nconst [first, second] = colors;\n\nconsole.log(first);   // red\nconsole.log(second);  // green\n\n// Skip elements\nconst [, , third] = colors;\nconsole.log(third);   // blue\n```\n\n### Object Destructuring\n\n```javascript\nconst person = { name: 'John', age: 30, city: 'NY' };\nconst { name, age } = person;\n\nconsole.log(name);  // John\nconsole.log(age);   // 30\n\n// With rename\nconst { name: fullName } = person;\nconsole.log(fullName);  // John\n```\n\n## Spread Operator (...)\n\n### Spread Arrays\n\n```javascript\nconst arr1 = [1, 2, 3];\nconst arr2 = [4, 5, 6];\nconst combined = [...arr1, ...arr2];\n\nconsole.log(combined);  // [1, 2, 3, 4, 5, 6]\n```\n\n### Spread Objects\n\n```javascript\nconst obj1 = { a: 1, b: 2 };\nconst obj2 = { c: 3, d: 4 };\nconst merged = { ...obj1, ...obj2 };\n\nconsole.log(merged);  // { a: 1, b: 2, c: 3, d: 4 }\n```\n\n## Rest Parameters\n\n```javascript\nfunction sum(...numbers) {\n    return numbers.reduce((a, b) => a + b, 0);\n}\n\nconsole.log(sum(1, 2, 3, 4, 5));  // 15\n```",
+                "fullProgram": "// ES6+ Features\n\n// Template literals\nconsole.log('=== Template Literals ===');\nconst name = 'Alice';\nconst score = 95;\nconsole.log(`${name} scored ${score}%`);\n\n// Array destructuring\nconsole.log('\\n=== Array Destructuring ===');\nconst [first, second, third] = [10, 20, 30, 40];\nconsole.log('First:', first, 'Second:', second);\n\n// Object destructuring\nconsole.log('\\n=== Object Destructuring ===');\nconst { name: studentName, age } = { name: 'Bob', age: 22, city: 'NYC' };\nconsole.log(studentName, 'is', age);\n\n// Spread arrays\nconsole.log('\\n=== Spread Arrays ===');\nconst arr1 = [1, 2];\nconst arr2 = [3, 4];\nconst combined = [...arr1, ...arr2];\nconsole.log('Combined:', combined);\n\n// Rest parameters\nconsole.log('\\n=== Rest Parameters ===');\nfunction multiply(...nums) {\n    return nums.reduce((a, b) => a * b, 1);\n}\nconsole.log('2 * 3 * 4 =', multiply(2, 3, 4));",
+                "expectedOutput": "=== Template Literals ===\nAlice scored 95%\n\n=== Array Destructuring ===\nFirst: 10 Second: 20\n\n=== Object Destructuring ===\nBob is 22\n\n=== Spread Arrays ===\nCombined: [ 1, 2, 3, 4 ]\n\n=== Rest Parameters ===\n2 * 3 * 4 = 24",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does the spread operator (...) do?",
+                        "options": ["Creates array", "Spreads elements", "Joins strings", "Multiplies"],
+                        "correctAnswer": 1,
+                        "explanation": "Spread operator unpacks/spreads elements of arrays or objects."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "js-level-5",
+        "title": "LEVEL 5: Asynchronous JS & DOM",
+        "description": "Build real-world interactive applications",
+        "lessons": [
+            {
+                "id": "js5.1",
+                "title": "5.1 DOM & Events",
+                "duration": "40 mins",
+                "difficultyLevel": "Advanced",
+                "topics": ["DOM", "Events", "Event Listeners"],
+                "content": "# DOM & Events\n\n## Selecting Elements\n\n```javascript\n// Single element\nconst element = document.getElementById('myId');\nconst element2 = document.querySelector('.myClass');\n\n// Multiple elements\nconst elements = document.querySelectorAll('p');\nconst elements2 = document.getElementsByClassName('active');\n```\n\n## DOM Manipulation\n\n```javascript\nconst div = document.getElementById('content');\n\n// Change text\ndiv.innerText = 'Hello';\n\n// Change HTML\ndiv.innerHTML = '<h1>Title</h1>';\n\n// Change attributes\ndiv.setAttribute('class', 'active');\ndiv.id = 'newId';\n\n// Add/Remove classes\ndiv.classList.add('highlight');\ndiv.classList.remove('old');\ndiv.classList.toggle('active');\n```\n\n## Events\n\n```javascript\nconst button = document.getElementById('myBtn');\n\n// Click event\nbutton.addEventListener('click', function() {\n    console.log('Button clicked!');\n});\n\n// Other events\nbutton.addEventListener('mouseenter', () => {\n    console.log('Mouse over');\n});\n\nconst input = document.getElementById('nameInput');\ninput.addEventListener('change', (event) => {\n    console.log('Value changed:', event.target.value);\n});\n```\n\n## Event Properties\n\n```javascript\ndocument.addEventListener('click', (event) => {\n    console.log('Type:', event.type);          // click\n    console.log('Target:', event.target);      // element clicked\n    console.log('Coordinates:', event.clientX, event.clientY);\n});\n```\n\n## Event Bubbling & Capturing\n\n```javascript\n// Bubbling (default)\nparent.addEventListener('click', () => {\n    console.log('Parent clicked (bubbling)');\n});\n\nchild.addEventListener('click', (e) => {\n    e.stopPropagation();  // Stop bubbling\n    console.log('Child clicked');\n});\n\n// Capturing\nparent.addEventListener('click', handler, true);  // capturing phase\n```",
+                "fullProgram": "// DOM & Events example\n\n// Create HTML elements\nconst container = document.createElement('div');\ncontainer.id = 'myContainer';\ncontainer.style.padding = '20px';\n\n// Create button\nconst button = document.createElement('button');\nbutton.innerText = 'Click Me';\nbutton.style.padding = '10px 20px';\nbutton.style.cursor = 'pointer';\n\n// Create counter display\nconst counter = document.createElement('div');\ncounter.id = 'counter';\ncounter.innerText = 'Clicks: 0';\ncounter.style.marginTop = '10px';\n\n// Event handling\nlet clicks = 0;\nbutton.addEventListener('click', () => {\n    clicks++;\n    counter.innerText = `Clicks: ${clicks}`;\n    console.log('Button clicked! Total:', clicks);\n});\n\nbutton.addEventListener('mouseenter', () => {\n    button.style.backgroundColor = '#4CAF50';\n    button.style.color = 'white';\n});\n\nbutton.addEventListener('mouseleave', () => {\n    button.style.backgroundColor = '';\n    button.style.color = '';\n});\n\n// Add to page\ncontainer.appendChild(button);\ncontainer.appendChild(counter);\ndocument.body.appendChild(container);\n\nconsole.log('DOM setup complete');",
+                "expectedOutput": "DOM setup complete\n\n(When button is clicked):\nButton clicked! Total: 1\nButton clicked! Total: 2\n\n(Visual: Button changes color on hover)",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What method selects multiple elements by class?",
+                        "options": ["getElementById", "getElementsByClassName", "querySelector", "querySelectorAll"],
+                        "correctAnswer": 3,
+                        "explanation": "querySelectorAll selects all matching elements; getElementsByClassName also works but querySelector* is preferred."
+                    }
+                ]
+            },
+            {
+                "id": "js5.2",
+                "title": "5.2 Promises & Async/Await",
+                "duration": "40 mins",
+                "difficultyLevel": "Advanced",
+                "topics": ["Promises", "Async", "Await", "Error Handling"],
+                "content": "# Promises & Async/Await\n\n## Promises\n\n**Three states: pending, fulfilled, rejected**\n\n```javascript\nconst promise = new Promise((resolve, reject) => {\n    const success = true;\n    \n    if (success) {\n        resolve('Success!');  // Fulfilled\n    } else {\n        reject('Error!');     // Rejected\n    }\n});\n\npromise\n    .then(result => console.log(result))  // Success!\n    .catch(error => console.log(error))\n    .finally(() => console.log('Done'));\n```\n\n## Fetch API (Promises)\n\n```javascript\nfetch('https://api.example.com/data')\n    .then(response => response.json())\n    .then(data => console.log(data))\n    .catch(error => console.log('Error:', error));\n```\n\n## async/await\n\n**Cleaner syntax for promises**\n\n```javascript\nasync function getData() {\n    try {\n        const response = await fetch('https://api.example.com/data');\n        const data = await response.json();\n        console.log(data);\n    } catch (error) {\n        console.log('Error:', error);\n    }\n}\n\ngetData();\n```\n\n## Fetch with async/await\n\n```javascript\nasync function getUser(userId) {\n    try {\n        const response = await fetch(`/api/users/${userId}`);\n        \n        if (!response.ok) {\n            throw new Error('User not found');\n        }\n        \n        const user = await response.json();\n        return user;\n    } catch (error) {\n        console.error('Error:', error);\n    }\n}\n```\n\n## Promise.all()\n\n```javascript\nconst promise1 = fetch('/api/users');\nconst promise2 = fetch('/api/posts');\n\nPromise.all([promise1, promise2])\n    .then(responses => {\n        console.log('All data loaded');\n    })\n    .catch(error => {\n        console.log('One failed:', error);\n    });\n```",
+                "fullProgram": "// Promises & async/await example\n\n// Create a promise that simulates API call\nfunction fetchUser(userId) {\n    return new Promise((resolve, reject) => {\n        setTimeout(() => {\n            if (userId > 0) {\n                resolve({\n                    id: userId,\n                    name: 'John Doe',\n                    email: 'john@example.com'\n                });\n            } else {\n                reject('Invalid user ID');\n            }\n        }, 1000);\n    });\n}\n\n// Using async/await\nasync function getUserInfo(userId) {\n    try {\n        console.log('Fetching user', userId + '...');\n        const user = await fetchUser(userId);\n        console.log('User fetched:', user);\n        console.log('Name: ' + user.name);\n        console.log('Email: ' + user.email);\n    } catch (error) {\n        console.log('Error:', error);\n    }\n}\n\n// Using .then().catch()\nfetchUser(1)\n    .then(user => {\n        console.log('\\nUsing .then():', user.name);\n    })\n    .catch(error => {\n        console.log('Error:', error);\n    });\n\n// Call async function\ngetUserInfo(1);",
+                "expectedOutput": "Fetching user 1...\n(After 1 second)\nUser fetched: { id: 1, name: 'John Doe', email: 'john@example.com' }\nName: John Doe\nEmail: john@example.com\n\nUsing .then(): John Doe",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What are the three states of a Promise?",
+                        "options": ["true, false, null", "pending, fulfilled, rejected", "loading, success, error", "start, middle, end"],
+                        "correctAnswer": 1,
+                        "explanation": "Promises have three states: pending (initial), fulfilled (success), and rejected (error)."
+                    }
+                ]
+            },
+            {
+                "id": "js5.3",
+                "title": "5.3 LocalStorage & Performance",
+                "duration": "30 mins",
+                "difficultyLevel": "Advanced",
+                "topics": ["LocalStorage", "Performance", "Optimization"],
+                "content": "# LocalStorage & Performance\n\n## LocalStorage\n\n**Persist data in browser**\n\n```javascript\n// Save data\nlocalStorage.setItem('userName', 'John');\nlocalStorage.setItem('userAge', '30');\n\n// Get data\nconst name = localStorage.getItem('userName');\nconsole.log(name);  // John\n\n// Remove data\nlocalStorage.removeItem('userAge');\n\n// Clear all\nlocalStorage.clear();\n\n// Check if key exists\nif (localStorage.getItem('userName')) {\n    console.log('User data found');\n}\n```\n\n## Storing Objects\n\n```javascript\nconst user = { name: 'Alice', age: 25 };\n\n// Save as JSON\nlocalStorage.setItem('user', JSON.stringify(user));\n\n// Retrieve and parse\nconst savedUser = JSON.parse(localStorage.getItem('user'));\nconsole.log(savedUser.name);  // Alice\n```\n\n## Debouncing\n\n**Limit function calls**\n\n```javascript\nfunction debounce(func, delay) {\n    let timeoutId;\n    return function(...args) {\n        clearTimeout(timeoutId);\n        timeoutId = setTimeout(() => func(...args), delay);\n    };\n}\n\nconst searchInput = document.getElementById('search');\nconst handleSearch = debounce((e) => {\n    console.log('Searching:', e.target.value);\n}, 500);\n\nsearchInput.addEventListener('input', handleSearch);\n```\n\n## Performance Tips\n\n```javascript\n// ❌ Bad: Multiple DOM queries\nfor (let i = 0; i < 1000; i++) {\n    document.getElementById('list').innerHTML += '<li>' + i + '</li>';\n}\n\n// ✅ Good: Cache element and batch updates\nconst list = document.getElementById('list');\nlet html = '';\nfor (let i = 0; i < 1000; i++) {\n    html += '<li>' + i + '</li>';\n}\nlist.innerHTML = html;\n```",
+                "fullProgram": "// LocalStorage & Performance example\n\n// LocalStorage example\nconsole.log('=== LocalStorage ===');\nconst userData = {\n    name: 'Alice',\n    email: 'alice@example.com',\n    lastLogin: new Date().toISOString()\n};\n\n// Save user data\nlocalStorage.setItem('user', JSON.stringify(userData));\nconsole.log('User data saved');\n\n// Retrieve user data\nconst saved = JSON.parse(localStorage.getItem('user'));\nconsole.log('Retrieved:', saved);\n\n// Check if logged in\nif (localStorage.getItem('user')) {\n    console.log('User is logged in:', saved.name);\n}\n\n// Debouncing example\nconsole.log('\\n=== Debouncing ===');\nfunction debounce(func, delay) {\n    let timeout;\n    return function(...args) {\n        clearTimeout(timeout);\n        timeout = setTimeout(() => func(...args), delay);\n    };\n}\n\nconst searchHandler = debounce((query) => {\n    console.log('Searching for:', query);\n}, 500);\n\n// Simulate multiple searches\nconsole.log('User typing: j, o, h, n');\nsearchHandler('j');\nsearchHandler('jo');\nsearchHandler('joh');\nsearchHandler('john');\nconsole.log('(Will search for \"john\" after 500ms pause)');",
+                "expectedOutput": "=== LocalStorage ===\nUser data saved\nRetrieved: { name: 'Alice', email: 'alice@example.com', lastLogin: '2024-01-18T...' }\nUser is logged in: Alice\n\n=== Debouncing ===\nUser typing: j, o, h, n\n(Will search for \"john\" after 500ms pause)\nSearching for: john",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "How do you save an object in localStorage?",
+                        "options": ["Save directly", "Use JSON.stringify()", "Use toString()", "Cannot save objects"],
+                        "correctAnswer": 1,
+                        "explanation": "Objects must be converted to JSON string using JSON.stringify() before saving to localStorage."
+                    }
+                ]
+            }
+        ]
+    }
+]

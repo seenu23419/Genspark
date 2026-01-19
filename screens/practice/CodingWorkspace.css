@@ -1,0 +1,151 @@
+/* CodingWorkspace Scrolling System */
+
+/* Smooth scrolling for all scrollable areas */
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for problem description panel */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 8px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.3);
+  border-left: 1px solid rgba(71, 85, 105, 0.2);
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6366f1 0%, #3b82f6 100%);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #818cf8 0%, #60a5fa 100%);
+}
+
+/* Firefox scrollbar */
+.overflow-y-auto {
+  scrollbar-color: rgba(99, 102, 241, 0.6) rgba(15, 23, 42, 0.3);
+  scrollbar-width: thin;
+}
+
+/* Scroll indicator appearance */
+.scroll-indicator-bar {
+  position: relative;
+  background: rgba(30, 41, 59, 0.3);
+  border-left: 1px solid rgba(71, 85, 105, 0.3);
+}
+
+.scroll-indicator-thumb {
+  background: linear-gradient(180deg, #6366f1 0%, #3b82f6 100%);
+  border-radius: 2px;
+  min-height: 24px;
+  transition: all 0.15s ease-out;
+}
+
+/* Scrolling direction indicators */
+.scroll-up-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #6366f1, transparent);
+  opacity: 0;
+  animation: scrollUpPulse 0.6s ease-out;
+}
+
+.scroll-down-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+  opacity: 0;
+  animation: scrollDownPulse 0.6s ease-out;
+}
+
+@keyframes scrollUpPulse {
+  0% {
+    opacity: 1;
+    transform: translateY(-4px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scrollDownPulse {
+  0% {
+    opacity: 1;
+    transform: translateY(4px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth scroll container for problem panels */
+.problem-panel {
+  scroll-snap-type: y proximity;
+  scroll-padding: 20px;
+}
+
+.problem-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: auto;
+}
+
+/* Mobile optimizations */
+@media (max-width: 1023px) {
+  .overflow-y-auto::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scroll-indicator-bar {
+    display: none;
+  }
+}
+
+/* Scrollbar appears on hover */
+.overflow-y-auto {
+  scrollbar-gutter: stable;
+}
+
+/* Highlight scrollable content */
+.has-more-content::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(180deg, transparent, rgba(15, 23, 42, 0.8));
+  pointer-events: none;
+}
+
+/* Practice Mode UI Distinction */
+.practice-ui-root {
+  background-image:
+    radial-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+    radial-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+.practice-tab-active {
+  color: #6366f1 !important;
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.practice-header-accent {
+  background: linear-gradient(90deg, #6366f1, #4f46e5);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+}

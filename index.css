@@ -1,0 +1,77 @@
+/* Smooth fade-in animation for page transitions */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Slide in from bottom animation */
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Global smooth fade for all page transitions */
+:root {
+  --animate-in-duration: 300ms;
+  --animate-in-timing: ease-in-out;
+}
+
+/* Ensure no white flashes during page loads */
+html {
+  background-color: #0a0b14;
+}
+
+body {
+  background-color: #0a0b14;
+  color: #f8fafc;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Remove default scrollbars */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Custom utilities for smooth transitions */
+.transition-smooth {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.fade-enter {
+  animation: fadeIn 300ms ease-in-out forwards;
+}
+
+.slide-in-bottom {
+  animation: slideInFromBottom 400ms ease-in-out forwards;
+}
+
+/* Shimmer Animation */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite linear;
+}

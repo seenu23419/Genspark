@@ -349,7 +349,9 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                      <p className="text-[10px] text-slate-400">Unlimited high-reasoning tokens active.</p>
                   </div>
                )}
-               <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors text-left group">
+               <button 
+                  onClick={() => {}}  // Add user profile handler
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors text-left group">
                   <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-sm shrink-0 ring-2 ring-slate-800 group-hover:ring-slate-700 transition-all">
                      {user?.name?.[0]?.toUpperCase() || 'U'}
                   </div>
@@ -425,11 +427,7 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                         <div className="shrink-0 pt-1">
                            <div className={`w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center overflow-hidden ${m.role === 'user' ? 'bg-indigo-600' : 'bg-transparent border border-slate-700'} shadow-sm shadow-indigo-500/10`}>
                               {m.role === 'user' ? (
-                                 <img
-                                    src={user?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.name || 'Genspark'}`}
-                                    alt="User"
-                                    className="w-full h-full object-cover"
-                                 />
+                                 <span className="text-white text-xs font-bold">U</span>
                               ) : (
                                  <Bot className="w-4 h-4 md:w-[18px] md:h-[18px] text-indigo-400" />
                               )}
@@ -446,28 +444,33 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                                     components={{
                                        code({ node, inline, className, children, ...props }: any) {
                                           const match = /language-(\w+)/.exec(className || '');
-                                          return !inline && match ? (
-                                             <div className="relative my-4 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 shadow-2xl text-left">
-                                                <div className="flex items-center justify-between px-4 py-2 bg-slate-900 text-xs text-slate-400 border-b border-slate-800">
-                                                   <span className="uppercase font-bold tracking-widest text-[10px]">{match[1]}</span>
-                                                   <button onClick={() => navigator.clipboard.writeText(String(children).replace(/\n$/, ''))} className="flex items-center gap-1 hover:text-white transition-colors">
-                                                      <Copy size={12} /> Copy
-                                                   </button>
+                                          if (!inline && match) {
+                                             return (
+                                                <div className="relative my-4 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 text-left">
+                                                   <div className="absolute top-3 right-3 z-10 px-2 py-0.5 rounded-full bg-white/6 text-[11px] font-mono text-slate-300 uppercase">{match[1]}</div>
+                                                   <div className="absolute top-3 left-3 z-10">
+                                                      <button onClick={() => navigator.clipboard.writeText(String(children).replace(/\n$/, ''))} className="flex items-center gap-1 px-2 py-0.5 bg-slate-800/60 rounded-md text-slate-200 text-xs">
+                                                         <Copy size={12} />
+                                                      </button>
+                                                   </div>
+                                                   <SyntaxHighlighter
+                                                      style={vscDarkPlus}
+                                                      language={match[1]}
+                                                      PreTag="div"
+                                                      {...props}
+                                                      customStyle={{ margin: 0, padding: '1rem', background: 'transparent', fontSize: '13px' }}
+                                                   >
+                                                      {String(children).replace(/\n$/, '')}
+                                                   </SyntaxHighlighter>
                                                 </div>
-                                                <SyntaxHighlighter
-                                                   style={vscDarkPlus}
-                                                   language={match[1]}
-                                                   PreTag="div"
-                                                   {...props}
-                                                   customStyle={{ margin: 0, padding: '1.25rem', background: 'transparent', fontSize: '13px' }}
-                                                >
-                                                   {String(children).replace(/\n$/, '')}
-                                                </SyntaxHighlighter>
-                                             </div>
-                                          ) : (
-                                             <code className="bg-slate-800 rounded px-1.5 py-0.5 text-indigo-300 font-mono text-sm" {...props}>{children}</code>
-                                          )
-                                       }
+                                             );
+                                          }
+
+                                          return <code className="bg-slate-800 rounded px-1.5 py-0.5 text-indigo-300 font-mono text-sm" {...props}>{children}</code>;
+                                       },
+                                       h1: ({node, ...props}) => <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mt-4 mb-3" {...props} />,
+                                       h2: ({node, ...props}) => <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mt-4 mb-2" {...props} />,
+                                       h3: ({node, ...props}) => <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-3 mb-2" {...props} />,
                                     }}
                                  >
                                     {m.content}
@@ -517,7 +520,9 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                            <button onClick={() => handleFileUpload('image')} className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
                               <ImageIcon size={18} />
                            </button>
-                           <button className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
+                           <button 
+                              onClick={() => {}}  // Add voice input handler when ready
+                              className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
                               <Mic size={18} />
                            </button>
                         </div>

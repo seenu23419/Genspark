@@ -1,25 +1,37 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Settings,
-  ChevronRight,
   Flame,
   Star,
   BookOpen,
   Trophy,
-  LogOut,
   Mail,
-  Edit2,
-  Crown,
   Zap,
+  Crown,
   TrendingUp,
+  Loader2,
+  ExternalLink,
+  Award,
+  Calendar,
+  ShieldCheck,
+  Share2,
+  Clock,
   Target,
-  Loader2
+  Pencil,
+  CheckCircle2,
+  ChevronRight,
+  Camera,
+  FileText,
+  Lock,
+  Scroll,
 } from 'lucide-react';
-import { User } from '../../types';
+import { User, Certificate } from '../../types';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area, CartesianGrid } from 'recharts';
+import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, BarChart, Bar, CartesianGrid } from 'recharts';
+import { certificateService } from '../../services/certificateService';
+import { supabaseDB } from '../../services/supabaseService';
+import SubscriptionStatus from './SubscriptionStatus';
 
 const data = [
   { name: 'M', xp: 120, time: 45 },
@@ -32,162 +44,175 @@ const data = [
 ];
 
 const Profile: React.FC = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
-  const [isLoggingOut, setIsLoggingOut] = React.useState(false);
+  const [certificates, setCertificates] = useState<Certificate[]>([]);
+  const [certificatesLoading, setCertificatesLoading] = useState(true);
+  const [showAvatarMenu, setShowAvatarMenu] = useState(false);
+  const [solvedProblemsCount, setSolvedProblemsCount] = useState(0);
+
+  useEffect(() => {
+    const fetchPracticeStats = async () => {
+      try {
+        const progress = await supabaseDB.getAllPracticeProgress();
+        const solved = progress.filter(p => p.status === 'completed').length;
+        setSolvedProblemsCount(solved);
+      } catch (err) {
+        console.error("Failed to fetch practice stats", err);
+      }
+    };
+    if (user) fetchPracticeStats();
+  }, [user]);
+
+  useEffect(() => {
+    const fetchCertificates = async () => {
+      if (user) {
+        try {
+          const userCerts = await certificateService.getUserCertificates(user._id);
+          setCertificates(userCerts);
+          await checkAndGenerateCertificates();
+        } catch (error) {
+          console.error('Error fetching certificates:', error);
+        } finally {
+          setCertificatesLoading(false);
+        }
+      }
+    };
+
+    fetchCertificates();
+  }, [user]);
+
+  const checkAndGenerateCertificates = async () => {
+    // Certificate check moved to LearningProfile to load only when stats are viewed
+    if (!user) return;
+    const courseData = [
+      { id: 'c', name: 'C' } // Minimal check if needed in future
+    ];
+  };
 
   if (!user) return null;
 
-  const handleLogout = async () => {
-    if (isLoggingOut) return;
-    setIsLoggingOut(true);
-    console.log("Profile: Triggering logout...");
-    try {
-      await logout();
-    } catch (err) {
-      console.error("Logout error:", err);
-      window.location.href = '/login';
-    }
-  };
-
   return (
-    <div className="p-6 md:p-10 max-w-5xl mx-auto space-y-12 pb-32">
-      {/* Profile Header */}
-      <header className="flex flex-col md:flex-row items-center md:items-start gap-8 bg-slate-900/50 border border-slate-800 p-8 rounded-[3rem]">
-        <div className="relative group">
-          <div className={`w-32 h-32 md:w-40 md:h-40 rounded-[2.5rem] border-4 ${user.isPro ? 'border-yellow-500 shadow-2xl shadow-yellow-500/20' : 'border-slate-800'} overflow-hidden relative`}>
-            <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user.name}`} alt="Avatar" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-indigo-600/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
-              <Edit2 className="text-white" size={24} />
-            </div>
-          </div>
-          {user.isPro && (
-            <div className="absolute -top-3 -right-3 w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-600 rounded-2xl border-4 border-slate-950 flex items-center justify-center shadow-xl">
-              <Crown size={22} className="text-white" fill="currentColor" />
-            </div>
-          )}
-        </div>
+    <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-8 pb-32 animate-in fade-in duration-500 bg-[#0a0b14] min-h-screen">
 
-        <div className="flex-1 text-center md:text-left space-y-4">
-          <div>
-            <div className="flex items-center justify-center md:justify-start gap-3">
-              <h1 className="text-3xl md:text-4xl font-black text-white">{user.name}</h1>
-              {user.isPro && (
-                <span className="bg-yellow-500/10 text-yellow-500 text-[10px] font-black uppercase px-3 py-1 rounded-full border border-yellow-500/20 tracking-widest">Pro Member</span>
-              )}
-            </div>
-            <p className="text-slate-500 flex items-center justify-center md:justify-start gap-2 mt-2 font-medium">
-              <Mail size={16} />
-              {user.email}
-            </p>
-          </div>
+      {/* 1. Personal Header - Centered & Premium */}
+      <section className="relative overflow-hidden rounded-[3rem] bg-slate-900 border border-white/5 shadow-2xl p-10 mt-4">
+        <div className="absolute inset-0 bg-gradient-to-b from-indigo-500/5 to-transparent pointer-events-none" />
 
-          <div className="flex flex-wrap justify-center md:justify-start gap-3 pt-2">
-            <button className="px-6 py-2.5 bg-slate-800 text-white rounded-xl font-bold text-xs hover:bg-slate-700 transition-all border border-slate-700">
-              Settings
+        <div className="relative z-10 flex flex-col items-center text-center space-y-6">
+          {/* Avatar Container */}
+          <div className="relative">
+            <div
+              onClick={() => setShowAvatarMenu(!showAvatarMenu)}
+              className="w-32 h-32 md:w-40 md:h-40 rounded-full p-1.5 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 shadow-2xl shadow-indigo-500/30 cursor-pointer group active:scale-95 transition-all"
+            >
+              <div className="w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-slate-800 to-slate-950 border-4 border-slate-950 flex items-center justify-center relative">
+                <span className="text-5xl md:text-7xl font-black text-white tracking-tighter transition-transform group-hover:scale-110">
+                  {(user.name && user.name !== 'User' ? user.name : user.email)?.charAt(0).toUpperCase()}
+                </span>
+                <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+            </div>
+
+            {/* Edit Icon Button */}
+            <button
+              onClick={() => setShowAvatarMenu(!showAvatarMenu)}
+              className="absolute -bottom-1 -right-1 w-10 h-10 bg-indigo-600 rounded-full border-4 border-slate-900 flex items-center justify-center shadow-lg hover:bg-indigo-500 transition-colors z-20 group"
+            >
+              <Camera size={14} className="text-white group-hover:scale-110 transition-transform" />
             </button>
-            {!user.isPro && (
-              <button
-                onClick={() => navigate('/subscription')}
-                className="px-6 py-2.5 bg-indigo-600 text-white rounded-xl font-bold text-xs hover:bg-indigo-500 transition-all flex items-center gap-2 shadow-lg shadow-indigo-600/20"
-              >
-                <Zap size={14} fill="currentColor" />
-                Unlock Pro
-              </button>
+
+            {/* Avatar Dropdown Menu */}
+            {showAvatarMenu && (
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-48 bg-slate-900 border border-white/10 rounded-2xl shadow-2xl z-50 py-2 animate-in fade-in slide-in-from-top-2 duration-200">
+                <button className="w-full px-4 py-3 text-left hover:bg-white/5 flex items-center gap-3 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400 group-hover:text-indigo-400">
+                    <Camera size={14} />
+                  </div>
+                  <span className="text-xs font-bold text-slate-300">Change Avatar</span>
+                </button>
+                <button className="w-full px-4 py-3 text-left hover:bg-white/5 flex items-center gap-3 transition-colors group border-t border-white/5">
+                  <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400">
+                    <CheckCircle2 size={14} />
+                  </div>
+                  <span className="text-xs font-bold text-white">Use Initial Avatar</span>
+                </button>
+                <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-slate-900 border-l border-t border-white/10 rotate-45" />
+              </div>
+            )}
+
+            {/* Click-away listener backdrop */}
+            {showAvatarMenu && (
+              <div
+                className="fixed inset-0 z-40"
+                onClick={() => setShowAvatarMenu(false)}
+              />
             )}
           </div>
-        </div>
-      </header>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {[
-          { icon: Flame, color: 'text-orange-500', bg: 'bg-orange-500/5', label: 'Streak', value: `${user.streak}d` },
-          { icon: Star, color: 'text-yellow-500', bg: 'bg-yellow-500/5', label: 'Total XP', value: user.xp },
-          { icon: BookOpen, color: 'text-indigo-400', bg: 'bg-indigo-400/5', label: 'Lessons', value: user.lessonsCompleted },
-          { icon: Trophy, color: 'text-emerald-400', bg: 'bg-emerald-400/5', label: 'Global Rank', value: `#${user.isPro ? '42' : '124'}` },
-        ].map((stat, i) => (
-          <div key={i} className="bg-slate-900 border border-slate-800 p-6 rounded-[2rem] text-center space-y-2 hover:border-slate-700 transition-all">
-            <div className={`${stat.color} ${stat.bg} w-10 h-10 rounded-xl flex items-center justify-center mx-auto`}>
-              <stat.icon size={20} fill={i < 2 ? 'currentColor' : 'none'} />
-            </div>
-            <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">{stat.label}</p>
-            <h4 className="text-xl font-black text-white">{stat.value}</h4>
-          </div>
-        ))}
-      </div>
-
-      {/* Embedded Analytics Section */}
-      <section className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h3 className="text-white font-black text-lg uppercase tracking-tight flex items-center gap-3">
-            <TrendingUp className="text-indigo-400" />
-            Weekly Progress
-          </h3>
-          <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest bg-slate-900 p-2 rounded-lg border border-slate-800">Last 7 Days</span>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-slate-900 border border-slate-800 p-6 rounded-[2.5rem] space-y-4">
-            <p className="text-xs font-black text-slate-500 uppercase tracking-widest">XP Distribution</p>
-            <div className="h-48 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: 'bold', fill: '#64748b' }} />
-                  <Tooltip
-                    contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '12px', fontSize: '10px' }}
-                    cursor={{ fill: '#1e293b' }}
-                  />
-                  <Bar dataKey="xp" fill="#6366f1" radius={[4, 4, 0, 0]} barSize={12} />
-                </BarChart>
-              </ResponsiveContainer>
+          <div className="space-y-2">
+            <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight italic uppercase">
+              {user.name}
+            </h1>
+            <div className="flex flex-col items-center gap-1">
+              <div className="flex items-center justify-center gap-2">
+                <ShieldCheck size={14} className="text-indigo-400" />
+                <p className="text-xs font-black text-slate-500 uppercase tracking-[0.2em]">Learning C Programming</p>
+              </div>
+              <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest bg-slate-800/50 px-3 py-1 rounded-full border border-white/5">
+                {Math.round(((user.lessonsCompleted || 0) / 40) * 100)}% Complete
+              </p>
             </div>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 p-6 rounded-[2.5rem] space-y-4">
-            <p className="text-xs font-black text-slate-500 uppercase tracking-widest">Coding Time (Mins)</p>
-            <div className="h-48 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={data}>
-                  <defs>
-                    <linearGradient id="colorTime" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
-                      <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: 'bold', fill: '#64748b' }} />
-                  <Tooltip contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '12px', fontSize: '10px' }} />
-                  <Area type="monotone" dataKey="time" stroke="#10b981" fillOpacity={1} fill="url(#colorTime)" strokeWidth={3} />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate('/settings', { state: { section: 'EDIT_PROFILE' } })}
+              className="px-6 py-2.5 bg-slate-800 text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-700 transition-all flex items-center gap-2 border border-white/5 active:scale-95"
+            >
+              <Pencil size={12} /> Edit Profile
+            </button>
           </div>
         </div>
       </section>
 
-      {/* Menu / Actions */}
-      <div className="space-y-3 pt-6">
+      {/* 2. Navigation Actions */}
+      <div className="flex flex-col gap-3">
         <button
-          onClick={handleLogout}
-          disabled={isLoggingOut}
-          className="w-full p-6 bg-red-500/10 border border-red-500/20 rounded-[2.5rem] flex items-center justify-between group hover:bg-red-500/20 transition-all active:scale-[0.98] disabled:opacity-50"
+          onClick={() => navigate('/profile/stats')}
+          className="w-full p-6 bg-slate-900 border border-white/5 rounded-3xl flex items-center justify-between group hover:border-indigo-500/50 hover:bg-slate-800/50 transition-all active:scale-95"
         >
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-red-500/20 rounded-2xl flex items-center justify-center text-red-500">
-              {isLoggingOut ? <Loader2 className="animate-spin" size={24} /> : <LogOut size={24} />}
+            <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center group-hover:bg-indigo-500 group-hover:text-white transition-colors">
+              <Trophy size={24} />
             </div>
             <div className="text-left">
-              <span className="block font-black text-red-500 uppercase tracking-widest text-sm">
-                {isLoggingOut ? 'Signing Out...' : 'Sign Out'}
-              </span>
-              <span className="text-[10px] text-red-500/60 font-bold uppercase">See you soon, {user.name.split(' ')[0]}!</span>
+              <h3 className="text-lg font-bold text-white group-hover:text-indigo-200 transition-colors">View Learning Profile</h3>
+              <p className="text-xs font-medium text-slate-500 group-hover:text-indigo-300/70 transition-colors">
+                🔥 You're on a 3-day streak! Keep it up.
+              </p>
             </div>
           </div>
-          <ChevronRight className="text-red-500/40 group-hover:translate-x-1 transition-transform" />
+          <ChevronRight className="text-slate-600 group-hover:text-indigo-400 group-hover:translate-x-1 transition-all" />
+        </button>
+
+        <button
+          onClick={() => navigate('/settings')}
+          className="w-full p-6 bg-slate-900 border border-white/5 rounded-3xl flex items-center justify-between group hover:border-slate-700 hover:bg-slate-800/50 transition-all active:scale-95"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-slate-800 text-slate-400 flex items-center justify-center group-hover:bg-slate-700 group-hover:text-white transition-colors">
+              <Settings size={24} />
+            </div>
+            <div className="text-left">
+              <h3 className="text-lg font-bold text-white">Settings</h3>
+              <p className="text-xs font-medium text-slate-500">Account, preferences & app info</p>
+            </div>
+          </div>
+          <ChevronRight className="text-slate-600 group-hover:text-slate-300 group-hover:translate-x-1 transition-all" />
         </button>
       </div>
+
     </div>
   );
 };

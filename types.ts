@@ -36,17 +36,17 @@ export interface User {
   password?: string; // Only for local email/password accounts
   provider?: 'google' | 'github' | 'email'; // Identity Provider
   providerId?: string; // Unique ID from Google/GitHub
-  xp: number;
-  streak: number;
   lessonsCompleted: number;
   completedLessonIds: string[];
   unlockedLessonIds: string[];
   createdAt: Date;
   onboardingCompleted: boolean;
-  isPro?: boolean;
-  subscriptionTier?: 'Free' | 'Pro';
-  billingCycle?: 'Monthly' | 'Yearly' | 'None';
-  nextBillingDate?: Date;
+  isPro?: boolean; // Legacy: All users are now Pro
+  subscriptionTier?: 'Free' | 'Pro'; // Legacy
+  subscriptionStatus?: 'FREE' | 'PREMIUM_ACTIVE' | 'PREMIUM_EXPIRED'; // Legacy: Always PREMIUM_ACTIVE
+  subscriptionEndDate?: string; // Legacy
+  billingCycle?: 'Monthly' | 'Yearly' | 'None'; // Legacy
+  nextBillingDate?: Date; // Legacy
   avatar?: string;
   lastLogin?: Date;
   lastLessonId?: string;
@@ -82,6 +82,8 @@ export interface QuizQuestion {
   text: string;
   options: string[];
   correctAnswer: number;
+  explanation?: string;
+  difficultyLevel?: 'Beginner' | 'Easy' | 'Intermediate' | 'Medium' | 'Advanced' | 'Hard';
 }
 
 export interface PracticeProblem {
@@ -100,9 +102,12 @@ export interface Lesson {
   topics?: string[];
   duration: string;
   content: string;
+  learningObjectives?: string[];
   syntax?: string;
   codeExample?: string;
   fullProgram?: string;
+  expectedOutput?: string;
+  difficultyLevel?: 'Beginner' | 'Intermediate' | 'Advanced' | string;
   quizQuestions: QuizQuestion[];
   practiceProblems?: PracticeProblem[];
   vivaQuestions?: VivaQuestion[];
@@ -111,6 +116,7 @@ export interface Lesson {
 export interface LessonModule {
   id: string;
   title: string;
+  subtitle?: string;
   lessons: Lesson[];
 }
 
@@ -123,4 +129,42 @@ export interface Challenge {
   inputFormat: string;
   outputFormat: string;
   constraints: string;
+}
+
+export interface Subscription {
+  id: string;
+  user_id: string;
+  plan: 'FREE' | 'PREMIUM';
+  status: 'FREE' | 'PREMIUM_ACTIVE' | 'PREMIUM_EXPIRED';
+  start_date: string;
+  end_date: string;
+  razorpay_subscription_id?: string;
+  created_at: string;
+}
+
+export interface Payment {
+  id: string;
+  user_id: string;
+  amount: number;
+  currency: string;
+  status: 'pending' | 'completed' | 'failed' | 'refunded';
+  razorpay_payment_id: string;
+  razorpay_subscription_id: string;
+  verified: boolean;
+  created_at: string;
+}
+
+export interface Certificate {
+  id: string;
+  user_id: string;
+  course_name: string;
+  mentor_name: string;
+  completion_date: string;
+  certificate_id: string;
+  pdf_url?: string;
+  created_at: string;
+  users?: {
+    name: string;
+    email: string;
+  };
 }

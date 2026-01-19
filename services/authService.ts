@@ -151,6 +151,27 @@ class AuthService {
     if (error) throw error;
   }
 
+  async deleteAccount(): Promise<void> {
+    const user = await this.getCurrentUser();
+    if (!user) throw new Error("No user logged in");
+
+    // 1. Delete profile data (User table)
+    // We cannot delete from auth.users (requires service role), 
+    // but we can clean up our app's 'users' table if RLS allows self-deletion.
+    const { error } = await supabaseDB.supabase
+      .from('users')
+      .delete()
+      .eq('id', user._id);
+
+    if (error) {
+      console.error("Failed to delete user profile:", error);
+      throw new Error("Failed to delete account data");
+    }
+
+    // 2. Sign out
+    await this.signOut();
+  }
+
   // --- Session State ---
 
   async getCurrentUser(): Promise<User | null> {
@@ -166,27 +187,41 @@ class AuthService {
 
   onAuthStateChange(callback: (user: User | null) => void) {
     const { data: { subscription } } = supabaseDB.supabase.auth.onAuthStateChange(async (event, session) => {
-      if (session?.user) {
-        const user = await supabaseDB.findOne({ _id: session.user.id });
+      console.log("authService: Auth event", { event, userId: session?.user?.id });
 
-        if (!user && event === 'SIGNED_IN') {
-          try {
-            const newUser = await supabaseDB.insertOne({
-              _id: session.user.id,
-              email: session.user.email!,
-              name: session.user.user_metadata.full_name || 'User',
-              avatar: session.user.user_metadata.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${session.user.id}`
-            });
-            callback(newUser);
-          } catch (e) {
-            console.error("Failed to create user profile on auth change:", e);
-            callback(null);
-          }
-        } else {
-          callback(user);
+      if (!session?.user) {
+        console.log("authService: No session, returning null");
+        callback(null);
+        return;
+      }
+
+      const userId = session.user.id;
+
+      // Fetch profile once per event
+      console.log("authService: Fetching profile for", userId);
+      let user = await supabaseDB.findOne({ _id: userId });
+
+      if (!user && event === 'SIGNED_IN') {
+        console.log("authService: Creating new user profile");
+        try {
+          const newUser = await supabaseDB.insertOne({
+            _id: userId,
+            email: session.user.email!,
+            name: session.user.user_metadata.full_name || session.user.user_metadata.name || session.user.email?.split('@')[0] || 'User',
+            avatar: session.user.user_metadata.avatar_url || session.user.user_metadata.picture || `https://api.dicebear.com/7.x/avataaars/svg?seed=${userId}`,
+            subscriptionStatus: 'PREMIUM_ACTIVE',
+            subscriptionEndDate: null,
+            onboardingCompleted: false
+          });
+          console.log("authService: Profile created", newUser);
+          callback(newUser);
+        } catch (e) {
+          console.error("authService: Failed to create profile:", e);
+          callback(null);
         }
       } else {
-        callback(null);
+        console.log("authService: Returning profile", { found: !!user, firstName: user?.firstName, subscriptionStatus: user?.subscriptionStatus });
+        callback(user);
       }
     });
 

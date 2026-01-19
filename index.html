@@ -3,14 +3,18 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="GenSpark" />
 
   <!-- Primary Meta Tags -->
   <title>GenSpark - Ignite Your Coding Intelligence</title>
   <meta name="title" content="GenSpark - Ignite Your Coding Intelligence" />
   <meta name="description"
     content="An AI-powered coding intelligence platform featuring interactive lessons, a real-time compiler, and personalized challenges." />
-  <meta name="theme-color" content="#0a0b14" />
+  <meta name="theme-color" content="#ffffff" />
 
   <!-- Open Graph / Facebook / WhatsApp -->
   <meta property="og:type" content="website" />
@@ -22,7 +26,7 @@
     content="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&h=630&auto=format&fit=crop" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="/logo.png">
+  <link rel="icon" type="image/svg+xml" href="/logo.svg">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link
@@ -47,19 +51,22 @@
 </script>
 
   <style>
+    /* Force dark background on all elements before anything loads */
+    html, body, #root {
+      background-color: #0a0b14 !important;
+      color: #f8fafc !important;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #0a0b14;
-      color: #f8fafc;
       margin: 0;
       overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .font-mono {
       font-family: 'Fira Code', monospace;
     }
-
-
 
     * {
       scrollbar-width: none !important;

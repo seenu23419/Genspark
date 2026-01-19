@@ -1,5 +1,5 @@
-import React, { Suspense, lazy } from 'react';
-import { createBrowserRouter, RouterProvider, Navigate, Outlet, useLocation } from 'react-router-dom';
+import React, { Suspense, lazy, useMemo, useRef, useEffect } from 'react';
+import { createBrowserRouter, RouterProvider, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Layout from './components/Layout';
@@ -7,13 +7,14 @@ import Splash from './screens/auth/Splash';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Loader2 } from 'lucide-react';
 import { Screen } from './types';
+import { initSentry } from './services/sentryService';
 
 // Lazy Load Screens
-import Welcome from './screens/auth/Welcome';
 import Login from './screens/auth/Login';
 import Signup from './screens/auth/Signup';
 import Home from './screens/home/Home';
 import LearnHub from './screens/learn/LearnHub';
+import CourseTrack from './screens/learn/CourseTrack';
 import PracticeHub from './screens/practice/PracticeHub';
 import Profile from './screens/profile/Profile';
 const ForgotPassword = lazy(() => import('./screens/auth/ForgotPassword'));
@@ -22,63 +23,222 @@ const Onboarding = lazy(() => import('./screens/auth/Onboarding'));
 const ChallengesList = lazy(() => import('./screens/challenges/ChallengesList'));
 const ChallengeDetail = lazy(() => import('./screens/challenges/ChallengeDetail'));
 const Settings = lazy(() => import('./screens/profile/Settings'));
-const Progress = lazy(() => import('./screens/profile/Progress'));
-const Analytics = lazy(() => import('./screens/profile/Analytics'));
-const LessonsList = lazy(() => import('./screens/lessons/LessonsList'));
+const LearningProfile = lazy(() => import('./screens/profile/LearningProfile'));
+const PrivacyPolicy = lazy(() => import('./screens/legal/PrivacyPolicy'));
+
 const LessonView = lazy(() => import('./screens/lessons/LessonView'));
+const CodingProblemWrapper = lazy(() => import('./screens/practice/CodingProblemWrapper'));
 const SubscriptionPlan = lazy(() => import('./screens/subscription/SubscriptionPlan'));
+const Quiz = lazy(() => import('./screens/quiz/Quiz'));
+const AdminCurriculumSync = lazy(() => import('./screens/admin/AdminCurriculumSync'));
+const DiagnosticTool = lazy(() => import('./screens/admin/DiagnosticTool'));
+const CertificateVerify = lazy(() => import('./screens/profile/CertificateVerify'));
 
 // Query Client for React Query
 const queryClient = new QueryClient();
 
-// Loading Fallback
-// Minimal Loading Fallback
+// Loading Fallback with smooth fade transition
 const ScreenLoader = () => (
-  <div className="fixed inset-0 bg-[#0a0b14] z-[9999]" />
+  <div className="fixed inset-0 bg-[#0a0b14] z-[9999] flex flex-col items-center justify-center gap-4 animate-in fade-in duration-300">
+    <div className="relative w-12 h-12 flex items-center justify-center">
+      <div className="absolute inset-0 rounded-full border-2 border-indigo-500/20" />
+      <Loader2 className="text-indigo-400 animate-spin" size={40} />
+    </div>
+    <p className="text-indigo-300/60 text-xs font-black uppercase tracking-[0.2em] animate-pulse">Loading...</p>
+  </div>
 );
+
+import OfflineBanner from './components/OfflineBanner';
+
+// ... (existing imports)
 
 // --- PROTECTED ROUTE WRAPPER ---
 const ProtectedRoute = () => {
   const { user, loading } = useAuth();
   const location = useLocation();
+  const [splashMinDurationPassed, setSplashMinDurationPassed] = React.useState(false);
+  const hasShownSplashRef = React.useRef(false);
+  const isOAuthRedirectRef = React.useRef(false);
 
-  if (loading) return <Splash />;
-  if (!user) return <Navigate to="/welcome" state={{ from: location }} replace />;
+  // Prevent scrolling during entire auth state transitions - keep overflow hidden until user is ready
+  React.useEffect(() => {
+    const shouldHideOverflow = loading || !user || !splashMinDurationPassed;
+
+    if (shouldHideOverflow) {
+      document.documentElement.style.overflow = 'hidden';
+      document.documentElement.style.height = '100%';
+      document.body.style.overflow = 'hidden';
+      document.body.style.height = '100%';
+    } else {
+      document.documentElement.style.overflow = '';
+      document.documentElement.style.height = '';
+      document.body.style.overflow = '';
+      document.body.style.height = '';
+    }
+
+    return () => {
+      document.documentElement.style.overflow = '';
+      document.documentElement.style.height = '';
+      document.body.style.overflow = '';
+      document.body.style.height = '';
+    };
+  }, [loading, user, splashMinDurationPassed]);
+
+  // Detect OAuth redirect by checking for auth-related hash/query params
+  React.useEffect(() => {
+    const hasAuthParams =
+      window.location.hash.includes('access_token') ||
+      window.location.hash.includes('code') ||
+      window.location.search.includes('code') ||
+      window.location.search.includes('state');
+
+    if (hasAuthParams) {
+      isOAuthRedirectRef.current = true;
+      hasShownSplashRef.current = true; // Skip splash on OAuth redirect
+      setSplashMinDurationPassed(true); // Skip timer on OAuth redirect
+      console.log("🔐 OAuth redirect detected, skipping splash screen");
+    }
+  }, []);
+
+  // Enforce 3-second minimum splash screen display on first app load only
+  React.useEffect(() => {
+    if (!hasShownSplashRef.current && !isOAuthRedirectRef.current) {
+      hasShownSplashRef.current = true;
+      const timer = setTimeout(() => {
+        setSplashMinDurationPassed(true);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  console.log("🔄 ProtectedRoute: Render", {
+    loading,
+    splashMinDurationPassed,
+    hasShownSplash: hasShownSplashRef.current,
+    isOAuthRedirect: isOAuthRedirectRef.current,
+    hasUser: !!user,
+    userId: user?._id,
+    onboardingCompleted: user?.onboardingCompleted,
+    path: location.pathname,
+    timestamp: Date.now()
+  });
+
+  // Memoize navigation decision to prevent re-creating Navigate components
+  const userId = user?._id;
+  const onboardingCompleted = user?.onboardingCompleted;
+  const currentPath = location.pathname;
+
+  const navigationElement = useMemo(() => {
+    console.log("🧮 useMemo: Recalculating navigation", { loading, splashMinDurationPassed, isOAuthRedirect: isOAuthRedirectRef.current, hasUser: !!user, userId, onboardingCompleted, currentPath });
+
+    // If user is already logged in, skip splash and go to appropriate screen
+    if (user) {
+      console.log("✅ ProtectedRoute: User loaded, proceeding with app flow");
+      // Continue to redirect logic below
+    } else {
+      // No user - show splash on first load only
+      if (!splashMinDurationPassed && !isOAuthRedirectRef.current) {
+        console.log("⏳ ProtectedRoute: Showing splash (first load, no OAuth)");
+        return <Splash />;
+      }
+
+      // If auth is still loading (and not on first load), show splash while waiting
+      if (loading && isOAuthRedirectRef.current) {
+        console.log("⏳ ProtectedRoute: Auth still loading during OAuth, showing splash");
+        return <Splash />;
+      }
+
+      // Auth done loading, no user found - show login
+      console.log("🚫 ProtectedRoute: No user after auth complete, redirecting to login");
+      return <Navigate to="/login" state={{ from: location }} replace />;
+    }
+
+    // Only make navigation decisions when we have complete user data
+    // If onboardingCompleted is undefined, we're still loading user details
+    if (onboardingCompleted === undefined && currentPath !== '/onboarding') {
+      console.log("⏳ ProtectedRoute: User data loading, showing splash");
+      return <Splash />;
+    }
+
+    // Redirect to onboarding if not completed and not already there
+    // For existing users, if onboardingCompleted is undefined but they have names filled, consider onboarding complete
+    // This handles users who completed onboarding before we added the onboardingCompleted field
+    const hasNamesFilled = user?.firstName && user?.firstName.trim() !== '';
+    const needsOnboarding = onboardingCompleted === false || (onboardingCompleted === undefined && !hasNamesFilled);
+
+    // Prevent redirecting to onboarding if we're currently on the home page or other valid pages
+    // This helps avoid redirect loops after onboarding completion
+    if (needsOnboarding && currentPath !== '/onboarding' && currentPath !== '/settings') {
+      console.log("➡️ ProtectedRoute: User needs onboarding, redirecting", {
+        userId,
+        currentPath,
+        timestamp: Date.now(),
+        onboardingCompleted,
+        hasNamesFilled
+      });
+      return <Navigate to="/onboarding" replace />;
+    }
+
+    // If onboarding is done, prevent going back to onboarding screen
+    if (onboardingCompleted && currentPath === '/onboarding') {
+      console.log("✅ ProtectedRoute: Onboarding already completed, redirecting to home");
+      return <Navigate to="/" replace />;
+    }
+
+    return null; // No redirect needed
+  }, [loading, splashMinDurationPassed, userId, onboardingCompleted, currentPath]);
+
+  // If we have a navigation element, return it
+  if (navigationElement) {
+    return navigationElement;
+  }
 
   // Derive screen name for Layout highlights
   const path = location.pathname;
   let screen: Screen = 'HOME';
   if (path === '/learn') screen = 'LEARN';
   else if (path.startsWith('/practice')) screen = 'PRACTICE';
-  else if (path.startsWith('/profile') || path.startsWith('/settings') || path.startsWith('/progress')) screen = 'PROFILE';
+  else if (path.startsWith('/settings')) screen = 'SETTINGS';
+  else if (path.startsWith('/profile')) screen = 'PROFILE';
   else if (path.startsWith('/lessons') || path.startsWith('/lesson') || path.startsWith('/quiz')) screen = 'LEARN';
   else if (path.startsWith('/challenge')) screen = 'PRACTICE';
 
-  // Redirect to onboarding if name is missing and not already there
-  if (!user.firstName && path !== '/onboarding' && path !== '/settings') {
-    return <Navigate to="/onboarding" replace />;
-  }
-
-  // If onboarding is done, prevent going back to onboarding screen
-  if (user.firstName && path === '/onboarding') {
-    return <Navigate to="/" replace />;
-  }
-
   // Isolate Onboarding from Layout (No Bottom Nav)
   if (path === '/onboarding') {
+    console.log("📝 ProtectedRoute: Rendering onboarding page");
     return (
-      <Suspense fallback={<ScreenLoader />}>
-        <Outlet />
-      </Suspense>
+      <div className="animate-in fade-in duration-300">
+        <Suspense fallback={<ScreenLoader />}>
+          <OfflineBanner />
+          <Outlet />
+        </Suspense>
+      </div>
     );
   }
 
+  // Isolate Coding Problem Screen from Layout (Distraction Free)
+  if (path.startsWith('/practice/problem/') || path.startsWith('/challenge/')) {
+    console.log("👨‍💻 ProtectedRoute: Rendering coding problem distraction-free");
+    return (
+      <div className="animate-in fade-in duration-300">
+        <Suspense fallback={<ScreenLoader />}>
+          <OfflineBanner />
+          <Outlet />
+        </Suspense>
+      </div>
+    );
+  }
+
+  console.log("🏠 ProtectedRoute: Rendering main layout");
   return (
-    <Layout currentScreen={screen} setScreen={() => { }} user={user}>
-      <Suspense fallback={<ScreenLoader />}>
-        <Outlet />
-      </Suspense>
-    </Layout>
+    <div className="animate-in fade-in duration-300">
+      <OfflineBanner />
+      <Layout currentScreen={screen} setScreen={() => { }} user={user!}>
+        <Suspense fallback={<ScreenLoader />}>
+          <Outlet />
+        </Suspense>
+      </Layout>
+    </div>
   );
 };
 
@@ -95,6 +255,25 @@ const PublicRoute = () => {
   );
 };
 
+// Navigation wrapper components to fix router.navigate() calls
+const LoginWrapper = () => {
+  return <Login />;
+};
+
+const SignupWrapper = () => {
+  return <Signup />;
+};
+
+const OTPWrapper = () => {
+  const navigate = useNavigate();
+  return <OTP email="" onVerify={() => navigate('/')} />;
+};
+
+const ForgotPasswordWrapper = () => {
+  const navigate = useNavigate();
+  return <ForgotPassword onBack={() => navigate('/login')} />;
+};
+
 // --- ROUTER CONFIGURATION ---
 const router = createBrowserRouter([
   {
@@ -105,58 +284,89 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "onboarding", element: <Onboarding /> },
       { path: "learn", element: <LearnHub /> },
-      { path: "practice/*", element: <PracticeHub /> },
-      { path: "profile", element: <Profile /> },
-      { path: "settings", element: <Settings onBack={() => window.history.back()} /> },
+      { path: "track/:langId", element: <CourseTrack /> },
+      { path: "practice", element: <PracticeHub /> },
+      { path: "practice/problem/:problemId", element: <CodingProblemWrapper /> },
+      { path: "settings", element: <Settings /> },
 
-      // Secondary / Detail Routes (Accessed from main tabs)
-      { path: "progress", element: <Progress /> },
-      { path: "lessons/:langId", element: <LessonsList /> },
+      // Routes accessible from Settings or other screens
+      { path: "profile", element: <Profile /> },
+      { path: "profile/stats", element: <LearningProfile /> },
+
       { path: "lesson/:lessonId", element: <LessonView /> },
       { path: "quiz/:quizId", element: <Quiz /> },
       { path: "challenge/:challengeId", element: <ChallengeDetail /> },
       { path: "subscription", element: <SubscriptionPlan /> },
+      { path: "certificate/verify/:certificateId", element: <CertificateVerify /> },
+      { path: "diagnostic", element: <DiagnosticTool /> },
     ]
   },
   {
+    path: "/login",
     element: <PublicRoute />,
     children: [
-      {
-        path: "welcome", element: <Welcome
-          onLoginSuccess={() => router.navigate('/')}
-          onGoToLogin={() => router.navigate('/login')}
-          onGoToSignup={() => router.navigate('/signup')}
-        />
-      },
-      {
-        path: "login", element: <Login
-          onLogin={() => router.navigate('/')}
-          onSignup={() => router.navigate('/signup')}
-          onForgotPassword={() => router.navigate('/forgot-password')}
-          onBack={() => router.navigate('/welcome')}
-        />
-      },
-      {
-        path: "signup", element: <Signup
-          onSignup={() => router.navigate('/')}
-          onLogin={() => router.navigate('/login')}
-          onBack={() => router.navigate('/welcome')}
-        />
-      },
-      { path: "otp", element: <OTP email="" onVerify={() => router.navigate('/')} /> },
-      { path: "forgot-password", element: <ForgotPassword onBack={() => router.navigate('/login')} /> },
+      { index: true, element: <LoginWrapper /> }
     ]
   },
-  { path: "*", element: <Navigate to="/" replace /> }
+  {
+    path: "/signup",
+    element: <PublicRoute />,
+    children: [
+      { index: true, element: <SignupWrapper /> }
+    ]
+  },
+  {
+    path: "/otp",
+    element: <PublicRoute />,
+    children: [
+      { index: true, element: <OTPWrapper /> }
+    ]
+  },
+  {
+    path: "/forgot-password",
+    element: <PublicRoute />,
+    children: [
+      { index: true, element: <ForgotPasswordWrapper /> }
+    ]
+  },
+  {
+    path: "/admin-sync",
+    element: <PublicRoute />,
+    children: [
+      { index: true, element: <AdminCurriculumSync /> }
+    ]
+  },
+  {
+    path: "/privacy",
+    element: <Suspense fallback={<ScreenLoader />}><PrivacyPolicy /></Suspense>
+  },
+  {
+    path: "*",
+    element: <Navigate to="/" replace />
+  }
 ]);
 
+import { CurriculumProvider } from './contexts/CurriculumContext';
+import { PracticeProvider } from './contexts/PracticeContext';
+
 const App: React.FC = () => {
+  // Initialize Sentry on first render
+  useEffect(() => {
+    initSentry().catch((err) => console.warn('Sentry init failed:', err));
+  }, []);
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
-    </QueryClientProvider>
+    <div className="bg-[#0a0b14] min-h-screen">
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <CurriculumProvider>
+            <PracticeProvider>
+              <RouterProvider router={router} />
+            </PracticeProvider>
+          </CurriculumProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </div>
   );
 };
 

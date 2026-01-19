@@ -1,15 +1,19 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Sparkles, Bot, Loader2, User, Copy, Check } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
+import { Send, Sparkles, Bot, Loader2, User } from 'lucide-react';
 import { genSparkAIService } from '../services/geminiService';
 import { ChatMessage } from '../types';
 
 interface AIPanelProps {
     context?: string;
+    /**
+     * If true, AI acts as a mentor and won't provide code solutions
+     * If false, AI can provide general assistance
+     */
+    mentorMode?: boolean;
 }
 
-const AIPanel: React.FC<AIPanelProps> = ({ context }) => {
+const AIPanel: React.FC<AIPanelProps> = ({ context, mentorMode = false }) => {
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -39,9 +43,16 @@ const AIPanel: React.FC<AIPanelProps> = ({ context }) => {
                 parts: [{ text: m.content }]
             }));
 
+            // Add mentor mode context if enabled
+            const systemPrompt = mentorMode
+              ? `You are a coding mentor. Help users learn by explaining concepts, not by providing solutions. 
+                 Never give full code. Ask guiding questions. Encourage independent thinking.
+                 Output plain text only, no markdown or code blocks.`
+              : '';
+
             const stream = genSparkAIService.generateChatStream(
-                input + (context ? `\n\nContext: I am currently on the ${context} screen.` : ''),
-                false, // assuming free for now or check user pro
+                (systemPrompt ? systemPrompt + '\n\n' : '') + input + (context ? `\n\nContext: I am currently on the ${context} screen.` : ''),
+                false,
                 history
             );
 
@@ -87,12 +98,9 @@ const AIPanel: React.FC<AIPanelProps> = ({ context }) => {
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${m.role === 'user' ? 'bg-indigo-600' : 'bg-slate-800 border border-slate-700'}`}>
                             {m.role === 'user' ? <User size={14} /> : <Bot size={14} className="text-indigo-400" />}
                         </div>
-                        <div className={`p-4 rounded-2xl max-w-[85%] text-sm leading-relaxed ${m.role === 'user' ? 'bg-indigo-600/10 border border-indigo-500/20 text-slate-200' : 'bg-slate-800/50 border border-slate-700/50 text-slate-300'}`}>
-                            <div className="prose prose-invert prose-sm max-w-none">
-                                <ReactMarkdown>
-                                    {m.content}
-                                </ReactMarkdown>
-                            </div>
+                        <div className={`p-4 rounded-2xl max-w-[85%] text-sm leading-relaxed whitespace-pre-wrap break-words ${m.role === 'user' ? 'bg-indigo-600/10 border border-indigo-500/20 text-slate-200' : 'bg-slate-800/50 border border-slate-700/50 text-slate-300'}`}>
+                            {/* Plain text output - no markdown processing, no copy buttons, no syntax highlighting */}
+                            {m.content}
                         </div>
                     </div>
                 ))}

@@ -1,0 +1,37 @@
+[
+    {
+        "id": "sql-l1",
+        "title": "LEVEL 1: SQL Mastery",
+        "lessons": [
+            {
+                "id": "sql1.1",
+                "title": "1.1 Introduction to SQL",
+                "duration": "15 min",
+                "difficultyLevel": "Beginner",
+                "topics": [
+                    "SELECT",
+                    "FROM",
+                    "Tables"
+                ],
+                "content": "# Relational Databases\n\nSQL (Structured Query Language) is used to communicate with databases.\n\n### Key Concepts\n- **Tables**: Data is stored in rows and columns.\n- **SELECT**: Used to pick data.\n- **FROM**: Specifies the table.",
+                "syntax": "SELECT * FROM users;",
+                "fullProgram": "-- Mock SQL Query\nSELECT name FROM employees WHERE status = 'active';",
+                "expectedOutput": "All active employees",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which command extracts data?",
+                        "options": [
+                            "EXTRACT",
+                            "GET",
+                            "SELECT",
+                            "OPEN"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "SELECT is the primary command for retrieval."
+                    }
+                ]
+            }
+        ]
+    }
+]

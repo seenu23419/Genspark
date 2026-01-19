@@ -1,0 +1,321 @@
+[
+    {
+        "id": "dsa-l1",
+        "title": "LEVEL 1: Fundamentals & Complexity",
+        "lessons": [
+            {
+                "id": "dsa1",
+                "title": "1. Time & Space Complexity (Big-O)",
+                "duration": "25 mins",
+                "difficultyLevel": "Beginner",
+                "topics": [
+                    "Asymptotic Analysis",
+                    "Best/Average/Worst Case",
+                    "Space Complexity"
+                ],
+                "content": "# Understanding Complexity (Big-O)\n\nIn DSA, we don't just want a working program; we want an **efficient** one. Complexity Analysis helps us measure how well an algorithm scales as input grows.\n\n---\n\n## 1. What is Time Complexity?\nIt is the amount of time taken by an algorithm to run as a function of the size of the input (n).\n\n### Common Notations:\n- **O(1)**: Constant (e.g., accessing an array index).\n- **O(log n)**: Logarithmic (e.g., Binary Search).\n- **O(n)**: Linear (e.g., a single loop).\n- **O(n²)**: Quadratic (e.g., nested loops).\n\n## 2. Space Complexity\nIt is the amount of memory an algorithm uses to execute relative to the input size.\n\n## 3. The 3 Cases\n- **Worst Case (O)**: Maximum time a program can take.\n- **Average Case (Θ)**: Mean time.\n- **Best Case (Ω)**: Minimum time (e.g., first element is the target).",
+                "fullProgram": "// Example: Linear vs Constant time\n#include <iostream>\n\nvoid constantTime(int n) {\n    std::cout << \"This is O(1) regardless of n\\n\";\n}\n\nvoid linearTime(int n) {\n    for (int i = 0; i < n; i++) {\n        // This loop runs n times\n    }\n    std::cout << \"This is O(n) for n = \" << n << \"\\n\";\n}\n\nint main() {\n    constantTime(10);\n    linearTime(10);\n    return 0;\n}",
+                "expectedOutput": "This is O(1) regardless of n\nThis is O(n) for n = 10",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the time complexity of searching an element in a sorted array using Binary Search?",
+                        "options": [
+                            "O(n)",
+                            "O(1)",
+                            "O(log n)",
+                            "O(n log n)"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Binary search divides the search space in half each time, leading to O(log n) complexity."
+                    }
+                ]
+            },
+            {
+                "id": "dsa2",
+                "title": "2. Recursion & Logic Building",
+                "duration": "30 mins",
+                "difficultyLevel": "Intermediate",
+                "topics": [
+                    "Base Case",
+                    "Recursive Tree",
+                    "Factorial",
+                    "Fibonacci"
+                ],
+                "content": "# Recursion: The Art of Thinking Small\n\nRecursion is a process where a function calls itself to solve a smaller version of the same problem.\n\n---\n\n## 1. The Two Parts of Recursion\nEvery recursive function **must** have:\n1.  **Base Case**: A condition that stops the recursion (prevents stack overflow).\n2.  **Recursive Step**: The part where the function calls itself with a reduced input.\n\n## 2. Visualization: Recursive Tree\nFor `factorial(3)`:\n- `fact(3)` calls `3 * fact(2)`\n- `fact(2)` calls `2 * fact(1)`\n- `fact(1)` returns 1 (**Base Case**)\n- Result: 3 * 2 * 1 = 6\n\n## 3. Types of Recursion\n- **Direct**: Function calls itself directly.\n- **Indirect**: Funct A calls B, and B calls A.\n- **Tail Recursion**: The recursive call is the last action in the function (efficient).",
+                "fullProgram": "#include <iostream>\n\n// Recursive function to calculate Factorial\nint factorial(int n) {\n    if (n <= 1) return 1; // Base Case\n    return n * factorial(n - 1); // Recursive Step\n}\n\nint main() {\n    int num = 5;\n    std::cout << \"Factorial of \" << num << \" is: \" << factorial(num);\n    return 0;\n}",
+                "expectedOutput": "Factorial of 5 is: 120",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What happens if a recursive function does not have a base case?",
+                        "options": [
+                            "It runs faster",
+                            "It returns zero",
+                            "It results in a Stack Overflow",
+                            "It converts to a for loop"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Without a base case, the function calls itself forever until the computer's memory stack is exhausted."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "dsa-l2",
+        "title": "LEVEL 2: Linear Data Structures",
+        "lessons": [
+            {
+                "id": "dsa3",
+                "title": "3. Arrays & Strings",
+                "duration": "35 mins",
+                "difficultyLevel": "Intermediate",
+                "topics": [
+                    "Prefix Sum",
+                    "Sliding Window",
+                    "Two Pointers",
+                    "Palindrome"
+                ],
+                "content": "# Arrays & Strings\n\nArrays and Strings are the most basic and frequently used data structures in DSA.\n\n---\n\n## 1. Advanced Array Techniques\n- **Two Pointers**: Used to search for pairs in a sorted array (O(n)).\n- **Sliding Window**: Used to solve subarray problems with a fixed or variable size (O(n)).\n- **Prefix Sum**: Precalculating the sum of elements from start to index `i` to answer range sum queries in O(1).\n\n## 2. String Manipulation\n- **Anagram**: Two strings with same characters in different order.\n- **Palindrome**: Reads the same forward and backward.\n- **Frequency Counting**: Using an array of size 26 or a hashmap to count character occurrences.\n\n## 3. Multidimensional Arrays (2D)\nUsed for matrix operations like rotation, transposition, and searching in sorted grids.",
+                "fullProgram": "// Simple Palindrome Check using Two Pointers\n#include <iostream>\n#include <string>\n\nbool isPalindrome(std::string s) {\n    int left = 0, right = s.length() - 1;\n    while (left < right) {\n        if (s[left] != s[right]) return false;\n        left++;\n        right--;\n    }\n    return true;\n}\n\nint main() {\n    std::string test = \"racecar\";\n    std::cout << \"Is '\" << test << \"' a palindrome? \" << (isPalindrome(test) ? \"Yes\" : \"No\");\n    return 0;\n}",
+                "expectedOutput": "Is 'racecar' a palindrome? Yes",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the time complexity of a 'Two Pointers' approach to find a pair in a sorted array?",
+                        "options": [
+                            "O(n^2)",
+                            "O(n log n)",
+                            "O(n)",
+                            "O(1)"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Two pointers traverse the array once from both ends, resulting in linear O(n) time."
+                    }
+                ]
+            },
+            {
+                "id": "dsa4",
+                "title": "4. Linked Lists, Stacks & Queues",
+                "duration": "40 mins",
+                "difficultyLevel": "Intermediate",
+                "topics": [
+                    "Singly Linked List",
+                    "LIFO/FIFO",
+                    "Deque",
+                    "Cycle Detection"
+                ],
+                "content": "# Dynamic & Sequential Structures\n\n## 1. Linked Lists\nA collection of nodes where each node contains data and a **pointer** to the next node.\n- **Memory**: Non-contiguous (dynamic).\n- **Cycle Detection**: Use Floyd's \"Tortoise and Hare\" algorithm.\n\n## 2. Stacks (LIFO)\n**Last In, First Out**. Like a stack of plates.\n- **Primary Ops**: `push()`, `pop()`, `top()`.\n- **Use Case**: Undo feature, function call stack, balanced parentheses.\n\n## 3. Queues (FIFO)\n**First In, First Out**. Like a queue at a ticket counter.\n- **Primary Ops**: `enqueue()`, `dequeue()`, `front()`.\n- **Deque**: A Double-Ended Queue where insertion/deletion can happen at both ends.\n\n## 4. Priority Queue\nElements are dequeued based on priority (highest/lowest first).",
+                "fullProgram": "// Concept of a Node in Linked List\n#include <iostream>\n\nstruct Node {\n    int data;\n    Node* next;\n    Node(int val) : data(val), next(nullptr) {}\n};\n\nint main() {\n    Node* head = new Node(10);\n    head->next = new Node(20);\n    \n    std::cout << \"First: \" << head->data << \", Second: \" << head->next->data;\n    return 0;\n}",
+                "expectedOutput": "First: 10, Second: 20",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which data structure follows the LIFO principle?",
+                        "options": [
+                            "Queue",
+                            "Linked List",
+                            "Stack",
+                            "Array"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Stacks follow the 'Last In, First Out' (LIFO) order."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "dsa-l3",
+        "title": "LEVEL 3: Searching, Sorting & Hashing",
+        "lessons": [
+            {
+                "id": "dsa5",
+                "title": "5. Searching & Sorting",
+                "duration": "45 mins",
+                "difficultyLevel": "Intermediate",
+                "topics": [
+                    "Binary Search",
+                    "Merge Sort",
+                    "Quick Sort",
+                    "Complexity Comparison"
+                ],
+                "content": "# Searching & Sorting\n\nSearching and Sorting are the most studied topics in computer science because they are the foundation for more complex algorithms.\n\n---\n\n## 1. Searching Algorithms\n- **Linear Search**: Checks every element (O(n)).\n- **Binary Search**: Efficiently finds an element in a **sorted** array by repeatedly halving the search space (O(log n)).\n\n## 2. Sorting Algorithms\nSorting is the process of arranging data in a specific order (ascending/descending).\n\n| Algorithm | Best Case | Worst Case | Space |\n| :--- | :--- | :--- | :--- |\n| Bubble Sort | O(n) | O(n²) | O(1) |\n| Merge Sort | O(n log n) | O(n log n) | O(n) |\n| Quick Sort | O(n log n) | O(n²) | O(log n) |\n\n## 3. Which one to use?\n- **Small data**: Insertion Sort.\n- **Stability needed**: Merge Sort.\n- **Space-constrained**: Quick Sort or Heap Sort.",
+                "fullProgram": "// Binary Search Implementation\n#include <iostream>\n#include <vector>\n\nint binarySearch(std::vector<int> arr, int target) {\n    int low = 0, high = arr.size() - 1;\n    while (low <= high) {\n        int mid = low + (high - low) / 2;\n        if (arr[mid] == target) return mid;\n        if (arr[mid] < target) low = mid + 1;\n        else high = mid - 1;\n    }\n    return -1;\n}\n\nint main() {\n    std::vector<int> data = {1, 3, 5, 7, 9};\n    int index = binarySearch(data, 7);\n    std::cout << \"Element 7 found at index: \" << index;\n    return 0;\n}",
+                "expectedOutput": "Element 7 found at index: 3",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the time complexity of Merge Sort in the worst case?",
+                        "options": [
+                            "O(n)",
+                            "O(n^2)",
+                            "O(n log n)",
+                            "O(log n)"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Merge sort always divides the array and merges it back, which takes O(n log n) in all cases."
+                    }
+                ]
+            },
+            {
+                "id": "dsa6",
+                "title": "6. Hashing & Maps",
+                "duration": "40 mins",
+                "difficultyLevel": "Intermediate",
+                "topics": [
+                    "Hash Functions",
+                    "Collision Handling",
+                    "Unordered Map",
+                    "Set"
+                ],
+                "content": "# Hashing: Constant Time Magic\n\nHashing is a technique to map large datasets to a smaller fixed size using a **Hash Function**. The main goal is to achieve **O(1)** average time for insertion, deletion, and lookup.\n\n---\n\n## 1. How Hashing Works\n1.  **Key**: The data you want to store.\n2.  **Hash Function**: Converts key into an integer index.\n3.  **Hash Table**: An array where the key is stored at that index.\n\n## 2. Collision Handling\nWhen two different keys produce the same hash index, it's called a collision.\n- **Chaining**: Use a linked list at each index to store multiple keys.\n- **Open Addressing**: Find the next available slot (Linear Probing).\n\n## 3. C++ STL Hashing\n- `unordered_map<key, value>`: Stores key-value pairs.\n- `unordered_set<key>`: Stores unique elements.",
+                "fullProgram": "// Counting Frequency using Hashing\n#include <iostream>\n#include <unordered_map>\n#include <vector>\n\nint main() {\n    std::vector<int> nums = {1, 2, 1, 3, 2, 1};\n    std::unordered_map<int, int> freq;\n    \n    for(int n : nums) freq[n]++;\n    \n    std::cout << \"Element frequency:\\n\";\n    for(auto const& [key, val] : freq) {\n        std::cout << key << \": \" << val << \"\\n\";\n    }\n    \n    return 0;\n}",
+                "expectedOutput": "Element frequency:\n1: 3\n2: 2\n3: 1",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the average time complexity for searching in an unordered_map?",
+                        "options": [
+                            "O(n)",
+                            "O(log n)",
+                            "O(1)",
+                            "O(n log n)"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Hashed structures provide near-instant O(1) average lookup time."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "dsa-l4",
+        "title": "LEVEL 4: Hierarchical Structures & Backtracking",
+        "lessons": [
+            {
+                "id": "dsa7",
+                "title": "7. Trees & Heaps",
+                "duration": "50 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "Binary Tree",
+                    "BST",
+                    "Traversals",
+                    "Max/Min Heap"
+                ],
+                "content": "# Trees & Heaps\n\nUnlike arrays or linked lists, Trees and Heaps are **non-linear** data structures used to represent hierarchical relationships.\n\n---\n\n## 1. Binary Trees & BST\n- **Binary Tree**: Every node has at most 2 children.\n- **Binary Search Tree (BST)**: Left child < parent < right child. This allows for O(log n) searching.\n\n## 2. Tree Traversals\n- **Pre-order**: Root → Left → Right\n- **In-order**: Left → Root → Right (Gives sorted order for BST!)\n- **Post-order**: Left → Right → Root\n- **Level-order**: Layer by layer (using a queue).\n\n## 3. Heaps (Priority Queues)\nA complete binary tree that satisfies the **Heap Property**:\n- **Max Heap**: Parent is always greater than children.\n- **Min Heap**: Parent is always smaller than children.\n\n**Note**: Heaps are usually implemented using Arrays for efficiency.",
+                "fullProgram": "// Simple BST property check\n#include <iostream>\n\nstruct Node {\n    int data;\n    Node *left, *right;\n    Node(int val) : data(val), left(nullptr), right(nullptr) {}\n};\n\nvoid inOrder(Node* root) {\n    if (!root) return;\n    inOrder(root->left);\n    std::cout << root->data << \" \";\n    inOrder(root->right);\n}\n\nint main() {\n    Node* root = new Node(10);\n    root->left = new Node(5);\n    root->right = new Node(15);\n    \n    std::cout << \"In-order traversal (sorted): \";\n    inOrder(root);\n    return 0;\n}",
+                "expectedOutput": "In-order traversal (sorted): 5 10 15",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which traversal of a BST results in a sorted list of elements?",
+                        "options": [
+                            "Pre-order",
+                            "In-order",
+                            "Post-order",
+                            "Level-order"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "In-order traversal visits nodes in non-decreasing order for a Binary Search Tree."
+                    }
+                ]
+            },
+            {
+                "id": "dsa8",
+                "title": "8. Backtracking basics",
+                "duration": "40 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "Decision Trees",
+                    "Pruning",
+                    "Subsets",
+                    "N-Queens"
+                ],
+                "content": "# Backtracking\n\nBacktracking is an algorithmic technique that uses recursion to explore all possible solutions to a problem and abandons a path (\"backtracks\") as soon as it determines it cannot lead to a valid solution.\n\n---\n\n## 1. How it works\n1.  **Choice**: Take a step.\n2.  **Constraint**: Check if the step is valid.\n3.  **Goal**: Check if you reached the solution.\n4.  **Backtrack**: If not found, go back and try a different choice.\n\n## 2. Famous Problems\n- **Subsets**: Find all combinations of a set.\n- **N-Queens**: Place N queens on a board so none attack each other.\n- **Sudoku Solver**: Fill a 9x9 grid following rules.",
+                "fullProgram": "// Concept: Recursion with Backtracking\n#include <iostream>\n#include <vector>\n\nvoid findSubsets(std::vector<int>& arr, std::vector<int>& current, int index) {\n    if (index == arr.size()) {\n        // Print current subset\n        return;\n    }\n    // Include element\n    current.push_back(arr[index]);\n    findSubsets(arr, current, index + 1);\n    \n    // Backtrack: Exclude element\n    current.pop_back();\n    findSubsets(arr, current, index + 1);\n}\n\nint main() {\n    std::vector<int> nums = {1, 2};\n    std::vector<int> path;\n    findSubsets(nums, path, 0);\n    return 0;\n}",
+                "expectedOutput": "",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the main technique used in Backtracking?",
+                        "options": [
+                            "Iteration",
+                            "Hashing",
+                            "Recursion",
+                            "Sorting"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Backtracking is fundamentally a recursive approach to exploring solution spaces."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "dsa-l5",
+        "title": "LEVEL 5: Advanced Graphs & DP",
+        "lessons": [
+            {
+                "id": "dsa9",
+                "title": "9. Graph Theory",
+                "duration": "60 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "Representation",
+                    "BFS",
+                    "DFS",
+                    "Shortest Path (Dijkstra)"
+                ],
+                "content": "# Graph Theory\n\nA Graph is a non-linear data structure consisting of **Nodes** (vertices) and **Edges** connecting them. It's used to model everything from social networks to GPS navigation.\n\n---\n\n## 1. Representation\n- **Adjacency Matrix**: A 2D array where `matrix[i][j] = 1` if an edge exists between i and j.\n- **Adjacency List**: An array of lists where `list[i]` contains all neighbors of node i (Memory efficient).\n\n## 2. Graph Traversals\n- **BFS (Breadth-First Search)**: Explores neighbors layer by layer using a **Queue**. Good for shortest paths in unweighted graphs.\n- **DFS (Depth-First Search)**: Goes as deep as possible along each branch using **Recursion/Stack**. Good for connectivity and topological sort.\n\n## 3. Shortest Path\n- **Dijkstra's Algorithm**: Finds the shortest path from a starting node to all other nodes in a weighted graph.\n- **Topological Sort**: Linear ordering of vertices such that for every directed edge (u, v), vertex u comes before v.",
+                "fullProgram": "// Concept: Adjacency List using Vector\n#include <iostream>\n#include <vector>\n\nint main() {\n    int nodes = 4;\n    std::vector<int> adj[nodes];\n\n    // Adding edges\n    adj[0].push_back(1);\n    adj[0].push_back(2);\n    adj[1].push_back(3);\n\n    std::cout << \"Neighbors of node 0: \";\n    for(int n : adj[0]) std::cout << n << \" \";\n    \n    return 0;\n}",
+                "expectedOutput": "Neighbors of node 0: 1 2 ",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which algorithm is used to find the shortest path in a weighted graph with non-negative edges?",
+                        "options": [
+                            "DFS",
+                            "Dijkstra's Algorithm",
+                            "Bubble Sort",
+                            "Binary Search"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Dijkstra's algorithm is the standard choice for single-source shortest path problems on weighted graphs."
+                    }
+                ]
+            },
+            {
+                "id": "dsa10",
+                "title": "10. Dynamic Programming (DP)",
+                "duration": "65 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "Memoization",
+                    "Tabulation",
+                    "State Transition",
+                    "Knapsack"
+                ],
+                "content": "# Dynamic Programming (DP)\n\nDP is an optimization over plain recursion. It works by breaking down a problem into overlapping subproblems and **storing the results** to avoid redundant calculations.\n\n---\n\n## 1. Ways to Solve\n- **Top-Down (Memoization)**: Use recursion + a table (often a hashmap or array) to cache results.\n- **Bottom-Up (Tabulation)**: Build the solution from the smallest subproblems up to the final result using an iterative table.\n\n## 2. When to use DP?\n1.  **Overlapping Subproblems**: The same subproblem is solved multiple times.\n2.  **Optimal Substructure**: The optimal solution to the problem can be built from optimal solutions of its subproblems.\n\n## 3. Classic DP Problems\n- **Knapsack (0/1)**: Selecting items to maximize value without exceeding capacity.\n- **LCS (Longest Common Subsequence)**: Finding the longest sequence present in two strings.\n- **LIS (Longest Increasing Subsequence)**: Finding the longest sequence where elements are in increasing order.",
+                "fullProgram": "// Fibonacci with Memoization (O(n))\n#include <iostream>\n#include <vector>\n\nlong long fib(int n, std::vector<long long>& memo) {\n    if (n <= 1) return n;\n    if (memo[n] != -1) return memo[n]; // Return cached result\n    return memo[n] = fib(n - 1, memo) + fib(n - 2, memo);\n}\n\nint main() {\n    int n = 50;\n    std::vector<long long> memo(n + 1, -1);\n    std::cout << \"50th Fibonacci: \" << fib(n, memo);\n    return 0;\n}",
+                "expectedOutput": "50th Fibonacci: 12586269025",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the primary benefit of Dynamic Programming?",
+                        "options": [
+                            "It uses less code",
+                            "It avoids redundant calculations by storing results",
+                            "It only works for mathematics",
+                            "It is always faster than sorting"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "DP optimizes algorithms by caching results of subproblems, drastically reducing time complexity."
+                    }
+                ]
+            }
+        ]
+    }
+]
