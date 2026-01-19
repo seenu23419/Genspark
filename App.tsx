@@ -9,6 +9,19 @@ import { Loader2 } from 'lucide-react';
 import { Screen } from './types';
 import { initSentry } from './services/sentryService';
 
+// Helper to handle dynamic import failures (common during redeploys)
+const lazyWithRetry = (componentImport: () => Promise<{ default: React.ComponentType<any> }>) =>
+  lazy(async () => {
+    try {
+      return await componentImport();
+    } catch (error) {
+      console.error("Async import failed, retrying...", error);
+      // Refresh the page once to pick up the new build assets
+      window.location.reload();
+      throw error;
+    }
+  });
+
 // Lazy Load Screens
 import Login from './screens/auth/Login';
 import Signup from './screens/auth/Signup';
@@ -17,22 +30,23 @@ import LearnHub from './screens/learn/LearnHub';
 import CourseTrack from './screens/learn/CourseTrack';
 import PracticeHub from './screens/practice/PracticeHub';
 import Profile from './screens/profile/Profile';
-const ForgotPassword = lazy(() => import('./screens/auth/ForgotPassword'));
-const OTP = lazy(() => import('./screens/auth/OTP'));
-const Onboarding = lazy(() => import('./screens/auth/Onboarding'));
-const ChallengesList = lazy(() => import('./screens/challenges/ChallengesList'));
-const ChallengeDetail = lazy(() => import('./screens/challenges/ChallengeDetail'));
-const Settings = lazy(() => import('./screens/profile/Settings'));
-const LearningProfile = lazy(() => import('./screens/profile/LearningProfile'));
-const PrivacyPolicy = lazy(() => import('./screens/legal/PrivacyPolicy'));
 
-const LessonView = lazy(() => import('./screens/lessons/LessonView'));
-const CodingProblemWrapper = lazy(() => import('./screens/practice/CodingProblemWrapper'));
-const SubscriptionPlan = lazy(() => import('./screens/subscription/SubscriptionPlan'));
-const Quiz = lazy(() => import('./screens/quiz/Quiz'));
-const AdminCurriculumSync = lazy(() => import('./screens/admin/AdminCurriculumSync'));
-const DiagnosticTool = lazy(() => import('./screens/admin/DiagnosticTool'));
-const CertificateVerify = lazy(() => import('./screens/profile/CertificateVerify'));
+const ForgotPassword = lazyWithRetry(() => import('./screens/auth/ForgotPassword'));
+const OTP = lazyWithRetry(() => import('./screens/auth/OTP'));
+const Onboarding = lazyWithRetry(() => import('./screens/auth/Onboarding'));
+const ChallengesList = lazyWithRetry(() => import('./screens/challenges/ChallengesList'));
+const ChallengeDetail = lazyWithRetry(() => import('./screens/challenges/ChallengeDetail'));
+const Settings = lazyWithRetry(() => import('./screens/profile/Settings'));
+const LearningProfile = lazyWithRetry(() => import('./screens/profile/LearningProfile'));
+const PrivacyPolicy = lazyWithRetry(() => import('./screens/legal/PrivacyPolicy'));
+
+const LessonView = lazyWithRetry(() => import('./screens/lessons/LessonView'));
+const CodingProblemWrapper = lazyWithRetry(() => import('./screens/practice/CodingProblemWrapper'));
+const SubscriptionPlan = lazyWithRetry(() => import('./screens/subscription/SubscriptionPlan'));
+const Quiz = lazyWithRetry(() => import('./screens/quiz/Quiz'));
+const AdminCurriculumSync = lazyWithRetry(() => import('./screens/admin/AdminCurriculumSync'));
+const DiagnosticTool = lazyWithRetry(() => import('./screens/admin/DiagnosticTool'));
+const CertificateVerify = lazyWithRetry(() => import('./screens/profile/CertificateVerify'));
 
 // Query Client for React Query
 const queryClient = new QueryClient();
