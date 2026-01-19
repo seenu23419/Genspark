@@ -39,12 +39,11 @@ const queryClient = new QueryClient();
 
 // Loading Fallback with smooth fade transition
 const ScreenLoader = () => (
-  <div className="fixed inset-0 bg-[#0a0b14] z-[9999] flex flex-col items-center justify-center gap-4 animate-in fade-in duration-300">
-    <div className="relative w-12 h-12 flex items-center justify-center">
-      <div className="absolute inset-0 rounded-full border-2 border-indigo-500/20" />
-      <Loader2 className="text-indigo-400 animate-spin" size={40} />
+  <div className="flex-1 flex flex-col items-center justify-center min-h-[60vh] gap-4 animate-in fade-in duration-300">
+    <div className="relative w-10 h-10 flex items-center justify-center">
+      <div className="absolute inset-0 rounded-full border-2 border-indigo-500/10" />
+      <Loader2 className="text-indigo-400/60 animate-spin" size={32} />
     </div>
-    <p className="text-indigo-300/60 text-xs font-black uppercase tracking-[0.2em] animate-pulse">Loading...</p>
   </div>
 );
 
@@ -100,13 +99,13 @@ const ProtectedRoute = () => {
     }
   }, []);
 
-  // Enforce 3-second minimum splash screen display on first app load only
+  // Enforce minimal splash screen display for brand presence (Reduced to 800ms for better UX)
   React.useEffect(() => {
     if (!hasShownSplashRef.current && !isOAuthRedirectRef.current) {
       hasShownSplashRef.current = true;
       const timer = setTimeout(() => {
         setSplashMinDurationPassed(true);
-      }, 3000);
+      }, 800);
       return () => clearTimeout(timer);
     }
   }, []);

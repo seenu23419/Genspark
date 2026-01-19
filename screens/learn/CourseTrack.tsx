@@ -100,19 +100,21 @@ const CourseTrack: React.FC = () => {
   // 5. Render States
   if (loading[langId || ''] && modules.length === 0) {
     return (
-      <div className="min-h-screen bg-[#020617] flex flex-col items-center justify-center p-6">
-        <Loader2 className="animate-spin text-indigo-500 mb-4" size={48} />
-        <h2 className="text-xl font-bold text-white">Loading Track</h2>
+      <div className="min-h-screen bg-[#0a0b14] flex flex-col items-center justify-center p-6">
+        <div className="relative w-12 h-12 flex items-center justify-center">
+          <div className="absolute inset-0 rounded-full border-4 border-indigo-500/10" />
+          <Loader2 className="animate-spin text-indigo-500/60" size={40} />
+        </div>
       </div>
     );
   }
 
   if (!language || (error[langId || ''] && modules.length === 0)) {
     return (
-      <div className="min-h-screen bg-[#020617] flex flex-col items-center justify-center p-6 text-center">
+      <div className="min-h-screen bg-[#0a0b14] flex flex-col items-center justify-center p-6 text-center">
         <AlertCircle size={48} className="text-red-500/50 mb-4" />
-        <h2 className="text-xl font-bold text-white mb-2">Track Not Found</h2>
-        <button onClick={() => navigate('/')} className="px-6 py-2 bg-indigo-600 text-white rounded-lg mt-4">Go Back</button>
+        <h2 className="text-xl font-bold text-white mb-2 font-black uppercase tracking-widest text-[10px]">Track Not Found</h2>
+        <button onClick={() => navigate('/')} className="px-6 py-2 bg-indigo-600 text-white rounded-lg mt-4 font-bold text-sm">Go Back</button>
       </div>
     );
   }
@@ -124,10 +126,10 @@ const CourseTrack: React.FC = () => {
   const progressPercent = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
 
   return (
-    <div className="relative min-h-screen bg-[#020617] overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#0a0b14] overflow-x-hidden">
       <div className="absolute top-0 left-1/2 w-[1200px] h-[800px] bg-indigo-500/5 blur-[150px] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
-      <header className="sticky top-0 z-40 bg-[#020617]/95 backdrop-blur-sm border-b border-slate-800/50 px-6 py-4">
+      <header className="sticky top-0 z-40 bg-[#0a0b14]/95 backdrop-blur-sm border-b border-white/5 px-6 py-4">
         <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
           <button onClick={() => navigate('/')} className="p-2 -ml-2 text-slate-400 hover:text-white rounded-lg">
             <ArrowLeft size={24} />
@@ -163,8 +165,8 @@ const CourseTrack: React.FC = () => {
                 <button
                   onClick={() => toggleLevel(levelIndex)}
                   className={`w-full group flex items-start justify-between gap-4 p-5 rounded-xl transition-all ${isCurrentLevel
-                      ? 'bg-indigo-600/15 border border-indigo-500/40'
-                      : 'bg-slate-900/40 border border-slate-800/50 hover:bg-slate-900/60'
+                    ? 'bg-indigo-600/15 border border-indigo-500/40'
+                    : 'bg-slate-900/40 border border-slate-800/50 hover:bg-slate-900/60'
                     }`}
                 >
                   <div className="flex items-start gap-4 flex-1 min-w-0 text-left">

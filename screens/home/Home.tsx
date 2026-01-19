@@ -72,10 +72,10 @@ const Home: React.FC = () => {
     if (loading || !user) return null;
 
     return (
-        <div className="min-h-screen bg-slate-950 text-white pb-24 font-sans">
-            {/* Minimal background - no gradients, clean and professional */}
+        <div className="min-h-screen bg-[#0a0b14] text-white pb-24 font-sans selection:bg-indigo-500/30">
+            {/* Minimal background glow */}
             <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/5 blur-[100px] rounded-full opacity-30" />
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/5 blur-[120px] rounded-full opacity-50" />
             </div>
 
             <div className="relative z-10 max-w-6xl mx-auto px-6 pt-10">
