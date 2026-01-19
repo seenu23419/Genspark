@@ -20,15 +20,16 @@ export const curriculumService = {
             // Check for explicit URL first
             const envKey = `VITE_CURRICULUM_${langId.toUpperCase()}_URL`;
             const explicitUrl = import.meta.env[envKey];
+            const baseUrl = import.meta.env.VITE_CURRICULUM_BASE_URL;
 
-            // If in Development and no explicit URL is set, or if explicitly requested local:
-            // We return an empty array to let the Context use the STATIC_CURRICULUM
-            if (import.meta.env.DEV && !explicitUrl && !import.meta.env.VITE_CURRICULUM_BASE_URL) {
-                console.log(`[Dev] Using local static data for ${langId}`);
+            // If no remote source is provided, or we're in dev with no specific overrides, 
+            // return empty array to use the statically bundled JSON data.
+            if (!explicitUrl && !baseUrl) {
+                console.log(`[Curriculum] No remote URL provided for ${langId}, using bundled data.`);
                 return [];
             }
 
-            const url = explicitUrl || `${BASE_URL}/${langId}.json`;
+            const url = explicitUrl || `${baseUrl}/${langId}.json`;
             const response = await fetch(url);
 
             if (!response.ok) {
