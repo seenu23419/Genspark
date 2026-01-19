@@ -8,16 +8,8 @@ import pino from 'pino';
 
 dotenv.config();
 
-const app = express.default();
-if (!app || typeof app.use !== 'function') {
-  // Fallback for different module resolution strategies
-  // @ts-ignore
-  const expressFunc = express.default || express;
-  // @ts-ignore
-  var appInstance = expressFunc();
-} else {
-  var appInstance = app;
-}
+// @ts-ignore
+const appInstance = express.default ? express.default() : express();
 const finalApp = appInstance;
 const PORT = process.env.PORT || 5000;
 const EXECUTE_API_TOKEN = process.env.EXECUTE_API_TOKEN || '';
