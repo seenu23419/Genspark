@@ -195,6 +195,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
     }, []);
 
+    // 4. Persistence Effect: Save user to localStorage to avoid refresh-flashes
+    useEffect(() => {
+        if (user) {
+            localStorage.setItem('genspark_user_backup', JSON.stringify(user));
+        } else if (!loading) {
+            localStorage.removeItem('genspark_user_backup');
+        }
+    }, [user, loading]);
+
     const value = {
         user,
         loading,
