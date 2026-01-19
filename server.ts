@@ -1,5 +1,4 @@
-
-import express from 'express';
+import * as express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 // @ts-ignore
@@ -9,22 +8,32 @@ import pino from 'pino';
 
 dotenv.config();
 
-const app = express();
+const app = express.default();
+if (!app || typeof app.use !== 'function') {
+  // Fallback for different module resolution strategies
+  // @ts-ignore
+  const expressFunc = express.default || express;
+  // @ts-ignore
+  var appInstance = expressFunc();
+} else {
+  var appInstance = app;
+}
+const finalApp = appInstance;
 const PORT = process.env.PORT || 5000;
 const EXECUTE_API_TOKEN = process.env.EXECUTE_API_TOKEN || '';
 
 const logger = pino({ level: process.env.LOG_LEVEL || 'info' });
 
-app.use(cors({ origin: '*' }));
-app.use(express.json({ limit: '100kb' }));
+finalApp.use(cors({ origin: '*' }));
+finalApp.use(express.json({ limit: '100kb' }));
 
 // Simple request logger
-app.use((req, res, next) => {
+finalApp.use((req, res, next) => {
   logger.info({ method: req.method, path: req.path, ip: req.ip }, 'incoming request');
   next();
 });
 
-app.get('/api/health', (req, res) => {
+finalApp.get('/api/health', (req, res) => {
   res.json({
     status: 'active',
     architecture: 'Supabase-Client-Side',
@@ -42,7 +51,7 @@ const execLimiter = rateLimit({
 });
 
 // Execute code via Piston (preferred) or Judge0 (fallback)
-app.post('/api/execute', execLimiter, async (req, res) => {
+finalApp.post('/api/execute', execLimiter, async (req, res) => {
   try {
     if (EXECUTE_API_TOKEN) {
       const header = (req.headers['x-exec-token'] || req.headers['x-exec-token'.toLowerCase()]) as string | undefined;
@@ -167,10 +176,10 @@ app.post('/api/execute', execLimiter, async (req, res) => {
 
 
 if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, () => {
+  finalApp.listen(PORT, () => {
     logger.info(`🚀 GenSpark Stateless Server running on port ${PORT}`);
   });
 }
 
-export default app;
+export default finalApp;
 
