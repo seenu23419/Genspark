@@ -111,7 +111,7 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
             {/* Main Container */}
             <div className="flex-1 flex flex-col min-w-0 relative">
                 {/* Mobile Header - Material Design 56 dp */}
-                <header className="md:hidden flex items-center justify-between px-4 bg-white/80 dark:bg-[#020617]/80 backdrop-blur-xl border-b border-slate-200 dark:border-white/5 sticky top-0 z-40 h-[56px] min-h-[56px]">
+                <header className="md:hidden flex items-center justify-between px-4 bg-[#0a0b14] backdrop-blur-xl border-b border-white/5 sticky top-0 z-40 h-[56px] min-h-[56px]">
                     <div className="flex items-center gap-4">
                         <div className="w-8 h-8 rounded-md bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-600/20 flex-shrink-0">
                             <img src="/icons/logo.png" alt="GenSpark" className="h-5 w-auto" />
@@ -134,7 +134,7 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
 
                 {/* Mobile Bottom Navigation - Material Design 56 dp, 4 tabs exact */}
                 <div className="md:hidden fixed bottom-0 left-0 right-0 z-50">
-                    <nav className="flex items-center justify-around bg-white/95 dark:bg-[#0a0b14]/95 backdrop-blur-xl border-t border-slate-200 dark:border-white/10 shadow-[0_-2px_8px_rgba(0,0,0,0.15)] h-[56px]">
+                    <nav className="flex items-center justify-around bg-[#0a0b14] backdrop-blur-xl border-t border-white/10 shadow-[0_-2px_12px_rgba(0,0,0,0.4)] h-[56px]">
                         {navItems.map((item) => {
                             const isActive = currentScreen === item.id || (item.id === 'PROFILE' && (currentScreen === 'SETTINGS' || currentScreen === 'ANALYTICS'));
                             return (
