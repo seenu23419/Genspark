@@ -135,9 +135,14 @@ const ProtectedRoute = () => {
     // Auth finished loading, but no user found
     if (!user) {
       // Logic for OAuth redirects: give it a bit more time or check parameters
-      const hasAuthParams = window.location.hash.includes('access_token') ||
+      const hasAuthParams =
+        window.location.hash.includes('access_token') ||
         window.location.hash.includes('code') ||
-        window.location.search.includes('code');
+        window.location.hash.includes('state') ||
+        window.location.hash.includes('error') ||
+        window.location.search.includes('code') ||
+        window.location.search.includes('state') ||
+        window.location.search.includes('error');
 
       if (hasAuthParams) {
         console.log("🔐 ProtectedRoute: OAuth params detected, waiting for session...");

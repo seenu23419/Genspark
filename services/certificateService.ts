@@ -153,13 +153,23 @@ class CertificateService {
 
       console.log('Lessons completed in course', courseId, ':', userCompletedInCourse);
 
-      // For the 'c' course, we require completion of the final certification lesson (c41)
-      if (courseId.toLowerCase() === 'c') {
-        return completedLessonIds.includes('c41');
+      // If a specific final lesson ID is provided, it's the primary indicator of completion
+      // (This is passed from the CourseTrack when the user tries to claim a certificate)
+      if (justCompletedLessonId && completedLessonIds.includes(justCompletedLessonId)) {
+        // Additional safety: ensure the final lesson ID belongs to the requested course
+        if (justCompletedLessonId.toLowerCase().startsWith(courseId.toLowerCase().charAt(0))) {
+          return true;
+        }
       }
 
-      // For other courses, use a basic threshold
-      return userCompletedInCourse >= 3;
+      // Fallback: Legacy hardcoded check for 'c'
+      if (courseId.toLowerCase() === 'c' && completedLessonIds.includes('c41')) {
+        return true;
+      }
+
+      // For other courses where we don't have the final ID, use a threshold (reduced to be more realistic if needed)
+      // but ideally we should always use the finalLessonId from the curriculum
+      return userCompletedInCourse >= 10;
     } catch (error) {
       console.error('Error checking course completion:', error);
       return false;

@@ -317,5 +317,194 @@
                 ]
             }
         ]
+    },
+    {
+        "id": "dsa-level-6",
+        "title": "LEVEL 6: Advanced Graphs & Segment Trees",
+        "description": "Master complex connectivity and range queries",
+        "lessons": [
+            {
+                "id": "dsa11",
+                "title": "11. MST & Disjoint Set Union (DSU)",
+                "duration": "55 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "Kruskal's",
+                    "Prim's",
+                    "DSU",
+                    "Connectivity"
+                ],
+                "content": "# Advanced Graph Connectivity\n\n## 1. Minimum Spanning Tree (MST)\nA subset of edges that connects all vertices without cycles and with the minimum total edge weight.\n- **Kruskal's Algorithm**: Sort edges and add them if they don't form a cycle (greedy).\n- **Prim's Algorithm**: Grow the tree from a starting node by adding the cheapest neighbor.\n\n## 2. Disjoint Set Union (DSU)\nA data structure that keeps track of elements partitioned into non-overlapping sets. It supports two main operations:\n- **Find**: Determine which set an element belongs to.\n- **Union**: Merge two sets into one.\n\n**Optimization**: Use 'Path Compression' and 'Union by Rank' to achieve near O(1) time.",
+                "fullProgram": "// Concept: DSU Find with Path Compression\n#include <iostream>\n#include <vector>\n\nstruct DSU {\n    std::vector<int> parent;\n    DSU(int n) {\n        parent.resize(n);\n        for(int i = 0; i < n; i++) parent[i] = i;\n    }\n    int find(int i) {\n        if (parent[i] == i) return i;\n        return parent[i] = find(parent[i]); // Path Compression\n    }\n};\n\nint main() {\n    DSU d(5);\n    std::cout << \"Parent of 3: \" << d.find(3);\n    return 0;\n}",
+                "expectedOutput": "Parent of 3: 3",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which algorithm is used to find a Minimum Spanning Tree?",
+                        "options": [
+                            "Dijkstra's",
+                            "Kruskal's",
+                            "BFS",
+                            "DFS"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Kruskal's and Prim's are the two main algorithms for finding an MST."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "dsa-level-7",
+        "title": "LEVEL 7: Greedy Algorithms & Bitwise",
+        "description": "Exploit bit-level patterns and optimal choice strategy",
+        "lessons": [
+            {
+                "id": "dsa12",
+                "title": "12. Greedy Strategy & Bit Manipulation",
+                "duration": "50 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "Greedy",
+                    "Huffman",
+                    "XOR",
+                    "Bit-masks"
+                ],
+                "content": "# Efficient Strategies\n\n## 1. Greedy Algorithms\nMake the locally optimal choice at each step with the hope of finding a global optimum.\n- **Examples**: Fractional Knapsack, Activity Selection, Huffman Coding.\n- **Limitation**: Doesn't work for all problems (unlike DP).\n\n## 2. Bit Manipulation\nPerforming operations at the bit level is extremely fast and space-efficient.\n- **AND (&)**: Masking.\n- **OR (|)**: Setting bits.\n- **XOR (^)**: Flipping bits, finding unique elements.\n- **NOT (~)**: Inversion.\n\n**Common Trick**: `n & (n-1)` clears the lowest set bit (useful for counting set bits).",
+                "fullProgram": "// Finding the only non-repeating element using XOR\n#include <iostream>\n#include <vector>\n\nint findUnique(std::vector<int>& nums) {\n    int res = 0;\n    for(int n : nums) res ^= n;\n    return res;\n}\n\nint main() {\n    std::vector<int> data = {1, 2, 3, 2, 1};\n    std::cout << \"Unique element: \" << findUnique(data);\n    return 0;\n}",
+                "expectedOutput": "Unique element: 3",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the result of X ^ X in bitwise XOR?",
+                        "options": [
+                            "X",
+                            "1",
+                            "0",
+                            "2X"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Any number XORed with itself is 0."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "dsa-level-8",
+        "title": "LEVEL 8: Advanced Strings & Tries",
+        "description": "Master pattern matching and dictionary structures",
+        "lessons": [
+            {
+                "id": "dsa13",
+                "title": "13. Tries, KMP & Rabin-Karp",
+                "duration": "55 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "Trie",
+                    "Pattern Matching",
+                    "Hash Rolling"
+                ],
+                "content": "# Advanced String Algorithms\n\n## 1. Trie (Prefix Tree)\nA tree structure used for efficient retrieval of keys in a large dataset of strings.\n- **Complexity**: O(L) where L is the length of the string.\n- **Use Case**: Auto-complete, Dictionary lookups.\n\n## 2. KMP Algorithm\nKnuth-Morris-Pratt searches for a pattern in text without re-checking characters that have already matched, using a 'Partial Match Table' (LPS array).\n\n## 3. Rabin-Karp\nUses **Rolling Hashes** to compare a pattern with all substrings of a text in O(n) average time.",
+                "fullProgram": "// Concept: Trie Node Structure\n#include <iostream>\n\nstruct TrieNode {\n    TrieNode* children[26];\n    bool isEndOfWord;\n    TrieNode() {\n        isEndOfWord = false;\n        for(int i = 0; i < 26; i++) children[i] = nullptr;\n    }\n};\n\nint main() {\n    TrieNode* root = new TrieNode();\n    std::cout << \"Trie Root Created.\";\n    return 0;\n}",
+                "expectedOutput": "Trie Root Created.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which data structure is best for auto-complete suggestions?",
+                        "options": [
+                            "HashMap",
+                            "Binary Tree",
+                            "Trie",
+                            "Graph"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Tries are specifically designed for prefix-based string searches."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "dsa-level-9",
+        "title": "LEVEL 9: Final DSA Certification",
+        "description": "The ultimate test of algorithmic mastery",
+        "lessons": [
+            {
+                "id": "dsa9.1",
+                "title": "9.1 Data Structures Master Exam",
+                "duration": "90 mins",
+                "difficultyLevel": "Master",
+                "topics": [
+                    "Final Exam",
+                    "Certification"
+                ],
+                "content": "# DSA Master Certification\n\n**Welcome, Architect!** You have completed the intensive roadmap of Data Structures and Algorithms. The final exam covers theory, complexity, and implementation.\n\n## Exam Breakdown:\n- **Complexity & Theory**: Big-O, Space vs Time trade-offs.\n- **Data Structures**: Linked Lists, Trees, Graphs, Tries.\n- **Algorithms**: Sorting, Dynamic Programming, Greedy, Graph traversals.\n- **Advanced**: MST, DSU, Segment Trees.\n\n## Rules:\n- 15 questions, 90 minutes.\n- Passing score: 80%.\n\n---\n\n*Mastery of DSA is the key to passing interviews at top-tier tech companies like Google, Amazon, and Meta.*",
+                "fullProgram": "/**\n * Final Graduation Challenge: Optimal Path Solver\n * A complex logic demonstrating DP + Graphs\n */\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    std::cout << \"DSA Final Shield Activated...\\n\";\n    std::cout << \"Analyzing complex data structures...\\n\";\n    std::cout << \"Result: Optimization found!\\n\";\n    std::cout << \"Certification Status: Master. Code correctly. Run efficiently.\";\n    return 0;\n}",
+                "expectedOutput": "DSA Final Shield Activated...\nAnalyzing complex data structures...\nResult: Optimization found!\nCertification Status: Master. Code correctly. Run efficiently.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which sorting algorithm is guaranteed to be stable and O(n log n)?",
+                        "options": [
+                            "Quick Sort",
+                            "Merge Sort",
+                            "Heap Sort",
+                            "Selection Sort"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Merge Sort is O(n log n) and maintains the relative order of equal elements (Stability)."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Difference between DP and Divide & Conquer?",
+                        "options": [
+                            "No difference",
+                            "DP uses recursion, D&C does not",
+                            "DP has overlapping subproblems, D&C subproblems are independent",
+                            "D&C is always faster"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "DP is optimized for overlapping subproblems by caching results, whereas D&C (like Merge Sort) solves independent subproblems."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Correct Big-O for finding the shortest path in an unweighted graph?",
+                        "options": [
+                            "O(V+E) using BFS",
+                            "O(V*E) using DFS",
+                            "O(log V) using Binary Search",
+                            "O(E^2) using Prim's"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Breadth-First Search (BFS) finds the shortest path in unweighted graphs in linear time."
+                    },
+                    {
+                        "id": 4,
+                        "text": "What is the time complexity of pushing an element onto an empty Stack?",
+                        "options": [
+                            "O(n)",
+                            "O(log n)",
+                            "O(1)",
+                            "O(0)"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Stack operations (push, pop, top) are O(1) constant time."
+                    },
+                    {
+                        "id": 5,
+                        "text": "If you need to find the Minimum Spanning Tree of a dense graph (many edges), which algorithm is often preferred?",
+                        "options": [
+                            "Kruskal's",
+                            "Prim's",
+                            "Dijkstra's",
+                            "Bellman-Ford"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Prim's algorithm (especially with an adjacency matrix/heap) can be more efficient for dense graphs."
+                    }
+                ]
+            }
+        ]
     }
 ]

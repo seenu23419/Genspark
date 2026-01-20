@@ -1,34 +1,364 @@
 [
     {
-        "id": "sql-l1",
-        "title": "LEVEL 1: SQL Mastery",
+        "id": "sql-level-1",
+        "title": "LEVEL 1: SQL Basics (CRUD)",
+        "description": "Master the core commands of data manipulation",
         "lessons": [
             {
                 "id": "sql1.1",
-                "title": "1.1 Introduction to SQL",
-                "duration": "15 min",
+                "title": "1.1 The SELECT Command",
+                "duration": "15 mins",
                 "difficultyLevel": "Beginner",
                 "topics": [
                     "SELECT",
                     "FROM",
-                    "Tables"
+                    "Syntax"
                 ],
-                "content": "# Relational Databases\n\nSQL (Structured Query Language) is used to communicate with databases.\n\n### Key Concepts\n- **Tables**: Data is stored in rows and columns.\n- **SELECT**: Used to pick data.\n- **FROM**: Specifies the table.",
-                "syntax": "SELECT * FROM users;",
-                "fullProgram": "-- Mock SQL Query\nSELECT name FROM employees WHERE status = 'active';",
-                "expectedOutput": "All active employees",
+                "content": "# The Power of SELECT\n\nSQL (Structured Query Language) is the language used to talk to databases. Every communication starts with a request for data.\n\n## 1. Selecting Everything\nTo see all columns in a table, use the asterisk (*).\n```sql\nSELECT * FROM students;\n```\n\n## 2. Selecting Specific Columns\nAlways better for performance!\n```sql\nSELECT name, email FROM students;\n```\n\n## 3. Aliases (AS)\nRename a column temporarily for the results.\n```sql\nSELECT name AS student_name FROM students;\n```",
+                "fullProgram": "-- SQL Simulation\nCREATE TABLE Users (id INT, name TEXT);\nINSERT INTO Users VALUES (1, 'Alice'), (2, 'Bob');\n\nSELECT name FROM Users;",
+                "expectedOutput": "Alice\nBob",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "Which command extracts data?",
+                        "text": "Which SQL keyword is used to retrieve data from a database?",
                         "options": [
-                            "EXTRACT",
                             "GET",
+                            "EXTRACT",
                             "SELECT",
-                            "OPEN"
+                            "RETRIEVE"
                         ],
                         "correctAnswer": 2,
-                        "explanation": "SELECT is the primary command for retrieval."
+                        "explanation": "SELECT is the fundamental command for data retrieval."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "sql-level-2",
+        "title": "LEVEL 2: Filtering & Sorting",
+        "description": "Query only the data you actually need",
+        "lessons": [
+            {
+                "id": "sql2.1",
+                "title": "2.1 The WHERE Clause",
+                "duration": "20 mins",
+                "difficultyLevel": "Beginner",
+                "topics": [
+                    "WHERE",
+                    "Operators",
+                    "ORDER BY"
+                ],
+                "content": "# Filtering Data\n\nRarely do you want thousands of rows. The `WHERE` clause allows you to filter based on conditions.\n\n## 1. Basic Operators\n- `=` Equals\n- `<>` Not Equal\n- `>` Greater Than\n- `LIKE` Pattern matching (e.g., `WHERE name LIKE 'A%'`)\n\n## 2. Sorting (ORDER BY)\nSort results alphabetically or numerically.\n```sql\nSELECT * FROM products \nORDER BY price DESC; -- Expensive first\n```",
+                "fullProgram": "-- Filter active users by age\nSELECT name \nFROM Users \nWHERE age > 18 AND status = 'active'\nORDER BY name ASC;",
+                "expectedOutput": "List of names in alphabetical order.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "How do you sort results in descending order?",
+                        "options": [
+                            "SORT DESC",
+                            "ORDER BY DESC",
+                            "ARRANGE BY",
+                            "ORDER ASC"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "ORDER BY <column> DESC sorts from highest/latest to lowest/earliest."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "sql-level-3",
+        "title": "LEVEL 3: Aggregate Functions",
+        "description": "Summarize and group your data",
+        "lessons": [
+            {
+                "id": "sql3.1",
+                "title": "3.1 Grouping & Counting",
+                "duration": "25 mins",
+                "difficultyLevel": "Intermediate",
+                "topics": [
+                    "COUNT",
+                    "SUM",
+                    "AVG",
+                    "GROUP BY"
+                ],
+                "content": "# Data Aggregation\n\nSometimes you want stats, not rows. SQL has built-in math functions.\n\n## 1. Common Functions\n- `COUNT(*)`: Total rows.\n- `SUM(column)`: Total value.\n- `AVG(column)`: Average value.\n\n## 2. GROUP BY\nGroups rows that have the same values into summary rows.\n```sql\nSELECT city, COUNT(*) \nFROM Users \nGROUP BY city;\n```",
+                "fullProgram": "-- Find average salary per department\nSELECT department, AVG(salary) AS avg_pay\nFROM employees\nGROUP BY department\nHAVING avg_pay > 50000;",
+                "expectedOutput": "Departments where average salary is over 50k.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which clause is used to filter after a GROUP BY?",
+                        "options": [
+                            "WHERE",
+                            "FOR",
+                            "HAVING",
+                            "CHECK"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "HAVING is like WHERE but for groups/aggregates."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "sql-level-4",
+        "title": "LEVEL 4: Relational Joins",
+        "description": "Combine multiple tables like a pro",
+        "lessons": [
+            {
+                "id": "sql4.1",
+                "title": "4.1 Inner & Left Joins",
+                "duration": "35 mins",
+                "difficultyLevel": "Intermediate",
+                "topics": [
+                    "JOIN",
+                    "Primary Key",
+                    "Foreign Key"
+                ],
+                "content": "# Connecting Tables\n\nIn relational databases, data is split into tables. We join them using Foreign Keys.\n\n## 1. INNER JOIN\nReturns records that have matching values in both tables.\n```sql\nSELECT Users.name, Orders.total\nFROM Users\nINNER JOIN Orders ON Users.id = Orders.user_id;\n```\n\n## 2. LEFT JOIN\nReturns ALL records from the left table, and matched records from the right table.",
+                "fullProgram": "-- Get user names and their order dates (if any)\nSELECT u.name, o.order_date\nFROM Users u\nLEFT JOIN Orders o ON u.id = o.user_id;",
+                "expectedOutput": "All users, with order dates for those who have bought something.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What happens in a LEFT JOIN if there is no match in the right table?",
+                        "options": [
+                            "Row is deleted",
+                            "Error is thrown",
+                            "Result is NULL for right table columns",
+                            "The query skips the row"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "A LEFT JOIN keeps the left row and puts NULL in place of any missing right-side data."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "sql-level-5",
+        "title": "LEVEL 5: Table Constraints & Design",
+        "description": "Learn to structure your database correctly",
+        "lessons": [
+            {
+                "id": "sql5.1",
+                "title": "5.1 Constraints & Types",
+                "duration": "30 mins",
+                "difficultyLevel": "Intermediate",
+                "topics": [
+                    "Primary Key",
+                    "Unique",
+                    "Not Null",
+                    "Check"
+                ],
+                "content": "# Data Integrity\n\nConstraints ensure your data is accurate and reliable.\n\n## 1. Essential Constraints\n- **PRIMARY KEY**: Uniquely identifies each row.\n- **NOT NULL**: Column cannot be empty.\n- **UNIQUE**: All values in a column must be different.\n- **DEFAULT**: Sets a value if none is provided.\n\n## 2. Data Types\n- `INT`: Whole numbers.\n- `VARCHAR(n)`: Strings with max length n.\n- `BOOLEAN`: True/False.\n- `TIMESTAMP`: Date and time.",
+                "fullProgram": "CREATE TABLE Products (\n    id INT PRIMARY KEY,\n    name VARCHAR(100) NOT NULL,\n    price DECIMAL(10,2) CHECK (price > 0),\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);",
+                "expectedOutput": "A new table with strict data rules.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Can a table have more than one Primary Key?",
+                        "options": [
+                            "Yes",
+                            "No",
+                            "Only if columns are different names",
+                            "Only in MySQL"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "A table can only have one primary key (though it can consist of multiple columns - a composite key)."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "sql-level-6",
+        "title": "LEVEL 6: Subqueries & CTEs",
+        "description": "Write advanced and nested logical queries",
+        "lessons": [
+            {
+                "id": "sql6.1",
+                "title": "6.1 Nested Queries",
+                "duration": "40 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "Subqueries",
+                    "WITH",
+                    "CTEs"
+                ],
+                "content": "# Complex Queries\n\nSometimes you need to use the result of one query inside another.\n\n## 1. Subqueries\n```sql\nSELECT * FROM Employees\nWHERE salary > (SELECT AVG(salary) FROM Employees);\n```\n\n## 2. CTEs (Common Table Expressions)\nEasier to read than nested subqueries!\n```sql\nWITH HighIncomes AS (\n  SELECT * FROM users WHERE income > 100000\n)\nSELECT name FROM HighIncomes;\n```",
+                "fullProgram": "-- Find products more expensive than the average price\nSELECT name, price\nFROM Products\nWHERE price > (SELECT AVG(price) FROM Products);",
+                "expectedOutput": "Premium products list.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the keyword used to start a CTE?",
+                        "options": [
+                            "CREATE",
+                            "USE",
+                            "WITH",
+                            "SET"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "CTEs are defined using the WITH keyword."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "sql-level-7",
+        "title": "LEVEL 7: Database Normalization",
+        "description": "Scientific way to reduce data redundancy",
+        "lessons": [
+            {
+                "id": "sql7.1",
+                "title": "7.1 Normal Forms (1NF, 2NF, 3NF)",
+                "duration": "45 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "Normalization",
+                    "Redundancy",
+                    "1NF/2NF/3NF"
+                ],
+                "content": "# Database Normalization\n\nNormalization is the process of organizing data to minimize redundancy (duplication) and improve data integrity.\n\n## 1. 1st Normal Form (1NF)\nEach cell must contain a single (atomic) value.\n\n## 2. 2nd Normal Form (2NF)\nMust be in 1NF and all non-key attributes must depend on the primary key.\n\n## 3. 3rd Normal Form (3NF)\nMust be in 2NF and have no transitive dependencies (Non-key columns shouldn't depend on other non-key columns).",
+                "fullProgram": "-- Concept: Splitting a messy table\n-- Before: [Student_Name, Course, Instructor_Name, Instructor_Email]\n-- After: StudentsTable, CoursesTable, InstructorsTable",
+                "expectedOutput": "A cleaner, more efficient database schema.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which normal form requires atomic values (no lists in a cell)?",
+                        "options": [
+                            "1NF",
+                            "2NF",
+                            "3NF",
+                            "Boyce-Codd"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "1NF requires that each column contains only atomic (indivisible) values."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "sql-level-8",
+        "title": "LEVEL 8: Transactions & Performance",
+        "description": "Handle critical operations and scale your data",
+        "lessons": [
+            {
+                "id": "sql8.1",
+                "title": "8.1 Transactions (ACID)",
+                "duration": "35 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "ACID",
+                    "COMMIT",
+                    "ROLLBACK",
+                    "Indexes"
+                ],
+                "content": "# Industrial Database Ops\n\n## 1. ACID Properties\n- **Atomicity**: All or nothing.\n- **Consistency**: Valid state to valid state.\n- **Isolation**: Concurrent transactions don't interfere.\n- **Durability**: Saved data persists through crashes.\n\n## 2. Transactions\n```sql\nBEGIN TRANSACTION;\n  UPDATE Accounts SET balance = balance - 100 WHERE id = 1;\n  UPDATE Accounts SET balance = balance + 100 WHERE id = 2;\nCOMMIT; -- Save it permanently\n```\nIf something fails: `ROLLBACK;`",
+                "fullProgram": "-- Bank Transfer Simulation\nBEGIN;\nUPDATE Accounts SET balance = balance - 500 WHERE account_id = 'A1';\nUPDATE Accounts SET balance = balance + 500 WHERE account_id = 'B2';\nCOMMIT;",
+                "expectedOutput": "A secure transfer of 500 units.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which command saves a transaction permanently?",
+                        "options": [
+                            "SAVE",
+                            "STORE",
+                            "COMMIT",
+                            "PUSH"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "COMMIT tells the database to permanently apply the changes from the current transaction."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "sql-level-9",
+        "title": "LEVEL 9: Final Database Certification",
+        "description": "Prove your SQL Grandmaster status",
+        "lessons": [
+            {
+                "id": "sql10.1",
+                "title": "9.1 SQL Expert Final Exam",
+                "duration": "60 mins",
+                "difficultyLevel": "Master",
+                "topics": [
+                    "Final Exam",
+                    "Certification"
+                ],
+                "content": "# Final SQL Certification\n\n**Congratulations!** You've mastered the language of data. This final exam will test your capability to design, query, and optimize relational databases.\n\n## Exam Scope:\n- **DML**: SELECT, JOIN, Filters, Aggregates.\n- **DDL**: Table creation, Constraints, Data types.\n- **Advanced**: Subqueries, CTEs, Transactions.\n- **Design**: Normalization and Schema Architecture.\n\n## Criteria:\n- 15 questions covering real-world data scenarios.\n- Pass mark: 90%.",
+                "fullProgram": "/* \n * Graduation Project: e-Commerce Analytics Schema \n * Demonstrates: Complex Joins, Aggregates, and Subqueries\n */\nSELECT \n  c.category_name,\n  COUNT(o.id) AS total_orders,\n  SUM(oi.price * oi.quantity) AS total_revenue\nFROM Categories c\nJOIN Products p ON c.id = p.category_id\nJOIN Order_Items oi ON p.id = oi.product_id\nJOIN Orders o ON oi.order_id = o.id\nWHERE o.status = 'shipped'\nGROUP BY c.category_name\nHAVING total_revenue > 10000\nORDER BY total_revenue DESC;",
+                "expectedOutput": "Full revenue analytics report.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does a 'FOREIGN KEY' create?",
+                        "options": [
+                            "A index",
+                            "A link between two tables",
+                            "A backup",
+                            "A faster search"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "A foreign key creates a relationship between a column in one table and the primary key of another table."
+                    },
+                    {
+                        "id": 2,
+                        "text": "The 'A' in ACID stands for?",
+                        "options": [
+                            "Always",
+                            "Accuracy",
+                            "Atomicity",
+                            "Architecture"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Atomicity ensures that a transaction is treated as a single unit, which either completely succeeds or completely fails."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Which clause is used with GROUP BY to filter groups?",
+                        "options": [
+                            "WHERE",
+                            "ONLY",
+                            "HAVING",
+                            "LIMIT"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "HAVING is the filtering clause specifically for groups."
+                    },
+                    {
+                        "id": 4,
+                        "text": "What is the difference between TRUNCATE and DELETE?",
+                        "options": [
+                            "TRUNCATE is faster and can't use WHERE, DELETE is slower and can use WHERE",
+                            "TRUNCATE deletes the table itself",
+                            "DELETE is same as DROP",
+                            "No difference"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "TRUNCATE is a DDL operation that clears all rows quickly, while DELETE is DML and allows filtering."
+                    },
+                    {
+                        "id": 5,
+                        "text": "An 'Index' is primarily used to?",
+                        "options": [
+                            "Save space",
+                            "Speed up retrieval",
+                            "Increase security",
+                            "Format data"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Indexes are data structures that improve the speed of data retrieval operations on a database table."
                     }
                 ]
             }

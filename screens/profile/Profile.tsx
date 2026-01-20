@@ -31,7 +31,6 @@ import { useAuth } from '../../contexts/AuthContext';
 import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, BarChart, Bar, CartesianGrid } from 'recharts';
 import { certificateService } from '../../services/certificateService';
 import { supabaseDB } from '../../services/supabaseService';
-import SubscriptionStatus from './SubscriptionStatus';
 
 const data = [
   { name: 'M', xp: 120, time: 45 },

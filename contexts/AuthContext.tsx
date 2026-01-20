@@ -185,7 +185,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 setInitializing(false);
             } else {
                 console.log("⏭️ AuthContext: State UNCHANGED - skipping setUser (prevents re-render)");
-                if (initializing) setInitializing(false);
+
+                // If we are in an OAuth flow (detectable via URL), don't stop initializing on a null state yet.
+                // This prevents flickering the login screen while Supabase processes the redirect params.
+                const hasAuthParams =
+                    window.location.hash.includes('access_token') ||
+                    window.location.hash.includes('code') ||
+                    window.location.search.includes('code') ||
+                    window.location.search.includes('state');
+
+                if (initializing) {
+                    if (!hasAuthParams || updatedUser) {
+                        setInitializing(false);
+                    } else {
+                        console.log("🔐 AuthContext: OAuth tokens detected, keeping loading state active...");
+                        // Safety fallback: if nothing happens, the 5s safetyTimer already in place will rescue us.
+                    }
+                }
             }
         });
 

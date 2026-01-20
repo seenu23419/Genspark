@@ -425,5 +425,193 @@
                 ]
             }
         ]
+    },
+    {
+        "id": "cpp-level-6",
+        "title": "LEVEL 6: Modern C++ & Smart Pointers",
+        "description": "Master memory safety and modern C++ features",
+        "lessons": [
+            {
+                "id": "cpp6.1",
+                "title": "6.1 Smart Pointers (RAII)",
+                "duration": "45 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "unique_ptr",
+                    "shared_ptr",
+                    "RAII"
+                ],
+                "content": "# Smart Pointers\n\nManual memory management with `new` and `delete` is dangerous and leads to memory leaks. Smart pointers automate this process.\n\n## 1. unique_ptr\nRepresents exclusive ownership. Only ONE pointer can point to the resource.\n\n```cpp\nstd::unique_ptr<int> p1 = std::make_unique<int>(10);\n// std::unique_ptr<int> p2 = p1; // ERROR: Cannot copy unique_ptr\n```\n\n## 2. shared_ptr\nAllows multiple pointers to share ownership. The resource is deleted when the last `shared_ptr` is destroyed (Reference Counting).\n\n## 3. weak_ptr\nUsed to break circular dependencies between `shared_ptr` objects.",
+                "fullProgram": "#include <iostream>\n#include <memory>\n\nclass Resource {\npublic:\n    Resource() { std::cout << \"Resource Acquired\\n\"; }\n    ~Resource() { std::cout << \"Resource Released\\n\"; }\n    void sayHi() { std::cout << \"Hello from Resource!\\n\"; }\n};\n\nint main() {\n    {\n        std::unique_ptr<Resource> ptr = std::make_unique<Resource>();\n        ptr->sayHi();\n    } // ptr goes out of scope, Resource is automatically deleted!\n    \n    std::cout << \"Scope ended.\";\n    return 0;\n}",
+                "expectedOutput": "Resource Acquired\nHello from Resource!\nResource Released\nScope ended.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which smart pointer should you use for sole ownership?",
+                        "options": [
+                            "shared_ptr",
+                            "unique_ptr",
+                            "weak_ptr",
+                            "auto_ptr"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "std::unique_ptr represents exclusive ownership and cannot be copied."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "cpp-level-7",
+        "title": "LEVEL 7: Advanced Memory & Move Semantics",
+        "description": "Optimize your code with C++ efficiency patterns",
+        "lessons": [
+            {
+                "id": "cpp7.1",
+                "title": "7.1 Move Semantics & rvalue References",
+                "duration": "50 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "std::move",
+                    "rvalue",
+                    "lvalue",
+                    "Efficiency"
+                ],
+                "content": "# Move Semantics\n\nMoving is cheaper than copying. Instead of copying a huge array, we 'steal' its pointer and give it to the new object.\n\n## 1. Lvalues vs Rvalues\n- **lvalue**: An object with a name (occupies space in memory).\n- **rvalue**: A temporary object (usually on the right side of an assignment).\n\n## 2. std::move\nConverts an lvalue into an rvalue, allowing a move constructor to be called.\n\n```cpp\nstd::string s1 = \"Hello\";\nstd::string s2 = std::move(s1); // s1 is now empty, s2 has the data\n```",
+                "fullProgram": "#include <iostream>\n#include <vector>\n#include <string>\n\nint main() {\n    std::vector<std::string> shelf;\n    std::string book = \"Advanced C++\";\n    \n    // Copying (expensive)\n    shelf.push_back(book);\n    std::cout << \"After copy, book is: \" << book << \"\\n\";\n    \n    // Moving (efficient)\n    shelf.push_back(std::move(book));\n    std::cout << \"After move, book is: '\" << book << \"' (empty)\\n\";\n    \n    return 0;\n}",
+                "expectedOutput": "After copy, book is: Advanced C++\nAfter move, book is: '' (empty)",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does std::move actually do?",
+                        "options": [
+                            "Moves data physically",
+                            "Deletes the variable",
+                            "Casts to an rvalue reference",
+                            "Clears the memory"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "std::move doesn't move anything; it just casts an object to an rvalue reference so it can be 'moved from'."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "cpp-level-8",
+        "title": "LEVEL 8: Concurrency & Multithreading",
+        "description": "Run high-performance parallel tasks",
+        "lessons": [
+            {
+                "id": "cpp8.1",
+                "title": "8.1 std::thread & Synchronization",
+                "duration": "45 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "Multithreading",
+                    "Mutex",
+                    "Threads"
+                ],
+                "content": "# Multithreading in C++\n\nC++11 introduced a standardized thread library to handle parallel execution.\n\n## 1. Creating Threads\nUse `std::thread` and pass a function or lambda.\n\n## 2. Join vs Detach\n- **join()**: Wait for the thread to finish.\n- **detach()**: Let the thread run in the background (independently).\n\n## 3. Data Races & Mutex\nIf two threads touch the same variable, your program might crash. Use `std::mutex` to lock the resource.\n\n```cpp\nstd::mutex m;\nm.lock();\n// access data\nm.unlock();\n```",
+                "fullProgram": "#include <iostream>\n#include <thread>\n\nvoid printMessage(std::string msg) {\n    std::cout << \"Thread says: \" << msg << \"\\n\";\n}\n\nint main() {\n    std::thread t1(printMessage, \"Hello from Worker!\");\n    \n    std::cout << \"Main is doing other work...\\n\";\n    \n    t1.join(); // Wait for t1 to finish\n    std::cout << \"All finished.\";\n    \n    return 0;\n}",
+                "expectedOutput": "Main is doing other work...\nThread says: Hello from Worker!\nAll finished.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What happens if a thread object is destroyed before join() or detach() is called?",
+                        "options": [
+                            "Program continues",
+                            "Thread is deleted",
+                            "std::terminate() is called (crash)",
+                            "Thread pauses"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "In C++, active thread objects must be joined or detached before destruction, otherwise the program will crash."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "cpp-level-9",
+        "title": "LEVEL 9: Final C++ Certification",
+        "description": "Prove your systems programming mastery",
+        "lessons": [
+            {
+                "id": "cpp9.1",
+                "title": "9.1 C++ Grandmaster Exam",
+                "duration": "60 mins",
+                "difficultyLevel": "Master",
+                "topics": [
+                    "Final Exam",
+                    "Certification"
+                ],
+                "content": "# C++ Final Mastery Exam\n\n**Congratulations!** You've reached the final frontier of systems programming. This exam covers C++ from core syntax to modern concurrency.\n\n## Topics covered:\n- **Foundations**: Memory, Pointers, Arrays.\n- **OOP**: Polymorphism, V-Tables, Inheritance.\n- **Modern C++**: Smart Pointers, Lambdas, Move Semantics.\n- **Architecture**: Templates, STL, and Error Handling.\n\n## Passing Criteria:\n- 15/20 correct answers required for the 'GenSpark Graduate' status.",
+                "fullProgram": "/**\n * Final Graduation Project: High Performance Simulation\n * Demonstrates: Smart Pointers, OOP, and Modern C++\n */\n#include <iostream>\n#include <vector>\n#include <memory>\n\nclass Entity {\npublic:\n    virtual void update() = 0;\n    virtual ~Entity() = default;\n};\n\nclass AI : public Entity {\npublic:\n    void update() override {\n        std::cout << \"AI logic executing...\\n\";\n    }\n};\n\nint main() {\n    std::vector<std::unique_ptr<Entity>> world;\n    world.push_back(std::make_unique<AI>());\n    \n    std::cout << \"Starting Simulation...\\n\";\n    for(auto& e : world) e->update();\n    \n    std::cout << \"Simulation Successful. Graduation Achieved!\";\n    return 0;\n}",
+                "expectedOutput": "Starting Simulation...\nAI logic executing...\nSimulation Successful. Graduation Achieved!",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is a 'Pure Virtual Function'?",
+                        "options": [
+                            "A function that returns 0",
+                            "A function with = 0 in its declaration",
+                            "A function that has no parameters",
+                            "A function that is only used in Main"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "A pure virtual function (= 0) makes a class abstract and forces child classes to implement that function."
+                    },
+                    {
+                        "id": 2,
+                        "text": "What does RAID stand for in the context of C++ memory?",
+                        "options": [
+                            "Redundant Array",
+                            "Resource Acquisition Is Initialization (RAII)",
+                            "Rapid Access",
+                            "Random Access"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "RAII is the core principle of C++ where resources are tied to object lifetimes."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Difference between struct and class in C++?",
+                        "options": [
+                            "No difference",
+                            "struct members are public by default, class are private",
+                            "struct cannot have methods",
+                            "class is faster"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "The only technical difference is the default access specifier (public for struct, private for class)."
+                    },
+                    {
+                        "id": 4,
+                        "text": "What is the purpose of 'explicit' keyword in a constructor?",
+                        "options": [
+                            "Speeds up code",
+                            "Prevents implicit type conversion",
+                            "Allocates memory on heap",
+                            "Allows inheritance"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Explicit prevents the compiler from performing unintended automatic type conversions using that constructor."
+                    },
+                    {
+                        "id": 5,
+                        "text": "Which STL container uses a balanced binary tree internally?",
+                        "options": [
+                            "std::vector",
+                            "std::list",
+                            "std::map",
+                            "std::unordered_map"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "std::map (and std::set) are typically implemented as Red-Black Trees (balanced BSTs) for O(log n) access."
+                    }
+                ]
+            }
+        ]
     }
 ]

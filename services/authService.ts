@@ -201,8 +201,8 @@ class AuthService {
       console.log("authService: Fetching profile for", userId);
       let user = await supabaseDB.findOne({ _id: userId });
 
-      if (!user && event === 'SIGNED_IN') {
-        console.log("authService: Creating new user profile");
+      if (!user) {
+        console.log("authService: Profile not found for existing session. Creating one...");
         try {
           const newUser = await supabaseDB.insertOne({
             _id: userId,
@@ -220,7 +220,7 @@ class AuthService {
           callback(null);
         }
       } else {
-        console.log("authService: Returning profile", { found: !!user, firstName: user?.firstName, subscriptionStatus: user?.subscriptionStatus });
+        console.log("authService: Returning existing profile", { userId, firstName: user.firstName });
         callback(user);
       }
     });
