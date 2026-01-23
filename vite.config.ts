@@ -16,9 +16,9 @@ export default defineConfig(({ mode }) => {
         registerType: 'autoUpdate',
         includeAssets: ['favicon.ico', 'icons/*'],
         manifest: {
-          name: 'GenSpark Global Academy',
+          name: 'GenSpark',
           short_name: 'GenSpark',
-          description: 'Master coding with GenSpark Global Academy',
+          description: 'Master coding with GenSpark',
           theme_color: '#0a0b14',
           background_color: '#0a0b14',
           display: 'standalone',
