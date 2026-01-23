@@ -2,6 +2,7 @@
 
 /* Optimize for mobile viewing and touch */
 @media (max-width: 768px) {
+
   /* Increase touch targets */
   button {
     min-height: 44px;
@@ -9,9 +10,16 @@
   }
 
   /* Reduce padding on small screens */
-  .px-4, .px-6 {
+  .px-4,
+  .px-6 {
     padding-left: 12px;
     padding-right: 12px;
+  }
+
+  /* Optimize touch scrolling */
+  .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
   }
 
   /* Optimize text sizes for small screens */
@@ -42,6 +50,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -54,9 +63,12 @@
 }
 
 @keyframes statusPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.6;
   }
@@ -100,6 +112,7 @@
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -125,6 +138,7 @@ button:active:not(:disabled) {
     opacity: 0;
     transform: scale(0.9);
   }
+
   100% {
     opacity: 1;
     transform: scale(1);
@@ -191,6 +205,7 @@ button:active:not(:disabled) {
 
 /* Print styles (for reference) */
 @media print {
+
   .sticky-bar,
   .action-bar,
   button {

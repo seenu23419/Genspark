@@ -179,10 +179,7 @@ const LessonView: React.FC<LessonViewProps> = ({
         {/* Lesson Metadata - readable text sizes */}
         <div className="space-y-4 md:space-y-5 animate-in fade-in slide-in-from-bottom-4 duration-500">
           <div className="flex flex-wrap gap-2">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
-              <Clock size={16} />
-              <span className="text-xs font-semibold uppercase">{lesson.duration}</span>
-            </div>
+
 
             {lesson.difficultyLevel && (
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">

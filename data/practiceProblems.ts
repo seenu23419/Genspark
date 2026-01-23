@@ -39,7 +39,7 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
             {
                 id: 'intro-1',
                 title: 'Hello World',
-                description: 'Write a program to display Hello World.',
+                description: 'The foundation of every programming journey! Your task is to write a simple program that outputs the message "Hello World" to the console.\n\nKey Goals:\n- Include the standard I/O library.\n- Implement the main function.\n- Use the printf() function to display the required text.',
                 initialCode: '#include <stdio.h>\n\nint main() {\n    // Write your code here\n    return 0;\n}',
                 hint: 'Use the printf() function to display text.',
                 solution: '#include <stdio.h>\n\nint main() {\n    printf("Hello World");\n    return 0;\n}',
@@ -56,7 +56,7 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
             {
                 id: 'intro-2',
                 title: 'Basic Program Structure',
-                description: 'Write a program showing the basic structure of a program.',
+                description: 'Every C program follows a specific pattern. In this exercise, you need to complete the program structure so it executes correctly and prints the confirmation message: "Program executed successfully".\n\nObjective:\n- Ensure the headers are correct.\n- Place the output statement inside the main block.',
                 initialCode: '#include <stdio.h>\n\nint main() {\n    // Add a statement here\n    return 0;\n}',
                 hint: 'Add a printf() statement to demonstrate program structure.',
                 solution: '#include <stdio.h>\n\nint main() {\n    printf("Program executed successfully");\n    return 0;\n}',
@@ -130,7 +130,7 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
             {
                 id: 'p3',
                 title: 'Even or Odd',
-                description: 'Write a program that checks if a number x=7 is even or odd.',
+                description: 'This is a classic logic problem. You are given an integer variable x with a value of 7. Your program must determine if this number is Even or Odd using conditional logic.\n\nSteps:\n- Use the modulus operator (%) to check the remainder when divided by 2.\n- If the remainder is 0, it is even.\n- Otherwise, it is odd.\n- Print "Even" or "Odd" exactly.',
                 initialCode: '#include <stdio.h>\n\nint main() {\n    int x = 7;\n    // Use if-else to print "Even" or "Odd"\n    return 0;\n}',
                 hint: 'Use the modulus operator: x % 2 == 0',
                 solution: '#include <stdio.h>\n\nint main() {\n    int x = 7;\n    if (x % 2 == 0) printf("Even");\n    else printf("Odd");\n    return 0;\n}',

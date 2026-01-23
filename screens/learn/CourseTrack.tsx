@@ -1,6 +1,6 @@
 import React, { useMemo, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Lock, Play, CheckCircle, Clock, Loader2, AlertCircle, Sparkles, ChevronDown, Trophy, Medal, Target, Award } from 'lucide-react';
+import { ArrowLeft, Lock, Play, CheckCircle, Clock, Loader2, AlertCircle, Sparkles, ChevronDown, Trophy, Medal, Target, Award, BookOpen } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCurriculum } from '../../contexts/useCurriculum';
 import { LANGUAGES } from '../../constants';
@@ -315,11 +315,10 @@ const CourseTrack: React.FC = () => {
                         >
                           <div className="flex items-center gap-4 min-w-0">
                             <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${isCompleted ? 'bg-emerald-500/10 text-emerald-400' : isFirstIncomplete ? 'bg-indigo-500/20 text-indigo-400' : 'bg-slate-800 text-slate-500'}`}>
-                              {isCompleted ? <CheckCircle size={20} /> : <Play size={20} fill={isFirstIncomplete ? 'currentColor' : 'none'} />}
+                              {isCompleted ? <CheckCircle size={20} /> : <BookOpen size={20} />}
                             </div>
                             <div className="text-left font-medium min-w-0">
                               <p className={`text-sm md:text-base truncate ${isCompleted ? 'text-slate-400' : 'text-white'}`}>{lesson.title}</p>
-                              <p className="text-xs text-slate-500">{lesson.duration || '15 mins'}</p>
                             </div>
                           </div>
                           {isFirstIncomplete && <Sparkles size={16} className="text-indigo-400 shrink-0" />}

@@ -51,6 +51,7 @@ export interface User {
   lastLogin?: Date;
   lastLessonId?: string;
   lastLanguageId?: string;
+  streak?: number;
 }
 
 export interface Language {

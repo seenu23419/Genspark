@@ -200,6 +200,7 @@ const ProtectedRoute = () => {
   const path = location.pathname;
   let screen: Screen = 'HOME';
   if (path === '/learn') screen = 'LEARN';
+  else if (path.startsWith('/track')) screen = 'LEARN'; // Fix: Highlight Learn for track pages
   else if (path.startsWith('/practice')) screen = 'PRACTICE';
   else if (path.startsWith('/settings')) screen = 'SETTINGS';
   else if (path.startsWith('/profile')) screen = 'PROFILE';

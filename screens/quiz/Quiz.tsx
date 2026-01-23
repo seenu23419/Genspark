@@ -157,10 +157,12 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
             }
 
             // Run progress update in background
+            console.log("Starting progress update for:", quizId, "Next:", nextId);
             updateProgressMutation.mutateAsync({
               completedId: quizId,
               nextId: nextId
-            }).catch(e => console.error("Background progress update failed", e));
+            }).then(() => console.log("Progress update successful for:", quizId))
+              .catch(e => console.error("Background progress update failed", e));
 
             // Generate certificate in background if passed - but don't auto-show it anymore
             // User will click "Claim Certificate" on the result screen if they passed the final lesson

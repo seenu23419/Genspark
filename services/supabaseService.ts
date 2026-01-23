@@ -252,7 +252,11 @@ class SupabaseService {
    * Handles complex logic to split updates between 'users' table and 'user_progress' table
    */
   async updateOne(id: string, updates: Partial<User>): Promise<User> {
-    if (!this.isConfigured) throw new Error("Database not configured");
+    console.log("[SupabaseService] updateOne CALLED for:", id, "Updates:", Object.keys(updates));
+    if (!this.isConfigured) {
+      console.error("[SupabaseService] Database not configured");
+      throw new Error("Database not configured");
+    }
 
     // 1. Update Profile Fields (Exclude XP/Streak - now managed by RPC)
     const profileUpdates: any = {};
@@ -269,6 +273,8 @@ class SupabaseService {
       }
     }
     if (updates.onboardingCompleted !== undefined) profileUpdates.onboarding_completed = updates.onboardingCompleted;
+    if (updates.completedLessonIds) profileUpdates.completed_lesson_ids = updates.completedLessonIds;
+    if (updates.unlockedLessonIds) profileUpdates.unlocked_lesson_ids = updates.unlockedLessonIds;
 
     // Resume Reliability
     if (updates.lastLessonId) profileUpdates.last_lesson_id = updates.lastLessonId;
@@ -318,6 +324,7 @@ class SupabaseService {
 
     // 3. Update Progress (Standard Lesson Completion)
     if (updates.completedLessonIds) {
+      console.log("[SupabaseService] Processing completedLessonIds:", updates.completedLessonIds.length);
       for (const lessonId of updates.completedLessonIds) {
         // RLS Policy "Enforce Sequential Completion" will reject this 
         // if previous lesson is not done. 
@@ -329,28 +336,29 @@ class SupabaseService {
             if (!localData.find((p: any) => p.lesson_id === lessonId)) {
               localData.push({ lesson_id: lessonId, status: 'completed' });
               localStorage.setItem(localKey, JSON.stringify(localData));
-              console.log(`Progress mirrored locally for: ${lessonId}`);
             }
           } catch (e) {
-            console.error("Local mirror failed", e);
+            console.error("[SupabaseService] Local mirror failed", e);
           }
         }
 
-        const { error } = await this.supabase.from('user_progress').upsert({
+        // NON-BLOCKING DB UPSERT: Don't let user_progress hang the main update
+        this.supabase.from('user_progress').upsert({
           user_id: id,
           lesson_id: lessonId,
           status: 'completed',
           completed_at: new Date()
-        }, { onConflict: 'user_id, lesson_id' });
-
-        if (error) {
-          console.error(`Failed to mark lesson ${lessonId} complete in DB.`, error);
-          if (error.code === '42P01') {
-            console.log("INFO: 'user_progress' table is missing. Progress is safely saved to LocalStorage for this session.");
-          } else {
-            throw error;
-          }
-        }
+        }, { onConflict: 'user_id, lesson_id' })
+          .then(({ error }) => {
+            if (error) {
+              console.error(`[SupabaseService] user_progress update failed for ${lessonId}:`, error);
+              if (error.code === '42P01') {
+                console.log("INFO: 'user_progress' table is missing. Progress is safely saved to LocalStorage and 'users' table.");
+              }
+            } else {
+              console.log(`[SupabaseService] user_progress updated for ${lessonId}`);
+            }
+          });
       }
     }
 

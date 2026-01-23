@@ -55,13 +55,8 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
             {/* Desktop Left Sidebar */}
             <nav className="hidden md:flex flex-col w-72 bg-white/50 dark:bg-slate-950/50 backdrop-blur-xl border-r border-slate-200 dark:border-slate-800/50 p-6 shrink-0 z-50">
                 <div className="flex items-center gap-4 mb-10 px-2 cursor-pointer" onClick={() => navigate('/')}>
-                    <div className="h-11 w-11 bg-gradient-to-br from-indigo-600 to-violet-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/20 ring-4 ring-indigo-500/10">
-                        <img src="/icons/logo.png" alt="GenSpark" className="h-7 w-auto drop-shadow-md" />
-                    </div>
-                    <div>
-                        <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white block">GenSpark</span>
-                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Global Academy</span>
-                    </div>
+                    <img src="/icons/logo.png" alt="GenSpark" className="h-14 w-auto" />
+                    <span className="text-2xl font-bold text-slate-800 dark:text-white tracking-tight">GenSpark</span>
                 </div>
 
                 <div className="flex-1 space-y-2">
@@ -113,10 +108,10 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
                 {/* Mobile Header - Material Design 56 dp */}
                 <header className="md:hidden flex items-center justify-between px-4 bg-[#0a0b14] backdrop-blur-xl border-b border-white/5 sticky top-0 z-40 h-[56px] min-h-[56px]">
                     <div className="flex items-center gap-4">
-                        <div className="w-8 h-8 rounded-md bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-600/20 flex-shrink-0">
-                            <img src="/icons/logo.png" alt="GenSpark" className="h-5 w-auto" />
+                        <div className="flex items-center gap-3">
+                            <img src="/icons/logo.png" alt="GenSpark" className="h-10 w-auto" />
+                            <span className="text-xl font-bold text-white tracking-tight">GenSpark</span>
                         </div>
-                        <span className="text-[18px] font-medium text-slate-900 dark:text-white tracking-tight">GenSpark</span>
                     </div>
                     <button
                         onClick={() => navigate('/settings')}

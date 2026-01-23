@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, Play, RotateCcw, Check, Loader2, AlertCircle, BookOpen, Code2, Zap, X, Terminal, Bot, ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronLeft, Play, RotateCcw, Check, Loader2, AlertCircle, BookOpen, Code2, Zap, X, Terminal, Bot, ChevronDown, ChevronUp, Cpu, Globe } from 'lucide-react';
 import Compiler, { CompilerRef } from '../../screens/compiler/Compiler';
 import { PracticeProblem } from '../../services/practiceService';
 import { genSparkAIService } from '../../services/geminiService';
@@ -126,6 +126,24 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
 
   const compilerRef = useRef<CompilerRef>(null);
 
+  // Mobile Viewport Height Handling
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+
+  useEffect(() => {
+    if (!window.visualViewport) return;
+
+    const handleResize = () => {
+      setViewportHeight(window.visualViewport?.height || window.innerHeight);
+    };
+
+    window.visualViewport.addEventListener('resize', handleResize);
+    window.visualViewport.addEventListener('scroll', handleResize);
+    return () => {
+      window.visualViewport?.removeEventListener('resize', handleResize);
+      window.visualViewport?.removeEventListener('scroll', handleResize);
+    };
+  }, []);
+
   // Initial load
   useEffect(() => {
     const fetchProgress = async () => {
@@ -152,15 +170,20 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
             }
           }
         } else {
-          // No progress, use initial code with placeholder if it's a fresh start
-          const starterCode = problem.initialCode || '';
-          // Add placeholder comment if not already present
-          if (starterCode && !starterCode.includes('Write your code')) {
-            const withPlaceholder = starterCode.replace(
-              /(\{[\s\n]*)/,
-              '{\n    // Write your code here\n    '
-            );
-            setUserCode(withPlaceholder);
+          // No progress, use starter codes or initial code
+          const langKey = selectedLanguage.toLowerCase();
+          const starter = (problem as any).starter_codes?.[langKey] || problem.initialCode || '';
+
+          if (starter) {
+            // Add placeholder comment if not already present
+            let codeToSet = starter;
+            if (!starter.includes('Write your code')) {
+              codeToSet = starter.replace(
+                /(\{[\s\n]*)/,
+                '{\n    // Write your code here\n    '
+              );
+            }
+            setUserCode(codeToSet);
           }
         }
       } catch (err) {
@@ -198,7 +221,11 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
     setExecutionResult(null); // Clear previous results
 
     try {
-      await compilerRef.current?.runCode();
+      if (problem.test_cases && problem.test_cases.length > 0) {
+        await (compilerRef.current as any)?.runTests(problem.test_cases);
+      } else {
+        await compilerRef.current?.runCode();
+      }
     } catch (error) {
       console.error("Run failed:", error);
     } finally {
@@ -294,7 +321,7 @@ Respond EXACTLY in the format above. NO CODE BLOCKS.`;
   // ═══════════════════════════════════════════════════════════
 
   const renderProblemView = () => (
-    <div className="flex-1 overflow-y-auto no-scrollbar bg-slate-950 p-6 space-y-8 animate-in fade-in duration-300">
+    <div className="flex-1 overflow-y-auto bg-slate-950 p-4 md:p-6 space-y-6 md:space-y-8 animate-in fade-in duration-300">
       {/* Problem Title and Badge */}
       <div className="space-y-4">
         <h1 className="text-3xl font-black text-white tracking-tight">{problem.title}</h1>
@@ -316,9 +343,12 @@ Respond EXACTLY in the format above. NO CODE BLOCKS.`;
       </div>
 
       {/* Problem Description */}
-      <div className="space-y-3">
-        <h2 className="text-sm font-black text-slate-300 uppercase tracking-wider">Description</h2>
-        <p className="text-slate-200 text-sm leading-relaxed font-medium whitespace-pre-wrap">{problem.description}</p>
+      <div className="bg-slate-900/40 rounded-2xl p-5 md:p-6 border border-white/5 space-y-4 shadow-inner">
+        <div className="flex items-center gap-2">
+          <Terminal size={14} className="text-indigo-400" />
+          <h2 className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em]">Objective & Details</h2>
+        </div>
+        <p className="text-slate-200 text-sm md:text-base leading-relaxed font-medium whitespace-pre-wrap">{problem.description}</p>
       </div>
 
       {/* Input/Output Format */}
@@ -346,7 +376,7 @@ Respond EXACTLY in the format above. NO CODE BLOCKS.`;
       {problem.test_cases && problem.test_cases.length > 0 && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-black text-slate-300 uppercase tracking-wider">Sample Test Cases</h2>
+            <h2 className="text-sm font-black text-slate-300 uppercase tracking-wider">Test Cases</h2>
             <span className="text-xs font-bold text-slate-500 bg-slate-900/50 px-3 py-1 rounded-full">{problem.test_cases.length} test{problem.test_cases.length !== 1 ? 's' : ''}</span>
           </div>
 
@@ -407,7 +437,7 @@ Respond EXACTLY in the format above. NO CODE BLOCKS.`;
           {problem.sampleOutput && problem.sampleOutput !== "N/A" && (
             <div className="bg-slate-900 rounded-xl border border-white/5 overflow-hidden">
               <div className="px-4 py-2 bg-white/5 border-b border-white/5">
-                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">📤 Expected Output</span>
+                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">📤 Output</span>
               </div>
               <div className="p-4 overflow-x-auto bg-slate-950">
                 <code className="text-emerald-400 font-mono text-xs block whitespace-pre">{problem.sampleOutput}</code>
@@ -450,105 +480,144 @@ Respond EXACTLY in the format above. NO CODE BLOCKS.`;
 
   const renderCodeView = () => (
     <div className="flex-1 flex flex-col bg-[#0a0b14] relative overflow-hidden">
-      {/* Editor Header - Enhanced Premium Label */}
-      <div className="h-14 bg-slate-900 border-b border-indigo-500/20 flex items-center justify-between px-6 shadow-lg shadow-indigo-950/20">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 rounded-full">
-            <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse shadow-[0_0_8px_rgba(99,102,241,1)]" />
-            <span className="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Strict Practice Mode</span>
-          </div>
-          <div className="w-px h-4 bg-slate-800" />
-          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Manual Input Only</span>
+      {/* 1. Main Editor Area */}
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Breadcrumb Bar */}
+        <div className="h-9 px-4 bg-[#0a0b14] border-b border-white/5 flex items-center gap-2 text-[11px] font-medium text-slate-500 overflow-x-auto no-scrollbar shrink-0">
+          <span className="hover:text-slate-300 cursor-default">practice</span>
+          <ChevronLeft size={10} className="rotate-180" />
+          <span className="hover:text-slate-300 cursor-default">{selectedLanguage}</span>
+          <ChevronLeft size={10} className="rotate-180" />
+          <span className="text-slate-300 font-bold truncate">
+            main.{selectedLanguage === 'python' ? 'py' : selectedLanguage === 'javascript' ? 'js' : 'c'}
+          </span>
         </div>
-        <select
-          value={selectedLanguage}
-          onChange={(e) => {
-            const newLang = e.target.value;
-            setSelectedLanguage(newLang);
-            if (!userHasTyped) {
-              const langKey = newLang.toLowerCase();
-              const starter = (problem as any).starter_codes?.[langKey] || problem.initialCode;
-              if (starter) setUserCode(starter);
-            }
-          }}
-          className="bg-transparent border-none text-indigo-400 text-[10px] font-black uppercase tracking-widest focus:ring-0 cursor-pointer"
-        >
-          {Object.keys((problem as any).starter_codes || {}).map(langKey => {
-            const displayMap: Record<string, string> = { 'c': 'C', 'cpp': 'C++', 'python': 'Python', 'javascript': 'JavaScript', 'java': 'Java' };
-            return <option key={langKey} value={langKey}>{displayMap[langKey] || langKey.toUpperCase()}</option>
-          })}
-        </select>
-      </div>
 
-      <div className="flex-1 overflow-hidden relative">
-        <Compiler
-          language={selectedLanguage.toLowerCase()}
-          initialCode={userCode}
-          onCodeChange={async (code) => {
-            if (currentStatus === 'COMPLETED' && !isEditingCompleted) return;
-            setUserCode(code);
-            if (!userHasTyped) setUserHasTyped(true);
-            if (currentStatus === 'NOT_STARTED') setCurrentStatus('IN_PROGRESS');
+        {/* Editor Tabs */}
+        <div className="h-9 bg-[#0d0e1a] flex shrink-0">
+          <div className="h-full px-4 flex items-center gap-2 bg-[#0a0b14] border-t-2 border-indigo-500 border-r border-white/5 min-w-[120px]">
+            <div className={`w-3 h-3 rounded-full flex items-center justify-center text-[8px] font-bold ${selectedLanguage === 'python' ? 'bg-blue-500' : selectedLanguage === 'c' ? 'bg-indigo-500' : 'bg-amber-500'}`}>
+              {selectedLanguage === 'python' ? 'P' : selectedLanguage === 'c' ? 'C' : 'J'}
+            </div>
+            <span className="text-[11px] font-semibold text-white truncate">
+              main.{selectedLanguage === 'python' ? 'py' : selectedLanguage === 'javascript' ? 'js' : 'c'}
+            </span>
+            <X size={10} className="ml-auto text-slate-500 hover:text-white cursor-pointer" />
+          </div>
+          <div className="flex-1 border-b border-white/5"></div>
+        </div>
 
-            // CRITICAL: Auto-save code as user types (debounced)
-            if (user?._id) {
-              try {
-                await supabaseDB.savePracticeAttempt(problem.id, code, false, selectedLanguage);
-              } catch (err) {
-                // Silent fail - don't interrupt typing
+        <div className="flex-1 overflow-hidden relative min-h-0">
+          <Compiler
+            language={selectedLanguage.toLowerCase()}
+            initialCode={userCode}
+            onCodeChange={async (code) => {
+              if (currentStatus === 'COMPLETED' && !isEditingCompleted) return;
+              setUserCode(code);
+              if (!userHasTyped) setUserHasTyped(true);
+              if (currentStatus === 'NOT_STARTED') setCurrentStatus('IN_PROGRESS');
+
+              if (user?._id) {
+                try {
+                  await supabaseDB.savePracticeAttempt(problem.id, code, false, selectedLanguage);
+                } catch (err) {
+                  // Silent fail
+                }
               }
-            }
-          }}
-          onRun={handleRunResult}
-          readOnly={isSubmitting || (currentStatus === 'COMPLETED' && !isEditingCompleted)}
-          ref={compilerRef}
-        />
+            }}
+            onRun={handleRunResult}
+            readOnly={isSubmitting || (currentStatus === 'COMPLETED' && !isEditingCompleted)}
+            ref={compilerRef}
+          />
 
-        {/* Anti-Copy Protection Overlay for completed code */}
-        {currentStatus === 'COMPLETED' && !isEditingCompleted && (
-          <div className="absolute inset-0 bg-slate-950/20 z-10 pointer-events-none" />
-        )}
-      </div>
-
-      {/* Symbol Keyboard Accessory */}
-      <div className="h-12 bg-[#0d0e1a] border-t border-white/5 flex items-center gap-1.5 px-3 overflow-x-auto no-scrollbar shrink-0 shadow-lg">
-        {['{', '}', '(', ')', ';', '"', "'", '<', '>', '/', '*', '=', '+', ':'].map(char => (
-          <button
-            key={char}
-            onClick={() => compilerRef.current?.insertText(char)}
-            className="h-8 min-w-[36px] bg-slate-800/50 border border-white/5 rounded-lg text-slate-300 font-mono text-sm active:bg-indigo-600 active:text-white transition"
-          >
-            {char}
-          </button>
-        ))}
-        <button
-          onClick={() => compilerRef.current?.deleteLastChar()}
-          className="h-8 px-3 bg-rose-500/10 border border-rose-500/20 rounded-lg text-rose-400 font-black text-[9px] active:scale-95 transition"
-        >
-          DEL
-        </button>
-      </div>
-
-      {/* Action Bar */}
-      <div className="p-4 bg-slate-900 border-t border-white/5 flex items-center gap-3">
-        <button
-          onClick={handleReset}
-          className="h-14 w-14 bg-slate-800 text-slate-500 rounded-2xl hover:text-white transition active:scale-95 border border-white/5 flex items-center justify-center shrink-0"
-        >
-          <RotateCcw size={20} />
-        </button>
-        <button
-          onClick={handleRunCode}
-          disabled={isSubmitting}
-          className="flex-1 h-14 bg-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 shadow-lg shadow-indigo-600/20 active:scale-95 disabled:opacity-50"
-        >
-          {isSubmitting ? <Loader2 size={18} className="animate-spin" /> : (
-            <>
-              <Play size={18} fill="white" />
-              <span>Run Code</span>
-            </>
+          {/* Anti-Copy Protection Overlay for completed code */}
+          {currentStatus === 'COMPLETED' && !isEditingCompleted && (
+            <div className="absolute inset-0 bg-slate-950/20 z-10 pointer-events-none" />
           )}
-        </button>
+        </div>
+
+        {/* Symbol Keyboard Accessory */}
+        <div className="h-10 md:h-12 bg-[#0d0e1a] border-t border-white/5 flex items-center gap-1 px-2 md:px-3 overflow-x-auto shrink-0 shadow-lg">
+          {['{', '}', '(', ')', ';', '"', "'", '<', '>', '/', '*', '=', '+', ':'].map(char => (
+            <button
+              key={char}
+              onClick={() => compilerRef.current?.insertText(char)}
+              className="h-7 md:h-8 min-w-[32px] md:min-w-[36px] bg-slate-800/50 border border-white/5 rounded-lg text-slate-300 font-mono text-xs md:text-sm active:bg-indigo-600 active:text-white transition"
+            >
+              {char}
+            </button>
+          ))}
+          <button
+            onClick={() => compilerRef.current?.deleteLastChar()}
+            className="h-7 md:h-8 px-2 md:px-3 bg-rose-500/10 border border-rose-500/20 rounded-lg text-rose-400 font-black text-[8px] md:text-[9px] translate-y-[1px]"
+          >
+            DEL
+          </button>
+        </div>
+
+        {/* Action Bar */}
+        <div className="p-3 md:p-4 bg-slate-900 border-t border-white/5 flex items-center gap-2 md:gap-3">
+          <button
+            onClick={handleReset}
+            className="h-12 w-12 md:h-14 md:w-14 bg-slate-800 text-slate-500 rounded-xl md:rounded-2xl hover:text-white transition active:scale-95 border border-white/5 flex items-center justify-center shrink-0"
+          >
+            <RotateCcw size={18} />
+          </button>
+          <button
+            onClick={handleRunCode}
+            disabled={isSubmitting}
+            className="flex-1 h-12 md:h-14 bg-indigo-600 text-white rounded-xl md:rounded-2xl font-black uppercase tracking-widest text-[10px] md:text-xs flex items-center justify-center gap-2 md:gap-3 shadow-lg shadow-indigo-600/20 active:scale-95 disabled:opacity-50"
+          >
+            {isSubmitting ? <Loader2 size={16} className="animate-spin" /> : (
+              <>
+                <Play size={16} fill="white" />
+                <span>Run Code</span>
+              </>
+            )}
+          </button>
+        </div>
+
+        {/* Status Bar (IDE style) */}
+        <div className="h-6 bg-indigo-600 flex items-center justify-between px-3 text-[10px] font-bold text-white shrink-0 z-20">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1.5 cursor-default">
+              <Globe size={11} />
+              <span className="uppercase tracking-widest">Mastery IDE v2.0</span>
+            </div>
+            <div className="hidden sm:flex items-center gap-1.5 cursor-default opacity-80">
+              <Cpu size={11} />
+              <span>Piston Env: {selectedLanguage.toUpperCase()}</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="hidden sm:inline">UTF-8</span>
+            <div className="relative flex items-center group">
+              <select
+                value={selectedLanguage}
+                onChange={(e) => {
+                  const newLang = e.target.value;
+                  setSelectedLanguage(newLang);
+                  if (!userHasTyped) {
+                    const langKey = newLang.toLowerCase();
+                    const starter = (problem as any).starter_codes?.[langKey] || problem.initialCode;
+                    if (starter) setUserCode(starter);
+                  }
+                }}
+                className="bg-transparent border-none p-0 pr-4 text-[10px] font-bold uppercase tracking-widest focus:ring-0 cursor-pointer appearance-none"
+              >
+                {Object.keys((problem as any).starter_codes || {}).map(langKey => {
+                  const displayMap: Record<string, string> = { 'c': 'C', 'cpp': 'C++', 'python': 'Python', 'javascript': 'JavaScript', 'java': 'Java' };
+                  return <option key={langKey} value={langKey} className="bg-slate-900">{displayMap[langKey] || langKey.toUpperCase()}</option>
+                })}
+              </select>
+              <ChevronUp size={10} className="absolute right-0 pointer-events-none opacity-60" />
+            </div>
+            <div className="flex items-center gap-1 px-2 border-l border-white/20">
+              <Zap size={10} className="fill-white" />
+              <span>AI Ready</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -556,11 +625,11 @@ Respond EXACTLY in the format above. NO CODE BLOCKS.`;
   const renderResultView = () => {
     if (!executionResult) {
       return (
-        <div className="flex-1 flex flex-col items-center justify-center bg-slate-950 p-10 text-center animate-in fade-in duration-300">
-          <div className="w-20 h-20 bg-slate-900 rounded-3xl flex items-center justify-center mb-6 border border-white/5 rotate-12">
-            <Play size={32} className="text-indigo-600" />
+        <div className="flex-1 flex flex-col items-center justify-center bg-slate-950 p-6 text-center animate-in fade-in duration-300">
+          <div className="w-16 h-16 md:w-20 md:h-20 bg-slate-900 rounded-3xl flex items-center justify-center mb-6 border border-white/5 rotate-12">
+            <Play size={28} className="text-indigo-600" />
           </div>
-          <h2 className="text-xl font-black text-white uppercase italic tracking-tight">Run your code to see results here</h2>
+          <h2 className="text-lg md:text-xl font-black text-white uppercase italic tracking-tight">Run your code to see results here</h2>
         </div>
       );
     }
@@ -570,7 +639,7 @@ Respond EXACTLY in the format above. NO CODE BLOCKS.`;
     const hasInput = executionResult.input || problem.sampleInput;
 
     return (
-      <div className="flex-1 overflow-y-auto no-scrollbar bg-slate-950 p-6 space-y-6 animate-in slide-in-from-bottom duration-300">
+      <div className="flex-1 overflow-y-auto bg-slate-950 p-4 md:p-6 space-y-6 animate-in slide-in-from-bottom duration-300">
 
         {/* 1. STATUS CARD - Always at top */}
         <div className={`p-8 rounded-[2.5rem] border-2 flex flex-col items-center text-center gap-3 shadow-2xl ${executionResult.accepted
@@ -581,21 +650,22 @@ Respond EXACTLY in the format above. NO CODE BLOCKS.`;
             ? 'bg-emerald-500/10 border-emerald-500/20'
             : 'bg-rose-500/10 border-rose-500/20'
             }`}>
-            {executionResult.accepted ? (
-              <Check size={32} strokeWidth={4} />
-            ) : (
-              <AlertCircle size={32} strokeWidth={3} />
-            )}
+            {executionResult.accepted ? <Check size={32} strokeWidth={4} /> : <AlertCircle size={32} strokeWidth={3} />}
           </div>
           <div>
             <h3 className="text-2xl font-black uppercase italic tracking-tight">
               {executionResult.accepted ? 'Accepted!' : 'Not Quite Yet'}
             </h3>
-            <p className="text-xs font-bold opacity-70 mt-1">
-              {executionResult.accepted
-                ? 'Your solution is correct. Great job!'
-                : 'There was an issue with your code. Let\'s fix it.'}
-            </p>
+            <div className="flex flex-col gap-1 mt-1">
+              <p className="text-xs font-bold opacity-70">
+                {executionResult.accepted ? 'Your solution is correct. Great job!' : 'There was an issue with your code. Let\'s fix it.'}
+              </p>
+              {(executionResult as any).testResults && (
+                <p className={`text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full inline-block mx-auto mt-2 ${executionResult.accepted ? 'bg-emerald-500/10' : 'bg-rose-500/10'}`}>
+                  {(executionResult as any).testResults.filter((r: any) => r.passed).length} / {(executionResult as any).testResults.length} Tests Passed
+                </p>
+              )}
+            </div>
           </div>
         </div>
 
@@ -606,17 +676,7 @@ Respond EXACTLY in the format above. NO CODE BLOCKS.`;
             disabled={isGeneratingExplanation}
             className="w-full h-12 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 transition-colors"
           >
-            {isGeneratingExplanation ? (
-              <>
-                <Loader2 size={16} className="animate-spin" />
-                Getting Help...
-              </>
-            ) : (
-              <>
-                <Bot size={16} />
-                Get AI Help
-              </>
-            )}
+            {isGeneratingExplanation ? <><Loader2 size={16} className="animate-spin" /> Getting Help...</> : <><Bot size={16} /> Get AI Help</>}
           </button>
         )}
 
@@ -626,37 +686,13 @@ Respond EXACTLY in the format above. NO CODE BLOCKS.`;
               <Bot size={18} className="text-indigo-400" />
               <div className="flex flex-col">
                 <h4 className="text-xs font-black text-slate-100 uppercase tracking-widest">AI Mentor</h4>
-                <p className="text-[10px] font-bold text-slate-500 uppercase">Here's what I see</p>
+                <p className="text-[10px] font-bold text-slate-500 uppercase">Analysis Complete</p>
               </div>
             </div>
-            {parsedAI.WHAT && (
-              <AISection
-                title="The Issue"
-                content={parsedAI.WHAT}
-                icon={<AlertCircle size={14} />}
-              />
-            )}
-            {parsedAI.LOCATION && (
-              <AISection
-                title="Where to Look"
-                content={parsedAI.LOCATION}
-                icon={<Terminal size={14} />}
-              />
-            )}
-            {parsedAI.CONCEPT && (
-              <AISection
-                title="Concept to Review"
-                content={parsedAI.CONCEPT}
-                icon={<BookOpen size={14} />}
-              />
-            )}
-            {parsedAI.FIX && (
-              <AISection
-                title="Next Step"
-                content={parsedAI.FIX}
-                icon={<Zap size={14} />}
-              />
-            )}
+            {parsedAI.WHAT && <AISection title="The Issue" content={parsedAI.WHAT} icon={<AlertCircle size={14} />} />}
+            {parsedAI.LOCATION && <AISection title="Where to Look" content={parsedAI.LOCATION} icon={<Terminal size={14} />} />}
+            {parsedAI.CONCEPT && <AISection title="Concept to Review" content={parsedAI.CONCEPT} icon={<BookOpen size={14} />} />}
+            {parsedAI.FIX && <AISection title="Next Step" content={parsedAI.FIX} icon={<Zap size={14} />} />}
           </section>
         )}
 
@@ -667,9 +703,7 @@ Respond EXACTLY in the format above. NO CODE BLOCKS.`;
           </div>
           <div className="p-4 bg-slate-950 min-h-12">
             <pre className="text-slate-300 font-mono text-xs whitespace-pre-wrap break-words">
-              {executionResult.stdout && executionResult.stdout.trim()
-                ? executionResult.stdout.trim()
-                : '(No output produced)'}
+              {executionResult.stdout && executionResult.stdout.trim() ? executionResult.stdout.trim() : '(No output produced)'}
             </pre>
           </div>
         </div>
@@ -678,12 +712,10 @@ Respond EXACTLY in the format above. NO CODE BLOCKS.`;
         {!executionResult.accepted && problem.sampleOutput && problem.sampleOutput !== "N/A" && (
           <div className="bg-slate-900 rounded-xl border border-white/5 overflow-hidden">
             <div className="px-4 py-2 bg-white/5 border-b border-white/5">
-              <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Expected Output</span>
+              <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Output</span>
             </div>
             <div className="p-4 bg-slate-950 min-h-12">
-              <pre className="text-emerald-400 font-mono text-xs whitespace-pre-wrap break-words">
-                {problem.sampleOutput}
-              </pre>
+              <pre className="text-emerald-400 font-mono text-xs whitespace-pre-wrap break-words">{problem.sampleOutput}</pre>
             </div>
           </div>
         )}
@@ -704,14 +736,12 @@ Respond EXACTLY in the format above. NO CODE BLOCKS.`;
 
         {/* 6. LEARNING FEEDBACK SECTION - New! */}
         {executionResult.accepted && problem.explanation && (
-          <section className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-4 space-y-3 select-text">
+          <section className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-4 space-y-3">
             <div className="flex items-center gap-2">
               <BookOpen size={16} className="text-indigo-400 shrink-0" />
               <h4 className="text-xs font-black text-indigo-300 uppercase tracking-widest">How It Works</h4>
             </div>
-            <p className="text-sm text-slate-300 leading-relaxed font-medium">
-              {problem.explanation}
-            </p>
+            <p className="text-sm text-slate-300 leading-relaxed font-medium">{problem.explanation}</p>
           </section>
         )}
 
@@ -731,11 +761,10 @@ Respond EXACTLY in the format above. NO CODE BLOCKS.`;
         {/* 8. TECHNICAL DETAILS - Collapsed by default */}
         {(executionResult.stderr || executionResult.compile_output) && (
           <CollapsibleSection
-            title="System Details (For Advanced Users)"
+            title="System Details"
             defaultOpen={false}
             content={
               <div className="space-y-2">
-                <p className="text-[9px] font-bold text-rose-400 uppercase mb-2">Error Details</p>
                 <pre className="text-rose-400/70 font-mono text-[10px] bg-rose-500/5 p-3 rounded border border-rose-500/20 overflow-x-auto whitespace-pre-wrap break-words">
                   {executionResult.stderr || executionResult.compile_output}
                 </pre>
@@ -748,15 +777,19 @@ Respond EXACTLY in the format above. NO CODE BLOCKS.`;
   };
 
   return (
-    <div className="flex flex-col h-screen bg-slate-950 overflow-hidden font-sans practice-ui-root">
+    <div
+      className="flex flex-col bg-slate-950 overflow-hidden font-sans practice-ui-root"
+      style={{ height: viewportHeight }}
+    >
       {/* 1. CLEAN HEADER */}
-      <header className="h-16 shrink-0 bg-slate-950 border-b border-white/5 flex items-center px-4 z-50">
+      <header className="h-12 md:h-16 shrink-0 bg-slate-950 border-b border-white/5 flex items-center px-4 z-50">
         <button onClick={onBack} className="p-2 -ml-1 text-slate-400 hover:text-white transition">
-          <ChevronLeft size={28} />
+          <ChevronLeft size={24} />
         </button>
         <div className="flex-1 px-3 truncate">
           <h1 className="text-[14px] font-black text-white uppercase tracking-tight truncate italic">{problem.title}</h1>
         </div>
+
         {currentStatus === 'COMPLETED' && (
           <div className="flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
             <Check size={12} className="text-emerald-500" strokeWidth={4} />
@@ -766,7 +799,7 @@ Respond EXACTLY in the format above. NO CODE BLOCKS.`;
       </header>
 
       {/* 2. THREE TAB NAVIGATION */}
-      <div className="h-14 bg-slate-900/50 border-b border-white/5 flex shrink-0">
+      <div className="h-10 md:h-14 bg-slate-900/50 border-b border-white/5 flex shrink-0">
         {(['PROBLEM', 'CODE', 'RESULT'] as TabType[]).map((tab) => (
           <button
             key={tab}
@@ -774,9 +807,7 @@ Respond EXACTLY in the format above. NO CODE BLOCKS.`;
             className={`flex-1 flex items-center justify-center text-[11px] font-black tracking-[0.2em] transition-all relative ${activeTab === tab ? 'text-indigo-400' : 'text-slate-600 hover:text-slate-400'}`}
           >
             {tab}
-            {activeTab === tab && (
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.5)]" />
-            )}
+            {activeTab === tab && <div className="absolute bottom-0 left-0 right-0 h-1 bg-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.5)]" />}
           </button>
         ))}
       </div>
@@ -800,24 +831,20 @@ Respond EXACTLY in the format above. NO CODE BLOCKS.`;
               <p className="text-slate-400 font-medium italic">Mission accomplished. Progress saved.</p>
               {problem.relatedLesson && (
                 <div className="pt-2 space-y-2 border-t border-slate-700">
-                  <p className="text-sm text-emerald-400 font-bold">
-                    ✨ You've mastered {problem.relatedLesson.split('→')[1]?.trim() || problem.concept}!
-                  </p>
+                  <p className="text-sm text-emerald-400 font-bold">✨ Mastered {problem.relatedLesson.split('→')[1]?.trim() || problem.concept}!</p>
                   {hasNextProblem && nextProblemTitle && (
-                    <p className="text-xs text-indigo-300 font-medium">
-                      🔓 Ready for the next challenge: <span className="font-bold">{nextProblemTitle}</span>
-                    </p>
+                    <p className="text-xs text-indigo-300 font-medium">🔓 Next Challenge: <span className="font-bold">{nextProblemTitle}</span></p>
                   )}
                 </div>
               )}
             </div>
             <div className="w-full space-y-4">
               {hasNextProblem ? (
-                <button onClick={() => { setShowSuccess(false); onNext?.(); }} className="w-full h-14 bg-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs active:scale-95 transition hover:bg-indigo-500">🚀 Next Challenge</button>
+                <button onClick={() => { setShowSuccess(false); onNext?.(); }} className="w-full h-14 bg-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs active:scale-95 transition">🚀 Next Challenge</button>
               ) : (
-                <button onClick={onBack} className="w-full h-14 bg-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs active:scale-95 transition hover:bg-indigo-500">Return to List</button>
+                <button onClick={onBack} className="w-full h-14 bg-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs active:scale-95 transition">Return to List</button>
               )}
-              <button onClick={() => { setShowSuccess(false); setActiveTab('CODE'); }} className="w-full h-14 bg-slate-800 text-slate-500 rounded-2xl font-black uppercase tracking-widest text-xs active:scale-95 transition hover:bg-slate-700">Review Syntax</button>
+              <button onClick={() => { setShowSuccess(false); setActiveTab('CODE'); }} className="w-full h-14 bg-slate-800 text-slate-500 rounded-2xl font-black uppercase tracking-widest text-xs active:scale-95 transition">Review Syntax</button>
             </div>
           </div>
         </div>

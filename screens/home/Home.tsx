@@ -3,7 +3,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useCurriculum } from '../../contexts/useCurriculum';
 // Unused imports removed
 import { CURRICULUM, LANGUAGES } from '../../constants';
-import { LayoutDashboard, Lock, CheckCircle2, Play, ChevronRight } from 'lucide-react';
+import { LayoutDashboard, Lock, CheckCircle2, Play, ChevronRight, BookOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Home: React.FC = () => {
@@ -68,6 +68,16 @@ const Home: React.FC = () => {
         return allLessons.find((l: any) => l.id === lastLessonId) || allLessons[0];
     }, [user, curriculumData]);
 
+    // Calculate progress for current path
+    const progress = useMemo(() => {
+        if (!modules.length) return 0;
+        const allLessons = modules.flatMap((m: any) => m.lessons);
+        const totalLessons = allLessons.length;
+        if (totalLessons === 0) return 0;
+        const completedCount = allLessons.filter((l: any) => completedLessonIds.includes(l.id)).length;
+        return Math.round((completedCount / totalLessons) * 100);
+    }, [modules, completedLessonIds]);
+
 
     if (loading || !user) return null;
 
@@ -82,6 +92,7 @@ const Home: React.FC = () => {
 
                 {/* 1. Header - Professional and clean */}
                 <header className="mb-14">
+
                     <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider mb-3">
                         {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
                     </p>
@@ -93,82 +104,120 @@ const Home: React.FC = () => {
                     </p>
                 </header>
 
-                {/* 2. Quick Actions - Minimal, professional */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
-                    <div className="p-4 bg-slate-900/50 border border-slate-800 rounded-lg hover:border-slate-700 transition-colors">
-                        <div className="text-sm text-slate-500 font-medium mb-1">Current Streak</div>
-                        <div className="text-2xl font-bold text-white">7 days</div>
-                    </div>
-                    <div className="p-4 bg-slate-900/50 border border-slate-800 rounded-lg hover:border-slate-700 transition-colors">
-                        <div className="text-sm text-slate-500 font-medium mb-1">Lessons Completed</div>
-                        <div className="text-2xl font-bold text-white">{modules.reduce((sum, m) => sum + m.lessons.filter((l: any) => completedLessonIds.includes(l.id)).length, 0)}</div>
-                    </div>
-                    <div className="p-4 bg-slate-900/50 border border-slate-800 rounded-lg hover:border-slate-700 transition-colors">
-                        <div className="text-sm text-slate-500 font-medium mb-1">Active Tracks</div>
-                        <div className="text-2xl font-bold text-white">{(LANGUAGES as any).length}</div>
-                    </div>
-                </div>
-
-                {/* 3. Hero: Continue Learning - Clean and focused */}
-                <section className="mb-16">
+                {/* 3. Hero: Continue Learning - Moved above stats as requested */}
+                <section className="mb-12">
                     <div className="relative overflow-hidden rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-sm">
-                        <div className="p-8 md:p-12 flex flex-col md:flex-row items-center gap-12">
-                            <div className="flex-1 space-y-6">
+                        <div className="p-4 md:p-6 flex flex-row items-center justify-between gap-6">
+                            <div className="flex-1 space-y-4">
                                 <div>
-                                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 leading-tight">
+                                    <h2 className="text-2xl font-bold text-white mb-2 leading-tight">
                                         {currentLesson?.title || 'Introduction to Programming'}
                                     </h2>
-                                    <p className="text-slate-400 text-base leading-relaxed max-w-lg">
+                                    <p className="text-slate-400 text-sm leading-relaxed max-w-lg">
                                         Pick up exactly where you left off. Continue learning and build your skills.
                                     </p>
                                 </div>
 
                                 <button
                                     onClick={() => navigate(`/lesson/${currentLesson?.id || 'c1'}`)}
-                                    className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200"
+                                    className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white px-6 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200"
                                 >
-                                    <Play size={18} className="fill-current" />
+                                    <BookOpen size={16} />
                                     Resume Lesson
                                 </button>
                             </div>
 
-                            {/* Decorative minimal graphic */}
-                            <div className="hidden md:flex items-center justify-center w-48 h-48 flex-shrink-0">
-                                <div className="w-full h-full border border-slate-800 rounded-lg bg-slate-950/50 flex items-center justify-center">
-                                    <LayoutDashboard size={56} className="text-slate-600" />
+                            {/* Circular Progress System */}
+                            <div className="flex items-center justify-center w-auto flex-shrink-0">
+                                <div className="relative w-24 h-24 flex items-center justify-center">
+                                    {/* Back Circle */}
+                                    <svg className="w-full h-full transform -rotate-90">
+                                        <circle
+                                            cx="48"
+                                            cy="48"
+                                            r="40"
+                                            stroke="currentColor"
+                                            strokeWidth="8"
+                                            fill="transparent"
+                                            className="text-slate-800"
+                                        />
+                                        {/* Progress Circle */}
+                                        <circle
+                                            cx="48"
+                                            cy="48"
+                                            r="40"
+                                            stroke="currentColor"
+                                            strokeWidth="8"
+                                            fill="transparent"
+                                            className="text-indigo-500 transition-all duration-1000 ease-out"
+                                            strokeDasharray={2 * Math.PI * 40}
+                                            strokeDashoffset={2 * Math.PI * 40 * (1 - progress / 100)}
+                                            strokeLinecap="round"
+                                        />
+                                    </svg>
+                                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                                        <span className="text-xl font-bold text-white">{progress}%</span>
+                                        <span className="text-[8px] uppercase font-bold text-slate-500 tracking-wider mt-0.5">Done</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* 4. Minimal Context Switcher */}
-                <div className="mt-12 pt-8 border-t border-slate-900/50 flex flex-col md:flex-row items-center justify-between gap-4">
-                    <div className="flex items-center gap-3 overflow-x-auto max-w-full pb-2 md:pb-0 scrollbar-hide">
-                        <span className="text-xs font-bold text-slate-600 uppercase tracking-wider flex-shrink-0">
-                            Switch Path:
-                        </span>
-                        {(LANGUAGES as any).map((lang: any) => (
-                            <button
-                                key={lang.id}
-                                onClick={() => handlePathSelect(lang.id)}
-                                className={`flex-shrink-0 px-3 py-1.5 rounded-md text-xs font-bold transition-all ${selectedPathId === lang.id
-                                    ? 'bg-indigo-500/10 text-indigo-400 ring-1 ring-indigo-500/20'
-                                    : 'text-slate-500 hover:text-slate-300 hover:bg-slate-900'
-                                    }`}
-                            >
-                                {lang.name}
-                            </button>
-                        ))}
+                {/* 2. Quick Actions - Minimal, professional */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+                    {/* Card 1: Streak */}
+                    <div className="relative p-6 bg-[#151725] rounded-l-2xl rounded-r-md overflow-hidden group shadow-lg shadow-black/20">
+                        {/* Rounded Left Accent Bar */}
+                        <div className="absolute left-0 top-3 bottom-3 w-2 bg-pink-600 rounded-r-2xl shadow-[0_0_15px_rgba(219,39,119,0.6)]"></div>
+
+                        <div className="pl-4">
+                            <h3 className="text-slate-400 text-sm font-medium mb-2 uppercase tracking-wide">Current Streak</h3>
+                            <div className="flex items-baseline gap-1">
+                                <span className="text-3xl font-bold text-white">{user.streak || 1}</span>
+                                <span className="text-lg text-slate-500 font-medium">days</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <button
-                        onClick={() => navigate('/learn')}
-                        className="text-xs font-bold text-slate-500 hover:text-indigo-400 transition-colors flex-shrink-0"
-                    >
-                        Browse Curriculum →
-                    </button>
+                    {/* Card 2: Lessons */}
+                    <div className="relative p-6 bg-[#151725] rounded-l-2xl rounded-r-md overflow-hidden group shadow-lg shadow-black/20">
+                        <div className="absolute left-0 top-3 bottom-3 w-2 bg-violet-600 rounded-r-2xl shadow-[0_0_15px_rgba(124,58,237,0.6)]"></div>
+
+                        <div className="pl-4">
+                            <h3 className="text-slate-400 text-sm font-medium mb-2 uppercase tracking-wide">Lessons Completed</h3>
+                            <div className="flex items-baseline gap-1">
+                                <span className="text-3xl font-bold text-white">{modules.reduce((sum, m) => sum + m.lessons.filter((l: any) => completedLessonIds.includes(l.id)).length, 0)}</span>
+                                <span className="text-lg text-slate-500 font-medium">lessons</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Card 3: Active Tracks */}
+                    <div className="relative p-6 bg-[#151725] rounded-l-2xl rounded-r-md overflow-hidden group shadow-lg shadow-black/20">
+                        <div className="absolute left-0 top-3 bottom-3 w-2 bg-orange-500 rounded-r-2xl shadow-[0_0_15px_rgba(249,115,22,0.6)]"></div>
+
+                        <div className="pl-4">
+                            <h3 className="text-slate-400 text-sm font-medium mb-2 uppercase tracking-wide">Active Tracks</h3>
+                            <div className="flex items-baseline gap-1">
+                                <span className="text-3xl font-bold text-white">
+                                    {/* Calculate actually active tracks based on progress */}
+                                    {(LANGUAGES as any).filter((l: any) =>
+                                        modules.some((m: any) => m.lessons.some((lesson: any) => completedLessonIds.includes(lesson.id) && lesson.id.startsWith(l.id)))
+                                        || l.id === user.lastLanguageId
+                                        || l.id === 'c' // Always active for demo
+                                    ).length}
+                                </span>
+                                <span className="text-lg text-slate-500 font-medium">languages</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+
+
+
             </div>
         </div>
     );
