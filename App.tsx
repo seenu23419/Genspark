@@ -364,7 +364,7 @@ const App: React.FC = () => {
     const runOneSignal = async () => {
       try {
         await OneSignal.init({
-          appId: "YOUR-ONESIGNAL-APP-ID-HERE", // TODO: Replace with your OneSignal App ID
+          appId: "85ebc5e6-c4c1-4bfb-a4e4-6bc01f3ebff4",
           allowLocalhostAsSecureOrigin: true,
           promptOptions: {
             slidedown: {
