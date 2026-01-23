@@ -386,6 +386,20 @@ const App: React.FC = () => {
             }
           }
         });
+
+        // Logic for Welcome Notification on first-time subscription
+        OneSignal.Notifications.addEventListener("permissionChange", (permissionChange) => {
+          if (permissionChange === true) {
+            console.log("User just subscribed, sending welcome notification...");
+            // We use OneSignal internal tags to mark them as 'welcomed'
+            OneSignal.User.addTag("app_role", "student");
+
+            // Note: OneSignal doesn't allow sending "instant" notifications from client-side code 
+            // for security reasons without an API key, so we recommend setting up an 
+            // Automated Message in the OneSignal Dashboard triggered by the 'app_role' tag.
+          }
+        });
+
         console.log("OneSignal Initialized");
       } catch (err) {
         console.error("OneSignal init failed:", err);

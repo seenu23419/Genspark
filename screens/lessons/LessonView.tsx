@@ -16,6 +16,7 @@ import {
   Play,
   LucideIcon
 } from 'lucide-react';
+import OneSignal from 'react-onesignal';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -74,6 +75,8 @@ const LessonView: React.FC<LessonViewProps> = ({
     const quizPassed = params.get('quizPassed');
     if (quizPassed === 'true') {
       setQuizCompleted(true);
+      // Tag OneSignal for automated congratulation messages
+      OneSignal.User.addTag("lesson_mastered", lesson?.id || "unknown");
       // Clean up URL
       window.history.replaceState({}, '', window.location.pathname);
     } else {
