@@ -1,4 +1,4 @@
-# GenSpark Global Academy - Application Documentation
+# GenSpark - Application Documentation
 
 ## 1. Problem Statement
 Traditional coding education fails to bridge the gap between theoretical knowledge and practical application. Learners often struggle with setting up development environments, receiving immediate feedback on their code, and finding structured, personalized learning paths.
