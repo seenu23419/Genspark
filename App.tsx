@@ -354,10 +354,45 @@ const router = createBrowserRouter([
 import { CurriculumProvider } from './contexts/CurriculumContext';
 import { PracticeProvider } from './contexts/PracticeContext';
 
+import OneSignal from 'react-onesignal';
+
 const App: React.FC = () => {
-  // Initialize Sentry on first render
+  // Initialize Sentry and OneSignal on first render
   useEffect(() => {
     initSentry().catch((err) => console.warn('Sentry init failed:', err));
+
+    const runOneSignal = async () => {
+      try {
+        await OneSignal.init({
+          appId: "YOUR-ONESIGNAL-APP-ID-HERE", // TODO: Replace with your OneSignal App ID
+          allowLocalhostAsSecureOrigin: true,
+          promptOptions: {
+            slidedown: {
+              prompts: [
+                {
+                  type: "category",
+                  autoPrompt: true,
+                  text: {
+                    actionMessage: "Get notified about new coding challenges?",
+                    acceptButton: "Allow",
+                    cancelButton: "Later"
+                  },
+                  delay: {
+                    pageViews: 1,
+                    timeDelay: 20
+                  }
+                }
+              ]
+            }
+          }
+        });
+        console.log("OneSignal Initialized");
+      } catch (err) {
+        console.error("OneSignal init failed:", err);
+      }
+    };
+
+    runOneSignal();
   }, []);
 
   return (
