@@ -19,6 +19,13 @@ const Home: React.FC = () => {
     React.useEffect(() => {
         if (user && !selectedPathId) {
             setSelectedPathId(user.lastLanguageId || 'c');
+            // Tag OneSignal for retention tracking
+            try {
+                const OneSignal = (window as any).OneSignal;
+                if (OneSignal) {
+                    OneSignal.User.addTag("last_active", new Date().toISOString());
+                }
+            } catch (e) { }
         }
     }, [user, selectedPathId]);
 

@@ -149,7 +149,16 @@ const CourseTrack: React.FC = () => {
 
   // 3. Effects
   useEffect(() => {
-    if (langId) fetchLanguageCurriculum(langId);
+    if (langId) {
+      fetchLanguageCurriculum(langId);
+      // Tag OneSignal with the course they are currently studying
+      try {
+        const OneSignal = (window as any).OneSignal;
+        if (OneSignal) {
+          OneSignal.User.addTag("active_course", langId);
+        }
+      } catch (e) { }
+    }
   }, [langId, fetchLanguageCurriculum]);
 
   // Initialize expansion
@@ -180,7 +189,16 @@ const CourseTrack: React.FC = () => {
       const finalLessonId = lessons.length > 0 ? lessons[lessons.length - 1].id : '';
 
       const cert = await certificateService.generateCertificateForCourse(user._id, courseId, courseName, finalLessonId);
-      if (cert) setShowCertModal(true);
+      if (cert) {
+        setShowCertModal(true);
+        // Tag OneSignal to trigger "Congratulations" automation
+        try {
+          const OneSignal = (window as any).OneSignal;
+          if (OneSignal) {
+            OneSignal.User.addTag("certificate_claimed", "true");
+          }
+        } catch (e) { }
+      }
       else alert("Requirement not met. You must complete the final certification exam to claim your certificate.");
     } catch (e) {
       alert('Failed to generate certificate. Please try again later.');

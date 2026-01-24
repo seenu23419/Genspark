@@ -20,16 +20,24 @@ const SubscriptionPlan: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       // In a real implementation, you would call your backend to create an order
       // and then open the Razorpay checkout with that order
       await paymentService.openCheckout(user._id, user);
-      
+
       // Note: The actual subscription creation would happen after payment verification
       // via webhook, but for demo purposes we'll show success
       // In a real app, this would happen after the payment webhook confirms
       setSuccess(true);
-      
+
+      // Tag OneSignal for premium user segment
+      try {
+        const OneSignal = (window as any).OneSignal;
+        if (OneSignal) {
+          OneSignal.User.addTag("is_premium", "true");
+        }
+      } catch (e) { }
+
       // Refresh user profile to get updated subscription status
       // Note: This will only update after the webhook has processed the payment
       // In demo mode, we'll show success message
@@ -51,10 +59,10 @@ const SubscriptionPlan: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       await billingService.cancelSubscription(user._id);
       await refreshProfile(); // Refresh user data
-      
+
       setSuccess(true);
     } catch (err: any) {
       console.error('Cancel subscription error:', err);
@@ -159,7 +167,7 @@ const SubscriptionPlan: React.FC = () => {
                 ACTIVE
               </div>
             )}
-            
+
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-2 bg-indigo-600/20 text-indigo-400 px-3 py-1 rounded-full text-sm font-bold mb-3">
                 <Star className="text-yellow-400" size={16} />
