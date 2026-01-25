@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { practiceService, PracticeContent, PracticeTopic, PracticeProblem } from '../services/practiceService';
 import { supabaseDB } from '../services/supabaseService';
 import { useAuth } from './AuthContext';
@@ -40,7 +40,7 @@ export const PracticeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }, []);
 
     // Load Progress (DB)
-    const fetchProgress = async () => {
+    const fetchProgress = useCallback(async () => {
         if (!user) return;
         const data = await supabaseDB.getAllPracticeProgress();
         const mapped: Record<string, any> = {};
@@ -49,7 +49,7 @@ export const PracticeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         });
         setProgress(mapped);
         setLoading(false);
-    };
+    }, [user]);
 
     useEffect(() => {
         if (user) {
@@ -66,7 +66,7 @@ export const PracticeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         return 'NOT_STARTED';
     };
 
-    const topics = content ? practiceService.getAllTopics(content) : [];
+    const topics = useMemo(() => content ? practiceService.getAllTopics(content) : [], [content]);
 
     return (
         <PracticeContext.Provider value={{ topics, progress, loading, refreshProgress: fetchProgress, getProblemStatus }}>

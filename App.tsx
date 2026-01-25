@@ -10,15 +10,14 @@ import { Loader2 } from 'lucide-react';
 import { Screen } from './types';
 import { initSentry } from './services/sentryService';
 
-// Helper to handle dynamic import failures (common during redeploys)
+// Helper to handle dynamic import failures
 const lazyWithRetry = (componentImport: () => Promise<{ default: React.ComponentType<any> }>) =>
   lazy(async () => {
     try {
       return await componentImport();
     } catch (error) {
-      console.error("Async import failed, retrying...", error);
-      // Refresh the page once to pick up the new build assets
-      window.location.reload();
+      console.error("Async import failed:", error);
+      // Let React Error Boundary handle it instead of looping refreshes
       throw error;
     }
   });
@@ -63,8 +62,6 @@ const ScreenLoader = () => (
 );
 
 import OfflineBanner from './components/OfflineBanner';
-
-// ... (existing imports)
 
 // --- PROTECTED ROUTE WRAPPER ---
 const ProtectedRoute = () => {
@@ -126,11 +123,23 @@ const ProtectedRoute = () => {
   const onboardingCompleted = user?.onboardingCompleted;
   const currentPath = location.pathname;
 
+  // Sticky Loading Guard: Once auth has loaded once, we never show Splash again in this session
+  const authHasFinished = React.useRef(false);
+  React.useEffect(() => {
+    if (!loading) authHasFinished.current = true;
+  }, [loading]);
+
   const navigationElement = useMemo(() => {
-    // If auth is still initializing, always show splash
-    if (loading) {
-      console.log("⏳ ProtectedRoute: Auth initializing, showing splash");
+    // Show splash ONLY if we haven't successfully loaded auth yet AND don't have a backup user
+    if (loading && !authHasFinished.current && !user) {
+      console.log("⏳ ProtectedRoute: Initial auth load, showing splash");
       return <Splash />;
+    }
+
+    // If it's a re-load or update after first load, use subtle loader
+    // Skip this if we already HAVE a user (background refresh)
+    if (loading && !user) {
+      return <ScreenLoader />;
     }
 
     // Auth finished loading, but no user found
@@ -150,8 +159,8 @@ const ProtectedRoute = () => {
         return <Splash />;
       }
 
-      console.log("🚫 ProtectedRoute: No user, redirecting to login");
-      return <Navigate to="/login" state={{ from: location }} replace />;
+      console.log("🚫 ProtectedRoute: No user, redirecting to signup");
+      return <Navigate to="/signup" state={{ from: location }} replace />;
     }
 
     // User is logged in, proceed with app flow
@@ -159,9 +168,10 @@ const ProtectedRoute = () => {
 
     // Only make navigation decisions when we have complete user data
     // If onboardingCompleted is undefined, we're still loading user details
+    // If onboardingCompleted is undefined, we're still loading user details
     if (onboardingCompleted === undefined && currentPath !== '/onboarding') {
-      console.log("⏳ ProtectedRoute: User data loading, showing splash");
-      return <Splash />;
+      console.log("⏳ ProtectedRoute: User data loading, showing subtle loader");
+      return <ScreenLoader />;
     }
 
     // Redirect to onboarding if not completed and not already there
@@ -221,11 +231,20 @@ const ProtectedRoute = () => {
     );
   }
 
-  // Isolate Coding Problem Screen from Layout (Distraction Free)
-  if (path.startsWith('/practice/problem/') || path.startsWith('/challenge/')) {
-    console.log("👨‍💻 ProtectedRoute: Rendering coding problem distraction-free");
+  // Isolate Full-Screen components from Layout (prevent double headers/nav)
+  const isFullScreenPage =
+    path.startsWith('/lesson/') ||
+    path.startsWith('/quiz/') ||
+    path.startsWith('/track/') ||
+    path.startsWith('/practice/problem/') ||
+    path.startsWith('/challenge/') ||
+    path.startsWith('/subscription') ||
+    path.startsWith('/certificate/verify/');
+
+  if (isFullScreenPage) {
+    console.log("📱 ProtectedRoute: Rendering full-screen page (no layout)");
     return (
-      <div className="animate-in fade-in duration-300">
+      <div className="animate-in fade-in duration-300 h-screen overflow-hidden">
         <Suspense fallback={<ScreenLoader />}>
           <OfflineBanner />
           <Outlet />
@@ -250,7 +269,14 @@ const ProtectedRoute = () => {
 // --- PUBLIC ROUTE WRAPPER (Redirect if logged in) ---
 const PublicRoute = () => {
   const { user, loading } = useAuth();
-  if (loading) return <Splash />;
+
+  // Sticky Loading Guard: Same as ProtectedRoute
+  const authHasFinished = React.useRef(false);
+  if (!loading) authHasFinished.current = true;
+
+  if (loading && !authHasFinished.current) return <Splash />;
+  if (loading) return <ScreenLoader />;
+
   if (user) return <Navigate to="/" replace />;
 
   return (
@@ -370,16 +396,16 @@ const App: React.FC = () => {
             slidedown: {
               prompts: [
                 {
-                  type: "category",
+                  type: "push",
                   autoPrompt: true,
                   text: {
-                    actionMessage: "Get notified about new coding challenges?",
+                    actionMessage: "Get notified about new coding challenges and track your progress!",
                     acceptButton: "Allow",
                     cancelButton: "Later"
                   },
                   delay: {
                     pageViews: 1,
-                    timeDelay: 20
+                    timeDelay: 5
                   }
                 }
               ]

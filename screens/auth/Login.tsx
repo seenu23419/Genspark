@@ -101,10 +101,10 @@ const Login: React.FC = () => {
           {/* Headline + Subtext */}
           <div className="text-center space-y-2">
             <h1 className="text-3xl font-bold text-white tracking-tight">
-              Welcome back
+              Welcome to GenSpark
             </h1>
-            <p className="text-sm text-slate-400">
-              Log in to continue learning
+            <p className="text-sm text-slate-400 font-medium">
+              Start your journey today
             </p>
           </div>
 

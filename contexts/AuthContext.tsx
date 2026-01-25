@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, useRef } from 'react';
+import React, { createContext, useContext, useEffect, useState, useRef, useCallback } from 'react';
 import { User } from '../types';
 import { authService } from '../services/authService';
 import { supabaseDB } from '../services/supabaseService';
@@ -11,7 +11,8 @@ interface AuthContextType {
     logout: () => Promise<void>;
     refreshProfile: () => Promise<void>;
     updateProfile: (updates: Partial<User>) => Promise<void>;
-    updateUser: (updates: Partial<User>) => Promise<void>; // Alias for backwards compatibility
+    updateUser: (updates: Partial<User>) => Promise<void>;
+    setInitializing: (val: boolean) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -28,7 +29,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return null;
     });
     const [initializing, setInitializing] = useState(!user); // If we have backup, we are not "initializing" in UI terms
-    const [minSplashDone, setMinSplashDone] = useState(false);
+    const [minSplashDone, setMinSplashDone] = useState(!!user); // Skip splash mandatory delay if we have backup user
 
     // State guard: Track the ACTUAL values we care about, not object references
     const userStateRef = useRef<{
@@ -45,12 +46,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const loading = initializing || !minSplashDone;
 
-    const refreshProfile = async () => {
+    const refreshProfile = useCallback(async () => {
         if (!user) return;
         try {
             const fresh = await supabaseDB.findOne({ _id: user._id });
             if (fresh) {
-                // Use the same state guard for manual refreshes
                 const currentState = userStateRef.current;
                 const hasChanged =
                     currentState.userId !== fresh._id ||
@@ -59,16 +59,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     currentState.lessonsCompleted !== fresh.lessonsCompleted;
 
                 if (hasChanged) {
-                    console.log("AuthContext: refreshProfile - state changed", {
-                        old: currentState,
-                        new: {
-                            userId: fresh._id,
-                            firstName: fresh.firstName,
-                            onboardingCompleted: fresh.onboardingCompleted,
-                            lessonsCompleted: fresh.lessonsCompleted
-                        },
-                        completedLessons: fresh.completedLessonIds
-                    });
+                    console.log("AuthContext: refreshProfile - state changed", fresh._id);
                     userStateRef.current = {
                         userId: fresh._id,
                         firstName: fresh.firstName,
@@ -77,15 +68,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     };
                     setUser(fresh);
                 } else {
-                    console.log("AuthContext: refreshProfile - no state change, but refreshing anyway for completion sync", fresh.completedLessonIds);
-                    // Even if state guard says no change, we update user to refresh completedLessonIds
                     setUser(fresh);
                 }
             }
         } catch (error) {
             console.error("AuthContext: refreshProfile error", error);
         }
-    };
+    }, [user]);
 
     useEffect(() => {
         let mounted = true;
@@ -197,6 +186,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 if (initializing) {
                     if (!hasAuthParams || updatedUser) {
                         setInitializing(false);
+
+                        // CLEAR AUTH PARAMS: If we just detected/handled a redirect, clean the URL
+                        if (hasAuthParams && updatedUser) {
+                            console.log("🧹 AuthContext: Redirect handled, cleaning URL params");
+                            const cleanUrl = window.location.origin + window.location.pathname;
+                            window.history.replaceState({}, document.title, cleanUrl);
+                        }
                     } else {
                         console.log("🔐 AuthContext: OAuth tokens detected, keeping loading state active...");
                         // Safety fallback: if nothing happens, the 5s safetyTimer already in place will rescue us.
@@ -245,55 +241,42 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             }
         },
         refreshProfile,
-        updateProfile: async (updates: Partial<User>) => {
+        updateProfile: useCallback(async (updates: Partial<User>) => {
             if (!user) return;
 
-            // 1. Optimistic Update (Instant Feedback)
             const previousUser = user;
             const optimisticUser = { ...user, ...updates };
-            // Ensure derived fields are updated
             if (updates.firstName || updates.lastName) {
                 const first = updates.firstName || user.firstName || '';
                 const last = updates.lastName || user.lastName || '';
                 optimisticUser.name = `${first} ${last}`.trim() || user.name;
-                optimisticUser.firstName = first; // Explicitly set to ensure
+                optimisticUser.firstName = first;
             }
 
-            // Ensure we keep complex objects if not updated
             if (!updates.completedLessonIds) optimisticUser.completedLessonIds = user.completedLessonIds;
             if (!updates.unlockedLessonIds) optimisticUser.unlockedLessonIds = user.unlockedLessonIds;
 
-            // **CRITICAL**: Update state guard ref for optimistic update
             userStateRef.current = {
                 userId: optimisticUser._id,
                 firstName: optimisticUser.firstName,
                 onboardingCompleted: optimisticUser.onboardingCompleted,
                 lessonsCompleted: optimisticUser.lessonsCompleted
             };
-            console.log("AuthContext: Optimistic update", userStateRef.current);
 
             setUser(optimisticUser as User);
 
-            // 2. Await Sync to ensure consistency
             try {
                 const updated = await supabaseDB.updateOne(user._id, updates);
-
-                // Update state guard with server response
                 userStateRef.current = {
                     userId: updated._id,
                     firstName: updated.firstName,
                     onboardingCompleted: updated.onboardingCompleted,
                     lessonsCompleted: updated.lessonsCompleted
                 };
-                console.log("AuthContext: Server update confirmed", userStateRef.current);
-
                 setUser(updated);
             } catch (error: any) {
                 console.error("Profile update failed, reverting...", error);
-
-                // If user record doesn't exist, try to create it first
                 if (error.message?.includes('not found') || error.code === 'PGRST116' || error.details?.includes('0 rows')) {
-                    console.log("User record not found, creating it...");
                     try {
                         const newUser = await supabaseDB.insertOne({
                             _id: user._id,
@@ -301,46 +284,37 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                             name: user.name || 'User',
                             ...updates
                         });
-
-                        // Update state guard with created user
                         userStateRef.current = {
                             userId: newUser._id,
                             firstName: newUser.firstName,
                             onboardingCompleted: newUser.onboardingCompleted,
                             lessonsCompleted: newUser.lessonsCompleted
                         };
-
                         setUser(newUser);
-                        return; // Success!
+                        return;
                     } catch (insertError) {
-                        console.error("Failed to create user record:", insertError);
-
-                        // Revert state guard
                         userStateRef.current = {
                             userId: previousUser._id,
                             firstName: previousUser.firstName,
                             onboardingCompleted: previousUser.onboardingCompleted,
                             lessonsCompleted: previousUser.lessonsCompleted
                         };
-
                         setUser(previousUser);
-                        throw new Error("Failed to save profile. Please check your database connection.");
+                        throw new Error("Failed to save profile.");
                     }
                 }
-
-                // Revert state guard on error
                 userStateRef.current = {
                     userId: previousUser._id,
                     firstName: previousUser.firstName,
                     onboardingCompleted: previousUser.onboardingCompleted,
                     lessonsCompleted: previousUser.lessonsCompleted
                 };
-
                 setUser(previousUser);
-                throw error; // Re-throw so UI knows it failed
+                throw error;
             }
-        },
-        updateUser: async (updates: Partial<User>) => { } // Placeholder, overridden below
+        }, [user]),
+        updateUser: (updates: Partial<User>) => Promise.resolve(), // Placeholder
+        setInitializing
     };
 
     // Alias updateUser to updateProfile

@@ -14,7 +14,7 @@ const Splash: React.FC = () => {
     useEffect(() => {
         const timer = setTimeout(() => {
             setFadeOut(true);
-        }, 5000);
+        }, 3000);
 
         return () => clearTimeout(timer);
     }, []);

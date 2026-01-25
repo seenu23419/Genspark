@@ -7,9 +7,6 @@ const PracticeHub: React.FC = () => {
     const { topics, loading, getProblemStatus, progress, refreshProgress } = usePractice();
     const [activeTopicId, setActiveTopicId] = useState<string | null>(null);
 
-    useEffect(() => {
-        refreshProgress();
-    }, []);
 
     // Initial Topic Selection
     useEffect(() => {

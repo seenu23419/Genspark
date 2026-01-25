@@ -3,7 +3,6 @@
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
   }
@@ -15,7 +14,6 @@
     opacity: 0;
     transform: translateY(10px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -29,18 +27,13 @@
 }
 
 /* Ensure no white flashes during page loads */
-/* Ensure absolute dark mode globally */
-:root {
-  color-scheme: dark !important;
+html {
+  background-color: #0a0b14;
 }
 
-html,
-body,
-#root {
-  background-color: #0a0b14 !important;
-  color: #f8fafc !important;
-  margin: 0;
-  padding: 0;
+body {
+  background-color: #0a0b14;
+  color: #f8fafc;
 }
 
 /* Smooth scrolling */
@@ -75,13 +68,8 @@ html {
 
 /* Shimmer Animation */
 @keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-
-  100% {
-    transform: translateX(100%);
-  }
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 .animate-shimmer {
