@@ -122,7 +122,6 @@ const CourseTrack: React.FC = () => {
   const navigate = useNavigate();
 
   // 1. State declarations
-  const [expandedLevels, setExpandedLevels] = useState<Record<number, boolean>>({});
   const [showCertModal, setShowCertModal] = useState(false);
   const [isClaiming, setIsClaiming] = useState(false);
 
@@ -161,20 +160,7 @@ const CourseTrack: React.FC = () => {
     }
   }, [langId, fetchLanguageCurriculum]);
 
-  // Initialize expansion
-  useEffect(() => {
-    if (modules.length > 0 && Object.keys(expandedLevels).length === 0) {
-      setExpandedLevels({ [currentLevelIndex]: true });
-    }
-  }, [modules.length, currentLevelIndex]);
-
   // 4. Action handlers
-  const toggleLevel = (index: number) => {
-    setExpandedLevels(prev => ({
-      ...prev,
-      [index]: !prev[index]
-    }));
-  };
 
   const handleClaimCertificate = async () => {
     if (!user || !language || modules.length === 0) return;
@@ -278,22 +264,20 @@ const CourseTrack: React.FC = () => {
         )}
 
         {/* Stages */}
-        <div className="space-y-4">
+        <div className="space-y-12">
           {modules.map((module, levelIndex) => {
             const lessons = module.lessons || [];
-            const isExpanded = !!expandedLevels[levelIndex];
             const isCertLevel = module.title.includes('Final Certification');
             const isCurrentLevel = levelIndex === currentLevelIndex;
             const isCompletedLevel = lessons.every((l: Lesson) => completedLessonIds.includes(l.id));
             const completedInLevel = lessons.filter((l: Lesson) => completedLessonIds.includes(l.id)).length;
 
             return (
-              <section key={module.id} className="border-b border-slate-800/40 last:border-b-0 pb-6 last:pb-0">
-                <button
-                  onClick={() => toggleLevel(levelIndex)}
-                  className={`w-full group flex items-start justify-between gap-4 p-5 rounded-xl transition-all ${isCurrentLevel
+              <section key={module.id} className="space-y-6">
+                <div
+                  className={`w-full flex items-start justify-between gap-4 p-5 rounded-xl transition-all ${isCurrentLevel
                     ? 'bg-indigo-600/15 border border-indigo-500/40'
-                    : 'bg-slate-900/40 border border-slate-800/50 hover:bg-slate-900/60'
+                    : 'bg-slate-900/40 border border-slate-800/50'
                     }`}
                 >
                   <div className="flex items-start gap-4 flex-1 min-w-0 text-left">
@@ -314,37 +298,34 @@ const CourseTrack: React.FC = () => {
                   </div>
                   <div className="flex items-center gap-3 shrink-0 mt-1">
                     <span className="text-xs font-bold text-slate-500">{completedInLevel}/{lessons.length}</span>
-                    <ChevronDown size={20} className={`text-slate-500 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
                   </div>
-                </button>
+                </div>
 
-                {isExpanded && (
-                  <div className="mt-4 pl-4 space-y-2">
-                    {lessons.map((lesson: any, lessonIndex: number) => {
-                      const isCompleted = completedLessonIds.includes(lesson.id);
-                      const isFirstIncomplete = !isCompleted && lessonIndex === lessons.findIndex((l: any) => !completedLessonIds.includes(l.id));
+                <div className="pl-4 space-y-2">
+                  {lessons.map((lesson: any, lessonIndex: number) => {
+                    const isCompleted = completedLessonIds.includes(lesson.id);
+                    const isFirstIncomplete = !isCompleted && lessonIndex === lessons.findIndex((l: any) => !completedLessonIds.includes(l.id));
 
-                      return (
-                        <button
-                          key={lesson.id}
-                          onClick={() => handleLessonClick(lesson)}
-                          className={`w-full flex items-center justify-between p-4 rounded-xl transition-all ${isFirstIncomplete ? 'bg-indigo-600/10 border border-indigo-500/30' : 'hover:bg-slate-800/30'
-                            }`}
-                        >
-                          <div className="flex items-center gap-4 min-w-0">
-                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${isCompleted ? 'bg-emerald-500/10 text-emerald-400' : isFirstIncomplete ? 'bg-indigo-500/20 text-indigo-400' : 'bg-slate-800 text-slate-500'}`}>
-                              {isCompleted ? <CheckCircle size={20} /> : <BookOpen size={20} />}
-                            </div>
-                            <div className="text-left font-medium min-w-0">
-                              <p className={`text-sm md:text-base truncate ${isCompleted ? 'text-slate-400' : 'text-white'}`}>{lesson.title}</p>
-                            </div>
+                    return (
+                      <button
+                        key={lesson.id}
+                        onClick={() => handleLessonClick(lesson)}
+                        className={`w-full flex items-center justify-between p-4 rounded-xl transition-all ${isFirstIncomplete ? 'bg-indigo-600/10 border border-indigo-500/30' : 'hover:bg-slate-800/30'
+                          }`}
+                      >
+                        <div className="flex items-center gap-4 min-w-0">
+                          <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${isCompleted ? 'bg-emerald-500/10 text-emerald-400' : isFirstIncomplete ? 'bg-indigo-500/20 text-indigo-400' : 'bg-slate-800 text-slate-500'}`}>
+                            {isCompleted ? <CheckCircle size={20} /> : <BookOpen size={20} />}
                           </div>
-                          {isFirstIncomplete && <Sparkles size={16} className="text-indigo-400 shrink-0" />}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
+                          <div className="text-left font-medium min-w-0">
+                            <p className={`text-sm md:text-base truncate ${isCompleted ? 'text-slate-400' : 'text-white'}`}>{lesson.title}</p>
+                          </div>
+                        </div>
+                        {isFirstIncomplete && <Sparkles size={16} className="text-indigo-400 shrink-0" />}
+                      </button>
+                    );
+                  })}
+                </div>
               </section>
             );
           })}
