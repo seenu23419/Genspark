@@ -65,33 +65,19 @@ import OfflineBanner from './components/OfflineBanner';
 
 // --- PROTECTED ROUTE WRAPPER ---
 const ProtectedRoute = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, initializing } = useAuth();
   const location = useLocation();
   const isOAuthRedirectRef = React.useRef(false);
 
-  // Prevent scrolling during entire auth state transitions - keep overflow hidden until user is ready
+  // Global styles for the app background - ENSURE SCROLLING IS ENABLED
   React.useEffect(() => {
-    const shouldHideOverflow = loading || !user;
-
-    if (shouldHideOverflow) {
-      document.documentElement.style.overflow = 'hidden';
-      document.documentElement.style.height = '100%';
-      document.body.style.overflow = 'hidden';
-      document.body.style.height = '100%';
-    } else {
-      document.documentElement.style.overflow = '';
-      document.documentElement.style.height = '';
-      document.body.style.overflow = '';
-      document.body.style.height = '';
-    }
-
-    return () => {
-      document.documentElement.style.overflow = '';
-      document.documentElement.style.height = '';
-      document.body.style.overflow = '';
-      document.body.style.height = '';
-    };
-  }, [loading, user]);
+    document.documentElement.style.backgroundColor = '#0a0b14';
+    document.body.style.backgroundColor = '#0a0b14';
+    document.documentElement.style.overflow = '';
+    document.documentElement.style.height = '';
+    document.body.style.overflow = '';
+    document.body.style.height = '';
+  }, []);
 
   // Detect OAuth redirect by checking for auth-related hash/query params
   React.useEffect(() => {
@@ -103,22 +89,9 @@ const ProtectedRoute = () => {
 
     if (hasAuthParams) {
       isOAuthRedirectRef.current = true;
-      console.log("🔐 OAuth redirect detected, skipping splash screen");
     }
   }, []);
 
-
-  console.log("🔄 ProtectedRoute: Render", {
-    loading,
-    isOAuthRedirect: isOAuthRedirectRef.current,
-    hasUser: !!user,
-    userId: user?._id,
-    onboardingCompleted: user?.onboardingCompleted,
-    path: location.pathname,
-    timestamp: Date.now()
-  });
-
-  // Memoize navigation decision to prevent re-creating Navigate components
   const userId = user?._id;
   const onboardingCompleted = user?.onboardingCompleted;
   const currentPath = location.pathname;
@@ -130,48 +103,20 @@ const ProtectedRoute = () => {
   }, [loading]);
 
   const navigationElement = useMemo(() => {
-    // Show splash ONLY if we haven't successfully loaded auth yet AND don't have a backup user
-    if (loading && !authHasFinished.current && !user) {
-      console.log("⏳ ProtectedRoute: Initial auth load, showing splash");
+    // Determine if we should show the splash screen
+    // We show it if we are initializing AND don't have a user, 
+    // OR if we are waiting for the minimum splash duration.
+    const isSplashPhase = (initializing && !user) || (loading && !user);
+
+    if (isSplashPhase && !authHasFinished.current) {
       return <Splash />;
     }
 
-    // If it's a re-load or update after first load, use subtle loader
-    // Skip this if we already HAVE a user (background refresh)
-    if (loading && !user) {
-      return <ScreenLoader />;
-    }
-
-    // Auth finished loading, but no user found
     if (!user) {
-      // Logic for OAuth redirects: give it a bit more time or check parameters
-      const hasAuthParams =
-        window.location.hash.includes('access_token') ||
-        window.location.hash.includes('code') ||
-        window.location.hash.includes('state') ||
-        window.location.hash.includes('error') ||
-        window.location.search.includes('code') ||
-        window.location.search.includes('state') ||
-        window.location.search.includes('error');
-
-      if (hasAuthParams) {
-        console.log("🔐 ProtectedRoute: OAuth params detected, waiting for session...");
+      if (isOAuthRedirectRef.current) {
         return <Splash />;
       }
-
-      console.log("🚫 ProtectedRoute: No user, redirecting to signup");
       return <Navigate to="/signup" state={{ from: location }} replace />;
-    }
-
-    // User is logged in, proceed with app flow
-    console.log("✅ ProtectedRoute: User validated", { userId, onboardingCompleted });
-
-    // Only make navigation decisions when we have complete user data
-    // If onboardingCompleted is undefined, we're still loading user details
-    // If onboardingCompleted is undefined, we're still loading user details
-    if (onboardingCompleted === undefined && currentPath !== '/onboarding') {
-      console.log("⏳ ProtectedRoute: User data loading, showing subtle loader");
-      return <ScreenLoader />;
     }
 
     // Redirect to onboarding if not completed and not already there
@@ -244,7 +189,7 @@ const ProtectedRoute = () => {
   if (isFullScreenPage) {
     console.log("📱 ProtectedRoute: Rendering full-screen page (no layout)");
     return (
-      <div className="animate-in fade-in duration-300 h-screen overflow-hidden">
+      <div className="animate-in fade-in duration-300 h-screen overflow-y-auto relative bg-[#0a0b14]">
         <Suspense fallback={<ScreenLoader />}>
           <OfflineBanner />
           <Outlet />
@@ -269,15 +214,17 @@ const ProtectedRoute = () => {
 // --- PUBLIC ROUTE WRAPPER (Redirect if logged in) ---
 const PublicRoute = () => {
   const { user, loading } = useAuth();
-
-  // Sticky Loading Guard: Same as ProtectedRoute
   const authHasFinished = React.useRef(false);
-  if (!loading) authHasFinished.current = true;
+
+  React.useEffect(() => {
+    if (!loading) authHasFinished.current = true;
+  }, [loading]);
 
   if (loading && !authHasFinished.current) return <Splash />;
-  if (loading) return <ScreenLoader />;
 
-  if (user) return <Navigate to="/" replace />;
+  if (user && !loading) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <Suspense fallback={<ScreenLoader />}>

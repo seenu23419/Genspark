@@ -6,6 +6,7 @@ import { supabaseDB } from '../services/supabaseService';
 interface AuthContextType {
     user: User | null;
     loading: boolean;
+    initializing: boolean;
     signInWithGoogle: () => Promise<void>;
     signInWithGithub: () => Promise<void>;
     logout: () => Promise<void>;
@@ -28,8 +29,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
         return null;
     });
-    const [initializing, setInitializing] = useState(!user); // If we have backup, we are not "initializing" in UI terms
-    const [minSplashDone, setMinSplashDone] = useState(!!user); // Skip splash mandatory delay if we have backup user
+    const [initializing, setInitializing] = useState(!user);
+    const [minSplashDone, setMinSplashDone] = useState(false); // Reset to false and let the timer handle it for consistency
 
     // State guard: Track the ACTUAL values we care about, not object references
     const userStateRef = useRef<{
@@ -80,7 +81,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         let mounted = true;
 
         // 1. Min Splash Timer
-        setTimeout(() => {
+        const splashTimer = setTimeout(() => {
             if (mounted) setMinSplashDone(true);
         }, 600);
 
@@ -186,13 +187,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 if (initializing) {
                     if (!hasAuthParams || updatedUser) {
                         setInitializing(false);
-
-                        // CLEAR AUTH PARAMS: If we just detected/handled a redirect, clean the URL
-                        if (hasAuthParams && updatedUser) {
-                            console.log("🧹 AuthContext: Redirect handled, cleaning URL params");
-                            const cleanUrl = window.location.origin + window.location.pathname;
-                            window.history.replaceState({}, document.title, cleanUrl);
-                        }
                     } else {
                         console.log("🔐 AuthContext: OAuth tokens detected, keeping loading state active...");
                         // Safety fallback: if nothing happens, the 5s safetyTimer already in place will rescue us.
@@ -204,6 +198,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return () => {
             mounted = false;
             if (typeof unsubscribe === 'function') unsubscribe();
+            clearTimeout(splashTimer);
         };
     }, []);
 
@@ -219,6 +214,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const value = {
         user,
         loading,
+        initializing,
         signInWithGoogle: authService.signInWithGoogle.bind(authService),
         signInWithGithub: authService.signInWithGithub.bind(authService),
         logout: async () => {

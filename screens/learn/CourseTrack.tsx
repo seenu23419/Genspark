@@ -240,7 +240,7 @@ const CourseTrack: React.FC = () => {
   const progressPercent = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
 
   return (
-    <div className="relative min-h-screen bg-[#0a0b14] overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#0a0b14]">
       <div className="absolute top-0 left-1/2 w-[1200px] h-[800px] bg-indigo-500/5 blur-[150px] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
       <header className="sticky top-0 z-40 bg-[#0a0b14]/95 backdrop-blur-sm border-b border-white/5 px-6 py-4">

@@ -53,7 +53,7 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
     return (
         <div className="flex h-screen bg-[#0a0b14] text-slate-200 overflow-hidden font-sans selection:bg-indigo-500/30">
             {/* Desktop Left Sidebar */}
-            <nav className="hidden md:flex flex-col w-72 bg-white/50 dark:bg-slate-950/50 backdrop-blur-xl border-r border-slate-200 dark:border-slate-800/50 p-6 shrink-0 z-50">
+            <nav className="hidden md:flex flex-col w-72 h-screen sticky top-0 bg-white/50 dark:bg-slate-950/50 backdrop-blur-xl border-r border-slate-200 dark:border-slate-800/50 p-6 shrink-0 z-50">
                 <div className="flex items-center gap-4 mb-10 px-2 cursor-pointer group" onClick={() => navigate('/')}>
                     <div className="relative">
                         <div className="absolute -inset-2 bg-indigo-500/20 blur-md rounded-full group-hover:bg-indigo-500/40 transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
