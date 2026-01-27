@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -16,12 +16,12 @@ import {
   Play,
   LucideIcon
 } from 'lucide-react';
-import OneSignal from 'react-onesignal';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useCurriculum } from '../../contexts/useCurriculum';
+import { useAuth } from '../../contexts/AuthContext';
 import { Lesson } from '../../types';
 import { offlineService } from '../../services/offlineService';
 import ConfettiReward from '../../components/feedback/ConfettiReward';
@@ -40,52 +40,78 @@ const LessonView: React.FC<LessonViewProps> = ({
 }) => {
   const { lessonId } = useParams();
   const navigate = useNavigate();
-  const { getLesson, loading } = useCurriculum();
+  const { getLesson, loading, fetchLanguageCurriculum } = useCurriculum();
+  const { user, updateProfile, refreshProfile } = useAuth();
   const [codeSuccess, setCodeSuccess] = useState(false);
   const [contentScrolled, setContentScrolled] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const [isFinishing, setIsFinishing] = useState(false);
 
-  // Find Lesson Logic using Context
-  const { lesson, langId } = useMemo(() => {
-    if (propLesson) return { lesson: propLesson, langId: 'c' }; // Default to c if prop
+  const { lesson, langId, nextLessonId } = useMemo(() => {
+    if (propLesson) return { lesson: propLesson, langId: 'c', nextLessonId: null };
     const result = getLesson(lessonId || '');
-    if (result.lesson) return result;
 
-    // Check offline cache if not found in context
-    if (lessonId) {
+    // Diagnostic log: Track quiz presence in retrieved lesson
+    if (result.lesson) {
+      console.log(`[LessonView] Loaded ${result.lesson.id} (${result.lesson.title}) | Quizzes: ${result.lesson.quizQuestions?.length || 0} | Source: CurriculumContext`);
+    } else if (lessonId) {
       const cached = offlineService.getLesson(lessonId);
-      if (cached) return { lesson: cached, langId: 'java' };
+      if (cached) {
+        console.log(`[LessonView] Loaded ${cached.id} from Offline Cache | Quizzes: ${cached.quizQuestions?.length || 0}`);
+        return { lesson: cached, langId: 'java', nextLessonId: null };
+      }
     }
-    return { lesson: null, langId: null };
+
+    if (result.lesson) return result;
+    return { lesson: null, langId: null, nextLessonId: null };
   }, [lessonId, propLesson, getLesson]);
 
-  // Cache Lesson offline
+  const isCompletedInProfile = useMemo(() => {
+    if (!user || !lesson) return false;
+    const isDone = user.completedLessonIds?.includes(lesson.id);
+    if (isDone) console.log(`[LessonView] Lesson ${lesson.id} is marked as COMPLETED in profile`);
+    return isDone;
+  }, [user, lesson]);
+
+  // Cache Lesson offline and fetch curriculum if missing
   useEffect(() => {
+    if (lessonId) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setContentScrolled(false);
+      setQuizCompleted(false);
+
+      // Auto-fetch curriculum for the language if we don't have it yet
+      // This ensures direct links/refreshes still get merged quizzes
+      if (langId && !propLesson) {
+        fetchLanguageCurriculum(langId);
+      }
+    }
     if (lesson && lessonId) {
       offlineService.saveLesson(lessonId, lesson);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setContentScrolled(false); // Reset scroll state for new lesson
-      setQuizCompleted(false);
     }
-  }, [lessonId, lesson]);
+  }, [lessonId, lesson, langId, fetchLanguageCurriculum, propLesson]);
 
-  // Detect quiz completion from URL params or localStorage
+  // Detect quiz completion from profile or localStorage
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const quizPassed = params.get('quizPassed');
-    if (quizPassed === 'true') {
-      setQuizCompleted(true);
-      // Tag OneSignal for automated congratulation messages
-      OneSignal.User.addTag("lesson_mastered", lesson?.id || "unknown");
-      // Clean up URL
+    const hasQuizPassedParam = params.get('quizPassed') === 'true';
+
+    // If we just arrived from a passed quiz, show confetti but don't mark THIS lesson as done
+    if (hasQuizPassedParam) {
+      setCodeSuccess(true);
+      // Clean up URL to prevent confetti on refresh
       window.history.replaceState({}, '', window.location.pathname);
+    }
+
+    if (isCompletedInProfile) {
+      setQuizCompleted(true);
     } else {
       const storedCompletion = localStorage.getItem(`quiz-${lesson?.id}`);
       if (storedCompletion === 'completed') {
         setQuizCompleted(true);
       }
     }
-  }, [lesson?.id]);
+  }, [lesson?.id, isCompletedInProfile]);
 
   // Detect when user scrolls to end of content using Intersection Observer
   useEffect(() => {
@@ -117,14 +143,31 @@ const LessonView: React.FC<LessonViewProps> = ({
     else if (lesson) navigate(`/quiz/${lesson.id}`);
   };
 
+  const handleCompleteWithoutQuiz = async () => {
+    if (!lesson || !user) return;
+    setIsFinishing(true);
+    try {
+      const currentCompleted = user.completedLessonIds || [];
+      if (!currentCompleted.includes(lesson.id)) {
+        await updateProfile({
+          completedLessonIds: [...currentCompleted, lesson.id]
+        });
+        setQuizCompleted(true);
+        setCodeSuccess(true);
+      }
+    } catch (error) {
+      console.error("Failed to complete lesson:", error);
+    } finally {
+      setIsFinishing(false);
+    }
+  };
+
   const handleNextLesson = () => {
-    if (lesson) {
-      const currentId = lesson.id;
-      const nextId = currentId.replace(/\d+$/, (match: string) => {
-        const num = parseInt(match) + 1;
-        return num.toString();
-      });
-      navigate(`/lesson/${nextId}`);
+    if (nextLessonId) {
+      navigate(`/lesson/${nextLessonId}`);
+    } else if (langId) {
+      // Fallback if no next lesson in this track
+      navigate(`/track/${langId}`);
     }
   };
 
@@ -153,8 +196,11 @@ const LessonView: React.FC<LessonViewProps> = ({
     );
   }
 
+  const hasQuiz = lesson.quizQuestions && lesson.quizQuestions.length > 0;
+
   return (
     <div className="min-h-screen bg-[#0a0b14] flex flex-col text-slate-200 selection:bg-indigo-500/30">
+      {quizCompleted && <ConfettiReward trigger={true} />}
 
       {/* Header - Material Design 56dp */}
       <header className="sticky top-0 z-30 bg-[#0a0b14]/80 backdrop-blur-xl border-b border-white/5 px-4 py-3 md:px-6 h-14">
@@ -182,7 +228,10 @@ const LessonView: React.FC<LessonViewProps> = ({
         {/* Lesson Metadata - readable text sizes */}
         <div className="space-y-4 md:space-y-5 animate-in fade-in slide-in-from-bottom-4 duration-500">
           <div className="flex flex-wrap gap-2">
-
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
+              <Clock size={16} />
+              <span className="text-xs font-semibold uppercase">{lesson.duration}</span>
+            </div>
 
             {lesson.difficultyLevel && (
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
@@ -325,13 +374,17 @@ const LessonView: React.FC<LessonViewProps> = ({
             <div className="text-emerald-400">
               <CheckCircle2 className="mx-auto mb-3" size={32} />
               <h4 className="font-black text-white text-lg mb-1">Lesson Mastered</h4>
-              <p className="text-slate-400 text-sm max-w-sm mx-auto">You've aced the quiz. Moving on to the next topic!</p>
+              <p className="text-slate-400 text-sm max-w-sm mx-auto">
+                {hasQuiz ? "You've aced the quiz. Moving on to the next topic!" : "You've completed this lesson. Well done!"}
+              </p>
             </div>
           ) : (
             <>
               <BookOpen className="mx-auto text-indigo-400/50 mb-3" size={32} />
               <h4 className="font-black text-white text-lg mb-1">Knowledge Acquired</h4>
-              <p className="text-slate-400 text-sm max-w-sm mx-auto">You've completed the reading. Ready to test your understanding?</p>
+              <p className="text-slate-400 text-sm max-w-sm mx-auto">
+                {hasQuiz ? "You've completed the reading. Ready to test your understanding?" : "You've reached the end of the lesson. Ready to proceed?"}
+              </p>
             </>
           )}
         </div>
@@ -346,7 +399,7 @@ const LessonView: React.FC<LessonViewProps> = ({
               <span>Go to Next Lesson</span>
               <ArrowRight size={20} />
             </button>
-          ) : (
+          ) : hasQuiz ? (
             <button
               onClick={handleStartQuiz}
               className="w-full h-16 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-black uppercase tracking-[0.2em] text-sm shadow-xl shadow-indigo-600/20 transition-all active:scale-95 flex items-center justify-center gap-3"
@@ -360,6 +413,24 @@ const LessonView: React.FC<LessonViewProps> = ({
                 <>
                   <span>Start Knowledge Quiz</span>
                   <ArrowRight size={20} />
+                </>
+              )}
+            </button>
+          ) : (
+            <button
+              onClick={handleCompleteWithoutQuiz}
+              disabled={isFinishing}
+              className="w-full h-16 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-black uppercase tracking-[0.2em] text-sm shadow-xl shadow-indigo-600/20 transition-all active:scale-95 flex items-center justify-center gap-3"
+            >
+              {isFinishing ? (
+                <>
+                  <Loader2 className="animate-spin" size={20} />
+                  <span>Finishing...</span>
+                </>
+              ) : (
+                <>
+                  <span>Finish Lesson</span>
+                  <CheckCircle2 size={20} />
                 </>
               )}
             </button>

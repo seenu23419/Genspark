@@ -2,7 +2,7 @@
 import React, { useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import CodingWorkspace from './CodingWorkspace';
-import { PRACTICE_TOPICS, PracticeProblem } from '../../data/practiceProblems';
+import { PracticeProblem } from '../../data/practiceProblems';
 import { usePracticeProgress } from '../../hooks/usePracticeProgress';
 
 import { usePractice } from '../../contexts/PracticeContext';

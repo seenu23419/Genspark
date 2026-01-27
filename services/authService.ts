@@ -1,5 +1,6 @@
 import { supabaseDB } from './supabaseService';
 import { User } from '../types';
+import { StreakService } from './streakService';
 
 /**
  * Auth Service - Powered by Supabase Auth (GoTrue)
@@ -221,6 +222,8 @@ class AuthService {
         }
       } else {
         console.log("authService: Returning existing profile", { userId, firstName: user.firstName });
+        // Update streak on profile load
+        StreakService.updateStreak(user).catch(e => console.error("Streak check failed", e));
         callback(user);
       }
     });

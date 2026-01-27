@@ -14,7 +14,7 @@ const Splash: React.FC = () => {
     useEffect(() => {
         const timer = setTimeout(() => {
             setFadeOut(true);
-        }, 3000);
+        }, 4000);
 
         return () => clearTimeout(timer);
     }, []);
@@ -44,13 +44,13 @@ const Splash: React.FC = () => {
                         draggable={false}
                     />
                 </div>
+            </div>
 
-                {/* Tagline */}
-                <div className="mt-8 animate-in fade-in duration-1000 ease-out delay-300">
-                    <p className="text-center text-sm md:text-base font-medium tracking-widest text-slate-400 opacity-70">
-                        IGNITE YOUR CODING JOURNEY
-                    </p>
-                </div>
+            {/* Tagline - repositioned to bottom area */}
+            <div className="absolute bottom-32 w-full px-6 animate-in fade-in duration-1000 ease-out delay-500 z-10">
+                <p className="text-center text-xs md:text-sm font-medium tracking-[0.3em] text-white opacity-80 uppercase">
+                    IGNITE YOUR CODING JOURNEY
+                </p>
             </div>
 
             {/* Minimal Loading Indicator - Thin fade line */}

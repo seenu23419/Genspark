@@ -46,41 +46,44 @@ class PracticeService {
         // 1. Try Memory Cache
         if (this.cache) return this.cache;
 
-        // 2. Try LocalStorage Cache
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-            try {
-                this.cache = JSON.parse(saved);
-                // Background revalidate
-                this.revalidate();
-                return this.cache!;
-            } catch (e) {
-                localStorage.removeItem(STORAGE_KEY);
-            }
-        }
-
-        // 3. Network Fetch
+        // 2. Network Fetch (Modular)
         return this.revalidate();
     }
 
     private async revalidate(): Promise<PracticeContent> {
         try {
-            const url = `${BASE_URL}/practice_content.json?v=${Date.now() + 1}`; // Force New Version
-            const response = await fetch(url, { cache: 'no-store' });
-            if (!response.ok) throw new Error('Fetch failed');
+            // 1. Fetch the list of topics
+            const topicsUrl = `${BASE_URL}/practice/topics.json?v=${Date.now()}`;
+            const topicsRes = await fetch(topicsUrl, { cache: 'no-store' });
+            if (!topicsRes.ok) throw new Error('Failed to fetch topics list');
+            const coreTopics = await topicsRes.json();
 
-            const data = await response.json();
-            this.cache = data;
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-            return data;
+            // 2. Fetch each topic's detailed problems in parallel
+            const topicPromises = coreTopics.map(async (topic: any) => {
+                try {
+                    const topicUrl = `${BASE_URL}/practice/topic_${topic.id}.json?v=${Date.now()}`;
+                    const res = await fetch(topicUrl, { cache: 'no-store' });
+                    if (!res.ok) return topic; // Fallback to shallow topic
+                    return await res.json();
+                } catch (e) {
+                    console.error(`Failed to load topic: ${topic.id}`, e);
+                    return topic;
+                }
+            });
+
+            const fullTopics = await Promise.all(topicPromises);
+
+            const content: PracticeContent = {
+                version: Date.now().toString(),
+                topics: fullTopics
+            };
+
+            this.cache = content;
+            return content;
         } catch (error) {
-            // Fallback to local if network fails and no cache exists
-            if (!this.cache) {
-                // In a real app, you might have a local copy bundled
-                console.warn("Using empty fallback. Network and cache failed.");
-                return { version: '0', topics: [], problems: [] };
-            }
-            return this.cache;
+            console.error("Critical: Practice content fetch failed", error);
+            if (this.cache) return this.cache;
+            return { topics: [] };
         }
     }
 

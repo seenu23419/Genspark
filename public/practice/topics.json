@@ -1,0 +1,18 @@
+[
+  {
+    "id": "basics",
+    "title": "Introduction & Basics"
+  },
+  {
+    "id": "conditionals",
+    "title": "Conditional Statements"
+  },
+  {
+    "id": "loops",
+    "title": "Loops & Iterations"
+  },
+  {
+    "id": "arrays",
+    "title": "Arrays & Collections"
+  }
+]

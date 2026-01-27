@@ -1,4 +1,5 @@
 import { LessonModule } from '../types';
+import { CURRICULUM as LOCAL_CURRICULUM } from '../constants';
 
 const BASE_URL = import.meta.env.VITE_CURRICULUM_BASE_URL || 'https://aoiagnnkhaswpmhbobhd.supabase.co/storage/v1/object/public/curriculum';
 
@@ -42,7 +43,7 @@ export const curriculumService = {
             // The user requested: topic, lesson id, title, theory, syntax, code block, expected output, difficulty level
             // We'll map these fields to our LessonModule and Lesson interfaces.
 
-            return this.mapResponseToCurriculum(data);
+            return this.mapResponseToCurriculum(data, langId);
         } catch (error) {
             console.error('Curriculum Fetch Error:', error);
             throw error;
@@ -51,19 +52,42 @@ export const curriculumService = {
 
     /**
      * Maps/Adapts remote JSON data to internal LessonModule interface.
+     * Merges in local quizzes if remote ones are missing.
      */
-    mapResponseToCurriculum(data: any): LessonModule[] {
-        // If it's already an array of modules (as in our local files), return it
+    mapResponseToCurriculum(data: any, langId?: string): LessonModule[] {
+        let modules: LessonModule[] = [];
+
+        // Determine modules from data
         if (Array.isArray(data)) {
-            return data;
+            modules = data;
+        } else if (data.modules && Array.isArray(data.modules)) {
+            modules = data.modules;
         }
 
-        // Example of mapping if the structure is different
-        // This allows the user to have a slightly different format on the server
-        if (data.modules && Array.isArray(data.modules)) {
-            return data.modules;
+        // Enhancement: Merge local quizzes if remote ones are missing or sparse
+        if (langId && modules.length > 0) {
+            const localModules = (LOCAL_CURRICULUM as any)[langId] || [];
+            modules.forEach(m => {
+                m.lessons.forEach(l => {
+                    // Find local version of this lesson
+                    const localLesson = localModules
+                        .flatMap((lm: any) => lm.lessons)
+                        .find((ll: any) => ll.id === l.id);
+
+                    // If remote lesson has no quiz (or just 1) and local has more, preferred local
+                    if (localLesson && localLesson.quizQuestions && localLesson.quizQuestions.length > 0) {
+                        const remoteQCount = l.quizQuestions ? l.quizQuestions.length : 0;
+                        const localQCount = localLesson.quizQuestions.length;
+
+                        if (remoteQCount < localQCount) {
+                            console.log(`[Curriculum] Merging local quizzes for lesson ${l.id} (${l.title})`);
+                            l.quizQuestions = localLesson.quizQuestions;
+                        }
+                    }
+                });
+            });
         }
 
-        return [];
+        return modules;
     }
 };

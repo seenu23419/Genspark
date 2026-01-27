@@ -1,0 +1,42 @@
+{
+  "id": "basics",
+  "title": "Introduction & Basics",
+  "problems": [
+    {
+      "id": "basics-1",
+      "topicId": "basics",
+      "title": "Hello World",
+      "description": "Write a program that prints exactly 'Hello, World!' to the console.",
+      "difficulty": "easy",
+      "estimatedTime": 2,
+      "concept": "I/O",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    printf(\"Hello, World!\");\n    return 0;\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "",
+          "expected_output": "Hello, World!"
+        }
+      ]
+    },
+    {
+      "id": "basics-2",
+      "topicId": "basics",
+      "title": "Sum of Two",
+      "description": "Take two space-separated integers and print their sum.",
+      "difficulty": "easy",
+      "estimatedTime": 3,
+      "concept": "Basic Math",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d\", a + b);\n    return 0;\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "5 7",
+          "expected_output": "12"
+        }
+      ]
+    }
+  ]
+}

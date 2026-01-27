@@ -1,0 +1,957 @@
+{
+  "id": "strings",
+  "title": "Strings & Text",
+  "color": "from-sky-500 to-blue-600",
+  "problems": [
+    {
+      "id": "strings-401",
+      "topicId": "strings",
+      "title": "String Manip 1",
+      "description": "Manipulate text string 1 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-402",
+      "topicId": "strings",
+      "title": "String Manip 2",
+      "description": "Manipulate text string 2 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-403",
+      "topicId": "strings",
+      "title": "String Manip 3",
+      "description": "Manipulate text string 3 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-404",
+      "topicId": "strings",
+      "title": "String Manip 4",
+      "description": "Manipulate text string 4 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-405",
+      "topicId": "strings",
+      "title": "String Manip 5",
+      "description": "Manipulate text string 5 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-406",
+      "topicId": "strings",
+      "title": "String Manip 6",
+      "description": "Manipulate text string 6 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-407",
+      "topicId": "strings",
+      "title": "String Manip 7",
+      "description": "Manipulate text string 7 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-408",
+      "topicId": "strings",
+      "title": "String Manip 8",
+      "description": "Manipulate text string 8 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-409",
+      "topicId": "strings",
+      "title": "String Manip 9",
+      "description": "Manipulate text string 9 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-410",
+      "topicId": "strings",
+      "title": "String Manip 10",
+      "description": "Manipulate text string 10 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-411",
+      "topicId": "strings",
+      "title": "String Manip 11",
+      "description": "Manipulate text string 11 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-412",
+      "topicId": "strings",
+      "title": "String Manip 12",
+      "description": "Manipulate text string 12 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-413",
+      "topicId": "strings",
+      "title": "String Manip 13",
+      "description": "Manipulate text string 13 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-414",
+      "topicId": "strings",
+      "title": "String Manip 14",
+      "description": "Manipulate text string 14 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-415",
+      "topicId": "strings",
+      "title": "String Manip 15",
+      "description": "Manipulate text string 15 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-416",
+      "topicId": "strings",
+      "title": "String Manip 16",
+      "description": "Manipulate text string 16 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-417",
+      "topicId": "strings",
+      "title": "String Manip 17",
+      "description": "Manipulate text string 17 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-418",
+      "topicId": "strings",
+      "title": "String Manip 18",
+      "description": "Manipulate text string 18 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-419",
+      "topicId": "strings",
+      "title": "String Manip 19",
+      "description": "Manipulate text string 19 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-420",
+      "topicId": "strings",
+      "title": "String Manip 20",
+      "description": "Manipulate text string 20 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-421",
+      "topicId": "strings",
+      "title": "String Manip 21",
+      "description": "Manipulate text string 21 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-422",
+      "topicId": "strings",
+      "title": "String Manip 22",
+      "description": "Manipulate text string 22 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-423",
+      "topicId": "strings",
+      "title": "String Manip 23",
+      "description": "Manipulate text string 23 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-424",
+      "topicId": "strings",
+      "title": "String Manip 24",
+      "description": "Manipulate text string 24 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-425",
+      "topicId": "strings",
+      "title": "String Manip 25",
+      "description": "Manipulate text string 25 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-426",
+      "topicId": "strings",
+      "title": "String Manip 26",
+      "description": "Manipulate text string 26 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-427",
+      "topicId": "strings",
+      "title": "String Manip 27",
+      "description": "Manipulate text string 27 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-428",
+      "topicId": "strings",
+      "title": "String Manip 28",
+      "description": "Manipulate text string 28 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-429",
+      "topicId": "strings",
+      "title": "String Manip 29",
+      "description": "Manipulate text string 29 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-430",
+      "topicId": "strings",
+      "title": "String Manip 30",
+      "description": "Manipulate text string 30 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-431",
+      "topicId": "strings",
+      "title": "String Manip 31",
+      "description": "Manipulate text string 31 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-432",
+      "topicId": "strings",
+      "title": "String Manip 32",
+      "description": "Manipulate text string 32 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-433",
+      "topicId": "strings",
+      "title": "String Manip 33",
+      "description": "Manipulate text string 33 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-434",
+      "topicId": "strings",
+      "title": "String Manip 34",
+      "description": "Manipulate text string 34 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-435",
+      "topicId": "strings",
+      "title": "String Manip 35",
+      "description": "Manipulate text string 35 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-436",
+      "topicId": "strings",
+      "title": "String Manip 36",
+      "description": "Manipulate text string 36 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-437",
+      "topicId": "strings",
+      "title": "String Manip 37",
+      "description": "Manipulate text string 37 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-438",
+      "topicId": "strings",
+      "title": "String Manip 38",
+      "description": "Manipulate text string 38 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-439",
+      "topicId": "strings",
+      "title": "String Manip 39",
+      "description": "Manipulate text string 39 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-440",
+      "topicId": "strings",
+      "title": "String Manip 40",
+      "description": "Manipulate text string 40 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-441",
+      "topicId": "strings",
+      "title": "String Manip 41",
+      "description": "Manipulate text string 41 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-442",
+      "topicId": "strings",
+      "title": "String Manip 42",
+      "description": "Manipulate text string 42 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-443",
+      "topicId": "strings",
+      "title": "String Manip 43",
+      "description": "Manipulate text string 43 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-444",
+      "topicId": "strings",
+      "title": "String Manip 44",
+      "description": "Manipulate text string 44 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-445",
+      "topicId": "strings",
+      "title": "String Manip 45",
+      "description": "Manipulate text string 45 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-446",
+      "topicId": "strings",
+      "title": "String Manip 46",
+      "description": "Manipulate text string 46 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-447",
+      "topicId": "strings",
+      "title": "String Manip 47",
+      "description": "Manipulate text string 47 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-448",
+      "topicId": "strings",
+      "title": "String Manip 48",
+      "description": "Manipulate text string 48 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-449",
+      "topicId": "strings",
+      "title": "String Manip 49",
+      "description": "Manipulate text string 49 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "strings-450",
+      "topicId": "strings",
+      "title": "String Manip 50",
+      "description": "Manipulate text string 50 (reverse, count, etc).",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Text Processing",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
+        "python": "s = \"text\""
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    }
+  ]
+}

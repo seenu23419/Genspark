@@ -21,6 +21,11 @@ const PracticeHub: React.FC = () => {
 
     const filteredProblems = activeTopic?.problems || [];
 
+    // Force refresh on mount
+    useEffect(() => {
+        refreshProgress();
+    }, [refreshProgress]);
+
     // Minimalist Loading State
     if (loading && topics.length === 0) {
         return (
@@ -69,13 +74,9 @@ const PracticeHub: React.FC = () => {
 
     const progressPercent = totalProblems > 0 ? (completedProblems / totalProblems) * 100 : 0;
 
-    // Force refresh on mount
-    useEffect(() => {
-        refreshProgress();
-    }, [refreshProgress]);
 
     return (
-        <div className="h-full flex flex-col bg-slate-950 font-sans overflow-hidden">
+        <div className="h-full flex flex-col bg-slate-950 font-sans relative">
             {/* 1. Header (Static) */}
             <div className="shrink-0 bg-slate-950 px-6 pt-10 pb-4">
                 <div className="max-w-5xl mx-auto flex flex-col gap-3">

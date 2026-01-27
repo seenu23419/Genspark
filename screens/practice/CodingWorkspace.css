@@ -1,151 +1,211 @@
 /* CodingWorkspace Scrolling System */
 
-/* Smooth scrolling for all scrollable areas */
 .scroll-smooth {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar for problem description panel */
-.overflow-y-auto::-webkit-scrollbar {
-  width: 8px;
+/* Custom scrollbar for pro panels */
+.no-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-.overflow-y-auto::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.3);
-  border-left: 1px solid rgba(71, 85, 105, 0.2);
+.no-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.overflow-y-auto::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #6366f1 0%, #3b82f6 100%);
-  border-radius: 4px;
-  transition: background 0.3s ease;
+.no-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
 }
 
-.overflow-y-auto::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #818cf8 0%, #60a5fa 100%);
+.no-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
-/* Firefox scrollbar */
-.overflow-y-auto {
-  scrollbar-color: rgba(99, 102, 241, 0.6) rgba(15, 23, 42, 0.3);
-  scrollbar-width: thin;
+/* Base Practice UI */
+.practice-ui-root {
+  background: #0a0b14;
 }
 
-/* Scroll indicator appearance */
-.scroll-indicator-bar {
+/* 3-COLUMN DESKTOP GRID */
+@media (min-width: 1024px) {
+  .ide-container {
+    display: grid;
+    grid-template-columns: 350px 1fr 400px;
+    height: calc(100vh - 56px);
+    /* Header compensated */
+    overflow: hidden;
+  }
+
+  .ide-col-left {
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    background: #0a0b14;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ide-col-center {
+    background: #0d0e1a;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .ide-col-right {
+    background: #0a0b14;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+}
+
+/* Pro Desktop Sidebar Styles */
+.pro-panel-header {
+  height: 40px;
+  background: rgba(15, 23, 42, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.pro-tab-btn {
+  height: 100%;
+  padding: 0 12px;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
   position: relative;
-  background: rgba(30, 41, 59, 0.3);
-  border-left: 1px solid rgba(71, 85, 105, 0.3);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
-.scroll-indicator-thumb {
-  background: linear-gradient(180deg, #6366f1 0%, #3b82f6 100%);
-  border-radius: 2px;
-  min-height: 24px;
-  transition: all 0.15s ease-out;
+.pro-tab-btn:hover:not(:disabled) {
+  color: #94a3b8;
 }
 
-/* Scrolling direction indicators */
-.scroll-up-indicator {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #6366f1, transparent);
-  opacity: 0;
-  animation: scrollUpPulse 0.6s ease-out;
+.pro-tab-btn.active {
+  color: #fff;
 }
 
-.scroll-down-indicator {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #3b82f6, transparent);
-  opacity: 0;
-  animation: scrollDownPulse 0.6s ease-out;
-}
-
-@keyframes scrollUpPulse {
-  0% {
-    opacity: 1;
-    transform: translateY(-4px);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scrollDownPulse {
-  0% {
-    opacity: 1;
-    transform: translateY(4px);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(0);
-  }
-}
-
-/* Smooth scroll container for problem panels */
-.problem-panel {
-  scroll-snap-type: y proximity;
-  scroll-padding: 20px;
-}
-
-.problem-section {
-  scroll-snap-align: start;
-  scroll-snap-stop: auto;
-}
-
-/* Mobile optimizations */
-@media (max-width: 1023px) {
-  .overflow-y-auto::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  .scroll-indicator-bar {
-    display: none;
-  }
-}
-
-/* Scrollbar appears on hover */
-.overflow-y-auto {
-  scrollbar-gutter: stable;
-}
-
-/* Highlight scrollable content */
-.has-more-content::after {
+.pro-tab-btn.active::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 20px;
-  background: linear-gradient(180deg, transparent, rgba(15, 23, 42, 0.8));
-  pointer-events: none;
+  height: 2px;
+  background: #6366f1;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
 }
 
-/* Practice Mode UI Distinction */
-.practice-ui-root {
-  background-image:
-    radial-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
-    radial-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px);
-  background-size: 20px 20px;
-  background-position: 0 0, 10px 10px;
+/* Editor Specific Styles */
+.editor-toolbar {
+  height: 44px;
+  background: #0f172a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  flex-shrink: 0;
 }
 
-.practice-tab-active {
-  color: #6366f1 !important;
-  background: rgba(99, 102, 241, 0.05);
+/* Pro Buttons */
+.btn-run-pro {
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  color: #818cf8;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
 }
 
-.practice-header-accent {
-  background: linear-gradient(90deg, #6366f1, #4f46e5);
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+.btn-run-pro:hover:not(:disabled) {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+.btn-submit-pro {
+  background: #6366f1;
+  color: #fff;
+  padding: 6px 18px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+
+.btn-submit-pro:hover:not(:disabled) {
+  background: #4f46e5;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
+}
+
+.btn-icon-pro {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  color: #64748b;
+  transition: all 0.2s;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-icon-pro:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+/* AI Feedback Styles */
+.ai-section-item {
+  border-left: 2px solid #6366f1;
+  padding-left: 12px;
+}
+
+.ai-status-card {
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.1);
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.ai-error-card {
+  background: rgba(244, 63, 94, 0.05);
+  border: 1px solid rgba(244, 63, 94, 0.1);
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.kbd-hint {
+  font-family: inherit;
+  font-size: 10px;
+  color: #475569;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }

@@ -56,8 +56,7 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
             <nav className="hidden md:flex flex-col w-72 h-screen sticky top-0 bg-white/50 dark:bg-slate-950/50 backdrop-blur-xl border-r border-slate-200 dark:border-slate-800/50 p-6 shrink-0 z-50">
                 <div className="flex items-center gap-4 mb-10 px-2 cursor-pointer group" onClick={() => navigate('/')}>
                     <div className="relative">
-                        <div className="absolute -inset-2 bg-indigo-500/20 blur-md rounded-full group-hover:bg-indigo-500/40 transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
-                        <img src="/icons/logo.png" alt="GenSpark" className="h-14 w-auto relative z-10 drop-shadow-xl transition-transform duration-300 group-hover:scale-105" />
+                        <img src="/icons/logo.png" alt="GenSpark" className="h-14 w-auto relative z-10 transition-transform duration-300 group-hover:scale-105" />
                     </div>
                     <span className="text-2xl font-bold bg-gradient-to-r from-slate-800 via-indigo-600 to-indigo-500 dark:from-white dark:via-indigo-200 dark:to-indigo-100 bg-clip-text text-transparent tracking-tight">GenSpark</span>
                 </div>
@@ -109,12 +108,11 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
             {/* Main Container */}
             <div className="flex-1 flex flex-col min-w-0 relative">
                 {/* Mobile Header - Material Design 56 dp */}
-                <header className="md:hidden flex items-center justify-between px-4 bg-gradient-to-r from-indigo-900/90 via-[#0a0b14]/95 to-[#0a0b14]/95 backdrop-blur-2xl border-b border-indigo-500/20 sticky top-0 z-40 h-[60px] min-h-[60px] shadow-lg shadow-indigo-500/10 transition-all duration-300">
+                <header className="md:hidden flex items-center justify-between px-4 bg-[#0a0b14]/95 backdrop-blur-2xl border-b border-white/5 sticky top-0 z-40 h-[60px] min-h-[60px] shadow-lg shadow-black/20 transition-all duration-300">
                     <div className="flex items-center gap-4">
                         <div className="flex items-center gap-3" onClick={() => navigate('/')}>
                             <div className="relative group">
-                                <div className="absolute -inset-1 bg-indigo-500/30 blur-md rounded-full group-hover:bg-indigo-500/50 transition-all duration-500"></div>
-                                <img src="/icons/logo.png" alt="GenSpark" className="h-10 w-auto relative z-10 drop-shadow-lg" />
+                                <img src="/icons/logo.png" alt="GenSpark" className="h-10 w-auto relative z-10" />
                             </div>
                             <span className="text-xl font-bold bg-gradient-to-r from-white via-indigo-200 to-indigo-100 bg-clip-text text-transparent tracking-tight">GenSpark</span>
                         </div>
@@ -137,7 +135,7 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
                 <div className="md:hidden fixed bottom-0 left-0 right-0 z-50">
                     <nav className="flex items-center justify-around bg-[#0a0b14] backdrop-blur-xl border-t border-white/10 shadow-[0_-2px_12px_rgba(0,0,0,0.4)] h-[56px]">
                         {navItems.map((item) => {
-                            const isActive = currentScreen === item.id || (item.id === 'PROFILE' && (currentScreen === 'SETTINGS' || currentScreen === 'ANALYTICS'));
+                            const isActive = currentScreen === item.id || (item.id === 'PROFILE' && (currentScreen === 'SETTINGS' || currentScreen === 'ANALYTICS' || window.location.pathname.startsWith('/profile')));
                             return (
                                 <button
                                     key={item.id}

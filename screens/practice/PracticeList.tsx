@@ -1,12 +1,14 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { ChevronRight, CheckCircle2, Clock, Loader2, Zap } from 'lucide-react';
 import CodingWorkspace from './CodingWorkspace';
-import { PRACTICE_TOPICS, PracticeProblem } from '../../data/practiceProblems';
+import { PracticeProblem } from '../../services/practiceService';
+import { usePractice } from '../../contexts/PracticeContext';
 import { supabaseDB } from '../../services/supabaseService';
 
 type ProgressState = Record<string, { status: string; completedAt?: number; attempts: number }>;
 
 const PracticeList: React.FC = () => {
+  const { topics, loading: contextLoading, getProblemStatus: getContextStatus } = usePractice();
   const [selectedProblem, setSelectedProblem] = useState<PracticeProblem | null>(null);
   const [progress, setProgress] = useState<ProgressState>({});
   const [loading, setLoading] = useState(true);
@@ -36,11 +38,11 @@ const PracticeList: React.FC = () => {
 
   const allProblems = useMemo(() => {
     const problems: PracticeProblem[] = [];
-    for (const topic of PRACTICE_TOPICS) {
-      problems.push(...topic.problems);
-    }
+    topics.forEach(topic => {
+      if (topic.problems) problems.push(...topic.problems);
+    });
     return problems;
-  }, []);
+  }, [topics]);
 
   const filteredProblems = allProblems;
 

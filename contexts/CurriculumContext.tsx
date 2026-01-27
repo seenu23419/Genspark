@@ -22,22 +22,14 @@ export const CurriculumProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     const [error, setError] = useState<Record<string, string | null>>({});
 
     // Merge static curriculum with remote overrides
-    // We add STATIC_CURRICULUM to dependencies so that local JSON file edits
-    // (which update STATIC_CURRICULUM via HMR) are reflected in the app instantly.
+    // Note: We intentionally don't add STATIC_CURRICULUM to dependencies to avoid
+    // constant recalculation during HMR updates in development
     const data = React.useMemo(() => {
-        console.log('[CurriculumContext] Recalculating data...', {
-            staticKeys: Object.keys(STATIC_CURRICULUM),
-            remoteKeys: Object.keys(remoteData)
-        });
         return {
             ...STATIC_CURRICULUM,
             ...remoteData
         };
-    }, [remoteData, STATIC_CURRICULUM]);
-
-    React.useEffect(() => {
-        console.log('[CurriculumContext] STATIC_CURRICULUM HMR Update detected');
-    }, [STATIC_CURRICULUM]);
+    }, [remoteData]);
 
     const fetchLanguageCurriculum = useCallback(async (langId: string) => {
         setLoading(prev => ({ ...prev, [langId]: true }));
@@ -56,14 +48,18 @@ export const CurriculumProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }, []);
 
     const getLesson = useCallback((lessonId: string) => {
-        const currentData = data;
-        for (const langId in currentData) {
-            for (const module of currentData[langId]) {
-                const found = module.lessons.find(l => l.id === lessonId);
-                if (found) return { lesson: found, langId };
+        for (const langId in data) {
+            const langModules = data[langId];
+            const allLessons = langModules.flatMap(m => m.lessons);
+            const lessonIndex = allLessons.findIndex(l => l.id === lessonId);
+
+            if (lessonIndex !== -1) {
+                const lesson = allLessons[lessonIndex];
+                const nextLesson = allLessons[lessonIndex + 1] || null;
+                return { lesson, langId, nextLessonId: nextLesson?.id || null };
             }
         }
-        return { lesson: null, langId: null };
+        return { lesson: null, langId: null, nextLessonId: null };
     }, [data]);
 
     return (

@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCurriculum } from '../../contexts/useCurriculum';
-// Unused imports removed
 import { CURRICULUM, LANGUAGES } from '../../constants';
-import { LayoutDashboard, Lock, CheckCircle2, Play, ChevronRight, BookOpen } from 'lucide-react';
+import { Play, Settings, Flame, BookOpen, Code, Trophy, Zap, Brain, Award, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Home: React.FC = () => {
@@ -11,21 +10,12 @@ const Home: React.FC = () => {
     const { data: curriculumData } = useCurriculum();
     const navigate = useNavigate();
 
-    // -- State --
-    // Track selected path locally to allow browsing different courses
-    // Initialize with user's last language or default to first available
+    // Track selected path locally
     const [selectedPathId, setSelectedPathId] = React.useState<string | null>(null);
 
     React.useEffect(() => {
         if (user && !selectedPathId) {
             setSelectedPathId(user.lastLanguageId || 'c');
-            // Tag OneSignal for retention tracking
-            try {
-                const OneSignal = (window as any).OneSignal;
-                if (OneSignal) {
-                    OneSignal.User.addTag("last_active", new Date().toISOString());
-                }
-            } catch (e) { }
         }
     }, [user, selectedPathId]);
 
@@ -33,7 +23,7 @@ const Home: React.FC = () => {
         setSelectedPathId(pathId);
     };
 
-    // -- Derived Data --
+    // Derived Data
     const currentPath = useMemo(() => {
         if (!selectedPathId) return null;
         return (LANGUAGES as any).find((l: any) => l.id === selectedPathId) || (LANGUAGES as any)[0];
@@ -46,45 +36,19 @@ const Home: React.FC = () => {
 
     const completedLessonIds = user?.completedLessonIds || [];
 
-    // Check if level is unlocked
-    const isLevelUnlocked = (levelIndex: number): boolean => {
-        if (levelIndex === 0) return true;
-        // Simple logic: if previous level checks out, unlock current.
-        // For a more robust app, might check all lessons in previous level.
-        if (currentPath?.id === 'c') return true; // C is fully open in this demo phase
-        const prevLevel = modules[levelIndex - 1];
-        if (!prevLevel) return false;
-        // Check if ANY lesson in previous level is done (lax rule) or ALL (strict)
-        // Using strict rule:
-        return prevLevel.lessons.every((l: any) => completedLessonIds.includes(l.id));
-    };
-
-    // Find current lesson for "Continue Learning"
+    // Find current lesson
     const currentLesson = useMemo(() => {
         if (!user || !curriculumData) return null;
-        // Determine the relevant language for "Continue Learning"
-        // Priority: selectedPathId if it matches user's active, otherwise user's last active
         const langId = user.lastLanguageId || 'c';
-
         const mods = (curriculumData[langId] || (CURRICULUM as any)[langId] || []);
         const allLessons = mods.flatMap((m: any) => m.lessons);
-
         const lastLessonId = user.lastLessonId || 'c1';
-        // If last lesson is completed, try to find next. If not, return it.
-        // For simplicity in this view, we just return the 'last visited' one or the first one.
         return allLessons.find((l: any) => l.id === lastLessonId) || allLessons[0];
     }, [user, curriculumData]);
 
-    // Calculate progress for current path
-    const progress = useMemo(() => {
-        if (!modules.length) return 0;
-        const allLessons = modules.flatMap((m: any) => m.lessons);
-        const totalLessons = allLessons.length;
-        if (totalLessons === 0) return 0;
-        const completedCount = allLessons.filter((l: any) => completedLessonIds.includes(l.id)).length;
-        return Math.round((completedCount / totalLessons) * 100);
-    }, [modules, completedLessonIds]);
-
+    // Calculate total lessons
+    const totalLessons = modules.reduce((sum, m) => sum + m.lessons.length, 0);
+    const completedCount = modules.reduce((sum, m) => sum + m.lessons.filter((l: any) => completedLessonIds.includes(l.id)).length, 0);
 
     if (loading || !user) return null;
 
@@ -95,136 +59,193 @@ const Home: React.FC = () => {
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/5 blur-[120px] rounded-full opacity-50" />
             </div>
 
-            <div className="relative z-10 max-w-6xl mx-auto px-6 pt-10">
+            <div className="relative z-10 max-w-6xl mx-auto px-6 pt-6">
 
-                {/* 1. Header - Professional and clean */}
-                <header className="mb-14">
+                {/* Date */}
+                <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider mb-6">
+                    {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
+                </p>
 
-                    <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider mb-3">
-                        {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
-                    </p>
-                    <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-2">
+                {/* 2. WELCOME SECTION - Improved */}
+                <div className="mb-10">
+                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2">
                         Welcome back, {user.firstName || 'Developer'}
-                    </h1>
-                    <p className="text-slate-400 text-lg max-w-2xl">
-                        Continue your learning journey and master new skills.
+                    </h2>
+                    <p className="text-slate-400 text-base mb-1">
+                        Your learning journey continues today.
                     </p>
-                </header>
+                    <p className="text-indigo-400 text-sm font-medium">
+                        Your next task is ready.
+                    </p>
+                </div>
 
-                {/* 3. Hero: Continue Learning - Moved above stats as requested */}
-                <section className="mb-12">
-                    <div className="relative overflow-hidden rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-sm">
-                        <div className="p-4 md:p-6 flex flex-row items-center justify-between gap-6">
-                            <div className="flex-1 space-y-4">
+                {/* 3. PRIMARY ACTION CARD - Enhanced */}
+                <section className="mb-6">
+                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600/20 to-purple-600/20 border border-indigo-500/30 backdrop-blur-sm hover:border-indigo-500/50 transition-all duration-300 shadow-xl shadow-indigo-500/10">
+                        <div className="p-6 md:p-8">
+                            <div className="flex items-start justify-between mb-4">
                                 <div>
-                                    <h2 className="text-2xl font-bold text-white mb-2 leading-tight">
-                                        {currentLesson?.title || 'Introduction to Programming'}
-                                    </h2>
-                                    <p className="text-slate-400 text-sm leading-relaxed max-w-lg">
-                                        Pick up exactly where you left off. Continue learning and build your skills.
+                                    <p className="text-xs font-bold text-indigo-300 uppercase tracking-wider mb-2">Continue Learning</p>
+                                    <h3 className="text-xl md:text-2xl font-bold text-white mb-1">
+                                        {currentLesson?.title || 'Introduction to C'}
+                                    </h3>
+                                    <p className="text-sm text-slate-400">
+                                        {currentPath?.name || 'C Programming'} • Lesson {completedCount + 1} of {totalLessons}
                                     </p>
                                 </div>
-
-                                <button
-                                    onClick={() => navigate(`/lesson/${currentLesson?.id || 'c1'}`)}
-                                    className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white px-6 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200"
-                                >
-                                    <BookOpen size={16} />
-                                    Resume Lesson
-                                </button>
-                            </div>
-
-                            {/* Circular Progress System */}
-                            <div className="flex items-center justify-center w-auto flex-shrink-0">
-                                <div className="relative w-24 h-24 flex items-center justify-center">
-                                    {/* Back Circle */}
-                                    <svg className="w-full h-full transform -rotate-90">
-                                        <circle
-                                            cx="48"
-                                            cy="48"
-                                            r="40"
-                                            stroke="currentColor"
-                                            strokeWidth="8"
-                                            fill="transparent"
-                                            className="text-slate-800"
-                                        />
-                                        {/* Progress Circle */}
-                                        <circle
-                                            cx="48"
-                                            cy="48"
-                                            r="40"
-                                            stroke="currentColor"
-                                            strokeWidth="8"
-                                            fill="transparent"
-                                            className="text-indigo-500 transition-all duration-1000 ease-out"
-                                            strokeDasharray={2 * Math.PI * 40}
-                                            strokeDashoffset={2 * Math.PI * 40 * (1 - progress / 100)}
-                                            strokeLinecap="round"
-                                        />
-                                    </svg>
-                                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                        <span className="text-xl font-bold text-white">{progress}%</span>
-                                        <span className="text-[8px] uppercase font-bold text-slate-500 tracking-wider mt-0.5">Done</span>
-                                    </div>
+                                <div className="hidden md:flex items-center justify-center w-16 h-16 bg-indigo-500/20 rounded-xl">
+                                    <BookOpen size={32} className="text-indigo-400" />
                                 </div>
                             </div>
+
+                            <button
+                                onClick={() => navigate(`/lesson/${currentLesson?.id || 'c1'}`)}
+                                className="w-full md:w-auto inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white px-8 py-3.5 rounded-xl font-bold transition-all duration-200 shadow-lg shadow-indigo-500/20"
+                            >
+                                <Play size={18} className="fill-current" />
+                                Resume Lesson
+                            </button>
                         </div>
                     </div>
                 </section>
 
-                {/* 2. Quick Actions - Minimal, professional */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-                    {/* Card 1: Streak */}
-                    <div className="relative p-6 bg-[#151725] rounded-l-2xl rounded-r-md overflow-hidden group shadow-lg shadow-black/20">
-                        {/* Rounded Left Accent Bar */}
-                        <div className="absolute left-0 top-3 bottom-3 w-2 bg-pink-600 rounded-r-2xl shadow-[0_0_15px_rgba(219,39,119,0.6)]"></div>
-
-                        <div className="pl-4">
-                            <h3 className="text-slate-400 text-sm font-medium mb-2 uppercase tracking-wide">Current Streak</h3>
-                            <div className="flex items-baseline gap-1">
-                                <span className="text-3xl font-bold text-white">{user.streak || 1}</span>
-                                <span className="text-lg text-slate-500 font-medium">days</span>
+                {/* 4. TODAY'S FOCUS - NEW */}
+                <section className="mb-8">
+                    <div className="relative p-5 bg-slate-900/40 border border-slate-700/30 rounded-xl hover:bg-slate-900/60 transition-all duration-300">
+                        <div className="flex items-start justify-between gap-4">
+                            <div className="flex-1">
+                                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Today's Focus</p>
+                                <h4 className="text-xl font-bold text-white mb-2">
+                                    {currentLesson?.title || 'Introduction to C'}
+                                </h4>
+                                <p className="text-sm text-slate-400">Beginner</p>
                             </div>
+                            <button
+                                onClick={() => navigate(`/lesson/${currentLesson?.id || 'c1'}`)}
+                                className="px-6 py-2.5 bg-slate-700 hover:bg-slate-600 text-white text-sm font-bold rounded-lg transition-colors"
+                            >
+                                Start Now
+                            </button>
                         </div>
                     </div>
+                </section>
 
-                    {/* Card 2: Lessons */}
-                    <div className="relative p-6 bg-[#151725] rounded-l-2xl rounded-r-md overflow-hidden group shadow-lg shadow-black/20">
-                        <div className="absolute left-0 top-3 bottom-3 w-2 bg-violet-600 rounded-r-2xl shadow-[0_0_15px_rgba(124,58,237,0.6)]"></div>
-
-                        <div className="pl-4">
-                            <h3 className="text-slate-400 text-sm font-medium mb-2 uppercase tracking-wide">Lessons Completed</h3>
-                            <div className="flex items-baseline gap-1">
-                                <span className="text-3xl font-bold text-white">{modules.reduce((sum, m) => sum + m.lessons.filter((l: any) => completedLessonIds.includes(l.id)).length, 0)}</span>
-                                <span className="text-lg text-slate-500 font-medium">lessons</span>
+                {/* 5. PROGRESS SNAPSHOT - Interactive */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <button
+                        onClick={() => navigate('/profile/streaks')}
+                        className="relative p-5 bg-slate-900/40 border border-slate-700/30 rounded-xl hover:bg-slate-900/60 transition-all duration-300 group overflow-hidden text-left"
+                    >
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-400 via-emerald-500 to-emerald-600 rounded-full shadow-[0_0_20px_rgba(52,211,153,0.7)]"></div>
+                        <div className="flex items-center justify-between">
+                            <div className="ml-3">
+                                <div className="text-sm text-slate-300 font-medium mb-2 flex items-center gap-2">
+                                    <Flame size={16} className="text-emerald-400" />
+                                    Current Streak
+                                </div>
+                                <div className="text-3xl font-bold text-white">7 days</div>
                             </div>
+                            <ChevronRight size={20} className="text-slate-600 group-hover:text-slate-400 transition-colors" />
                         </div>
-                    </div>
+                    </button>
 
-                    {/* Card 3: Active Tracks */}
-                    <div className="relative p-6 bg-[#151725] rounded-l-2xl rounded-r-md overflow-hidden group shadow-lg shadow-black/20">
-                        <div className="absolute left-0 top-3 bottom-3 w-2 bg-orange-500 rounded-r-2xl shadow-[0_0_15px_rgba(249,115,22,0.6)]"></div>
-
-                        <div className="pl-4">
-                            <h3 className="text-slate-400 text-sm font-medium mb-2 uppercase tracking-wide">Active Tracks</h3>
-                            <div className="flex items-baseline gap-1">
-                                <span className="text-3xl font-bold text-white">
-                                    {/* Calculate actually active tracks based on progress */}
-                                    {(LANGUAGES as any).filter((l: any) =>
-                                        modules.some((m: any) => m.lessons.some((lesson: any) => completedLessonIds.includes(lesson.id) && lesson.id.startsWith(l.id)))
-                                        || l.id === user.lastLanguageId
-                                        || l.id === 'c' // Always active for demo
-                                    ).length}
-                                </span>
-                                <span className="text-lg text-slate-500 font-medium">languages</span>
+                    <button
+                        onClick={() => navigate('/learn', { state: { initialFilter: 'completed' } })}
+                        className="relative p-5 bg-slate-900/40 border border-slate-700/30 rounded-xl hover:bg-slate-900/60 transition-all duration-300 group overflow-hidden text-left"
+                    >
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-rose-400 via-rose-500 to-rose-600 rounded-full shadow-[0_0_20px_rgba(251,113,133,0.7)]"></div>
+                        <div className="flex items-center justify-between">
+                            <div className="ml-3 flex-1">
+                                <div className="text-sm text-slate-300 font-medium mb-2 flex items-center gap-2">
+                                    <BookOpen size={16} className="text-rose-400" />
+                                    Lessons Completed
+                                </div>
+                                <div className="text-3xl font-bold text-white mb-2">{completedCount} / {totalLessons}</div>
+                                <div className="w-full bg-slate-700/50 rounded-full h-1.5">
+                                    <div className="bg-rose-500 h-1.5 rounded-full transition-all duration-500" style={{ width: `${(completedCount / totalLessons) * 100}%` }}></div>
+                                </div>
                             </div>
+                            <ChevronRight size={20} className="text-slate-600 group-hover:text-slate-400 transition-colors" />
                         </div>
-                    </div>
+                    </button>
+
+                    <button
+                        onClick={() => navigate('/practice')}
+                        className="relative p-5 bg-slate-900/40 border border-slate-700/30 rounded-xl hover:bg-slate-900/60 transition-all duration-300 group overflow-hidden text-left"
+                    >
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 rounded-full shadow-[0_0_20px_rgba(251,191,36,0.7)]"></div>
+                        <div className="flex items-center justify-between">
+                            <div className="ml-3 flex-1">
+                                <div className="text-sm text-slate-300 font-medium mb-2 flex items-center gap-2">
+                                    <Code size={16} className="text-amber-400" />
+                                    Practice Solved
+                                </div>
+                                <div className="text-3xl font-bold text-white mb-2">0</div>
+                                <div className="w-full bg-slate-700/50 rounded-full h-1.5">
+                                    <div className="bg-amber-500 h-1.5 rounded-full transition-all duration-500" style={{ width: '0%' }}></div>
+                                </div>
+                            </div>
+                            <ChevronRight size={20} className="text-slate-600 group-hover:text-slate-400 transition-colors" />
+                        </div>
+                    </button>
                 </div>
 
+                {/* 6. QUICK ACTIONS - NEW */}
+                <section className="mb-10">
+                    <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">Quick Actions</h3>
+                    <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+                        <button
+                            onClick={() => navigate('/practice')}
+                            className="flex-shrink-0 px-6 py-3 bg-slate-800/70 hover:bg-slate-800 border border-slate-700 rounded-xl text-white text-sm font-semibold transition-all duration-200 flex items-center gap-2"
+                        >
+                            <Zap size={16} className="text-yellow-400" />
+                            Practice 1 Min
+                        </button>
+                        <button
+                            onClick={() => navigate('/quiz')}
+                            className="flex-shrink-0 px-6 py-3 bg-slate-800/70 hover:bg-slate-800 border border-slate-700 rounded-xl text-white text-sm font-semibold transition-all duration-200 flex items-center gap-2"
+                        >
+                            <Brain size={16} className="text-purple-400" />
+                            Take Quiz
+                        </button>
+                        <button
+                            onClick={() => navigate('/profile')}
+                            className="flex-shrink-0 px-6 py-3 bg-slate-800/70 hover:bg-slate-800 border border-slate-700 rounded-xl text-white text-sm font-semibold transition-all duration-200 flex items-center gap-2 opacity-50 cursor-not-allowed"
+                            disabled
+                        >
+                            <Award size={16} className="text-blue-400" />
+                            View Certificate 🔒
+                        </button>
+                        <button
+                            onClick={() => navigate('/learn')}
+                            className="flex-shrink-0 px-6 py-3 bg-slate-800/70 hover:bg-slate-800 border border-slate-700 rounded-xl text-white text-sm font-semibold transition-all duration-200 flex items-center gap-2"
+                        >
+                            <Trophy size={16} className="text-cyan-400" />
+                            Switch Language
+                        </button>
+                    </div>
+                </section>
 
-
-
+                {/* 7. LANGUAGE PATH INDICATOR - Improved */}
+                <section className="mb-8">
+                    <p className="text-sm text-slate-400 mb-3">
+                        You are learning: <span className="text-white font-bold">{currentPath?.name || 'C Programming'}</span>
+                    </p>
+                    <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+                        {(LANGUAGES as any).map((lang: any) => (
+                            <button
+                                key={lang.id}
+                                onClick={() => handlePathSelect(lang.id)}
+                                className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-bold transition-all ${selectedPathId === lang.id
+                                    ? 'bg-indigo-600 text-white ring-2 ring-indigo-400 shadow-lg shadow-indigo-500/30'
+                                    : 'bg-slate-800/30 text-slate-500 hover:text-slate-400 hover:bg-slate-800/50 opacity-60'
+                                    }`}
+                            >
+                                {lang.name}
+                            </button>
+                        ))}
+                    </div>
+                </section>
             </div>
         </div>
     );

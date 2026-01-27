@@ -1,0 +1,49 @@
+{
+  "id": "arrays",
+  "title": "Arrays & Collections",
+  "color": "from-rose-500 to-orange-500",
+  "problems": [
+    {
+      "id": "arrays-1",
+      "topicId": "arrays",
+      "title": "Find Maximum in Array",
+      "description": "Read an array of N integers and print the largest element found in the array.",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Arrays",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n, max;\n    // Read array size\n    \n    // Read array elements\n    \n    // Find and print max\n    \n    return 0;\n}",
+        "python": "n = int(input())\narr = list(map(int, input().split()))\nprint(max(arr))"
+      },
+      "test_cases": [
+        {
+          "stdin": "5\n1 5 3 9 2",
+          "expected_output": "9"
+        },
+        {
+          "stdin": "3\n-1 -5 -2",
+          "expected_output": "-1"
+        }
+      ]
+    },
+    {
+      "id": "arrays-2",
+      "topicId": "arrays",
+      "title": "Array Sum",
+      "description": "Calculate the sum of all elements in an integer array of size N.",
+      "difficulty": "easy",
+      "estimatedTime": 4,
+      "concept": "Arrays",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    // Implementation\n    return 0;\n}",
+        "python": "n = int(input())\narr = list(map(int, input().split()))\nprint(sum(arr))"
+      },
+      "test_cases": [
+        {
+          "stdin": "4\n1 2 3 4",
+          "expected_output": "10"
+        }
+      ]
+    }
+  ]
+}

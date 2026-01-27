@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Loader2, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { Loader2, AlertCircle, Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { authService } from '../../services/authService';
 import { useNavigate } from 'react-router-dom';
@@ -85,25 +85,25 @@ const Login: React.FC = () => {
 
   return (
     <div className="fixed inset-0 bg-slate-950 overflow-y-auto">
-      <div className="min-h-full flex flex-col items-center justify-center px-6 py-12">
-        <div className="w-full max-w-sm space-y-6">
+      <div className="min-h-full flex flex-col items-center justify-center px-6 py-8">
+        <div className="w-full max-w-[340px] space-y-5">
 
-          {/* Logo - Centered with breathing room */}
-          <div className="flex justify-center pt-4 pb-1">
+          {/* Logo - Centered with minimal spacing */}
+          <div className="flex justify-center -mb-10">
             <img
               src="/icons/logo.png"
               alt="GenSpark"
-              className="h-44 w-44 object-contain"
+              className="h-36 w-36 object-contain drop-shadow-2xl"
               draggable={false}
             />
           </div>
 
-          {/* Headline + Subtext */}
-          <div className="text-center space-y-2">
-            <h1 className="text-3xl font-bold text-white tracking-tight">
+          {/* Headline + Subtext - Standard Professional Size */}
+          <div className="text-center space-y-1">
+            <h1 className="text-xl font-bold text-white tracking-tight">
               Welcome to GenSpark
             </h1>
-            <p className="text-sm text-slate-400 font-medium">
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em]">
               Start your journey today
             </p>
           </div>
@@ -118,22 +118,32 @@ const Login: React.FC = () => {
 
           {/* Login Form */}
           <form onSubmit={handleLogin} className="space-y-5">
-            {/* Email field - Clean, consistent styling */}
-            <div>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={handleEmailChange}
-                placeholder="Email address"
-                disabled={isLoading || isGoogleLoading}
-                className="w-full px-4 py-3.5 bg-slate-900 border border-slate-800 rounded-lg text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              />
+            {/* Email field - Professional with Icon & Label */}
+            <div className="space-y-1.5">
+              <label htmlFor="email" className="text-xs font-bold text-slate-300 uppercase tracking-widest block ml-1">
+                Email
+              </label>
+              <div className="relative group">
+                <Mail size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-400 transition-colors" />
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={handleEmailChange}
+                  placeholder="Email address"
+                  disabled={isLoading || isGoogleLoading}
+                  className="w-full pl-11 pr-4 py-3 bg-slate-900/60 border border-slate-700 rounded-xl text-white text-sm placeholder:text-slate-600 focus:ring-2 focus:ring-indigo-700/80 focus:border-indigo-600 focus:bg-slate-950 focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                />
+              </div>
             </div>
 
-            {/* Password field - Eye icon perfectly centered */}
-            <div className="space-y-2">
-              <div className="relative">
+            {/* Password field - Professional with Icon & Label */}
+            <div className="space-y-1.5">
+              <label htmlFor="password" className="text-xs font-bold text-slate-300 uppercase tracking-widest block ml-1">
+                Password
+              </label>
+              <div className="relative group">
+                <Lock size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-400 transition-colors" />
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
@@ -141,7 +151,7 @@ const Login: React.FC = () => {
                   onChange={handlePasswordChange}
                   placeholder="Password"
                   disabled={isLoading || isGoogleLoading}
-                  className="w-full px-4 py-3.5 pr-11 bg-slate-900 border border-slate-800 rounded-lg text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full pl-11 pr-4 py-3 bg-slate-900/80 border border-slate-700/60 rounded-xl text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-600/40 focus:border-indigo-500 focus:bg-slate-900 focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
                 />
                 <button
                   type="button"
@@ -160,22 +170,22 @@ const Login: React.FC = () => {
                   type="button"
                   onClick={() => navigate('/forgot-password')}
                   disabled={isLoading || isGoogleLoading}
-                  className="text-xs text-slate-500 hover:text-slate-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="text-xs text-slate-400 hover:text-slate-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Forgot password?
                 </button>
               </div>
             </div>
 
-            {/* Primary CTA - Log In (Most Prominent) */}
+            {/* Primary CTA - Log In (Premium Solid Design) */}
             <button
               type="submit"
               disabled={!isFormValid || isLoading || isGoogleLoading}
-              className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 disabled:bg-slate-800 disabled:text-slate-600 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20"
+              className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 disabled:bg-slate-800 disabled:text-slate-600 disabled:cursor-not-allowed text-white text-base font-extrabold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/10"
             >
               {isLoading ? (
                 <>
-                  <Loader2 size={16} className="animate-spin" />
+                  <Loader2 size={18} className="animate-spin" />
                   <span>Logging in...</span>
                 </>
               ) : (
@@ -186,9 +196,9 @@ const Login: React.FC = () => {
 
           {/* Divider Section - "or continue with" */}
           <div className="relative flex items-center gap-3 py-2">
-            <div className="flex-1 h-px bg-slate-800"></div>
-            <span className="text-xs text-slate-500 font-medium">or continue with</span>
-            <div className="flex-1 h-px bg-slate-800"></div>
+            <div className="flex-1 h-px bg-slate-600"></div>
+            <span className="text-xs text-slate-400 font-medium">or continue with</span>
+            <div className="flex-1 h-px bg-slate-600"></div>
           </div>
 
           {/* Secondary Authentication - Google (Less Prominent) */}
@@ -196,7 +206,7 @@ const Login: React.FC = () => {
             type="button"
             onClick={handleGoogleLogin}
             disabled={isLoading || isGoogleLoading}
-            className="w-full py-3.5 bg-transparent border border-slate-800 hover:border-slate-700 hover:bg-slate-900/50 rounded-lg text-slate-300 text-sm font-medium flex items-center justify-center gap-3 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3.5 bg-slate-800/60 border border-slate-700 hover:border-slate-600 hover:bg-slate-800 rounded-lg text-slate-200 text-sm font-medium flex items-center justify-center gap-3 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isGoogleLoading ? (
               <>
@@ -218,27 +228,18 @@ const Login: React.FC = () => {
             )}
           </button>
 
-          {/* Bottom signup link - Lowest priority */}
-          <p className="text-center text-sm text-slate-500 pt-2">
+          {/* Bottom signup link */}
+          <p className="text-center text-sm text-slate-400 pt-2">
             Don't have an account?{' '}
             <button
               onClick={() => navigate('/signup')}
               disabled={isLoading || isGoogleLoading}
-              className="text-slate-400 hover:text-white font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="text-slate-300 hover:text-white font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Sign up
             </button>
           </p>
 
-          <p className="text-center text-[10px] text-slate-600 pt-4 uppercase tracking-widest font-semibold">
-            By logging in, you agree to our{' '}
-            <button
-              onClick={() => navigate('/privacy')}
-              className="text-slate-500 hover:text-indigo-400 transition-colors underline"
-            >
-              Privacy Policy
-            </button>
-          </p>
         </div>
       </div>
     </div>

@@ -52,6 +52,8 @@ export interface User {
   lastLessonId?: string;
   lastLanguageId?: string;
   streak?: number;
+  lastActiveAt?: string; // ISO string
+  activity_log?: string[]; // Array of YYYY-MM-DD strings
 }
 
 export interface Language {

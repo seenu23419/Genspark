@@ -1,0 +1,2287 @@
+{
+  "id": "patterns",
+  "title": "Pattern Printing",
+  "color": "from-purple-500 to-pink-500",
+  "problems": [
+    {
+      "id": "patterns-181",
+      "topicId": "patterns",
+      "title": "Stars Triangle 1",
+      "description": "Print a stars triangle pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 4\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-182",
+      "topicId": "patterns",
+      "title": "Stars Triangle 2",
+      "description": "Print a stars triangle pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 5\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-183",
+      "topicId": "patterns",
+      "title": "Stars Triangle 3",
+      "description": "Print a stars triangle pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 6\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-184",
+      "topicId": "patterns",
+      "title": "Stars Triangle 4",
+      "description": "Print a stars triangle pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 7\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-185",
+      "topicId": "patterns",
+      "title": "Stars Triangle 5",
+      "description": "Print a stars triangle pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 8\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-186",
+      "topicId": "patterns",
+      "title": "Stars Square 1",
+      "description": "Print a stars square pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 4\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-187",
+      "topicId": "patterns",
+      "title": "Stars Square 2",
+      "description": "Print a stars square pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 5\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-188",
+      "topicId": "patterns",
+      "title": "Stars Square 3",
+      "description": "Print a stars square pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 6\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-189",
+      "topicId": "patterns",
+      "title": "Stars Square 4",
+      "description": "Print a stars square pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 7\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-190",
+      "topicId": "patterns",
+      "title": "Stars Square 5",
+      "description": "Print a stars square pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 8\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-191",
+      "topicId": "patterns",
+      "title": "Stars Pyramid 1",
+      "description": "Print a stars pyramid pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 4\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-192",
+      "topicId": "patterns",
+      "title": "Stars Pyramid 2",
+      "description": "Print a stars pyramid pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 5\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-193",
+      "topicId": "patterns",
+      "title": "Stars Pyramid 3",
+      "description": "Print a stars pyramid pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 6\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-194",
+      "topicId": "patterns",
+      "title": "Stars Pyramid 4",
+      "description": "Print a stars pyramid pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 7\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-195",
+      "topicId": "patterns",
+      "title": "Stars Pyramid 5",
+      "description": "Print a stars pyramid pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 8\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-196",
+      "topicId": "patterns",
+      "title": "Stars Diamond 1",
+      "description": "Print a stars diamond pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 4\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-197",
+      "topicId": "patterns",
+      "title": "Stars Diamond 2",
+      "description": "Print a stars diamond pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 5\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-198",
+      "topicId": "patterns",
+      "title": "Stars Diamond 3",
+      "description": "Print a stars diamond pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 6\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-199",
+      "topicId": "patterns",
+      "title": "Stars Diamond 4",
+      "description": "Print a stars diamond pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 7\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-200",
+      "topicId": "patterns",
+      "title": "Stars Diamond 5",
+      "description": "Print a stars diamond pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 8\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-201",
+      "topicId": "patterns",
+      "title": "Stars Butterfly 1",
+      "description": "Print a stars butterfly pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 4\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-202",
+      "topicId": "patterns",
+      "title": "Stars Butterfly 2",
+      "description": "Print a stars butterfly pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 5\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-203",
+      "topicId": "patterns",
+      "title": "Stars Butterfly 3",
+      "description": "Print a stars butterfly pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 6\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-204",
+      "topicId": "patterns",
+      "title": "Stars Butterfly 4",
+      "description": "Print a stars butterfly pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 7\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-205",
+      "topicId": "patterns",
+      "title": "Stars Butterfly 5",
+      "description": "Print a stars butterfly pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 8\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-206",
+      "topicId": "patterns",
+      "title": "Stars Hourglass 1",
+      "description": "Print a stars hourglass pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 4\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-207",
+      "topicId": "patterns",
+      "title": "Stars Hourglass 2",
+      "description": "Print a stars hourglass pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 5\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-208",
+      "topicId": "patterns",
+      "title": "Stars Hourglass 3",
+      "description": "Print a stars hourglass pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 6\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-209",
+      "topicId": "patterns",
+      "title": "Stars Hourglass 4",
+      "description": "Print a stars hourglass pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 7\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-210",
+      "topicId": "patterns",
+      "title": "Stars Hourglass 5",
+      "description": "Print a stars hourglass pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 8\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-211",
+      "topicId": "patterns",
+      "title": "Numbers Triangle 1",
+      "description": "Print a numbers triangle pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 4\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-212",
+      "topicId": "patterns",
+      "title": "Numbers Triangle 2",
+      "description": "Print a numbers triangle pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 5\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-213",
+      "topicId": "patterns",
+      "title": "Numbers Triangle 3",
+      "description": "Print a numbers triangle pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 6\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-214",
+      "topicId": "patterns",
+      "title": "Numbers Triangle 4",
+      "description": "Print a numbers triangle pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 7\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-215",
+      "topicId": "patterns",
+      "title": "Numbers Triangle 5",
+      "description": "Print a numbers triangle pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 8\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-216",
+      "topicId": "patterns",
+      "title": "Numbers Square 1",
+      "description": "Print a numbers square pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 4\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-217",
+      "topicId": "patterns",
+      "title": "Numbers Square 2",
+      "description": "Print a numbers square pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 5\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-218",
+      "topicId": "patterns",
+      "title": "Numbers Square 3",
+      "description": "Print a numbers square pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 6\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-219",
+      "topicId": "patterns",
+      "title": "Numbers Square 4",
+      "description": "Print a numbers square pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 7\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-220",
+      "topicId": "patterns",
+      "title": "Numbers Square 5",
+      "description": "Print a numbers square pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 8\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-221",
+      "topicId": "patterns",
+      "title": "Numbers Pyramid 1",
+      "description": "Print a numbers pyramid pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 4\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-222",
+      "topicId": "patterns",
+      "title": "Numbers Pyramid 2",
+      "description": "Print a numbers pyramid pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 5\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-223",
+      "topicId": "patterns",
+      "title": "Numbers Pyramid 3",
+      "description": "Print a numbers pyramid pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 6\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-224",
+      "topicId": "patterns",
+      "title": "Numbers Pyramid 4",
+      "description": "Print a numbers pyramid pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 7\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-225",
+      "topicId": "patterns",
+      "title": "Numbers Pyramid 5",
+      "description": "Print a numbers pyramid pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 8\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-226",
+      "topicId": "patterns",
+      "title": "Numbers Diamond 1",
+      "description": "Print a numbers diamond pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 4\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-227",
+      "topicId": "patterns",
+      "title": "Numbers Diamond 2",
+      "description": "Print a numbers diamond pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 5\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-228",
+      "topicId": "patterns",
+      "title": "Numbers Diamond 3",
+      "description": "Print a numbers diamond pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 6\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-229",
+      "topicId": "patterns",
+      "title": "Numbers Diamond 4",
+      "description": "Print a numbers diamond pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 7\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-230",
+      "topicId": "patterns",
+      "title": "Numbers Diamond 5",
+      "description": "Print a numbers diamond pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 8\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-231",
+      "topicId": "patterns",
+      "title": "Numbers Butterfly 1",
+      "description": "Print a numbers butterfly pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 4\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-232",
+      "topicId": "patterns",
+      "title": "Numbers Butterfly 2",
+      "description": "Print a numbers butterfly pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 5\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-233",
+      "topicId": "patterns",
+      "title": "Numbers Butterfly 3",
+      "description": "Print a numbers butterfly pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 6\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-234",
+      "topicId": "patterns",
+      "title": "Numbers Butterfly 4",
+      "description": "Print a numbers butterfly pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 7\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-235",
+      "topicId": "patterns",
+      "title": "Numbers Butterfly 5",
+      "description": "Print a numbers butterfly pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 8\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-236",
+      "topicId": "patterns",
+      "title": "Numbers Hourglass 1",
+      "description": "Print a numbers hourglass pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 4\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-237",
+      "topicId": "patterns",
+      "title": "Numbers Hourglass 2",
+      "description": "Print a numbers hourglass pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 5\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-238",
+      "topicId": "patterns",
+      "title": "Numbers Hourglass 3",
+      "description": "Print a numbers hourglass pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 6\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-239",
+      "topicId": "patterns",
+      "title": "Numbers Hourglass 4",
+      "description": "Print a numbers hourglass pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 7\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-240",
+      "topicId": "patterns",
+      "title": "Numbers Hourglass 5",
+      "description": "Print a numbers hourglass pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 8\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-241",
+      "topicId": "patterns",
+      "title": "Alphabets Triangle 1",
+      "description": "Print a alphabets triangle pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 4\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-242",
+      "topicId": "patterns",
+      "title": "Alphabets Triangle 2",
+      "description": "Print a alphabets triangle pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 5\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-243",
+      "topicId": "patterns",
+      "title": "Alphabets Triangle 3",
+      "description": "Print a alphabets triangle pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 6\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-244",
+      "topicId": "patterns",
+      "title": "Alphabets Triangle 4",
+      "description": "Print a alphabets triangle pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 7\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-245",
+      "topicId": "patterns",
+      "title": "Alphabets Triangle 5",
+      "description": "Print a alphabets triangle pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 8\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-246",
+      "topicId": "patterns",
+      "title": "Alphabets Square 1",
+      "description": "Print a alphabets square pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 4\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-247",
+      "topicId": "patterns",
+      "title": "Alphabets Square 2",
+      "description": "Print a alphabets square pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 5\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-248",
+      "topicId": "patterns",
+      "title": "Alphabets Square 3",
+      "description": "Print a alphabets square pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 6\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-249",
+      "topicId": "patterns",
+      "title": "Alphabets Square 4",
+      "description": "Print a alphabets square pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 7\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-250",
+      "topicId": "patterns",
+      "title": "Alphabets Square 5",
+      "description": "Print a alphabets square pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 8\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-251",
+      "topicId": "patterns",
+      "title": "Alphabets Pyramid 1",
+      "description": "Print a alphabets pyramid pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 4\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-252",
+      "topicId": "patterns",
+      "title": "Alphabets Pyramid 2",
+      "description": "Print a alphabets pyramid pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 5\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-253",
+      "topicId": "patterns",
+      "title": "Alphabets Pyramid 3",
+      "description": "Print a alphabets pyramid pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 6\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-254",
+      "topicId": "patterns",
+      "title": "Alphabets Pyramid 4",
+      "description": "Print a alphabets pyramid pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 7\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-255",
+      "topicId": "patterns",
+      "title": "Alphabets Pyramid 5",
+      "description": "Print a alphabets pyramid pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 8\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-256",
+      "topicId": "patterns",
+      "title": "Alphabets Diamond 1",
+      "description": "Print a alphabets diamond pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 4\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-257",
+      "topicId": "patterns",
+      "title": "Alphabets Diamond 2",
+      "description": "Print a alphabets diamond pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 5\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-258",
+      "topicId": "patterns",
+      "title": "Alphabets Diamond 3",
+      "description": "Print a alphabets diamond pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 6\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-259",
+      "topicId": "patterns",
+      "title": "Alphabets Diamond 4",
+      "description": "Print a alphabets diamond pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 7\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-260",
+      "topicId": "patterns",
+      "title": "Alphabets Diamond 5",
+      "description": "Print a alphabets diamond pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 8\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-261",
+      "topicId": "patterns",
+      "title": "Alphabets Butterfly 1",
+      "description": "Print a alphabets butterfly pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 4\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-262",
+      "topicId": "patterns",
+      "title": "Alphabets Butterfly 2",
+      "description": "Print a alphabets butterfly pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 5\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-263",
+      "topicId": "patterns",
+      "title": "Alphabets Butterfly 3",
+      "description": "Print a alphabets butterfly pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 6\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-264",
+      "topicId": "patterns",
+      "title": "Alphabets Butterfly 4",
+      "description": "Print a alphabets butterfly pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 7\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-265",
+      "topicId": "patterns",
+      "title": "Alphabets Butterfly 5",
+      "description": "Print a alphabets butterfly pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 8\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-266",
+      "topicId": "patterns",
+      "title": "Alphabets Hourglass 1",
+      "description": "Print a alphabets hourglass pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 4\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-267",
+      "topicId": "patterns",
+      "title": "Alphabets Hourglass 2",
+      "description": "Print a alphabets hourglass pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 5\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-268",
+      "topicId": "patterns",
+      "title": "Alphabets Hourglass 3",
+      "description": "Print a alphabets hourglass pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 6\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-269",
+      "topicId": "patterns",
+      "title": "Alphabets Hourglass 4",
+      "description": "Print a alphabets hourglass pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 7\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-270",
+      "topicId": "patterns",
+      "title": "Alphabets Hourglass 5",
+      "description": "Print a alphabets hourglass pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 8\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-271",
+      "topicId": "patterns",
+      "title": "Hollow Triangle 1",
+      "description": "Print a hollow triangle pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 4\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-272",
+      "topicId": "patterns",
+      "title": "Hollow Triangle 2",
+      "description": "Print a hollow triangle pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 5\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-273",
+      "topicId": "patterns",
+      "title": "Hollow Triangle 3",
+      "description": "Print a hollow triangle pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 6\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-274",
+      "topicId": "patterns",
+      "title": "Hollow Triangle 4",
+      "description": "Print a hollow triangle pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 7\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-275",
+      "topicId": "patterns",
+      "title": "Hollow Triangle 5",
+      "description": "Print a hollow triangle pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Triangle\n    return 0;\n}",
+        "python": "n = 8\n# Print Triangle"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-276",
+      "topicId": "patterns",
+      "title": "Hollow Square 1",
+      "description": "Print a hollow square pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 4\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-277",
+      "topicId": "patterns",
+      "title": "Hollow Square 2",
+      "description": "Print a hollow square pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 5\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-278",
+      "topicId": "patterns",
+      "title": "Hollow Square 3",
+      "description": "Print a hollow square pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 6\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-279",
+      "topicId": "patterns",
+      "title": "Hollow Square 4",
+      "description": "Print a hollow square pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 7\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-280",
+      "topicId": "patterns",
+      "title": "Hollow Square 5",
+      "description": "Print a hollow square pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Square\n    return 0;\n}",
+        "python": "n = 8\n# Print Square"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-281",
+      "topicId": "patterns",
+      "title": "Hollow Pyramid 1",
+      "description": "Print a hollow pyramid pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 4\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-282",
+      "topicId": "patterns",
+      "title": "Hollow Pyramid 2",
+      "description": "Print a hollow pyramid pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 5\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-283",
+      "topicId": "patterns",
+      "title": "Hollow Pyramid 3",
+      "description": "Print a hollow pyramid pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 6\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-284",
+      "topicId": "patterns",
+      "title": "Hollow Pyramid 4",
+      "description": "Print a hollow pyramid pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 7\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-285",
+      "topicId": "patterns",
+      "title": "Hollow Pyramid 5",
+      "description": "Print a hollow pyramid pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Pyramid\n    return 0;\n}",
+        "python": "n = 8\n# Print Pyramid"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-286",
+      "topicId": "patterns",
+      "title": "Hollow Diamond 1",
+      "description": "Print a hollow diamond pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 4\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-287",
+      "topicId": "patterns",
+      "title": "Hollow Diamond 2",
+      "description": "Print a hollow diamond pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 5\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-288",
+      "topicId": "patterns",
+      "title": "Hollow Diamond 3",
+      "description": "Print a hollow diamond pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 6\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-289",
+      "topicId": "patterns",
+      "title": "Hollow Diamond 4",
+      "description": "Print a hollow diamond pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 7\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-290",
+      "topicId": "patterns",
+      "title": "Hollow Diamond 5",
+      "description": "Print a hollow diamond pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Diamond\n    return 0;\n}",
+        "python": "n = 8\n# Print Diamond"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-291",
+      "topicId": "patterns",
+      "title": "Hollow Butterfly 1",
+      "description": "Print a hollow butterfly pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 4\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-292",
+      "topicId": "patterns",
+      "title": "Hollow Butterfly 2",
+      "description": "Print a hollow butterfly pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 5\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-293",
+      "topicId": "patterns",
+      "title": "Hollow Butterfly 3",
+      "description": "Print a hollow butterfly pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 6\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-294",
+      "topicId": "patterns",
+      "title": "Hollow Butterfly 4",
+      "description": "Print a hollow butterfly pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 7\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-295",
+      "topicId": "patterns",
+      "title": "Hollow Butterfly 5",
+      "description": "Print a hollow butterfly pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Butterfly\n    return 0;\n}",
+        "python": "n = 8\n# Print Butterfly"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-296",
+      "topicId": "patterns",
+      "title": "Hollow Hourglass 1",
+      "description": "Print a hollow hourglass pattern of size 4. careful with spacing!",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 4\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-297",
+      "topicId": "patterns",
+      "title": "Hollow Hourglass 2",
+      "description": "Print a hollow hourglass pattern of size 5. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 5\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-298",
+      "topicId": "patterns",
+      "title": "Hollow Hourglass 3",
+      "description": "Print a hollow hourglass pattern of size 6. careful with spacing!",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 6\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-299",
+      "topicId": "patterns",
+      "title": "Hollow Hourglass 4",
+      "description": "Print a hollow hourglass pattern of size 7. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 7\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "patterns-300",
+      "topicId": "patterns",
+      "title": "Hollow Hourglass 5",
+      "description": "Print a hollow hourglass pattern of size 8. careful with spacing!",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Nested Loops",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Hourglass\n    return 0;\n}",
+        "python": "n = 8\n# Print Hourglass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    }
+  ]
+}

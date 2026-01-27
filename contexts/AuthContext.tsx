@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState, useRef, useCallb
 import { User } from '../types';
 import { authService } from '../services/authService';
 import { supabaseDB } from '../services/supabaseService';
+import { StreakService } from '../services/streakService';
 
 interface AuthContextType {
     user: User | null;
@@ -38,26 +39,37 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         firstName: string | null | undefined;
         onboardingCompleted: boolean | undefined;
         lessonsCompleted: number | undefined;
+        completedLessonIds: string[];
+        unlockedLessonIds: string[];
     }>({
         userId: null,
         firstName: null,
         onboardingCompleted: undefined,
-        lessonsCompleted: undefined
+        lessonsCompleted: undefined,
+        completedLessonIds: [],
+        unlockedLessonIds: ['c1']
     });
 
     const loading = initializing || !minSplashDone;
 
     const refreshProfile = useCallback(async () => {
-        if (!user) return;
+        const currentUserId = userStateRef.current.userId;
+        if (!currentUserId) return;
+
         try {
-            const fresh = await supabaseDB.findOne({ _id: user._id });
+            const fresh = await supabaseDB.findOne({ _id: currentUserId });
             if (fresh) {
                 const currentState = userStateRef.current;
+                const freshCompleted = fresh.completedLessonIds || [];
+                const freshUnlocked = fresh.unlockedLessonIds || ['c1'];
+
                 const hasChanged =
                     currentState.userId !== fresh._id ||
                     currentState.firstName !== fresh.firstName ||
                     currentState.onboardingCompleted !== fresh.onboardingCompleted ||
-                    currentState.lessonsCompleted !== fresh.lessonsCompleted;
+                    currentState.lessonsCompleted !== fresh.lessonsCompleted ||
+                    JSON.stringify(currentState.completedLessonIds) !== JSON.stringify(freshCompleted) ||
+                    JSON.stringify(currentState.unlockedLessonIds) !== JSON.stringify(freshUnlocked);
 
                 if (hasChanged) {
                     console.log("AuthContext: refreshProfile - state changed", fresh._id);
@@ -65,25 +77,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                         userId: fresh._id,
                         firstName: fresh.firstName,
                         onboardingCompleted: fresh.onboardingCompleted,
-                        lessonsCompleted: fresh.lessonsCompleted
+                        lessonsCompleted: fresh.lessonsCompleted,
+                        completedLessonIds: freshCompleted,
+                        unlockedLessonIds: freshUnlocked
                     };
                     setUser(fresh);
                 } else {
-                    setUser(fresh);
+                    console.log("AuthContext: refreshProfile - no changes, skipping update");
                 }
             }
         } catch (error) {
             console.error("AuthContext: refreshProfile error", error);
         }
-    }, [user]);
+    }, []); // No dependencies - uses ref instead
 
     useEffect(() => {
         let mounted = true;
 
-        // 1. Min Splash Timer
+        // 1. Min Splash Timer (Adjusted to 4s per user request)
         const splashTimer = setTimeout(() => {
             if (mounted) setMinSplashDone(true);
-        }, 600);
+        }, 4000);
 
         // 2. Initial Session Check
         const initSession = async () => {
@@ -97,7 +111,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                             userId: currentUser._id,
                             firstName: currentUser.firstName,
                             onboardingCompleted: currentUser.onboardingCompleted,
-                            lessonsCompleted: currentUser.lessonsCompleted
+                            lessonsCompleted: currentUser.lessonsCompleted,
+                            completedLessonIds: currentUser.completedLessonIds || [],
+                            unlockedLessonIds: currentUser.unlockedLessonIds || ['c1']
                         };
                         console.log("AuthContext: Initial user loaded", userStateRef.current);
                     }
@@ -133,19 +149,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 userId: updatedUser._id,
                 firstName: updatedUser.firstName,
                 onboardingCompleted: updatedUser.onboardingCompleted,
-                lessonsCompleted: updatedUser.lessonsCompleted
+                lessonsCompleted: updatedUser.lessonsCompleted,
+                completedLessonIds: updatedUser.completedLessonIds || [],
+                unlockedLessonIds: updatedUser.unlockedLessonIds || ['c1']
             } : {
                 userId: null,
                 firstName: null,
                 onboardingCompleted: undefined,
-                lessonsCompleted: undefined
+                lessonsCompleted: undefined,
+                completedLessonIds: [],
+                unlockedLessonIds: ['c1']
             };
 
             // **THE CRITICAL CHECK**: Only update if actual data changed
             const hasChanged =
                 currentState.userId !== newState.userId ||
                 currentState.firstName !== newState.firstName ||
-                currentState.onboardingCompleted !== newState.onboardingCompleted;
+                currentState.onboardingCompleted !== newState.onboardingCompleted ||
+                JSON.stringify(currentState.completedLessonIds) !== JSON.stringify(newState.completedLessonIds);
 
             console.log("AuthContext: Auth state change", {
                 hasChanged,
@@ -206,6 +227,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     useEffect(() => {
         if (user) {
             localStorage.setItem('genspark_user_backup', JSON.stringify(user));
+            // Flag that this user has successfully authenticated at least once
+            localStorage.setItem('genspark_returning_user', 'true');
         } else if (!loading) {
             localStorage.removeItem('genspark_user_backup');
         }
@@ -238,73 +261,94 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         },
         refreshProfile,
         updateProfile: useCallback(async (updates: Partial<User>) => {
-            if (!user) return;
+            if (!userStateRef.current.userId) return;
 
-            const previousUser = user;
-            const optimisticUser = { ...user, ...updates };
+            // 1. Get latest state for merging
+            let baseUser: User | null = null;
+            setUser(prev => {
+                baseUser = prev;
+                return prev;
+            });
+
+            if (!baseUser) return;
+
+            // 2. High-integrity Merge (Using latest state)
+            const currentCompleted = baseUser.completedLessonIds || [];
+            const newCompleted = updates.completedLessonIds
+                ? [...new Set([...currentCompleted, ...updates.completedLessonIds])]
+                : currentCompleted;
+
+            const currentUnlocked = baseUser.unlockedLessonIds || ['c1'];
+            const newUnlocked = updates.unlockedLessonIds
+                ? [...new Set([...currentUnlocked, ...updates.unlockedLessonIds])]
+                : currentUnlocked;
+
+            const activityUpdates = StreakService.getActivityUpdates(baseUser);
+            const mergedUpdates = {
+                ...updates,
+                ...(activityUpdates || {}),
+                completedLessonIds: newCompleted,
+                unlockedLessonIds: newUnlocked
+            };
+
+            const previousUser = baseUser;
+            const optimisticUser = {
+                ...baseUser,
+                ...mergedUpdates,
+                lessonsCompleted: newCompleted.length
+            };
+
             if (updates.firstName || updates.lastName) {
-                const first = updates.firstName || user.firstName || '';
-                const last = updates.lastName || user.lastName || '';
-                optimisticUser.name = `${first} ${last}`.trim() || user.name;
+                const first = updates.firstName || baseUser.firstName || '';
+                const last = updates.lastName || baseUser.lastName || '';
+                optimisticUser.name = `${first} ${last}`.trim() || baseUser.name;
                 optimisticUser.firstName = first;
             }
 
-            if (!updates.completedLessonIds) optimisticUser.completedLessonIds = user.completedLessonIds;
-            if (!updates.unlockedLessonIds) optimisticUser.unlockedLessonIds = user.unlockedLessonIds;
-
+            // 3. Update memory ref and optimistic UI
             userStateRef.current = {
                 userId: optimisticUser._id,
                 firstName: optimisticUser.firstName,
                 onboardingCompleted: optimisticUser.onboardingCompleted,
-                lessonsCompleted: optimisticUser.lessonsCompleted
+                lessonsCompleted: optimisticUser.lessonsCompleted,
+                completedLessonIds: newCompleted,
+                unlockedLessonIds: newUnlocked
             };
 
             setUser(optimisticUser as User);
 
             try {
-                const updated = await supabaseDB.updateOne(user._id, updates);
+                // 4. Persist to DB
+                console.log("AuthContext: Starting DB update for", baseUser._id, mergedUpdates);
+                const updated = await supabaseDB.updateOne(baseUser._id, mergedUpdates);
+                console.log("AuthContext: DB update SUCCESS", updated._id);
+
+                // 5. Final sync with DB result
                 userStateRef.current = {
                     userId: updated._id,
                     firstName: updated.firstName,
                     onboardingCompleted: updated.onboardingCompleted,
-                    lessonsCompleted: updated.lessonsCompleted
+                    lessonsCompleted: updated.lessonsCompleted,
+                    completedLessonIds: updated.completedLessonIds || [],
+                    unlockedLessonIds: updated.unlockedLessonIds || ['c1']
                 };
                 setUser(updated);
             } catch (error: any) {
-                console.error("Profile update failed, reverting...", error);
-                if (error.message?.includes('not found') || error.code === 'PGRST116' || error.details?.includes('0 rows')) {
-                    try {
-                        const newUser = await supabaseDB.insertOne({
-                            _id: user._id,
-                            email: user.email,
-                            name: user.name || 'User',
-                            ...updates
-                        });
-                        userStateRef.current = {
-                            userId: newUser._id,
-                            firstName: newUser.firstName,
-                            onboardingCompleted: newUser.onboardingCompleted,
-                            lessonsCompleted: newUser.lessonsCompleted
-                        };
-                        setUser(newUser);
+                console.error("Profile update failed, checking for partial success...", error);
+
+                // CRITICAL SAFETY: Repopulate from server to see if user_progress table actually updated
+                // even if the users table (cache) failed.
+                try {
+                    const fresh = await supabaseDB.findOne({ _id: baseUser._id });
+                    if (fresh) {
+                        setUser(fresh);
                         return;
-                    } catch (insertError) {
-                        userStateRef.current = {
-                            userId: previousUser._id,
-                            firstName: previousUser.firstName,
-                            onboardingCompleted: previousUser.onboardingCompleted,
-                            lessonsCompleted: previousUser.lessonsCompleted
-                        };
-                        setUser(previousUser);
-                        throw new Error("Failed to save profile.");
                     }
+                } catch (e) {
+                    console.error("Recovery fetch failed", e);
                 }
-                userStateRef.current = {
-                    userId: previousUser._id,
-                    firstName: previousUser.firstName,
-                    onboardingCompleted: previousUser.onboardingCompleted,
-                    lessonsCompleted: previousUser.lessonsCompleted
-                };
+
+                // Only revert if we truly failed everything and the user doesn't already have the data
                 setUser(previousUser);
                 throw error;
             }

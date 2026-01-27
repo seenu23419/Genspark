@@ -1,5 +1,6 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { User } from '../types';
+import { StreakService } from './streakService';
 
 const PROJECT_URL = 'https://aoiagnnkhaswpmhbobhd.supabase.co';
 const DEFAULT_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFvaWFnbm5raGFzd3BtaGJvYmhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY3ODU0MTUsImV4cCI6MjA4MjM2MTQxNX0.ZYGTcqoIp8SPMCMO_6VQa9pmj_dqoHv6qrsK8DXD3ls';
@@ -28,6 +29,7 @@ const getEnv = (key: string) => {
 class SupabaseService {
   public supabase: SupabaseClient;
   private isConfigured: boolean = false;
+  private streakEnabled: boolean = true; // Circuit breaker for streak updates
   private supabaseUrl: string;
 
   constructor() {
@@ -133,13 +135,16 @@ class SupabaseService {
       }
     }
 
-    const completedIds = progressData
-      ?.filter((p: any) => p.status === 'completed')
-      .map((p: any) => p.lesson_id) || [];
+    const completedIds = [...new Set([
+      ...(progressData?.filter((p: any) => p.status === 'completed').map((p: any) => p.lesson_id) || []),
+      ...(profile.completed_lesson_ids || [])
+    ])];
 
-    const unlockedIds = progressData
-      ?.filter((p: any) => p.status === 'unlocked' || p.status === 'completed')
-      .map((p: any) => p.lesson_id) || ['c1']; // Default unlock first lesson
+    const unlockedIds = [...new Set([
+      ...(progressData?.filter((p: any) => p.status === 'unlocked' || p.status === 'completed').map((p: any) => p.lesson_id) || []),
+      ...(profile.unlocked_lesson_ids || []),
+      'c1' // Default unlock first lesson
+    ])];
 
     return {
       _id: profile.id,
@@ -157,7 +162,10 @@ class SupabaseService {
       unlockedLessonIds: unlockedIds,
       createdAt: new Date(profile.created_at),
       provider: 'email', // simplified for UI
-      onboardingCompleted: profile.onboarding_completed || false
+      onboardingCompleted: profile.onboarding_completed || false,
+      streak: profile.streak || 0,
+      lastActiveAt: profile.last_active_at,
+      activity_log: profile.activity_log || []
     };
   }
 
@@ -166,33 +174,89 @@ class SupabaseService {
   async findOne(query: { email?: string, _id?: string }): Promise<User | null> {
     if (!this.isConfigured) return null;
 
+    // Helper to safely fetch user with fallback for missing columns
+    const fetchWithFallback = async (builder: any, queryBuilder: any) => {
+      // 1. If we already know streaks/new columns are missing, use the fallback immediately
+      if (!this.streakEnabled) {
+        console.log("[SupabaseService] Fast-forwarding to fallback fetch (streakEnabled is false)");
+        const fallbackBuilder = this.supabase.from('users')
+          .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, completed_lesson_ids, unlocked_lesson_ids, created_at') as any;
+
+        if (queryBuilder.id) fallbackBuilder.eq('id', queryBuilder.id);
+        else if (queryBuilder.email) fallbackBuilder.eq('email', queryBuilder.email);
+
+        const fallbackResult = await fallbackBuilder.single();
+        return fallbackResult.data || null;
+      }
+
+      try {
+        const { data, error } = await builder.single();
+        if (error) {
+          console.warn("[SupabaseService] findOne fetch error:", error.code, error.message);
+          // If error is 42703 (undefined_column) in Postgres, retry without new columns
+          if (error.code === '42703' || error.message?.includes('column')) {
+            console.warn("[SupabaseService] Missing columns detected, falling back to basic profile fetch");
+            this.streakEnabled = false; // Disable streak logic globally for this session
+            const fallbackBuilder = this.supabase.from('users')
+              .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, created_at') as any;
+
+            if (queryBuilder.id) fallbackBuilder.eq('id', queryBuilder.id);
+            else if (queryBuilder.email) fallbackBuilder.eq('email', queryBuilder.email);
+
+            const fallbackResult = await fallbackBuilder.single();
+            if (fallbackResult.error) {
+              console.error("[SupabaseService] Fallback fetch also failed:", fallbackResult.error);
+              throw fallbackResult.error;
+            }
+            return fallbackResult.data;
+          }
+          // For other errors, try the fallback anyway
+          console.warn("[SupabaseService] Unexpected fetch error, attempting fallback anyway");
+          const lastResortBuilder = this.supabase.from('users')
+            .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, created_at') as any;
+          if (queryBuilder.id) lastResortBuilder.eq('id', queryBuilder.id);
+          else if (queryBuilder.email) lastResortBuilder.eq('email', queryBuilder.email);
+          const lastResortResult = await lastResortBuilder.single();
+          return lastResortResult.data || null;
+        }
+        return data;
+      } catch (e) {
+        console.error("[SupabaseService] fetchWithFallback exception:", e);
+        return null;
+      }
+    };
+
     // OPTIMIZATION: Parallel Fetching if ID is known
     if (query._id) {
-      const profilePromise = this.supabase
+      const profileBuilder = this.supabase
         .from('users')
-        .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, created_at')
-        .eq('id', query._id)
-        .single();
+        .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, completed_lesson_ids, unlocked_lesson_ids, created_at')
+        .eq('id', query._id);
 
       const progressPromise = this.supabase
         .from('user_progress')
         .select('lesson_id, status')
         .eq('user_id', query._id);
 
-      const [profileResult, progressResult] = await Promise.all([profilePromise, progressPromise]);
+      const [profileData, progressResult] = await Promise.all([
+        fetchWithFallback(profileBuilder, { id: query._id }),
+        progressPromise
+      ]);
 
-      if (profileResult.error || !profileResult.data) return null;
+      if (!profileData) return null;
 
-      return this.formatUserForApp(profileResult.data, progressResult.data || []);
+      return this.formatUserForApp(profileData, progressResult.data || []);
     }
 
     // Fallback for Email query (Sequential)
-    let builder = this.supabase.from('users').select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, created_at');
+    let builder = this.supabase.from('users')
+      .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, completed_lesson_ids, unlocked_lesson_ids, created_at');
+
     if (query.email) builder = builder.eq('email', query.email);
     else return null;
 
-    const { data, error } = await builder.single();
-    if (error || !data) return null;
+    const data = await fetchWithFallback(builder, { email: query.email });
+    if (!data) return null;
 
     return this.formatUserForApp(data);
   }
@@ -220,7 +284,7 @@ class SupabaseService {
       firstName = userData.email.split('@')[0];
     }
 
-    const { data: profile, error } = await this.supabase
+    let profileRequest = this.supabase
       .from('users')
       .insert({
         id: userData._id,
@@ -232,8 +296,30 @@ class SupabaseService {
         onboarding_completed: false, // Always false for new users
         created_at: userData.createdAt || new Date()
       })
-      .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, created_at')
-      .single();
+      .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, completed_lesson_ids, unlocked_lesson_ids, created_at');
+
+    let { data: profile, error } = await profileRequest.single();
+
+    if (error && (error.code === '42703' || error.message?.includes('column'))) {
+      console.warn("[SupabaseService] Missing streak columns during insert, retrying without them");
+      const fallbackInsert = await this.supabase
+        .from('users')
+        .insert({
+          id: userData._id,
+          email: userData.email,
+          name: userData.name || firstName || 'User',
+          first_name: firstName || 'User',
+          last_name: lastName || '',
+          avatar: userData.avatar,
+          onboarding_completed: false,
+          created_at: userData.createdAt || new Date()
+        })
+        .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, created_at')
+        .single() as any;
+
+      profile = fallbackInsert.data;
+      error = fallbackInsert.error;
+    }
 
     if (error) throw error;
 
@@ -275,6 +361,9 @@ class SupabaseService {
     if (updates.onboardingCompleted !== undefined) profileUpdates.onboarding_completed = updates.onboardingCompleted;
     if (updates.completedLessonIds) profileUpdates.completed_lesson_ids = updates.completedLessonIds;
     if (updates.unlockedLessonIds) profileUpdates.unlocked_lesson_ids = updates.unlockedLessonIds;
+    if (updates.streak !== undefined) profileUpdates.streak = updates.streak;
+    if (updates.lastActiveAt !== undefined) profileUpdates.last_active_at = updates.lastActiveAt;
+    if (updates.activity_log !== undefined) profileUpdates.activity_log = updates.activity_log;
 
     // Resume Reliability
     if (updates.lastLessonId) profileUpdates.last_lesson_id = updates.lastLessonId;
@@ -289,11 +378,31 @@ class SupabaseService {
     }
 
     if (Object.keys(profileUpdates).length > 0) {
-      const { error, data } = await this.supabase
+      let { error, data } = await this.supabase
         .from('users')
         .update(profileUpdates)
         .eq('id', id)
         .select();
+
+      if (error && (error.code === '42703' || error.message?.includes('column'))) {
+        console.warn("[SupabaseService] Missing columns during update, retrying basic fields");
+        this.streakEnabled = false; // Circuit breaker
+        const safeUpdates = { ...profileUpdates };
+        delete safeUpdates.streak;
+        delete safeUpdates.last_active_at;
+        delete safeUpdates.activity_log;
+        delete safeUpdates.completed_lesson_ids;
+        delete safeUpdates.unlocked_lesson_ids;
+
+        const fallbackUpdate = await this.supabase
+          .from('users')
+          .update(safeUpdates)
+          .eq('id', id)
+          .select();
+
+        error = fallbackUpdate.error;
+        data = fallbackUpdate.data;
+      }
 
       if (error) {
         console.error("Supabase update error:", {
@@ -323,42 +432,60 @@ class SupabaseService {
     }
 
     // 3. Update Progress (Standard Lesson Completion)
-    if (updates.completedLessonIds) {
-      console.log("[SupabaseService] Processing completedLessonIds:", updates.completedLessonIds.length);
-      for (const lessonId of updates.completedLessonIds) {
-        // RLS Policy "Enforce Sequential Completion" will reject this 
-        // if previous lesson is not done. 
-        // MIRROR TO LOCALSTORAGE: Ensure immediate persistence even if DB fails
-        if (typeof localStorage !== 'undefined') {
-          const localKey = `progress_${id}`;
-          try {
-            const localData = JSON.parse(localStorage.getItem(localKey) || '[]');
-            if (!localData.find((p: any) => p.lesson_id === lessonId)) {
-              localData.push({ lesson_id: lessonId, status: 'completed' });
-              localStorage.setItem(localKey, JSON.stringify(localData));
-            }
-          } catch (e) {
-            console.error("[SupabaseService] Local mirror failed", e);
-          }
-        }
+    if (updates.completedLessonIds && updates.completedLessonIds.length > 0) {
+      console.log("[SupabaseService] Processing completedLessonIds (Bulk):", updates.completedLessonIds.length);
 
-        // NON-BLOCKING DB UPSERT: Don't let user_progress hang the main update
-        this.supabase.from('user_progress').upsert({
+      // Deduplicate IDs safely
+      const uniqueLessonIds = [...new Set(updates.completedLessonIds)];
+
+      // MIRROR TO LOCALSTORAGE: Ensure immediate persistence even if DB fails
+      if (typeof localStorage !== 'undefined') {
+        const localKey = `progress_${id}`;
+        try {
+          const localData = JSON.parse(localStorage.getItem(localKey) || '[]');
+          const localMap = new Map(localData.map((p: any) => [p.lesson_id, p]));
+
+          uniqueLessonIds.forEach(lessonId => {
+            if (!localMap.has(lessonId)) {
+              localMap.set(lessonId, { lesson_id: lessonId, status: 'completed' });
+            }
+          });
+
+          localStorage.setItem(localKey, JSON.stringify(Array.from(localMap.values())));
+        } catch (e) {
+          console.error("[SupabaseService] Local mirror failed", e);
+        }
+      }
+
+      // CRITICAL: Bulk upsert to user_progress for maximum speed
+      try {
+        const upsertData = uniqueLessonIds.map(lessonId => ({
           user_id: id,
           lesson_id: lessonId,
           status: 'completed',
-          completed_at: new Date()
-        }, { onConflict: 'user_id, lesson_id' })
-          .then(({ error }) => {
-            if (error) {
-              console.error(`[SupabaseService] user_progress update failed for ${lessonId}:`, error);
-              if (error.code === '42P01') {
-                console.log("INFO: 'user_progress' table is missing. Progress is safely saved to LocalStorage and 'users' table.");
-              }
-            } else {
-              console.log(`[SupabaseService] user_progress updated for ${lessonId}`);
-            }
-          });
+          completed_at: new Date().toISOString()
+        }));
+
+        const { data: upsertResult, error } = await this.supabase
+          .from('user_progress')
+          .upsert(upsertData, { onConflict: 'user_id, lesson_id' })
+          .select();
+
+        if (error) {
+          console.error(`[SupabaseService] ❌ Bulk user_progress update failed:`, error.message, error.details);
+        } else {
+          console.log(`[SupabaseService] ✅ Bulk progress updated successfully. Rows:`, upsertResult?.length);
+        }
+      } catch (e) {
+        console.error(`[SupabaseService] Error in bulk progress operation:`, e);
+      }
+
+      // Update streak on lesson completion
+      try {
+        const u = await this.findOne({ _id: id });
+        if (u) await StreakService.updateStreak(u);
+      } catch (e) {
+        console.error("Streak sync failed", e);
       }
     }
 
@@ -479,6 +606,10 @@ class SupabaseService {
 
     if (solved && (!existing || existing.status !== 'completed')) {
       await this.awardXP(20, `practice_${challengeId}`);
+      // Update streak on solving a practice problem
+      const { data: profile } = await this.supabase.from('users').select('*').eq('id', user.id).single();
+      const mappedUser = await this.formatUserForApp(profile);
+      if (mappedUser) StreakService.updateStreak(mappedUser).catch(e => console.error("Streak update failed", e));
     }
   }
 
@@ -776,6 +907,10 @@ class SupabaseService {
     }
 
     return data?.fixedCode || data?.message || "No suggestions returned.";
+  }
+
+  public isStreakEnabled(): boolean {
+    return this.streakEnabled;
   }
 }
 

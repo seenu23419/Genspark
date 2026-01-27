@@ -1,0 +1,28 @@
+{
+  "id": "conditionals",
+  "title": "Conditional Statements",
+  "problems": [
+    {
+      "id": "cond-1",
+      "topicId": "conditionals",
+      "title": "Even or Odd",
+      "description": "Determine if a number is even or odd.",
+      "difficulty": "easy",
+      "estimatedTime": 2,
+      "concept": "Selection",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n; scanf(\"%d\", &n);\n    if(n%2==0) printf(\"Even\"); else printf(\"Odd\");\n    return 0;\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "10",
+          "expected_output": "Even"
+        },
+        {
+          "stdin": "7",
+          "expected_output": "Odd"
+        }
+      ]
+    }
+  ]
+}

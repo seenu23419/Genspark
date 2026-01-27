@@ -25,52 +25,41 @@ const Compiler = forwardRef<CompilerRef, CompilerProps>(({
     readOnly = false,
     language = 'python'
 }, ref) => {
-    const [code, setCode] = useState(initialCode);
+    const [currentInitialCode, setCurrentInitialCode] = useState(initialCode);
     const editorRef = useRef<any>(null);
     const monacoRef = useRef<Monaco | null>(null);
 
+    // Reset editor ONLY if content actually differs (Prevents cursor jumping)
     useEffect(() => {
-        setCode(initialCode);
+        if (editorRef.current) {
+            const currentVal = editorRef.current.getValue();
+            if (initialCode !== currentVal) {
+                editorRef.current.setValue(initialCode);
+            }
+        }
     }, [initialCode]);
 
     // Expose methods to parent
     useImperativeHandle(ref, () => ({
         runCode,
-        getCode: () => code,
+        getCode: () => editorRef.current?.getValue() || '',
         insertText: (text: string) => {
             if (editorRef.current) {
-                const selection = editorRef.current.getSelection();
-                const range = new (monacoRef.current as any).Range(
-                    selection.startLineNumber,
-                    selection.startColumn,
-                    selection.endLineNumber,
-                    selection.endColumn
-                );
-                editorRef.current.executeEdits('custom-insert', [
-                    { range, text, forceMoveMarkers: true }
-                ]);
+                editorRef.current.focus();
+                editorRef.current.trigger('keyboard', 'type', { text });
             }
         },
         deleteLastChar: () => {
             if (editorRef.current) {
-                const selection = editorRef.current.getSelection();
-                if (selection.isEmpty()) {
-                    const range = new (monacoRef.current as any).Range(
-                        selection.startLineNumber,
-                        selection.startColumn - 1,
-                        selection.startLineNumber,
-                        selection.startColumn
-                    );
-                    editorRef.current.executeEdits('custom-delete', [{ range, text: '' }]);
-                } else {
-                    editorRef.current.executeEdits('custom-delete', [{ range: selection, text: '' }]);
-                }
+                editorRef.current.focus();
+                editorRef.current.trigger('keyboard', 'deleteLeft', {});
             }
         },
         runTests: async (tests: { stdin?: string; expected_output: string }[]) => {
             try {
+                const currentCode = editorRef.current?.getValue() || '';
                 const testSpecs = tests.map(t => ({ stdin: t.stdin, expectedOutput: t.expected_output }));
-                const results = await genSparkCompilerService.runTests(language, code, testSpecs);
+                const results = await genSparkCompilerService.runTests(language, currentCode, testSpecs);
 
                 const allPassed = results.every(r => r.passed);
                 const firstFail = results.find(r => !r.passed);
@@ -83,7 +72,7 @@ const Compiler = forwardRef<CompilerRef, CompilerProps>(({
                     stderr: displayResult.stderr,
                     accepted: allPassed,
                     status: { id: allPassed ? 3 : 4, description: allPassed ? 'Accepted' : 'Tests Failed' },
-                    code,
+                    code: currentCode,
                     language,
                     testResults: results // Pack for potential UI use
                 });
@@ -100,11 +89,12 @@ const Compiler = forwardRef<CompilerRef, CompilerProps>(({
 
     const runCode = async () => {
         try {
-            const result = await genSparkCompilerService.executeCode(language, code);
+            const currentCode = editorRef.current?.getValue() || '';
+            const result = await genSparkCompilerService.executeCode(language, currentCode);
             onRun({
                 ...result,
                 accepted: result.status.id === 3,
-                code,
+                code: currentCode,
                 language
             });
         } catch (error: any) {
@@ -221,11 +211,9 @@ const Compiler = forwardRef<CompilerRef, CompilerProps>(({
             <Editor
                 height="100%"
                 language={language === 'c' || language === 'cpp' ? 'cpp' : language}
-                value={code}
+                defaultValue={initialCode}
                 onChange={(val) => {
-                    const newCode = val || '';
-                    setCode(newCode);
-                    onCodeChange?.(newCode);
+                    onCodeChange?.(val || '');
                 }}
                 onMount={handleEditorDidMount}
                 theme="genspark-theme"

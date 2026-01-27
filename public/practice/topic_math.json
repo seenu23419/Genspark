@@ -1,0 +1,957 @@
+{
+  "id": "math",
+  "title": "Math & Number Theory",
+  "color": "from-yellow-500 to-orange-600",
+  "problems": [
+    {
+      "id": "math-451",
+      "topicId": "math",
+      "title": "Number Theory 1",
+      "description": "Solve math problem 1 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 1"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-452",
+      "topicId": "math",
+      "title": "Number Theory 2",
+      "description": "Solve math problem 2 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 2"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-453",
+      "topicId": "math",
+      "title": "Number Theory 3",
+      "description": "Solve math problem 3 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 3"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-454",
+      "topicId": "math",
+      "title": "Number Theory 4",
+      "description": "Solve math problem 4 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 4"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-455",
+      "topicId": "math",
+      "title": "Number Theory 5",
+      "description": "Solve math problem 5 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 5"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-456",
+      "topicId": "math",
+      "title": "Number Theory 6",
+      "description": "Solve math problem 6 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 6"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-457",
+      "topicId": "math",
+      "title": "Number Theory 7",
+      "description": "Solve math problem 7 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 7"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-458",
+      "topicId": "math",
+      "title": "Number Theory 8",
+      "description": "Solve math problem 8 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 8"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-459",
+      "topicId": "math",
+      "title": "Number Theory 9",
+      "description": "Solve math problem 9 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 9"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-460",
+      "topicId": "math",
+      "title": "Number Theory 10",
+      "description": "Solve math problem 10 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 10"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-461",
+      "topicId": "math",
+      "title": "Number Theory 11",
+      "description": "Solve math problem 11 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 11"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-462",
+      "topicId": "math",
+      "title": "Number Theory 12",
+      "description": "Solve math problem 12 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 12"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-463",
+      "topicId": "math",
+      "title": "Number Theory 13",
+      "description": "Solve math problem 13 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 13"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-464",
+      "topicId": "math",
+      "title": "Number Theory 14",
+      "description": "Solve math problem 14 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 14"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-465",
+      "topicId": "math",
+      "title": "Number Theory 15",
+      "description": "Solve math problem 15 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 15"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-466",
+      "topicId": "math",
+      "title": "Number Theory 16",
+      "description": "Solve math problem 16 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 16"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-467",
+      "topicId": "math",
+      "title": "Number Theory 17",
+      "description": "Solve math problem 17 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 17"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-468",
+      "topicId": "math",
+      "title": "Number Theory 18",
+      "description": "Solve math problem 18 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 18"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-469",
+      "topicId": "math",
+      "title": "Number Theory 19",
+      "description": "Solve math problem 19 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 19"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-470",
+      "topicId": "math",
+      "title": "Number Theory 20",
+      "description": "Solve math problem 20 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 20"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-471",
+      "topicId": "math",
+      "title": "Number Theory 21",
+      "description": "Solve math problem 21 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 21"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-472",
+      "topicId": "math",
+      "title": "Number Theory 22",
+      "description": "Solve math problem 22 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 22"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-473",
+      "topicId": "math",
+      "title": "Number Theory 23",
+      "description": "Solve math problem 23 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 23"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-474",
+      "topicId": "math",
+      "title": "Number Theory 24",
+      "description": "Solve math problem 24 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 24"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-475",
+      "topicId": "math",
+      "title": "Number Theory 25",
+      "description": "Solve math problem 25 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 25"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-476",
+      "topicId": "math",
+      "title": "Number Theory 26",
+      "description": "Solve math problem 26 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 26"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-477",
+      "topicId": "math",
+      "title": "Number Theory 27",
+      "description": "Solve math problem 27 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 27"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-478",
+      "topicId": "math",
+      "title": "Number Theory 28",
+      "description": "Solve math problem 28 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 28"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-479",
+      "topicId": "math",
+      "title": "Number Theory 29",
+      "description": "Solve math problem 29 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 29"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-480",
+      "topicId": "math",
+      "title": "Number Theory 30",
+      "description": "Solve math problem 30 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 30"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-481",
+      "topicId": "math",
+      "title": "Number Theory 31",
+      "description": "Solve math problem 31 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 31"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-482",
+      "topicId": "math",
+      "title": "Number Theory 32",
+      "description": "Solve math problem 32 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 32"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-483",
+      "topicId": "math",
+      "title": "Number Theory 33",
+      "description": "Solve math problem 33 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 33"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-484",
+      "topicId": "math",
+      "title": "Number Theory 34",
+      "description": "Solve math problem 34 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 34"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-485",
+      "topicId": "math",
+      "title": "Number Theory 35",
+      "description": "Solve math problem 35 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 35"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-486",
+      "topicId": "math",
+      "title": "Number Theory 36",
+      "description": "Solve math problem 36 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 36"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-487",
+      "topicId": "math",
+      "title": "Number Theory 37",
+      "description": "Solve math problem 37 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 37"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-488",
+      "topicId": "math",
+      "title": "Number Theory 38",
+      "description": "Solve math problem 38 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 38"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-489",
+      "topicId": "math",
+      "title": "Number Theory 39",
+      "description": "Solve math problem 39 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 39"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-490",
+      "topicId": "math",
+      "title": "Number Theory 40",
+      "description": "Solve math problem 40 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 40"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-491",
+      "topicId": "math",
+      "title": "Number Theory 41",
+      "description": "Solve math problem 41 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 41"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-492",
+      "topicId": "math",
+      "title": "Number Theory 42",
+      "description": "Solve math problem 42 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 42"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-493",
+      "topicId": "math",
+      "title": "Number Theory 43",
+      "description": "Solve math problem 43 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 43"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-494",
+      "topicId": "math",
+      "title": "Number Theory 44",
+      "description": "Solve math problem 44 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 44"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-495",
+      "topicId": "math",
+      "title": "Number Theory 45",
+      "description": "Solve math problem 45 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 45"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-496",
+      "topicId": "math",
+      "title": "Number Theory 46",
+      "description": "Solve math problem 46 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 46"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-497",
+      "topicId": "math",
+      "title": "Number Theory 47",
+      "description": "Solve math problem 47 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 47"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-498",
+      "topicId": "math",
+      "title": "Number Theory 48",
+      "description": "Solve math problem 48 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 48"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-499",
+      "topicId": "math",
+      "title": "Number Theory 49",
+      "description": "Solve math problem 49 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 49"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "math-500",
+      "topicId": "math",
+      "title": "Number Theory 50",
+      "description": "Solve math problem 50 (Gcd, Prime, etc).",
+      "difficulty": "hard",
+      "estimatedTime": 5,
+      "concept": "Algorithms",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
+        "python": "# Math 50"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    }
+  ]
+}

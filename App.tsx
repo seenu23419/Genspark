@@ -47,6 +47,7 @@ const Quiz = lazyWithRetry(() => import('./screens/quiz/Quiz'));
 const AdminCurriculumSync = lazyWithRetry(() => import('./screens/admin/AdminCurriculumSync'));
 const DiagnosticTool = lazyWithRetry(() => import('./screens/admin/DiagnosticTool'));
 const CertificateVerify = lazyWithRetry(() => import('./screens/profile/CertificateVerify'));
+const StreaksActivity = lazyWithRetry(() => import('./screens/profile/StreaksActivity'));
 
 // Query Client for React Query
 const queryClient = new QueryClient();
@@ -116,7 +117,13 @@ const ProtectedRoute = () => {
       if (isOAuthRedirectRef.current) {
         return <Splash />;
       }
-      return <Navigate to="/signup" state={{ from: location }} replace />;
+
+      // Smart Redirect: Returning users go to Login, New users go to Signup
+      const isReturningUser = typeof localStorage !== 'undefined' && localStorage.getItem('genspark_returning_user') === 'true';
+      const redirectPath = isReturningUser ? '/login' : '/signup';
+
+      console.log(`🔒 ProtectedRoute: No user, redirecting to ${redirectPath} (Returning: ${isReturningUser})`);
+      return <Navigate to={redirectPath} state={{ from: location }} replace />;
     }
 
     // Redirect to onboarding if not completed and not already there
@@ -145,7 +152,7 @@ const ProtectedRoute = () => {
     }
 
     return null; // No redirect needed
-  }, [loading, userId, onboardingCompleted, currentPath]);
+  }, [loading, initializing, user, userId, onboardingCompleted, currentPath]);
 
   // If we have a navigation element, return it
   if (navigationElement) {
@@ -189,7 +196,7 @@ const ProtectedRoute = () => {
   if (isFullScreenPage) {
     console.log("📱 ProtectedRoute: Rendering full-screen page (no layout)");
     return (
-      <div className="animate-in fade-in duration-300 h-screen overflow-y-auto relative bg-[#0a0b14]">
+      <div className="animate-in fade-in duration-300 h-screen overflow-y-auto relative bg-[#0a0b14] no-scrollbar">
         <Suspense fallback={<ScreenLoader />}>
           <OfflineBanner />
           <Outlet />
@@ -270,6 +277,7 @@ const router = createBrowserRouter([
       // Routes accessible from Settings or other screens
       { path: "profile", element: <Profile /> },
       { path: "profile/stats", element: <LearningProfile /> },
+      { path: "profile/streaks", element: <StreaksActivity /> },
 
       { path: "lesson/:lessonId", element: <LessonView /> },
       { path: "quiz/:quizId", element: <Quiz /> },
@@ -336,6 +344,15 @@ const App: React.FC = () => {
 
     const runOneSignal = async () => {
       try {
+        // Prevent multiple initialization errors
+        // @ts-ignore
+        if (window.OneSignalInitStarted) {
+          console.log("OneSignal init already in progress or completed");
+          return;
+        }
+        // @ts-ignore
+        window.OneSignalInitStarted = true;
+
         await OneSignal.init({
           appId: "85ebc5e6-c4c1-4bfb-a4e4-6bc01f3ebff4",
           allowLocalhostAsSecureOrigin: true,

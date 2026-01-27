@@ -31,7 +31,7 @@ const Signup: React.FC = () => {
   const isEmailValid = email.length > 0 && isValidEmail(email);
   const isPasswordValid = password.length >= 6;
   const isPasswordMatch = password === confirmPassword && password.length > 0;
-  const isFormValid = isNameValid && isEmailValid && isPasswordValid && isPasswordMatch && acceptedTerms;
+  const isFormValid = isNameValid && isEmailValid && isPasswordValid && isPasswordMatch;
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -103,21 +103,7 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 overflow-hidden flex flex-col">
-      {/* Subtle background grid */}
-      <div
-        className="absolute inset-0 opacity-[0.008] pointer-events-none"
-        style={{
-          backgroundImage: 'linear-gradient(0deg, transparent 24%, rgba(148, 163, 184, .1) 25%, rgba(148, 163, 184, .1) 26%, transparent 27%, transparent 74%, rgba(148, 163, 184, .1) 75%, rgba(148, 163, 184, .1) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(148, 163, 184, .1) 25%, rgba(148, 163, 184, .1) 26%, transparent 27%, transparent 74%, rgba(148, 163, 184, .1) 75%, rgba(148, 163, 184, .1) 76%, transparent 77%, transparent)',
-          backgroundSize: '60px 60px'
-        }}
-      />
-
-      {/* Subtle accent */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute bottom-0 -left-32 w-64 h-64 bg-indigo-600/5 rounded-full blur-3xl" />
-      </div>
-
+    <div className="fixed inset-0 bg-slate-950 overflow-y-auto">
       {/* Back button */}
       <button
         onClick={() => navigate(-1)}
@@ -128,37 +114,37 @@ const Signup: React.FC = () => {
       </button>
 
       {/* Main content - Logo first, brand-forward */}
-      <div className="relative z-10 flex flex-col items-center px-5 py-8 overflow-y-auto">
+      <div className="min-h-full flex flex-col items-center justify-center px-5 py-8">
 
-        {/* Logo - Large, transparent, direct on background */}
-        <div className="mt-8 mb-6 animate-in fade-in zoom-in duration-700 ease-out">
+        {/* Logo - Centered with gap */}
+        <div className="mt-2 mb-2 animate-in fade-in zoom-in duration-700 ease-out">
           <img
             src="/icons/logo.png"
             alt="GenSpark"
-            className="w-40 h-40 md:w-48 md:h-48 object-contain drop-shadow-lg"
+            className="w-36 h-36 md:w-40 md:h-40 object-contain drop-shadow-2xl"
             draggable={false}
           />
         </div>
 
-        {/* Typography Hierarchy */}
-        <div className="text-center mb-10 w-full">
-          <h1 className="text-4xl font-bold text-white mb-2 tracking-tight">Create your account</h1>
-          <p className="text-sm text-slate-400 font-normal">Start your coding journey</p>
+        {/* Typography Hierarchy - Balanced */}
+        <div className="text-center mb-8 w-full space-y-1">
+          <h1 className="text-xl font-bold text-white tracking-tight">Create your account</h1>
+          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em]">Start your coding journey</p>
         </div>
 
         {/* Error message */}
         {error && (
-          <div className="w-full mb-5 p-3 bg-red-500/10 border border-red-500/30 rounded-xl flex items-start gap-3 animate-in fade-in duration-300">
+          <div className="w-full mb-6 p-3 bg-red-500/10 border border-red-500/30 rounded-xl flex items-start gap-3 animate-in fade-in duration-300">
             <AlertCircle size={18} className="text-red-400 mt-0.5 flex-shrink-0" />
             <p className="text-xs text-red-300 font-medium leading-relaxed">{error}</p>
           </div>
         )}
 
         {/* Signup Form */}
-        <form onSubmit={handleSignup} className="w-full max-w-xs space-y-5 px-4 pb-8">
+        <form onSubmit={handleSignup} className="w-full max-w-[340px] space-y-5 px-4 pb-8">
           {/* Name field */}
           <div>
-            <label htmlFor="name" className="text-xs font-semibold text-slate-300 uppercase tracking-wider block mb-2">
+            <label htmlFor="name" className="text-xs font-bold text-slate-300 uppercase tracking-widest block mb-1.5 ml-1">
               Full Name
             </label>
             <div className="relative">
@@ -170,18 +156,18 @@ const Signup: React.FC = () => {
                 onChange={handleNameChange}
                 placeholder="John Doe"
                 disabled={isLoading || isGoogleLoading}
-                className="w-full pl-10 pr-4 py-2.5 bg-slate-800/50 border border-slate-700 rounded-lg text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full pl-11 pr-4 py-3 bg-slate-900/80 border border-slate-700/60 rounded-xl text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-600/40 focus:border-indigo-500 focus:bg-slate-900 focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
               />
             </div>
           </div>
 
           {/* Email field */}
           <div>
-            <label htmlFor="email" className="text-xs font-semibold text-slate-300 uppercase tracking-wider block mb-2">
+            <label htmlFor="email" className="text-xs font-bold text-slate-300 uppercase tracking-widest block mb-1.5 ml-1">
               Email
             </label>
-            <div className="relative">
-              <Mail size={18} className="absolute left-3 top-3 text-slate-500 pointer-events-none" />
+            <div className="relative group">
+              <Mail size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-400 transition-colors z-10" />
               <input
                 id="email"
                 type="email"
@@ -189,18 +175,18 @@ const Signup: React.FC = () => {
                 onChange={handleEmailChange}
                 placeholder="you@example.com"
                 disabled={isLoading || isGoogleLoading}
-                className="w-full pl-10 pr-4 py-2.5 bg-slate-800/50 border border-slate-700 rounded-lg text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full pl-11 pr-4 py-3 bg-slate-900/80 border border-slate-700/60 rounded-xl text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-600/40 focus:border-indigo-500 focus:bg-slate-900 focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
               />
             </div>
           </div>
 
           {/* Password field */}
           <div>
-            <label htmlFor="password" className="text-xs font-semibold text-slate-300 uppercase tracking-wider block mb-2">
+            <label htmlFor="password" className="text-xs font-bold text-slate-300 uppercase tracking-widest block mb-1.5 ml-1">
               Password
             </label>
-            <div className="relative">
-              <Lock size={18} className="absolute left-3 top-3 text-slate-500 pointer-events-none" />
+            <div className="relative group">
+              <Lock size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-400 transition-colors z-10" />
               <input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
@@ -208,27 +194,26 @@ const Signup: React.FC = () => {
                 onChange={handlePasswordChange}
                 placeholder="••••••••"
                 disabled={isLoading || isGoogleLoading}
-                className="w-full pl-10 pr-10 py-2.5 bg-slate-800/50 border border-slate-700 rounded-lg text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full pl-11 pr-11 py-3 bg-slate-900/60 border border-slate-700 rounded-xl text-white text-sm placeholder:text-slate-600 focus:ring-2 focus:ring-indigo-700/80 focus:border-indigo-600 focus:bg-slate-950 focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 disabled={isLoading || isGoogleLoading}
-                className="absolute right-3 top-3 text-slate-500 hover:text-slate-300 transition-colors disabled:opacity-50"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
-            <p className="text-xs text-slate-500 mt-1">Minimum 6 characters</p>
           </div>
 
           {/* Confirm password field */}
           <div>
-            <label htmlFor="confirm" className="text-xs font-semibold text-slate-300 uppercase tracking-wider block mb-2">
+            <label htmlFor="confirm" className="text-xs font-bold text-slate-300 uppercase tracking-widest block mb-1.5 ml-1">
               Confirm Password
             </label>
-            <div className="relative">
-              <Lock size={18} className="absolute left-3 top-3 text-slate-500 pointer-events-none" />
+            <div className="relative group">
+              <Lock size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-400 transition-colors z-10" />
               <input
                 id="confirm"
                 type={showConfirm ? 'text' : 'password'}
@@ -236,13 +221,13 @@ const Signup: React.FC = () => {
                 onChange={handleConfirmChange}
                 placeholder="••••••••"
                 disabled={isLoading || isGoogleLoading}
-                className="w-full pl-10 pr-10 py-2.5 bg-slate-800/50 border border-slate-700 rounded-lg text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full pl-11 pr-11 py-3 bg-slate-900/60 border border-slate-700 rounded-xl text-white text-sm placeholder:text-slate-600 focus:ring-2 focus:ring-indigo-700/80 focus:border-indigo-600 focus:bg-slate-950 focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               />
               <button
                 type="button"
                 onClick={() => setShowConfirm(!showConfirm)}
                 disabled={isLoading || isGoogleLoading}
-                className="absolute right-3 top-3 text-slate-500 hover:text-slate-300 transition-colors disabled:opacity-50"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors disabled:opacity-50"
               >
                 {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
@@ -261,48 +246,15 @@ const Signup: React.FC = () => {
             )}
           </div>
 
-          {/* Terms checkbox */}
-          <div className="flex items-start gap-3 pt-2">
-            <input
-              id="terms"
-              type="checkbox"
-              checked={acceptedTerms}
-              onChange={(e) => {
-                setAcceptedTerms(e.target.checked);
-                if (error) setError(null);
-              }}
-              disabled={isLoading || isGoogleLoading}
-              className="w-4 h-4 rounded mt-1 bg-slate-800 border border-slate-700 accent-indigo-600 cursor-pointer disabled:opacity-50"
-            />
-            <label htmlFor="terms" className="text-xs text-slate-400 cursor-pointer leading-relaxed">
-              I accept the{' '}
-              <button
-                type="button"
-                onClick={() => window.open('/terms', '_blank')}
-                className="text-indigo-400 hover:text-indigo-300 font-semibold underline"
-              >
-                Terms
-              </button>
-              {' & '}
-              <button
-                type="button"
-                onClick={() => navigate('/privacy')}
-                className="text-indigo-400 hover:text-indigo-300 font-semibold underline"
-              >
-                Privacy Policy
-              </button>
-            </label>
-          </div>
-
-          {/* Sign up button */}
+          {/* Sign up button - Solid professional style */}
           <button
             type="submit"
             disabled={!isFormValid || isLoading || isGoogleLoading}
-            className="w-full py-3 bg-violet-600 hover:bg-violet-500 active:bg-violet-700 disabled:bg-slate-700 disabled:cursor-not-allowed text-white text-sm font-bold rounded-full transition-all duration-200 flex items-center justify-center gap-2 mt-6"
+            className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 disabled:bg-slate-800 disabled:text-slate-600 disabled:cursor-not-allowed text-white text-base font-extrabold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/10"
           >
             {isLoading ? (
               <>
-                <Loader2 size={16} className="animate-spin" />
+                <Loader2 size={18} className="animate-spin" />
                 <span>Creating account...</span>
               </>
             ) : (
@@ -313,9 +265,9 @@ const Signup: React.FC = () => {
 
         {/* Divider */}
         <div className="w-full max-w-xs flex items-center gap-3 my-5">
-          <div className="flex-1 h-px bg-slate-700" />
-          <span className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Or</span>
-          <div className="flex-1 h-px bg-slate-700" />
+          <div className="flex-1 h-px bg-slate-600" />
+          <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Or</span>
+          <div className="flex-1 h-px bg-slate-600" />
         </div>
 
         {/* Google signup button */}
@@ -323,7 +275,7 @@ const Signup: React.FC = () => {
           type="button"
           onClick={handleGoogleSignup}
           disabled={isLoading || isGoogleLoading}
-          className="w-full max-w-xs py-3 bg-slate-800 hover:bg-slate-700 border-0 rounded-full text-white text-sm font-semibold flex items-center justify-center gap-3 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full max-w-xs py-3 bg-slate-800/60 border border-slate-700 hover:border-slate-600 hover:bg-slate-800 rounded-full text-slate-200 text-sm font-semibold flex items-center justify-center gap-3 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isGoogleLoading ? (
             <>
@@ -346,12 +298,12 @@ const Signup: React.FC = () => {
         </button>
 
         {/* Login link */}
-        <p className="text-center text-slate-400 text-sm mt-8 mb-6">
+        <p className="text-center text-slate-300 text-sm mt-8 mb-6">
           Already have an account?{' '}
           <button
             onClick={() => navigate('/login')}
             disabled={isLoading || isGoogleLoading}
-            className="text-indigo-400 font-bold hover:text-indigo-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="text-slate-200 font-bold hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Log in
           </button>

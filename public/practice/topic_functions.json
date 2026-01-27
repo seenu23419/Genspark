@@ -1,0 +1,957 @@
+{
+  "id": "functions",
+  "title": "Functions & Modularity",
+  "color": "from-indigo-500 to-violet-500",
+  "problems": [
+    {
+      "id": "functions-301",
+      "topicId": "functions",
+      "title": "Modular Task 1",
+      "description": "Create a function that performs operation 1.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task1() {\n}\n\nint main() {\n    task1();\n    return 0;\n}",
+        "python": "def task1():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-302",
+      "topicId": "functions",
+      "title": "Modular Task 2",
+      "description": "Create a function that performs operation 2.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task2() {\n}\n\nint main() {\n    task2();\n    return 0;\n}",
+        "python": "def task2():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-303",
+      "topicId": "functions",
+      "title": "Modular Task 3",
+      "description": "Create a function that performs operation 3.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task3() {\n}\n\nint main() {\n    task3();\n    return 0;\n}",
+        "python": "def task3():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-304",
+      "topicId": "functions",
+      "title": "Modular Task 4",
+      "description": "Create a function that performs operation 4.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task4() {\n}\n\nint main() {\n    task4();\n    return 0;\n}",
+        "python": "def task4():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-305",
+      "topicId": "functions",
+      "title": "Modular Task 5",
+      "description": "Create a function that performs operation 5.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task5() {\n}\n\nint main() {\n    task5();\n    return 0;\n}",
+        "python": "def task5():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-306",
+      "topicId": "functions",
+      "title": "Modular Task 6",
+      "description": "Create a function that performs operation 6.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task6() {\n}\n\nint main() {\n    task6();\n    return 0;\n}",
+        "python": "def task6():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-307",
+      "topicId": "functions",
+      "title": "Modular Task 7",
+      "description": "Create a function that performs operation 7.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task7() {\n}\n\nint main() {\n    task7();\n    return 0;\n}",
+        "python": "def task7():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-308",
+      "topicId": "functions",
+      "title": "Modular Task 8",
+      "description": "Create a function that performs operation 8.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task8() {\n}\n\nint main() {\n    task8();\n    return 0;\n}",
+        "python": "def task8():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-309",
+      "topicId": "functions",
+      "title": "Modular Task 9",
+      "description": "Create a function that performs operation 9.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task9() {\n}\n\nint main() {\n    task9();\n    return 0;\n}",
+        "python": "def task9():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-310",
+      "topicId": "functions",
+      "title": "Modular Task 10",
+      "description": "Create a function that performs operation 10.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task10() {\n}\n\nint main() {\n    task10();\n    return 0;\n}",
+        "python": "def task10():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-311",
+      "topicId": "functions",
+      "title": "Modular Task 11",
+      "description": "Create a function that performs operation 11.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task11() {\n}\n\nint main() {\n    task11();\n    return 0;\n}",
+        "python": "def task11():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-312",
+      "topicId": "functions",
+      "title": "Modular Task 12",
+      "description": "Create a function that performs operation 12.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task12() {\n}\n\nint main() {\n    task12();\n    return 0;\n}",
+        "python": "def task12():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-313",
+      "topicId": "functions",
+      "title": "Modular Task 13",
+      "description": "Create a function that performs operation 13.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task13() {\n}\n\nint main() {\n    task13();\n    return 0;\n}",
+        "python": "def task13():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-314",
+      "topicId": "functions",
+      "title": "Modular Task 14",
+      "description": "Create a function that performs operation 14.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task14() {\n}\n\nint main() {\n    task14();\n    return 0;\n}",
+        "python": "def task14():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-315",
+      "topicId": "functions",
+      "title": "Modular Task 15",
+      "description": "Create a function that performs operation 15.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task15() {\n}\n\nint main() {\n    task15();\n    return 0;\n}",
+        "python": "def task15():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-316",
+      "topicId": "functions",
+      "title": "Modular Task 16",
+      "description": "Create a function that performs operation 16.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task16() {\n}\n\nint main() {\n    task16();\n    return 0;\n}",
+        "python": "def task16():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-317",
+      "topicId": "functions",
+      "title": "Modular Task 17",
+      "description": "Create a function that performs operation 17.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task17() {\n}\n\nint main() {\n    task17();\n    return 0;\n}",
+        "python": "def task17():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-318",
+      "topicId": "functions",
+      "title": "Modular Task 18",
+      "description": "Create a function that performs operation 18.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task18() {\n}\n\nint main() {\n    task18();\n    return 0;\n}",
+        "python": "def task18():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-319",
+      "topicId": "functions",
+      "title": "Modular Task 19",
+      "description": "Create a function that performs operation 19.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task19() {\n}\n\nint main() {\n    task19();\n    return 0;\n}",
+        "python": "def task19():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-320",
+      "topicId": "functions",
+      "title": "Modular Task 20",
+      "description": "Create a function that performs operation 20.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task20() {\n}\n\nint main() {\n    task20();\n    return 0;\n}",
+        "python": "def task20():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-321",
+      "topicId": "functions",
+      "title": "Modular Task 21",
+      "description": "Create a function that performs operation 21.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task21() {\n}\n\nint main() {\n    task21();\n    return 0;\n}",
+        "python": "def task21():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-322",
+      "topicId": "functions",
+      "title": "Modular Task 22",
+      "description": "Create a function that performs operation 22.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task22() {\n}\n\nint main() {\n    task22();\n    return 0;\n}",
+        "python": "def task22():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-323",
+      "topicId": "functions",
+      "title": "Modular Task 23",
+      "description": "Create a function that performs operation 23.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task23() {\n}\n\nint main() {\n    task23();\n    return 0;\n}",
+        "python": "def task23():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-324",
+      "topicId": "functions",
+      "title": "Modular Task 24",
+      "description": "Create a function that performs operation 24.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task24() {\n}\n\nint main() {\n    task24();\n    return 0;\n}",
+        "python": "def task24():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-325",
+      "topicId": "functions",
+      "title": "Modular Task 25",
+      "description": "Create a function that performs operation 25.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task25() {\n}\n\nint main() {\n    task25();\n    return 0;\n}",
+        "python": "def task25():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-326",
+      "topicId": "functions",
+      "title": "Modular Task 26",
+      "description": "Create a function that performs operation 26.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task26() {\n}\n\nint main() {\n    task26();\n    return 0;\n}",
+        "python": "def task26():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-327",
+      "topicId": "functions",
+      "title": "Modular Task 27",
+      "description": "Create a function that performs operation 27.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task27() {\n}\n\nint main() {\n    task27();\n    return 0;\n}",
+        "python": "def task27():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-328",
+      "topicId": "functions",
+      "title": "Modular Task 28",
+      "description": "Create a function that performs operation 28.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task28() {\n}\n\nint main() {\n    task28();\n    return 0;\n}",
+        "python": "def task28():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-329",
+      "topicId": "functions",
+      "title": "Modular Task 29",
+      "description": "Create a function that performs operation 29.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task29() {\n}\n\nint main() {\n    task29();\n    return 0;\n}",
+        "python": "def task29():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-330",
+      "topicId": "functions",
+      "title": "Modular Task 30",
+      "description": "Create a function that performs operation 30.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task30() {\n}\n\nint main() {\n    task30();\n    return 0;\n}",
+        "python": "def task30():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-331",
+      "topicId": "functions",
+      "title": "Modular Task 31",
+      "description": "Create a function that performs operation 31.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task31() {\n}\n\nint main() {\n    task31();\n    return 0;\n}",
+        "python": "def task31():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-332",
+      "topicId": "functions",
+      "title": "Modular Task 32",
+      "description": "Create a function that performs operation 32.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task32() {\n}\n\nint main() {\n    task32();\n    return 0;\n}",
+        "python": "def task32():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-333",
+      "topicId": "functions",
+      "title": "Modular Task 33",
+      "description": "Create a function that performs operation 33.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task33() {\n}\n\nint main() {\n    task33();\n    return 0;\n}",
+        "python": "def task33():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-334",
+      "topicId": "functions",
+      "title": "Modular Task 34",
+      "description": "Create a function that performs operation 34.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task34() {\n}\n\nint main() {\n    task34();\n    return 0;\n}",
+        "python": "def task34():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-335",
+      "topicId": "functions",
+      "title": "Modular Task 35",
+      "description": "Create a function that performs operation 35.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task35() {\n}\n\nint main() {\n    task35();\n    return 0;\n}",
+        "python": "def task35():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-336",
+      "topicId": "functions",
+      "title": "Modular Task 36",
+      "description": "Create a function that performs operation 36.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task36() {\n}\n\nint main() {\n    task36();\n    return 0;\n}",
+        "python": "def task36():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-337",
+      "topicId": "functions",
+      "title": "Modular Task 37",
+      "description": "Create a function that performs operation 37.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task37() {\n}\n\nint main() {\n    task37();\n    return 0;\n}",
+        "python": "def task37():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-338",
+      "topicId": "functions",
+      "title": "Modular Task 38",
+      "description": "Create a function that performs operation 38.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task38() {\n}\n\nint main() {\n    task38();\n    return 0;\n}",
+        "python": "def task38():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-339",
+      "topicId": "functions",
+      "title": "Modular Task 39",
+      "description": "Create a function that performs operation 39.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task39() {\n}\n\nint main() {\n    task39();\n    return 0;\n}",
+        "python": "def task39():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-340",
+      "topicId": "functions",
+      "title": "Modular Task 40",
+      "description": "Create a function that performs operation 40.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task40() {\n}\n\nint main() {\n    task40();\n    return 0;\n}",
+        "python": "def task40():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-341",
+      "topicId": "functions",
+      "title": "Modular Task 41",
+      "description": "Create a function that performs operation 41.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task41() {\n}\n\nint main() {\n    task41();\n    return 0;\n}",
+        "python": "def task41():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-342",
+      "topicId": "functions",
+      "title": "Modular Task 42",
+      "description": "Create a function that performs operation 42.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task42() {\n}\n\nint main() {\n    task42();\n    return 0;\n}",
+        "python": "def task42():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-343",
+      "topicId": "functions",
+      "title": "Modular Task 43",
+      "description": "Create a function that performs operation 43.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task43() {\n}\n\nint main() {\n    task43();\n    return 0;\n}",
+        "python": "def task43():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-344",
+      "topicId": "functions",
+      "title": "Modular Task 44",
+      "description": "Create a function that performs operation 44.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task44() {\n}\n\nint main() {\n    task44();\n    return 0;\n}",
+        "python": "def task44():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-345",
+      "topicId": "functions",
+      "title": "Modular Task 45",
+      "description": "Create a function that performs operation 45.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task45() {\n}\n\nint main() {\n    task45();\n    return 0;\n}",
+        "python": "def task45():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-346",
+      "topicId": "functions",
+      "title": "Modular Task 46",
+      "description": "Create a function that performs operation 46.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task46() {\n}\n\nint main() {\n    task46();\n    return 0;\n}",
+        "python": "def task46():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-347",
+      "topicId": "functions",
+      "title": "Modular Task 47",
+      "description": "Create a function that performs operation 47.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task47() {\n}\n\nint main() {\n    task47();\n    return 0;\n}",
+        "python": "def task47():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-348",
+      "topicId": "functions",
+      "title": "Modular Task 48",
+      "description": "Create a function that performs operation 48.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task48() {\n}\n\nint main() {\n    task48();\n    return 0;\n}",
+        "python": "def task48():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-349",
+      "topicId": "functions",
+      "title": "Modular Task 49",
+      "description": "Create a function that performs operation 49.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task49() {\n}\n\nint main() {\n    task49();\n    return 0;\n}",
+        "python": "def task49():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    },
+    {
+      "id": "functions-350",
+      "topicId": "functions",
+      "title": "Modular Task 50",
+      "description": "Create a function that performs operation 50.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Functions",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nvoid task50() {\n}\n\nint main() {\n    task50();\n    return 0;\n}",
+        "python": "def task50():\n    pass"
+      },
+      "testCases": [
+        {
+          "input": "10",
+          "output": "Sample Output"
+        }
+      ]
+    }
+  ]
+}
