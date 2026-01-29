@@ -17,7 +17,11 @@ const lazyWithRetry = (componentImport: () => Promise<{ default: React.Component
       return await componentImport();
     } catch (error) {
       console.error("Async import failed:", error);
-      // Let React Error Boundary handle it instead of looping refreshes
+      // Fallback: If it's a chunk error, it might be due to a deployment update.
+      // We check if it's a "Loading chunk failed" error.
+      if (error instanceof Error && error.message.includes('Loading chunk')) {
+        console.warn("Chunk error detected, potentially due to new deployment. Prompting for update via PWA instead of auto-refresh.");
+      }
       throw error;
     }
   });
@@ -71,7 +75,7 @@ const ProtectedRoute = () => {
   const isOAuthRedirectRef = React.useRef(false);
 
   // Global styles for the app background - ENSURE SCROLLING IS ENABLED
-  React.useEffect(() => {
+  useEffect(() => {
     document.documentElement.style.backgroundColor = '#0a0b14';
     document.body.style.backgroundColor = '#0a0b14';
     document.documentElement.style.overflow = '';
@@ -81,7 +85,7 @@ const ProtectedRoute = () => {
   }, []);
 
   // Detect OAuth redirect by checking for auth-related hash/query params
-  React.useEffect(() => {
+  useEffect(() => {
     const hasAuthParams =
       window.location.hash.includes('access_token') ||
       window.location.hash.includes('code') ||
@@ -98,15 +102,13 @@ const ProtectedRoute = () => {
   const currentPath = location.pathname;
 
   // Sticky Loading Guard: Once auth has loaded once, we never show Splash again in this session
-  const authHasFinished = React.useRef(false);
-  React.useEffect(() => {
+  const authHasFinished = useRef(false);
+  useEffect(() => {
     if (!loading) authHasFinished.current = true;
   }, [loading]);
 
   const navigationElement = useMemo(() => {
     // Determine if we should show the splash screen
-    // We show it if we are initializing AND don't have a user, 
-    // OR if we are waiting for the minimum splash duration.
     const isSplashPhase = (initializing && !user) || (loading && !user);
 
     if (isSplashPhase && !authHasFinished.current) {
@@ -122,32 +124,28 @@ const ProtectedRoute = () => {
       const isReturningUser = typeof localStorage !== 'undefined' && localStorage.getItem('genspark_returning_user') === 'true';
       const redirectPath = isReturningUser ? '/login' : '/signup';
 
-      console.log(`🔒 ProtectedRoute: No user, redirecting to ${redirectPath} (Returning: ${isReturningUser})`);
+      console.log(`🔒 ProtectedRoute: No user, redirecting to ${redirectPath}`);
       return <Navigate to={redirectPath} state={{ from: location }} replace />;
     }
 
     // Redirect to onboarding if not completed and not already there
-    // For existing users, if onboardingCompleted is undefined but they have names filled, consider onboarding complete
-    // This handles users who completed onboarding before we added the onboardingCompleted field
     const hasNamesFilled = user?.firstName && user?.firstName.trim() !== '';
     const needsOnboarding = onboardingCompleted === false || (onboardingCompleted === undefined && !hasNamesFilled);
 
-    // Prevent redirecting to onboarding if we're currently on the home page or other valid pages
-    // This helps avoid redirect loops after onboarding completion
     if (needsOnboarding && currentPath !== '/onboarding' && currentPath !== '/settings') {
-      console.log("➡️ ProtectedRoute: User needs onboarding, redirecting", {
-        userId,
-        currentPath,
-        timestamp: Date.now(),
-        onboardingCompleted,
-        hasNamesFilled
-      });
+      console.log("➡️ ProtectedRoute: User needs onboarding, redirecting home");
       return <Navigate to="/onboarding" replace />;
+    }
+
+    // Redirect home if they land on auth pages while logged in
+    if (['/login', '/signup', '/forgot-password', '/otp'].includes(currentPath)) {
+      console.log("✅ ProtectedRoute: Logged in user on auth page, redirecting home");
+      return <Navigate to="/" replace />;
     }
 
     // If onboarding is done, prevent going back to onboarding screen
     if (onboardingCompleted && currentPath === '/onboarding') {
-      console.log("✅ ProtectedRoute: Onboarding already completed, redirecting to home");
+      console.log("✅ ProtectedRoute: Onboarding already completed, redirecting home");
       return <Navigate to="/" replace />;
     }
 
@@ -160,19 +158,17 @@ const ProtectedRoute = () => {
   }
 
   // Derive screen name for Layout highlights
-  const path = location.pathname;
   let screen: Screen = 'HOME';
-  if (path === '/learn') screen = 'LEARN';
-  else if (path.startsWith('/track')) screen = 'LEARN'; // Fix: Highlight Learn for track pages
-  else if (path.startsWith('/practice')) screen = 'PRACTICE';
-  else if (path.startsWith('/settings')) screen = 'SETTINGS';
-  else if (path.startsWith('/profile')) screen = 'PROFILE';
-  else if (path.startsWith('/lessons') || path.startsWith('/lesson') || path.startsWith('/quiz')) screen = 'LEARN';
-  else if (path.startsWith('/challenge')) screen = 'PRACTICE';
+  if (currentPath === '/learn') screen = 'LEARN';
+  else if (currentPath.startsWith('/track')) screen = 'LEARN';
+  else if (currentPath.startsWith('/practice')) screen = 'PRACTICE';
+  else if (currentPath.startsWith('/settings')) screen = 'SETTINGS';
+  else if (currentPath.startsWith('/profile')) screen = 'PROFILE';
+  else if (currentPath.startsWith('/lessons') || currentPath.startsWith('/lesson') || currentPath.startsWith('/quiz')) screen = 'LEARN';
+  else if (currentPath.startsWith('/challenge')) screen = 'PRACTICE';
 
   // Isolate Onboarding from Layout (No Bottom Nav)
-  if (path === '/onboarding') {
-    console.log("📝 ProtectedRoute: Rendering onboarding page");
+  if (currentPath === '/onboarding') {
     return (
       <div className="animate-in fade-in duration-300">
         <Suspense fallback={<ScreenLoader />}>
@@ -185,16 +181,15 @@ const ProtectedRoute = () => {
 
   // Isolate Full-Screen components from Layout (prevent double headers/nav)
   const isFullScreenPage =
-    path.startsWith('/lesson/') ||
-    path.startsWith('/quiz/') ||
-    path.startsWith('/track/') ||
-    path.startsWith('/practice/problem/') ||
-    path.startsWith('/challenge/') ||
-    path.startsWith('/subscription') ||
-    path.startsWith('/certificate/verify/');
+    currentPath.startsWith('/lesson/') ||
+    currentPath.startsWith('/quiz/') ||
+    currentPath.startsWith('/track/') ||
+    currentPath.startsWith('/practice/problem/') ||
+    currentPath.startsWith('/challenge/') ||
+    currentPath.startsWith('/subscription') ||
+    currentPath.startsWith('/certificate/verify/');
 
   if (isFullScreenPage) {
-    console.log("📱 ProtectedRoute: Rendering full-screen page (no layout)");
     return (
       <div className="animate-in fade-in duration-300 h-screen overflow-y-auto relative bg-[#0a0b14] no-scrollbar">
         <Suspense fallback={<ScreenLoader />}>
@@ -205,7 +200,6 @@ const ProtectedRoute = () => {
     );
   }
 
-  console.log("🏠 ProtectedRoute: Rendering main layout");
   return (
     <div className="animate-in fade-in duration-300">
       <OfflineBanner />
