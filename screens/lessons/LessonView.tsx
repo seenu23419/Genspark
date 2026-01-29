@@ -24,7 +24,6 @@ import { useCurriculum } from '../../contexts/useCurriculum';
 import { useAuth } from '../../contexts/AuthContext';
 import { Lesson } from '../../types';
 import { offlineService } from '../../services/offlineService';
-import ConfettiReward from '../../components/feedback/ConfettiReward';
 import './lessons.css';
 
 interface LessonViewProps {
@@ -151,6 +150,10 @@ const LessonView: React.FC<LessonViewProps> = ({
       if (!currentCompleted.includes(lesson.id)) {
         await updateProfile({
           completedLessonIds: [...currentCompleted, lesson.id]
+        }, {
+          type: 'lesson',
+          title: `Completed Lesson: ${lesson.title}`,
+          xp: 50
         });
         setQuizCompleted(true);
         setCodeSuccess(true);
@@ -200,7 +203,6 @@ const LessonView: React.FC<LessonViewProps> = ({
 
   return (
     <div className="min-h-screen bg-[#0a0b14] flex flex-col text-slate-200 selection:bg-indigo-500/30">
-      {quizCompleted && <ConfettiReward trigger={true} />}
 
       {/* Header - Material Design 56dp */}
       <header className="sticky top-0 z-30 bg-[#0a0b14]/80 backdrop-blur-xl border-b border-white/5 px-4 py-3 md:px-6 h-14">
@@ -438,7 +440,6 @@ const LessonView: React.FC<LessonViewProps> = ({
         </div>
       </main>
 
-      <ConfettiReward trigger={codeSuccess} />
     </div>
   );
 };

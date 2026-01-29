@@ -158,7 +158,11 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
             updates.unlockedLessonIds = [nextId];
           }
 
-          await updateProfile(updates);
+          await updateProfile(updates, {
+            type: 'challenge',
+            title: `Passed Quiz: ${lessonData.lesson?.title || 'Knowledge Check'}`,
+            xp: 100
+          });
 
           // Final exam cert generation
           if (isPassed && quizId === 'c41') {

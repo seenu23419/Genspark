@@ -1,589 +1,1346 @@
 [
     {
-        "id": "java-level-1",
-        "title": "LEVEL 1: Java Basics (Zero Level)",
-        "description": "Get started with the world's most popular enterprise language",
+        "id": "java-l1",
+        "title": "LEVEL 1: Java Foundations (Beginner)",
+        "description": "Understand Java basics & syntax",
         "lessons": [
             {
-                "id": "j1.1",
-                "title": "1.1 What is Java?",
+                "id": "j1",
+                "title": "1. Introduction to Java",
                 "duration": "15 mins",
-                "difficultyLevel": "Beginner",
-                "topics": [
-                    "Introduction",
-                    "History",
-                    "Enterprise"
-                ],
-                "content": "# What is Java?\n\nJava is a high-level, class-based, object-oriented programming language designed to have as few implementation dependencies as possible. It follows the **WORA** principle: **Write Once, Run Anywhere.**\n\n## Why Java?\n\n- **🔥 Platform Independent**: Programs compile into bytecode that runs on any machine with a JVM.\n- **⚡ Secure**: Java runs inside a sandbox, preventing unauthorized access to system resources.\n- **💠 Robust**: Strong memory management (Automatic Garbage Collection).\n- **📝 Multi-threaded**: Java allows you to write programs that can perform many tasks simultaneously.\n\n## History\n- Created by **James Gosling** at Sun Microsystems in 1995.\n- Originally called 'Oak'.\n- Now owned by **Oracle Corporation**.\n\n## Real-World Applications\n- **Android Apps**: Most mobile apps are built using Java (or Kotlin).\n- **Enterprise Servers**: Banking, stock exchanges, and big data (Hadoop).\n- **Embedded Systems**: Smart cards, sensors, and appliances.",
-                "fullProgram": "// The classic entry point\npublic class Intro {\n    public static void main(String[] args) {\n        System.out.println(\"Java: The foundation of enterprise software.\");\n        System.out.println(\"Welcome to your Zero to Hero journey!\");\n    }\n}",
-                "expectedOutput": "Java: The foundation of enterprise software.\nWelcome to your Zero to Hero journey!",
+                "content": "# ☕ Introduction to Java\n\nJava is a platform-independent, object-oriented programming language. \n\n### Key Components:\n- **JVM**: Runs bytecode.\n- **JRE**: Libraries + JVM.\n- **JDK**: Development tools + JRE.\n\n### History:\n- Created by **James Gosling** in 1995 (Sun Microsystems).",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "What does WORA stand for?",
+                        "text": "Which component makes Java platform independent?",
                         "options": [
-                            "Work On Real Apps",
-                            "Write Once, Run Anywhere",
-                            "Win On Real Assets",
-                            "Write Only Read Always"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "WORA stands for Write Once, Run Anywhere, referring to Java's platform independence."
-                    }
-                ]
-            },
-            {
-                "id": "j1.2",
-                "title": "1.2 JDK, JRE, and JVM",
-                "duration": "20 mins",
-                "difficultyLevel": "Beginner",
-                "topics": [
-                    "Architecture",
-                    "Compilation",
-                    "Bytecode"
-                ],
-                "content": "# The Java Environment\n\nTo run and build Java programs, you need to understand the relationship between three core components.\n\n## 1. JVM (Java Virtual Machine)\n- The 'engine' that runs the code.\n- It translates Java Bytecode into machine-specific code.\n\n## 2. JRE (Java Runtime Environment)\n- Contains the JVM + core libraries needed to **run** Java apps.\n- Does NOT contain development tools (like compilers).\n\n## 3. JDK (Java Development Kit)\n- The full software package for **developers**.\n- Contains JRE + Development Tools (javac, jdb, javadoc).\n\n### The Relationship:\n`JDK = JRE + Development Tools` \n`JRE = JVM + Library Files`",
-                "fullProgram": "public class Architecture {\n    public static void main(String[] args) {\n        System.out.println(\"JDK: For Developers\");\n        System.out.println(\"JRE: For Running Apps\");\n        System.out.println(\"JVM: The Execution Engine\");\n    }\n}",
-                "expectedOutput": "JDK: For Developers\nJRE: For Running Apps\nJVM: The Execution Engine",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which component contains the Java Compiler (javac)?",
-                        "options": [
-                            "JVM",
-                            "JRE",
                             "JDK",
-                            "OS"
+                            "JRE",
+                            "JVM"
                         ],
                         "correctAnswer": 2,
-                        "explanation": "The JDK contains development tools like the compiler, while JRE/JVM only provide run-time functionality."
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "java-level-2",
-        "title": "LEVEL 2: Data Types & Operators",
-        "description": "Master the build blocks of Java logic",
-        "lessons": [
-            {
-                "id": "j2.1",
-                "title": "2.1 Primitive Types vs Wrappers",
-                "duration": "25 mins",
-                "difficultyLevel": "Beginner",
-                "topics": [
-                    "Data Types",
-                    "Memory",
-                    "Wrappers"
-                ],
-                "content": "# Java Data Types\n\nJava is a **statically-typed** language, meaning every variable must have a declared type.\n\n## 1. Primitive Types (Direct values)\n- `int`: 4 bytes (Integers)\n- `double`: 8 bytes (Decimals)\n- `boolean`: 1 bit (true/false)\n- `char`: 2 bytes (Unicode character)\n- `long`: 8 bytes (Large integers - add 'L' suffix)\n\n## 2. Wrapper Classes (Object versions)\nJava provides objects that wrap primitives to use them with collections (like ArrayList).\n- `int` -> `Integer`\n- `double` -> `Double`\n- `char` -> `Character`\n\n## Autoboxing & Unboxing\n- **Autoboxing**: Automatic conversion of primitive to wrapper (`int` -> `Integer`).\n- **Unboxing**: Wrapper to primitive (`Integer` -> `int`).",
-                "fullProgram": "public class Types {\n    public static void main(String[] args) {\n        int age = 22;\n        double price = 19.99;\n        boolean isJavaFun = true;\n        \n        // Autoboxing example\n        Integer wrapperAge = age;\n        \n        System.out.println(\"Age: \" + age);\n        System.out.println(\"Wrapper Age: \" + wrapperAge);\n        System.out.println(\"Is Java Fun? \" + isJavaFun);\n    }\n}",
-                "expectedOutput": "Age: 22\nWrapper Age: 22\nIs Java Fun? true",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "What is the size of a 'long' in Java?",
-                        "options": [
-                            "4 bytes",
-                            "8 bytes",
-                            "2 bytes",
-                            "1 byte"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "A long is a 64-bit (8 bytes) integer type."
-                    }
-                ]
-            },
-            {
-                "id": "j2.2",
-                "title": "2.2 Arithmetic & Bitwise Operators",
-                "duration": "30 mins",
-                "difficultyLevel": "Beginner",
-                "topics": [
-                    "Math",
-                    "Bitwise",
-                    "Logic"
-                ],
-                "content": "# Operators in Java\n\n## 1. Arithmetic\n`+`, `-`, `*`, `/`, `%` (Modulus), `++`, `--`.\n\n## 2. Relational\n`==`, `!=`, `>`, `<`, `>=`, `<=` (Result is always a boolean).\n\n## 3. Logical\n- `&&` (AND)\n- `||` (OR)\n- `!` (NOT)\n\n## 4. Assignment\n`=`, `+=`, `-=`, `*=`, `/=`.\n\n## 5. Ternary Operator\n`result = (condition) ? value_if_true : value_if_false;`",
-                "fullProgram": "public class Operators {\n    public static void main(String[] args) {\n        int a = 10, b = 3;\n        \n        System.out.println(\"Add: \" + (a + b));\n        System.out.println(\"Rem: \" + (a % b));\n        \n        // Ternary\n        String type = (a % 2 == 0) ? \"Even\" : \"Odd\";\n        System.out.println(\"10 is \" + type);\n    }\n}",
-                "expectedOutput": "Add: 13\nRem: 1\n10 is Even",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "What is the result of 15 % 4?",
-                        "options": [
-                            "3",
-                            "1",
-                            "4",
-                            "0"
-                        ],
-                        "correctAnswer": 0,
-                        "explanation": "15 divided by 4 is 3 with a remainder of 3. Modulus returns the remainder."
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "java-level-3",
-        "title": "LEVEL 3: Control Flow Mastery",
-        "description": "Make complex decisions and build efficient loops",
-        "lessons": [
-            {
-                "id": "j3.1",
-                "title": "3.1 Conditionals (if, switch)",
-                "duration": "30 mins",
-                "difficultyLevel": "Beginner",
-                "topics": [
-                    "if-else",
-                    "Switch",
-                    "Logic"
-                ],
-                "content": "# Making Decisions\n\n## 1. if-else Ladder\nUsed for range-based or boolean logic.\n\n```java\nif (score > 90) {\n    System.out.println(\"A\");\n} else if (score > 80) {\n    System.out.println(\"B\");\n} else {\n    System.out.println(\"C\");\n}\n```\n\n## 2. Switch Statement\nBest for discrete values (integers, chars, strings, enums).\n\n```java\nString day = \"SAT\";\nswitch (day) {\n    case \"MON\": System.out.println(\"Work\"); break;\n    case \"SAT\":\n    case \"SUN\": System.out.println(\"Weekend\"); break;\n    default: System.out.println(\"Invalid\");\n}\n```",
-                "fullProgram": "public class Decisions {\n    public static void main(String[] args) {\n        int day = 3;\n        \n        switch(day) {\n            case 1: System.out.println(\"Monday\"); break;\n            case 2: System.out.println(\"Tuesday\"); break;\n            case 3: System.out.println(\"Wednesday\"); break;\n            default: System.out.println(\"Other\");\n        }\n    }\n}",
-                "expectedOutput": "Wednesday",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "What happens if you omit the 'break' in a switch case?",
-                        "options": [
-                            "Error",
-                            "Program stops",
-                            "Flow continues to next case (Fall-through)",
-                            "Case is ignored"
-                        ],
-                        "correctAnswer": 2,
-                        "explanation": "Omitting break causes the execution to 'fall through' to lower cases regardless of their condition."
-                    }
-                ]
-            },
-            {
-                "id": "j3.2",
-                "title": "3.2 Advanced Loops",
-                "duration": "35 mins",
-                "difficultyLevel": "Beginner",
-                "topics": [
-                    "for",
-                    "while",
-                    "do-while",
-                    "for-each"
-                ],
-                "content": "# Iteration in Java\n\n## 1. for loop\nClassic counter-based loop.\n\n## 2. Enhanced (for-each) loop\nUsed to iterate through arrays or collections easily.\n```java\nint[] nums = {1, 2, 3};\nfor (int n : nums) {\n    System.out.println(n);\n}\n```\n\n## 3. Loop Control\n- `break`: Exit the loop immediately.\n- `continue`: Skip the rest of current iteration and move to next.",
-                "fullProgram": "public class Loops {\n    public static void main(String[] args) {\n        // Sum using for-each\n        int[] grades = {90, 85, 95};\n        int total = 0;\n        \n        for (int g : grades) {\n            total += g;\n        }\n        \n        System.out.println(\"Average: \" + (total / grades.length));\n    }\n}",
-                "expectedOutput": "Average: 90",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which loop is guaranteed to run at least once?",
-                        "options": [
-                            "for",
-                            "while",
-                            "do-while",
-                            "for-each"
-                        ],
-                        "correctAnswer": 2,
-                        "explanation": "The do-while loop checks the condition at the END, so it always runs the body at least once."
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "java-level-4",
-        "title": "LEVEL 4: Arrays & Strings",
-        "description": "Understand memory allocation and text manipulation",
-        "lessons": [
-            {
-                "id": "j4.1",
-                "title": "4.1 Arrays (1D and 2D)",
-                "duration": "30 mins",
-                "difficultyLevel": "Intermediate",
-                "topics": [
-                    "Arrays",
-                    "Memory",
-                    "Matrix"
-                ],
-                "content": "# Arrays in Java\n\nIn Java, arrays are fixed-size objects that hold elements of the same type.\n\n## 1. Declaration & Allocation\n```java\nint[] numbers = new int[5]; // Size is 5\nint[] values = {10, 20, 30};\n```\n\n## 2. 2D Arrays (Matrix)\n```java\nint[][] matrix = {\n    {1, 2, 3},\n    {4, 5, 6}\n};\nSystem.out.println(matrix[0][1]); // 2\n```\n\n## 3. Important Facts\n- Array length: `arr.length`.\n- Accessing invalid index throws `ArrayIndexOutOfBoundsException`.",
-                "fullProgram": "public class ArrayWork {\n    public static void main(String[] args) {\n        String[] names = {\"Java\", \"Python\", \"C++\"};\n        System.out.println(\"First: \" + names[0]);\n        System.out.println(\"Last: \" + names[names.length - 1]);\n    }\n}",
-                "expectedOutput": "First: Java\nLast: C++",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "What is the index of the last element in an array of size N?",
-                        "options": [
-                            "N",
-                            "N-1",
-                            "1",
-                            "N+1"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "Since Java arrays are 0-indexed, the last element is at size-1."
-                    }
-                ]
-            },
-            {
-                "id": "j4.2",
-                "title": "4.2 Strings & String Pool",
-                "duration": "35 mins",
-                "difficultyLevel": "Intermediate",
-                "topics": [
-                    "Strings",
-                    "Immutability",
-                    "Memory"
-                ],
-                "content": "# The String Class\n\nStrings in Java are **Immutable Objects**. Once created, they cannot be changed.\n\n## 1. String Pool\nTo save memory, Java stores identical string literals in a special memory area called the **String Constant Pool (SCP)**.\n\n## 2. Comparison\n- `stack == heap`: Compares memory addresses (references).\n- `equals()`: Compares actual text content.\n\n## 3. StringBuilder\nIf you need to perform heavy text manipulation (like in a loop), use `StringBuilder` because it is **Mutable** and much faster.",
-                "fullProgram": "public class Text {\n    public static void main(String[] args) {\n        String s1 = \"GenSpark\";\n        String s2 = new String(\"GenSpark\");\n        \n        System.out.println(\"== compare: \" + (s1 == s2));\n        System.out.println(\"equals compare: \" + s1.equals(s2));\n        \n        StringBuilder sb = new StringBuilder(\"Hello\");\n        sb.append(\" World\");\n        System.out.println(\"Mutable: \" + sb.toString());\n    }\n}",
-                "expectedOutput": "== compare: false\nequals compare: true\nMutable: Hello World",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Why are Strings immutable in Java?",
-                        "options": [
-                            "Security",
-                            "Efficiency (String Pool)",
-                            "Thread Safety",
-                            "All of the above"
-                        ],
-                        "correctAnswer": 3,
-                        "explanation": "Immutability allows sharing in the memory pool, simplifies multithreading, and prevents unauthorized data changes."
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "java-level-5",
-        "title": "LEVEL 5: OOP Pillar 1 & 2 (Basics)",
-        "description": "Start designing software with classes and inheritance",
-        "lessons": [
-            {
-                "id": "j5.1",
-                "title": "5.1 Classes, Objects, & Constructors",
-                "duration": "40 mins",
-                "difficultyLevel": "Intermediate",
-                "topics": [
-                    "OOP",
-                    "Classes",
-                    "this"
-                ],
-                "content": "# Object Oriented Programming\n\nJava is a pure OOP language. A class is a blueprint; an object is an instance.\n\n## 1. State and Behavior\n- Variables (Fields) represent state.\n- Methods represent behavior.\n\n## 2. Constructors\nSpecial methods that initialize objects. They have the same name as the class and no return type.\n\n## 3. 'this' keyword\nRefers to the current instance of the class. Use it to resolve ambiguity between fields and parameters.",
-                "fullProgram": "class Player {\n    String name;\n    int level;\n    \n    Player(String name) {\n        this.name = name;\n        this.level = 1;\n    }\n    \n    void info() {\n        System.out.println(\"Player \" + name + \" is level \" + level);\n    }\n}\n\npublic class Game {\n    public static void main(String[] args) {\n        Player p = new Player(\"Alex\");\n        p.info();\n    }\n}",
-                "expectedOutput": "Player Alex is level 1",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Can a constructor have a return type like 'void'?",
-                        "options": [
-                            "Yes",
-                            "No",
-                            "Only if it is public",
-                            "Only in old Java versions"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "Constructors strictly have no return type. If you add 'void', it becomes a regular method, not a constructor."
-                    }
-                ]
-            },
-            {
-                "id": "j5.2",
-                "title": "5.2 Inheritance & super()",
-                "duration": "40 mins",
-                "difficultyLevel": "Intermediate",
-                "topics": [
-                    "Inheritance",
-                    "super",
-                    "Reusability"
-                ],
-                "content": "# Inheritance\n\nInheritance allows a class (subclass) to acquire the properties of another class (superclass) using the `extends` keyword.\n\n## 1. Why Inheritance?\n- Code Reusability.\n- Method Overriding (custom behavior in child).\n\n## 2. super keyword\nUsed to access methods or constructors of the parent class.\n\n**Note**: Java does NOT support multi-class inheritance (`class C extends A, B` is invalid).",
-                "fullProgram": "class Device {\n    String brand = \"Apple\";\n    void powerOn() { System.out.println(\"Booting...\"); }\n}\n\nclass iPhone extends Device {\n    void info() {\n        System.out.println(\"Brand is: \" + super.brand);\n    }\n}\n\npublic class Mobile {\n    public static void main(String[] args) {\n        iPhone myPhone = new iPhone();\n        myPhone.powerOn();\n        myPhone.info();\n    }\n}",
-                "expectedOutput": "Booting...\nBrand is: Apple",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which class is the parent of all classes in Java?",
-                        "options": [
-                            "SuperClass",
-                            "System",
-                            "Object",
-                            "Main"
-                        ],
-                        "correctAnswer": 2,
-                        "explanation": "java.lang.Object is the root of the class hierarchy in Java."
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "java-level-6",
-        "title": "LEVEL 6: OOP Pillar 3 & 4 (Advanced)",
-        "description": "Master Abstraction and Polymorphism for scalable apps",
-        "lessons": [
-            {
-                "id": "j6.1",
-                "title": "6.1 Interfaces & Abstract Classes",
-                "duration": "45 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "Abstraction",
-                    "Interfaces",
-                    "Contract"
-                ],
-                "content": "# Abstraction\n\nAbstraction is the process of hiding internal details and showing only functionality.\n\n## 1. Abstract Class\n- Can have both abstract (empty) and concrete (implemented) methods.\n- Use it when classes share a base implementation.\n\n## 2. Interface\n- A 100% abstract contract.\n- A class can **implement** multiple interfaces (solving the multiple inheritance problem).\n- All methods are implicitly `public abstract`.",
-                "fullProgram": "interface Camera {\n    void takePhoto();\n}\n\nabstract class Phone {\n    abstract void makeCall();\n    void powerOn() { System.out.println(\"Phone On\"); }\n}\n\nclass SmartPhone extends Phone implements Camera {\n    void makeCall() { System.out.println(\"Calling...\"); }\n    public void takePhoto() { System.out.println(\"Click!\"); }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        SmartPhone s = new SmartPhone();\n        s.powerOn();\n        s.takePhoto();\n    }\n}",
-                "expectedOutput": "Phone On\nClick!",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Can you create an instance (object) of an Abstract Class?",
-                        "options": [
-                            "Yes",
-                            "No",
-                            "Only if it has a constructor",
-                            "Only in the main method"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "Abstract classes are incomplete and cannot be instantiated directly with 'new'."
-                    }
-                ]
-            },
-            {
-                "id": "j6.2",
-                "title": "6.2 Polymorphism (Dynamic Binding)",
-                "duration": "40 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "Overriding",
-                    "Overloading",
-                    "Casting"
-                ],
-                "content": "# Polymorphism\n\nPolymorphism means 'many forms'. It allows one interface to address different underlying data types.\n\n## 1. Compile-time (Static)\n- **Method Overloading**: Same method name, different parameters in the same class.\n\n## 2. Runtime (Dynamic)\n- **Method Overriding**: Child class provides specific implementation for a method already in parent.\n\n## Upcasting\n`Animal a = new Dog();` - The variable is an Animal, but the object is a Dog. At runtime, the Dog's version of methods will run.",
-                "fullProgram": "class Language {\n    void speak() { System.out.println(\"Code\"); }\n}\n\nclass Java extends Language {\n    void speak() { System.out.println(\"Java is compiled\"); }\n}\n\npublic class Demo {\n    public static void main(String[] args) {\n        Language obj = new Java(); // Upcasting\n        obj.speak();\n    }\n}",
-                "expectedOutput": "Java is compiled",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which annotation is used to ensure code is overriding a parent method?",
-                        "options": [
-                            "@Inherit",
-                            "@Override",
-                            "@Super",
-                            "@Abstract"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "@Override tells the compiler to check if a matching method exists in the parent class."
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "java-level-7",
-        "title": "LEVEL 7: Collections Framework",
-        "description": "Store and manipulate complex data structures",
-        "lessons": [
-            {
-                "id": "j7.1",
-                "title": "7.1 Lists & Sets",
-                "duration": "45 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "ArrayList",
-                    "HashSet",
-                    "Collections"
-                ],
-                "content": "# Java Collections API\n\nArrays are fixed-size, but Collections grow dynamically.\n\n## 1. ArrayList (Ordered & Not Unique)\nPerfect for lists where you need to access elements by index.\n```java\nList<String> list = new ArrayList<>();\n```\n\n## 2. HashSet (Unordered & Unique)\nUsed when you want to store unique items only. It uses Hashing to look up items instantly.\n```java\nSet<Integer> set = new HashSet<>();\n```\n\n## 3. Difference\n- List: Index-based, allows duplicates.\n- Set: Value-based, forbids duplicates.",
-                "fullProgram": "import java.util.*;\n\npublic class CollTest {\n    public static void main(String[] args) {\n        List<String> list = new ArrayList<>();\n        list.add(\"A\");\n        list.add(\"A\"); // Duplicate OK\n        \n        Set<String> set = new HashSet<>();\n        set.add(\"A\");\n        set.add(\"A\"); // Duplicate ignored\n        \n        System.out.println(\"List size: \" + list.size());\n        System.out.println(\"Set size: \" + set.size());\n    }\n}",
-                "expectedOutput": "List size: 2\nSet size: 1",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which class would you use for fast random access by index?",
-                        "options": [
-                            "LinkedList",
-                            "ArrayList",
-                            "HashSet",
-                            "TreeSet"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "ArrayList is backed by an array, providing O(1) time for index-based access."
-                    }
-                ]
-            },
-            {
-                "id": "j7.2",
-                "title": "7.2 Maps (Key-Value Pairs)",
-                "duration": "40 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "HashMap",
-                    "Key-Value",
-                    "Iterating"
-                ],
-                "content": "# HashMap in Java\n\nA Map cannot contain duplicate keys; each key can map to at most one value.\n\n## 1. Internal Logic\nIt works on the principle of **Hashing**. It uses `hashCode()` and `equals()` to find and store objects.\n\n## 2. Basic Methods\n- `put(K, V)`: Store a pair.\n- `get(K)`: Retrieve a value.\n- `containsKey(K)`: Check for existence.",
-                "fullProgram": "import java.util.HashMap;\n\npublic class MapApp {\n    public static void main(String[] args) {\n        HashMap<String, String> capitals = new HashMap<>();\n        capitals.put(\"USA\", \"DC\");\n        capitals.put(\"India\", \"Delhi\");\n        \n        System.out.println(\"USA capital is \" + capitals.get(\"USA\"));\n        System.out.println(\"Size: \" + capitals.size());\n    }\n}",
-                "expectedOutput": "USA capital is DC\nSize: 2",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "What happens if you 'put' a value with an existing key?",
-                        "options": [
-                            "Error",
-                            "Value is ignored",
-                            "Old value is overwritten",
-                            "Second value added as list"
-                        ],
-                        "correctAnswer": 2,
-                        "explanation": "Maps overwrite the existing value if the same key is put again."
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "java-level-8",
-        "title": "LEVEL 8: Modern Java & Concurrency",
-        "description": "Functional patterns and Multithreading",
-        "lessons": [
-            {
-                "id": "j8.1",
-                "title": "8.1 Streams & Lambdas",
-                "duration": "45 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "Functional",
-                    "Streams",
-                    "ES8"
-                ],
-                "content": "# Functional Programming in Java\n\nIntroduced in Java 8, Lambdas allow us to treat code as data.\n\n## 1. Lambda Syntax\n`(params) -> { body }` \nExample: `(a, b) -> a + b;`\n\n## 2. Streams API\nUsed to process collections of objects in a declarative way.\n- `filter`: Pick elements matching a condition.\n- `map`: Transform each element.\n- `collect`: Put results into a new list.",
-                "fullProgram": "import java.util.*;\nimport java.util.stream.*;\n\npublic class StreamDev {\n    public static void main(String[] args) {\n        List<Integer> nums = Arrays.asList(1, 2, 3, 4, 5, 6);\n        \n        List<Integer> evens = nums.stream()\n                                  .filter(n -> n % 2 == 0)\n                                  .collect(Collectors.toList());\n                                  \n        System.out.println(evens);\n    }\n}",
-                "expectedOutput": "[2, 4, 6]",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which Stream method is used to transform data?",
-                        "options": [
-                            "filter",
-                            "map",
-                            "reduce",
-                            "collect"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "Map transforms elements from one form to another."
-                    }
-                ]
-            },
-            {
-                "id": "j8.2",
-                "title": "8.2 Multithreading (Concurrency)",
-                "duration": "50 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "Threads",
-                    "Runnable",
-                    "Parallel"
-                ],
-                "content": "# Multithreading\n\nMultithreading allows multiple parts of a program to run in parallel, maximizing CPU usage.\n\n## 1. Creation\n- **Extend Thread Class**: Override `run()` method.\n- **Implement Runnable Interface**: (Better practice as it allows class to inherit others).\n\n## 2. Thread State\nNew -> Runnable -> Running -> Blocked -> Dead.\n\n## 3. Synchronization\nIf two threads access the same resource (like a bank balance), use the `synchronized` keyword to prevent data corruption.",
-                "fullProgram": "class Task implements Runnable {\n    public void run() {\n        System.out.println(\"A task is running in a separate thread!\");\n    }\n}\n\npublic class Multi {\n    public static void main(String[] args) {\n        Thread t = new Thread(new Task());\n        t.start(); // This starts the new thread\n        System.out.println(\"Main thread is done.\");\n    }\n}",
-                "expectedOutput": "Main thread is done.\nA task is running in a separate thread!",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which method is used to begin a thread's execution?",
-                        "options": [
-                            "run()",
-                            "start()",
-                            "init()",
-                            "begin()"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "You MUST call start() to initiate the thread. Calling run() directly just executes it in the current thread."
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "java-level-9",
-        "title": "LEVEL 9: Final Java Certification",
-        "description": "Prove your enterprise development skills",
-        "lessons": [
-            {
-                "id": "java41",
-                "title": "41. Final Java Mastery Exam",
-                "duration": "60 mins",
-                "difficultyLevel": "Master",
-                "topics": [
-                    "Final Exam",
-                    "Certification"
-                ],
-                "content": "# Java Certification Exam\n\n**Welcome, Developer!** You have completed the Java Masterclass. This final assessment will test your knowledge on everything from primitive types to advanced concurrency.\n\n## Assessment Topics:\n- **Fundamentals**: JVM architecture, Data types, Loops.\n- **OOP pillars**: Inheritance, Overriding, Abstract classes vs Interfaces.\n- **Data Handling**: String Pool, Arrays, HashMap logic.\n- **Modern Java**: Streams, Lambdas, and Exception propagation.\n\n## Graduation Requirements:\n- Score 80% or higher to claim your **GenSpark Java Programming Certificate**.\n\n---\n\n*Click the quiz below to begin your final journey.*",
-                "fullProgram": "/**\n * Final Graduation Project: Simple Banking System\n * Demonstrates: OOP, Collections, and Exception Handling\n */\nimport java.util.*;\n\nclass BankAccount {\n    private double balance;\n    \n    public void deposit(double amt) {\n        if(amt < 0) throw new IllegalArgumentException(\"Negative deposit\");\n        balance += amt;\n    }\n    \n    public double getBalance() { return balance; }\n}\n\npublic class Graduation {\n    public static void main(String[] args) {\n        System.out.println(\"Java Graduation Project Running...\");\n        BankAccount myAcc = new BankAccount();\n        myAcc.deposit(5000.0);\n        System.out.println(\"Current Balance: $\" + myAcc.getBalance());\n        System.out.println(\"Congratulation! You have mastered Java.\");\n    }\n}",
-                "expectedOutput": "Java Graduation Project Running...\nCurrent Balance: $5000.0\nCongratulation! You have mastered Java.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "What is the result of applying 'synchronized' to a static method?",
-                        "options": [
-                            "Locks the object",
-                            "Locks the whole class",
-                            "No effect",
-                            "Throws exception"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "Synchronizing a static method locks the Class object, preventing any thread from accessing any static synchronized method of that class."
+                        "explanation": "JVM translates bytecode to machine code."
                     },
                     {
                         "id": 2,
-                        "text": "Which collection allows null as a Key?",
+                        "text": "Who created Java?",
                         "options": [
-                            "HashMap",
-                            "Hashtable",
-                            "TreeMap",
-                            "None"
+                            "James Gosling",
+                            "Guido van Rossum"
                         ],
                         "correctAnswer": 0,
-                        "explanation": "HashMap allows one null key and multiple null values. Hashtable does not allow null keys or values."
+                        "explanation": "James Gosling is known as the father of Java."
                     },
                     {
                         "id": 3,
-                        "text": "What is the default value of a boolean field in a class?",
+                        "text": "What is WORA?",
                         "options": [
-                            "true",
-                            "false",
-                            "null",
-                            "undefined"
+                            "Work On Real Apps",
+                            "Write Once, Run Anywhere"
                         ],
                         "correctAnswer": 1,
-                        "explanation": "Instance variables (fields) of boolean type default to 'false'."
+                        "explanation": "Java's core portability principle."
                     },
                     {
                         "id": 4,
-                        "text": "Difference between 'throw' and 'throws'?",
+                        "text": "Is Java purely object-oriented?",
                         "options": [
-                            "No difference",
-                            "Throw is for catching, throws for declaring",
-                            "Throw is to trigger an exception, throws to declare potential exceptions in signature",
-                            "Throws is for system errors only"
+                            "Yes",
+                            "No (due to primitives)"
                         ],
-                        "correctAnswer": 2,
-                        "explanation": "throw is a statement to manually throw an exception; throws is a keyword in the method header to delegate exception handling to the caller."
+                        "correctAnswer": 1,
+                        "explanation": "Primitive types like int prevent it from being 100% pure OOP."
                     },
                     {
                         "id": 5,
-                        "text": "Which package is automatically imported in every Java file?",
+                        "text": "JDK contains JRE?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "JDK is the full development package including JRE."
+                    }
+                ]
+            },
+            {
+                "id": "j2",
+                "title": "2. Installing Java & First Program",
+                "duration": "20 mins",
+                "content": "# 🛠️ First Steps\n\n### Hello World:\n```java\npublic class HelloWorld {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, World!\");\n    }\n}\n```\n- Compile: `javac HelloWorld.java`\n- Run: `java HelloWorld`.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Command to compile?",
+                        "options": [
+                            "java",
+                            "javac"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "javac is the compiler."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Main method signature must be?",
+                        "options": [
+                            "public static void main",
+                            "private void main"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Standard entry point."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Extension of bytecode file?",
+                        "options": [
+                            ".java",
+                            ".class"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Bytecode is stored in .class files."
+                    },
+                    {
+                        "id": 4,
+                        "text": "Can a file have multiple public classes?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Only one public class per file, matching the filename."
+                    },
+                    {
+                        "id": 5,
+                        "text": "Is semicolon mandatory?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Java statements must end with a semicolon."
+                    }
+                ]
+            },
+            {
+                "id": "j3",
+                "title": "3. Variables & Data Types",
+                "duration": "25 mins",
+                "content": "# 📦 Storage\n\n- `int`: Integers.\n- `double`: Decimals.\n- `char`: Characters.\n- `boolean`: true/false.\n- `String`: Text.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Type for 10.5?",
+                        "options": [
+                            "int",
+                            "double"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Double handles decimals."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Size of int?",
+                        "options": [
+                            "2 bytes",
+                            "4 bytes"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Standard int is 32-bit (4 bytes)."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Boolean default?",
+                        "options": [
+                            "true",
+                            "false"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Primitive boolean defaults to false."
+                    },
+                    {
+                        "id": 4,
+                        "text": "Is String primitive?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "String is a class."
+                    },
+                    {
+                        "id": 5,
+                        "text": "Type for 'A'?",
+                        "options": [
+                            "char",
+                            "String"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Single characters use char."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "java-l3",
+        "title": "LEVEL 3: Core Java Concepts",
+        "description": "Understand memory & logic",
+        "lessons": [
+            {
+                "id": "j14",
+                "title": "14. Arrays (1D & 2D)",
+                "duration": "25 mins",
+                "content": "# 📚 Arrays\n\n```java\nint[] nums = {1, 2, 3};\nint[][] matrix = { {1, 2}, {3, 4} };\n```",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Index starts from?",
+                        "options": [
+                            "0",
+                            "1"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Zero-indexed."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Length property?",
+                        "options": [
+                            ".length",
+                            ".size()"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Arrays use .length property."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Access index 'length'?",
+                        "options": [
+                            "Valid",
+                            "ArrayIndexOutOfBounds"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Max index is length-1."
+                    },
+                    {
+                        "id": 4,
+                        "text": "Are arrays objects?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Even primitive arrays are objects."
+                    },
+                    {
+                        "id": 5,
+                        "text": "Default int value?",
+                        "options": [
+                            "0",
+                            "null"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Prinitives have defaults like 0."
+                    }
+                ]
+            },
+            {
+                "id": "j15",
+                "title": "15. Strings (String, StringBuilder, StringBuffer)",
+                "duration": "25 mins",
+                "content": "# 🧵 Text\n\n- `String`: Immutable.\n- `StringBuilder`: Mutable (Fast).\n- `StringBuffer`: Mutable (Thread-safe).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Immutable means?",
+                        "options": [
+                            "Unchangeable",
+                            "Variable"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Once created, state cannot change."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Where are literals?",
+                        "options": [
+                            "Heap",
+                            "String Pool"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Stored in the SCP."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Compare content?",
+                        "options": [
+                            "==",
+                            ".equals()"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "equals() checks logical equality."
+                    },
+                    {
+                        "id": 4,
+                        "text": "Thread-safe one?",
+                        "options": [
+                            "StringBuilder",
+                            "StringBuffer"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Buffer uses synchronization."
+                    },
+                    {
+                        "id": 5,
+                        "text": "Length method?",
+                        "options": [
+                            "length",
+                            "length()"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Strings use length() method."
+                    }
+                ]
+            },
+            {
+                "id": "j16",
+                "title": "16. Wrapper Classes",
+                "duration": "15 mins",
+                "content": "# 🎁 Wrappers\n\n`int` -> `Integer`, `char` -> `Character`. Used in Collections.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Wrapper for char?",
+                        "options": [
+                            "Char",
+                            "Character"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Full word: Character."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Primitive to Wrapper?",
+                        "options": [
+                            "Autoboxing",
+                            "Unboxing"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Boxing it into an object."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Can be null?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Objects can hold null."
+                    },
+                    {
+                        "id": 4,
+                        "text": "Integer.parseInt() returns?",
+                        "options": [
+                            "int",
+                            "Integer"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Returns the primitive primitive int."
+                    },
+                    {
+                        "id": 5,
+                        "text": "Immutable?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Wrappers are immutable classes."
+                    }
+                ]
+            },
+            {
+                "id": "j-memory",
+                "title": "Memory: Heap vs Stack",
+                "duration": "20 mins",
+                "content": "# 🧠 Memory\n\n- **Stack**: Local variables, fast.\n- **Heap**: Objects, GC managed.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Objects stored in?",
+                        "options": [
+                            "Heap",
+                            "Stack"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Heap is for dynamic allocation."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Local primitives in?",
+                        "options": [
+                            "Heap",
+                            "Stack"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Stack handles execution context."
+                    },
+                    {
+                        "id": 3,
+                        "text": "What cleans Heap?",
+                        "options": [
+                            "OS",
+                            "Garbage Collector"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "JVM's GC."
+                    },
+                    {
+                        "id": 4,
+                        "text": "Recursive crash?",
+                        "options": [
+                            "StackOverflow",
+                            "OutOfMemory"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Stack runs out of space."
+                    },
+                    {
+                        "id": 5,
+                        "text": "Which is faster?",
+                        "options": [
+                            "Stack",
+                            "Heap"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Stack access is nearly instant."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "java-l2",
+        "title": "LEVEL 2: Control Flow",
+        "description": "Decision making & loops",
+        "lessons": [
+            {
+                "id": "j8",
+                "title": "8. if, else if, else",
+                "duration": "15 mins",
+                "content": "# 🚦 Conditionals\n\n- `if (condition) { ... }`\n- `else if (condition) { ... }`\n- `else { ... }`",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which block is optional?",
+                        "options": [
+                            "if",
+                            "else"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Else is not always needed."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Keyword for multiple checks?",
+                        "options": [
+                            "again if",
+                            "else if"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "else if links multiple conditions."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Condition must be?",
+                        "options": [
+                            "Boolean",
+                            "Integer"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Conditions must evaluate to true or false."
+                    },
+                    {
+                        "id": 4,
+                        "text": "Can you nest 'if'?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Inside one if, you can have another."
+                    },
+                    {
+                        "id": 5,
+                        "text": "What happens if all conditions fail?",
+                        "options": [
+                            "Error",
+                            "Executes 'else' block"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Else is the fallback."
+                    }
+                ]
+            },
+            {
+                "id": "j9",
+                "title": "9. switch Statement",
+                "duration": "15 mins",
+                "content": "# 🎛️ Multi-way Branching\n\n`switch` is more efficient than long `if-else-if` chains for specific values.\n\n```java\nswitch (expression) {\n    case x:\n        // Code\n        break;\n    default:\n        // Code\n}\n```",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Why use 'break'?",
+                        "options": [
+                            "Exit switch",
+                            "Next case"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Prevents fall-through."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Catch-all case?",
+                        "options": [
+                            "else",
+                            "default"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Default runs if no cases match."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Can switch on String?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Java 7+ supports it."
+                    },
+                    {
+                        "id": 4,
+                        "text": "Can switch on boolean?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Only discrete types like int/char/String."
+                    },
+                    {
+                        "id": 5,
+                        "text": "What is 'fall-through'?",
+                        "options": [
+                            "Error",
+                            "Executing next cases without break"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Common bug or feature depending on use."
+                    }
+                ]
+            },
+            {
+                "id": "j10",
+                "title": "10. for Loop",
+                "duration": "20 mins",
+                "content": "# 🔁 for Loop\n\n```java\nfor (init; cond; update) { ... }\n```",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Init part runs?",
+                        "options": [
+                            "Once",
+                            "Every turn"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Only at the very start."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Condition check is?",
+                        "options": [
+                            "Before body",
+                            "After body"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "It's a pre-test loop."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Infinite loop?",
+                        "options": [
+                            "for(;;)",
+                            "for(1)"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Blank expressions = true."
+                    },
+                    {
+                        "id": 4,
+                        "text": "Enhanced for is for?",
+                        "options": [
+                            "Math",
+                            "Arrays/Collections"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Also called for-each loop."
+                    },
+                    {
+                        "id": 5,
+                        "text": "Loop counter scope?",
+                        "options": [
+                            "Inside loop",
+                            "Whole class"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Usually local to the for block."
+                    }
+                ]
+            },
+            {
+                "id": "j11",
+                "title": "11. while Loop",
+                "duration": "15 mins",
+                "content": "# 🔄 while Loop\n\n```java\nwhile (condition) { ... }\n```",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Condition is checked?",
+                        "options": [
+                            "Before",
+                            "After"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "While is a pre-test loop."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Best for?",
+                        "options": [
+                            "Fixed count",
+                            "Unknown count"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Repeats until event happens."
+                    },
+                    {
+                        "id": 3,
+                        "text": "while(true)?",
+                        "options": [
+                            "Error",
+                            "Infinite loop"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Handy for servers/listeners."
+                    },
+                    {
+                        "id": 4,
+                        "text": "Can you use break?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Exits immediately."
+                    },
+                    {
+                        "id": 5,
+                        "text": "Update variable?",
+                        "options": [
+                            "Inside block",
+                            "Signature"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Must update manually to avoid infinite loop."
+                    }
+                ]
+            },
+            {
+                "id": "j12",
+                "title": "12. do-while Loop",
+                "duration": "15 mins",
+                "content": "# 🔄 do-while Loop\n\n```java\ndo { ... } while (cond);\n```",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Min executions?",
+                        "options": [
+                            "0",
+                            "1"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Executed before truth check."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Semicolon needed?",
+                        "options": [
+                            "No",
+                            "Yes, at end"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "After while(cond);"
+                    },
+                    {
+                        "id": 3,
+                        "text": "Post-test loop?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Checks condition at the end."
+                    },
+                    {
+                        "id": 4,
+                        "text": "Useful for menus?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Show menu at least once."
+                    },
+                    {
+                        "id": 5,
+                        "text": "do { } while(false)?",
+                        "options": [
+                            "Nothing",
+                            "Runs once"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "First execution is guaranteed."
+                    }
+                ]
+            },
+            {
+                "id": "j13",
+                "title": "13. break, continue",
+                "duration": "10 mins",
+                "content": "# 🏎️ Jump Statements\n\n- `break`: Terminate loop.\n- `continue`: Skip to next turn.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which stops loop?",
+                        "options": [
+                            "break",
+                            "continue"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Break exits completely."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Which skips turn?",
+                        "options": [
+                            "break",
+                            "continue"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Continue jumps back to header."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Inside nested loops, break stops?",
+                        "options": [
+                            "Inner loop",
+                            "All loops"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Stops ONLY the immediate loop."
+                    },
+                    {
+                        "id": 4,
+                        "text": "What are Labeled loops?",
+                        "options": [
+                            "Loop with a nickname",
+                            "Loop with comments"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Allows breaking from specific outer loops."
+                    },
+                    {
+                        "id": 5,
+                        "text": "continue in for goes to?",
+                        "options": [
+                            "Condition",
+                            "Update part"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "It executes the increment step."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "java-l4",
+        "title": "LEVEL 4: Methods & Packages",
+        "description": "Code reusability & modularity",
+        "lessons": [
+            {
+                "id": "j18",
+                "title": "18. Methods in Java",
+                "duration": "20 mins",
+                "content": "# 🛠️ Methods\n\nA method is a reusable block of code.\n\n```java\npublic static void sayHello() { ... }\n```",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Keyword for no return?",
+                        "options": [
+                            "null",
+                            "void"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Void means no value is sent back."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Call a method 'hi()':",
+                        "options": [
+                            "hi;",
+                            "hi();"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Parentheses are required."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Method inside method?",
+                        "options": [
+                            "Allowed",
+                            "Not allowed"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Java doesn't support nested methods."
+                    },
+                    {
+                        "id": 4,
+                        "text": "Static means?",
+                        "options": [
+                            "Belongs to class",
+                            "Belongs to object"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Can be called without an instance."
+                    },
+                    {
+                        "id": 5,
+                        "text": "Return terminates method?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "It exits immediately."
+                    }
+                ]
+            },
+            {
+                "id": "j19",
+                "title": "19. Method Overloading",
+                "duration": "15 mins",
+                "content": "# 👯 Overloading\n\nSame name, different parameters.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What must differ?",
+                        "options": [
+                            "Return type",
+                            "Parameters"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Signatures must be unique."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Compile-time or Runtime?",
+                        "options": [
+                            "Compile-time",
+                            "Runtime"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Decided by the compiler."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Overload by return type only?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Signatures must differ by params."
+                    }
+                ]
+            },
+            {
+                "id": "j22",
+                "title": "22. Packages & Access Modifiers",
+                "duration": "20 mins",
+                "content": "# 📁 Organization\n\n- `public`: Everywhere.\n- `private`: Only in class.\n- `protected`: Package + Subclass.\n- `default`: Only package.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Most restrictive?",
+                        "options": [
+                            "private",
+                            "public"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Private hides from all external classes."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Keyword to use other packages?",
+                        "options": [
+                            "import",
+                            "include"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Standard import syntax."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Default access level?",
+                        "options": [
+                            "public",
+                            "package-private"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Also known as 'default' modifier."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "java-l5",
+        "title": "LEVEL 5: Object-Oriented Programming (OOP)",
+        "description": "Master Java objects & design",
+        "lessons": [
+            {
+                "id": "j24",
+                "title": "24. OOP Principles",
+                "duration": "15 mins",
+                "content": "# 💎 The Four Pillars\n\n1. **Encapsulation**: Hiding data.\n2. **Inheritance**: Reusing code.\n3. **Polymorphism**: One interface, many forms.\n4. **Abstraction**: Hiding complexity.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Hiding implementation details is?",
+                        "options": [
+                            "Abstraction",
+                            "Inheritance"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Focuses on 'what' it does."
+                    },
+                    {
+                        "id": 2,
+                        "text": "One method behaving differently is?",
+                        "options": [
+                            "Polymorphism",
+                            "Encapsulation"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "'Many shapes' of behavior."
+                    }
+                ]
+            },
+            {
+                "id": "j25",
+                "title": "25. Classes & Objects",
+                "duration": "20 mins",
+                "content": "# 🏗️ Blueprint & Instance\n\n```java\nclass Car { ... }\nCar myCar = new Car();\n```",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Blueprint is the?",
+                        "options": [
+                            "Class",
+                            "Object"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "The class defines the template."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Instance is the?",
+                        "options": [
+                            "Class",
+                            "Object"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "The object is a specific realization."
+                    }
+                ]
+            },
+            {
+                "id": "j28",
+                "title": "28. Inheritance",
+                "duration": "25 mins",
+                "content": "# 🌳 Inheritance\n\n```java\nclass Dog extends Animal { ... }\n```",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Keyword?",
+                        "options": [
+                            "inherits",
+                            "extends"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "To derive one class from another."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Multiple inheritance of classes?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Java only allows one parent class."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "java-l5-2",
+        "title": "LEVEL 5 (Cont.): Advanced OOP",
+        "description": "Polymorphism & Abstraction",
+        "lessons": [
+            {
+                "id": "j30",
+                "title": "30. Polymorphism",
+                "duration": "20 mins",
+                "content": "# 🎭 Polymorphism\n\n- Compile-time: Overloading.\n- Runtime: Overriding.\n\n```java\nAnimal a = new Dog();\na.sound();\n```",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Runtime polymorphism uses?",
+                        "options": [
+                            "Overloading",
+                            "Overriding"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Dynamic method dispatch."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Upcasting is?",
+                        "options": [
+                            "Child to Parent",
+                            "Parent to Child"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Animal a = new Dog();"
+                    }
+                ]
+            },
+            {
+                "id": "j32",
+                "title": "32. Abstraction",
+                "duration": "20 mins",
+                "content": "# 🌫️ Abstraction\n\n- **Abstract Class**: Partial implementation.\n- **Interface**: Full abstraction.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Can instantiate abstract class?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "They are incomplete templates."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Class implements?",
+                        "options": [
+                            "extends",
+                            "implements"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Interfaces use 'implements'."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "java-l6",
+        "title": "LEVEL 6: Exception Handling & Files",
+        "description": "Handle errors & data",
+        "lessons": [
+            {
+                "id": "j34",
+                "title": "34. Exception Handling",
+                "duration": "20 mins",
+                "content": "# 🛡️ Exceptions\n\n```java\ntry { ... } catch (Exception e) { ... } finally { ... }\n```",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Finally block runs?",
+                        "options": [
+                            "Only on success",
+                            "Always"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Used for cleanup."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Checked exception means?",
+                        "options": [
+                            "Checked at runtime",
+                            "Checked at compile-time"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Compiler forces handling."
+                    }
+                ]
+            },
+            {
+                "id": "j38",
+                "title": "38. File Handling",
+                "duration": "20 mins",
+                "content": "# 💾 Files\n\n`java.io` package. Use `FileWriter` and `FileReader`.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Package name?",
                         "options": [
                             "java.io",
-                            "java.util",
-                            "java.lang",
-                            "java.net"
+                            "java.file"
                         ],
-                        "correctAnswer": 2,
-                        "explanation": "java.lang (containing String, System, Object, etc.) is implicitly imported."
+                        "correctAnswer": 0,
+                        "explanation": "Input/Output package."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Always close files?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Prevents memory/resource leaks."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "java-l7",
+        "title": "LEVEL 7: Advanced Java",
+        "description": "Collections & Generics",
+        "lessons": [
+            {
+                "id": "j39",
+                "title": "39. Collections Framework",
+                "duration": "20 mins",
+                "content": "# 📚 Collections\n\nA unified architecture for representing and manipulating collections of objects.\n\n- **List**: Ordered, duplicates allowed.\n- **Set**: Unordered, no duplicates.\n- **Map**: Key-Value pairs.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Ordered collection with duplicates?",
+                        "options": [
+                            "Set",
+                            "List"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "List interface maintains insertion order."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Key-Value pairs interface?",
+                        "options": [
+                            "Map",
+                            "Collection"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Map doesn't inherit from Collection, but is part of the framework."
+                    }
+                ]
+            },
+            {
+                "id": "j42",
+                "title": "42. HashMap",
+                "duration": "20 mins",
+                "content": "# 🗝️ HashMap\n\n```java\nHashMap<String, Integer> map = new HashMap<>();\nmap.put(\"A\", 1);\n```",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Are keys unique?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Maps cannot have duplicate keys."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Search complexity (average)?",
+                        "options": [
+                            "O(1)",
+                            "O(n)"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Hashing allows constant time access."
+                    }
+                ]
+            },
+            {
+                "id": "j44",
+                "title": "44. Generics",
+                "duration": "15 mins",
+                "content": "# 🧬 Generics\n\nEnable types (classes and interfaces) to be parameters when defining classes, interfaces and methods.\n\n```java\nList<String> list = new ArrayList<>();\n```",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Benefit of Generics?",
+                        "options": [
+                            "Type safety",
+                            "Speed"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Catches type errors at compile-time."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Can use primitives in Generics?",
+                        "options": [
+                            "Yes",
+                            "No (use Wrappers)"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Generics require object types."
+                    }
+                ]
+            },
+            {
+                "id": "j-extra",
+                "title": "Extra: Immutable Classes",
+                "duration": "10 mins",
+                "content": "# 🧊 Immutability\n\nClasses whose instances cannot be modified after creation.\n\n- Declare class as `final`.\n- Fields as `private final`.\n- No setters.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Example of immutable class in Java?",
+                        "options": [
+                            "ArrayList",
+                            "String"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "String cannot be changed after creation."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Modifier for fields?",
+                        "options": [
+                            "static",
+                            "final"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Final ensures single assignment."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "java-l8",
+        "title": "LEVEL 8: Advanced Concepts",
+        "description": "Multithreading & JVM",
+        "lessons": [
+            {
+                "id": "j45",
+                "title": "45. Multithreading basics",
+                "duration": "20 mins",
+                "content": "# 🧵 Multithreading\n\nExecuting multiple threads concurrently to maximize CPU utilization.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is a Thread?",
+                        "options": [
+                            "Application",
+                            "Lightweight process"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Smallest unit of execution."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Parallel vs Concurrent?",
+                        "options": [
+                            "Simultaneous vs Overlapping",
+                            "Same thing"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Parallel literally happens at same time; Concurrent jumps between tasks."
+                    }
+                ]
+            },
+            {
+                "id": "j48",
+                "title": "48. Synchronization",
+                "duration": "20 mins",
+                "content": "# 🔐 Synchronization\n\nPrevents thread interference and memory consistency errors.\n\n```java\nsynchronized void method() { ... }\n```",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is a 'Race Condition'?",
+                        "options": [
+                            "Fast threads",
+                            "Output depends on timing of threads"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Occurs when multiple threads access shared data."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Synchronized block uses?",
+                        "options": [
+                            "Monitor lock",
+                            "CPU lock"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Every object in Java has an intrinsic lock."
+                    }
+                ]
+            },
+            {
+                "id": "j50",
+                "title": "50. JVM Architecture",
+                "duration": "30 mins",
+                "content": "# 🏗️ JVM Internals\n\n- **ClassLoader**: Loads .class files.\n- **Runtime Data Areas**: Stack, Heap, Method Area.\n- **Execution Engine**: JIT Compiler, Garbage Collector.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does JIT stand for?",
+                        "options": [
+                            "Java Interaction Tool",
+                            "Just-In-Time Compiler"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Compiles bytecode to native code for speed."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Heap stores?",
+                        "options": [
+                            "Objects",
+                            "Method calls"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Shared area for object instances."
                     }
                 ]
             }
         ]
     }
-]
+ , { "id": "java-l9", "title": "LEVEL 9: Java for Real World", "description": "JDBC & Modern Features", "lessons": [ { "id": "j51", "title": "51. JDBC & SQL", "duration": "25 mins", "content": "#  Databases\n\n- **JDBC**: Java Database Connectivity API.\n- **SQL**: Standard Query Language.", "quizQuestions": [ { "id": 1, "text": "JDBC connectivity steps?", "options": ["Connect -> Query -> Close", "Query -> Connect"], "correctAnswer": 0, "explanation": "Link first, then talk." } ] }, { "id": "j53", "title": "53. Java 8 Features", "duration": "25 mins", "content": "#  Modern Java\n\n- **Lambdas**: Functional programming.\n- **Streams**: Collection processing.", "quizQuestions": [ { "id": 1, "text": "Are lambdas anonymous functions?", "options": ["Yes", "No"], "correctAnswer": 0, "explanation": "They replace verbose anonymous inner classes." } ] }, { "id": "j-final", "title": "55. Final Capstone Brief", "duration": "10 mins", "content": "#  Mission Complete\n\nBuild a Student Management System to graduate!", "quizQuestions": [ { "id": 1, "text": "Ready to graduate?", "options": ["Yes", "Absolutely"], "correctAnswer": 1, "explanation": "Success!" } ] } ] } ]

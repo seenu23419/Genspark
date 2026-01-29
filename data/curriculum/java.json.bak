@@ -1,0 +1,589 @@
+[
+    {
+        "id": "java-level-1",
+        "title": "LEVEL 1: Java Basics (Zero Level)",
+        "description": "Get started with the world's most popular enterprise language",
+        "lessons": [
+            {
+                "id": "j1.1",
+                "title": "1.1 What is Java?",
+                "duration": "15 mins",
+                "difficultyLevel": "Beginner",
+                "topics": [
+                    "Introduction",
+                    "History",
+                    "Enterprise"
+                ],
+                "content": "# What is Java?\n\nJava is a high-level, class-based, object-oriented programming language designed to have as few implementation dependencies as possible. It follows the **WORA** principle: **Write Once, Run Anywhere.**\n\n## Why Java?\n\n- **🔥 Platform Independent**: Programs compile into bytecode that runs on any machine with a JVM.\n- **⚡ Secure**: Java runs inside a sandbox, preventing unauthorized access to system resources.\n- **💠 Robust**: Strong memory management (Automatic Garbage Collection).\n- **📝 Multi-threaded**: Java allows you to write programs that can perform many tasks simultaneously.\n\n## History\n- Created by **James Gosling** at Sun Microsystems in 1995.\n- Originally called 'Oak'.\n- Now owned by **Oracle Corporation**.\n\n## Real-World Applications\n- **Android Apps**: Most mobile apps are built using Java (or Kotlin).\n- **Enterprise Servers**: Banking, stock exchanges, and big data (Hadoop).\n- **Embedded Systems**: Smart cards, sensors, and appliances.",
+                "fullProgram": "// The classic entry point\npublic class Intro {\n    public static void main(String[] args) {\n        System.out.println(\"Java: The foundation of enterprise software.\");\n        System.out.println(\"Welcome to your Zero to Hero journey!\");\n    }\n}",
+                "expectedOutput": "Java: The foundation of enterprise software.\nWelcome to your Zero to Hero journey!",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What does WORA stand for?",
+                        "options": [
+                            "Work On Real Apps",
+                            "Write Once, Run Anywhere",
+                            "Win On Real Assets",
+                            "Write Only Read Always"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "WORA stands for Write Once, Run Anywhere, referring to Java's platform independence."
+                    }
+                ]
+            },
+            {
+                "id": "j1.2",
+                "title": "1.2 JDK, JRE, and JVM",
+                "duration": "20 mins",
+                "difficultyLevel": "Beginner",
+                "topics": [
+                    "Architecture",
+                    "Compilation",
+                    "Bytecode"
+                ],
+                "content": "# The Java Environment\n\nTo run and build Java programs, you need to understand the relationship between three core components.\n\n## 1. JVM (Java Virtual Machine)\n- The 'engine' that runs the code.\n- It translates Java Bytecode into machine-specific code.\n\n## 2. JRE (Java Runtime Environment)\n- Contains the JVM + core libraries needed to **run** Java apps.\n- Does NOT contain development tools (like compilers).\n\n## 3. JDK (Java Development Kit)\n- The full software package for **developers**.\n- Contains JRE + Development Tools (javac, jdb, javadoc).\n\n### The Relationship:\n`JDK = JRE + Development Tools` \n`JRE = JVM + Library Files`",
+                "fullProgram": "public class Architecture {\n    public static void main(String[] args) {\n        System.out.println(\"JDK: For Developers\");\n        System.out.println(\"JRE: For Running Apps\");\n        System.out.println(\"JVM: The Execution Engine\");\n    }\n}",
+                "expectedOutput": "JDK: For Developers\nJRE: For Running Apps\nJVM: The Execution Engine",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which component contains the Java Compiler (javac)?",
+                        "options": [
+                            "JVM",
+                            "JRE",
+                            "JDK",
+                            "OS"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "The JDK contains development tools like the compiler, while JRE/JVM only provide run-time functionality."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "java-level-2",
+        "title": "LEVEL 2: Data Types & Operators",
+        "description": "Master the build blocks of Java logic",
+        "lessons": [
+            {
+                "id": "j2.1",
+                "title": "2.1 Primitive Types vs Wrappers",
+                "duration": "25 mins",
+                "difficultyLevel": "Beginner",
+                "topics": [
+                    "Data Types",
+                    "Memory",
+                    "Wrappers"
+                ],
+                "content": "# Java Data Types\n\nJava is a **statically-typed** language, meaning every variable must have a declared type.\n\n## 1. Primitive Types (Direct values)\n- `int`: 4 bytes (Integers)\n- `double`: 8 bytes (Decimals)\n- `boolean`: 1 bit (true/false)\n- `char`: 2 bytes (Unicode character)\n- `long`: 8 bytes (Large integers - add 'L' suffix)\n\n## 2. Wrapper Classes (Object versions)\nJava provides objects that wrap primitives to use them with collections (like ArrayList).\n- `int` -> `Integer`\n- `double` -> `Double`\n- `char` -> `Character`\n\n## Autoboxing & Unboxing\n- **Autoboxing**: Automatic conversion of primitive to wrapper (`int` -> `Integer`).\n- **Unboxing**: Wrapper to primitive (`Integer` -> `int`).",
+                "fullProgram": "public class Types {\n    public static void main(String[] args) {\n        int age = 22;\n        double price = 19.99;\n        boolean isJavaFun = true;\n        \n        // Autoboxing example\n        Integer wrapperAge = age;\n        \n        System.out.println(\"Age: \" + age);\n        System.out.println(\"Wrapper Age: \" + wrapperAge);\n        System.out.println(\"Is Java Fun? \" + isJavaFun);\n    }\n}",
+                "expectedOutput": "Age: 22\nWrapper Age: 22\nIs Java Fun? true",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the size of a 'long' in Java?",
+                        "options": [
+                            "4 bytes",
+                            "8 bytes",
+                            "2 bytes",
+                            "1 byte"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "A long is a 64-bit (8 bytes) integer type."
+                    }
+                ]
+            },
+            {
+                "id": "j2.2",
+                "title": "2.2 Arithmetic & Bitwise Operators",
+                "duration": "30 mins",
+                "difficultyLevel": "Beginner",
+                "topics": [
+                    "Math",
+                    "Bitwise",
+                    "Logic"
+                ],
+                "content": "# Operators in Java\n\n## 1. Arithmetic\n`+`, `-`, `*`, `/`, `%` (Modulus), `++`, `--`.\n\n## 2. Relational\n`==`, `!=`, `>`, `<`, `>=`, `<=` (Result is always a boolean).\n\n## 3. Logical\n- `&&` (AND)\n- `||` (OR)\n- `!` (NOT)\n\n## 4. Assignment\n`=`, `+=`, `-=`, `*=`, `/=`.\n\n## 5. Ternary Operator\n`result = (condition) ? value_if_true : value_if_false;`",
+                "fullProgram": "public class Operators {\n    public static void main(String[] args) {\n        int a = 10, b = 3;\n        \n        System.out.println(\"Add: \" + (a + b));\n        System.out.println(\"Rem: \" + (a % b));\n        \n        // Ternary\n        String type = (a % 2 == 0) ? \"Even\" : \"Odd\";\n        System.out.println(\"10 is \" + type);\n    }\n}",
+                "expectedOutput": "Add: 13\nRem: 1\n10 is Even",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the result of 15 % 4?",
+                        "options": [
+                            "3",
+                            "1",
+                            "4",
+                            "0"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "15 divided by 4 is 3 with a remainder of 3. Modulus returns the remainder."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "java-level-3",
+        "title": "LEVEL 3: Control Flow Mastery",
+        "description": "Make complex decisions and build efficient loops",
+        "lessons": [
+            {
+                "id": "j3.1",
+                "title": "3.1 Conditionals (if, switch)",
+                "duration": "30 mins",
+                "difficultyLevel": "Beginner",
+                "topics": [
+                    "if-else",
+                    "Switch",
+                    "Logic"
+                ],
+                "content": "# Making Decisions\n\n## 1. if-else Ladder\nUsed for range-based or boolean logic.\n\n```java\nif (score > 90) {\n    System.out.println(\"A\");\n} else if (score > 80) {\n    System.out.println(\"B\");\n} else {\n    System.out.println(\"C\");\n}\n```\n\n## 2. Switch Statement\nBest for discrete values (integers, chars, strings, enums).\n\n```java\nString day = \"SAT\";\nswitch (day) {\n    case \"MON\": System.out.println(\"Work\"); break;\n    case \"SAT\":\n    case \"SUN\": System.out.println(\"Weekend\"); break;\n    default: System.out.println(\"Invalid\");\n}\n```",
+                "fullProgram": "public class Decisions {\n    public static void main(String[] args) {\n        int day = 3;\n        \n        switch(day) {\n            case 1: System.out.println(\"Monday\"); break;\n            case 2: System.out.println(\"Tuesday\"); break;\n            case 3: System.out.println(\"Wednesday\"); break;\n            default: System.out.println(\"Other\");\n        }\n    }\n}",
+                "expectedOutput": "Wednesday",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What happens if you omit the 'break' in a switch case?",
+                        "options": [
+                            "Error",
+                            "Program stops",
+                            "Flow continues to next case (Fall-through)",
+                            "Case is ignored"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Omitting break causes the execution to 'fall through' to lower cases regardless of their condition."
+                    }
+                ]
+            },
+            {
+                "id": "j3.2",
+                "title": "3.2 Advanced Loops",
+                "duration": "35 mins",
+                "difficultyLevel": "Beginner",
+                "topics": [
+                    "for",
+                    "while",
+                    "do-while",
+                    "for-each"
+                ],
+                "content": "# Iteration in Java\n\n## 1. for loop\nClassic counter-based loop.\n\n## 2. Enhanced (for-each) loop\nUsed to iterate through arrays or collections easily.\n```java\nint[] nums = {1, 2, 3};\nfor (int n : nums) {\n    System.out.println(n);\n}\n```\n\n## 3. Loop Control\n- `break`: Exit the loop immediately.\n- `continue`: Skip the rest of current iteration and move to next.",
+                "fullProgram": "public class Loops {\n    public static void main(String[] args) {\n        // Sum using for-each\n        int[] grades = {90, 85, 95};\n        int total = 0;\n        \n        for (int g : grades) {\n            total += g;\n        }\n        \n        System.out.println(\"Average: \" + (total / grades.length));\n    }\n}",
+                "expectedOutput": "Average: 90",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which loop is guaranteed to run at least once?",
+                        "options": [
+                            "for",
+                            "while",
+                            "do-while",
+                            "for-each"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "The do-while loop checks the condition at the END, so it always runs the body at least once."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "java-level-4",
+        "title": "LEVEL 4: Arrays & Strings",
+        "description": "Understand memory allocation and text manipulation",
+        "lessons": [
+            {
+                "id": "j4.1",
+                "title": "4.1 Arrays (1D and 2D)",
+                "duration": "30 mins",
+                "difficultyLevel": "Intermediate",
+                "topics": [
+                    "Arrays",
+                    "Memory",
+                    "Matrix"
+                ],
+                "content": "# Arrays in Java\n\nIn Java, arrays are fixed-size objects that hold elements of the same type.\n\n## 1. Declaration & Allocation\n```java\nint[] numbers = new int[5]; // Size is 5\nint[] values = {10, 20, 30};\n```\n\n## 2. 2D Arrays (Matrix)\n```java\nint[][] matrix = {\n    {1, 2, 3},\n    {4, 5, 6}\n};\nSystem.out.println(matrix[0][1]); // 2\n```\n\n## 3. Important Facts\n- Array length: `arr.length`.\n- Accessing invalid index throws `ArrayIndexOutOfBoundsException`.",
+                "fullProgram": "public class ArrayWork {\n    public static void main(String[] args) {\n        String[] names = {\"Java\", \"Python\", \"C++\"};\n        System.out.println(\"First: \" + names[0]);\n        System.out.println(\"Last: \" + names[names.length - 1]);\n    }\n}",
+                "expectedOutput": "First: Java\nLast: C++",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the index of the last element in an array of size N?",
+                        "options": [
+                            "N",
+                            "N-1",
+                            "1",
+                            "N+1"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Since Java arrays are 0-indexed, the last element is at size-1."
+                    }
+                ]
+            },
+            {
+                "id": "j4.2",
+                "title": "4.2 Strings & String Pool",
+                "duration": "35 mins",
+                "difficultyLevel": "Intermediate",
+                "topics": [
+                    "Strings",
+                    "Immutability",
+                    "Memory"
+                ],
+                "content": "# The String Class\n\nStrings in Java are **Immutable Objects**. Once created, they cannot be changed.\n\n## 1. String Pool\nTo save memory, Java stores identical string literals in a special memory area called the **String Constant Pool (SCP)**.\n\n## 2. Comparison\n- `stack == heap`: Compares memory addresses (references).\n- `equals()`: Compares actual text content.\n\n## 3. StringBuilder\nIf you need to perform heavy text manipulation (like in a loop), use `StringBuilder` because it is **Mutable** and much faster.",
+                "fullProgram": "public class Text {\n    public static void main(String[] args) {\n        String s1 = \"GenSpark\";\n        String s2 = new String(\"GenSpark\");\n        \n        System.out.println(\"== compare: \" + (s1 == s2));\n        System.out.println(\"equals compare: \" + s1.equals(s2));\n        \n        StringBuilder sb = new StringBuilder(\"Hello\");\n        sb.append(\" World\");\n        System.out.println(\"Mutable: \" + sb.toString());\n    }\n}",
+                "expectedOutput": "== compare: false\nequals compare: true\nMutable: Hello World",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Why are Strings immutable in Java?",
+                        "options": [
+                            "Security",
+                            "Efficiency (String Pool)",
+                            "Thread Safety",
+                            "All of the above"
+                        ],
+                        "correctAnswer": 3,
+                        "explanation": "Immutability allows sharing in the memory pool, simplifies multithreading, and prevents unauthorized data changes."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "java-level-5",
+        "title": "LEVEL 5: OOP Pillar 1 & 2 (Basics)",
+        "description": "Start designing software with classes and inheritance",
+        "lessons": [
+            {
+                "id": "j5.1",
+                "title": "5.1 Classes, Objects, & Constructors",
+                "duration": "40 mins",
+                "difficultyLevel": "Intermediate",
+                "topics": [
+                    "OOP",
+                    "Classes",
+                    "this"
+                ],
+                "content": "# Object Oriented Programming\n\nJava is a pure OOP language. A class is a blueprint; an object is an instance.\n\n## 1. State and Behavior\n- Variables (Fields) represent state.\n- Methods represent behavior.\n\n## 2. Constructors\nSpecial methods that initialize objects. They have the same name as the class and no return type.\n\n## 3. 'this' keyword\nRefers to the current instance of the class. Use it to resolve ambiguity between fields and parameters.",
+                "fullProgram": "class Player {\n    String name;\n    int level;\n    \n    Player(String name) {\n        this.name = name;\n        this.level = 1;\n    }\n    \n    void info() {\n        System.out.println(\"Player \" + name + \" is level \" + level);\n    }\n}\n\npublic class Game {\n    public static void main(String[] args) {\n        Player p = new Player(\"Alex\");\n        p.info();\n    }\n}",
+                "expectedOutput": "Player Alex is level 1",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Can a constructor have a return type like 'void'?",
+                        "options": [
+                            "Yes",
+                            "No",
+                            "Only if it is public",
+                            "Only in old Java versions"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Constructors strictly have no return type. If you add 'void', it becomes a regular method, not a constructor."
+                    }
+                ]
+            },
+            {
+                "id": "j5.2",
+                "title": "5.2 Inheritance & super()",
+                "duration": "40 mins",
+                "difficultyLevel": "Intermediate",
+                "topics": [
+                    "Inheritance",
+                    "super",
+                    "Reusability"
+                ],
+                "content": "# Inheritance\n\nInheritance allows a class (subclass) to acquire the properties of another class (superclass) using the `extends` keyword.\n\n## 1. Why Inheritance?\n- Code Reusability.\n- Method Overriding (custom behavior in child).\n\n## 2. super keyword\nUsed to access methods or constructors of the parent class.\n\n**Note**: Java does NOT support multi-class inheritance (`class C extends A, B` is invalid).",
+                "fullProgram": "class Device {\n    String brand = \"Apple\";\n    void powerOn() { System.out.println(\"Booting...\"); }\n}\n\nclass iPhone extends Device {\n    void info() {\n        System.out.println(\"Brand is: \" + super.brand);\n    }\n}\n\npublic class Mobile {\n    public static void main(String[] args) {\n        iPhone myPhone = new iPhone();\n        myPhone.powerOn();\n        myPhone.info();\n    }\n}",
+                "expectedOutput": "Booting...\nBrand is: Apple",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which class is the parent of all classes in Java?",
+                        "options": [
+                            "SuperClass",
+                            "System",
+                            "Object",
+                            "Main"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "java.lang.Object is the root of the class hierarchy in Java."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "java-level-6",
+        "title": "LEVEL 6: OOP Pillar 3 & 4 (Advanced)",
+        "description": "Master Abstraction and Polymorphism for scalable apps",
+        "lessons": [
+            {
+                "id": "j6.1",
+                "title": "6.1 Interfaces & Abstract Classes",
+                "duration": "45 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "Abstraction",
+                    "Interfaces",
+                    "Contract"
+                ],
+                "content": "# Abstraction\n\nAbstraction is the process of hiding internal details and showing only functionality.\n\n## 1. Abstract Class\n- Can have both abstract (empty) and concrete (implemented) methods.\n- Use it when classes share a base implementation.\n\n## 2. Interface\n- A 100% abstract contract.\n- A class can **implement** multiple interfaces (solving the multiple inheritance problem).\n- All methods are implicitly `public abstract`.",
+                "fullProgram": "interface Camera {\n    void takePhoto();\n}\n\nabstract class Phone {\n    abstract void makeCall();\n    void powerOn() { System.out.println(\"Phone On\"); }\n}\n\nclass SmartPhone extends Phone implements Camera {\n    void makeCall() { System.out.println(\"Calling...\"); }\n    public void takePhoto() { System.out.println(\"Click!\"); }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        SmartPhone s = new SmartPhone();\n        s.powerOn();\n        s.takePhoto();\n    }\n}",
+                "expectedOutput": "Phone On\nClick!",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Can you create an instance (object) of an Abstract Class?",
+                        "options": [
+                            "Yes",
+                            "No",
+                            "Only if it has a constructor",
+                            "Only in the main method"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Abstract classes are incomplete and cannot be instantiated directly with 'new'."
+                    }
+                ]
+            },
+            {
+                "id": "j6.2",
+                "title": "6.2 Polymorphism (Dynamic Binding)",
+                "duration": "40 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "Overriding",
+                    "Overloading",
+                    "Casting"
+                ],
+                "content": "# Polymorphism\n\nPolymorphism means 'many forms'. It allows one interface to address different underlying data types.\n\n## 1. Compile-time (Static)\n- **Method Overloading**: Same method name, different parameters in the same class.\n\n## 2. Runtime (Dynamic)\n- **Method Overriding**: Child class provides specific implementation for a method already in parent.\n\n## Upcasting\n`Animal a = new Dog();` - The variable is an Animal, but the object is a Dog. At runtime, the Dog's version of methods will run.",
+                "fullProgram": "class Language {\n    void speak() { System.out.println(\"Code\"); }\n}\n\nclass Java extends Language {\n    void speak() { System.out.println(\"Java is compiled\"); }\n}\n\npublic class Demo {\n    public static void main(String[] args) {\n        Language obj = new Java(); // Upcasting\n        obj.speak();\n    }\n}",
+                "expectedOutput": "Java is compiled",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which annotation is used to ensure code is overriding a parent method?",
+                        "options": [
+                            "@Inherit",
+                            "@Override",
+                            "@Super",
+                            "@Abstract"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "@Override tells the compiler to check if a matching method exists in the parent class."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "java-level-7",
+        "title": "LEVEL 7: Collections Framework",
+        "description": "Store and manipulate complex data structures",
+        "lessons": [
+            {
+                "id": "j7.1",
+                "title": "7.1 Lists & Sets",
+                "duration": "45 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "ArrayList",
+                    "HashSet",
+                    "Collections"
+                ],
+                "content": "# Java Collections API\n\nArrays are fixed-size, but Collections grow dynamically.\n\n## 1. ArrayList (Ordered & Not Unique)\nPerfect for lists where you need to access elements by index.\n```java\nList<String> list = new ArrayList<>();\n```\n\n## 2. HashSet (Unordered & Unique)\nUsed when you want to store unique items only. It uses Hashing to look up items instantly.\n```java\nSet<Integer> set = new HashSet<>();\n```\n\n## 3. Difference\n- List: Index-based, allows duplicates.\n- Set: Value-based, forbids duplicates.",
+                "fullProgram": "import java.util.*;\n\npublic class CollTest {\n    public static void main(String[] args) {\n        List<String> list = new ArrayList<>();\n        list.add(\"A\");\n        list.add(\"A\"); // Duplicate OK\n        \n        Set<String> set = new HashSet<>();\n        set.add(\"A\");\n        set.add(\"A\"); // Duplicate ignored\n        \n        System.out.println(\"List size: \" + list.size());\n        System.out.println(\"Set size: \" + set.size());\n    }\n}",
+                "expectedOutput": "List size: 2\nSet size: 1",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which class would you use for fast random access by index?",
+                        "options": [
+                            "LinkedList",
+                            "ArrayList",
+                            "HashSet",
+                            "TreeSet"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "ArrayList is backed by an array, providing O(1) time for index-based access."
+                    }
+                ]
+            },
+            {
+                "id": "j7.2",
+                "title": "7.2 Maps (Key-Value Pairs)",
+                "duration": "40 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "HashMap",
+                    "Key-Value",
+                    "Iterating"
+                ],
+                "content": "# HashMap in Java\n\nA Map cannot contain duplicate keys; each key can map to at most one value.\n\n## 1. Internal Logic\nIt works on the principle of **Hashing**. It uses `hashCode()` and `equals()` to find and store objects.\n\n## 2. Basic Methods\n- `put(K, V)`: Store a pair.\n- `get(K)`: Retrieve a value.\n- `containsKey(K)`: Check for existence.",
+                "fullProgram": "import java.util.HashMap;\n\npublic class MapApp {\n    public static void main(String[] args) {\n        HashMap<String, String> capitals = new HashMap<>();\n        capitals.put(\"USA\", \"DC\");\n        capitals.put(\"India\", \"Delhi\");\n        \n        System.out.println(\"USA capital is \" + capitals.get(\"USA\"));\n        System.out.println(\"Size: \" + capitals.size());\n    }\n}",
+                "expectedOutput": "USA capital is DC\nSize: 2",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What happens if you 'put' a value with an existing key?",
+                        "options": [
+                            "Error",
+                            "Value is ignored",
+                            "Old value is overwritten",
+                            "Second value added as list"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Maps overwrite the existing value if the same key is put again."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "java-level-8",
+        "title": "LEVEL 8: Modern Java & Concurrency",
+        "description": "Functional patterns and Multithreading",
+        "lessons": [
+            {
+                "id": "j8.1",
+                "title": "8.1 Streams & Lambdas",
+                "duration": "45 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "Functional",
+                    "Streams",
+                    "ES8"
+                ],
+                "content": "# Functional Programming in Java\n\nIntroduced in Java 8, Lambdas allow us to treat code as data.\n\n## 1. Lambda Syntax\n`(params) -> { body }` \nExample: `(a, b) -> a + b;`\n\n## 2. Streams API\nUsed to process collections of objects in a declarative way.\n- `filter`: Pick elements matching a condition.\n- `map`: Transform each element.\n- `collect`: Put results into a new list.",
+                "fullProgram": "import java.util.*;\nimport java.util.stream.*;\n\npublic class StreamDev {\n    public static void main(String[] args) {\n        List<Integer> nums = Arrays.asList(1, 2, 3, 4, 5, 6);\n        \n        List<Integer> evens = nums.stream()\n                                  .filter(n -> n % 2 == 0)\n                                  .collect(Collectors.toList());\n                                  \n        System.out.println(evens);\n    }\n}",
+                "expectedOutput": "[2, 4, 6]",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which Stream method is used to transform data?",
+                        "options": [
+                            "filter",
+                            "map",
+                            "reduce",
+                            "collect"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Map transforms elements from one form to another."
+                    }
+                ]
+            },
+            {
+                "id": "j8.2",
+                "title": "8.2 Multithreading (Concurrency)",
+                "duration": "50 mins",
+                "difficultyLevel": "Advanced",
+                "topics": [
+                    "Threads",
+                    "Runnable",
+                    "Parallel"
+                ],
+                "content": "# Multithreading\n\nMultithreading allows multiple parts of a program to run in parallel, maximizing CPU usage.\n\n## 1. Creation\n- **Extend Thread Class**: Override `run()` method.\n- **Implement Runnable Interface**: (Better practice as it allows class to inherit others).\n\n## 2. Thread State\nNew -> Runnable -> Running -> Blocked -> Dead.\n\n## 3. Synchronization\nIf two threads access the same resource (like a bank balance), use the `synchronized` keyword to prevent data corruption.",
+                "fullProgram": "class Task implements Runnable {\n    public void run() {\n        System.out.println(\"A task is running in a separate thread!\");\n    }\n}\n\npublic class Multi {\n    public static void main(String[] args) {\n        Thread t = new Thread(new Task());\n        t.start(); // This starts the new thread\n        System.out.println(\"Main thread is done.\");\n    }\n}",
+                "expectedOutput": "Main thread is done.\nA task is running in a separate thread!",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which method is used to begin a thread's execution?",
+                        "options": [
+                            "run()",
+                            "start()",
+                            "init()",
+                            "begin()"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "You MUST call start() to initiate the thread. Calling run() directly just executes it in the current thread."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "java-level-9",
+        "title": "LEVEL 9: Final Java Certification",
+        "description": "Prove your enterprise development skills",
+        "lessons": [
+            {
+                "id": "java41",
+                "title": "41. Final Java Mastery Exam",
+                "duration": "60 mins",
+                "difficultyLevel": "Master",
+                "topics": [
+                    "Final Exam",
+                    "Certification"
+                ],
+                "content": "# Java Certification Exam\n\n**Welcome, Developer!** You have completed the Java Masterclass. This final assessment will test your knowledge on everything from primitive types to advanced concurrency.\n\n## Assessment Topics:\n- **Fundamentals**: JVM architecture, Data types, Loops.\n- **OOP pillars**: Inheritance, Overriding, Abstract classes vs Interfaces.\n- **Data Handling**: String Pool, Arrays, HashMap logic.\n- **Modern Java**: Streams, Lambdas, and Exception propagation.\n\n## Graduation Requirements:\n- Score 80% or higher to claim your **GenSpark Java Programming Certificate**.\n\n---\n\n*Click the quiz below to begin your final journey.*",
+                "fullProgram": "/**\n * Final Graduation Project: Simple Banking System\n * Demonstrates: OOP, Collections, and Exception Handling\n */\nimport java.util.*;\n\nclass BankAccount {\n    private double balance;\n    \n    public void deposit(double amt) {\n        if(amt < 0) throw new IllegalArgumentException(\"Negative deposit\");\n        balance += amt;\n    }\n    \n    public double getBalance() { return balance; }\n}\n\npublic class Graduation {\n    public static void main(String[] args) {\n        System.out.println(\"Java Graduation Project Running...\");\n        BankAccount myAcc = new BankAccount();\n        myAcc.deposit(5000.0);\n        System.out.println(\"Current Balance: $\" + myAcc.getBalance());\n        System.out.println(\"Congratulation! You have mastered Java.\");\n    }\n}",
+                "expectedOutput": "Java Graduation Project Running...\nCurrent Balance: $5000.0\nCongratulation! You have mastered Java.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the result of applying 'synchronized' to a static method?",
+                        "options": [
+                            "Locks the object",
+                            "Locks the whole class",
+                            "No effect",
+                            "Throws exception"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Synchronizing a static method locks the Class object, preventing any thread from accessing any static synchronized method of that class."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Which collection allows null as a Key?",
+                        "options": [
+                            "HashMap",
+                            "Hashtable",
+                            "TreeMap",
+                            "None"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "HashMap allows one null key and multiple null values. Hashtable does not allow null keys or values."
+                    },
+                    {
+                        "id": 3,
+                        "text": "What is the default value of a boolean field in a class?",
+                        "options": [
+                            "true",
+                            "false",
+                            "null",
+                            "undefined"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Instance variables (fields) of boolean type default to 'false'."
+                    },
+                    {
+                        "id": 4,
+                        "text": "Difference between 'throw' and 'throws'?",
+                        "options": [
+                            "No difference",
+                            "Throw is for catching, throws for declaring",
+                            "Throw is to trigger an exception, throws to declare potential exceptions in signature",
+                            "Throws is for system errors only"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "throw is a statement to manually throw an exception; throws is a keyword in the method header to delegate exception handling to the caller."
+                    },
+                    {
+                        "id": 5,
+                        "text": "Which package is automatically imported in every Java file?",
+                        "options": [
+                            "java.io",
+                            "java.util",
+                            "java.lang",
+                            "java.net"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "java.lang (containing String, System, Object, etc.) is implicitly imported."
+                    }
+                ]
+            }
+        ]
+    }
+]

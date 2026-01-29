@@ -232,14 +232,23 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
          // Refresh sessions list to update "Recent" order or snippet
          queryClient.invalidateQueries({ queryKey: ['chatSessions'] });
 
-      } catch (error) {
-         console.error(error);
-         setMessages(prev => [...prev, {
-            id: Date.now().toString(),
-            role: 'assistant',
-            content: "Sorry, I encountered an error. Please try again.",
-            timestamp: new Date()
-         }]);
+      } catch (error: any) {
+         console.error("AIChat Error:", error);
+         const errorContent = error.message || "Sorry, I encountered an error. Please check your internet connection or try again.";
+         setMessages(prev => {
+            const updated = [...prev];
+            if (updated.length > 0 && updated[updated.length - 1].role === 'assistant' && updated[updated.length - 1].content === '') {
+               updated[updated.length - 1].content = errorContent;
+            } else {
+               updated.push({
+                  id: Date.now().toString(),
+                  role: 'assistant',
+                  content: errorContent,
+                  timestamp: new Date()
+               });
+            }
+            return updated;
+         });
       } finally {
          setIsLoading(false);
       }
@@ -349,8 +358,8 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                      <p className="text-[10px] text-slate-400">Unlimited high-reasoning tokens active.</p>
                   </div>
                )}
-               <button 
-                  onClick={() => {}}  // Add user profile handler
+               <button
+                  onClick={() => { }}  // Add user profile handler
                   className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors text-left group">
                   <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-sm shrink-0 ring-2 ring-slate-800 group-hover:ring-slate-700 transition-all">
                      {user?.name?.[0]?.toUpperCase() || 'U'}
@@ -468,9 +477,9 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
 
                                           return <code className="bg-slate-800 rounded px-1.5 py-0.5 text-indigo-300 font-mono text-sm" {...props}>{children}</code>;
                                        },
-                                       h1: ({node, ...props}) => <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mt-4 mb-3" {...props} />,
-                                       h2: ({node, ...props}) => <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mt-4 mb-2" {...props} />,
-                                       h3: ({node, ...props}) => <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-3 mb-2" {...props} />,
+                                       h1: ({ node, ...props }) => <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mt-4 mb-3" {...props} />,
+                                       h2: ({ node, ...props }) => <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mt-4 mb-2" {...props} />,
+                                       h3: ({ node, ...props }) => <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-3 mb-2" {...props} />,
                                     }}
                                  >
                                     {m.content}
@@ -520,8 +529,8 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                            <button onClick={() => handleFileUpload('image')} className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
                               <ImageIcon size={18} />
                            </button>
-                           <button 
-                              onClick={() => {}}  // Add voice input handler when ready
+                           <button
+                              onClick={() => { }}  // Add voice input handler when ready
                               className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
                               <Mic size={18} />
                            </button>

@@ -79,6 +79,37 @@ const Home: React.FC = () => {
                     </p>
                 </div>
 
+                {/* 7. LANGUAGE PATH INDICATOR - Premium Redesign */}
+                <section className="mb-10 p-6 bg-slate-900/40 border border-slate-700/40 rounded-2xl shadow-xl shadow-indigo-500/5">
+                    <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-2">
+                            <Zap size={18} className="text-indigo-400" />
+                            <h3 className="text-sm font-black text-white uppercase tracking-wider">Learning Path</h3>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest hidden md:block">Active Choice</span>
+                            <span className="text-[10px] font-black text-white bg-indigo-600 px-4 py-1.5 rounded-xl border border-indigo-400/50 shadow-lg shadow-indigo-500/20 uppercase tracking-wider">
+                                {currentPath?.name || 'C Programming'}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide">
+                        {(LANGUAGES as any).map((lang: any) => (
+                            <button
+                                key={lang.id}
+                                onClick={() => handlePathSelect(lang.id)}
+                                className={`flex-shrink-0 px-6 py-3 rounded-xl text-sm font-black transition-all duration-300 border-2 ${selectedPathId === lang.id
+                                    ? 'bg-indigo-600 border-indigo-400 text-white shadow-xl shadow-indigo-500/40 scale-105'
+                                    : 'bg-slate-800/80 border-slate-700 text-slate-400 hover:text-white hover:bg-slate-700 hover:border-slate-500'
+                                    }`}
+                            >
+                                {lang.name}
+                            </button>
+                        ))}
+                    </div>
+                </section>
+
                 {/* 3. PRIMARY ACTION CARD - Enhanced */}
                 <section className="mb-6">
                     <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600/20 to-purple-600/20 border border-indigo-500/30 backdrop-blur-sm hover:border-indigo-500/50 transition-all duration-300 shadow-xl shadow-indigo-500/10">
@@ -104,27 +135,6 @@ const Home: React.FC = () => {
                             >
                                 <Play size={18} className="fill-current" />
                                 Resume Lesson
-                            </button>
-                        </div>
-                    </div>
-                </section>
-
-                {/* 4. TODAY'S FOCUS - NEW */}
-                <section className="mb-8">
-                    <div className="relative p-5 bg-slate-900/40 border border-slate-700/30 rounded-xl hover:bg-slate-900/60 transition-all duration-300">
-                        <div className="flex items-start justify-between gap-4">
-                            <div className="flex-1">
-                                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Today's Focus</p>
-                                <h4 className="text-xl font-bold text-white mb-2">
-                                    {currentLesson?.title || 'Introduction to C'}
-                                </h4>
-                                <p className="text-sm text-slate-400">Beginner</p>
-                            </div>
-                            <button
-                                onClick={() => navigate(`/lesson/${currentLesson?.id || 'c1'}`)}
-                                className="px-6 py-2.5 bg-slate-700 hover:bg-slate-600 text-white text-sm font-bold rounded-lg transition-colors"
-                            >
-                                Start Now
                             </button>
                         </div>
                     </div>
@@ -223,27 +233,6 @@ const Home: React.FC = () => {
                             <Trophy size={16} className="text-cyan-400" />
                             Switch Language
                         </button>
-                    </div>
-                </section>
-
-                {/* 7. LANGUAGE PATH INDICATOR - Improved */}
-                <section className="mb-8">
-                    <p className="text-sm text-slate-400 mb-3">
-                        You are learning: <span className="text-white font-bold">{currentPath?.name || 'C Programming'}</span>
-                    </p>
-                    <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-                        {(LANGUAGES as any).map((lang: any) => (
-                            <button
-                                key={lang.id}
-                                onClick={() => handlePathSelect(lang.id)}
-                                className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-bold transition-all ${selectedPathId === lang.id
-                                    ? 'bg-indigo-600 text-white ring-2 ring-indigo-400 shadow-lg shadow-indigo-500/30'
-                                    : 'bg-slate-800/30 text-slate-500 hover:text-slate-400 hover:bg-slate-800/50 opacity-60'
-                                    }`}
-                            >
-                                {lang.name}
-                            </button>
-                        ))}
                     </div>
                 </section>
             </div>

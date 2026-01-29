@@ -12,7 +12,7 @@ interface AuthContextType {
     signInWithGithub: () => Promise<void>;
     logout: () => Promise<void>;
     refreshProfile: () => Promise<void>;
-    updateProfile: (updates: Partial<User>) => Promise<void>;
+    updateProfile: (updates: Partial<User>, specificActivity?: { type: 'lesson' | 'practice' | 'project' | 'challenge', title: string, xp?: number }) => Promise<void>;
     updateUser: (updates: Partial<User>) => Promise<void>;
     setInitializing: (val: boolean) => void;
 }
@@ -260,7 +260,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             }
         },
         refreshProfile,
-        updateProfile: useCallback(async (updates: Partial<User>) => {
+        updateProfile: useCallback(async (updates: Partial<User>, specificActivity?: { type: 'lesson' | 'practice' | 'project' | 'challenge', title: string, xp?: number }) => {
             if (!userStateRef.current.userId) return;
 
             // 1. Get latest state for merging
@@ -283,7 +283,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 ? [...new Set([...currentUnlocked, ...updates.unlockedLessonIds])]
                 : currentUnlocked;
 
-            const activityUpdates = StreakService.getActivityUpdates(baseUser);
+            const activityUpdates = StreakService.getActivityUpdates(baseUser, specificActivity);
             const mergedUpdates = {
                 ...updates,
                 ...(activityUpdates || {}),

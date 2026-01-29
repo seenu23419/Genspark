@@ -4,22 +4,32 @@ export interface MediaPart {
   data: string;
 }
 
+// Helper to check if a key is a dummy placeholder from .env.example
+const isPlaceholderKey = (key: string): boolean => {
+  if (!key) return true;
+  const placeholders = [
+    'your_gemini_api_key',
+    'your_openai_api_key',
+    'placeholder',
+    'api_key_here',
+    'dummy'
+  ];
+  return placeholders.some(p => key.toLowerCase().includes(p));
+};
+
 // Safely access environment variables
 const getApiKey = (provider: 'gemini' | 'openai'): string => {
   try {
+    let key = '';
     if (provider === 'gemini') {
-      return (
-        (typeof (import.meta as any).env !== 'undefined' ? (import.meta as any).env.VITE_GEMINI_API_KEY : '') ||
-        (typeof process !== 'undefined' && process.env ? (process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY || process.env.API_KEY) : '') ||
-        ''
-      );
+      key = (typeof (import.meta as any).env !== 'undefined' ? (import.meta as any).env.VITE_GEMINI_API_KEY : '') ||
+        (typeof process !== 'undefined' && process.env ? (process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY || process.env.API_KEY) : '');
     } else {
-      return (
-        (typeof (import.meta as any).env !== 'undefined' ? (import.meta as any).env.VITE_OPENAI_API_KEY : '') ||
-        (typeof process !== 'undefined' && process.env ? (process.env.OPENAI_API_KEY || process.env.VITE_OPENAI_API_KEY) : '') ||
-        ''
-      );
+      key = (typeof (import.meta as any).env !== 'undefined' ? (import.meta as any).env.VITE_OPENAI_API_KEY : '') ||
+        (typeof process !== 'undefined' && process.env ? (process.env.OPENAI_API_KEY || process.env.VITE_OPENAI_API_KEY) : '');
     }
+
+    return isPlaceholderKey(key) ? '' : key;
   } catch {
     return '';
   }
@@ -42,7 +52,7 @@ export class GenSparkAIService {
     const recentHistory = history.slice(-10);
 
     // Strategy: Try OpenAI first (highest reasoning), then Gemini fallback
-    if (this.openaiKey && this.openaiKey !== 'PLACEHOLDER_API_KEY') {
+    if (this.openaiKey) {
       try {
         console.log("GenSpark AI: Attempting with OpenAI...");
         yield* this.generateOpenAIStream(message, isPro, recentHistory, attachment);
@@ -52,22 +62,22 @@ export class GenSparkAIService {
       }
     }
 
-    if (this.geminiKey && this.geminiKey !== 'PLACEHOLDER_API_KEY') {
+    if (this.geminiKey) {
       try {
         console.log("GenSpark AI: Attempting with Gemini...");
         yield* this.generateGeminiStream(message, isPro, recentHistory, attachment);
         return;
       } catch (e: any) {
         console.error("GenSpark AI: Gemini also failed.", e.message);
-        yield `Connection error: ${e.message || "I encountered an issue processing your request."}`;
+        yield `⚠️ **System Note**: ${e.message || "I encountered an issue connecting to the AI brain. Please check your internet or try again."}`;
       }
-    } else if (!this.openaiKey || this.openaiKey === 'PLACEHOLDER_API_KEY') {
+    } else {
       // Offline mode message
       const isDev = (import.meta as any).env.DEV;
       if (isDev) {
-        yield "GenSpark AI: I'm currently in 'offline mode' because your API keys are missing in `.env.local`. Please add `VITE_GEMINI_API_KEY` to activate me! 🚀";
+        yield "🤖 **GenSpark AI (Setup Required)**: I'm currently in 'offline mode' because your AI keys are missing. \n\n**Quick Fix**: Please add your `VITE_GEMINI_API_KEY` to your `.env.local` file and restart the server! 🚀";
       } else {
-        yield "GenSpark AI: I'm currently in 'offline mode' in production. **Fix Needed**: Please add your `VITE_GEMINI_API_KEY` to your Netlify Environment Variables.";
+        yield "🤖 **GenSpark AI (Offline)**: I'm currently in 'offline mode' because no valid API key was found in the environment variables.";
       }
     }
   }
@@ -143,7 +153,8 @@ export class GenSparkAIService {
   }
 
   private async *generateGeminiStream(message: string, isPro: boolean, history: any[], attachment?: MediaPart) {
-    const models = ['gemini-2.0-flash-lite', 'gemini-1.5-flash', 'gemini-1.5-pro'];
+    // Using exact model names that work with v1beta API
+    const models = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro'];
     const systemPrompt = this.getSystemPrompt(isPro);
     let lastError = '';
 
@@ -187,7 +198,14 @@ export class GenSparkAIService {
 
         if (!response.ok) {
           const err = await response.json().catch(() => ({}));
-          throw new Error(err.error?.message || response.statusText);
+          const errorMsg = err.error?.message || response.statusText;
+
+          // Short-circuit: If API key is invalid, don't keep trying other models
+          if (response.status === 400 && errorMsg.toLowerCase().includes('key')) {
+            throw new Error("Invalid API Key. Please verify your credentials in .env.local");
+          }
+
+          throw new Error(errorMsg);
         }
 
         const reader = response.body?.getReader();

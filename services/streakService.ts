@@ -91,24 +91,76 @@ export class StreakService {
      * Explicitly record activity for today without necessarily updating the streak increment logic.
      * Useful for non-streak-incrementing actions that still count as "activity".
      */
-    /**
-     * Helper to get activity log updates for a user.
-     * Use this to merge activity tracking into other profile updates.
-     */
-    static getActivityUpdates(user: User): Partial<User> | null {
-        if (!user || !supabaseDB.isStreakEnabled()) return null;
+    // --- Persistence Helper for Detailed History (LocalStorage) ---
+    private static getHistoryKey(userId: string): string {
+        return `activity_history_${userId}`;
+    }
+
+    static loadHistory(userId: string): any[] {
+        if (typeof localStorage === 'undefined') return [];
+        try {
+            const raw = localStorage.getItem(this.getHistoryKey(userId));
+            return raw ? JSON.parse(raw) : [];
+        } catch (e) {
+            console.error("Failed to load history", e);
+            return [];
+        }
+    }
+
+    private static saveHistory(userId: string, history: any[]) {
+        if (typeof localStorage === 'undefined') return;
+        try {
+            localStorage.setItem(this.getHistoryKey(userId), JSON.stringify(history));
+        } catch (e) {
+            console.error("Failed to save history", e);
+        }
+    }
+
+    static getActivityUpdates(user: User, specificActivity?: { type: 'lesson' | 'practice' | 'project' | 'challenge', title: string, xp?: number }): Partial<User> | null {
+        if (!user) return null; // streakEnabled check moved to internal logic if needed
 
         const now = new Date();
-        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        const dateStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        // Use local date for calendar consistency
+        const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
         const activityLog = [...(user.activity_log || [])];
+        let hasLogUpdates = false;
+
+        // 1. Update basic activity log (dates only) - This goes to DB
         if (!activityLog.includes(dateStr)) {
             activityLog.push(dateStr);
-            return {
-                activity_log: activityLog.slice(-60),
-                lastActiveAt: now.toISOString()
+            if (activityLog.length > 60) activityLog.shift(); // Keep last 60 days
+            hasLogUpdates = true;
+        }
+
+        // 2. Update detailed activity history (LocalStorage)
+        // Load latest from storage to ensure we don't overwrite with stale state
+        let activityHistory = this.loadHistory(user._id);
+        let hasHistoryUpdates = false;
+
+        if (specificActivity) {
+            const newItem = {
+                id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+                date: now.toISOString(),
+                ...specificActivity
             };
+            activityHistory.unshift(newItem); // Add to beginning
+            if (activityHistory.length > 100) activityHistory = activityHistory.slice(0, 100); // Keep last 100 items
+
+            this.saveHistory(user._id, activityHistory);
+            hasHistoryUpdates = true;
+        } else if (user.activity_history && user.activity_history.length > activityHistory.length) {
+            // Edge case: State has more items than storage? (Unlikely but safe sync)
+            // this.saveHistory(user._id, user.activity_history);
+        }
+
+        if (hasLogUpdates || hasHistoryUpdates) {
+            const updates: Partial<User> = { lastActiveAt: now.toISOString() };
+            if (hasLogUpdates) updates.activity_log = activityLog;
+            // We return activity_history so the context updates the UI state immediately
+            if (hasHistoryUpdates || specificActivity) updates.activity_history = activityHistory;
+
+            return updates;
         }
 
         return null;

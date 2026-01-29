@@ -16,7 +16,8 @@ const PracticeHub: React.FC = () => {
     }, [topics]);
 
     const activeTopic = useMemo(() => {
-        return topics.find(t => t.id === activeTopicId) || topics[0];
+        if (!topics || topics.length === 0) return null;
+        return topics.find(t => t && t.id === activeTopicId) || topics[0];
     }, [topics, activeTopicId]);
 
     const filteredProblems = activeTopic?.problems || [];
@@ -57,7 +58,7 @@ const PracticeHub: React.FC = () => {
     }
 
     // Total stats
-    const totalProblems = topics.flatMap(t => t.problems).length;
+    const totalProblems = (topics || []).flatMap(t => t?.problems || []).length;
 
     // DEMO FIX: Read directly from localStorage + Context to ensure count is never 0 if work was done
     const getLocalCount = () => {
@@ -69,7 +70,7 @@ const PracticeHub: React.FC = () => {
         } catch (e) { return 0; }
     };
 
-    const contextCount = topics.flatMap(t => t.problems).filter(p => getProblemStatus(p.id) === 'COMPLETED').length;
+    const contextCount = (topics || []).flatMap(t => t?.problems || []).filter(p => p && getProblemStatus(p.id) === 'COMPLETED').length;
     const completedProblems = Math.max(contextCount, getLocalCount());
 
     const progressPercent = totalProblems > 0 ? (completedProblems / totalProblems) * 100 : 0;

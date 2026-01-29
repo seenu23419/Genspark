@@ -54,6 +54,15 @@ export interface User {
   streak?: number;
   lastActiveAt?: string; // ISO string
   activity_log?: string[]; // Array of YYYY-MM-DD strings
+  activity_history?: ActivityItem[]; // Detailed log of actions
+}
+
+export interface ActivityItem {
+  id: string; // unique timestamp + random
+  type: 'lesson' | 'practice' | 'project' | 'challenge';
+  title: string;
+  date: string; // ISO string
+  xp?: number;
 }
 
 export interface Language {

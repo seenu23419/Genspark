@@ -32,16 +32,6 @@ import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, BarChart, Bar, Ca
 import { certificateService } from '../../services/certificateService';
 import { supabaseDB } from '../../services/supabaseService';
 
-const data = [
-  { name: 'M', xp: 120, time: 45 },
-  { name: 'T', xp: 90, time: 30 },
-  { name: 'W', xp: 200, time: 60 },
-  { name: 'T', xp: 150, time: 40 },
-  { name: 'F', xp: 180, time: 55 },
-  { name: 'S', xp: 400, time: 90 },
-  { name: 'S', xp: 320, time: 70 },
-];
-
 const Profile: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -159,7 +149,7 @@ const Profile: React.FC = () => {
                 <p className="text-xs font-black text-slate-500 uppercase tracking-[0.2em]">Learning C Programming</p>
               </div>
               <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest bg-slate-800/50 px-3 py-1 rounded-full border border-white/5">
-                {Math.round(((user.lessonsCompleted || 0) / 40) * 100)}% Complete
+                {Math.min(100, Math.round(((user.lessonsCompleted || 0) / 40) * 100))}% Complete
               </p>
             </div>
           </div>
@@ -188,7 +178,9 @@ const Profile: React.FC = () => {
             <div className="text-left">
               <h3 className="text-lg font-bold text-white group-hover:text-indigo-200 transition-colors">View Learning Profile</h3>
               <p className="text-xs font-medium text-slate-500 group-hover:text-indigo-300/70 transition-colors">
-                🔥 You're on a 3-day streak! Keep it up.
+                {user.streak > 0
+                  ? `🔥 You're on a ${user.streak}-day streak! Keep it up.`
+                  : "🚀 Start your learning journey today!"}
               </p>
             </div>
           </div>

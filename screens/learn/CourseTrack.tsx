@@ -139,9 +139,11 @@ const CourseTrack: React.FC = () => {
   const isLevelUnlocked = (levelIndex: number): boolean => true;
 
   const currentLevelIndex = useMemo(() => {
+    if (!modules || modules.length === 0) return 0;
     for (let mIdx = 0; mIdx < modules.length; mIdx++) {
       const module = modules[mIdx];
-      const hasIncomplete = module.lessons.some((l: Lesson) => !completedLessonIds.includes(l.id));
+      const lessons = module?.lessons || [];
+      const hasIncomplete = lessons.some((l: Lesson) => l && !completedLessonIds.includes(l.id));
       if (hasIncomplete) return mIdx;
     }
     return 0;
@@ -233,9 +235,9 @@ const CourseTrack: React.FC = () => {
     );
   }
 
-  const totalLessons = modules.reduce((sum: number, m: any) => sum + m.lessons.length, 0);
+  const totalLessons = modules.reduce((sum: number, m: any) => sum + (m?.lessons?.length || 0), 0);
   const completedCount = completedLessonIds.filter((id: string) =>
-    modules.some((m: any) => m.lessons.some((l: any) => l.id === id))
+    modules.some((m: any) => (m?.lessons || []).some((l: any) => l?.id === id))
   ).length;
   const progressPercent = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
 

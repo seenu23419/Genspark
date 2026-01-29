@@ -1,62 +1,124 @@
 [
     {
         "id": "dsa-l1",
-        "title": "LEVEL 1: Fundamentals & Complexity",
+        "title": "LEVEL 1: Programming & DSA Foundations (Beginner)",
+        "description": "Goal: Build logical thinking & coding base",
         "lessons": [
             {
-                "id": "dsa1",
-                "title": "1. Time & Space Complexity (Big-O)",
-                "duration": "25 mins",
-                "difficultyLevel": "Beginner",
-                "topics": [
-                    "Asymptotic Analysis",
-                    "Best/Average/Worst Case",
-                    "Space Complexity"
-                ],
-                "content": "# Understanding Complexity (Big-O)\n\nIn DSA, we don't just want a working program; we want an **efficient** one. Complexity Analysis helps us measure how well an algorithm scales as input grows.\n\n---\n\n## 1. What is Time Complexity?\nIt is the amount of time taken by an algorithm to run as a function of the size of the input (n).\n\n### Common Notations:\n- **O(1)**: Constant (e.g., accessing an array index).\n- **O(log n)**: Logarithmic (e.g., Binary Search).\n- **O(n)**: Linear (e.g., a single loop).\n- **O(n²)**: Quadratic (e.g., nested loops).\n\n## 2. Space Complexity\nIt is the amount of memory an algorithm uses to execute relative to the input size.\n\n## 3. The 3 Cases\n- **Worst Case (O)**: Maximum time a program can take.\n- **Average Case (Θ)**: Mean time.\n- **Best Case (Ω)**: Minimum time (e.g., first element is the target).",
-                "fullProgram": "// Example: Linear vs Constant time\n#include <iostream>\n\nvoid constantTime(int n) {\n    std::cout << \"This is O(1) regardless of n\\n\";\n}\n\nvoid linearTime(int n) {\n    for (int i = 0; i < n; i++) {\n        // This loop runs n times\n    }\n    std::cout << \"This is O(n) for n = \" << n << \"\\n\";\n}\n\nint main() {\n    constantTime(10);\n    linearTime(10);\n    return 0;\n}",
-                "expectedOutput": "This is O(1) regardless of n\nThis is O(n) for n = 10",
+                "id": "d1",
+                "title": "1. What is DSA? Why DSA?",
+                "duration": "15 mins",
+                "content": "# 🧬 Understanding DSA\n\n**Data Structures** are ways to organize data in a computer so that it can be used efficiently. **Algorithms** are step-by-step procedures for solving problems.",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "What is the time complexity of searching an element in a sorted array using Binary Search?",
+                        "text": "What is an Algorithm?",
                         "options": [
-                            "O(n)",
-                            "O(1)",
-                            "O(log n)",
-                            "O(n log n)"
+                            "A data container",
+                            "A step-by-step procedure"
                         ],
-                        "correctAnswer": 2,
-                        "explanation": "Binary search divides the search space in half each time, leading to O(log n) complexity."
+                        "correctAnswer": 1,
+                        "explanation": "Algorithms are instructions for solving problems."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Which is a Data Structure?",
+                        "options": [
+                            "Binary Search",
+                            "Array"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Array is a way to organize data elements."
                     }
                 ]
             },
             {
-                "id": "dsa2",
-                "title": "2. Recursion & Logic Building",
-                "duration": "30 mins",
-                "difficultyLevel": "Intermediate",
-                "topics": [
-                    "Base Case",
-                    "Recursive Tree",
-                    "Factorial",
-                    "Fibonacci"
-                ],
-                "content": "# Recursion: The Art of Thinking Small\n\nRecursion is a process where a function calls itself to solve a smaller version of the same problem.\n\n---\n\n## 1. The Two Parts of Recursion\nEvery recursive function **must** have:\n1.  **Base Case**: A condition that stops the recursion (prevents stack overflow).\n2.  **Recursive Step**: The part where the function calls itself with a reduced input.\n\n## 2. Visualization: Recursive Tree\nFor `factorial(3)`:\n- `fact(3)` calls `3 * fact(2)`\n- `fact(2)` calls `2 * fact(1)`\n- `fact(1)` returns 1 (**Base Case**)\n- Result: 3 * 2 * 1 = 6\n\n## 3. Types of Recursion\n- **Direct**: Function calls itself directly.\n- **Indirect**: Funct A calls B, and B calls A.\n- **Tail Recursion**: The recursive call is the last action in the function (efficient).",
-                "fullProgram": "#include <iostream>\n\n// Recursive function to calculate Factorial\nint factorial(int n) {\n    if (n <= 1) return 1; // Base Case\n    return n * factorial(n - 1); // Recursive Step\n}\n\nint main() {\n    int num = 5;\n    std::cout << \"Factorial of \" << num << \" is: \" << factorial(num);\n    return 0;\n}",
-                "expectedOutput": "Factorial of 5 is: 120",
+                "id": "d2",
+                "title": "2. Time & Space Complexity",
+                "duration": "20 mins",
+                "content": "# ⏳ Complexity Analysis\n\nEfficiency is measured in two dimensions: **Time Complexity** (CPU time) and **Space Complexity** (Memory usage).",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "What happens if a recursive function does not have a base case?",
+                        "text": "Memory growth is called?",
                         "options": [
-                            "It runs faster",
-                            "It returns zero",
-                            "It results in a Stack Overflow",
-                            "It converts to a for loop"
+                            "Time complexity",
+                            "Space complexity"
                         ],
-                        "correctAnswer": 2,
-                        "explanation": "Without a base case, the function calls itself forever until the computer's memory stack is exhausted."
+                        "correctAnswer": 1,
+                        "explanation": "Space complexity focuses on memory usage."
+                    }
+                ]
+            },
+            {
+                "id": "d3",
+                "title": "3. Big-O, Big-Ω, Big-Θ",
+                "duration": "20 mins",
+                "content": "# 🔣 Asymptotic Notations\n\n1. **Big-O (O)**: Upper bound (Worst case).\n2. **Big-Omega (Ω)**: Lower bound (Best case).\n3. **Big-Theta (Θ)**: Tight bound (Average case).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which notation represents the Worst Case?",
+                        "options": [
+                            "Big-O",
+                            "Big-Omega"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Big-O defines the upper limit of growth."
+                    }
+                ]
+            },
+            {
+                "id": "d4",
+                "title": "4. Best, Average & Worst Case",
+                "duration": "15 mins",
+                "content": "# 📊 Case Scenarios\n\n- **Worst Case**: Maximum time.\n- **Best Case**: Minimum time.\n- **Average Case**: Performance over all possible inputs.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Sorting a reverse array is usually?",
+                        "options": [
+                            "Best case",
+                            "Worst case"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Most algorithms reach peak complexity here."
+                    }
+                ]
+            },
+            {
+                "id": "d5",
+                "title": "5. Recursion Basics",
+                "duration": "25 mins",
+                "content": "# 🔁 Recursion\n\nA function calling itself. Requires a **Base Case** and a **Recursive Step**.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Missing base case causes?",
+                        "options": [
+                            "Infinite loop",
+                            "StackOverflowError"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "The stack eventually runs out of memory."
+                    }
+                ]
+            },
+            {
+                "id": "d6",
+                "title": "6. Iterative vs Recursive Approach",
+                "duration": "20 mins",
+                "content": "# ⚖️ Iteration vs Recursion\n\n- **Iteration**: Uses loops, constant space.\n- **Recursion**: Uses function calls, O(n) stack space.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which is generally more memory-efficient?",
+                        "options": [
+                            "Recursion",
+                            "Iteration"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Iteration doesn't add stack frames."
                     }
                 ]
             }
@@ -64,63 +126,132 @@
     },
     {
         "id": "dsa-l2",
-        "title": "LEVEL 2: Linear Data Structures",
+        "title": "LEVEL 2: Arrays & Strings",
+        "description": "Goal: Master linear data structures",
         "lessons": [
             {
-                "id": "dsa3",
-                "title": "3. Arrays & Strings",
-                "duration": "35 mins",
-                "difficultyLevel": "Intermediate",
-                "topics": [
-                    "Prefix Sum",
-                    "Sliding Window",
-                    "Two Pointers",
-                    "Palindrome"
-                ],
-                "content": "# Arrays & Strings\n\nArrays and Strings are the most basic and frequently used data structures in DSA.\n\n---\n\n## 1. Advanced Array Techniques\n- **Two Pointers**: Used to search for pairs in a sorted array (O(n)).\n- **Sliding Window**: Used to solve subarray problems with a fixed or variable size (O(n)).\n- **Prefix Sum**: Precalculating the sum of elements from start to index `i` to answer range sum queries in O(1).\n\n## 2. String Manipulation\n- **Anagram**: Two strings with same characters in different order.\n- **Palindrome**: Reads the same forward and backward.\n- **Frequency Counting**: Using an array of size 26 or a hashmap to count character occurrences.\n\n## 3. Multidimensional Arrays (2D)\nUsed for matrix operations like rotation, transposition, and searching in sorted grids.",
-                "fullProgram": "// Simple Palindrome Check using Two Pointers\n#include <iostream>\n#include <string>\n\nbool isPalindrome(std::string s) {\n    int left = 0, right = s.length() - 1;\n    while (left < right) {\n        if (s[left] != s[right]) return false;\n        left++;\n        right--;\n    }\n    return true;\n}\n\nint main() {\n    std::string test = \"racecar\";\n    std::cout << \"Is '\" << test << \"' a palindrome? \" << (isPalindrome(test) ? \"Yes\" : \"No\");\n    return 0;\n}",
-                "expectedOutput": "Is 'racecar' a palindrome? Yes",
+                "id": "d7",
+                "title": "7. Arrays (1D & 2D)",
+                "duration": "25 mins",
+                "content": "# 🧱 Arrays\n\nFixed-size contiguous memory collection.\n- **1D**: `int[] arr`\n- **2D**: `int[][] matrix`",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "What is the time complexity of a 'Two Pointers' approach to find a pair in a sorted array?",
+                        "text": "Array search (linear) complexity?",
                         "options": [
-                            "O(n^2)",
-                            "O(n log n)",
-                            "O(n)",
-                            "O(1)"
+                            "O(1)",
+                            "O(n)"
                         ],
-                        "correctAnswer": 2,
-                        "explanation": "Two pointers traverse the array once from both ends, resulting in linear O(n) time."
+                        "correctAnswer": 1,
+                        "explanation": "Might need to check every element."
                     }
                 ]
             },
             {
-                "id": "dsa4",
-                "title": "4. Linked Lists, Stacks & Queues",
-                "duration": "40 mins",
-                "difficultyLevel": "Intermediate",
-                "topics": [
-                    "Singly Linked List",
-                    "LIFO/FIFO",
-                    "Deque",
-                    "Cycle Detection"
-                ],
-                "content": "# Dynamic & Sequential Structures\n\n## 1. Linked Lists\nA collection of nodes where each node contains data and a **pointer** to the next node.\n- **Memory**: Non-contiguous (dynamic).\n- **Cycle Detection**: Use Floyd's \"Tortoise and Hare\" algorithm.\n\n## 2. Stacks (LIFO)\n**Last In, First Out**. Like a stack of plates.\n- **Primary Ops**: `push()`, `pop()`, `top()`.\n- **Use Case**: Undo feature, function call stack, balanced parentheses.\n\n## 3. Queues (FIFO)\n**First In, First Out**. Like a queue at a ticket counter.\n- **Primary Ops**: `enqueue()`, `dequeue()`, `front()`.\n- **Deque**: A Double-Ended Queue where insertion/deletion can happen at both ends.\n\n## 4. Priority Queue\nElements are dequeued based on priority (highest/lowest first).",
-                "fullProgram": "// Concept of a Node in Linked List\n#include <iostream>\n\nstruct Node {\n    int data;\n    Node* next;\n    Node(int val) : data(val), next(nullptr) {}\n};\n\nint main() {\n    Node* head = new Node(10);\n    head->next = new Node(20);\n    \n    std::cout << \"First: \" << head->data << \", Second: \" << head->next->data;\n    return 0;\n}",
-                "expectedOutput": "First: 10, Second: 20",
+                "id": "d8",
+                "title": "8. Array Operations",
+                "duration": "20 mins",
+                "content": "# 🔧 Operations\n\nInsertion and Deletion are O(n) due to shifting elements.",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "Which data structure follows the LIFO principle?",
+                        "text": "Delete at index 0?",
                         "options": [
-                            "Queue",
-                            "Linked List",
-                            "Stack",
-                            "Array"
+                            "O(1)",
+                            "O(n)"
                         ],
-                        "correctAnswer": 2,
-                        "explanation": "Stacks follow the 'Last In, First Out' (LIFO) order."
+                        "correctAnswer": 1,
+                        "explanation": "All elements must shift left."
+                    }
+                ]
+            },
+            {
+                "id": "d9",
+                "title": "9. Sliding Window Technique",
+                "duration": "30 mins",
+                "content": "# 🪟 Sliding Window\n\nOptimizes contiguous subarray problems from O(n²) to O(n).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Goal of sliding window?",
+                        "options": [
+                            "Sorting",
+                            "Reduce nested loops"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Reuses calculation from previous window."
+                    }
+                ]
+            },
+            {
+                "id": "d10",
+                "title": "10. Prefix Sum Technique",
+                "duration": "20 mins",
+                "content": "# ➕ Prefix Sum\n\nAllows O(1) range sum queries after O(n) preprocessing.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Range query complexity after prefix sum?",
+                        "options": [
+                            "O(n)",
+                            "O(1)"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "It's just one subtraction."
+                    }
+                ]
+            },
+            {
+                "id": "d11",
+                "title": "11. Strings Basics",
+                "duration": "15 mins",
+                "content": "# 🧵 Strings\n\nArrays of characters, often immutable in high-level languages.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is an immutable string?",
+                        "options": [
+                            "Cannot be used",
+                            "Cannot be modified"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Modifications create new objects."
+                    }
+                ]
+            },
+            {
+                "id": "d12",
+                "title": "12. String Matching Basics",
+                "duration": "25 mins",
+                "content": "# 🔍 String Search\n\nBrute force pattern matching runs in O(N*M).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Naive matching worst case?",
+                        "options": [
+                            "O(N)",
+                            "O(N*M)"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Where M is pattern length."
+                    }
+                ]
+            },
+            {
+                "id": "d13",
+                "title": "13. Two Pointer Technique",
+                "duration": "30 mins",
+                "content": "# ✌️ Two Pointers\n\nUsed on sorted arrays to find pairs/triplets in O(n).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Two pointers on sorted array complexity?",
+                        "options": [
+                            "O(n)",
+                            "O(n^2)"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Each element is visited at most once."
                     }
                 ]
             }
@@ -128,63 +259,186 @@
     },
     {
         "id": "dsa-l3",
-        "title": "LEVEL 3: Searching, Sorting & Hashing",
+        "title": "LEVEL 3: Searching & Sorting",
+        "description": "Goal: Fundamental algorithms",
         "lessons": [
             {
-                "id": "dsa5",
-                "title": "5. Searching & Sorting",
-                "duration": "45 mins",
-                "difficultyLevel": "Intermediate",
-                "topics": [
-                    "Binary Search",
-                    "Merge Sort",
-                    "Quick Sort",
-                    "Complexity Comparison"
-                ],
-                "content": "# Searching & Sorting\n\nSearching and Sorting are the most studied topics in computer science because they are the foundation for more complex algorithms.\n\n---\n\n## 1. Searching Algorithms\n- **Linear Search**: Checks every element (O(n)).\n- **Binary Search**: Efficiently finds an element in a **sorted** array by repeatedly halving the search space (O(log n)).\n\n## 2. Sorting Algorithms\nSorting is the process of arranging data in a specific order (ascending/descending).\n\n| Algorithm | Best Case | Worst Case | Space |\n| :--- | :--- | :--- | :--- |\n| Bubble Sort | O(n) | O(n²) | O(1) |\n| Merge Sort | O(n log n) | O(n log n) | O(n) |\n| Quick Sort | O(n log n) | O(n²) | O(log n) |\n\n## 3. Which one to use?\n- **Small data**: Insertion Sort.\n- **Stability needed**: Merge Sort.\n- **Space-constrained**: Quick Sort or Heap Sort.",
-                "fullProgram": "// Binary Search Implementation\n#include <iostream>\n#include <vector>\n\nint binarySearch(std::vector<int> arr, int target) {\n    int low = 0, high = arr.size() - 1;\n    while (low <= high) {\n        int mid = low + (high - low) / 2;\n        if (arr[mid] == target) return mid;\n        if (arr[mid] < target) low = mid + 1;\n        else high = mid - 1;\n    }\n    return -1;\n}\n\nint main() {\n    std::vector<int> data = {1, 3, 5, 7, 9};\n    int index = binarySearch(data, 7);\n    std::cout << \"Element 7 found at index: \" << index;\n    return 0;\n}",
-                "expectedOutput": "Element 7 found at index: 3",
+                "id": "d14",
+                "title": "14. Linear Search",
+                "duration": "10 mins",
+                "content": "# 🔍 Linear Search\n\nO(n) worst case search by visiting elements one by one.",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "What is the time complexity of Merge Sort in the worst case?",
+                        "text": "Linear search complexity?",
                         "options": [
-                            "O(n)",
-                            "O(n^2)",
-                            "O(n log n)",
-                            "O(log n)"
+                            "O(log n)",
+                            "O(n)"
                         ],
-                        "correctAnswer": 2,
-                        "explanation": "Merge sort always divides the array and merges it back, which takes O(n log n) in all cases."
+                        "correctAnswer": 1,
+                        "explanation": "Checks each element sequentially."
                     }
                 ]
             },
             {
-                "id": "dsa6",
-                "title": "6. Hashing & Maps",
-                "duration": "40 mins",
-                "difficultyLevel": "Intermediate",
-                "topics": [
-                    "Hash Functions",
-                    "Collision Handling",
-                    "Unordered Map",
-                    "Set"
-                ],
-                "content": "# Hashing: Constant Time Magic\n\nHashing is a technique to map large datasets to a smaller fixed size using a **Hash Function**. The main goal is to achieve **O(1)** average time for insertion, deletion, and lookup.\n\n---\n\n## 1. How Hashing Works\n1.  **Key**: The data you want to store.\n2.  **Hash Function**: Converts key into an integer index.\n3.  **Hash Table**: An array where the key is stored at that index.\n\n## 2. Collision Handling\nWhen two different keys produce the same hash index, it's called a collision.\n- **Chaining**: Use a linked list at each index to store multiple keys.\n- **Open Addressing**: Find the next available slot (Linear Probing).\n\n## 3. C++ STL Hashing\n- `unordered_map<key, value>`: Stores key-value pairs.\n- `unordered_set<key>`: Stores unique elements.",
-                "fullProgram": "// Counting Frequency using Hashing\n#include <iostream>\n#include <unordered_map>\n#include <vector>\n\nint main() {\n    std::vector<int> nums = {1, 2, 1, 3, 2, 1};\n    std::unordered_map<int, int> freq;\n    \n    for(int n : nums) freq[n]++;\n    \n    std::cout << \"Element frequency:\\n\";\n    for(auto const& [key, val] : freq) {\n        std::cout << key << \": \" << val << \"\\n\";\n    }\n    \n    return 0;\n}",
-                "expectedOutput": "Element frequency:\n1: 3\n2: 2\n3: 1",
+                "id": "d15",
+                "title": "15. Binary Search",
+                "duration": "20 mins",
+                "content": "# ✂️ Binary Search\n\nO(log n) search on sorted data by halving the interval.",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "What is the average time complexity for searching in an unordered_map?",
+                        "text": "Requirement for Binary Search?",
+                        "options": [
+                            "Non-empty array",
+                            "Sorted array"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Efficiency depends on the range property."
+                    }
+                ]
+            },
+            {
+                "id": "d16",
+                "title": "16. Search in Rotated Array",
+                "duration": "25 mins",
+                "content": "# 🎡 Rotated Array Search\n\nModified binary search to find an element in a sorted-then-rotated array.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Complexity?",
                         "options": [
                             "O(n)",
-                            "O(log n)",
-                            "O(1)",
-                            "O(n log n)"
+                            "O(log n)"
                         ],
-                        "correctAnswer": 2,
-                        "explanation": "Hashed structures provide near-instant O(1) average lookup time."
+                        "correctAnswer": 1,
+                        "explanation": "Still uses the binary search mechanism."
+                    }
+                ]
+            },
+            {
+                "id": "d17",
+                "title": "17. Bubble Sort",
+                "duration": "15 mins",
+                "content": "# 🫧 Bubble Sort\n\nO(n²) sorting by repeatedly swapping adjacent elements.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Bubble sort stability?",
+                        "options": [
+                            "Stable",
+                            "Unstable"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Doesn't swap equal elements."
+                    }
+                ]
+            },
+            {
+                "id": "d18",
+                "title": "18. Selection Sort",
+                "duration": "15 mins",
+                "content": "# 🎯 Selection Sort\n\nO(n²) sorting by repeatedly picking the minimum element.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Complexity?",
+                        "options": [
+                            "Always O(n^2)",
+                            "O(n)"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "It always scans the entire remaining list."
+                    }
+                ]
+            },
+            {
+                "id": "d19",
+                "title": "19. Insertion Sort",
+                "duration": "15 mins",
+                "content": "# 🃏 Insertion Sort\n\nO(n²) sorting by inserting one element at a time into a sorted sub-part.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Is it adaptive?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Fast on nearly-sorted data."
+                    }
+                ]
+            },
+            {
+                "id": "d20",
+                "title": "20. Merge Sort",
+                "duration": "30 mins",
+                "content": "# 🧩 Merge Sort\n\nO(n log n) Divide and Conquer sorting using O(n) extra space.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Merge sort strategy?",
+                        "options": [
+                            "Greedy",
+                            "Divide & Conquer"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Splits problem into sub-problems."
+                    }
+                ]
+            },
+            {
+                "id": "d21",
+                "title": "21. Quick Sort",
+                "duration": "30 mins",
+                "content": "# ⚡ Quick Sort\n\nIn-place Divide and Conquer sorting using a pivot. O(n log n) average.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Worst case occurs when?",
+                        "options": [
+                            "Bad pivot",
+                            "Merge step"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Usually with sorted data and end pivots."
+                    }
+                ]
+            },
+            {
+                "id": "d22",
+                "title": "22. Counting Sort",
+                "duration": "20 mins",
+                "content": "# 🔢 Counting Sort\n\nO(n + k) non-comparison sorting for limited ranges.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Is it comparison-based?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Uses frequency counts."
+                    }
+                ]
+            },
+            {
+                "id": "d23",
+                "title": "23. Radix Sort",
+                "duration": "25 mins",
+                "content": "# 🔟 Radix Sort\n\nSorting numbers digit by digit. Effective for large datasets with small digits.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Stable sort needed?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Crucial for correct ordering across digits."
                     }
                 ]
             }
@@ -192,63 +446,132 @@
     },
     {
         "id": "dsa-l4",
-        "title": "LEVEL 4: Hierarchical Structures & Backtracking",
+        "title": "LEVEL 4: Linked List",
+        "description": "Goal: Dynamic memory structures",
         "lessons": [
             {
-                "id": "dsa7",
-                "title": "7. Trees & Heaps",
-                "duration": "50 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "Binary Tree",
-                    "BST",
-                    "Traversals",
-                    "Max/Min Heap"
-                ],
-                "content": "# Trees & Heaps\n\nUnlike arrays or linked lists, Trees and Heaps are **non-linear** data structures used to represent hierarchical relationships.\n\n---\n\n## 1. Binary Trees & BST\n- **Binary Tree**: Every node has at most 2 children.\n- **Binary Search Tree (BST)**: Left child < parent < right child. This allows for O(log n) searching.\n\n## 2. Tree Traversals\n- **Pre-order**: Root → Left → Right\n- **In-order**: Left → Root → Right (Gives sorted order for BST!)\n- **Post-order**: Left → Right → Root\n- **Level-order**: Layer by layer (using a queue).\n\n## 3. Heaps (Priority Queues)\nA complete binary tree that satisfies the **Heap Property**:\n- **Max Heap**: Parent is always greater than children.\n- **Min Heap**: Parent is always smaller than children.\n\n**Note**: Heaps are usually implemented using Arrays for efficiency.",
-                "fullProgram": "// Simple BST property check\n#include <iostream>\n\nstruct Node {\n    int data;\n    Node *left, *right;\n    Node(int val) : data(val), left(nullptr), right(nullptr) {}\n};\n\nvoid inOrder(Node* root) {\n    if (!root) return;\n    inOrder(root->left);\n    std::cout << root->data << \" \";\n    inOrder(root->right);\n}\n\nint main() {\n    Node* root = new Node(10);\n    root->left = new Node(5);\n    root->right = new Node(15);\n    \n    std::cout << \"In-order traversal (sorted): \";\n    inOrder(root);\n    return 0;\n}",
-                "expectedOutput": "In-order traversal (sorted): 5 10 15",
+                "id": "d24",
+                "title": "24. Singly Linked List",
+                "duration": "20 mins",
+                "content": "# 🧬 Singly Linked List\n\nForward-only collection of nodes with data and next pointers.",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "Which traversal of a BST results in a sorted list of elements?",
+                        "text": "Accessing 5th element complexity?",
                         "options": [
-                            "Pre-order",
-                            "In-order",
-                            "Post-order",
-                            "Level-order"
+                            "O(1)",
+                            "O(n)"
                         ],
                         "correctAnswer": 1,
-                        "explanation": "In-order traversal visits nodes in non-decreasing order for a Binary Search Tree."
+                        "explanation": "Must traverse from the head."
                     }
                 ]
             },
             {
-                "id": "dsa8",
-                "title": "8. Backtracking basics",
-                "duration": "40 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "Decision Trees",
-                    "Pruning",
-                    "Subsets",
-                    "N-Queens"
-                ],
-                "content": "# Backtracking\n\nBacktracking is an algorithmic technique that uses recursion to explore all possible solutions to a problem and abandons a path (\"backtracks\") as soon as it determines it cannot lead to a valid solution.\n\n---\n\n## 1. How it works\n1.  **Choice**: Take a step.\n2.  **Constraint**: Check if the step is valid.\n3.  **Goal**: Check if you reached the solution.\n4.  **Backtrack**: If not found, go back and try a different choice.\n\n## 2. Famous Problems\n- **Subsets**: Find all combinations of a set.\n- **N-Queens**: Place N queens on a board so none attack each other.\n- **Sudoku Solver**: Fill a 9x9 grid following rules.",
-                "fullProgram": "// Concept: Recursion with Backtracking\n#include <iostream>\n#include <vector>\n\nvoid findSubsets(std::vector<int>& arr, std::vector<int>& current, int index) {\n    if (index == arr.size()) {\n        // Print current subset\n        return;\n    }\n    // Include element\n    current.push_back(arr[index]);\n    findSubsets(arr, current, index + 1);\n    \n    // Backtrack: Exclude element\n    current.pop_back();\n    findSubsets(arr, current, index + 1);\n}\n\nint main() {\n    std::vector<int> nums = {1, 2};\n    std::vector<int> path;\n    findSubsets(nums, path, 0);\n    return 0;\n}",
-                "expectedOutput": "",
+                "id": "d25",
+                "title": "25. Doubly Linked List",
+                "duration": "20 mins",
+                "content": "# ↔️ Doubly Linked List\n\nNodes with next and previous pointers for bidirectional travel.",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "What is the main technique used in Backtracking?",
+                        "text": "Benefit of Doubly LL?",
                         "options": [
-                            "Iteration",
-                            "Hashing",
-                            "Recursion",
-                            "Sorting"
+                            "Less memory",
+                            "Bidirectional traversal"
                         ],
-                        "correctAnswer": 2,
-                        "explanation": "Backtracking is fundamentally a recursive approach to exploring solution spaces."
+                        "correctAnswer": 1,
+                        "explanation": "Can move head-to-tail and tail-to-head."
+                    }
+                ]
+            },
+            {
+                "id": "d26",
+                "title": "26. Circular Linked List",
+                "duration": "20 mins",
+                "content": "# ⭕ Circular Linked List\n\nLast node points back to the head, creating a circle.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Last node points to?",
+                        "options": [
+                            "Null",
+                            "Head"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "This creates the circle."
+                    }
+                ]
+            },
+            {
+                "id": "d27",
+                "title": "27. Insertion & Deletion",
+                "duration": "25 mins",
+                "content": "# 🛠️ Operations\n\nInserting at head is O(1). Inserting at middle/tail is O(n).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Insert at head?",
+                        "options": [
+                            "O(1)",
+                            "O(n)"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Just update head pointer."
+                    }
+                ]
+            },
+            {
+                "id": "d28",
+                "title": "28. Reverse Linked List",
+                "duration": "25 mins",
+                "content": "# ↩️ Reversing a List\n\nFlipping pointer directions. O(n) time and O(1) space iteratively.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Reverse complexity?",
+                        "options": [
+                            "O(n)",
+                            "O(n^2)"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Single pass over the list."
+                    }
+                ]
+            },
+            {
+                "id": "d29",
+                "title": "29. Detect Cycle",
+                "duration": "25 mins",
+                "content": "# 🕵️ Detect Cycle\n\nFloyd's Tortoise and Hare algorithm detects loops in O(n).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Fast pointer speed?",
+                        "options": [
+                            "1 step",
+                            "2 steps"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Moves double speed to catch slow pointer."
+                    }
+                ]
+            },
+            {
+                "id": "d30",
+                "title": "30. Merge Two Sorted Lists",
+                "duration": "20 mins",
+                "content": "# 🤝 Merging sorted lists\n\nCombining two sorted lists into one in O(N+M) time.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Merge complexity?",
+                        "options": [
+                            "O(N+M)",
+                            "O(N*M)"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Visits each node once."
                     }
                 ]
             }
@@ -256,252 +579,941 @@
     },
     {
         "id": "dsa-l5",
-        "title": "LEVEL 5: Advanced Graphs & DP",
+        "title": "LEVEL 5: Stack & Queue",
+        "description": "Goal: LIFO & FIFO structures",
         "lessons": [
             {
-                "id": "dsa9",
-                "title": "9. Graph Theory",
-                "duration": "60 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "Representation",
-                    "BFS",
-                    "DFS",
-                    "Shortest Path (Dijkstra)"
-                ],
-                "content": "# Graph Theory\n\nA Graph is a non-linear data structure consisting of **Nodes** (vertices) and **Edges** connecting them. It's used to model everything from social networks to GPS navigation.\n\n---\n\n## 1. Representation\n- **Adjacency Matrix**: A 2D array where `matrix[i][j] = 1` if an edge exists between i and j.\n- **Adjacency List**: An array of lists where `list[i]` contains all neighbors of node i (Memory efficient).\n\n## 2. Graph Traversals\n- **BFS (Breadth-First Search)**: Explores neighbors layer by layer using a **Queue**. Good for shortest paths in unweighted graphs.\n- **DFS (Depth-First Search)**: Goes as deep as possible along each branch using **Recursion/Stack**. Good for connectivity and topological sort.\n\n## 3. Shortest Path\n- **Dijkstra's Algorithm**: Finds the shortest path from a starting node to all other nodes in a weighted graph.\n- **Topological Sort**: Linear ordering of vertices such that for every directed edge (u, v), vertex u comes before v.",
-                "fullProgram": "// Concept: Adjacency List using Vector\n#include <iostream>\n#include <vector>\n\nint main() {\n    int nodes = 4;\n    std::vector<int> adj[nodes];\n\n    // Adding edges\n    adj[0].push_back(1);\n    adj[0].push_back(2);\n    adj[1].push_back(3);\n\n    std::cout << \"Neighbors of node 0: \";\n    for(int n : adj[0]) std::cout << n << \" \";\n    \n    return 0;\n}",
-                "expectedOutput": "Neighbors of node 0: 1 2 ",
+                "id": "d31",
+                "title": "31. Stack Implementation",
+                "duration": "20 mins",
+                "content": "# 🥞 Stack\n\nLIFO (Last-In First-Out) data structure. \n- **Push**: Add element.\n- **Pop**: Remove top element.\n- **Peek**: See top element.",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "Which algorithm is used to find the shortest path in a weighted graph with non-negative edges?",
+                        "text": "LIFO stands for?",
                         "options": [
-                            "DFS",
-                            "Dijkstra's Algorithm",
-                            "Bubble Sort",
-                            "Binary Search"
+                            "Last-In First-Out",
+                            "Linear Input Fast Output"
                         ],
-                        "correctAnswer": 1,
-                        "explanation": "Dijkstra's algorithm is the standard choice for single-source shortest path problems on weighted graphs."
+                        "correctAnswer": 0,
+                        "explanation": "The last item added is the first one removed."
                     }
                 ]
             },
             {
-                "id": "dsa10",
-                "title": "10. Dynamic Programming (DP)",
-                "duration": "65 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "Memoization",
-                    "Tabulation",
-                    "State Transition",
-                    "Knapsack"
-                ],
-                "content": "# Dynamic Programming (DP)\n\nDP is an optimization over plain recursion. It works by breaking down a problem into overlapping subproblems and **storing the results** to avoid redundant calculations.\n\n---\n\n## 1. Ways to Solve\n- **Top-Down (Memoization)**: Use recursion + a table (often a hashmap or array) to cache results.\n- **Bottom-Up (Tabulation)**: Build the solution from the smallest subproblems up to the final result using an iterative table.\n\n## 2. When to use DP?\n1.  **Overlapping Subproblems**: The same subproblem is solved multiple times.\n2.  **Optimal Substructure**: The optimal solution to the problem can be built from optimal solutions of its subproblems.\n\n## 3. Classic DP Problems\n- **Knapsack (0/1)**: Selecting items to maximize value without exceeding capacity.\n- **LCS (Longest Common Subsequence)**: Finding the longest sequence present in two strings.\n- **LIS (Longest Increasing Subsequence)**: Finding the longest sequence where elements are in increasing order.",
-                "fullProgram": "// Fibonacci with Memoization (O(n))\n#include <iostream>\n#include <vector>\n\nlong long fib(int n, std::vector<long long>& memo) {\n    if (n <= 1) return n;\n    if (memo[n] != -1) return memo[n]; // Return cached result\n    return memo[n] = fib(n - 1, memo) + fib(n - 2, memo);\n}\n\nint main() {\n    int n = 50;\n    std::vector<long long> memo(n + 1, -1);\n    std::cout << \"50th Fibonacci: \" << fib(n, memo);\n    return 0;\n}",
-                "expectedOutput": "50th Fibonacci: 12586269025",
+                "id": "d32",
+                "title": "32. Stack Applications",
+                "duration": "20 mins",
+                "content": "# 🛠️ Use Cases\n\n- Undo/Redo operations.\n- Expression evaluation (Postfix/Infix).\n- Backtracking problems.",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "What is the primary benefit of Dynamic Programming?",
+                        "text": "Function calls use which structure?",
                         "options": [
-                            "It uses less code",
-                            "It avoids redundant calculations by storing results",
-                            "It only works for mathematics",
-                            "It is always faster than sorting"
+                            "Queue",
+                            "Stack"
                         ],
                         "correctAnswer": 1,
-                        "explanation": "DP optimizes algorithms by caching results of subproblems, drastically reducing time complexity."
+                        "explanation": "The Call Stack manages active function calls."
                     }
                 ]
-            }
-        ]
-    },
-    {
-        "id": "dsa-level-6",
-        "title": "LEVEL 6: Advanced Graphs & Segment Trees",
-        "description": "Master complex connectivity and range queries",
-        "lessons": [
+            },
             {
-                "id": "dsa11",
-                "title": "11. MST & Disjoint Set Union (DSU)",
-                "duration": "55 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "Kruskal's",
-                    "Prim's",
-                    "DSU",
-                    "Connectivity"
-                ],
-                "content": "# Advanced Graph Connectivity\n\n## 1. Minimum Spanning Tree (MST)\nA subset of edges that connects all vertices without cycles and with the minimum total edge weight.\n- **Kruskal's Algorithm**: Sort edges and add them if they don't form a cycle (greedy).\n- **Prim's Algorithm**: Grow the tree from a starting node by adding the cheapest neighbor.\n\n## 2. Disjoint Set Union (DSU)\nA data structure that keeps track of elements partitioned into non-overlapping sets. It supports two main operations:\n- **Find**: Determine which set an element belongs to.\n- **Union**: Merge two sets into one.\n\n**Optimization**: Use 'Path Compression' and 'Union by Rank' to achieve near O(1) time.",
-                "fullProgram": "// Concept: DSU Find with Path Compression\n#include <iostream>\n#include <vector>\n\nstruct DSU {\n    std::vector<int> parent;\n    DSU(int n) {\n        parent.resize(n);\n        for(int i = 0; i < n; i++) parent[i] = i;\n    }\n    int find(int i) {\n        if (parent[i] == i) return i;\n        return parent[i] = find(parent[i]); // Path Compression\n    }\n};\n\nint main() {\n    DSU d(5);\n    std::cout << \"Parent of 3: \" << d.find(3);\n    return 0;\n}",
-                "expectedOutput": "Parent of 3: 3",
+                "id": "d33",
+                "title": "33. Queue Implementation",
+                "duration": "20 mins",
+                "content": "# 🎟️ Queue\n\nFIFO (First-In First-Out) data structure.\n- **Enqueue**: Add to rear.\n- **Dequeue**: Remove from front.",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "Which algorithm is used to find a Minimum Spanning Tree?",
+                        "text": "FIFO stands for?",
                         "options": [
-                            "Dijkstra's",
-                            "Kruskal's",
-                            "BFS",
-                            "DFS"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "Kruskal's and Prim's are the two main algorithms for finding an MST."
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "dsa-level-7",
-        "title": "LEVEL 7: Greedy Algorithms & Bitwise",
-        "description": "Exploit bit-level patterns and optimal choice strategy",
-        "lessons": [
-            {
-                "id": "dsa12",
-                "title": "12. Greedy Strategy & Bit Manipulation",
-                "duration": "50 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "Greedy",
-                    "Huffman",
-                    "XOR",
-                    "Bit-masks"
-                ],
-                "content": "# Efficient Strategies\n\n## 1. Greedy Algorithms\nMake the locally optimal choice at each step with the hope of finding a global optimum.\n- **Examples**: Fractional Knapsack, Activity Selection, Huffman Coding.\n- **Limitation**: Doesn't work for all problems (unlike DP).\n\n## 2. Bit Manipulation\nPerforming operations at the bit level is extremely fast and space-efficient.\n- **AND (&)**: Masking.\n- **OR (|)**: Setting bits.\n- **XOR (^)**: Flipping bits, finding unique elements.\n- **NOT (~)**: Inversion.\n\n**Common Trick**: `n & (n-1)` clears the lowest set bit (useful for counting set bits).",
-                "fullProgram": "// Finding the only non-repeating element using XOR\n#include <iostream>\n#include <vector>\n\nint findUnique(std::vector<int>& nums) {\n    int res = 0;\n    for(int n : nums) res ^= n;\n    return res;\n}\n\nint main() {\n    std::vector<int> data = {1, 2, 3, 2, 1};\n    std::cout << \"Unique element: \" << findUnique(data);\n    return 0;\n}",
-                "expectedOutput": "Unique element: 3",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "What is the result of X ^ X in bitwise XOR?",
-                        "options": [
-                            "X",
-                            "1",
-                            "0",
-                            "2X"
-                        ],
-                        "correctAnswer": 2,
-                        "explanation": "Any number XORed with itself is 0."
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "dsa-level-8",
-        "title": "LEVEL 8: Advanced Strings & Tries",
-        "description": "Master pattern matching and dictionary structures",
-        "lessons": [
-            {
-                "id": "dsa13",
-                "title": "13. Tries, KMP & Rabin-Karp",
-                "duration": "55 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "Trie",
-                    "Pattern Matching",
-                    "Hash Rolling"
-                ],
-                "content": "# Advanced String Algorithms\n\n## 1. Trie (Prefix Tree)\nA tree structure used for efficient retrieval of keys in a large dataset of strings.\n- **Complexity**: O(L) where L is the length of the string.\n- **Use Case**: Auto-complete, Dictionary lookups.\n\n## 2. KMP Algorithm\nKnuth-Morris-Pratt searches for a pattern in text without re-checking characters that have already matched, using a 'Partial Match Table' (LPS array).\n\n## 3. Rabin-Karp\nUses **Rolling Hashes** to compare a pattern with all substrings of a text in O(n) average time.",
-                "fullProgram": "// Concept: Trie Node Structure\n#include <iostream>\n\nstruct TrieNode {\n    TrieNode* children[26];\n    bool isEndOfWord;\n    TrieNode() {\n        isEndOfWord = false;\n        for(int i = 0; i < 26; i++) children[i] = nullptr;\n    }\n};\n\nint main() {\n    TrieNode* root = new TrieNode();\n    std::cout << \"Trie Root Created.\";\n    return 0;\n}",
-                "expectedOutput": "Trie Root Created.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which data structure is best for auto-complete suggestions?",
-                        "options": [
-                            "HashMap",
-                            "Binary Tree",
-                            "Trie",
-                            "Graph"
-                        ],
-                        "correctAnswer": 2,
-                        "explanation": "Tries are specifically designed for prefix-based string searches."
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "dsa-level-9",
-        "title": "LEVEL 9: Final DSA Certification",
-        "description": "The ultimate test of algorithmic mastery",
-        "lessons": [
-            {
-                "id": "dsa9.1",
-                "title": "9.1 Data Structures Master Exam",
-                "duration": "90 mins",
-                "difficultyLevel": "Master",
-                "topics": [
-                    "Final Exam",
-                    "Certification"
-                ],
-                "content": "# DSA Master Certification\n\n**Welcome, Architect!** You have completed the intensive roadmap of Data Structures and Algorithms. The final exam covers theory, complexity, and implementation.\n\n## Exam Breakdown:\n- **Complexity & Theory**: Big-O, Space vs Time trade-offs.\n- **Data Structures**: Linked Lists, Trees, Graphs, Tries.\n- **Algorithms**: Sorting, Dynamic Programming, Greedy, Graph traversals.\n- **Advanced**: MST, DSU, Segment Trees.\n\n## Rules:\n- 15 questions, 90 minutes.\n- Passing score: 80%.\n\n---\n\n*Mastery of DSA is the key to passing interviews at top-tier tech companies like Google, Amazon, and Meta.*",
-                "fullProgram": "/**\n * Final Graduation Challenge: Optimal Path Solver\n * A complex logic demonstrating DP + Graphs\n */\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    std::cout << \"DSA Final Shield Activated...\\n\";\n    std::cout << \"Analyzing complex data structures...\\n\";\n    std::cout << \"Result: Optimization found!\\n\";\n    std::cout << \"Certification Status: Master. Code correctly. Run efficiently.\";\n    return 0;\n}",
-                "expectedOutput": "DSA Final Shield Activated...\nAnalyzing complex data structures...\nResult: Optimization found!\nCertification Status: Master. Code correctly. Run efficiently.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which sorting algorithm is guaranteed to be stable and O(n log n)?",
-                        "options": [
-                            "Quick Sort",
-                            "Merge Sort",
-                            "Heap Sort",
-                            "Selection Sort"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "Merge Sort is O(n log n) and maintains the relative order of equal elements (Stability)."
-                    },
-                    {
-                        "id": 2,
-                        "text": "Difference between DP and Divide & Conquer?",
-                        "options": [
-                            "No difference",
-                            "DP uses recursion, D&C does not",
-                            "DP has overlapping subproblems, D&C subproblems are independent",
-                            "D&C is always faster"
-                        ],
-                        "correctAnswer": 2,
-                        "explanation": "DP is optimized for overlapping subproblems by caching results, whereas D&C (like Merge Sort) solves independent subproblems."
-                    },
-                    {
-                        "id": 3,
-                        "text": "Correct Big-O for finding the shortest path in an unweighted graph?",
-                        "options": [
-                            "O(V+E) using BFS",
-                            "O(V*E) using DFS",
-                            "O(log V) using Binary Search",
-                            "O(E^2) using Prim's"
+                            "First-In First-Out",
+                            "Fast Input Fast Output"
                         ],
                         "correctAnswer": 0,
-                        "explanation": "Breadth-First Search (BFS) finds the shortest path in unweighted graphs in linear time."
-                    },
+                        "explanation": "The first item added is the first one removed (like a line)."
+                    }
+                ]
+            },
+            {
+                "id": "d34",
+                "title": "34. Circular Queue",
+                "duration": "20 mins",
+                "content": "# ⭕ Circular Queue\n\nConnecting the end back to the front to avoid wasting space in array-based implementations.",
+                "quizQuestions": [
                     {
-                        "id": 4,
-                        "text": "What is the time complexity of pushing an element onto an empty Stack?",
+                        "id": 1,
+                        "text": "Goal of Circular Queue?",
                         "options": [
-                            "O(n)",
-                            "O(log n)",
-                            "O(1)",
-                            "O(0)"
-                        ],
-                        "correctAnswer": 2,
-                        "explanation": "Stack operations (push, pop, top) are O(1) constant time."
-                    },
-                    {
-                        "id": 5,
-                        "text": "If you need to find the Minimum Spanning Tree of a dense graph (many edges), which algorithm is often preferred?",
-                        "options": [
-                            "Kruskal's",
-                            "Prim's",
-                            "Dijkstra's",
-                            "Bellman-Ford"
+                            "Faster access",
+                            "Reuse empty slots"
                         ],
                         "correctAnswer": 1,
-                        "explanation": "Prim's algorithm (especially with an adjacency matrix/heap) can be more efficient for dense graphs."
+                        "explanation": "The rear wraps around to the beginning once it reachers capacity."
+                    }
+                ]
+            },
+            {
+                "id": "d35",
+                "title": "35. Deque",
+                "duration": "20 mins",
+                "content": "# ↔️ Double-Ended Queue\n\nElements can be added or removed from either the front or the rear.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Deque stands for?",
+                        "options": [
+                            "Decrease Queue",
+                            "Double-Ended Queue"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Supports both stack and queue operations."
+                    }
+                ]
+            },
+            {
+                "id": "d36",
+                "title": "36. Priority Queue",
+                "duration": "20 mins",
+                "content": "# 🏆 Priority Queue\n\nEach element has a priority. Higher priority elements are dequeued first.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Core characteristic?",
+                        "options": [
+                            "Sorted data",
+                            "Priority-based removal"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Not strictly FIFO; depends on priority values."
+                    }
+                ]
+            },
+            {
+                "id": "d37",
+                "title": "37. Stack using Queue & Vice Versa",
+                "duration": "25 mins",
+                "content": "# 🔄 Cross Implementation\n\nImplementing a Stack using two Queues or a Queue using two Stacks.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Queue using 2 Stacks (Enqueue)?",
+                        "options": [
+                            "O(1)",
+                            "O(n)"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Standard implementation makes enqueue O(1) or O(n) depending on the variant."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "dsa-l6",
+        "title": "LEVEL 6: Hashing",
+        "description": "Goal: Fast lookup & storage",
+        "lessons": [
+            {
+                "id": "d38",
+                "title": "38. Hash Tables",
+                "duration": "20 mins",
+                "content": "# 🔍 Hash Table\n\nStores key-value pairs using a hash function to compute an index in an array.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Average search time?",
+                        "options": [
+                            "O(1)",
+                            "O(n)"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Hashing allows nearly constant-time access."
+                    }
+                ]
+            },
+            {
+                "id": "d39",
+                "title": "39. Hash Functions",
+                "duration": "20 mins",
+                "content": "# ⚙️ Hash Functions\n\nMapping a key to a specific integer. Must be **Deterministic**.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Deterministic means?",
+                        "options": [
+                            "Random result",
+                            "Same input always gives same output"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Essential for retrieving stored values."
+                    }
+                ]
+            },
+            {
+                "id": "d40",
+                "title": "40. Collision Handling",
+                "duration": "20 mins",
+                "content": "# 💥 Collisions\n\nWhen two different keys map to the same hash index. Handled by Seperate Chaining or Open Addressing.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Collision happens when?",
+                        "options": [
+                            "Keys are unique",
+                            "Multiple keys map to same index"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Pigeonhole principle applied to hashing."
+                    }
+                ]
+            },
+            {
+                "id": "d41",
+                "title": "41. Open Addressing",
+                "duration": "25 mins",
+                "content": "# 🏠 Open Addressing\n\nFinding another slot in the array when a collision occurs (Linear probing, Quadratic probing, Double hashing).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Linear probing check?",
+                        "options": [
+                            "Next available slot",
+                            "Rehash to another table"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Searches slots sequentially (i+1, i+2...)."
+                    }
+                ]
+            },
+            {
+                "id": "d42",
+                "title": "42. Separate Chaining",
+                "duration": "25 mins",
+                "content": "# ⛓️ Separate Chaining\n\nEach array slot point to a linked list of records that share the same hash index.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Data structure used in slots?",
+                        "options": [
+                            "Arrays",
+                            "Linked Lists"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Standard chaining uses linked nodes."
+                    }
+                ]
+            },
+            {
+                "id": "d43",
+                "title": "43. HashMap / Dictionary",
+                "duration": "20 mins",
+                "content": "# 📘 HashMap\n\nA high-level implementation of the Hash Table. Essential for modern programming.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Key property in Maps?",
+                        "options": [
+                            "Must be unique",
+                            "Can be duplicate"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Keys act as unique identifiers for values."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "dsa-l7",
+        "title": "LEVEL 7: Trees",
+        "description": "Goal: Hierarchical data structures",
+        "lessons": [
+            {
+                "id": "d44",
+                "title": "44. Tree Terminologies",
+                "duration": "15 mins",
+                "content": "# 🌳 Tree Basics\n\nA non-linear data structure representing a hierarchy.\n- **Root**: Top node.\n- **Leaf**: Node with no children.\n- **Height**: Longest path to a leaf.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is a Leaf node?",
+                        "options": [
+                            "The top node",
+                            "A node with no children"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Leaves are the terminal nodes of a tree."
+                    }
+                ]
+            },
+            {
+                "id": "d45",
+                "title": "45. Binary Tree",
+                "duration": "20 mins",
+                "content": "# 🌿 Binary Tree\n\nEach node has at most **two** children (Left and Right).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Max children in Binary Tree?",
+                        "options": [
+                            "1",
+                            "2"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Binary means base 2."
+                    }
+                ]
+            },
+            {
+                "id": "d46",
+                "title": "46. Tree Traversals (DFS, BFS)",
+                "duration": "25 mins",
+                "content": "# 🗺️ Traversals\n\n- **DFS**: Pre-order, In-order, Post-order.\n- **BFS**: Level-order traversal using a Queue.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "BFS uses which structure?",
+                        "options": [
+                            "Stack",
+                            "Queue"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Queue handles nodes level by level."
+                    }
+                ]
+            },
+            {
+                "id": "d47",
+                "title": "47. Binary Search Tree",
+                "duration": "20 mins",
+                "content": "# 🔍 BST\n\n- Left child < Parent\n- Right child > Parent\n- Efficiency: O(log n) for search.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Property of BST?",
+                        "options": [
+                            "Random order",
+                            "Sorted relationship"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Left is smaller, Right is larger."
+                    }
+                ]
+            },
+            {
+                "id": "d48",
+                "title": "48. BST Operations",
+                "duration": "25 mins",
+                "content": "# 🛠️ BST Ops\n\nSearch, Insertion, and Deletion. Deletion has 3 cases: Leaf, 1 child, 2 children.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Worst case search in BST?",
+                        "options": [
+                            "O(log n)",
+                            "O(n)"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Occurs if the tree is skewed (like a linked list)."
+                    }
+                ]
+            },
+            {
+                "id": "d49",
+                "title": "49. AVL Tree",
+                "duration": "30 mins",
+                "content": "# ⚖️ AVL Tree\n\nA self-balancing BST where the height difference between left and right subtrees is at most 1.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "AVL is used for?",
+                        "options": [
+                            "Faster sorting",
+                            "Maintaining balance"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Ensures O(log n) height always."
+                    }
+                ]
+            },
+            {
+                "id": "d50",
+                "title": "50. Red-Black Tree",
+                "duration": "30 mins",
+                "content": "# 🔴⚫ Red-Black Tree\n\nA balanced BST that uses color properties to ensure the tree remains approximately balanced.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Used in which Java class?",
+                        "options": [
+                            "ArrayList",
+                            "TreeMap"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Java's TreeMap and TreeSet use Red-Black trees."
+                    }
+                ]
+            },
+            {
+                "id": "d51",
+                "title": "51. Heap (Min & Max)",
+                "duration": "25 mins",
+                "content": "# 🏔️ Heap\n\nA complete binary tree that satisfies the **Heap Property**.\n- **Min-Heap**: Parent <= Children.\n- **Max-Heap**: Parent >= Children.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Max element in Max-Heap is at?",
+                        "options": [
+                            "Root",
+                            "Any leaf"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "The root always holds the highest priority element."
+                    }
+                ]
+            },
+            {
+                "id": "d52",
+                "title": "52. Priority Queue using Heap",
+                "duration": "20 mins",
+                "content": "# 🥇 Priority Queue\n\nUsing a Heap to implement a Priority Queue ensures O(log n) insertion and extraction.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Heap insert complexity?",
+                        "options": [
+                            "O(1)",
+                            "O(log n)"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Requires 'bubbling up' the new element."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "dsa-l8",
+        "title": "LEVEL 8: Graphs",
+        "description": "Goal: Network & relationship problems",
+        "lessons": [
+            {
+                "id": "d53",
+                "title": "53. Graph Representation",
+                "duration": "20 mins",
+                "content": "# 🕸️ Graphs\n\nNodes (Vertices) and Edges.\n- **Adjacency Matrix**: 2D array.\n- **Adjacency List**: Array of lists.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Space-efficient for sparse graphs?",
+                        "options": [
+                            "Matrix",
+                            "List"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Adjacency List only stores present edges."
+                    }
+                ]
+            },
+            {
+                "id": "d54",
+                "title": "54. BFS & DFS",
+                "duration": "30 mins",
+                "content": "# 🧭 Graph Traversal\n\n- **BFS**: Breadth-First (Layer by layer).\n- **DFS**: Depth-First (Deeper first).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "DFS uses which structure?",
+                        "options": [
+                            "Queue",
+                            "Stack/Recursion"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Explores a path completely before backtracking."
+                    }
+                ]
+            },
+            {
+                "id": "d55",
+                "title": "55. Connected Components",
+                "duration": "20 mins",
+                "content": "# 🔗 Components\n\nIdentifying subgraphs where all vertices are connected to each other.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Algo to find components?",
+                        "options": [
+                            "Binary Search",
+                            "DFS/BFS"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Each traversal identifies one component."
+                    }
+                ]
+            },
+            {
+                "id": "d56",
+                "title": "56. Cycle Detection",
+                "duration": "25 mins",
+                "content": "# 🔄 Graph Cycles\n\nDetecting if a path exists from a vertex back to itself.\n- Directed: Using recursion stack.\n- Undirected: Using parent pointers.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Cyclic graph property?",
+                        "options": [
+                            "No loops",
+                            "Has at least one cycle"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "A path returns to the starting node."
+                    }
+                ]
+            },
+            {
+                "id": "d57",
+                "title": "57. Topological Sorting",
+                "duration": "25 mins",
+                "content": "# 📉 Topological Sort\n\nLinear ordering of vertices in a Directed Acyclic Graph (DAG) such that for every edge u -> v, u comes before v.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Requires a?",
+                        "options": [
+                            "Cycle",
+                            "DAG (No Cycles)"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Cycles make topological sorting impossible."
+                    }
+                ]
+            },
+            {
+                "id": "d58",
+                "title": "58. Shortest Path (Dijkstra)",
+                "duration": "30 mins",
+                "content": "# 🛣️ Dijkstra's Algorithm\n\nFinding the shortest path from a source to all other vertices in a weighted graph (no negative weights).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Type of strategy?",
+                        "options": [
+                            "Greedy",
+                            "DP"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Always picks the nearest unvisited node."
+                    }
+                ]
+            },
+            {
+                "id": "d59",
+                "title": "59. Bellman-Ford Algorithm",
+                "duration": "30 mins",
+                "content": "# 📉 Bellman-Ford\n\nFinds shortest paths and **detects negative cycles** in a weighted graph.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Works with negative weights?",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Handles negative edge weights but not negative cycles."
+                    }
+                ]
+            },
+            {
+                "id": "d60",
+                "title": "60. Floyd-Warshall Algorithm",
+                "duration": "30 mins",
+                "content": "# 🌐 Floyd-Warshall\n\nFinds shortest paths between **all pairs** of vertices.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Complexity?",
+                        "options": [
+                            "O(V^2)",
+                            "O(V^3)"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Triple nested loop over all vertices."
+                    }
+                ]
+            },
+            {
+                "id": "d61",
+                "title": "61. Minimum Spanning Tree (Kruskal, Prim)",
+                "duration": "35 mins",
+                "content": "# 🌲 MST\n\nA subset of edges connecting all vertices with the minimum total weight.\n- **Kruskal**: Edge-based.\n- **Prim**: Vertex-based.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "MST property?",
+                        "options": [
+                            "Contains cycles",
+                            "Connects all nodes with min weight"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Forms a tree covering all vertices."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "dsa-l9",
+        "title": "LEVEL 9: Advanced Algorithms",
+        "description": "Goal: Interview & competitive programming mastery",
+        "lessons": [
+            {
+                "id": "d62",
+                "title": "62. Greedy Algorithms",
+                "duration": "25 mins",
+                "content": "# 🍕 Greedy Algorithms\n\nMaking the locally optimal choice at each step with the hope of finding a global optimum.\n- Examples: Fractional Knapsack, Activity Selection.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Greedy always finds global optimum?",
+                        "options": [
+                            "Yes",
+                            "No, not always"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "It depends on the problem property (Greedy Choice Property)."
+                    }
+                ]
+            },
+            {
+                "id": "d63",
+                "title": "63. Divide & Conquer",
+                "duration": "20 mins",
+                "content": "# ✂️ Divide & Conquer\n\nBreaking a problem into smaller subproblems, solving them, and combining the results.\n- Examples: Binary Search, Quick Sort.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Strategy name?",
+                        "options": [
+                            "Greedy",
+                            "Divide & Conquer"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Recursive splitting and merging."
+                    }
+                ]
+            },
+            {
+                "id": "d64",
+                "title": "64. Backtracking",
+                "duration": "30 mins",
+                "content": "# ↩️ Backtracking\n\nA refinement of brute force that prunes paths that cannot lead to a solution.\n- Examples: N-Queens, Sudoku Solver.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Core mechanism?",
+                        "options": [
+                            "Looping",
+                            "Recursion + Pruning"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Goes deep and retreats on failure."
+                    }
+                ]
+            },
+            {
+                "id": "d65",
+                "title": "65. Dynamic Programming (DP)",
+                "duration": "35 mins",
+                "content": "# 🧠 Dynamic Programming\n\nSolving complex problems by breaking them into overlapping subproblems and storing results (memoization/tabulation).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "DP requirement?",
+                        "options": [
+                            "Unique subproblems",
+                            "Overlapping subproblems"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "DP avoids re-calculating the same state twice."
+                    }
+                ]
+            },
+            {
+                "id": "d66",
+                "title": "66. 0/1 Knapsack",
+                "duration": "30 mins",
+                "content": "# 🎒 0/1 Knapsack\n\nA classic DP problem: Choose items with weight and value to maximize value without exceeding capacity. Each item is either picked (1) or not (0).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Can we take half an item?",
+                        "options": [
+                            "Yes (Fractional)",
+                            "No (0/1)"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "In 0/1, items are discrete units."
+                    }
+                ]
+            },
+            {
+                "id": "d67",
+                "title": "67. Longest Common Subsequence",
+                "duration": "30 mins",
+                "content": "# 🧬 LCS\n\nFinding the longest sequence of characters that appears in the same relative order in two strings.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Complexity?",
+                        "options": [
+                            "O(N+M)",
+                            "O(N*M)"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Standard DP approach uses a 2D table."
+                    }
+                ]
+            },
+            {
+                "id": "d68",
+                "title": "68. Longest Increasing Subsequence",
+                "duration": "30 mins",
+                "content": "# 📈 LIS\n\nFinding the length of the longest subsequence of a given sequence such that all elements are sorted in increasing order.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "DP complexity?",
+                        "options": [
+                            "O(N^2)",
+                            "O(N log N)"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Simple DP is N^2; optimized version is N log N."
+                    }
+                ]
+            },
+            {
+                "id": "d69",
+                "title": "69. Matrix DP",
+                "duration": "30 mins",
+                "content": "# 🔳 Matrix DP\n\nPath-finding and optimization problems on grids (e.g., Minimum Path Sum).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Movement usually?",
+                        "options": [
+                            "Right or Down",
+                            "Any direction"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Usually restricted to maintain a DAG of states."
+                    }
+                ]
+            },
+            {
+                "id": "d70",
+                "title": "70. Bit Manipulation",
+                "duration": "25 mins",
+                "content": "# 🔢 Bitwise Ops\n\nUsing low-level bits (`&`, `|`, `^`, `~`, `<<`, `>>`) to solve problems efficiently.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Check if number is even?",
+                        "options": [
+                            "(n % 2 == 0)",
+                            "(n & 1 == 0)"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Bitwise check is often faster."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "dsa-l10",
+        "title": "LEVEL 10: Advanced DSA & Interview Prep",
+        "description": "Goal: Job-ready DSA mastery",
+        "lessons": [
+            {
+                "id": "d71",
+                "title": "71. Tries",
+                "duration": "25 mins",
+                "content": "# 📒 Trie (Prefix Tree)\n\nEfficient information retrieval. Used for autocompletion and dictionary searches.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Best use case?",
+                        "options": [
+                            "Sorting integers",
+                            "Dictionary/Prefix search"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Stores characters at edges for fast string lookup."
+                    }
+                ]
+            },
+            {
+                "id": "d72",
+                "title": "72. Segment Trees",
+                "duration": "35 mins",
+                "content": "# 📊 Segment Tree\n\nA tree data structure for storing information about intervals or segments. Allows O(log n) range queries and updates.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Update complexity?",
+                        "options": [
+                            "O(1)",
+                            "O(log n)"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Must update parents up to the root."
+                    }
+                ]
+            },
+            {
+                "id": "d73",
+                "title": "73. Fenwick Tree (BIT)",
+                "duration": "30 mins",
+                "content": "# 📉 Fenwick Tree\n\nBinary Indexed Tree. Efficiently updates elements and calculates prefix sums in O(log n).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Space compared to Segment Tree?",
+                        "options": [
+                            "More",
+                            "Less"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "BIT uses O(N) space, less than Segment Tree."
+                    }
+                ]
+            },
+            {
+                "id": "d74",
+                "title": "74. Disjoint Set Union (Union-Find)",
+                "duration": "30 mins",
+                "content": "# 🤝 DSU\n\nTracks a set of elements partitioned into a number of disjoint (non-overlapping) subsets.\n- **Find**: Find representative.\n- **Union**: Merge two sets.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Path compression benefit?",
+                        "options": [
+                            "Uses less memory",
+                            "Flattens tree for O(alpha) time"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Picks every node's parent as the root during find."
+                    }
+                ]
+            },
+            {
+                "id": "d75",
+                "title": "75. Mo’s Algorithm (Basics)",
+                "duration": "20 mins",
+                "content": "# 📦 Mo's Algorithm\n\nAn offline algorithm to process range queries in O((N+Q) * sqrt(N)) by sorting queries in blocks.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Type of algorithm?",
+                        "options": [
+                            "Online",
+                            "Offline (All queries known)"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "You must sort all queries before processing."
+                    }
+                ]
+            },
+            {
+                "id": "d76",
+                "title": "76. String Algorithms (KMP, Z-Algorithm)",
+                "duration": "35 mins",
+                "content": "# 🧵 Advanced String Search\n\n- **KMP**: O(N+M) using LPS array.\n- **Z-Algo**: Preprocesses all occurrences in O(N+M).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "KMP benefit?",
+                        "options": [
+                            "Simple logic",
+                            "No backtracking in text pointers"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Only the pattern pointer resets based on prefix knowledge."
+                    }
+                ]
+            },
+            {
+                "id": "d77",
+                "title": "77. Computational Geometry (Basics)",
+                "duration": "25 mins",
+                "content": "# 📐 Geometry\n\nAlgorithms involving points, lines, and polygons (e.g., Convex Hull).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Convex Hull algorithm?",
+                        "options": [
+                            "Graham Scan",
+                            "Bubble Sort"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Finds the smallest convex polygon containing all points."
+                    }
+                ]
+            },
+            {
+                "id": "d78",
+                "title": "78. Randomized Algorithms",
+                "duration": "20 mins",
+                "content": "# 🎲 Randomization\n\nAlgorithms that use a degree of randomness to achieve good average-case performance (e.g., Randomized QuickSort).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Randomized pivot benefit?",
+                        "options": [
+                            "Always O(n)",
+                            "Avoids O(n^2) worst case on sorted data"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Makes worst cases extremely unlikely."
+                    }
+                ]
+            },
+            {
+                "id": "d79",
+                "title": "79. Amortized Analysis",
+                "duration": "25 mins",
+                "content": "# 📈 Amortized Analysis\n\nFinding the average time per operation over a sequence of operations (e.g., dynamic array resizing).",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Dynamic array push (average)?",
+                        "options": [
+                            "O(1)",
+                            "O(n)"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Individual O(n) resizes are averaged over many O(1) ops."
+                    }
+                ]
+            },
+            {
+                "id": "d80",
+                "title": "80. DSA Interview Patterns",
+                "duration": "40 mins",
+                "content": "# 🎓 The Master Map\n\nReviewing high-level patterns:\n1. Sliding Window\n2. Two Pointers\n3. Fast/Slow Pointers\n4. Merge Intervals\n5. Cyclic Sort\n6. Tree/Graph BFS/DFS\n7. DP (Knapsack, LCS)\n8. Bitwise common patterns.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Consistency is key?",
+                        "options": [
+                            "Yes",
+                            "Maybe"
+                        ],
+                        "correctAnswer": 0,
+                        "explanation": "Practicing these 80 lessons will make you job-ready!"
                     }
                 ]
             }

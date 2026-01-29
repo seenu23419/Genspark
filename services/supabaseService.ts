@@ -165,7 +165,8 @@ class SupabaseService {
       onboardingCompleted: profile.onboarding_completed || false,
       streak: profile.streak || 0,
       lastActiveAt: profile.last_active_at,
-      activity_log: profile.activity_log || []
+      activity_log: profile.activity_log || [],
+      activity_history: StreakService.loadHistory(profile.id) || []
     };
   }
 
@@ -230,7 +231,7 @@ class SupabaseService {
     if (query._id) {
       const profileBuilder = this.supabase
         .from('users')
-        .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, completed_lesson_ids, unlocked_lesson_ids, created_at')
+        .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, activity_history, completed_lesson_ids, unlocked_lesson_ids, created_at')
         .eq('id', query._id);
 
       const progressPromise = this.supabase
@@ -250,7 +251,7 @@ class SupabaseService {
 
     // Fallback for Email query (Sequential)
     let builder = this.supabase.from('users')
-      .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, completed_lesson_ids, unlocked_lesson_ids, created_at');
+      .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, activity_history, completed_lesson_ids, unlocked_lesson_ids, created_at');
 
     if (query.email) builder = builder.eq('email', query.email);
     else return null;
@@ -364,6 +365,7 @@ class SupabaseService {
     if (updates.streak !== undefined) profileUpdates.streak = updates.streak;
     if (updates.lastActiveAt !== undefined) profileUpdates.last_active_at = updates.lastActiveAt;
     if (updates.activity_log !== undefined) profileUpdates.activity_log = updates.activity_log;
+    if (updates.activity_history !== undefined) profileUpdates.activity_history = updates.activity_history;
 
     // Resume Reliability
     if (updates.lastLessonId) profileUpdates.last_lesson_id = updates.lastLessonId;
@@ -391,6 +393,7 @@ class SupabaseService {
         delete safeUpdates.streak;
         delete safeUpdates.last_active_at;
         delete safeUpdates.activity_log;
+        delete safeUpdates.activity_history;
         delete safeUpdates.completed_lesson_ids;
         delete safeUpdates.unlocked_lesson_ids;
 

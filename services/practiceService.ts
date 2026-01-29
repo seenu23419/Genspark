@@ -55,8 +55,11 @@ class PracticeService {
             // 1. Fetch the list of topics
             const topicsUrl = `${BASE_URL}/practice/topics.json?v=${Date.now()}`;
             const topicsRes = await fetch(topicsUrl, { cache: 'no-store' });
-            if (!topicsRes.ok) throw new Error('Failed to fetch topics list');
             const coreTopics = await topicsRes.json();
+            if (!Array.isArray(coreTopics)) {
+                console.warn("PracticeService: topics.json is not an array");
+                return { topics: [] };
+            }
 
             // 2. Fetch each topic's detailed problems in parallel
             const topicPromises = coreTopics.map(async (topic: any) => {
