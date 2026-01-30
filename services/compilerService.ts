@@ -136,17 +136,50 @@ class GenSparkCompilerService {
         }
     }
 
-    async runTests(language: string, sourceCode: string, tests: { stdin?: string; expectedOutput: string }[], userId?: string): Promise<Array<{ passed: boolean; stdout?: string | null; stderr?: string | null }>> {
-        const results: Array<{ passed: boolean; stdout?: string | null; stderr?: string | null }> = [];
+    async runTests(language: string, sourceCode: string, tests: { stdin?: string; expectedOutput: string }[], userId?: string): Promise<Array<{ passed: boolean; stdout?: string | null; stderr?: string | null; expected?: string; actual?: string }>> {
+        const results: Array<{ passed: boolean; stdout?: string | null; stderr?: string | null; expected?: string; actual?: string }> = [];
         for (const t of tests) {
             try {
                 const res = await this.executeCode(language, sourceCode, userId, t.stdin);
-                const stdoutTrim = (res.stdout || '').trim();
-                const expectedTrim = (t.expectedOutput || '').trim();
-                const passed = stdoutTrim === expectedTrim;
-                results.push({ passed, stdout: res.stdout, stderr: res.stderr || res.compile_output });
+
+                // Normalize outputs for comparison
+                const normalizeOutput = (str: string) => {
+                    return str
+                        .replace(/\r\n/g, '\n')  // Normalize line endings
+                        .replace(/\r/g, '\n')     // Handle old Mac line endings
+                        .trim()                   // Remove leading/trailing whitespace
+                        .replace(/\s+$/gm, '')    // Remove trailing whitespace from each line
+                        .replace(/\n+/g, '\n');   // Normalize multiple newlines
+                };
+
+                const actualOutput = normalizeOutput(res.stdout || '');
+                const expectedOutput = normalizeOutput(t.expectedOutput || '');
+                const passed = actualOutput === expectedOutput;
+
+                // Log for debugging
+                if (!passed) {
+                    console.log('[Test Failed]', {
+                        expected: expectedOutput,
+                        actual: actualOutput,
+                        stdin: t.stdin
+                    });
+                }
+
+                results.push({
+                    passed,
+                    stdout: res.stdout,
+                    stderr: res.stderr || res.compile_output,
+                    expected: expectedOutput,
+                    actual: actualOutput
+                });
             } catch (e: any) {
-                results.push({ passed: false, stdout: null, stderr: e?.message || 'Execution error' });
+                results.push({
+                    passed: false,
+                    stdout: null,
+                    stderr: e?.message || 'Execution error',
+                    expected: t.expectedOutput,
+                    actual: null
+                });
             }
         }
         return results;

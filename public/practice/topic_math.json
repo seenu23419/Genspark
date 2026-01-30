@@ -4,952 +4,1381 @@
   "color": "from-yellow-500 to-orange-600",
   "problems": [
     {
-      "id": "math-451",
+      "id": "math-1",
       "topicId": "math",
-      "title": "Number Theory 1",
-      "description": "Solve math problem 1 (Gcd, Prime, etc).",
-      "difficulty": "hard",
+      "title": "Factorial",
+      "description": "Calculate the factorial of a number N.\n\nInput: 5\nOutput: 120",
+      "difficulty": "medium",
       "estimatedTime": 5,
-      "concept": "Algorithms",
+      "concept": "Mathematics",
+      "explanation": "Factorial of N (N!) is the product of all positive integers from 1 to N.",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 1"
+        "c": "#include <stdio.h>\n\nlong long factorial(int n) {\n    if (n == 0) return 1;\n    return n * factorial(n - 1);\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%lld\", factorial(n));\n    return 0;\n}",
+        "python": "import math\nprint(math.factorial(int(input())))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "5",
+          "expected_output": "120"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "6",
+          "expected_output": "720"
+        }
+      ]
+    },
+    {
+      "id": "math-2",
+      "topicId": "math",
+      "title": "GCD of Two Numbers",
+      "description": "Find the Greatest Common Divisor (GCD) of two integers a and b.",
+      "difficulty": "hard",
+      "estimatedTime": 7,
+      "concept": "Algorithms",
+      "explanation": "Use the Euclidean algorithm: `gcd(a, b)` is `gcd(b, a % b)` until `b` becomes 0.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint gcd(int a, int b) {\n    while (b) {\n        a %= b;\n        int temp = a; a = b; b = temp;\n    }\n    return a;\n}\n\nint main() {\n    int a, b; scanf(\"%d %d\", &a, &b);\n    printf(\"%d\", gcd(a, b));\n    return 0;\n}",
+        "python": "import math\na, b = map(int, input().split())\nprint(math.gcd(a, b))"
+      },
+      "test_cases": [
+        {
+          "stdin": "48 18",
+          "expected_output": "6"
+        },
+        {
+          "stdin": "101 10",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "20 100",
+          "expected_output": "20"
         }
       ]
     },
     {
       "id": "math-452",
       "topicId": "math",
-      "title": "Number Theory 2",
-      "description": "Solve math problem 2 (Gcd, Prime, etc).",
+      "title": "Prime Factorization",
+      "description": "Print all prime factors of a given number N in increasing order, separated by spaces.\n\nInput: 12\nOutput: 2 2 3",
       "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "estimatedTime": 10,
+      "concept": "Number Theory",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 2"
+        "c": "#include <stdio.h>\n#include <math.h>\n\nvoid primeFactors(int n) {\n    // Print prime factors\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    primeFactors(n);\n    return 0;\n}",
+        "python": "n = int(input())\n# Print prime factors"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "12",
+          "expected_output": "2 2 3"
+        },
+        {
+          "stdin": "315",
+          "expected_output": "3 3 5 7"
+        },
+        {
+          "stdin": "17",
+          "expected_output": "17"
         }
       ]
     },
     {
       "id": "math-453",
       "topicId": "math",
-      "title": "Number Theory 3",
-      "description": "Solve math problem 3 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
+      "title": "LCM of Two Numbers",
+      "description": "Find the Least Common Multiple (LCM) of two integers a and b.\nHint: LCM(a, b) = (a * b) / GCD(a, b)",
+      "difficulty": "medium",
+      "estimatedTime": 8,
       "concept": "Algorithms",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 3"
+        "c": "#include <stdio.h>\n\nint gcd(int a, int b) {\n    if (b == 0) return a;\n    return gcd(b, a % b);\n}\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    // Calculate and print LCM\n    return 0;\n}",
+        "python": "import math\na, b = map(int, input().split())\nprint((a * b) // math.gcd(a, b))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "4 6",
+          "expected_output": "12"
+        },
+        {
+          "stdin": "21 6",
+          "expected_output": "42"
+        },
+        {
+          "stdin": "5 7",
+          "expected_output": "35"
         }
       ]
     },
     {
       "id": "math-454",
       "topicId": "math",
-      "title": "Number Theory 4",
-      "description": "Solve math problem 4 (Gcd, Prime, etc).",
-      "difficulty": "hard",
+      "title": "Power Function",
+      "description": "Calculate a raised to the power of b (a^b). Both a and b are integers.",
+      "difficulty": "medium",
       "estimatedTime": 5,
-      "concept": "Algorithms",
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 4"
+        "c": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    int base, exp;\n    scanf(\"%d %d\", &base, &exp);\n    long long result = 1;\n    while (exp > 0) {\n        result *= base;\n        exp--;\n    }\n    printf(\"%lld\", result);\n    return 0;\n}",
+        "python": "a, b = map(int, input().split())\nprint(a ** b)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "2 3",
+          "expected_output": "8"
+        },
+        {
+          "stdin": "5 2",
+          "expected_output": "25"
+        },
+        {
+          "stdin": "10 0",
+          "expected_output": "1"
         }
       ]
     },
     {
       "id": "math-455",
       "topicId": "math",
-      "title": "Number Theory 5",
-      "description": "Solve math problem 5 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Count Digits",
+      "description": "Count the number of digits in a given integer N.",
+      "difficulty": "easy",
+      "estimatedTime": 3,
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 5"
+        "c": "#include <stdio.h>\n\nint main() {\n    long long n;\n    scanf(\"%lld\", &n);\n    if (n == 0) {\n        printf(\"1\");\n        return 0;\n    }\n    int count = 0;\n    while (n != 0) {\n        n /= 10;\n        count++;\n    }\n    printf(\"%d\", count);\n    return 0;\n}",
+        "python": "print(len(str(int(input()))))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "12345",
+          "expected_output": "5"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "9876543210",
+          "expected_output": "10"
         }
       ]
     },
     {
       "id": "math-456",
       "topicId": "math",
-      "title": "Number Theory 6",
-      "description": "Solve math problem 6 (Gcd, Prime, etc).",
-      "difficulty": "hard",
+      "title": "Reverse Number",
+      "description": "Reverse the digits of a given integer N.",
+      "difficulty": "easy",
       "estimatedTime": 5,
-      "concept": "Algorithms",
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 6"
+        "c": "#include <stdio.h>\n\nint main() {\n    int n, reversed = 0;\n    scanf(\"%d\", &n);\n    while (n != 0) {\n        int digit = n % 10;\n        reversed = reversed * 10 + digit;\n        n /= 10;\n    }\n    printf(\"%d\", reversed);\n    return 0;\n}",
+        "python": "n = int(input())\nprint(int(str(n)[::-1]))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "1234",
+          "expected_output": "4321"
+        },
+        {
+          "stdin": "500",
+          "expected_output": "5"
+        },
+        {
+          "stdin": "101",
+          "expected_output": "101"
         }
       ]
     },
     {
       "id": "math-457",
       "topicId": "math",
-      "title": "Number Theory 7",
-      "description": "Solve math problem 7 (Gcd, Prime, etc).",
-      "difficulty": "hard",
+      "title": "Check Prime",
+      "description": "Check if a number N is prime. Output 1 for Yes, 0 for No.",
+      "difficulty": "medium",
       "estimatedTime": 5,
-      "concept": "Algorithms",
+      "concept": "Number Theory",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 7"
+        "c": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    if (n <= 1) {\n        printf(\"0\");\n        return 0;\n    }\n    for (int i = 2; i <= sqrt(n); i++) {\n        if (n % i == 0) {\n            printf(\"0\");\n            return 0;\n        }\n    }\n    printf(\"1\");\n    return 0;\n}",
+        "python": "import math\nn = int(input())\nif n <= 1:\n    print(0)\nelse:\n    is_prime = True\n    for i in range(2, int(math.sqrt(n)) + 1):\n        if n % i == 0:\n            is_prime = False\n            break\n    print(1 if is_prime else 0)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "7",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "10",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "0"
         }
       ]
     },
     {
       "id": "math-458",
       "topicId": "math",
-      "title": "Number Theory 8",
-      "description": "Solve math problem 8 (Gcd, Prime, etc).",
-      "difficulty": "hard",
+      "title": "Nth Fibonacci Number",
+      "description": "Find the Nth Fibonacci number (0-indexed). F(0)=0, F(1)=1.",
+      "difficulty": "medium",
       "estimatedTime": 5,
       "concept": "Algorithms",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 8"
+        "c": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    if (n <= 1) {\n        printf(\"%d\", n);\n        return 0;\n    }\n    int a = 0, b = 1, c;\n    for (int i = 2; i <= n; i++) {\n        c = a + b;\n        a = b;\n        b = c;\n    }\n    printf(\"%d\", b);\n    return 0;\n}",
+        "python": "n = int(input())\nif n <= 1:\n    print(n)\nelse:\n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        a, b = b, a + b\n    print(b)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "5",
+          "expected_output": "5"
+        },
+        {
+          "stdin": "6",
+          "expected_output": "8"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "0"
         }
       ]
     },
     {
       "id": "math-459",
       "topicId": "math",
-      "title": "Number Theory 9",
-      "description": "Solve math problem 9 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Sum of Digits",
+      "description": "Calculate the sum of digits of a given integer N.",
+      "difficulty": "easy",
+      "estimatedTime": 3,
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 9"
+        "c": "#include <stdio.h>\n\nint main() {\n    int n, sum = 0;\n    scanf(\"%d\", &n);\n    while (n != 0) {\n        sum += n % 10;\n        n /= 10;\n    }\n    printf(\"%d\", sum);\n    return 0;\n}",
+        "python": "n = int(input())\nprint(sum(int(d) for d in str(abs(n))))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "123",
+          "expected_output": "6"
+        },
+        {
+          "stdin": "1001",
+          "expected_output": "2"
+        },
+        {
+          "stdin": "99",
+          "expected_output": "18"
         }
       ]
     },
     {
       "id": "math-460",
       "topicId": "math",
-      "title": "Number Theory 10",
-      "description": "Solve math problem 10 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Palindrome Number",
+      "description": "Check if integer N is a palindrome. Output 1 for Yes, 0 for No.",
+      "difficulty": "easy",
+      "estimatedTime": 4,
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 10"
+        "c": "#include <stdio.h>\n\nint main() {\n    int n, original, reversed = 0;\n    scanf(\"%d\", &n);\n    original = n;\n    while (n != 0) {\n        reversed = reversed * 10 + n % 10;\n        n /= 10;\n    }\n    printf(\"%d\", original == reversed ? 1 : 0);\n    return 0;\n}",
+        "python": "s = input()\nprint(1 if s == s[::-1] else 0)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "121",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "123",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "5",
+          "expected_output": "1"
         }
       ]
     },
     {
       "id": "math-461",
       "topicId": "math",
-      "title": "Number Theory 11",
-      "description": "Solve math problem 11 (Gcd, Prime, etc).",
-      "difficulty": "hard",
+      "title": "Armstrong Number",
+      "description": "Check if N is an Armstrong number (sum of cubes of digits equals N for 3-digit numbers). Output 1 for Yes, 0 for No.",
+      "difficulty": "medium",
       "estimatedTime": 5,
-      "concept": "Algorithms",
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 11"
+        "c": "#include <stdio.h>\n\nint main() {\n    int n, temp, sum = 0;\n    scanf(\"%d\", &n);\n    temp = n;\n    while (temp != 0) {\n        int d = temp % 10;\n        sum += d * d * d;\n        temp /= 10;\n    }\n    printf(\"%d\", sum == n ? 1 : 0);\n    return 0;\n}",
+        "python": "n = int(input())\ns = sum(int(d)**3 for d in str(n))\nprint(1 if s == n else 0)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "153",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "123",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "370",
+          "expected_output": "1"
         }
       ]
     },
     {
       "id": "math-462",
       "topicId": "math",
-      "title": "Number Theory 12",
-      "description": "Solve math problem 12 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Perfect Number",
+      "description": "Check if N is a perfect number (sum of divisors excluding N equals N). Output 1/0.",
+      "difficulty": "medium",
+      "estimatedTime": 6,
+      "concept": "Number Theory",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 12"
+        "c": "#include <stdio.h>\n\nint main() {\n    int n, sum = 0;\n    scanf(\"%d\", &n);\n    for (int i = 1; i < n; i++) {\n        if (n % i == 0) sum += i;\n    }\n    printf(\"%d\", sum == n ? 1 : 0);\n    return 0;\n}",
+        "python": "n = int(input())\ns = sum(i for i in range(1, n) if n % i == 0)\nprint(1 if s == n else 0)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "6",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "28",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "10",
+          "expected_output": "0"
         }
       ]
     },
     {
       "id": "math-463",
       "topicId": "math",
-      "title": "Number Theory 13",
-      "description": "Solve math problem 13 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Leap Year",
+      "description": "Check if a year Y is a leap year. Output 1 for Yes, 0 for No.",
+      "difficulty": "easy",
+      "estimatedTime": 3,
+      "concept": "Logic",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 13"
+        "c": "#include <stdio.h>\n\nint main() {\n    int y;\n    scanf(\"%d\", &y);\n    if ((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0)) printf(\"1\");\n    else printf(\"0\");\n    return 0;\n}",
+        "python": "y = int(input())\nprint(1 if (y % 4 == 0 and y % 100 != 0) or (y % 400 == 0) else 0)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "2000",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "2100",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "2024",
+          "expected_output": "1"
         }
       ]
     },
     {
       "id": "math-464",
       "topicId": "math",
-      "title": "Number Theory 14",
-      "description": "Solve math problem 14 (Gcd, Prime, etc).",
+      "title": "Binomial Coefficient",
+      "description": "Calculate nCr = n! / (r! * (n-r)!). Input n and r.",
       "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "estimatedTime": 8,
+      "concept": "Combinatorics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 14"
+        "c": "#include <stdio.h>\nlong long fact(int n) {\n    if (n == 0) return 1;\n    return n * fact(n - 1);\n}\nint main() {\n    int n, r;\n    scanf(\"%d %d\", &n, &r);\n    printf(\"%lld\", fact(n) / (fact(r) * fact(n - r)));\n    return 0;\n}",
+        "python": "import math\nn, r = map(int, input().split())\nprint(math.comb(n, r))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "5 2",
+          "expected_output": "10"
+        },
+        {
+          "stdin": "6 0",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "4 4",
+          "expected_output": "1"
         }
       ]
     },
     {
       "id": "math-465",
       "topicId": "math",
-      "title": "Number Theory 15",
-      "description": "Solve math problem 15 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Sum of Natural Numbers",
+      "description": "Calculate sum of first N natural numbers.",
+      "difficulty": "easy",
+      "estimatedTime": 2,
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 15"
+        "c": "#include <stdio.h>\n\nint main() {\n    long long n;\n    scanf(\"%lld\", &n);\n    printf(\"%lld\", n * (n + 1) / 2);\n    return 0;\n}",
+        "python": "n = int(input())\nprint(n * (n + 1) // 2)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "55"
+        },
+        {
+          "stdin": "5",
+          "expected_output": "15"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1"
         }
       ]
     },
     {
       "id": "math-466",
       "topicId": "math",
-      "title": "Number Theory 16",
-      "description": "Solve math problem 16 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Factors of a Number",
+      "description": "Print all factors of N in increasing order, separated by space.",
+      "difficulty": "easy",
+      "estimatedTime": 4,
+      "concept": "Number Theory",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 16"
+        "c": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    for (int i = 1; i <= n; i++) {\n        if (n % i == 0) {\n            printf(\"%d \", i);\n        }\n    }\n    return 0;\n}",
+        "python": "n = int(input())\nfor i in range(1, n + 1):\n    if n % i == 0:\n        print(i, end=' ')"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "6",
+          "expected_output": "1 2 3 6 "
+        },
+        {
+          "stdin": "12",
+          "expected_output": "1 2 3 4 6 12 "
+        },
+        {
+          "stdin": "7",
+          "expected_output": "1 7 "
         }
       ]
     },
     {
       "id": "math-467",
       "topicId": "math",
-      "title": "Number Theory 17",
-      "description": "Solve math problem 17 (Gcd, Prime, etc).",
+      "title": "Largest Prime Factor",
+      "description": "Find the largest prime factor of a number N.",
       "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "estimatedTime": 7,
+      "concept": "Number Theory",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 17"
+        "c": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    long long n;\n    scanf(\"%lld\", &n);\n    long long maxPrime = -1;\n    while (n % 2 == 0) {\n        maxPrime = 2;\n        n /= 2;\n    }\n    for (long long i = 3; i <= sqrt(n); i += 2) {\n        while (n % i == 0) {\n            maxPrime = i;\n            n /= i;\n        }\n    }\n    if (n > 2) maxPrime = n;\n    printf(\"%lld\", maxPrime);\n    return 0;\n}",
+        "python": "import math\nn = int(input())\nmax_prime = -1\nwhile n % 2 == 0:\n    max_prime = 2\n    n //= 2\nfor i in range(3, int(math.sqrt(n)) + 1, 2):\n    while n % i == 0:\n        max_prime = i\n        n //= i\nif n > 2:\n    max_prime = n\nprint(max_prime)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "5"
+        },
+        {
+          "stdin": "17",
+          "expected_output": "17"
+        },
+        {
+          "stdin": "315",
+          "expected_output": "7"
         }
       ]
     },
     {
       "id": "math-468",
       "topicId": "math",
-      "title": "Number Theory 18",
-      "description": "Solve math problem 18 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Area of Circle",
+      "description": "Calculate area of a circle given radius R. Use PI = 3.14. Output integer part.",
+      "difficulty": "easy",
+      "estimatedTime": 3,
+      "concept": "Geometry",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 18"
+        "c": "#include <stdio.h>\n\nint main() {\n    float r;\n    scanf(\"%f\", &r);\n    printf(\"%d\", (int)(3.14 * r * r));\n    return 0;\n}",
+        "python": "r = float(input())\nprint(int(3.14 * r * r))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "5",
+          "expected_output": "78"
+        },
+        {
+          "stdin": "10",
+          "expected_output": "314"
+        },
+        {
+          "stdin": "2",
+          "expected_output": "12"
         }
       ]
     },
     {
       "id": "math-469",
       "topicId": "math",
-      "title": "Number Theory 19",
-      "description": "Solve math problem 19 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Perimeter of Rectangle",
+      "description": "Calculate perimeter of a rectangle given length L and width W.",
+      "difficulty": "easy",
+      "estimatedTime": 2,
+      "concept": "Geometry",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 19"
+        "c": "#include <stdio.h>\n\nint main() {\n    int l, w;\n    scanf(\"%d %d\", &l, &w);\n    printf(\"%d\", 2 * (l + w));\n    return 0;\n}",
+        "python": "l, w = map(int, input().split())\nprint(2 * (l + w))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "5 10",
+          "expected_output": "30"
+        },
+        {
+          "stdin": "2 3",
+          "expected_output": "10"
+        },
+        {
+          "stdin": "100 100",
+          "expected_output": "400"
         }
       ]
     },
     {
       "id": "math-470",
       "topicId": "math",
-      "title": "Number Theory 20",
-      "description": "Solve math problem 20 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Simple Interest",
+      "description": "Calculate Simple Interest given P, R, T. Formula: (P*R*T)/100. Output integer part.",
+      "difficulty": "easy",
+      "estimatedTime": 3,
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 20"
+        "c": "#include <stdio.h>\n\nint main() {\n    float p, r, t;\n    scanf(\"%f %f %f\", &p, &r, &t);\n    printf(\"%d\", (int)((p * r * t) / 100));\n    return 0;\n}",
+        "python": "p, r, t = map(float, input().split())\nprint(int((p * r * t) / 100))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "1000 5 2",
+          "expected_output": "100"
+        },
+        {
+          "stdin": "500 10 1",
+          "expected_output": "50"
+        },
+        {
+          "stdin": "2000 2.5 4",
+          "expected_output": "200"
         }
       ]
     },
     {
       "id": "math-471",
       "topicId": "math",
-      "title": "Number Theory 21",
-      "description": "Solve math problem 21 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Celsius to Fahrenheit",
+      "description": "Convert Celsius to Fahrenheit. F = (C * 9/5) + 32. Output integer part.",
+      "difficulty": "easy",
+      "estimatedTime": 3,
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 21"
+        "c": "#include <stdio.h>\n\nint main() {\n    float c;\n    scanf(\"%f\", &c);\n    printf(\"%d\", (int)((c * 9.0 / 5.0) + 32));\n    return 0;\n}",
+        "python": "c = float(input())\nprint(int((c * 9/5) + 32))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "0",
+          "expected_output": "32"
+        },
+        {
+          "stdin": "100",
+          "expected_output": "212"
+        },
+        {
+          "stdin": "-40",
+          "expected_output": "-40"
         }
       ]
     },
     {
       "id": "math-472",
       "topicId": "math",
-      "title": "Number Theory 22",
-      "description": "Solve math problem 22 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
+      "title": "Swap Numbers",
+      "description": "Swap two numbers without using a third variable.",
+      "difficulty": "easy",
+      "estimatedTime": 4,
       "concept": "Algorithms",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 22"
+        "c": "#include <stdio.h>\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    a = a + b;\n    b = a - b;\n    a = a - b;\n    printf(\"%d %d\", a, b);\n    return 0;\n}",
+        "python": "a, b = map(int, input().split())\na, b = b, a\nprint(f\"{a} {b}\")"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10 20",
+          "expected_output": "20 10"
+        },
+        {
+          "stdin": "5 5",
+          "expected_output": "5 5"
+        },
+        {
+          "stdin": "-1 1",
+          "expected_output": "1 -1"
         }
       ]
     },
     {
       "id": "math-473",
       "topicId": "math",
-      "title": "Number Theory 23",
-      "description": "Solve math problem 23 (Gcd, Prime, etc).",
-      "difficulty": "hard",
+      "title": "Roots of Quadratic Equation",
+      "description": "Solve ax^2 + bx + c = 0. Output floor of sum of roots (-b/a).",
+      "difficulty": "medium",
       "estimatedTime": 5,
-      "concept": "Algorithms",
+      "concept": "Algebra",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 23"
+        "c": "#include <stdio.h>\n\nint main() {\n    int a, b, c;\n    scanf(\"%d %d %d\", &a, &b, &c);\n    printf(\"%d\", -b / a);\n    return 0;\n}",
+        "python": "a, b, c = map(int, input().split())\nprint(-b // a)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "1 -5 6",
+          "expected_output": "5"
+        },
+        {
+          "stdin": "1 4 4",
+          "expected_output": "-4"
+        },
+        {
+          "stdin": "2 -6 4",
+          "expected_output": "3"
         }
       ]
     },
     {
       "id": "math-474",
       "topicId": "math",
-      "title": "Number Theory 24",
-      "description": "Solve math problem 24 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Volume of Cylinder",
+      "description": "Calculate volume of cylinder (PI*r^2*h). r,h are ints. use PI=3.14. Output int.",
+      "difficulty": "easy",
+      "estimatedTime": 3,
+      "concept": "Geometry",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 24"
+        "c": "#include <stdio.h>\n\nint main() {\n    int r, h;\n    scanf(\"%d %d\", &r, &h);\n    printf(\"%d\", (int)(3.14 * r * r * h));\n    return 0;\n}",
+        "python": "r, h = map(int, input().split())\nprint(int(3.14 * r * r * h))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "2 10",
+          "expected_output": "125"
+        },
+        {
+          "stdin": "5 2",
+          "expected_output": "157"
+        },
+        {
+          "stdin": "1 1",
+          "expected_output": "3"
         }
       ]
     },
     {
       "id": "math-475",
       "topicId": "math",
-      "title": "Number Theory 25",
-      "description": "Solve math problem 25 (Gcd, Prime, etc).",
-      "difficulty": "hard",
+      "title": "Distance Between Points",
+      "description": "Calculate distance between (x1, y1) and (x2, y2). Output floor value.",
+      "difficulty": "medium",
       "estimatedTime": 5,
-      "concept": "Algorithms",
+      "concept": "Geometry",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 25"
+        "c": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    int x1, y1, x2, y2;\n    scanf(\"%d %d %d %d\", &x1, &y1, &x2, &y2);\n    double d = sqrt(pow(x2-x1, 2) + pow(y2-y1, 2));\n    printf(\"%d\", (int)d);\n    return 0;\n}",
+        "python": "import math\nx1, y1, x2, y2 = map(int, input().split())\nprint(int(math.dist((x1, y1), (x2, y2))))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "0 0 3 4",
+          "expected_output": "5"
+        },
+        {
+          "stdin": "1 1 2 2",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "0 0 0 10",
+          "expected_output": "10"
         }
       ]
     },
     {
       "id": "math-476",
       "topicId": "math",
-      "title": "Number Theory 26",
-      "description": "Solve math problem 26 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Sum of Arithmetic Series",
+      "description": "Find sum of AP series: a, a+d, a+2d ... up to n terms. formula: n/2 * (2a + (n-1)d)",
+      "difficulty": "medium",
+      "estimatedTime": 4,
+      "concept": "Algebra",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 26"
+        "c": "#include <stdio.h>\n\nint main() {\n    int a, d, n;\n    scanf(\"%d %d %d\", &a, &d, &n);\n    printf(\"%d\", (n * (2 * a + (n - 1) * d)) / 2);\n    return 0;\n}",
+        "python": "a, d, n = map(int, input().split())\nprint((n * (2 * a + (n - 1) * d)) // 2)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "1 1 5",
+          "expected_output": "15"
+        },
+        {
+          "stdin": "2 2 3",
+          "expected_output": "12"
+        },
+        {
+          "stdin": "10 5 1",
+          "expected_output": "10"
         }
       ]
     },
     {
       "id": "math-477",
       "topicId": "math",
-      "title": "Number Theory 27",
-      "description": "Solve math problem 27 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Sum of Squares",
+      "description": "Calculate sum of squares of first N natural numbers. Formula: N(N+1)(2N+1)/6.",
+      "difficulty": "medium",
+      "estimatedTime": 4,
+      "concept": "Algebra",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 27"
+        "c": "#include <stdio.h>\n\nint main() {\n    long long n;\n    scanf(\"%lld\", &n);\n    printf(\"%lld\", (n * (n + 1) * (2 * n + 1)) / 6);\n    return 0;\n}",
+        "python": "n = int(input())\nprint((n * (n + 1) * (2 * n + 1)) // 6)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "3",
+          "expected_output": "14"
+        },
+        {
+          "stdin": "5",
+          "expected_output": "55"
+        },
+        {
+          "stdin": "2",
+          "expected_output": "5"
         }
       ]
     },
     {
       "id": "math-478",
       "topicId": "math",
-      "title": "Number Theory 28",
-      "description": "Solve math problem 28 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Divisibility by 9",
+      "description": "Check if a number is divisible by 9. Output 1 if Yes, 0 if No.",
+      "difficulty": "easy",
+      "estimatedTime": 2,
+      "concept": "Number Theory",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 28"
+        "c": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", n % 9 == 0 ? 1 : 0);\n    return 0;\n}",
+        "python": "n = int(input())\nprint(1 if n % 9 == 0 else 0)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "81",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "19",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "99",
+          "expected_output": "1"
         }
       ]
     },
     {
       "id": "math-479",
       "topicId": "math",
-      "title": "Number Theory 29",
-      "description": "Solve math problem 29 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Power of Two",
+      "description": "Check if N is a power of 2. Output 1/0.",
+      "difficulty": "medium",
+      "estimatedTime": 4,
+      "concept": "Bit Manipulation",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 29"
+        "c": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    if (n > 0 && ((n & (n - 1)) == 0)) printf(\"1\");\n    else printf(\"0\");\n    return 0;\n}",
+        "python": "n = int(input())\nprint(1 if n > 0 and (n & (n - 1) == 0) else 0)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "16",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "18",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1"
         }
       ]
     },
     {
       "id": "math-480",
       "topicId": "math",
-      "title": "Number Theory 30",
-      "description": "Solve math problem 30 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Sum of Cubes",
+      "description": "Calculate sum of cubes of first N natural numbers. Formula: (N(N+1)/2)^2.",
+      "difficulty": "medium",
+      "estimatedTime": 4,
+      "concept": "Algebra",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 30"
+        "c": "#include <stdio.h>\n\nint main() {\n    long long n;\n    scanf(\"%lld\", &n);\n    long long sum = (n * (n + 1)) / 2;\n    printf(\"%lld\", sum * sum);\n    return 0;\n}",
+        "python": "n = int(input())\ns = (n * (n + 1)) // 2\nprint(s * s)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "3",
+          "expected_output": "36"
+        },
+        {
+          "stdin": "2",
+          "expected_output": "9"
+        },
+        {
+          "stdin": "5",
+          "expected_output": "225"
         }
       ]
     },
     {
       "id": "math-481",
       "topicId": "math",
-      "title": "Number Theory 31",
-      "description": "Solve math problem 31 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Triangle Validity",
+      "description": "Check if 3 sides a,b,c form a valid triangle. (Sum of any 2 > 3rd). Output 1/0.",
+      "difficulty": "easy",
+      "estimatedTime": 3,
+      "concept": "Geometry",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 31"
+        "c": "#include <stdio.h>\n\nint main() {\n    int a, b, c;\n    scanf(\"%d %d %d\", &a, &b, &c);\n    if (a+b>c && a+c>b && b+c>a) printf(\"1\");\n    else printf(\"0\");\n    return 0;\n}",
+        "python": "a, b, c = map(int, input().split())\nprint(1 if a+b>c and a+c>b and b+c>a else 0)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "3 4 5",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "1 1 5",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "5 12 13",
+          "expected_output": "1"
         }
       ]
     },
     {
       "id": "math-482",
       "topicId": "math",
-      "title": "Number Theory 32",
-      "description": "Solve math problem 32 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Average of Three",
+      "description": "Calculate average of 3 numbers. Output integer part.",
+      "difficulty": "easy",
+      "estimatedTime": 2,
+      "concept": "Statistics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 32"
+        "c": "#include <stdio.h>\n\nint main() {\n    int a, b, c;\n    scanf(\"%d %d %d\", &a, &b, &c);\n    printf(\"%d\", (a+b+c)/3);\n    return 0;\n}",
+        "python": "a, b, c = map(int, input().split())\nprint((a+b+c)//3)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10 20 30",
+          "expected_output": "20"
+        },
+        {
+          "stdin": "5 5 5",
+          "expected_output": "5"
+        },
+        {
+          "stdin": "1 2 3",
+          "expected_output": "2"
         }
       ]
     },
     {
       "id": "math-483",
       "topicId": "math",
-      "title": "Number Theory 33",
-      "description": "Solve math problem 33 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Check Perfect Square",
+      "description": "Check if N is a perfect square. Output 1/0.",
+      "difficulty": "medium",
+      "estimatedTime": 4,
+      "concept": "Number Theory",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 33"
+        "c": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    int root = sqrt(n);\n    if (root * root == n) printf(\"1\");\n    else printf(\"0\");\n    return 0;\n}",
+        "python": "import math\nn = int(input())\nroot = int(math.sqrt(n))\nprint(1 if root * root == n else 0)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "16",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "15",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "25",
+          "expected_output": "1"
         }
       ]
     },
     {
       "id": "math-484",
       "topicId": "math",
-      "title": "Number Theory 34",
-      "description": "Solve math problem 34 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Smallest of Three",
+      "description": "Find the smallest of three numbers.",
+      "difficulty": "easy",
+      "estimatedTime": 2,
+      "concept": "Logic",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 34"
+        "c": "#include <stdio.h>\n\nint main() {\n    int a, b, c, min;\n    scanf(\"%d %d %d\", &a, &b, &c);\n    min = a;\n    if (b < min) min = b;\n    if (c < min) min = c;\n    printf(\"%d\", min);\n    return 0;\n}",
+        "python": "print(min(map(int, input().split())))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10 5 20",
+          "expected_output": "5"
+        },
+        {
+          "stdin": "1 1 1",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "100 200 50",
+          "expected_output": "50"
         }
       ]
     },
     {
       "id": "math-485",
       "topicId": "math",
-      "title": "Number Theory 35",
-      "description": "Solve math problem 35 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Cube Volume",
+      "description": "Calculate volume of a cube with side a.",
+      "difficulty": "easy",
+      "estimatedTime": 1,
+      "concept": "Geometry",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 35"
+        "c": "#include <stdio.h>\n\nint main() {\n    int a;\n    scanf(\"%d\", &a);\n    printf(\"%d\", a * a * a);\n    return 0;\n}",
+        "python": "a = int(input())\nprint(a**3)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "3",
+          "expected_output": "27"
+        },
+        {
+          "stdin": "2",
+          "expected_output": "8"
+        },
+        {
+          "stdin": "10",
+          "expected_output": "1000"
         }
       ]
     },
     {
       "id": "math-486",
       "topicId": "math",
-      "title": "Number Theory 36",
-      "description": "Solve math problem 36 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Minutes to Seconds",
+      "description": "Convert minutes to seconds.",
+      "difficulty": "easy",
+      "estimatedTime": 1,
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 36"
+        "c": "#include <stdio.h>\n\nint main() {\n    int m;\n    scanf(\"%d\", &m);\n    printf(\"%d\", m * 60);\n    return 0;\n}",
+        "python": "m = int(input())\nprint(m * 60)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "5",
+          "expected_output": "300"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "60"
+        },
+        {
+          "stdin": "10",
+          "expected_output": "600"
         }
       ]
     },
     {
       "id": "math-487",
       "topicId": "math",
-      "title": "Number Theory 37",
-      "description": "Solve math problem 37 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Hours to Minutes",
+      "description": "Convert hours to minutes.",
+      "difficulty": "easy",
+      "estimatedTime": 1,
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 37"
+        "c": "#include <stdio.h>\n\nint main() {\n    int h;\n    scanf(\"%d\", &h);\n    printf(\"%d\", h * 60);\n    return 0;\n}",
+        "python": "h = int(input())\nprint(h * 60)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "1",
+          "expected_output": "60"
+        },
+        {
+          "stdin": "24",
+          "expected_output": "1440"
+        },
+        {
+          "stdin": "5",
+          "expected_output": "300"
         }
       ]
     },
     {
       "id": "math-488",
       "topicId": "math",
-      "title": "Number Theory 38",
-      "description": "Solve math problem 38 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Days to Hours",
+      "description": "Convert days to hours.",
+      "difficulty": "easy",
+      "estimatedTime": 1,
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 38"
+        "c": "#include <stdio.h>\n\nint main() {\n    int d;\n    scanf(\"%d\", &d);\n    printf(\"%d\", d * 24);\n    return 0;\n}",
+        "python": "d = int(input())\nprint(d * 24)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "1",
+          "expected_output": "24"
+        },
+        {
+          "stdin": "2",
+          "expected_output": "48"
+        },
+        {
+          "stdin": "10",
+          "expected_output": "240"
         }
       ]
     },
     {
       "id": "math-489",
       "topicId": "math",
-      "title": "Number Theory 39",
-      "description": "Solve math problem 39 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Check Zero",
+      "description": "Check if a number is zero. Output 1/0.",
+      "difficulty": "easy",
+      "estimatedTime": 1,
+      "concept": "Logic",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 39"
+        "c": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", n == 0 ? 1 : 0);\n    return 0;\n}",
+        "python": "n = int(input())\nprint(1 if n == 0 else 0)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "0",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "5",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "-5",
+          "expected_output": "0"
         }
       ]
     },
     {
       "id": "math-490",
       "topicId": "math",
-      "title": "Number Theory 40",
-      "description": "Solve math problem 40 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Check Negative",
+      "description": "Check if a number is negative. Output 1/0.",
+      "difficulty": "easy",
+      "estimatedTime": 1,
+      "concept": "Logic",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 40"
+        "c": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", n < 0 ? 1 : 0);\n    return 0;\n}",
+        "python": "n = int(input())\nprint(1 if n < 0 else 0)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "-5",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "5",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "0"
         }
       ]
     },
     {
       "id": "math-491",
       "topicId": "math",
-      "title": "Number Theory 41",
-      "description": "Solve math problem 41 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Modulus Operator",
+      "description": "Find remainder of a divided by b.",
+      "difficulty": "easy",
+      "estimatedTime": 1,
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 41"
+        "c": "#include <stdio.h>\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d\", a % b);\n    return 0;\n}",
+        "python": "a, b = map(int, input().split())\nprint(a % b)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10 3",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "10 5",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "15 4",
+          "expected_output": "3"
         }
       ]
     },
     {
       "id": "math-492",
       "topicId": "math",
-      "title": "Number Theory 42",
-      "description": "Solve math problem 42 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Integer Division",
+      "description": "Find result of integer division of a by b.",
+      "difficulty": "easy",
+      "estimatedTime": 1,
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 42"
+        "c": "#include <stdio.h>\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d\", a / b);\n    return 0;\n}",
+        "python": "a, b = map(int, input().split())\nprint(a // b)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10 3",
+          "expected_output": "3"
+        },
+        {
+          "stdin": "10 5",
+          "expected_output": "2"
+        },
+        {
+          "stdin": "100 11",
+          "expected_output": "9"
         }
       ]
     },
     {
       "id": "math-493",
       "topicId": "math",
-      "title": "Number Theory 43",
-      "description": "Solve math problem 43 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Product of Two",
+      "description": "Calculate product of two numbers.",
+      "difficulty": "easy",
+      "estimatedTime": 1,
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 43"
+        "c": "#include <stdio.h>\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d\", a * b);\n    return 0;\n}",
+        "python": "a, b = map(int, input().split())\nprint(a * b)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "5 6",
+          "expected_output": "30"
+        },
+        {
+          "stdin": "10 0",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "-2 5",
+          "expected_output": "-10"
         }
       ]
     },
     {
       "id": "math-494",
       "topicId": "math",
-      "title": "Number Theory 44",
-      "description": "Solve math problem 44 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Sum of Evens",
+      "description": "Calculate sum of all even numbers up to N.",
+      "difficulty": "easy",
+      "estimatedTime": 2,
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 44"
+        "c": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    int count = n / 2;\n    printf(\"%d\", count * (count + 1));\n    return 0;\n}",
+        "python": "n = int(input())\ncount = n // 2\nprint(count * (count + 1))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "30"
+        },
+        {
+          "stdin": "5",
+          "expected_output": "6"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "0"
         }
       ]
     },
     {
       "id": "math-495",
       "topicId": "math",
-      "title": "Number Theory 45",
-      "description": "Solve math problem 45 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Sum of Odds",
+      "description": "Calculate sum of all odd numbers up to N (inclusive).",
+      "difficulty": "easy",
+      "estimatedTime": 2,
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 45"
+        "c": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    int count = (n + 1) / 2;\n    printf(\"%d\", count * count);\n    return 0;\n}",
+        "python": "n = int(input())\ncount = (n + 1) // 2\nprint(count * count)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "5",
+          "expected_output": "9"
+        },
+        {
+          "stdin": "10",
+          "expected_output": "25"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1"
         }
       ]
     },
     {
       "id": "math-496",
       "topicId": "math",
-      "title": "Number Theory 46",
-      "description": "Solve math problem 46 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Square Root Integer",
+      "description": "Calculate the integer part of the square root of N.",
+      "difficulty": "easy",
+      "estimatedTime": 1,
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 46"
+        "c": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", (int)sqrt(n));\n    return 0;\n}",
+        "python": "import math\nn = int(input())\nprint(int(math.sqrt(n)))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "9",
+          "expected_output": "3"
+        },
+        {
+          "stdin": "10",
+          "expected_output": "3"
+        },
+        {
+          "stdin": "16",
+          "expected_output": "4"
         }
       ]
     },
     {
       "id": "math-497",
       "topicId": "math",
-      "title": "Number Theory 47",
-      "description": "Solve math problem 47 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Check Leap Year",
+      "description": "Check if Y is a leap year (Repeat for practice). Output 1/0.",
+      "difficulty": "easy",
+      "estimatedTime": 2,
+      "concept": "Logic",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 47"
+        "c": "#include <stdio.h>\n\nint main() {\n    int y;\n    scanf(\"%d\", &y);\n    if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0) printf(\"1\");\n    else printf(\"0\");\n    return 0;\n}",
+        "python": "y = int(input())\nprint(1 if (y % 4 == 0 and y % 100 != 0) or y % 400 == 0 else 0)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "2020",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "2021",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "1900",
+          "expected_output": "0"
         }
       ]
     },
     {
       "id": "math-498",
       "topicId": "math",
-      "title": "Number Theory 48",
-      "description": "Solve math problem 48 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
+      "title": "Geometric Progression Nth Term",
+      "description": "Find Nth term of GP given a, r, N. Output integer.",
+      "difficulty": "medium",
+      "estimatedTime": 3,
       "concept": "Algorithms",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 48"
+        "c": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    int a, r, n;\n    scanf(\"%d %d %d\", &a, &r, &n);\n    printf(\"%d\", a * (int)pow(r, n - 1));\n    return 0;\n}",
+        "python": "a, r, n = map(int, input().split())\nprint(a * (r ** (n - 1)))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "2 3 3",
+          "expected_output": "18"
+        },
+        {
+          "stdin": "1 2 5",
+          "expected_output": "16"
+        },
+        {
+          "stdin": "5 2 1",
+          "expected_output": "5"
         }
       ]
     },
     {
       "id": "math-499",
       "topicId": "math",
-      "title": "Number Theory 49",
-      "description": "Solve math problem 49 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Sum of First N Evens",
+      "description": "Sum of first N even numbers (2, 4, ...). Formula: N(N+1).",
+      "difficulty": "easy",
+      "estimatedTime": 2,
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 49"
+        "c": "#include <stdio.h>\n\nint main() {\n    long long n;\n    scanf(\"%lld\", &n);\n    printf(\"%lld\", n * (n + 1));\n    return 0;\n}",
+        "python": "n = int(input())\nprint(n * (n + 1))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "3",
+          "expected_output": "12"
+        },
+        {
+          "stdin": "2",
+          "expected_output": "6"
+        },
+        {
+          "stdin": "5",
+          "expected_output": "30"
         }
       ]
     },
     {
       "id": "math-500",
       "topicId": "math",
-      "title": "Number Theory 50",
-      "description": "Solve math problem 50 (Gcd, Prime, etc).",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Algorithms",
+      "title": "Signum Function",
+      "description": "Implement sign(x): 1 if x>0, -1 if x<0, 0 if x=0.",
+      "difficulty": "easy",
+      "estimatedTime": 1,
+      "concept": "Mathematics",
       "starter_codes": {
-        "c": "#include <stdio.h>\nint main() {\n    return 0;\n}",
-        "python": "# Math 50"
+        "c": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    if (n > 0) printf(\"1\");\n    else if (n < 0) printf(\"-1\");\n    else printf(\"0\");\n    return 0;\n}",
+        "python": "n = int(input())\nprint(1 if n > 0 else (-1 if n < 0 else 0))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "100",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "-50",
+          "expected_output": "-1"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "0"
         }
       ]
     }

@@ -412,6 +412,73 @@
                     }
                 ]
             }
+        ],
+        "problems": [
+            {
+                "id": "py-l1-p1",
+                "title": "Hello Python World",
+                "difficulty": "easy",
+                "description": "Write a script that prints 'Hello, Python World!' to the console.",
+                "starter_code": "# Write your code here\nprint(\"\")",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "Hello, Python World!\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l1-p2",
+                "title": "Sum of Two Inputs",
+                "difficulty": "easy",
+                "description": "Read two integers from the user and print their sum.",
+                "starter_code": "a = int(input())\nb = int(input())\n# Calculate and print sum",
+                "test_cases": [
+                    {
+                        "stdin": "12\n8",
+                        "expected_output": "20\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l1-p3",
+                "title": "Area of a Rectangle",
+                "difficulty": "easy",
+                "description": "Read length and width. Print the area (length * width).",
+                "starter_code": "l = float(input())\nw = float(input())\n# Print area",
+                "test_cases": [
+                    {
+                        "stdin": "10\n5",
+                        "expected_output": "50.0\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l1-p4",
+                "title": "Simple Interest",
+                "difficulty": "easy",
+                "description": "Read P, R, T and calculate Simple Interest: (P*R*T)/100.",
+                "starter_code": "p = float(input())\nr = float(input())\nt = float(input())\n# Print SI",
+                "test_cases": [
+                    {
+                        "stdin": "2000\n4\n3",
+                        "expected_output": "240.0\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l1-p5",
+                "title": "Square of a Number",
+                "difficulty": "easy",
+                "description": "Read a number and print its square.",
+                "starter_code": "n = int(input())\n# Print square",
+                "test_cases": [
+                    {
+                        "stdin": "5",
+                        "expected_output": "25\n"
+                    }
+                ]
+            }
         ]
     },
     {
@@ -688,6 +755,77 @@
                         ],
                         "correctAnswer": 2,
                         "explanation": "In Python, break/continue only affect the specific loop they are directly inside of."
+                    }
+                ]
+            }
+        ],
+        "problems": [
+            {
+                "id": "py-l2-p1",
+                "title": "Even or Odd",
+                "difficulty": "easy",
+                "description": "Read a number and print 'Even' if it's even, else print 'Odd'.",
+                "starter_code": "n = int(input())\n# Check and print",
+                "test_cases": [
+                    {
+                        "stdin": "4",
+                        "expected_output": "Even\n"
+                    },
+                    {
+                        "stdin": "7",
+                        "expected_output": "Odd\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l2-p2",
+                "title": "Grade Calculator",
+                "difficulty": "easy",
+                "description": "Read marks (0-100). Print 'A' for >=90, 'B' for >=80, 'C' for >=70, else 'F'.",
+                "starter_code": "score = int(input())\n# Print grade",
+                "test_cases": [
+                    {
+                        "stdin": "85",
+                        "expected_output": "B\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l2-p3",
+                "title": "Sum of First N Numbers",
+                "difficulty": "easy",
+                "description": "Read n and print the sum of numbers from 1 to n using a loop.",
+                "starter_code": "n = int(input())\n# Calculate sum",
+                "test_cases": [
+                    {
+                        "stdin": "5",
+                        "expected_output": "15\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l2-p4",
+                "title": "Multiplication Table",
+                "difficulty": "easy",
+                "description": "Read n and print its multiplication table up to 10 (n * i = result).",
+                "starter_code": "n = int(input())\n# Print table",
+                "test_cases": [
+                    {
+                        "stdin": "3",
+                        "expected_output": "3 * 1 = 3\n3 * 2 = 6\n3 * 3 = 9\n3 * 4 = 12\n3 * 5 = 15\n3 * 6 = 18\n3 * 7 = 21\n3 * 8 = 24\n3 * 9 = 27\n3 * 10 = 30\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l2-p5",
+                "title": "Factorial",
+                "difficulty": "medium",
+                "description": "Read n and print its factorial.",
+                "starter_code": "n = int(input())\n# Calculate factorial",
+                "test_cases": [
+                    {
+                        "stdin": "5",
+                        "expected_output": "120\n"
                     }
                 ]
             }
@@ -1038,6 +1176,73 @@
                     }
                 ]
             }
+        ],
+        "problems": [
+            {
+                "id": "py-l3-p1",
+                "title": "List Reversal",
+                "difficulty": "easy",
+                "description": "Read a list of 5 space-separated integers and print them in reverse order.",
+                "starter_code": "nums = input().split()\n# Reverse and print",
+                "test_cases": [
+                    {
+                        "stdin": "1 2 3 4 5",
+                        "expected_output": "5 4 3 2 1\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l3-p2",
+                "title": "Remove Duplicates",
+                "difficulty": "easy",
+                "description": "Read a list of strings with duplicates and print a sorted list of unique entries using a Set.",
+                "starter_code": "items = input().split()\n# Use set to remove duplicates\n# Print sorted unique list",
+                "test_cases": [
+                    {
+                        "stdin": "apple banana apple cherry banana",
+                        "expected_output": "['apple', 'banana', 'cherry']\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l3-p3",
+                "title": "Dictionary Lookup",
+                "difficulty": "medium",
+                "description": "Create a dictionary of word counts from a given string. Print the count for 'python'.",
+                "starter_code": "text = \"python is fun and python is powerful\"\n# Count words and print count for 'python'",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "2\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l3-p4",
+                "title": "Tuple Indexing",
+                "difficulty": "easy",
+                "description": "Given a tuple `t = (10, 20, 30, 40, 50)`, print the sum of the first and last elements.",
+                "starter_code": "t = (10, 20, 30, 40, 50)\n# Print sum of t[0] and t[-1]",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "60\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l3-p5",
+                "title": "Most Frequent Character",
+                "difficulty": "hard",
+                "description": "Find the most frequent character in a string using a dictionary. Print the character.",
+                "starter_code": "s = input()\n# Use dictionary to find most frequent",
+                "test_cases": [
+                    {
+                        "stdin": "hello world",
+                        "expected_output": "l\n"
+                    }
+                ]
+            }
         ]
     },
     {
@@ -1385,6 +1590,73 @@
                     }
                 ]
             }
+        ],
+        "problems": [
+            {
+                "id": "py-l4-p1",
+                "title": "Welcome Function",
+                "difficulty": "easy",
+                "description": "Write a function `greet(name)` that prints 'Welcome, [name]!'. Call it with 'Alice'.",
+                "starter_code": "def greet(name):\n    # Print welcome message\n\n# Call function with 'Alice'",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "Welcome, Alice!\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l4-p2",
+                "title": "Add Function",
+                "difficulty": "easy",
+                "description": "Write a function `add(a, b)` that RETURNS their sum. Call it with two inputs and print the result.",
+                "starter_code": "def add(a, b):\n    # Return sum\n\nx = int(input())\ny = int(input())\n# Call and print",
+                "test_cases": [
+                    {
+                        "stdin": "5\n7",
+                        "expected_output": "12\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l4-p3",
+                "title": "Square and Cube",
+                "difficulty": "medium",
+                "description": "Write a function `power(n)` that returns both the square and cube of n as a tuple.",
+                "starter_code": "def power(n):\n    # Return n**2 and n**3\n\nnum = int(input())\n# Print the tuple result",
+                "test_cases": [
+                    {
+                        "stdin": "3",
+                        "expected_output": "(9, 27)\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l4-p4",
+                "title": "Importing Math",
+                "difficulty": "easy",
+                "description": "Import the `math` module and use `math.sqrt()` to print the square root of a given number.",
+                "starter_code": "import math\nn = int(input())\n# Print sqrt of n",
+                "test_cases": [
+                    {
+                        "stdin": "16",
+                        "expected_output": "4.0\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l4-p5",
+                "title": "Variable Scope Test",
+                "difficulty": "hard",
+                "description": "Demonstrate global vs local scope. Define `x = 10` globally. Inside `update()`, change a local `x` to 5. Print both values from `main` logic to show the original global `x` is unchanged.",
+                "starter_code": "x = 10\ndef update():\n    x = 5\n\nupdate()\nprint(f\"Global: {x}\")\n# Output should show Global: 10",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "Global: 10\n"
+                    }
+                ]
+            }
         ]
     },
     {
@@ -1661,6 +1933,77 @@
                         ],
                         "correctAnswer": 1,
                         "explanation": "CSVs are plain text and highly compatible, making them ideal for sharing datasets."
+                    }
+                ]
+            }
+        ],
+        "problems": [
+            {
+                "id": "py-l5-p1",
+                "title": "String Palindrome",
+                "difficulty": "easy",
+                "description": "Read a string and print 'True' if it's a palindrome (reads the same forward and backward), else 'False'.",
+                "starter_code": "s = input()\n# Check if s == s[::-1]",
+                "test_cases": [
+                    {
+                        "stdin": "madam",
+                        "expected_output": "True\n"
+                    },
+                    {
+                        "stdin": "hello",
+                        "expected_output": "False\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l5-p2",
+                "title": "Word Frequency Counter",
+                "difficulty": "medium",
+                "description": "Read a sentence and print the number of words in it.",
+                "starter_code": "text = input()\n# Split and count words",
+                "test_cases": [
+                    {
+                        "stdin": "Python is very easy to learn",
+                        "expected_output": "6\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l5-p3",
+                "title": "Write to File",
+                "difficulty": "easy",
+                "description": "Write a script that creates a file 'hello.txt' and writes 'Python Files' inside it. (Simulated output)",
+                "starter_code": "with open('hello.txt', 'w') as f:\n    f.write('Python Files')\n# Print success message\nprint('File Created')",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "File Created\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l5-p4",
+                "title": "Char Counter safely",
+                "difficulty": "medium",
+                "description": "Read a string and count how many 'a' characters it contains. Case-insensitive.",
+                "starter_code": "s = input().lower()\n# Count 'a'",
+                "test_cases": [
+                    {
+                        "stdin": "Amazing Apple",
+                        "expected_output": "3\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l5-p5",
+                "title": "Format Name",
+                "difficulty": "easy",
+                "description": "Read first and last name separately. Print them in 'Last, First' format using f-strings.",
+                "starter_code": "first = input()\nlast = input()\n# Print formatted string",
+                "test_cases": [
+                    {
+                        "stdin": "John\nDoe",
+                        "expected_output": "Doe, John\n"
                     }
                 ]
             }
@@ -2147,6 +2490,73 @@
                     }
                 ]
             }
+        ],
+        "problems": [
+            {
+                "id": "py-l6-p1",
+                "title": "Simple Car Class",
+                "difficulty": "easy",
+                "description": "Create a class `Car` with an `__init__` method that takes `brand` and `year`. Print '[brand] [year]'.",
+                "starter_code": "class Car:\n    def __init__(self, brand, year):\n        # Initialize\n\nmy_car = Car(\"Toyota\", 2022)\n# Print brand and year",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "Toyota 2022\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l6-p2",
+                "title": "Inheritance Test",
+                "difficulty": "easy",
+                "description": "Create a `Dog` class that inherits from `Animal`. `Animal` has a `speak()` method that prints 'Animal speaks'. `Dog` should override it to print 'Woof!'.",
+                "starter_code": "class Animal:\n    def speak(self):\n        print(\"Animal speaks\")\n\nclass Dog(Animal):\n    # Override speak\n\nd = Dog()\nd.speak()",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "Woof!\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l6-p3",
+                "title": "Private Balance",
+                "difficulty": "medium",
+                "description": "Create a `BankAccount` with a private variable `__balance`. Provide a method `get_balance()` to see it.",
+                "starter_code": "class BankAccount:\n    def __init__(self, bal):\n        # Set private balance\n    \n    def get_balance(self):\n        # Return it\n\nacc = BankAccount(500)\nprint(acc.get_balance())",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "500\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l6-p4",
+                "title": "Class vs Instance",
+                "difficulty": "medium",
+                "description": "Define a class `Student` with a class variable `school = 'Genspark'`. Create an instance and print its school name.",
+                "starter_code": "class Student:\n    school = 'Genspark'\n\ns1 = Student()\n# Print s1.school",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "Genspark\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l6-p5",
+                "title": "Circle Area Method",
+                "difficulty": "hard",
+                "description": "Create a class `Circle` with `radius`. Add a method `area()` that returns `3.14 * radius * radius`. Print area for radius 5.",
+                "starter_code": "class Circle:\n    def __init__(self, r):\n        self.radius = r\n    # Add area method\n\nc = Circle(5)\nprint(c.area())",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "78.5\n"
+                    }
+                ]
+            }
         ]
     },
     {
@@ -2494,6 +2904,77 @@
                     }
                 ]
             }
+        ],
+        "problems": [
+            {
+                "id": "py-l7-p1",
+                "title": "Squares List Comprehension",
+                "difficulty": "easy",
+                "description": "Use a list comprehension to create a list of squares of even numbers from 0 to 10. Print the list.",
+                "starter_code": "# Use list comprehension\n# [x*x for x in range(11) if x % 2 == 0]",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "[0, 4, 16, 36, 64, 100]\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l7-p2",
+                "title": "Safe Division",
+                "difficulty": "easy",
+                "description": "Write a function `divide(a, b)` that uses `try-except` to handle `ZeroDivisionError`. Print 'Error' if division by zero occurs, else print the result.",
+                "starter_code": "def divide(a, b):\n    try:\n        return a / b\n    except ZeroDivisionError:\n        return \"Error\"\n\nx = int(input())\ny = int(input())\nprint(divide(x, y))",
+                "test_cases": [
+                    {
+                        "stdin": "10\n0",
+                        "expected_output": "Error\n"
+                    },
+                    {
+                        "stdin": "10\n2",
+                        "expected_output": "5.0\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l7-p3",
+                "title": "Fibonacci Generator",
+                "difficulty": "medium",
+                "description": "Create a generator `fib(n)` that yields the first `n` Fibonacci numbers. Use a loop to print them.",
+                "starter_code": "def fib(n):\n    a, b = 0, 1\n    for _ in range(n):\n        yield a\n        a, b = b, a + b\n\n# Print first 5 fib numbers",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "0 1 1 2 3\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l7-p4",
+                "title": "Simple Decorator",
+                "difficulty": "hard",
+                "description": "Create a decorator `debug` that prints 'Calling function' before every call. Apply it to a function `hello()`.",
+                "starter_code": "def debug(func):\n    def wrapper():\n        print(\"Calling function\")\n        func()\n    return wrapper\n\n@debug\ndef hello():\n    print(\"Hello\")\n\nhello()",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "Calling function\nHello\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l7-p5",
+                "title": "With Statement Simulation",
+                "difficulty": "medium",
+                "description": "Use the `@contextmanager` decorator to create a context that prints 'Start' and 'End'.",
+                "starter_code": "from contextlib import contextmanager\n\n@contextmanager\ndef tag():\n    print(\"Start\")\n    yield\n    print(\"End\")\n\nwith tag():\n    print(\"Work\")",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "Start\nWork\nEnd\n"
+                    }
+                ]
+            }
         ]
     },
     {
@@ -2773,6 +3254,73 @@
                     }
                 ]
             }
+        ],
+        "problems": [
+            {
+                "id": "py-l8-p1",
+                "title": "API Status Check",
+                "difficulty": "easy",
+                "description": "Use the `requests` library to check the status code of 'https://api.github.com'. Print the status code.",
+                "starter_code": "import requests\n# Get response\n# Print status_code",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "200\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l8-p2",
+                "title": "NumPy Array Mean",
+                "difficulty": "medium",
+                "description": "Create a NumPy array from the list `[10, 20, 30, 40, 50]` and print its mean.",
+                "starter_code": "import numpy as np\nlst = [10, 20, 30, 40, 50]\n# Create array and print mean",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "30.0\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l8-p3",
+                "title": "JSON to Dict",
+                "difficulty": "easy",
+                "description": "Convert the JSON string `json_data = '{\"name\": \"Alice\", \"age\": 25}'` into a dictionary and print the name.",
+                "starter_code": "import json\njson_data = '{\"name\": \"Alice\", \"age\": 25}'\n# Parse and print name",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "Alice\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l8-p4",
+                "title": "Simple Web Scraper",
+                "difficulty": "medium",
+                "description": "Use BeautifulSoup to extract the text inside the `<h1>` tag from the string `<html><body><h1>Hello World</h1></body></html>`.",
+                "starter_code": "from bs4 import BeautifulSoup\nhtml = \"<html><body><h1>Hello World</h1></body></html>\"\n# Parse and print h1 text",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "Hello World\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l8-p5",
+                "title": "Price Alert Bot",
+                "difficulty": "hard",
+                "description": "Simulate a bot loop. Check if `price = 85` is less than `target = 90`. If true, print 'Buy Now' and break the loop.",
+                "starter_code": "price = 85\ntarget = 90\nwhile True:\n    # Check price and print alert\n    break",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "Buy Now\n"
+                    }
+                ]
+            }
         ]
     },
     {
@@ -3049,6 +3597,73 @@
                         ],
                         "correctAnswer": 1,
                         "explanation": "Technology is always evolving; the best engineers are the ones who stay curious and keep building."
+                    }
+                ]
+            }
+        ],
+        "problems": [
+            {
+                "id": "py-l9-p1",
+                "title": "Two Sum O(n)",
+                "difficulty": "hard",
+                "description": "Given a list of numbers and a target, find the indices of the two numbers that add up to the target. Use a dictionary for O(n) efficiency.",
+                "starter_code": "def two_sum(nums, target):\n    seen = {}\n    # Implement O(n) logic\n\nprint(two_sum([2, 7, 11, 15], 9))",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "[0, 1]\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l9-p2",
+                "title": "Frequency Counter",
+                "difficulty": "medium",
+                "description": "Read a string and return a dictionary where keys are characters and values are their counts.",
+                "starter_code": "s = \"hello\"\n# Create frequency dictionary and print it\n# Hint: {'h': 1, 'e': 1, 'l': 2, 'o': 1}",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "{'h': 1, 'e': 1, 'l': 2, 'o': 1}\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l9-p3",
+                "title": "PEP 8 Compliance",
+                "difficulty": "easy",
+                "description": "Rename the following to follow PEP 8: `MyVariable = 10`, `def MyFunction():`, `CONSTANT_VALUE = 5`.",
+                "starter_code": "# Correct the names\nmy_variable = 10\ndef my_function():\n    pass\nMY_CONSTANT = 5\nprint(\"Corrected\")",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "Corrected\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l9-p4",
+                "title": "Reverse Words",
+                "difficulty": "medium",
+                "description": "Read a sentence and print it with its words in reverse order. 'Python is fun' -> 'fun is Python'.",
+                "starter_code": "sentence = input()\n# Reverse words and print",
+                "test_cases": [
+                    {
+                        "stdin": "Python is fun",
+                        "expected_output": "fun is Python\n"
+                    }
+                ]
+            },
+            {
+                "id": "py-l9-p5",
+                "title": "Final Challenge",
+                "difficulty": "hard",
+                "description": "Use list comprehension to filter even numbers from 0-20, then use a function to return their sum.",
+                "starter_code": "nums = [x for x in range(21) if x % 2 == 0]\n# print sum(nums)",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "110\n"
                     }
                 ]
             }

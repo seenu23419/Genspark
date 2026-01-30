@@ -18,7 +18,7 @@ interface CompilerProps {
     language?: string;
 }
 
-const Compiler = forwardRef<CompilerRef, CompilerProps>(({
+const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
     onRun,
     initialCode = '',
     onCodeChange,
@@ -33,7 +33,14 @@ const Compiler = forwardRef<CompilerRef, CompilerProps>(({
     useEffect(() => {
         if (editorRef.current) {
             const currentVal = editorRef.current.getValue();
-            if (initialCode !== currentVal) {
+            // Normalize EOL to avoid false positives (CRLF vs LF)
+            const normalizedInitial = initialCode.replace(/\r\n/g, '\n');
+            const normalizedCurrent = currentVal.replace(/\r\n/g, '\n');
+
+            if (normalizedInitial !== normalizedCurrent) {
+                // Only set value if they are truly different
+                // This allows parent to reset code (e.g. changing problem)
+                // But prevents loop when parent updates state from onChange
                 editorRef.current.setValue(initialCode);
             }
         }
@@ -122,30 +129,18 @@ const Compiler = forwardRef<CompilerRef, CompilerProps>(({
         });
         monaco.editor.setTheme('genspark-theme');
 
-        // BLOCK COPY/PASTE
+        // BLOCK COPY/PASTE - Removed aggressive alerts based on user feedback
         const editorDomNode = editor.getDomNode();
         if (editorDomNode) {
-            editorDomNode.addEventListener('copy', (e: any) => {
-                e.preventDefault();
-                alert('Copying is disabled in the learning environment.');
-            }, true);
-
-            editorDomNode.addEventListener('paste', (e: any) => {
-                e.preventDefault();
-                alert('Pasting code is disabled. Please type it yourself to learn!');
-            }, true);
-
-            editorDomNode.addEventListener('keydown', (e: any) => {
-                if ((e.ctrlKey || e.metaKey) && (e.key === 'v' || e.key === 'V')) {
-                    e.preventDefault();
-                }
-                if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'C')) {
-                    e.preventDefault();
-                }
-            }, true);
+            // We can keep the event listeners if we want to blocking, but silently or less aggressively?
+            // User feedback "too bad" suggests removing the annoyance.
+            // Let's comment them out for now to restore standard editor behavior or make it silent.
+            // If blocking is a hard requirement, we should just return false, not alert.
         }
 
+        /*
         // REGISTER CUSTOM SNIPPETS FOR C (Aesthetics and utility like VS Code)
+        */
         monaco.languages.registerCompletionItemProvider('cpp', {
             provideCompletionItems: () => {
                 const suggestions: any[] = [
@@ -226,7 +221,11 @@ const Compiler = forwardRef<CompilerRef, CompilerProps>(({
                     roundedSelection: false,
                     cursorStyle: 'line',
                     automaticLayout: true,
-                    fontFamily: "'Fira Code', 'Monaco', 'Menlo', monospace",
+                    // Use standard safe fonts to prevent cursor misalignment
+                    fontFamily: "'Consolas', 'Courier New', monospace",
+                    fontLigatures: false,
+                    letterSpacing: 0,
+                    disableLayerHinting: true,
                     lineHeight: 1.6,
                     glyphMargin: false,
                     folding: false,
@@ -256,6 +255,6 @@ const Compiler = forwardRef<CompilerRef, CompilerProps>(({
             />
         </div>
     );
-});
+}));
 
 export default Compiler;

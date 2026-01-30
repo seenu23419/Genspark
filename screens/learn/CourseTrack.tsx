@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useCurriculum } from '../../contexts/useCurriculum';
 import { LANGUAGES } from '../../constants';
 import { Language, Lesson, Certificate } from '../../types';
+import { usePractice } from '../../contexts/PracticeContext';
 import { certificateService } from '../../services/certificateService';
 import { CertificateModal } from '../../components/CertificateModal';
 
@@ -106,19 +107,20 @@ const LEVEL_DESCRIPTIONS: { [key: string]: string } = {
 
   // C
   'Introduction': 'Begin your journey with the mother of all languages',
-  'Functions': 'Write reusable, modular C code',
-  'Arrays': 'Organize sequential data efficiently',
-  'Pointers': 'Master direct memory access and manipulation',
-  'Dynamic Memory': 'Allocate and manage heap memory at runtime',
-  'Structures & Unions': 'Create custom data types for complex objects',
-  'File Handling': 'Read from and write to permanent storage',
-  'Final C Certification': 'The definitive systems foundation milestone.',
+  'Flow Control': 'Master logic, loops, and decision making in C',
+  'Functions': 'Write reusable, modular, and optimized C code',
+  'Arrays': 'Organize and manipulate sequential data efficiently',
+  'Pointers': 'Master direct memory access and pointer arithmetic',
+  'Dynamic Memory Allocation': 'Allocate and manage heap memory at runtime',
+  'Structures & Files': 'Master custom data types and permanent storage',
+  'Advanced Concepts': 'Macros, Bitwise, and Command Line interaction',
 };
 
 const CourseTrack: React.FC = () => {
   const { langId } = useParams<{ langId: string }>();
   const { user } = useAuth();
   const { data: curriculumData, loading, error, fetchLanguageCurriculum } = useCurriculum();
+  const { getProblemStatus } = usePractice();
   const navigate = useNavigate();
 
   // 1. State declarations
@@ -135,19 +137,38 @@ const CourseTrack: React.FC = () => {
     return (curriculumData[language.id] || []) as any[];
   }, [language, curriculumData]);
 
-  // All levels are now unlocked for all languages
-  const isLevelUnlocked = (levelIndex: number): boolean => true;
+  // All levels are now unlocked for all languages, EXCEPT C which requires completion
+  const isLevelUnlocked = (levelIndex: number): boolean => {
+    if (langId !== 'c') return true;
+    if (levelIndex === 0) return true;
+
+    // Check if previous level is fully completed (lessons + problems)
+    const prevModule = modules[levelIndex - 1];
+    if (!prevModule) return true;
+
+    const lessons = prevModule.lessons || [];
+    const problems = prevModule.problems || [];
+
+    const allLessonsDone = lessons.every((l: Lesson) => completedLessonIds.includes(l.id));
+    const allProblemsDone = problems.every((p: any) => getProblemStatus(p.id) === 'COMPLETED');
+
+    return allLessonsDone && allProblemsDone;
+  };
 
   const currentLevelIndex = useMemo(() => {
     if (!modules || modules.length === 0) return 0;
     for (let mIdx = 0; mIdx < modules.length; mIdx++) {
       const module = modules[mIdx];
       const lessons = module?.lessons || [];
-      const hasIncomplete = lessons.some((l: Lesson) => l && !completedLessonIds.includes(l.id));
-      if (hasIncomplete) return mIdx;
+      const problems = module?.problems || [];
+
+      const hasIncompleteLesson = lessons.some((l: Lesson) => l && !completedLessonIds.includes(l.id));
+      const hasIncompleteProblem = langId === 'c' && problems.some((p: any) => getProblemStatus(p.id) !== 'COMPLETED');
+
+      if (hasIncompleteLesson || hasIncompleteProblem) return mIdx;
     }
     return 0;
-  }, [modules, completedLessonIds]);
+  }, [modules, completedLessonIds, langId, getProblemStatus]);
 
   // 3. Effects
   useEffect(() => {
@@ -209,7 +230,8 @@ const CourseTrack: React.FC = () => {
     }
   };
 
-  const handleLessonClick = (lesson: Lesson) => {
+  const handleLessonClick = (lesson: Lesson, levelIndex: number) => {
+    if (!isLevelUnlocked(levelIndex)) return;
     navigate(`/lesson/${lesson.id}`);
   };
 
@@ -312,9 +334,20 @@ const CourseTrack: React.FC = () => {
                           return LEVEL_DESCRIPTIONS[cleanedTitle] || `${lessons.length} lessons`;
                         })()}
                       </p>
+                      {module.problems && module.problems.length > 0 && (
+                        <div className="flex items-center gap-1.5 mt-2">
+                          <div className="px-1.5 py-0.5 rounded bg-indigo-500/10 border border-indigo-500/20 flex items-center gap-1">
+                            <Target size={10} className="text-indigo-400" />
+                            <span className="text-[9px] text-indigo-300 font-bold uppercase tracking-tight">
+                              {module.problems.filter((p: any) => getProblemStatus(p.id) === 'COMPLETED').length}/{module.problems.length} Assignments
+                            </span>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="flex items-center gap-3 shrink-0 mt-1">
+                    {!isLevelUnlocked(levelIndex) && <Lock size={16} className="text-slate-600" />}
                     <span className="text-xs font-bold text-slate-500">{completedInLevel}/{lessons.length}</span>
                   </div>
                 </button>
@@ -328,22 +361,85 @@ const CourseTrack: React.FC = () => {
                       return (
                         <button
                           key={lesson.id}
-                          onClick={() => handleLessonClick(lesson)}
+                          disabled={!isLevelUnlocked(levelIndex)}
+                          onClick={() => handleLessonClick(lesson, levelIndex)}
                           className={`w-full flex items-center justify-between p-4 rounded-xl transition-all ${isFirstIncomplete ? 'bg-indigo-600/10 border border-indigo-500/30' : 'hover:bg-slate-800/30'
-                            }`}
+                            } ${!isLevelUnlocked(levelIndex) ? 'opacity-50 grayscale cursor-not-allowed' : ''}`}
                         >
                           <div className="flex items-center gap-4 min-w-0">
                             <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${isCompleted ? 'bg-emerald-500/10 text-emerald-400' : isFirstIncomplete ? 'bg-indigo-500/20 text-indigo-400' : 'bg-slate-800 text-slate-500'}`}>
-                              {isCompleted ? <CheckCircle size={20} /> : <BookOpen size={20} />}
+                              {!isLevelUnlocked(levelIndex) ? <Lock size={20} /> : isCompleted ? <CheckCircle size={20} /> : <BookOpen size={20} />}
                             </div>
                             <div className="text-left font-medium min-w-0">
                               <p className={`text-sm md:text-base truncate ${isCompleted ? 'text-slate-400' : 'text-white'}`}>{lesson.title}</p>
                             </div>
                           </div>
-                          {isFirstIncomplete && <Sparkles size={16} className="text-indigo-400 shrink-0" />}
+                          {isFirstIncomplete && isLevelUnlocked(levelIndex) && <Sparkles size={16} className="text-indigo-400 shrink-0" />}
                         </button>
                       );
                     })}
+
+                    {/* Level Assignments Section */}
+                    {module.problems && module.problems.length > 0 && (
+                      <div className="mt-10 mb-6">
+                        <div className="flex items-center gap-3 px-2 mb-6">
+                          <div className="h-[1px] flex-1 bg-slate-800/60" />
+                          <div className="flex items-center gap-2">
+                            <Award size={14} className="text-indigo-400" />
+                            <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Assignment Phase</span>
+                          </div>
+                          <div className="h-[1px] flex-1 bg-slate-800/60" />
+                        </div>
+
+                        <div className="space-y-3">
+                          {module.problems.map((prob: any) => {
+                            const pStatus = getProblemStatus(prob.id);
+                            const isCompleted = pStatus === 'COMPLETED';
+                            const isUnlocked = levelIndex <= currentLevelIndex;
+
+                            return (
+                              <button
+                                key={prob.id}
+                                disabled={!isUnlocked}
+                                onClick={() => navigate(`/practice/problem/${prob.id}`)}
+                                className={`w-full group flex items-center justify-between p-5 rounded-2xl transition-all border ${isCompleted
+                                  ? 'bg-emerald-500/5 border-emerald-500/20 hover:bg-emerald-500/10'
+                                  : isUnlocked
+                                    ? 'bg-indigo-600/5 border-indigo-500/20 hover:bg-indigo-600/10 hover:border-indigo-500/40'
+                                    : 'bg-slate-900/40 border-slate-800/50 opacity-50 grayscale'
+                                  }`}
+                              >
+                                <div className="flex items-center gap-4 min-w-0">
+                                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${isCompleted
+                                    ? 'bg-emerald-500/20 text-emerald-400'
+                                    : isUnlocked
+                                      ? 'bg-indigo-500/20 text-indigo-400'
+                                      : 'bg-slate-800 text-slate-600'
+                                    }`}>
+                                    {isCompleted ? <CheckCircle size={24} /> : isUnlocked ? <Target size={24} /> : <Lock size={24} />}
+                                  </div>
+                                  <div className="text-left overflow-hidden">
+                                    <div className="flex items-center gap-2 mb-1">
+                                      <h4 className={`font-bold text-sm ${isUnlocked ? 'text-white' : 'text-slate-500'}`}>{prob.title}</h4>
+                                      <span className={`text-[8px] px-1.5 py-0.5 rounded-full font-black uppercase ${prob.difficulty === 'easy' ? 'bg-emerald-500/10 text-emerald-500' :
+                                        prob.difficulty === 'medium' ? 'bg-amber-500/10 text-amber-500' :
+                                          'bg-rose-500/10 text-rose-500'
+                                        }`}>{prob.difficulty}</span>
+                                    </div>
+                                    <p className="text-[10px] text-slate-500 font-medium">Coding Assignment • Required to advance</p>
+                                  </div>
+                                </div>
+                                {isUnlocked && !isCompleted && (
+                                  <div className="flex items-center gap-2 text-indigo-400 text-[10px] font-black uppercase tracking-widest group-hover:translate-x-1 transition-transform">
+                                    Start Assignment <Play size={10} fill="currentColor" />
+                                  </div>
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
               </section>

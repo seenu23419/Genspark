@@ -4,21 +4,66 @@
   "color": "from-sky-500 to-blue-600",
   "problems": [
     {
-      "id": "strings-401",
+      "id": "strings-1",
       "topicId": "strings",
-      "title": "String Manip 1",
-      "description": "Manipulate text string 1 (reverse, count, etc).",
+      "title": "String Length",
+      "description": "Read a string and print its length.\n\nInput: GenSpark\nOutput: 8",
+      "difficulty": "easy",
+      "estimatedTime": 2,
+      "concept": "Text Processing",
+      "explanation": "In C, use `strlen()` from `<string.h>`. In Python, use the `len()` function.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[100];\n    scanf(\"%s\", s);\n    // Print length\n    return 0;\n}",
+        "python": "s = input()\nprint(len(s))"
+      },
+      "test_cases": [
+        {
+          "stdin": "GenSpark",
+          "expected_output": "8"
+        }
+      ]
+    },
+    {
+      "id": "strings-2",
+      "topicId": "strings",
+      "title": "Vowel Count",
+      "description": "Count the number of vowels (a, e, i, o, u) in a given string.\n\nInput: hello\nOutput: 2",
       "difficulty": "medium",
       "estimatedTime": 5,
       "concept": "Text Processing",
+      "explanation": "Iterate through the string and check if each character is one of 'a', 'e', 'i', 'o', or 'u' (both lowercase and uppercase).",
       "starter_codes": {
-        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
-        "python": "s = \"text\""
+        "c": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main() {\n    char s[100];\n    // Read string and count vowels\n    return 0;\n}",
+        "python": "s = input().lower()\nvowels = \"aeiou\"\nprint(sum(1 for char in s if char in vowels))"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "Programming",
+          "expected_output": "3"
+        }
+      ]
+    },
+    {
+      "id": "strings-3",
+      "topicId": "strings",
+      "title": "Palindrome Check",
+      "description": "Output 'Yes' if the string is a palindrome, else 'No'.\n\nInput: madam\nOutput: Yes",
+      "difficulty": "hard",
+      "estimatedTime": 7,
+      "concept": "Text Processing",
+      "explanation": "A palindrome reads the same forwards and backwards. Compare characters from both ends moving towards the middle.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[100];\n    // Read string and check palindrome\n    return 0;\n}",
+        "python": "s = input()\nif s == s[::-1]:\n    print(\"Yes\")\nelse:\n    print(\"No\")"
+      },
+      "test_cases": [
+        {
+          "stdin": "racecar",
+          "expected_output": "Yes"
+        },
+        {
+          "stdin": "hello",
+          "expected_output": "No"
         }
       ]
     },
@@ -34,10 +79,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -53,10 +98,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -72,10 +117,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -91,10 +136,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -110,10 +155,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -129,10 +174,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -148,10 +193,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -167,10 +212,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -186,10 +231,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -205,10 +250,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -224,10 +269,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -243,10 +288,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -262,10 +307,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -281,10 +326,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -300,10 +345,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -319,10 +364,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -338,10 +383,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -357,10 +402,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -376,10 +421,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -395,10 +440,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -414,10 +459,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -433,10 +478,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -452,10 +497,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -471,10 +516,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -490,10 +535,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -509,10 +554,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -528,10 +573,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -547,10 +592,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -566,10 +611,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -585,10 +630,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -604,10 +649,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -623,10 +668,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -642,10 +687,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -661,10 +706,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -680,10 +725,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -699,10 +744,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -718,10 +763,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -737,10 +782,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -756,10 +801,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -775,10 +820,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -794,10 +839,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -813,10 +858,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -832,10 +877,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -851,10 +896,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -870,10 +915,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -889,10 +934,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -908,10 +953,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -927,10 +972,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -946,10 +991,10 @@
         "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[] = \"text\";\n    return 0;\n}",
         "python": "s = \"text\""
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     }

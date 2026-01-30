@@ -14,5 +14,21 @@
   {
     "id": "arrays",
     "title": "Arrays & Collections"
+  },
+  {
+    "id": "functions",
+    "title": "Functions & Modularity"
+  },
+  {
+    "id": "patterns",
+    "title": "Pattern Printing"
+  },
+  {
+    "id": "strings",
+    "title": "Strings & Text"
+  },
+  {
+    "id": "math",
+    "title": "Math & Number Theory"
   }
 ]

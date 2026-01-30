@@ -6,6 +6,7 @@ import { PracticeProblem } from '../../data/practiceProblems';
 import { usePracticeProgress } from '../../hooks/usePracticeProgress';
 
 import { usePractice } from '../../contexts/PracticeContext';
+import { useCurriculum } from '../../contexts/useCurriculum';
 import { Loader2 } from 'lucide-react';
 
 const CodingProblemWrapper: React.FC = () => {
@@ -14,14 +15,41 @@ const CodingProblemWrapper: React.FC = () => {
     const { topics, loading, progress, getProblemStatus, refreshProgress } = usePractice();
 
     // Find the problem in the JSON content
+    const { data: curriculumData } = useCurriculum();
+
+    // Find the problem in the JSON content
     const problem = useMemo(() => {
-        if (!problemId || !topics) return null;
-        for (const topic of topics) {
-            const found = topic.problems.find(p => p.id === problemId);
-            if (found) return found;
+        if (!problemId) return null;
+
+        // 1. Try Practice Topics
+        if (topics) {
+            for (const topic of topics) {
+                const found = topic.problems.find(p => p.id === problemId);
+                if (found) return found;
+            }
         }
+
+        // 2. Try Curriculum Data
+        if (curriculumData) {
+            for (const langId in curriculumData) {
+                const modules = curriculumData[langId];
+                for (const module of modules) {
+                    if (module.problems) {
+                        const found = module.problems.find((p: any) => p.id === problemId);
+                        if (found) {
+                            // Adapt standard curriculum problem to PracticeProblem shape
+                            return {
+                                ...found,
+                                starter_codes: found.starter_codes || { [langId]: found.starter_code }
+                            };
+                        }
+                    }
+                }
+            }
+        }
+
         return null;
-    }, [problemId, topics]);
+    }, [problemId, topics, curriculumData]);
 
     // Find next problem for adaptive flow
     const getNextProblem = (currentId: string) => {

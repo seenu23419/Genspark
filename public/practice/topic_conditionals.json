@@ -6,12 +6,14 @@
       "id": "cond-1",
       "topicId": "conditionals",
       "title": "Even or Odd",
-      "description": "Determine if a number is even or odd.",
+      "description": "Determine if a number N is even or odd.",
       "difficulty": "easy",
       "estimatedTime": 2,
       "concept": "Selection",
+      "explanation": "A number is even if it is divisible by 2 (N % 2 == 0), otherwise it is odd.",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    int n; scanf(\"%d\", &n);\n    if(n%2==0) printf(\"Even\"); else printf(\"Odd\");\n    return 0;\n}"
+        "c": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    // Check if even or odd\n    return 0;\n}",
+        "python": "n = int(input())\nif n % 2 == 0:\n    print(\"Even\")\nelse:\n    print(\"Odd\")"
       },
       "test_cases": [
         {
@@ -21,6 +23,70 @@
         {
           "stdin": "7",
           "expected_output": "Odd"
+        }
+      ]
+    },
+    {
+      "id": "cond-2",
+      "topicId": "conditionals",
+      "title": "Largest of Three",
+      "description": "Take three space-separated integers and print the largest one.",
+      "difficulty": "easy",
+      "estimatedTime": 4,
+      "concept": "Comparison",
+      "explanation": "Compare the three numbers using nested if-statements or logical AND operators: `if (a >= b && a >= c)`. In Python, `max(a, b, c)` is a quick way.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int a, b, c;\n    // Read a, b, c\n    // Find and print max\n    return 0;\n}",
+        "python": "a, b, c = map(int, input().split())\nprint(max(a, b, c))"
+      },
+      "test_cases": [
+        {
+          "stdin": "10 55 23",
+          "expected_output": "55"
+        }
+      ]
+    },
+    {
+      "id": "cond-3",
+      "topicId": "conditionals",
+      "title": "Grading System",
+      "description": "Read marks M (0-100) and print grade: 90+ 'A', 80-89 'B', 70-79 'C', else 'F'.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Nested If",
+      "explanation": "Use `if-else if-else` structure to check marks against different thresholds sequentially.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int m;\n    // Read m\n    // Print grade letter\n    return 0;\n}",
+        "python": "m = int(input())\nif m >= 90: print('A')\nelif m >= 80: print('B')\nelif m >= 70: print('C')\nelse: print('F')"
+      },
+      "test_cases": [
+        {
+          "stdin": "85",
+          "expected_output": "B"
+        }
+      ]
+    },
+    {
+      "id": "cond-4",
+      "topicId": "conditionals",
+      "title": "Leap Year",
+      "description": "Check if a year Y is a leap year. Output 'Leap' or 'Not Leap'.",
+      "difficulty": "hard",
+      "estimatedTime": 6,
+      "concept": "Complex Logic",
+      "explanation": "A year is a leap year if it's divisible by 400 OR (divisible by 4 AND not divisible by 100).",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int y;\n    // Read y\n    // Check leap year logic\n    return 0;\n}",
+        "python": "y = int(input())\nif (y % 400 == 0) or (y % 4 == 0 and y % 100 != 0):\n    print(\"Leap\")\nelse:\n    print(\"Not Leap\")"
+      },
+      "test_cases": [
+        {
+          "stdin": "2000",
+          "expected_output": "Leap"
+        },
+        {
+          "stdin": "1900",
+          "expected_output": "Not Leap"
         }
       ]
     }

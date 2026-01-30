@@ -130,6 +130,7 @@ export interface LessonModule {
   title: string;
   subtitle?: string;
   lessons: Lesson[];
+  problems?: any[]; // For level assignments
 }
 
 export interface Challenge {

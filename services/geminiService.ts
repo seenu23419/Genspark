@@ -45,8 +45,10 @@ export class GenSparkAIService {
   }
 
   async *generateChatStream(message: string, isPro: boolean = false, history: any[] = [], attachment?: MediaPart) {
+    console.log('[GenSpark AI] generateChatStream called');
     if (!this.geminiKey) this.geminiKey = getApiKey('gemini');
     if (!this.openaiKey) this.openaiKey = getApiKey('openai');
+    console.log('[GenSpark AI] Keys available - OpenAI:', !!this.openaiKey, 'Gemini:', !!this.geminiKey);
 
     // OPTIMIZATION: Limit context to last 10 messages (5 turns) for performance and cost
     const recentHistory = history.slice(-10);
@@ -72,6 +74,7 @@ export class GenSparkAIService {
         yield `⚠️ **System Note**: ${e.message || "I encountered an issue connecting to the AI brain. Please check your internet or try again."}`;
       }
     } else {
+      console.log('[GenSpark AI] No API keys available');
       // Offline mode message
       const isDev = (import.meta as any).env.DEV;
       if (isDev) {
@@ -153,14 +156,16 @@ export class GenSparkAIService {
   }
 
   private async *generateGeminiStream(message: string, isPro: boolean, history: any[], attachment?: MediaPart) {
-    // Using exact model names that work with v1beta API
-    const models = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro'];
+    // Using v1beta API - updated for Gemini 2.0/2.5 support
+    const models = ['gemini-2.0-flash', 'gemini-2.5-flash', 'gemini-flash-latest'];
     const systemPrompt = this.getSystemPrompt(isPro);
     let lastError = '';
 
     for (const modelName of models) {
       try {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:streamGenerateContent?alt=sse&key=${this.geminiKey}`;
+        console.log('[Gemini API] Querying URL:', url);
+        console.log('[Gemini API] Trying model:', modelName);
 
         let contents = [];
         if (history.length === 0) {
@@ -199,6 +204,7 @@ export class GenSparkAIService {
         if (!response.ok) {
           const err = await response.json().catch(() => ({}));
           const errorMsg = err.error?.message || response.statusText;
+          console.error(`[Gemini API] Error with model ${modelName}:`, errorMsg);
 
           // Short-circuit: If API key is invalid, don't keep trying other models
           if (response.status === 400 && errorMsg.toLowerCase().includes('key')) {
@@ -243,6 +249,7 @@ export class GenSparkAIService {
         return;
       } catch (err: any) {
         lastError = err.message;
+        console.warn(`[Gemini API] Model ${modelName} failed.`, err.message);
         if (modelName === models[models.length - 1]) throw err;
       }
     }

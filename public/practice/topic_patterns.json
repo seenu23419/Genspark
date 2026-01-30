@@ -4,21 +4,62 @@
   "color": "from-purple-500 to-pink-500",
   "problems": [
     {
-      "id": "patterns-181",
+      "id": "patterns-1",
       "topicId": "patterns",
-      "title": "Stars Triangle 1",
-      "description": "Print a stars triangle pattern of size 4. careful with spacing!",
+      "title": "Right Angled Triangle",
+      "description": "Print a right-angled triangle of stars for size N.\n\nInput: 3\nOutput:\n*\n**\n***",
       "difficulty": "easy",
       "estimatedTime": 5,
       "concept": "Nested Loops",
+      "explanation": "Use two nested loops. The outer loop runs from 1 to N (rows). The inner loop runs from 1 to the current row number (columns) and prints a star.",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Triangle\n    return 0;\n}",
-        "python": "n = 4\n# Print Triangle"
+        "c": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    // Outer loop for rows\n    // Inner loop for stars\n    return 0;\n}",
+        "python": "n = int(input())\nfor i in range(1, n + 1):\n    print('*' * i)"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "3",
+          "expected_output": "*\n**\n***\n"
+        }
+      ]
+    },
+    {
+      "id": "patterns-2",
+      "topicId": "patterns",
+      "title": "Square Pattern",
+      "description": "Print an N x N square of stars.\n\nInput: 3\nOutput:\n***\n***\n***",
+      "difficulty": "easy",
+      "estimatedTime": 4,
+      "concept": "Nested Loops",
+      "explanation": "Use two nested loops. Both the outer and inner loops run from 1 to N.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    // Print N x N square\n    return 0;\n}",
+        "python": "n = int(input())\nfor i in range(n):\n    print('*' * n)"
+      },
+      "test_cases": [
+        {
+          "stdin": "3",
+          "expected_output": "***\n***\n***\n"
+        }
+      ]
+    },
+    {
+      "id": "patterns-3",
+      "topicId": "patterns",
+      "title": "Inverted Triangle",
+      "description": "Print an inverted triangle of stars for size N.\n\nInput: 3\nOutput:\n***\n**\n*",
+      "difficulty": "medium",
+      "estimatedTime": 6,
+      "concept": "Nested Loops",
+      "explanation": "The outer loop runs from N down to 1. The inner loop prints stars equal to the current row number.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    // Print inverted triangle\n    return 0;\n}",
+        "python": "n = int(input())\nfor i in range(n, 0, -1):\n    print('*' * i)"
+      },
+      "test_cases": [
+        {
+          "stdin": "3",
+          "expected_output": "***\n**\n*\n"
         }
       ]
     },
@@ -34,10 +75,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 5\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -53,10 +94,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 6\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -72,10 +113,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 7\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -91,10 +132,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 8\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -110,10 +151,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Square\n    return 0;\n}",
         "python": "n = 4\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -129,10 +170,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Square\n    return 0;\n}",
         "python": "n = 5\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -148,10 +189,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Square\n    return 0;\n}",
         "python": "n = 6\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -167,10 +208,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Square\n    return 0;\n}",
         "python": "n = 7\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -186,10 +227,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Square\n    return 0;\n}",
         "python": "n = 8\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -205,10 +246,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 4\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -224,10 +265,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 5\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -243,10 +284,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 6\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -262,10 +303,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 7\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -281,10 +322,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 8\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -300,10 +341,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 4\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -319,10 +360,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 5\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -338,10 +379,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 6\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -357,10 +398,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 7\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -376,10 +417,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 8\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -395,10 +436,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 4\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -414,10 +455,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 5\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -433,10 +474,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 6\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -452,10 +493,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 7\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -471,10 +512,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 8\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -490,10 +531,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 4\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -509,10 +550,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 5\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -528,10 +569,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 6\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -547,10 +588,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 7\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -566,10 +607,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 8\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -585,10 +626,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 4\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -604,10 +645,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 5\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -623,10 +664,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 6\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -642,10 +683,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 7\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -661,10 +702,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 8\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -680,10 +721,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Square\n    return 0;\n}",
         "python": "n = 4\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -699,10 +740,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Square\n    return 0;\n}",
         "python": "n = 5\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -718,10 +759,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Square\n    return 0;\n}",
         "python": "n = 6\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -737,10 +778,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Square\n    return 0;\n}",
         "python": "n = 7\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -756,10 +797,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Square\n    return 0;\n}",
         "python": "n = 8\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -775,10 +816,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 4\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -794,10 +835,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 5\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -813,10 +854,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 6\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -832,10 +873,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 7\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -851,10 +892,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 8\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -870,10 +911,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 4\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -889,10 +930,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 5\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -908,10 +949,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 6\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -927,10 +968,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 7\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -946,10 +987,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 8\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -965,10 +1006,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 4\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -984,10 +1025,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 5\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1003,10 +1044,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 6\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1022,10 +1063,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 7\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1041,10 +1082,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 8\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1060,10 +1101,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 4\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1079,10 +1120,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 5\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1098,10 +1139,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 6\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1117,10 +1158,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 7\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1136,10 +1177,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 8\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1155,10 +1196,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 4\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1174,10 +1215,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 5\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1193,10 +1234,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 6\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1212,10 +1253,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 7\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1231,10 +1272,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 8\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1250,10 +1291,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Square\n    return 0;\n}",
         "python": "n = 4\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1269,10 +1310,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Square\n    return 0;\n}",
         "python": "n = 5\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1288,10 +1329,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Square\n    return 0;\n}",
         "python": "n = 6\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1307,10 +1348,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Square\n    return 0;\n}",
         "python": "n = 7\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1326,10 +1367,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Square\n    return 0;\n}",
         "python": "n = 8\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1345,10 +1386,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 4\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1364,10 +1405,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 5\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1383,10 +1424,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 6\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1402,10 +1443,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 7\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1421,10 +1462,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 8\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1440,10 +1481,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 4\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1459,10 +1500,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 5\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1478,10 +1519,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 6\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1497,10 +1538,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 7\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1516,10 +1557,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 8\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1535,10 +1576,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 4\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1554,10 +1595,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 5\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1573,10 +1614,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 6\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1592,10 +1633,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 7\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1611,10 +1652,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 8\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1630,10 +1671,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 4\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1649,10 +1690,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 5\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1668,10 +1709,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 6\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1687,10 +1728,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 7\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1706,10 +1747,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 8\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1725,10 +1766,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 4\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1744,10 +1785,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 5\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1763,10 +1804,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 6\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1782,10 +1823,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 7\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1801,10 +1842,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Triangle\n    return 0;\n}",
         "python": "n = 8\n# Print Triangle"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1820,10 +1861,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Square\n    return 0;\n}",
         "python": "n = 4\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1839,10 +1880,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Square\n    return 0;\n}",
         "python": "n = 5\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1858,10 +1899,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Square\n    return 0;\n}",
         "python": "n = 6\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1877,10 +1918,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Square\n    return 0;\n}",
         "python": "n = 7\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1896,10 +1937,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Square\n    return 0;\n}",
         "python": "n = 8\n# Print Square"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1915,10 +1956,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 4\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1934,10 +1975,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 5\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1953,10 +1994,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 6\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1972,10 +2013,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 7\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -1991,10 +2032,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Pyramid\n    return 0;\n}",
         "python": "n = 8\n# Print Pyramid"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -2010,10 +2051,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 4\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -2029,10 +2070,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 5\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -2048,10 +2089,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 6\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -2067,10 +2108,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 7\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -2086,10 +2127,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Diamond\n    return 0;\n}",
         "python": "n = 8\n# Print Diamond"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -2105,10 +2146,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 4\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -2124,10 +2165,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 5\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -2143,10 +2184,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 6\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -2162,10 +2203,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 7\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -2181,10 +2222,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Butterfly\n    return 0;\n}",
         "python": "n = 8\n# Print Butterfly"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -2200,10 +2241,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 4;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 4\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -2219,10 +2260,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 5;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 5\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -2238,10 +2279,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 6;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 6\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -2257,10 +2298,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 7;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 7\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     },
@@ -2276,10 +2317,10 @@
         "c": "#include <stdio.h>\n\nint main() {\n    int n = 8;\n    // Print Hourglass\n    return 0;\n}",
         "python": "n = 8\n# Print Hourglass"
       },
-      "testCases": [
+      "test_cases": [
         {
-          "input": "10",
-          "output": "Sample Output"
+          "stdin": "10",
+          "expected_output": "Sample Output"
         }
       ]
     }

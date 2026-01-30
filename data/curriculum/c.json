@@ -411,6 +411,77 @@
                     }
                 ]
             }
+        ],
+        "problems": [
+            {
+                "id": "c-l1-p1",
+                "title": "Hello GenSpark",
+                "difficulty": "easy",
+                "description": "Write a C program that prints 'Hello GenSpark' followed by a newline.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    printf(\"Hello GenSpark\\n\");\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "Hello GenSpark\n"
+                    }
+                ]
+            },
+            {
+                "id": "c-l1-p2",
+                "title": "Sum of Two Numbers",
+                "difficulty": "easy",
+                "description": "Write a program that takes two integers as input and prints their sum.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    int a, b;\n    // Input two numbers using scanf\n    // Print the sum\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "10 20",
+                        "expected_output": "30"
+                    },
+                    {
+                        "stdin": "5 -3",
+                        "expected_output": "2"
+                    }
+                ]
+            },
+            {
+                "id": "c-l1-p3",
+                "title": "Circle Area",
+                "difficulty": "easy",
+                "description": "Calculate the area of a circle given its radius. Use 3.14 for PI. Area = PI * r * r. Print result with 2 decimal places.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    float radius, area;\n    // Read radius\n    // Calculate and print area\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "5",
+                        "expected_output": "78.50"
+                    }
+                ]
+            },
+            {
+                "id": "c-l1-p4",
+                "title": "Celsius to Fahrenheit",
+                "difficulty": "easy",
+                "description": "Convert temperature from Celsius to Fahrenheit. Formula: F = (C * 9/5) + 32. Print result with 2 decimal places.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    float celsius, fahrenheit;\n    // Read celsius\n    // Calculate and print fahrenheit\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "37",
+                        "expected_output": "98.60"
+                    }
+                ]
+            },
+            {
+                "id": "c-l1-p5",
+                "title": "Print ASCII Value",
+                "difficulty": "easy",
+                "description": "Read a character from the user and print its ASCII value.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    char ch;\n    // Read character\n    // Print ASCII value\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "A",
+                        "expected_output": "65"
+                    }
+                ]
+            }
         ]
     },
     {
@@ -822,6 +893,85 @@
                         ],
                         "correctAnswer": 2,
                         "explanation": "Because i++ is skipped when i=3, the value of i stays 3 forever, and the condition 3 <= 5 remains true, causing an infinite loop."
+                    }
+                ]
+            }
+        ],
+        "problems": [
+            {
+                "id": "c-l2-p1",
+                "title": "Even or Odd",
+                "difficulty": "easy",
+                "description": "Write a C program that takes an integer as input and prints 'Even' if it is even and 'Odd' otherwise.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    int n;\n    // Read integer\n    // Check if even or odd\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "4",
+                        "expected_output": "Even"
+                    },
+                    {
+                        "stdin": "7",
+                        "expected_output": "Odd"
+                    }
+                ]
+            },
+            {
+                "id": "c-l2-p2",
+                "title": "Largest of Three",
+                "difficulty": "easy",
+                "description": "Take three integers as input and print the largest among them.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    int a, b, c;\n    // Read three integers\n    // Print the largest\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "10 25 15",
+                        "expected_output": "25"
+                    }
+                ]
+            },
+            {
+                "id": "c-l2-p3",
+                "title": "Factorial of a Number",
+                "difficulty": "medium",
+                "description": "Calculate the factorial of a given non-negative integer using a loop.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    int n;\n    unsigned long long fact = 1;\n    // Read n\n    // Calculate factorial and print it\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "5",
+                        "expected_output": "120"
+                    },
+                    {
+                        "stdin": "0",
+                        "expected_output": "1"
+                    }
+                ]
+            },
+            {
+                "id": "c-l2-p4",
+                "title": "Multiplication Table",
+                "difficulty": "easy",
+                "description": "Print the multiplication table of a given number up to 10. Format: 'n x i = result'",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    int n;\n    // Read n\n    // Print table using a loop\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "5",
+                        "expected_output": "5 x 1 = 5\n5 x 2 = 10\n5 x 3 = 15\n5 x 4 = 20\n5 x 5 = 25\n5 x 6 = 30\n5 x 7 = 35\n5 x 8 = 40\n5 x 9 = 45\n5 x 10 = 50\n"
+                    }
+                ]
+            },
+            {
+                "id": "c-l2-p5",
+                "title": "Reverse a Number",
+                "difficulty": "medium",
+                "description": "Take an integer as input and print its reverse. For example, if input is 123, output should be 321.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    int n, rev = 0;\n    // Read n\n    // Reverse the digits\n    // Print reversed value\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "123",
+                        "expected_output": "321"
+                    },
+                    {
+                        "stdin": "400",
+                        "expected_output": "4"
                     }
                 ]
             }
@@ -1239,6 +1389,77 @@
                     }
                 ]
             }
+        ],
+        "problems": [
+            {
+                "id": "c-l3-p1",
+                "title": "Sum Function",
+                "difficulty": "easy",
+                "description": "Write a function `int add(int a, int b)` that returns the sum of two numbers. Call this function from `main` with inputs from the user.",
+                "starter_code": "#include <stdio.h>\n\n// Declare function\n\nint main() {\n    int x, y;\n    // Read x and y\n    // Call add and print result\n    return 0;\n}\n\n// Define function",
+                "test_cases": [
+                    {
+                        "stdin": "5 7",
+                        "expected_output": "12"
+                    }
+                ]
+            },
+            {
+                "id": "c-l3-p2",
+                "title": "Square of a Number",
+                "difficulty": "easy",
+                "description": "Write a function `float square(float n)` that returns the square of a number. Print the result with 2 decimal places.",
+                "starter_code": "#include <stdio.h>\n\n// Declare square function\n\nint main() {\n    float num;\n    // Read num\n    // Call square and print result\n    return 0;\n}\n\n// Define function",
+                "test_cases": [
+                    {
+                        "stdin": "4",
+                        "expected_output": "16.00"
+                    }
+                ]
+            },
+            {
+                "id": "c-l3-p3",
+                "title": "Check Prime Number",
+                "difficulty": "medium",
+                "description": "Write a function `int isPrime(int n)` that returns 1 if a number is prime and 0 otherwise. Use this in `main` to print 'Prime' or 'Not Prime'.",
+                "starter_code": "#include <stdio.h>\n\n// Declare isPrime\n\nint main() {\n    int n;\n    // Read n\n    // Call isPrime and print 'Prime' or 'Not Prime'\n    return 0;\n}\n\n// Define function",
+                "test_cases": [
+                    {
+                        "stdin": "7",
+                        "expected_output": "Prime"
+                    },
+                    {
+                        "stdin": "10",
+                        "expected_output": "Not Prime"
+                    }
+                ]
+            },
+            {
+                "id": "c-l3-p4",
+                "title": "Power Function",
+                "difficulty": "medium",
+                "description": "Write a function `long long power(int base, int exp)` that calculates `base` raised to the power `exp` using a loop.",
+                "starter_code": "#include <stdio.h>\n\n// Declare power function\n\nint main() {\n    int b, e;\n    // Read base and exponent\n    // Print result\n    return 0;\n}\n\n// Define function",
+                "test_cases": [
+                    {
+                        "stdin": "2 3",
+                        "expected_output": "8"
+                    }
+                ]
+            },
+            {
+                "id": "c-l3-p5",
+                "title": "Recursive Fibonacci",
+                "difficulty": "hard",
+                "description": "Write a recursive function `int fib(int n)` that returns the nth Fibonacci number (starting from 0, 1, 1, 2, 3...).",
+                "starter_code": "#include <stdio.h>\n\n// Recursive function fib\n\nint main() {\n    int n;\n    // Read n\n    // Print nth fibonacci number\n    return 0;\n}\n\n// Define function",
+                "test_cases": [
+                    {
+                        "stdin": "6",
+                        "expected_output": "8"
+                    }
+                ]
+            }
         ]
     },
     {
@@ -1585,6 +1806,81 @@
                     }
                 ]
             }
+        ],
+        "problems": [
+            {
+                "id": "c-l4-p1",
+                "title": "Array Sum",
+                "difficulty": "easy",
+                "description": "Read 5 integers into an array and print their sum.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    int arr[5];\n    // Read 5 elements\n    // Calculate and print sum\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "1 2 3 4 5",
+                        "expected_output": "15"
+                    }
+                ]
+            },
+            {
+                "id": "c-l4-p2",
+                "title": "Find Maximum in Array",
+                "difficulty": "easy",
+                "description": "Read size `n` and then `n` elements into an array. Find and print the maximum element.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    int n;\n    // Read n\n    // Read array elements\n    // Find max and print\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "5\n10 20 5 40 30",
+                        "expected_output": "40"
+                    }
+                ]
+            },
+            {
+                "id": "c-l4-p3",
+                "title": "Linear Search",
+                "difficulty": "easy",
+                "description": "Search for a number `x` in an array of size `n`. Print the index if found, else print -1.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    int n, x;\n    // Read n\n    // Read array\n    // Read x\n    // Search and print index or -1\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "5\n1 2 3 4 5\n4",
+                        "expected_output": "3"
+                    },
+                    {
+                        "stdin": "3\n10 20 30\n50",
+                        "expected_output": "-1"
+                    }
+                ]
+            },
+            {
+                "id": "c-l4-p4",
+                "title": "String Palindrome",
+                "difficulty": "medium",
+                "description": "Check if a given string is a palindrome (same forwards and backwards). Print 'Palindrome' or 'Not Palindrome'.",
+                "starter_code": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str[100];\n    // Read string\n    // Check palindrome\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "madam",
+                        "expected_output": "Palindrome"
+                    },
+                    {
+                        "stdin": "hello",
+                        "expected_output": "Not Palindrome"
+                    }
+                ]
+            },
+            {
+                "id": "c-l4-p5",
+                "title": "Matrix Transpose",
+                "difficulty": "medium",
+                "description": "Given a 2x2 matrix, print its transpose.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    int matrix[2][2];\n    // Read matrix\n    // Print transpose\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "1 2\n3 4",
+                        "expected_output": "1 3\n2 4"
+                    }
+                ]
+            }
         ]
     },
     {
@@ -1860,6 +2156,73 @@
                         ],
                         "correctAnswer": 2,
                         "explanation": "C allows multiple levels of indirection, though more than 3 is rarely seen in professional code."
+                    }
+                ]
+            }
+        ],
+        "problems": [
+            {
+                "id": "c-l5-p1",
+                "title": "Swap with Pointers",
+                "difficulty": "easy",
+                "description": "Write a function `void swap(int *a, int *b)` that swaps the values of two variables using pointers.",
+                "starter_code": "#include <stdio.h>\n\n// Declare swap\n\nint main() {\n    int x, y;\n    // Read x and y\n    // Swap x and y using swap(&x, &y)\n    // Print swapped x and y\n    return 0;\n}\n\n// Define swap",
+                "test_cases": [
+                    {
+                        "stdin": "10 20",
+                        "expected_output": "20 10"
+                    }
+                ]
+            },
+            {
+                "id": "c-l5-p2",
+                "title": "Pointer to Max",
+                "difficulty": "easy",
+                "description": "Write a function that takes two integer pointers and returns a pointer to the larger value.",
+                "starter_code": "#include <stdio.h>\n\nint* findMax(int *a, int *b) {\n    // Return pointer to larger value\n}\n\nint main() {\n    int x, y;\n    // Read x, y\n    // Call findMax and print the value it points to\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "15 30",
+                        "expected_output": "30"
+                    }
+                ]
+            },
+            {
+                "id": "c-l5-p3",
+                "title": "Array Pointer Traversal",
+                "difficulty": "medium",
+                "description": "Read 5 integers and print them using a pointer instead of array indexing.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    int arr[5];\n    int *ptr = arr;\n    // Read 5 elements\n    // Print using *ptr and ptr++\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "1 2 3 4 5",
+                        "expected_output": "1 2 3 4 5"
+                    }
+                ]
+            },
+            {
+                "id": "c-l5-p4",
+                "title": "Calculate Length with Pointers",
+                "difficulty": "medium",
+                "description": "Write a function `int getLen(char *s)` that calculates the length of a string using pointers (without `strlen`).",
+                "starter_code": "#include <stdio.h>\n\nint getLen(char *s) {\n    // Calculate length using pointer\n}\n\nint main() {\n    char s[100];\n    // Read string\n    // Print length\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "Genspark",
+                        "expected_output": "8"
+                    }
+                ]
+            },
+            {
+                "id": "c-l5-p5",
+                "title": "Double Pointer Basics",
+                "difficulty": "hard",
+                "description": "Create a double pointer and use it to change the value of an integer. Print the value of the integer.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    int a = 10;\n    int *p = &a;\n    int **pp = &p;\n    // Change 'a' to 50 using 'pp'\n    // Print a\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "50"
                     }
                 ]
             }
@@ -2209,6 +2572,73 @@
                     }
                 ]
             }
+        ],
+        "problems": [
+            {
+                "id": "c-l6-p1",
+                "title": "Dynamic Array Allocation",
+                "difficulty": "easy",
+                "description": "Read an integer `n` from the user, allocate an array of `n` integers using `malloc`, fill it with numbers 1 to `n`, and print them. Finally, free the memory.",
+                "starter_code": "#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int n, *arr;\n    // Read n\n    // Allocate memory\n    // Fill and print\n    // Free memory\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "3",
+                        "expected_output": "1 2 3"
+                    }
+                ]
+            },
+            {
+                "id": "c-l6-p2",
+                "title": "Sum of N Numbers (DMA)",
+                "difficulty": "easy",
+                "description": "Allocate memory for `n` floats using `malloc`. Read `n` floats and print their sum with 2 decimal places.",
+                "starter_code": "#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int n;\n    float *ptr, sum = 0;\n    // Read n\n    // Allocate memory\n    // Read elements and calculate sum\n    // Print sum and free memory\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "3\n1.5 2.5 3.0",
+                        "expected_output": "7.00"
+                    }
+                ]
+            },
+            {
+                "id": "c-l6-p3",
+                "title": "Using calloc for Zero Initialization",
+                "difficulty": "medium",
+                "description": "Allocate an array of 5 integers using `calloc`. Print all elements (they should be 0).",
+                "starter_code": "#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int *arr;\n    // Allocate with calloc\n    // Print all 5 elements\n    // Free memory\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "0 0 0 0 0"
+                    }
+                ]
+            },
+            {
+                "id": "c-l6-p4",
+                "title": "Resizing Array with realloc",
+                "difficulty": "medium",
+                "description": "Initially allocate memory for 2 integers. Then resize it to 4 integers using `realloc`. Fill all 4 with values 10, 20, 30, 40 and print them.",
+                "starter_code": "#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int *arr = malloc(2 * sizeof(int));\n    // Use realloc to resize to 4\n    // Fill and print\n    // Free memory\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "10 20 30 40"
+                    }
+                ]
+            },
+            {
+                "id": "c-l6-p5",
+                "title": "Dynamic String concatenation",
+                "difficulty": "hard",
+                "description": "Read two strings, calculate their total length, allocate a new dynamic string of that size + 1, and concatenate them. Print the result and free the memory.",
+                "starter_code": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\nint main() {\n    char s1[50], s2[50];\n    // Read s1 and s2\n    // Allocate dynamic memory for combined string\n    // Concatenate and print\n    // Free memory\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "Gen Spark",
+                        "expected_output": "GenSpark"
+                    }
+                ]
+            }
         ]
     },
     {
@@ -2392,6 +2822,73 @@
                         ],
                         "correctAnswer": 1,
                         "explanation": "Enum member names must be unique within the same scope."
+                    }
+                ]
+            }
+        ],
+        "problems": [
+            {
+                "id": "c-l7-p1",
+                "title": "Student Information System",
+                "difficulty": "easy",
+                "description": "Define a struct `Student` with `name`, `roll_no`, and `marks`. Read data for one student and print it.",
+                "starter_code": "#include <stdio.h>\n\nstruct Student {\n    char name[50];\n    int roll_no;\n    float marks;\n};\n\nint main() {\n    struct Student s;\n    // Read name, roll_no, marks\n    // Print them\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "Alice 101 85.5",
+                        "expected_output": "Name: Alice, Roll: 101, Marks: 85.50"
+                    }
+                ]
+            },
+            {
+                "id": "c-l7-p2",
+                "title": "Rectangle Area using Structs",
+                "difficulty": "easy",
+                "description": "Define a struct `Rectangle` with `length` and `width`. Write a function `float calculateArea(struct Rectangle r)` and use it to print the area.",
+                "starter_code": "#include <stdio.h>\n\nstruct Rectangle {\n    float length;\n    float width;\n};\n\n// float calculateArea(struct Rectangle r)\n\nint main() {\n    struct Rectangle rect;\n    // Read length and width\n    // Calculate and print area\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "5.0 4.0",
+                        "expected_output": "20.00"
+                    }
+                ]
+            },
+            {
+                "id": "c-l7-p3",
+                "title": "Write to File",
+                "difficulty": "medium",
+                "description": "Write a program that takes a string from the user and writes it to a file named 'output.txt'.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    char str[100];\n    FILE *fp;\n    // Read string\n    // Open output.txt for writing\n    // Write string and close file\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "Hello File I/O",
+                        "expected_output": "Data written successfully"
+                    }
+                ]
+            },
+            {
+                "id": "c-l7-p4",
+                "title": "Read from File",
+                "difficulty": "medium",
+                "description": "Write a program that reads the first 10 characters from a file named 'input.txt' and prints them.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    char buffer[11];\n    FILE *fp;\n    // Open input.txt for reading\n    // Read 10 chars\n    // Print buffer\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "abcdefghij"
+                    }
+                ]
+            },
+            {
+                "id": "c-l7-p5",
+                "title": "Complex Number Addition",
+                "difficulty": "hard",
+                "description": "Use a struct `Complex` to store `real` and `imag` parts. Write a function to add two complex numbers and print the result in 'a + bi' format.",
+                "starter_code": "#include <stdio.h>\n\ntypedef struct {\n    float real;\n    float imag;\n} Complex;\n\n// Complex add(Complex c1, Complex c2)\n\nint main() {\n    Complex n1, n2, result;\n    // Read n1 and n2\n    // Add and print result\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "1.5 2.5 2.5 1.5",
+                        "expected_output": "4.00 + 4.00i"
                     }
                 ]
             }
@@ -2594,6 +3091,77 @@
                         ],
                         "correctAnswer": 1,
                         "explanation": "strerror converts the numeric errno into a human-readable string like 'Permission denied'."
+                    }
+                ]
+            }
+        ],
+        "problems": [
+            {
+                "id": "c-l8-p1",
+                "title": "Macro for Maximum",
+                "difficulty": "easy",
+                "description": "Define a macro `MAX(a, b)` that returns the maximum of two numbers. Use it in `main` to compare two user inputs.",
+                "starter_code": "#include <stdio.h>\n\n// Define MAX macro\n\nint main() {\n    int x, y;\n    // Read x and y\n    // Print MAX(x, y)\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "15 25",
+                        "expected_output": "25"
+                    }
+                ]
+            },
+            {
+                "id": "c-l8-p2",
+                "title": "Static Counter",
+                "difficulty": "easy",
+                "description": "Write a function `void countCalls()` that uses a `static` variable to keep track of how many times it has been called. Print 'Call #1', 'Call #2', etc.",
+                "starter_code": "#include <stdio.h>\n\nvoid countCalls() {\n    // Use static variable\n}\n\nint main() {\n    countCalls();\n    countCalls();\n    countCalls();\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "Call #1\nCall #2\nCall #3"
+                    }
+                ]
+            },
+            {
+                "id": "c-l8-p3",
+                "title": "Bitwise Even Check",
+                "difficulty": "medium",
+                "description": "Use the bitwise AND operator (`&`) to check if a number is even or odd. Print 'Even' or 'Odd'.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    int n;\n    // Read n\n    // Check using (n & 1)\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "4",
+                        "expected_output": "Even"
+                    },
+                    {
+                        "stdin": "7",
+                        "expected_output": "Odd"
+                    }
+                ]
+            },
+            {
+                "id": "c-l8-p4",
+                "title": "Command Line Addition",
+                "difficulty": "medium",
+                "description": "Write a program that takes two numbers as command line arguments and prints their sum. If arguments are missing, print 'Usage: ./prog n1 n2'.",
+                "starter_code": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(int argc, char *argv[]) {\n    // Check argc\n    // Convert argv[1], argv[2] to int and sum\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "10 20",
+                        "expected_output": "30"
+                    }
+                ]
+            },
+            {
+                "id": "c-l8-p5",
+                "title": "Typedef for Points",
+                "difficulty": "hard",
+                "description": "Use `typedef` to create a struct `Point` with `x` and `y`. Write a function `float distance(Point p1, Point p2)` to calculate the distance between two points.",
+                "starter_code": "#include <stdio.h>\n#include <math.h>\n\ntypedef struct {\n    float x, y;\n} Point;\n\n// float distance(Point p1, Point p2)\n\nint main() {\n    Point a = {0, 0}, b;\n    // Read b.x and b.y\n    // Print distance with 2 decimal places\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "3 4",
+                        "expected_output": "5.00"
                     }
                 ]
             }
@@ -2848,6 +3416,77 @@
                         ],
                         "correctAnswer": 1,
                         "explanation": "C is a compiled language; source code is translated into machine-readable binaries before execution."
+                    }
+                ]
+            }
+        ],
+        "problems": [
+            {
+                "id": "c-l9-p1",
+                "title": "Linked List Node",
+                "difficulty": "medium",
+                "description": "Define a struct `Node` for a singly linked list. Allocate a node dynamically, set its data to 10 and next to NULL. Print the data.",
+                "starter_code": "#include <stdio.h>\n#include <stdlib.h>\n\nstruct Node {\n    int data;\n    struct Node *next;\n};\n\nint main() {\n    // Allocate node\n    // Set values and print data\n    // Free memory\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "10"
+                    }
+                ]
+            },
+            {
+                "id": "c-l9-p2",
+                "title": "Stack using Array",
+                "difficulty": "medium",
+                "description": "Implement a simple stack with `push` and `pop` operations using an array of size 5. Support one push and one pop.",
+                "starter_code": "#include <stdio.h>\n\nint stack[5];\nint top = -1;\n\nvoid push(int val) { /* logic */ }\nint pop() { /* logic */ }\n\nint main() {\n    push(100);\n    printf(\"%d\", pop());\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "100"
+                    }
+                ]
+            },
+            {
+                "id": "c-l9-p3",
+                "title": "Bubble Sort",
+                "difficulty": "hard",
+                "description": "Implement Bubble Sort to sort an array of 5 integers in ascending order.",
+                "starter_code": "#include <stdio.h>\n\nint main() {\n    int arr[5];\n    // Read 5 elements\n    // Sort using Bubble Sort\n    // Print sorted array\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "5 4 3 2 1",
+                        "expected_output": "1 2 3 4 5"
+                    }
+                ]
+            },
+            {
+                "id": "c-l9-p4",
+                "title": "Queue Basics",
+                "difficulty": "medium",
+                "description": "Implement a basic Queue with `enqueue` and `dequeue`. Support one of each.",
+                "starter_code": "#include <stdio.h>\n\nint queue[5];\nint front = 0, rear = 0;\n\nvoid enqueue(int val) { /* logic */ }\nint dequeue() { /* logic */ }\n\nint main() {\n    enqueue(50);\n    printf(\"%d\", dequeue());\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "",
+                        "expected_output": "50"
+                    }
+                ]
+            },
+            {
+                "id": "c-l9-p5",
+                "title": "Recursive Binary Search",
+                "difficulty": "hard",
+                "description": "Implement binary search recursively on a sorted array of 5 integers. Print index of target or -1.",
+                "starter_code": "#include <stdio.h>\n\nint binarySearch(int arr[], int l, int r, int x) {\n    // Recursive implementation\n}\n\nint main() {\n    int arr[5] = {10, 20, 30, 40, 50};\n    int x;\n    // Read target x\n    // Print index or -1\n    return 0;\n}",
+                "test_cases": [
+                    {
+                        "stdin": "30",
+                        "expected_output": "2"
+                    },
+                    {
+                        "stdin": "25",
+                        "expected_output": "-1"
                     }
                 ]
             }

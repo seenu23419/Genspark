@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, Play, RotateCcw, Check, Loader2, AlertCircle, BookOpen, Code2, Zap, X, Terminal, Bot, ChevronDown, ChevronUp } from 'lucide-react';
 import Compiler, { CompilerRef } from '../../screens/compiler/Compiler';
 import { PracticeProblem } from '../../services/practiceService';
@@ -60,11 +60,15 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
 }) => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<TabType>('PROBLEM');
+  // Code state management
   const [userCode, setUserCode] = useState(() => {
     const starterCodes = (problem as any).starter_codes || {};
     const defaultLang = Object.keys(starterCodes)[0] || 'c';
     return starterCodes[defaultLang] || problem.initialCode || '';
   });
+  // Separate state for binding to the editor to prevent re-render loops/cursor jumps
+  const [editorSyncCode, setEditorSyncCode] = useState(userCode);
+
   const [currentStatus, setCurrentStatus] = useState<StatusType>(status);
   const [showSuccess, setShowSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -76,7 +80,7 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
     const starterCodes = (problem as any).starter_codes || {};
     return Object.keys(starterCodes)[0] || 'c';
   });
-  const [sidebarTab, setSidebarTab] = useState<'DESCRIPTION' | 'EXAMPLES'>('DESCRIPTION');
+  /* Removed sidebarTab state */
   const [isEditingCompleted, setIsEditingCompleted] = useState(false);
 
   const compilerRef = useRef<CompilerRef>(null);
@@ -99,7 +103,10 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
         const progress = await supabaseDB.getPracticeProgress(problem.id);
         if (progress) {
           setCurrentStatus(progress.status === 'completed' ? 'COMPLETED' : 'IN_PROGRESS');
-          if (progress.code_snapshot) setUserCode(progress.code_snapshot);
+          if (progress.code_snapshot) {
+            setUserCode(progress.code_snapshot);
+            setEditorSyncCode(progress.code_snapshot);
+          }
           if (progress.language_used) setSelectedLanguage(progress.language_used);
         }
       } catch (err) { console.error(err); }
@@ -107,9 +114,12 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
     fetchProgress();
   }, [problem.id]);
 
+  const [isSubmission, setIsSubmission] = useState(false);
+
   const handleRunCode = async () => {
     if (!userCode.trim() || isSubmitting) return;
     setIsSubmitting(true);
+    setIsSubmission(false); // Run mode: Just execute, don't submit
     setExecutionResult(null);
     setAiExplanation(null);
     try {
@@ -121,12 +131,15 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   const handleSubmit = async () => {
     if (!userCode.trim() || isSubmitting) return;
     setIsSubmitting(true);
+    setIsSubmission(true); // Submit mode: Verify and complete
     setExecutionResult(null);
     setAiExplanation(null);
     try {
       if (problem.test_cases && problem.test_cases.length > 0) {
         await compilerRef.current?.runTests(problem.test_cases);
       } else {
+        // Fallback for problems without test cases: regular run counts as submission check
+        // Ideally all validation problems should have test cases.
         await compilerRef.current?.runCode();
       }
     } catch (e) { console.error(e); }
@@ -134,9 +147,14 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   };
 
   const generateAIHelp = async (error: string) => {
-    if (isGeneratingExplanation) return;
+    console.log('[AI Mentor] Button clicked, error:', error);
+    if (isGeneratingExplanation) {
+      console.log('[AI Mentor] Already generating, skipping');
+      return;
+    }
     setIsGeneratingExplanation(true);
-    setAiExplanation(null);
+    setAiExplanation(''); // Start with empty to show loading
+    console.log('[AI Mentor] Starting generation...');
     try {
       const prompt = `Analyze this programming error: "${error}". 
       Explain exactly three things using these EXACT prefixes:
@@ -147,37 +165,93 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
       Keep it very concise.`;
 
       let full = '';
-      for await (const chunk of genSparkAIService.generateChatStream(prompt, false, [])) {
-        full += chunk;
+      let hasReceivedData = false;
+
+      console.log('[AI Mentor] Calling genSparkAIService.generateChatStream...');
+      try {
+        let lastUpdate = 0;
+        for await (const chunk of genSparkAIService.generateChatStream(prompt, false, [])) {
+          hasReceivedData = true;
+          full += chunk;
+
+          // Throttle updates to prevent UI freezing (update every 100ms)
+          const now = Date.now();
+          if (now - lastUpdate > 100) {
+            setAiExplanation(full);
+            lastUpdate = now;
+          }
+        }
+        // Ensure final state is set
+        setAiExplanation(full);
+        console.log('[AI Mentor] Stream complete, hasReceivedData:', hasReceivedData);
+      } catch (streamError: any) {
+        console.error('[AI Mentor] Stream error:', streamError);
+        throw streamError;
+      }
+
+      // If no data received, show error
+      if (!hasReceivedData || !full.trim()) {
+        throw new Error('No response from AI');
       }
       setAiExplanation(full);
-    } catch (e) {
-      console.error(e);
-      setAiExplanation("LOCATION: System Busy\nCONCEPT: AI Mentor is warming up\nFIX: Please try clicking 'Ask AI Mentor' again in a moment.");
+      console.log('[AI Mentor] Response received:', full.substring(0, 200));
+    } catch (e: any) {
+      console.error('[AI Mentor Error]', e);
+      const errorMessage = e?.message || 'Unknown error';
+
+      // Provide helpful error messages based on the error type
+      if (errorMessage.includes('API') || errorMessage.includes('key')) {
+        setAiExplanation("LOCATION: API Configuration\nCONCEPT: AI service connection failed. Please check your API keys in .env.local\nFIX: Verify VITE_GEMINI_API_KEY or VITE_OPENAI_API_KEY is set correctly and restart the server.");
+      } else if (errorMessage.includes('quota') || errorMessage.includes('limit')) {
+        setAiExplanation("LOCATION: API Quota\nCONCEPT: API usage limit reached\nFIX: Wait a moment and try again, or check your API quota.");
+      } else {
+        setAiExplanation("LOCATION: AI Mentor\nCONCEPT: Temporary connection issue\nFIX: Please try clicking 'Ask AI Mentor' again in a moment.");
+      }
     }
     finally { setIsGeneratingExplanation(false); }
   };
 
-  const handleRunResult = async (result: any) => {
+  // Ref to track userCode without triggering re-renders in callbacks
+  const userCodeRef = useRef(userCode);
+  useEffect(() => { userCodeRef.current = userCode; }, [userCode]);
+
+  // Ref to track submission state in callback
+  const isSubmissionRef = useRef(isSubmission);
+  useEffect(() => { isSubmissionRef.current = isSubmission; }, [isSubmission]);
+
+  // Stable callback for completion
+  const onCompleteRef = useRef(onComplete);
+  useEffect(() => { onCompleteRef.current = onComplete; }, [onComplete]);
+
+  const handleRunResult = useCallback(async (result: any) => {
     setExecutionResult(result);
     setActiveTab('RESULT');
-    if (user?._id) {
-      await supabaseDB.savePracticeAttempt(problem.id, userCode, result.accepted, selectedLanguage);
+
+    // Only save attempt if it's a submission
+    if (user?._id && isSubmissionRef.current) {
+      await supabaseDB.savePracticeAttempt(problem.id, userCodeRef.current, result.accepted, selectedLanguage);
     }
-    if (result.accepted) {
+
+    // Only mark complete if it's a submission AND accepted
+    if (result.accepted && isSubmissionRef.current) {
       setCurrentStatus('COMPLETED');
-      onComplete(problem.id);
+      onCompleteRef.current(problem.id);
       setShowSuccess(true);
     } else if (result.stderr || result.compile_output) {
       // Auto-trigger AI for errors on all platforms
       generateAIHelp(result.stderr || result.compile_output || "Unknown Error");
     }
-  };
+  }, [user?._id, problem.id, selectedLanguage]); // generateAIHelp is stable (defined outside? no, inside. Need to fix that too)
+
+  // generateAIHelp depends on state, let's stabilize it or just leave it since it's not passed to Compiler
+  // Compiler receives onRun={handleRunResult}
+  // So handleRunResult MUST be stable.
 
   const handleReset = () => {
     if (confirm('Reset code to initial template?')) {
       const starter = (problem as any).starter_codes?.[selectedLanguage] || problem.initialCode || '';
       setUserCode(starter);
+      setEditorSyncCode(starter);
       setExecutionResult(null);
       setAiExplanation(null);
       setUserHasTyped(false);
@@ -188,6 +262,7 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   // SUB-RENDERS
   // ═══════════════════════════════════════════════════════════
 
+  /* MERGED EXAMPLES INTO DESCRIPTION */
   const renderDescription = () => (
     <div className="p-6 space-y-8 animate-in fade-in duration-500">
       <div className="space-y-4">
@@ -198,26 +273,33 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
         </div>
       </div>
       <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">{problem.description}</p>
+
+      {/* INPUT FORMAT */}
       {problem.inputFormat && (
         <div className="space-y-2">
           <h4 className="text-[10px] font-black text-indigo-400 uppercase">Input Format</h4>
           <div className="p-3 bg-white/[0.02] border border-white/5 rounded-lg text-xs text-slate-400 italic">{problem.inputFormat}</div>
         </div>
       )}
-    </div>
-  );
 
-  const renderExamples = () => (
-    <div className="p-6 space-y-6">
-      {problem.test_cases?.map((tc, i) => (
-        <div key={i} className="space-y-3">
-          <h4 className="text-[10px] font-black text-slate-500 uppercase">Example {i + 1}</h4>
-          <div className="bg-slate-950 border border-white/5 rounded-xl overflow-hidden font-mono text-xs">
-            {tc.stdin && <div className="p-4 border-b border-white/5"><div className="text-amber-500 mb-1 opacity-50 text-[9px]">INPUT</div><div className="text-amber-400">{tc.stdin}</div></div>}
-            <div className="p-4"><div className="text-emerald-500 mb-1 opacity-50 text-[9px]">EXPECTED</div><div className="text-emerald-400">{tc.expected_output}</div></div>
-          </div>
+      {/* EXAMPLES SECTION (Merged from previous tab) */}
+      {problem.test_cases && problem.test_cases.length > 0 && (
+        <div className="space-y-6 pt-4 border-t border-white/5">
+          <h3 className="text-xs font-black text-white uppercase tracking-widest flex items-center gap-2">
+            <Terminal size={14} className="text-indigo-400" />
+            Examples
+          </h3>
+          {problem.test_cases.map((tc, i) => (
+            <div key={i} className="space-y-3">
+              <h4 className="text-[10px] font-black text-slate-500 uppercase">Example {i + 1}</h4>
+              <div className="bg-slate-950 border border-white/5 rounded-xl overflow-hidden font-mono text-xs">
+                {tc.stdin && <div className="p-4 border-b border-white/5"><div className="text-amber-500 mb-1 opacity-50 text-[9px]">INPUT</div><div className="text-amber-400">{tc.stdin}</div></div>}
+                <div className="p-4"><div className="text-emerald-500 mb-1 opacity-50 text-[9px]">EXPECTED</div><div className="text-emerald-400">{tc.expected_output}</div></div>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   );
 
@@ -243,27 +325,47 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
               <p className="text-[10px] text-slate-500 font-bold uppercase">{executionResult.status.description}</p>
             </div>
           </div>
-          {!executionResult.accepted && !aiExplanation && (
+          {!executionResult.accepted && !aiExplanation && !isGeneratingExplanation && (
             <button onClick={() => generateAIHelp(executionResult.stderr || executionResult.compile_output || "Logic Error")} className="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-[10px] font-black uppercase transition-colors">Ask AI Mentor</button>
+          )}
+          {isGeneratingExplanation && (
+            <div className="flex items-center gap-2 text-indigo-400 text-[10px] font-bold">
+              <Loader2 size={14} className="animate-spin" />
+              <span>AI Mentor analyzing...</span>
+            </div>
           )}
         </div>
 
-        {aiExplanation && (
+        {(aiExplanation || isGeneratingExplanation) && (
           <div className="space-y-4 animate-in fade-in zoom-in duration-500">
             <div className="flex items-center gap-2">
               <Bot size={16} className="text-indigo-400" />
               <span className="text-[10px] font-black text-white uppercase">AI Diagnostics</span>
+              {isGeneratingExplanation && <Loader2 size={12} className="animate-spin text-indigo-400" />}
             </div>
             <div className="grid gap-3">
-              {(() => {
+              {aiExplanation ? (() => {
                 const patterns = ['LOCATION:', 'CONCEPT:', 'FIX:'];
-                return patterns.map(p => {
+                const sections = patterns.map(p => {
                   const regex = new RegExp(`${p}\\s*([^]*?)(?=${patterns.join('|')}|$)`, 'i');
                   const match = aiExplanation.match(regex);
                   if (!match || !match[1].trim()) return null;
                   return <AISection key={p} title={p.replace(':', '')} content={match[1].trim()} icon={<Zap size={12} />} />;
                 }).filter(Boolean);
-              })()}
+
+                // If no sections matched, show raw response as fallback
+                if (sections.length === 0) {
+                  return (
+                    <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                      <p className="text-xs text-slate-300 leading-relaxed whitespace-pre-wrap">{aiExplanation}</p>
+                    </div>
+                  );
+                }
+
+                return sections;
+              })() : (
+                <div className="text-slate-400 text-xs italic">Analyzing your code...</div>
+              )}
             </div>
           </div>
         )}
@@ -272,12 +374,16 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
           <div className="space-y-3">
             <h4 className="text-[10px] font-black text-slate-600 uppercase">Test Case Breakdown</h4>
             <div className="grid grid-cols-2 gap-2">
-              {(executionResult as any).testResults.map((tr: any, i: number) => (
-                <div key={i} className={`p-3 rounded-lg border flex items-center justify-between ${tr.passed ? 'bg-emerald-500/5 border-emerald-500/10' : 'bg-rose-500/5 border-rose-500/10'}`}>
-                  <span className="text-[10px] font-bold text-slate-400">Case {i + 1}</span>
-                  {tr.passed ? <Check size={12} className="text-emerald-500" /> : <X size={12} className="text-rose-500" />}
-                </div>
-              ))}
+              {(() => {
+                const testResults = (executionResult as any).testResults;
+                console.log('[Test Results]', testResults);
+                return testResults.map((tr: any, i: number) => (
+                  <div key={i} className={`p-3 rounded-lg border flex items-center justify-between ${tr.passed ? 'bg-emerald-500/5 border-emerald-500/10' : 'bg-rose-500/5 border-rose-500/10'}`}>
+                    <span className="text-[10px] font-bold text-slate-400">Case {i + 1}</span>
+                    {tr.passed ? <Check size={12} className="text-emerald-500" /> : <X size={12} className="text-rose-500" />}
+                  </div>
+                ));
+              })()}
             </div>
           </div>
         )}
@@ -312,12 +418,11 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
 
         {/* LEFT: INFORMATION */}
-        <div className="hidden lg:flex flex-col w-[380px] bg-[#0a0b14] border-r border-white/5">
+        <div className="hidden lg:flex flex-col w-[340px] bg-[#0a0b14] border-r border-white/5">
           <div className="pro-panel-header">
-            <button onClick={() => setSidebarTab('DESCRIPTION')} className={`pro-tab-btn ${sidebarTab === 'DESCRIPTION' ? 'active' : ''}`}><BookOpen size={14} />Description</button>
-            <button onClick={() => setSidebarTab('EXAMPLES')} className={`pro-tab-btn ${sidebarTab === 'EXAMPLES' ? 'active' : ''}`}><Terminal size={14} />Examples</button>
+            <div className="pro-tab-btn active"><BookOpen size={14} />Description</div>
           </div>
-          <div className="flex-1 overflow-y-auto no-scrollbar">{sidebarTab === 'DESCRIPTION' ? renderDescription() : renderExamples()}</div>
+          <div className="flex-1 overflow-y-auto no-scrollbar">{renderDescription()}</div>
         </div>
 
         {/* CENTER: IDE */}
@@ -351,7 +456,7 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
                 <Compiler
                   key={problem.id}
                   language={selectedLanguage.toLowerCase()}
-                  initialCode={userCode}
+                  initialCode={editorSyncCode}
                   onCodeChange={setUserCode}
                   onRun={handleRunResult}
                   ref={compilerRef}
@@ -384,7 +489,7 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
         </div>
 
         {/* RIGHT: RESULTS & AI */}
-        <div className="hidden lg:flex flex-col w-[420px] bg-[#0a0b14] border-l border-white/5 shrink-0 overflow-hidden">
+        <div className="hidden lg:flex flex-col w-[380px] bg-[#0a0b14] border-l border-white/5 shrink-0 overflow-hidden">
           <div className="pro-panel-header px-4">
             <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2"><Zap size={14} />Execution Results</span>
           </div>

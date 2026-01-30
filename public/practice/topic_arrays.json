@@ -34,14 +34,59 @@
       "difficulty": "easy",
       "estimatedTime": 4,
       "concept": "Arrays",
+      "explanation": "Declare an array of size N, then use a loop to read N elements. Initialize a `sum` variable to 0 and add each element to it within the loop.",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    // Implementation\n    return 0;\n}",
+        "c": "#include <stdio.h>\n\nint main() {\n    int n, sum = 0;\n    // Read n\n    // Read array and calculate sum\n    return 0;\n}",
         "python": "n = int(input())\narr = list(map(int, input().split()))\nprint(sum(arr))"
       },
       "test_cases": [
         {
           "stdin": "4\n1 2 3 4",
           "expected_output": "10"
+        }
+      ]
+    },
+    {
+      "id": "arrays-3",
+      "topicId": "arrays",
+      "title": "Reverse Array",
+      "description": "Read an array of size N and print its elements in reverse order.",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Manipulation",
+      "explanation": "Read the array elements first. Then, use a loop starting from the last index (`N-1`) down to 0 and print each element.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n;\n    // Read n\n    // Read array\n    // Print in reverse\n    return 0;\n}",
+        "python": "n = int(input())\narr = list(map(int, input().split()))\nprint(*(arr[::-1]))"
+      },
+      "test_cases": [
+        {
+          "stdin": "5\n1 2 3 4 5",
+          "expected_output": "5 4 3 2 1"
+        }
+      ]
+    },
+    {
+      "id": "arrays-4",
+      "topicId": "arrays",
+      "title": "Linear Search",
+      "description": "Read an array of size N and an integer X. Output the index of X if found, else -1.",
+      "difficulty": "medium",
+      "estimatedTime": 6,
+      "concept": "Searching",
+      "explanation": "Iterate through the array and compare each element with X. If a match is found, print the index and exit. If the loop finishes without a match, print -1.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    int n, x;\n    // Read n, array, and x\n    // Perform search\n    return 0;\n}",
+        "python": "n = int(input())\narr = list(map(int, input().split()))\nx = int(input())\ntry:\n    print(arr.index(x))\nexcept ValueError:\n    print(-1)"
+      },
+      "test_cases": [
+        {
+          "stdin": "5\n10 20 30 40 50\n30",
+          "expected_output": "2"
+        },
+        {
+          "stdin": "5\n10 20 30 40 50\n60",
+          "expected_output": "-1"
         }
       ]
     }
