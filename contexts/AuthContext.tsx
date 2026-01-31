@@ -234,38 +234,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     }, [user, loading]);
 
-    // 5. GLOBAL ADMIN OVERRIDE: C Completion for seenu@gmail.com
-    useEffect(() => {
-        const checkAdmin = async () => {
-            if (!user || user.email !== 'seenu@gmail.com') return;
-
-            // Hardcoded C lessons for admin completion (approx 41 items)
-            // They always start with 'c' but NOT 'cpp'
-            const currentC = user.completedLessonIds?.filter(id => id.startsWith('c') && !id.startsWith('cpp')) || [];
-
-            // If less than 20 C lessons (arbitrary threshold to detect if completion ran)
-            if (currentC.length < 20 && !localStorage.getItem('admin_c_completed_v4')) {
-                console.log("🚀 AuthContext: Admin Detected. Starting C Completion Sync...");
-                const allCLessons = [
-                    'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10',
-                    'c11', 'c12', 'c13', 'c14', 'c15', 'c16', 'c17', 'c18', 'c19', 'c20',
-                    'c21', 'c22', 'c23', 'c24', 'c25', 'c26', 'c27', 'c28', 'c29', 'c30',
-                    'c31', 'c32', 'c33', 'c34', 'c35', 'c36', 'c37', 'c38', 'c39', 'c40', 'c41'
-                ];
-
-                try {
-                    await value.updateUser({ completedLessonIds: allCLessons });
-                    try {
-                        localStorage.setItem('admin_c_completed_v4', 'true');
-                    } catch (e) { }
-                    console.log("✅ AuthContext: Admin C Completion SUCCESS");
-                } catch (e) {
-                    console.error("AuthContext: Admin completion FAILED", e);
-                }
-            }
-        };
-        checkAdmin();
-    }, [user?.email, user?.completedLessonIds?.length]);
 
     const value = {
         user,

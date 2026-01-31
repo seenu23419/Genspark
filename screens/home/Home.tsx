@@ -216,16 +216,16 @@ const Home: React.FC = () => {
                         onClick={() => navigate('/learn', { state: { initialFilter: 'completed' } })}
                         className="relative p-5 bg-slate-900/40 border border-slate-700/30 rounded-xl hover:bg-slate-900/60 transition-all duration-300 group overflow-hidden text-left"
                     >
-                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-rose-400 via-rose-500 to-rose-600 rounded-full shadow-[0_0_20px_rgba(251,113,133,0.7)]"></div>
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-400 via-emerald-500 to-emerald-600 rounded-full shadow-[0_0_20px_rgba(52,211,153,0.7)]"></div>
                         <div className="flex items-center justify-between">
                             <div className="ml-3 flex-1">
                                 <div className="text-sm text-slate-300 font-medium mb-2 flex items-center gap-2">
-                                    <BookOpen size={16} className="text-rose-400" />
+                                    <BookOpen size={16} className="text-emerald-400" />
                                     Lessons Completed
                                 </div>
                                 <div className="text-3xl font-bold text-white mb-2">{completedCount} / {totalLessons}</div>
                                 <div className="w-full bg-slate-700/50 rounded-full h-1.5">
-                                    <div className="bg-rose-500 h-1.5 rounded-full transition-all duration-500" style={{ width: `${(completedCount / totalLessons) * 100}%` }}></div>
+                                    <div className="bg-emerald-500 h-1.5 rounded-full transition-all duration-500" style={{ width: `${(completedCount / totalLessons) * 100}%` }}></div>
                                 </div>
                             </div>
                             <ChevronRight size={20} className="text-slate-600 group-hover:text-slate-400 transition-colors" />

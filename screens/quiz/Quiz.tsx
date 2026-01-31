@@ -158,7 +158,11 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
             updates.unlockedLessonIds = [nextId];
           }
 
-          await updateProfile(updates, {
+          await updateProfile({
+            ...updates,
+            lastLanguageId: langId,
+            lastLessonId: nextId
+          }, {
             type: 'challenge',
             title: `Passed Quiz: ${lessonData.lesson?.title || 'Knowledge Check'}`,
             xp: 100

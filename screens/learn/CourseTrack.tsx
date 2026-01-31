@@ -282,7 +282,7 @@ const CourseTrack: React.FC = () => {
           </div>
           <div className="flex items-center gap-2 shrink-0">
             <div className="w-12 h-12 rounded-lg bg-slate-900 border border-slate-800 flex flex-col items-center justify-center">
-              <span className="text-sm font-black text-indigo-400">{progressPercent}%</span>
+              <span className="text-sm font-black text-emerald-400">{progressPercent}%</span>
               <span className="text-[8px] text-slate-500 uppercase tracking-tighter">Done</span>
             </div>
           </div>
@@ -298,7 +298,7 @@ const CourseTrack: React.FC = () => {
               <span>{progressPercent}%</span>
             </div>
             <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
-              <div className="h-full bg-indigo-500 transition-all duration-1000" style={{ width: `${progressPercent}%` }} />
+              <div className="h-full bg-emerald-500 transition-all duration-1000" style={{ width: `${progressPercent}%` }} />
             </div>
           </div>
         )}
@@ -365,7 +365,9 @@ const CourseTrack: React.FC = () => {
                           key={lesson.id}
                           disabled={!isLevelUnlocked(levelIndex)}
                           onClick={() => handleLessonClick(lesson, levelIndex)}
-                          className={`w-full flex items-center justify-between p-4 rounded-xl transition-all ${isFirstIncomplete ? 'bg-indigo-600/10 border border-indigo-500/30' : 'hover:bg-slate-800/30'
+                          className={`w-full flex items-center justify-between p-4 rounded-xl transition-all ${isCompleted ? 'bg-emerald-500/10 border border-emerald-500/20' :
+                              isFirstIncomplete ? 'bg-indigo-600/10 border border-indigo-500/30' :
+                                'hover:bg-slate-800/30'
                             } ${!isLevelUnlocked(levelIndex) ? 'opacity-50 grayscale cursor-not-allowed' : ''}`}
                         >
                           <div className="flex items-center gap-4 min-w-0">

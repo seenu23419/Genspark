@@ -149,7 +149,9 @@ const LessonView: React.FC<LessonViewProps> = ({
       const currentCompleted = user.completedLessonIds || [];
       if (!currentCompleted.includes(lesson.id)) {
         await updateProfile({
-          completedLessonIds: [...currentCompleted, lesson.id]
+          completedLessonIds: [...currentCompleted, lesson.id],
+          lastLanguageId: langId,
+          lastLessonId: nextLessonId
         }, {
           type: 'lesson',
           title: `Completed Lesson: ${lesson.title}`,
