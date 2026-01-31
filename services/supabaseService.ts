@@ -183,7 +183,7 @@ class SupabaseService {
       if (!this.streakEnabled) {
         console.log("[SupabaseService] Fast-forwarding to fallback fetch (streakEnabled is false)");
         const fallbackBuilder = this.supabase.from('users')
-          .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, completed_lesson_ids, unlocked_lesson_ids, created_at') as any;
+          .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id') as any;
 
         if (queryBuilder.id) fallbackBuilder.eq('id', queryBuilder.id);
         else if (queryBuilder.email) fallbackBuilder.eq('email', queryBuilder.email);
@@ -233,7 +233,7 @@ class SupabaseService {
     if (query._id) {
       const profileBuilder = this.supabase
         .from('users')
-        .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, activity_history, completed_lesson_ids, unlocked_lesson_ids, created_at')
+        .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, activity_history, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id')
         .eq('id', query._id);
 
       const progressPromise = this.supabase
@@ -253,7 +253,7 @@ class SupabaseService {
 
     // Fallback for Email query (Sequential)
     let builder = this.supabase.from('users')
-      .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, activity_history, completed_lesson_ids, unlocked_lesson_ids, created_at');
+      .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, activity_history, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id');
 
     if (query.email) builder = builder.eq('email', query.email);
     else return null;
@@ -299,7 +299,7 @@ class SupabaseService {
         onboarding_completed: false, // Always false for new users
         created_at: userData.createdAt || new Date()
       })
-      .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, completed_lesson_ids, unlocked_lesson_ids, created_at');
+      .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id');
 
     let { data: profile, error } = await profileRequest.single();
 
