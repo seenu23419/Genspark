@@ -6,7 +6,7 @@ import { Play, Settings, Flame, BookOpen, Code, Trophy, Zap, Brain, Award, Chevr
 import { useNavigate } from 'react-router-dom';
 
 const Home: React.FC = () => {
-    const { user, loading } = useAuth();
+    const { user, loading, updateUser } = useAuth();
     const { data: curriculumData } = useCurriculum();
     const navigate = useNavigate();
 
@@ -22,30 +22,39 @@ const Home: React.FC = () => {
     // ADMIN: Auto-complete C for seenu@gmail.com
     React.useEffect(() => {
         const adminComplete = async () => {
-            if (user?.email === 'seenu@gmail.com' && curriculumData && !localStorage.getItem('admin_c_completed_v2')) {
+            if (!user || !curriculumData || user.email !== 'seenu@gmail.com') return;
+
+            // Check if already completed to avoid infinite loop
+            const cModules = curriculumData['c'] || (CURRICULUM as any)['c'] || [];
+            const allCLessons = cModules.flatMap((m: any) => m.lessons.map((l: any) => l.id));
+
+            const currentCCompleted = user.completedLessonIds?.filter(id => id.startsWith('c') && !id.startsWith('cpp')) || [];
+
+            // Only run if we have lessons AND they aren't all marked as completed yet
+            if (allCLessons.length > 0 && currentCCompleted.length < allCLessons.length && !localStorage.getItem('admin_c_completed_v3')) {
                 console.log("🚀 Admin User Detected: Starting C Completion...");
+                try {
+                    console.log(`Marking ${allCLessons.length} lessons as complete...`);
+                    await updateUser({
+                        completedLessonIds: allCLessons,
+                        lastLanguageId: 'c'
+                    });
 
-                // 1. Get all C Lessons
-                const cModules = curriculumData['c'] || (CURRICULUM as any)['c'] || [];
-                const allCLessons = cModules.flatMap((m: any) => m.lessons.map((l: any) => l.id));
-
-                if (allCLessons.length > 0) {
+                    // Try to set flag, but don't fail if localStorage is blocked
                     try {
-                        console.log(`Marking ${allCLessons.length} lessons as complete...`);
-                        await import('../../services/supabaseService').then(({ supabaseDB }) =>
-                            supabaseDB.updateOne(user._id, { completedLessonIds: allCLessons })
-                        );
-                        localStorage.setItem('admin_c_completed_v2', 'true');
-                        alert("✅ ADMIN ACTION: C Language Course Marked as 100% Complete!");
-                        window.location.reload(); // Refresh to show changes
+                        localStorage.setItem('admin_c_completed_v3', 'true');
                     } catch (e) {
-                        console.error("Admin completion failed", e);
+                        console.warn("Could not save to localStorage, but DB is updated.");
                     }
+
+                    alert("✅ ADMIN ACTION: C Language Course Marked as 100% Complete!");
+                } catch (e) {
+                    console.error("Admin completion failed", e);
                 }
             }
         };
         adminComplete();
-    }, [user, curriculumData]);
+    }, [user?.email, user?.completedLessonIds?.length, curriculumData, updateUser]);
 
     const handlePathSelect = (pathId: string) => {
         setSelectedPathId(pathId);

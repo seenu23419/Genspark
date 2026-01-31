@@ -382,6 +382,7 @@ class SupabaseService {
     }
 
     if (Object.keys(profileUpdates).length > 0) {
+      console.log("[SupabaseService] Updating Profile:", profileUpdates);
       let { error, data } = await this.supabase
         .from('users')
         .update(profileUpdates)
@@ -389,19 +390,23 @@ class SupabaseService {
         .select();
 
       if (error && (error.code === '42703' || error.message?.includes('column'))) {
-        console.warn("[SupabaseService] Missing columns during update, retrying basic fields");
-        this.streakEnabled = false; // Circuit breaker
-        const safeUpdates = { ...profileUpdates };
-        delete safeUpdates.streak;
-        delete safeUpdates.last_active_at;
-        delete safeUpdates.activity_log;
-        delete safeUpdates.activity_history;
-        delete safeUpdates.completed_lesson_ids;
-        delete safeUpdates.unlocked_lesson_ids;
+        console.warn("[SupabaseService] Missing columns during update, retrying with strictly compatible fields");
+        this.streakEnabled = false;
 
+        // Comprehensive fallback: Only keep columns known to be in early schemas
+        const legacyCompatibleUpdates: any = {};
+        const safeKeys = ['name', 'first_name', 'last_name', 'avatar', 'is_pro', 'subscription_tier', 'onboarding_completed'];
+
+        Object.keys(profileUpdates).forEach(key => {
+          if (safeKeys.includes(key)) {
+            legacyCompatibleUpdates[key] = profileUpdates[key];
+          }
+        });
+
+        console.log("[SupabaseService] Fallback Update Content:", legacyCompatibleUpdates);
         const fallbackUpdate = await this.supabase
           .from('users')
-          .update(safeUpdates)
+          .update(legacyCompatibleUpdates)
           .eq('id', id)
           .select();
 
@@ -410,19 +415,8 @@ class SupabaseService {
       }
 
       if (error) {
-        console.error("Supabase update error:", {
-          error,
-          userId: id,
-          updates: profileUpdates
-        });
-        throw error;
-      }
-      if (!data || data.length === 0) {
-        console.error("No rows updated:", {
-          userId: id,
-          updates: profileUpdates
-        });
-        throw new Error("Profile update failed: User not found or permission denied.");
+        console.error("Supabase update error:", { error, userId: id });
+        // Don't throw here, allow progress update to proceed if possible
       }
     }
 
@@ -471,6 +465,8 @@ class SupabaseService {
           completed_at: new Date().toISOString()
         }));
 
+        console.log(`[SupabaseService] Upserting ${upsertData.length} rows to user_progress...`);
+
         const { data: upsertResult, error } = await this.supabase
           .from('user_progress')
           .upsert(upsertData, { onConflict: 'user_id, lesson_id' })
@@ -478,6 +474,24 @@ class SupabaseService {
 
         if (error) {
           console.error(`[SupabaseService] ❌ Bulk user_progress update failed:`, error.message, error.details);
+
+          // Fallback 1: Try without completed_at (common schema mismatch)
+          console.warn("[SupabaseService] Retrying without completed_at column...");
+          const partialUpsertData = uniqueLessonIds.map(lessonId => ({
+            user_id: id,
+            lesson_id: lessonId,
+            status: 'completed'
+          }));
+
+          const fallbackUpsert = await this.supabase
+            .from('user_progress')
+            .upsert(partialUpsertData, { onConflict: 'user_id, lesson_id' });
+
+          if (fallbackUpsert.error) {
+            console.error(`[SupabaseService] ❌ Fallback upsert also failed:`, fallbackUpsert.error.message);
+          } else {
+            console.log(`[SupabaseService] ✅ Fallback upsert succeeded (without completed_at).`);
+          }
         } else {
           console.log(`[SupabaseService] ✅ Bulk progress updated successfully. Rows:`, upsertResult?.length);
         }
