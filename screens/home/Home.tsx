@@ -19,6 +19,34 @@ const Home: React.FC = () => {
         }
     }, [user, selectedPathId]);
 
+    // ADMIN: Auto-complete C for seenu@gmail.com
+    React.useEffect(() => {
+        const adminComplete = async () => {
+            if (user?.email === 'seenu@gmail.com' && curriculumData && !localStorage.getItem('admin_c_completed_v2')) {
+                console.log("🚀 Admin User Detected: Starting C Completion...");
+
+                // 1. Get all C Lessons
+                const cModules = curriculumData['c'] || (CURRICULUM as any)['c'] || [];
+                const allCLessons = cModules.flatMap((m: any) => m.lessons.map((l: any) => l.id));
+
+                if (allCLessons.length > 0) {
+                    try {
+                        console.log(`Marking ${allCLessons.length} lessons as complete...`);
+                        await import('../../services/supabaseService').then(({ supabaseDB }) =>
+                            supabaseDB.updateOne(user._id, { completedLessonIds: allCLessons })
+                        );
+                        localStorage.setItem('admin_c_completed_v2', 'true');
+                        alert("✅ ADMIN ACTION: C Language Course Marked as 100% Complete!");
+                        window.location.reload(); // Refresh to show changes
+                    } catch (e) {
+                        console.error("Admin completion failed", e);
+                    }
+                }
+            }
+        };
+        adminComplete();
+    }, [user, curriculumData]);
+
     const handlePathSelect = (pathId: string) => {
         setSelectedPathId(pathId);
     };
@@ -36,19 +64,27 @@ const Home: React.FC = () => {
 
     const completedLessonIds = user?.completedLessonIds || [];
 
-    // Find current lesson
+    // Find current lesson (First UNCOMPLETED lesson in selected path)
     const currentLesson = useMemo(() => {
-        if (!user || !curriculumData) return null;
-        const langId = user.lastLanguageId || 'c';
-        const mods = (curriculumData[langId] || (CURRICULUM as any)[langId] || []);
+        if (!user || !curriculumData || !selectedPathId) return null;
+
+        const mods = curriculumData[selectedPathId] || (CURRICULUM as any)[selectedPathId] || [];
         const allLessons = mods.flatMap((m: any) => m.lessons);
-        const lastLessonId = user.lastLessonId || 'c1';
-        return allLessons.find((l: any) => l.id === lastLessonId) || allLessons[0];
-    }, [user, curriculumData]);
+
+        // 1. Find the first lesson that has NOT been completed
+        const firstUncompleted = allLessons.find((l: any) => !completedLessonIds.includes(l.id));
+
+        if (firstUncompleted) return firstUncompleted;
+
+        // 2. If all completed, return the last lesson as a fallback for the title/view
+        // but we'll handle the "null/completed" state in the UI
+        return allLessons[allLessons.length - 1] || null;
+    }, [user, curriculumData, selectedPathId, completedLessonIds]);
 
     // Calculate total lessons
     const totalLessons = modules.reduce((sum, m) => sum + m.lessons.length, 0);
     const completedCount = modules.reduce((sum, m) => sum + m.lessons.filter((l: any) => completedLessonIds.includes(l.id)).length, 0);
+    const isPathCompleted = totalLessons > 0 && completedCount === totalLessons;
 
     if (loading || !user) return null;
 
@@ -72,10 +108,10 @@ const Home: React.FC = () => {
                         Welcome back, {user.firstName || 'Developer'}
                     </h2>
                     <p className="text-slate-400 text-base mb-1">
-                        Your learning journey continues today.
+                        {isPathCompleted ? 'Congratulations! You have mastered this path.' : 'Your learning journey continues today.'}
                     </p>
                     <p className="text-indigo-400 text-sm font-medium">
-                        Your next task is ready.
+                        {isPathCompleted ? 'Claim your rewards in the Profile section.' : 'Your next task is ready.'}
                     </p>
                 </div>
 
@@ -112,29 +148,37 @@ const Home: React.FC = () => {
 
                 {/* 3. PRIMARY ACTION CARD - Enhanced */}
                 <section className="mb-6">
-                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600/20 to-purple-600/20 border border-indigo-500/30 backdrop-blur-sm hover:border-indigo-500/50 transition-all duration-300 shadow-xl shadow-indigo-500/10">
+                    <div className={`relative overflow-hidden rounded-2xl border backdrop-blur-sm transition-all duration-300 shadow-xl shadow-indigo-500/10 ${isPathCompleted
+                        ? 'bg-gradient-to-br from-emerald-600/20 to-teal-600/20 border-emerald-500/30 hover:border-emerald-500/50'
+                        : 'bg-gradient-to-br from-indigo-600/20 to-purple-600/20 border-indigo-500/30 hover:border-indigo-500/50'
+                        }`}>
                         <div className="p-6 md:p-8">
                             <div className="flex items-start justify-between mb-4">
                                 <div>
-                                    <p className="text-xs font-bold text-indigo-300 uppercase tracking-wider mb-2">Continue Learning</p>
+                                    <p className={`text-xs font-bold uppercase tracking-wider mb-2 ${isPathCompleted ? 'text-emerald-300' : 'text-indigo-300'}`}>
+                                        {isPathCompleted ? 'Path Mastered' : 'Continue Learning'}
+                                    </p>
                                     <h3 className="text-xl md:text-2xl font-bold text-white mb-1">
-                                        {currentLesson?.title || 'Introduction to C'}
+                                        {isPathCompleted ? `${currentPath?.name} Mastered! 🎉` : (currentLesson?.title || 'Introduction to C')}
                                     </h3>
                                     <p className="text-sm text-slate-400">
-                                        {currentPath?.name || 'C Programming'} • Lesson {completedCount + 1} of {totalLessons}
+                                        {currentPath?.name} • {isPathCompleted ? `All ${totalLessons} Lessons Completed` : `Lesson ${completedCount + 1} of ${totalLessons}`}
                                     </p>
                                 </div>
-                                <div className="hidden md:flex items-center justify-center w-16 h-16 bg-indigo-500/20 rounded-xl">
-                                    <BookOpen size={32} className="text-indigo-400" />
+                                <div className={`hidden md:flex items-center justify-center w-16 h-16 rounded-xl ${isPathCompleted ? 'bg-emerald-500/20' : 'bg-indigo-500/20'}`}>
+                                    {isPathCompleted ? <Trophy size={32} className="text-emerald-400" /> : <BookOpen size={32} className="text-indigo-400" />}
                                 </div>
                             </div>
 
                             <button
-                                onClick={() => navigate(`/lesson/${currentLesson?.id || 'c1'}`)}
-                                className="w-full md:w-auto inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white px-8 py-3.5 rounded-xl font-bold transition-all duration-200 shadow-lg shadow-indigo-500/20"
+                                onClick={() => isPathCompleted ? navigate('/profile') : navigate(`/lesson/${currentLesson?.id || 'c1'}`)}
+                                className={`w-full md:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold transition-all duration-200 shadow-lg ${isPathCompleted
+                                    ? 'bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white shadow-emerald-500/20'
+                                    : 'bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white shadow-indigo-500/20'
+                                    }`}
                             >
-                                <Play size={18} className="fill-current" />
-                                Resume Lesson
+                                {isPathCompleted ? <Trophy size={18} /> : <Play size={18} className="fill-current" />}
+                                {isPathCompleted ? 'View Performance' : 'Resume Lesson'}
                             </button>
                         </div>
                     </div>

@@ -72,11 +72,18 @@ const Profile: React.FC = () => {
   }, [user]);
 
   const checkAndGenerateCertificates = async () => {
-    // Certificate check moved to LearningProfile to load only when stats are viewed
     if (!user) return;
-    const courseData = [
-      { id: 'c', name: 'C' } // Minimal check if needed in future
-    ];
+    try {
+      // Force check for C certificate
+      console.log("Checking C certificate eligibility...");
+      await certificateService.generateCertificateForCourse(user._id, 'c', 'C Programming');
+
+      // Refresh list
+      const userCerts = await certificateService.getUserCertificates(user._id);
+      setCertificates(userCerts);
+    } catch (e) {
+      console.error("Certificate check failed", e);
+    }
   };
 
   if (!user) return null;

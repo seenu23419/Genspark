@@ -6,9 +6,7 @@ import { PYTHON_CURRICULUM } from './data/pythonCurriculum';
 import { JAVASCRIPT_CURRICULUM } from './data/javascriptCurriculum';
 import { CPP_CURRICULUM } from './data/cppCurriculum';
 import { SQL_CURRICULUM } from './data/sqlCurriculum';
-import { HTMLCSS_CURRICULUM } from './data/htmlcssCurriculum';
 import { DSA_CURRICULUM } from './data/dsaCurriculum';
-import { FULLSTACK_CURRICULUM } from './data/fullstackCurriculum';
 
 export const LANGUAGES: Language[] = [
   { id: 'c', name: 'C Programming', icon: '/icons/c_official.svg', level: 'Beginner to Advanced', stats: '40 Lessons • 40 Quizzes' },
@@ -16,10 +14,7 @@ export const LANGUAGES: Language[] = [
   { id: 'python', name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg', level: 'Beginner to Advanced', stats: '44 Lessons • 44 Quizzes' },
   { id: 'javascript', name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg', level: 'Fullstack Ready', stats: '90 Lessons • 25 Quizzes' },
   { id: 'cpp', name: 'C++', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg', level: 'Competitive Coding', stats: '55 Lessons • 18 Quizzes' },
-  { id: 'sql', name: 'SQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg', level: 'Database Mastery', stats: '30 Lessons • 10 Quizzes' },
-  { id: 'htmlcss', name: 'HTML & CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg', level: 'Web Design', stats: '40 Lessons • 10 Quizzes' },
   { id: 'dsa', name: 'DSA', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/thealgorithms/thealgorithms-original.svg', level: 'Interview Prep', stats: '100 Lessons • 40 Quizzes' },
-  { id: 'fullstack', name: 'Full Stack', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg', level: 'Project Based', stats: '120 Lessons • 30 Quizzes' },
 ];
 
 export const CURRICULUM: Record<string, LessonModule[]> = {
@@ -29,9 +24,7 @@ export const CURRICULUM: Record<string, LessonModule[]> = {
   'javascript': JAVASCRIPT_CURRICULUM,
   'cpp': CPP_CURRICULUM,
   'sql': SQL_CURRICULUM,
-  'htmlcss': HTMLCSS_CURRICULUM,
   'dsa': DSA_CURRICULUM,
-  'fullstack': FULLSTACK_CURRICULUM,
 };
 
 export { PYTHON_CURRICULUM };

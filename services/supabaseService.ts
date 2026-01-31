@@ -165,6 +165,8 @@ class SupabaseService {
       onboardingCompleted: profile.onboarding_completed || false,
       streak: profile.streak || 0,
       lastActiveAt: profile.last_active_at,
+      lastLanguageId: profile.last_language_id,
+      lastLessonId: profile.last_lesson_id,
       activity_log: profile.activity_log || [],
       activity_history: StreakService.loadHistory(profile.id) || []
     };

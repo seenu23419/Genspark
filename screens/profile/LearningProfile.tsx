@@ -34,7 +34,7 @@ const LESSON_PREFIXES: Record<string, string> = {
 
 // Achievement requirements per course (lessons needed to unlock)
 const ACHIEVEMENT_REQUIREMENTS: Record<string, { lessons: number; problems: number }> = {
-    'c': { lessons: 10, problems: 15 },
+    'c': { lessons: 41, problems: 15 }, // Updated to match actual content
     'cpp': { lessons: 15, problems: 20 },
     'python': { lessons: 15, problems: 20 },
     'java': { lessons: 15, problems: 20 },
@@ -150,6 +150,11 @@ const LearningProfile: React.FC = () => {
     const lessonsStarted = user.lessonsCompleted || 0;
     const activeDaysCount = user.activity_log?.length || 0;
     const estimatedTime = (lessonsStarted * 15 + solvedProblemsCount * 10) / 60; // Est 15m/lesson, 10m/problem
+
+    const cReqs = ACHIEVEMENT_REQUIREMENTS['c'];
+    const totalCReqs = cReqs.lessons + cReqs.problems;
+    const currentCScore = (user.lessonsCompleted || 0) + solvedProblemsCount;
+    const isCCertified = (user.lessonsCompleted || 0) >= cReqs.lessons && solvedProblemsCount >= cReqs.problems;
 
     return (
         <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-8 pb-32 animate-in fade-in duration-500 bg-[#0a0b14] min-h-screen">
@@ -298,13 +303,13 @@ const LearningProfile: React.FC = () => {
                 </div>
 
                 {/* C Programming Certificate Card */}
-                <div className={`relative border rounded-2xl p-8 flex flex-col md:flex-row items-center gap-6 transition-all ${(user.lessonsCompleted >= 10 && solvedProblemsCount >= 15)
+                <div className={`relative border rounded-2xl p-8 flex flex-col md:flex-row items-center gap-6 transition-all ${isCCertified
                     ? 'bg-gradient-to-r from-slate-900 to-indigo-950/30 border-indigo-500/50 shadow-2xl shadow-indigo-500/5'
                     : 'bg-slate-900/50 border-white/5 opacity-90'
                     }`}>
 
                     {/* Icon Section - Ribbon Style */}
-                    <div className={`w-16 h-16 rounded-xl flex items-center justify-center shrink-0 ${(user.lessonsCompleted >= 10 && solvedProblemsCount >= 15)
+                    <div className={`w-16 h-16 rounded-xl flex items-center justify-center shrink-0 ${isCCertified
                         ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/20'
                         : 'bg-slate-800 text-slate-500'
                         }`}>
@@ -314,18 +319,18 @@ const LearningProfile: React.FC = () => {
                     {/* Content Section */}
                     <div className="flex-1 text-center md:text-left space-y-2">
                         <div>
-                            <h4 className={`text-lg font-bold tracking-tight ${(user.lessonsCompleted >= 10 && solvedProblemsCount >= 15) ? 'text-white' : 'text-slate-400'
+                            <h4 className={`text-lg font-bold tracking-tight ${isCCertified ? 'text-white' : 'text-slate-400'
                                 }`}>
                                 C Programming Fundamentals Certificate
                             </h4>
-                            {!(user.lessonsCompleted >= 10 && solvedProblemsCount >= 15) && (
+                            {!isCCertified && (
                                 <p className="text-sm text-slate-500 font-medium italic mt-1">
                                     "Your first certificate proves real skill, not just activity."
                                 </p>
                             )}
                         </div>
 
-                        {(user.lessonsCompleted >= 10 && solvedProblemsCount >= 15) ? (
+                        {isCCertified ? (
                             <div className="flex flex-col md:flex-row items-center gap-4 pt-2">
                                 <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-full text-xs font-bold border border-emerald-500/20 flex items-center gap-1.5">
                                     <CheckCircle2 size={12} /> Certified
@@ -341,24 +346,24 @@ const LearningProfile: React.FC = () => {
                             <div className="flex flex-col gap-3 pt-2 w-full">
                                 <div className="flex items-center justify-between text-[10px] font-bold text-slate-500 uppercase tracking-widest">
                                     <span>Progress to unlock</span>
-                                    <span>{Math.round(((user.lessonsCompleted || 0) + solvedProblemsCount) / 25 * 100)}%</span>
+                                    <span>{Math.round((currentCScore / totalCReqs) * 100)}%</span>
                                 </div>
                                 {/* Progress Bar */}
                                 <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
                                     <div
                                         className="h-full bg-indigo-500 rounded-full transition-all duration-1000"
-                                        style={{ width: `${Math.min(100, ((user.lessonsCompleted || 0) + solvedProblemsCount) / 25 * 100)}%` }}
+                                        style={{ width: `${Math.min(100, (currentCScore / totalCReqs) * 100)}%` }}
                                     />
                                 </div>
 
                                 <div className="flex items-center gap-4 text-xs font-semibold text-slate-500 mt-1">
-                                    <div className={`flex items-center gap-1.5 ${user.lessonsCompleted >= 10 ? 'text-emerald-500' : ''}`}>
-                                        {user.lessonsCompleted >= 10 ? <CheckCircle2 size={12} /> : <Lock size={12} />}
-                                        <span>{user.lessonsCompleted || 0}/10 Lessons</span>
+                                    <div className={`flex items-center gap-1.5 ${(user.lessonsCompleted || 0) >= cReqs.lessons ? 'text-emerald-500' : ''}`}>
+                                        {(user.lessonsCompleted || 0) >= cReqs.lessons ? <CheckCircle2 size={12} /> : <Lock size={12} />}
+                                        <span>{user.lessonsCompleted || 0}/{cReqs.lessons} Lessons</span>
                                     </div>
-                                    <div className={`flex items-center gap-1.5 ${solvedProblemsCount >= 15 ? 'text-emerald-500' : ''}`}>
-                                        {solvedProblemsCount >= 15 ? <CheckCircle2 size={12} /> : <Lock size={12} />}
-                                        <span>{solvedProblemsCount}/15 Problems</span>
+                                    <div className={`flex items-center gap-1.5 ${solvedProblemsCount >= cReqs.problems ? 'text-emerald-500' : ''}`}>
+                                        {solvedProblemsCount >= cReqs.problems ? <CheckCircle2 size={12} /> : <Lock size={12} />}
+                                        <span>{solvedProblemsCount}/{cReqs.problems} Problems</span>
                                     </div>
                                 </div>
                             </div>

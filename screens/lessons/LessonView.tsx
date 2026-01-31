@@ -310,8 +310,8 @@ const LessonView: React.FC<LessonViewProps> = ({
                   );
                 }
 
-                // Standard code block rendering - Read-only version
-                if (!inline && match) {
+                // Check if this is a multi-line block without a tag (usually Syntax)
+                if (!inline && !match && content.includes('\n')) {
                   return (
                     <div className="lesson-example-program selection-none">
                       <div className="lesson-code-header">
@@ -320,14 +320,36 @@ const LessonView: React.FC<LessonViewProps> = ({
                           <div className="w-2 h-2 rounded-full bg-slate-700" />
                           <div className="w-2 h-2 rounded-full bg-slate-700" />
                         </div>
-                        <div className="lesson-code-label">{match[1].toUpperCase()} EXAMPLE</div>
-                        <div className="lesson-read-only-badge">Read Only</div>
+                        <div className="lesson-code-label">SYNTAX</div>
+                      </div>
+                      <pre className="p-6 bg-[#0f1016] text-indigo-300 font-mono text-sm leading-relaxed overflow-x-auto whitespace-pre">
+                        {content}
+                      </pre>
+                    </div>
+                  );
+                }
+
+                // Standard code block rendering
+                if (!inline && match) {
+                  // Heuristic: If it contains placeholders like <...>, it's likely SYNTAX even if tagged
+                  const isSyntax = content.includes('<') && content.includes('>') && content.includes(';');
+                  const label = isSyntax ? 'SYNTAX' : `${match[1].toUpperCase()} EXAMPLE`;
+
+                  return (
+                    <div className="lesson-example-program selection-none">
+                      <div className="lesson-code-header">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-slate-700" />
+                          <div className="w-2 h-2 rounded-full bg-slate-700" />
+                          <div className="w-2 h-2 rounded-full bg-slate-700" />
+                        </div>
+                        <div className="lesson-code-label">{label}</div>
                       </div>
                       <SyntaxHighlighter
                         style={vscDarkPlus}
                         language={match[1]}
                         PreTag="div"
-                        showLineNumbers={true}
+                        showLineNumbers={!isSyntax} // Hide line numbers for pure syntax templates
                         customStyle={{
                           margin: 0,
                           padding: '1.5rem',

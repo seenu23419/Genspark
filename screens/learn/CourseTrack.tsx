@@ -1,6 +1,6 @@
 import React, { useMemo, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Lock, Play, CheckCircle, Clock, Loader2, AlertCircle, Sparkles, ChevronDown, Trophy, Medal, Target, Award, BookOpen } from 'lucide-react';
+import { ArrowLeft, Lock, Play, CheckCircle, Clock, Loader2, AlertCircle, Sparkles, ChevronDown, Trophy, Medal, Target, Award, BookOpen, Search } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCurriculum } from '../../contexts/useCurriculum';
 import { LANGUAGES } from '../../constants';
@@ -8,6 +8,7 @@ import { Language, Lesson, Certificate } from '../../types';
 import { usePractice } from '../../contexts/PracticeContext';
 import { certificateService } from '../../services/certificateService';
 import { CertificateModal } from '../../components/CertificateModal';
+import { supabaseDB } from '../../services/supabaseService';
 
 // Level descriptions - provide emotional context and guide
 const LEVEL_DESCRIPTIONS: { [key: string]: string } = {
@@ -118,7 +119,7 @@ const LEVEL_DESCRIPTIONS: { [key: string]: string } = {
 
 const CourseTrack: React.FC = () => {
   const { langId } = useParams<{ langId: string }>();
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
   const { data: curriculumData, loading, error, fetchLanguageCurriculum } = useCurriculum();
   const { getProblemStatus } = usePractice();
   const navigate = useNavigate();
@@ -174,6 +175,7 @@ const CourseTrack: React.FC = () => {
   useEffect(() => {
     if (langId) {
       fetchLanguageCurriculum(langId);
+
       // Tag OneSignal with the course they are currently studying
       try {
         const OneSignal = (window as any).OneSignal;
@@ -182,7 +184,7 @@ const CourseTrack: React.FC = () => {
         }
       } catch (e) { }
     }
-  }, [langId, fetchLanguageCurriculum]);
+  }, [langId, user?._id, fetchLanguageCurriculum]);
 
   // Initialize expansion
   useEffect(() => {
@@ -461,14 +463,23 @@ const CourseTrack: React.FC = () => {
               <p className="text-indigo-100 mb-8 max-w-md mx-auto">
                 You've completed every lesson in the {language.name} Track. You're now ready to showcase your skills to the world.
               </p>
-              <button
-                onClick={handleClaimCertificate}
-                disabled={isClaiming}
-                className="group relative px-10 py-4 bg-white text-indigo-600 rounded-2xl font-black uppercase tracking-widest text-sm hover:scale-105 transition-all active:scale-95 disabled:opacity-70 disabled:hover:scale-100 shadow-xl shadow-white/10 flex items-center gap-3 mx-auto"
-              >
-                {isClaiming ? <Loader2 className="animate-spin" size={20} /> : <Award size={22} className="group-hover:rotate-12 transition-transform" />}
-                {isClaiming ? 'Generating...' : 'Claim My Certificate'}
-              </button>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button
+                  onClick={handleClaimCertificate}
+                  disabled={isClaiming}
+                  className="group relative px-6 py-4 bg-white text-indigo-600 rounded-2xl font-black uppercase tracking-widest text-xs hover:scale-105 transition-all active:scale-95 disabled:opacity-70 disabled:hover:scale-100 shadow-xl shadow-white/10 flex items-center gap-2"
+                >
+                  {isClaiming ? <Loader2 className="animate-spin" size={20} /> : <Award size={18} className="group-hover:rotate-12 transition-transform" />}
+                  {isClaiming ? 'Generating...' : 'Claim My Certificate'}
+                </button>
+                <button
+                  onClick={() => navigate('/learn')}
+                  className="px-6 py-4 bg-indigo-500/20 text-white border border-indigo-400/30 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-indigo-500/30 transition-all flex items-center gap-2"
+                >
+                  <Search size={18} />
+                  Select Another Language
+                </button>
+              </div>
             </div>
           </div>
         )}

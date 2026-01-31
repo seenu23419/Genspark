@@ -40,9 +40,8 @@ interface CourseSection {
 const LearnHub: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { user } = useAuth();
+    const { user, updateUser } = useAuth();
     const [searchQuery, setSearchQuery] = useState('');
-    const [showAdvanced, setShowAdvanced] = useState(false);
     const [activeTab, setActiveTab] = useState<'TRACKS' | 'COMPLETED'>('TRACKS');
 
     // Handle initial filter from navigation state
@@ -91,12 +90,20 @@ const LearnHub: React.FC = () => {
             };
         }
 
+        if (completedCount === 0) {
+            return {
+                state: 'path_selected' as const,
+                activePath: { langId: lastLanguageId, name: pathName, progress: 0 },
+                completedBeginnerPaths
+            };
+        }
+
         return {
             state: 'path_in_progress' as const,
             activePath: { langId: lastLanguageId, name: pathName, progress: totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0 },
             completedBeginnerPaths
         };
-    }, [user]);
+    }, [user, CURRICULUM]);
 
     // Get all completed lessons across all paths
     const completedLessons = useMemo(() => {
@@ -165,18 +172,47 @@ const LearnHub: React.FC = () => {
 
         if (beginnerCourses.length > 0) {
             const isPathInProgress = userState.state === 'path_in_progress' && userState.activePath;
+            const isPathSelected = userState.state === 'path_selected' && userState.activePath;
+            const isPathCompleted = userState.state === 'path_completed' && userState.activePath;
 
-            if (isPathInProgress) {
+            if (isPathInProgress || isPathSelected) {
                 const activeLang = LANGUAGES.find(l => l.id === userState.activePath?.langId);
-                if (activeLang && beginnerCourses.some(c => c.id === activeLang.id)) {
+                if (activeLang) {
                     sections.push({
-                        title: 'Continue Learning',
-                        description: `You're learning ${userState.activePath?.name}. Keep going!`,
+                        title: isPathSelected ? 'Selected Path' : 'Continue Learning',
+                        description: isPathSelected
+                            ? `You've selected ${activeLang.name}. Ready to begin?`
+                            : `You're learning ${activeLang.name}. Keep going!`,
                         courses: [activeLang],
                         showBadge: false,
                     });
                 }
+            } else if (isPathCompleted) {
+                // If current path is completed, show a "Next Recommended" beginner course if available
+                const activeLangId = userState.activePath?.langId;
+                const nextBeginner = beginnerCourses.find(c => c.id !== activeLangId && !userState.completedBeginnerPaths.includes(c.id));
+
+                if (nextBeginner) {
+                    sections.push({
+                        title: 'Up Next',
+                        description: `You've mastered ${userState.activePath?.name}! Ready for ${nextBeginner.name}?`,
+                        courses: [nextBeginner],
+                        showBadge: true,
+                    });
+                } else {
+                    // Fallback to the completed path card but with mastered status
+                    const activeLang = LANGUAGES.find(l => l.id === activeLangId);
+                    if (activeLang) {
+                        sections.push({
+                            title: 'Path Mastered',
+                            description: `Congratulations! You've finished the ${activeLang.name} track.`,
+                            courses: [activeLang],
+                            showBadge: false,
+                        });
+                    }
+                }
             } else {
+                // No path selected, show the default "Start Here" (C)
                 sections.push({
                     title: 'Start Here',
                     description: 'Ready to begin? C Programming is the best foundation.',
@@ -185,24 +221,25 @@ const LearnHub: React.FC = () => {
                 });
             }
 
-            if (beginnerCourses.length > 1) {
-                let otherCourses = beginnerCourses.slice(1);
-                if (isPathInProgress && userState.activePath) {
-                    otherCourses = otherCourses.filter(c => c.id !== userState.activePath?.langId);
-                }
+            // Other beginner courses
+            let otherCourses = beginnerCourses;
+            // Filter out the one already shown in the top section
+            if (sections.length > 0 && sections[0].courses.length > 0) {
+                const mainCourseId = sections[0].courses[0].id;
+                otherCourses = otherCourses.filter(c => c.id !== mainCourseId);
+            }
 
-                if (otherCourses.length > 0) {
-                    const helperText = isPathInProgress
-                        ? 'Explore after completing your current path'
-                        : 'Once comfortable with C, explore these paths';
+            if (otherCourses.length > 0) {
+                const helperText = isPathInProgress
+                    ? 'Explore after completing your current path'
+                    : 'Expand your foundation with these beginner paths';
 
-                    sections.push({
-                        title: 'Popular for Beginners',
-                        description: helperText,
-                        courses: otherCourses,
-                        showBadge: false,
-                    });
-                }
+                sections.push({
+                    title: 'More for Beginners',
+                    description: helperText,
+                    courses: otherCourses,
+                    showBadge: false,
+                });
             }
         }
 
@@ -225,35 +262,57 @@ const LearnHub: React.FC = () => {
 
     const renderCourseCard = (lang: Language, isFirst: boolean, showBadge: boolean, sectionIndex: number) => {
         const stats = getLangStats(lang.id);
-        const isCProgramming = lang.id === 'c' && isFirst && userState.state === 'no_path_selected';
-        const isActivePathCard = lang.id === userState.activePath?.langId;
+        const isPathMastered = stats.progressPercent === 100;
+        const isFeaturedCard = sectionIndex === 0;
+
+        // C is only special if nothing else is started/selected
+        const isCProgramming = lang.id === 'c' && userState.state === 'no_path_selected';
+
         const isBeginnerCompleted = userState.completedBeginnerPaths.length > 0;
         const isAdvancedSection = sectionIndex >= 2;
         const isAdvancedLocked = isAdvancedSection && !isBeginnerCompleted && userState.state !== 'no_path_selected';
 
         const handleClick = () => {
             if (!isAdvancedLocked) {
+                // Determine if we should "Swap" the featured path
+                // Only swap if:
+                // 1. Current path is completed
+                // 2. OR No path is selected yet (state is 'no_path_selected')
+                // 3. AND we are clicking a different language than the current lastLanguageId
+                const isMastered = userState.state === 'path_completed';
+                const isNoPath = userState.state === 'no_path_selected';
+                const isDifferent = lang.id !== user?.lastLanguageId;
+
+                if ((isMastered || isNoPath) && isDifferent) {
+                    console.log(`LearnHub: Swapping featured path from ${user?.lastLanguageId} to ${lang.id}`);
+                    updateUser({ lastLanguageId: lang.id }).catch(console.error);
+                }
+
                 navigate(`/track/${lang.id}`);
             }
         };
+
+        const borderClass = isPathMastered
+            ? 'border-emerald-500 shadow-emerald-500/20 hover:shadow-emerald-500/30'
+            : 'border-indigo-500 shadow-indigo-500/30 hover:shadow-indigo-500/40';
 
         return (
             <div
                 key={lang.id}
                 onClick={handleClick}
                 className={`group relative rounded-2xl cursor-pointer overflow-hidden transition-all active:scale-[0.98] ${isAdvancedLocked ? 'opacity-50 cursor-not-allowed' : ''
-                    } ${isCProgramming || isActivePathCard
-                        ? 'col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2 bg-slate-900 border-2 border-indigo-500 p-6 md:p-8 shadow-2xl shadow-indigo-500/30 hover:shadow-indigo-500/40'
+                    } ${isFeaturedCard
+                        ? `col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2 bg-slate-900 border-2 p-6 md:p-8 shadow-2xl transition-all ${borderClass}`
                         : 'bg-slate-900/80 border border-slate-800 p-5 md:p-6 shadow-lg hover:border-slate-700 hover:bg-slate-900'
                     }`}
             >
-                <div className={`absolute -top-10 -right-10 w-32 h-32 rounded-full blur-3xl transition-all ${isCProgramming || isActivePathCard
-                    ? 'bg-indigo-500/20 group-hover:bg-indigo-500/25'
+                <div className={`absolute -top-10 -right-10 w-32 h-32 rounded-full blur-3xl transition-all ${isFeaturedCard
+                    ? (isPathMastered ? 'bg-emerald-500/20 group-hover:bg-emerald-500/25' : 'bg-indigo-500/20 group-hover:bg-indigo-500/25')
                     : 'bg-indigo-500/5 group-hover:bg-indigo-500/10'
                     }`}></div>
 
                 <div className="flex items-start justify-between mb-4">
-                    <div className={`${(isCProgramming || isActivePathCard) ? 'w-16 h-16 md:w-20 md:h-20' : 'w-14 h-14 md:w-16 md:h-16'} bg-white/5 rounded-xl flex items-center justify-center p-2 shadow-inner group-hover:bg-white/10 transition-all`}>
+                    <div className={`${isFeaturedCard ? 'w-16 h-16 md:w-20 md:h-20' : 'w-14 h-14 md:w-16 md:h-16'} bg-white/5 rounded-xl flex items-center justify-center p-2 shadow-inner group-hover:bg-white/10 transition-all`}>
                         <img
                             src={lang.icon}
                             alt={lang.name}
@@ -261,18 +320,21 @@ const LearnHub: React.FC = () => {
                         />
                     </div>
                     {showBadge && (
-                        <span className="px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                            Beginner
+                        <span className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border ${isPathMastered
+                            ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                            : 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30'
+                            }`}>
+                            {isPathMastered ? 'Mastered' : 'Beginner'}
                         </span>
                     )}
                 </div>
 
-                <h3 className={`font-black text-white mb-2 group-hover:text-indigo-300 transition-colors ${(isCProgramming || isActivePathCard) ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl'
+                <h3 className={`font-black text-white mb-2 group-hover:text-indigo-300 transition-colors ${isFeaturedCard ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl'
                     }`}>
                     {lang.name}
                 </h3>
 
-                <p className={`font-medium mb-6 leading-relaxed ${(isCProgramming || isActivePathCard) ? 'text-slate-300 text-base md:text-lg' : 'text-slate-300 text-sm md:text-base'
+                <p className={`font-medium mb-6 leading-relaxed ${isFeaturedCard ? 'text-slate-300 text-base md:text-lg' : 'text-slate-300 text-sm md:text-base'
                     }`}>
                     {LANGUAGE_OUTCOMES[lang.id] || `Learn ${lang.name}`}
                 </p>
@@ -283,7 +345,37 @@ const LearnHub: React.FC = () => {
                     </p>
                 )}
 
-                {isCProgramming ? (
+                {isPathMastered ? (
+                    <div className="space-y-3">
+                        <div className="flex flex-col sm:flex-row gap-3">
+                            <button className="flex-1 py-3.5 md:py-4 rounded-xl font-bold uppercase tracking-widest text-sm md:text-base transition-all flex items-center justify-center gap-2 px-4 bg-emerald-600/20 text-emerald-400 border border-emerald-500/30">
+                                <CheckCircle2 size={20} />
+                                <span>Mastered</span>
+                            </button>
+                            {isFeaturedCard && (
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        // Scroll to More for Beginners
+                                        const moreSection = document.getElementById('more-beginner-paths');
+                                        if (moreSection) {
+                                            moreSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                        } else {
+                                            document.querySelector('input')?.focus();
+                                        }
+                                    }}
+                                    className="flex-[1.5] py-3.5 md:py-4 rounded-xl font-bold uppercase tracking-widest text-sm md:text-base transition-all flex items-center justify-center gap-2 px-4 bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 active:scale-95"
+                                >
+                                    <span>Select Another Language</span>
+                                    <ChevronRight size={18} />
+                                </button>
+                            )}
+                        </div>
+                        <p className="text-slate-500 text-xs md:text-sm font-medium text-center italic">
+                            {isFeaturedCard ? "Congratulations! Ready for your next challenge?" : "You've successfully finished this track."}
+                        </p>
+                    </div>
+                ) : isCProgramming ? (
                     <div className="space-y-3">
                         <button className="w-full py-3.5 md:py-4 rounded-xl font-bold uppercase tracking-widest text-sm md:text-base transition-all flex items-center justify-center gap-2 px-4 group/btn bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 active:scale-95">
                             <span>Start C Programming</span>
@@ -292,27 +384,20 @@ const LearnHub: React.FC = () => {
                             Best choice if you're new to coding
                         </p>
                     </div>
-                ) : isActivePathCard ? (
+                ) : stats.hasProgress ? (
                     <div className="space-y-3">
                         <button className="w-full py-3.5 md:py-4 rounded-xl font-bold uppercase tracking-widest text-sm md:text-base transition-all flex items-center justify-center gap-2 px-4 group/btn bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 active:scale-95">
                             <span>Continue {lang.name}</span>
                         </button>
                         <p className="text-slate-500 text-xs md:text-sm font-medium text-center italic">
-                            You're {userState.activePath?.progress}% complete
+                            You're {stats.progressPercent}% complete
                         </p>
                     </div>
-                ) : isAdvancedLocked ? (
-                    <div className="flex items-center text-slate-600 font-semibold text-sm">
-                        <span>Locked</span>
-                    </div>
-                ) : sectionIndex === 1 ? (
-                    <button className="px-4 py-2.5 bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-slate-300 rounded-lg font-semibold text-sm transition-colors border border-slate-700/50 hover:border-slate-600">
-                        Explore
-                    </button>
                 ) : (
-                    <div className="flex items-center text-slate-500 group-hover:text-slate-400 font-semibold text-sm transition-colors">
-                        <span>Explore</span>
-                        <ChevronRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                    <div className="space-y-3">
+                        <button className="w-full py-3.5 md:py-4 rounded-xl font-bold uppercase tracking-widest text-sm md:text-base transition-all flex items-center justify-center gap-2 px-4 group/btn bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 active:scale-95">
+                            <span>Start {lang.name}</span>
+                        </button>
                     </div>
                 )}
             </div>
@@ -375,13 +460,13 @@ const LearnHub: React.FC = () => {
                     <div className="space-y-12 md:space-y-16">
                         {sections.map((section, sectionIndex) => {
                             const isAdvancedSection = section.title === 'Build Advanced Skills';
-                            const shouldRender = !isAdvancedSection || showAdvanced || searchQuery !== '';
+                            const shouldRender = true;
 
                             if (!shouldRender) return null;
 
                             return (
                                 <section key={sectionIndex} className="space-y-4">
-                                    <div className={`px-1 ${isAdvancedSection && !showAdvanced ? 'opacity-40' : ''}`}>
+                                    <div id={sectionIndex === 1 ? "more-beginner-paths" : undefined} className={`px-1`}>
                                         <h2 className={`font-black mb-1 ${sectionIndex === 0
                                             ? 'text-2xl md:text-3xl text-white'
                                             : 'text-lg md:text-xl text-slate-300'
@@ -403,7 +488,7 @@ const LearnHub: React.FC = () => {
                                     )}
 
                                     <div className={`${sectionIndex === 0 ? 'grid grid-cols-1' : 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3'
-                                        } gap-4 md:gap-6 ${isAdvancedSection && !showAdvanced ? 'opacity-40 pointer-events-none' : ''}`}>
+                                        } gap-4 md:gap-6`}>
                                         {section.courses.map((course, courseIndex) =>
                                             renderCourseCard(course, sectionIndex === 0 && courseIndex === 0, section.showBadge, sectionIndex)
                                         )}
@@ -412,17 +497,7 @@ const LearnHub: React.FC = () => {
                             );
                         })}
 
-                        {!showAdvanced && sections.some(s => s.title === 'Build Advanced Skills') && searchQuery === '' && (
-                            <div className="text-center">
-                                <button
-                                    onClick={() => setShowAdvanced(true)}
-                                    className="inline-flex items-center gap-2 px-4 py-2.5 text-slate-400 hover:text-slate-300 font-semibold text-sm transition-colors"
-                                >
-                                    <span>Explore advanced paths</span>
-                                    <ChevronDown size={16} />
-                                </button>
-                            </div>
-                        )}
+
 
                         {sections.length === 0 && (
                             <div className="text-center py-12">

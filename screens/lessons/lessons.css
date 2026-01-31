@@ -78,11 +78,15 @@
 
 .lesson-code-label {
   font-weight: 900;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   letter-spacing: 0.1em;
   color: #6366f1;
   text-transform: uppercase;
   font-family: 'Inter', sans-serif;
+  padding: 0.375rem 0.75rem;
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  border-radius: 0.5rem;
 }
 
 .lesson-read-only-badge {
@@ -156,31 +160,10 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Code Block Language Label */
-.lesson-code-label {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  padding: 0.375rem 0.75rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 0.375rem;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: rgba(226, 232, 240, 0.6);
-  text-transform: uppercase;
-}
-
-/* On small screens, hide the language label to avoid covering code and reduce padding */
+/* On small screens, hide labels if too crowded */
 @media (max-width: 520px) {
-  .lesson-code-label {
+  .lesson-read-only-badge {
     display: none;
-  }
-
-  .lesson-code-block pre {
-    padding-right: 1.25rem;
-    /* restore tighter padding when label is hidden */
   }
 }
 
