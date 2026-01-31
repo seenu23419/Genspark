@@ -21,12 +21,11 @@ export const curriculumService = {
             // Check for explicit URL first
             const envKey = `VITE_CURRICULUM_${langId.toUpperCase()}_URL`;
             const explicitUrl = import.meta.env[envKey];
-            const baseUrl = import.meta.env.VITE_CURRICULUM_BASE_URL;
+            const baseUrl = import.meta.env.VITE_CURRICULUM_BASE_URL || BASE_URL;
 
-            // If no remote source is provided, or we're in dev with no specific overrides, 
-            // return empty array to use the statically bundled JSON data.
+            // If no remote source is provided at all, use bundled data.
             if (!explicitUrl && !baseUrl) {
-                console.log(`[Curriculum] No remote URL provided for ${langId}, using bundled data.`);
+                console.log(`[Curriculum] No remote source found for ${langId}, using bundled data.`);
                 return [];
             }
 

@@ -126,17 +126,9 @@ const Home: React.FC = () => {
 
                 {/* 7. LANGUAGE PATH INDICATOR - Premium Redesign */}
                 <section className="mb-10 p-6 bg-slate-900/40 border border-slate-700/40 rounded-2xl shadow-xl shadow-indigo-500/5">
-                    <div className="flex items-center justify-between mb-6">
-                        <div className="flex items-center gap-2">
-                            <Zap size={18} className="text-indigo-400" />
-                            <h3 className="text-sm font-black text-white uppercase tracking-wider">Learning Path</h3>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest hidden md:block">Active Choice</span>
-                            <span className="text-[10px] font-black text-white bg-indigo-600 px-4 py-1.5 rounded-xl border border-indigo-400/50 shadow-lg shadow-indigo-500/20 uppercase tracking-wider">
-                                {currentPath?.name || 'C Programming'}
-                            </span>
-                        </div>
+                    <div className="flex items-center gap-2 mb-6">
+                        <Zap size={18} className="text-indigo-400" />
+                        <h3 className="text-sm font-black text-white uppercase tracking-wider">Learning Path</h3>
                     </div>
 
                     <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide">
@@ -199,11 +191,11 @@ const Home: React.FC = () => {
                         onClick={() => navigate('/profile/streaks')}
                         className="relative p-5 bg-slate-900/40 border border-slate-700/30 rounded-xl hover:bg-slate-900/60 transition-all duration-300 group overflow-hidden text-left"
                     >
-                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-400 via-emerald-500 to-emerald-600 rounded-full shadow-[0_0_20px_rgba(52,211,153,0.7)]"></div>
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-400 via-indigo-500 to-indigo-600 rounded-full shadow-[0_0_20px_rgba(99,102,241,0.7)]"></div>
                         <div className="flex items-center justify-between">
                             <div className="ml-3">
                                 <div className="text-sm text-slate-300 font-medium mb-2 flex items-center gap-2">
-                                    <Flame size={16} className="text-emerald-400" />
+                                    <Flame size={16} className="text-indigo-400" />
                                     Current Streak
                                 </div>
                                 <div className="text-3xl font-bold text-white">7 days</div>
@@ -216,16 +208,16 @@ const Home: React.FC = () => {
                         onClick={() => navigate('/learn', { state: { initialFilter: 'completed' } })}
                         className="relative p-5 bg-slate-900/40 border border-slate-700/30 rounded-xl hover:bg-slate-900/60 transition-all duration-300 group overflow-hidden text-left"
                     >
-                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-400 via-emerald-500 to-emerald-600 rounded-full shadow-[0_0_20px_rgba(52,211,153,0.7)]"></div>
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-rose-400 via-rose-500 to-rose-600 rounded-full shadow-[0_0_20px_rgba(244, 63, 94, 0.7)]"></div>
                         <div className="flex items-center justify-between">
                             <div className="ml-3 flex-1">
                                 <div className="text-sm text-slate-300 font-medium mb-2 flex items-center gap-2">
-                                    <BookOpen size={16} className="text-emerald-400" />
+                                    <BookOpen size={16} className="text-rose-400" />
                                     Lessons Completed
                                 </div>
                                 <div className="text-3xl font-bold text-white mb-2">{completedCount} / {totalLessons}</div>
                                 <div className="w-full bg-slate-700/50 rounded-full h-1.5">
-                                    <div className="bg-emerald-500 h-1.5 rounded-full transition-all duration-500" style={{ width: `${(completedCount / totalLessons) * 100}%` }}></div>
+                                    <div className="bg-rose-500 h-1.5 rounded-full transition-all duration-500" style={{ width: `${(completedCount / totalLessons) * 100}%` }}></div>
                                 </div>
                             </div>
                             <ChevronRight size={20} className="text-slate-600 group-hover:text-slate-400 transition-colors" />
@@ -236,16 +228,16 @@ const Home: React.FC = () => {
                         onClick={() => navigate('/practice')}
                         className="relative p-5 bg-slate-900/40 border border-slate-700/30 rounded-xl hover:bg-slate-900/60 transition-all duration-300 group overflow-hidden text-left"
                     >
-                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 rounded-full shadow-[0_0_20px_rgba(251,191,36,0.7)]"></div>
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.7)]"></div>
                         <div className="flex items-center justify-between">
                             <div className="ml-3 flex-1">
                                 <div className="text-sm text-slate-300 font-medium mb-2 flex items-center gap-2">
-                                    <Code size={16} className="text-amber-400" />
+                                    <Code size={16} className="text-purple-400" />
                                     Practice Solved
                                 </div>
                                 <div className="text-3xl font-bold text-white mb-2">0</div>
                                 <div className="w-full bg-slate-700/50 rounded-full h-1.5">
-                                    <div className="bg-amber-500 h-1.5 rounded-full transition-all duration-500" style={{ width: '0%' }}></div>
+                                    <div className="bg-purple-500 h-1.5 rounded-full transition-all duration-500" style={{ width: '0%' }}></div>
                                 </div>
                             </div>
                             <ChevronRight size={20} className="text-slate-600 group-hover:text-slate-400 transition-colors" />
