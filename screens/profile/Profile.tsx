@@ -25,18 +25,15 @@ import {
   Lock,
   Scroll,
 } from 'lucide-react';
-import { User, Certificate } from '../../types';
+import { User } from '../../types';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, BarChart, Bar, CartesianGrid } from 'recharts';
-import { certificateService } from '../../services/certificateService';
 import { supabaseDB } from '../../services/supabaseService';
 
 const Profile: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [certificates, setCertificates] = useState<Certificate[]>([]);
-  const [certificatesLoading, setCertificatesLoading] = useState(true);
   const [showAvatarMenu, setShowAvatarMenu] = useState(false);
   const [solvedProblemsCount, setSolvedProblemsCount] = useState(0);
 
@@ -53,38 +50,6 @@ const Profile: React.FC = () => {
     if (user) fetchPracticeStats();
   }, [user]);
 
-  useEffect(() => {
-    const fetchCertificates = async () => {
-      if (user) {
-        try {
-          const userCerts = await certificateService.getUserCertificates(user._id);
-          setCertificates(userCerts);
-          await checkAndGenerateCertificates();
-        } catch (error) {
-          console.error('Error fetching certificates:', error);
-        } finally {
-          setCertificatesLoading(false);
-        }
-      }
-    };
-
-    fetchCertificates();
-  }, [user]);
-
-  const checkAndGenerateCertificates = async () => {
-    if (!user) return;
-    try {
-      // Force check for C certificate
-      console.log("Checking C certificate eligibility...");
-      await certificateService.generateCertificateForCourse(user._id, 'c', 'C Programming');
-
-      // Refresh list
-      const userCerts = await certificateService.getUserCertificates(user._id);
-      setCertificates(userCerts);
-    } catch (e) {
-      console.error("Certificate check failed", e);
-    }
-  };
 
   if (!user) return null;
 

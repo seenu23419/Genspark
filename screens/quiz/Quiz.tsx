@@ -6,10 +6,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabaseDB } from '../../services/supabaseService';
 import { CURRICULUM } from '../../constants';
 import { QuizQuestion } from '../../types';
-import { certificateService } from '../../services/certificateService';
-import { CertificateModal } from '../../components/CertificateModal';
-import { CertificateDisplay } from '../../components/CertificateDisplay';
-import { Certificate } from '../../types';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import './quiz.css';
@@ -70,9 +66,6 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
   const [isFinished, setIsFinished] = useState(false);
   const [submittedAnswer, setSubmittedAnswer] = useState<number | null>(null);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean | null>(null);
-  const [showCertificateModal, setShowCertificateModal] = useState(false);
-  const [certCourseInfo, setCertCourseInfo] = useState<{ id: string, name: string } | null>(null);
-  const [earnedCertificate, setEarnedCertificate] = useState<Certificate | null>(null);
   const [isSubmittingFinish, setIsSubmittingFinish] = useState(false);
 
   // 3. Derived State (Defined before functions that use them)
@@ -168,15 +161,6 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
             xp: 100
           });
 
-          // Final exam cert generation
-          if (isPassed && quizId === 'c41') {
-            certificateService.generateCertificateForCourse(
-              user._id,
-              courseId,
-              courseId.charAt(0).toUpperCase() + courseId.slice(1),
-              quizId
-            ).catch(e => console.error("Async cert generation failed", e));
-          }
         } catch (err) {
           console.error('Error in background quiz sync:', err);
         }
@@ -223,26 +207,6 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
 
   // 8. Result Screen
   if (isFinished) {
-    if (earnedCertificate) {
-      return (
-        <div className="h-full w-full bg-[#0a0b14] p-4 flex flex-col items-center justify-center animate-in fade-in duration-700">
-          <div className="w-full max-w-5xl mx-auto space-y-6">
-            <CertificateDisplay
-              certificate={{
-                certificateId: earnedCertificate.certificate_id,
-                userName: user?.name || 'Student',
-                courseName: earnedCertificate.course_name,
-                completionDate: new Date(earnedCertificate.completion_date),
-                mentorName: earnedCertificate.mentor_name
-              }}
-            />
-            <button onClick={() => navigate(-1)} className="w-full max-w-sm py-4 bg-indigo-600 text-white rounded-2xl font-black transition-all flex items-center justify-center gap-2 mx-auto active:scale-95 shadow-xl shadow-indigo-600/20">
-              Done <ArrowRight size={20} />
-            </button>
-          </div>
-        </div>
-      );
-    }
 
     const isPassed = score >= (questions.length * passPercentage) / 100;
 
@@ -272,21 +236,6 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
           </div>
 
           <div className="space-y-3">
-            {isPassed && quizId === 'c41' && (
-              <button
-                onClick={async () => {
-                  const cert = await certificateService.getCertificateForCourse(user!._id, 'C Programming');
-                  if (cert) setEarnedCertificate(cert);
-                  else {
-                    const generated = await certificateService.generateCertificateForCourse(user!._id, 'c', 'C Programming', 'c41');
-                    if (generated) setEarnedCertificate(generated);
-                  }
-                }}
-                className="w-full py-5 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white rounded-2xl font-black flex items-center justify-center gap-3 active:scale-95 shadow-lg shadow-emerald-500/10"
-              >
-                <Award size={24} /> Claim My Certificate
-              </button>
-            )}
 
             <button
               onClick={() => {
@@ -411,15 +360,6 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
         </div>
       </div>
 
-      {user && certCourseInfo && (
-        <CertificateModal
-          isOpen={showCertificateModal}
-          onClose={() => setShowCertificateModal(false)}
-          userId={user._id}
-          courseId={certCourseInfo.id}
-          courseName={certCourseInfo.name}
-        />
-      )}
     </div>
   );
 };

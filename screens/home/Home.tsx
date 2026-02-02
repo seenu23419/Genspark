@@ -264,14 +264,6 @@ const Home: React.FC = () => {
                             Take Quiz
                         </button>
                         <button
-                            onClick={() => navigate('/profile')}
-                            className="flex-shrink-0 px-6 py-3 bg-slate-800/70 hover:bg-slate-800 border border-slate-700 rounded-xl text-white text-sm font-semibold transition-all duration-200 flex items-center gap-2 opacity-50 cursor-not-allowed"
-                            disabled
-                        >
-                            <Award size={16} className="text-blue-400" />
-                            View Certificate 🔒
-                        </button>
-                        <button
                             onClick={() => navigate('/learn')}
                             className="flex-shrink-0 px-6 py-3 bg-slate-800/70 hover:bg-slate-800 border border-slate-700 rounded-xl text-white text-sm font-semibold transition-all duration-200 flex items-center gap-2"
                         >

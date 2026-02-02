@@ -263,7 +263,6 @@ const Settings: React.FC<{ onBack?: () => void }> = ({ onBack: propOnBack }) => 
           <h3 className="font-black text-slate-900 dark:text-white px-2">FAQ</h3>
           {[
             "How do I reset my progress?",
-            "Can I download certificates?",
             "How does the AI tutor work?"
           ].map((q, i) => (
             <div key={i} className="p-4 border border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-900/50 cursor-pointer">

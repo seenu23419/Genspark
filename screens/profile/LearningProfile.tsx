@@ -11,11 +11,12 @@ import {
     ExternalLink,
     ShieldCheck
 } from 'lucide-react';
-import { Certificate } from '../../types';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, BarChart, Bar, CartesianGrid } from 'recharts';
-import { certificateService } from '../../services/certificateService';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, BarChart, Bar, CartesianGrid } from 'recharts';
 import { supabaseDB } from '../../services/supabaseService';
 import { LANGUAGES } from '../../constants';
 
@@ -48,8 +49,6 @@ const ACHIEVEMENT_REQUIREMENTS: Record<string, { lessons: number; problems: numb
 const LearningProfile: React.FC = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
-    const [certificates, setCertificates] = useState<Certificate[]>([]);
-    const [certificatesLoading, setCertificatesLoading] = useState(true);
     const [solvedProblemsCount, setSolvedProblemsCount] = useState(0);
 
     // Dynamic Activity Data Calculation
@@ -121,22 +120,6 @@ const LearningProfile: React.FC = () => {
         if (user) fetchPracticeStats();
     }, [user]);
 
-    useEffect(() => {
-        const fetchCertificates = async () => {
-            if (user) {
-                try {
-                    const userCerts = await certificateService.getUserCertificates(user._id);
-                    setCertificates(userCerts);
-                } catch (error) {
-                    console.error('Error fetching certificates:', error);
-                } finally {
-                    setCertificatesLoading(false);
-                }
-            }
-        };
-
-        fetchCertificates();
-    }, [user]);
 
     if (!user) return null;
 
@@ -293,84 +276,6 @@ const LearningProfile: React.FC = () => {
                 </div>
             </div>
 
-            {/* 4. Certificates Section */}
-            <section className="space-y-4">
-                <div className="px-2">
-                    <h3 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-                        Certificates
-                    </h3>
-                    <p className="text-xs font-medium text-slate-400">Proof of your learning progress</p>
-                </div>
-
-                {/* C Programming Certificate Card */}
-                <div className={`relative border rounded-2xl p-8 flex flex-col md:flex-row items-center gap-6 transition-all ${isCCertified
-                    ? 'bg-gradient-to-r from-slate-900 to-indigo-950/30 border-indigo-500/50 shadow-2xl shadow-indigo-500/5'
-                    : 'bg-slate-900/50 border-white/5 opacity-90'
-                    }`}>
-
-                    {/* Icon Section - Ribbon Style */}
-                    <div className={`w-16 h-16 rounded-xl flex items-center justify-center shrink-0 ${isCCertified
-                        ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/20'
-                        : 'bg-slate-800 text-slate-500'
-                        }`}>
-                        <Scroll size={32} strokeWidth={1.5} />
-                    </div>
-
-                    {/* Content Section */}
-                    <div className="flex-1 text-center md:text-left space-y-2">
-                        <div>
-                            <h4 className={`text-lg font-bold tracking-tight ${isCCertified ? 'text-white' : 'text-slate-400'
-                                }`}>
-                                C Programming Fundamentals Certificate
-                            </h4>
-                            {!isCCertified && (
-                                <p className="text-sm text-slate-500 font-medium italic mt-1">
-                                    "Your first certificate proves real skill, not just activity."
-                                </p>
-                            )}
-                        </div>
-
-                        {isCCertified ? (
-                            <div className="flex flex-col md:flex-row items-center gap-4 pt-2">
-                                <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-full text-xs font-bold border border-emerald-500/20 flex items-center gap-1.5">
-                                    <CheckCircle2 size={12} /> Certified
-                                </span>
-                                <button
-                                    onClick={() => navigate('/certificate/verify/GS-C-2026-DEMO')}
-                                    className="px-6 py-2 bg-white text-slate-900 rounded-lg font-bold text-xs hover:bg-indigo-50 transition active:scale-95 shadow-lg border border-transparent"
-                                >
-                                    View Certificate
-                                </button>
-                            </div>
-                        ) : (
-                            <div className="flex flex-col gap-3 pt-2 w-full">
-                                <div className="flex items-center justify-between text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                                    <span>Progress to unlock</span>
-                                    <span>{Math.round((currentCScore / totalCReqs) * 100)}%</span>
-                                </div>
-                                {/* Progress Bar */}
-                                <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
-                                    <div
-                                        className="h-full bg-indigo-500 rounded-full transition-all duration-1000"
-                                        style={{ width: `${Math.min(100, (currentCScore / totalCReqs) * 100)}%` }}
-                                    />
-                                </div>
-
-                                <div className="flex items-center gap-4 text-xs font-semibold text-slate-500 mt-1">
-                                    <div className={`flex items-center gap-1.5 ${(user.lessonsCompleted || 0) >= cReqs.lessons ? 'text-emerald-500' : ''}`}>
-                                        {(user.lessonsCompleted || 0) >= cReqs.lessons ? <CheckCircle2 size={12} /> : <Lock size={12} />}
-                                        <span>{user.lessonsCompleted || 0}/{cReqs.lessons} Lessons</span>
-                                    </div>
-                                    <div className={`flex items-center gap-1.5 ${solvedProblemsCount >= cReqs.problems ? 'text-emerald-500' : ''}`}>
-                                        {solvedProblemsCount >= cReqs.problems ? <CheckCircle2 size={12} /> : <Lock size={12} />}
-                                        <span>{solvedProblemsCount}/{cReqs.problems} Problems</span>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </section>
 
             {/* 5. Achievements (Secondary) */}
             <section className="space-y-6 pb-20">
@@ -381,33 +286,6 @@ const LearningProfile: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {/* Unlocked / Earned Certificates */}
-                    {certificates.map((cert) => (
-                        <div key={cert.id} className="group bg-slate-900/60 border border-white/10 rounded-[2.5rem] overflow-hidden hover:border-indigo-500/30 transition-all duration-500 hover:-translate-y-2">
-                            <div className="p-8 space-y-6">
-                                <div className="flex items-start justify-between">
-                                    <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 border border-emerald-500/20">
-                                        <CheckCircle2 size={28} />
-                                    </div>
-                                    <div className="text-right">
-                                        <div className="text-[8px] font-black text-slate-400 uppercase tracking-widest">ID: {cert.certificate_id.slice(0, 8)}</div>
-                                    </div>
-                                </div>
-
-                                <div className="space-y-1">
-                                    <h4 className="text-xl font-black text-white tracking-tight">{cert.course_name} Program</h4>
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Issued {new Date(cert.completion_date).toLocaleDateString()}</p>
-                                </div>
-
-                                <button
-                                    onClick={() => navigate(`/certificate/verify/${cert.certificate_id}`)}
-                                    className="w-full py-4 bg-white text-slate-950 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] flex items-center justify-center gap-2 hover:bg-slate-100 transition shadow-xl"
-                                >
-                                    View Certificate <ExternalLink size={12} />
-                                </button>
-                            </div>
-                        </div>
-                    ))}
 
                     {/* Dynamic Course Achievements */}
                     {LANGUAGES.map((lang) => {
@@ -420,10 +298,6 @@ const LearningProfile: React.FC = () => {
 
                         const courseLessons = getCourseLessonsCompleted(courseId);
                         const isCompleted = courseLessons >= requirements.lessons && solvedProblemsCount >= requirements.problems;
-                        const hasCertificate = certificates.some(c => c.course_name === courseName);
-
-                        // Don't show if already has certificate
-                        if (hasCertificate) return null;
 
                         return isCompleted ? (
                             // Completed State
@@ -441,7 +315,7 @@ const LearningProfile: React.FC = () => {
                                 </div>
                                 <div className="mt-8 pt-6 border-t border-white/5">
                                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
-                                        You've mastered the basics! Go claim your certificate above.
+                                        You've mastered the basics! Course completed.
                                     </p>
                                 </div>
                             </div>
