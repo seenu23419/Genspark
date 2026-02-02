@@ -4,7 +4,7 @@ import App from './App';
 import { registerSW } from 'virtual:pwa-register';
 
 // Register service worker for offline support
-registerSW({ immediate: true });
+// registerSW({ immediate: true });
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

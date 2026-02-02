@@ -104,14 +104,7 @@ const Signup: React.FC = () => {
 
   return (
     <div className="fixed inset-0 bg-slate-950 overflow-y-auto">
-      {/* Back button */}
-      <button
-        onClick={() => navigate(-1)}
-        className="absolute top-4 left-4 z-20 p-2 hover:bg-slate-800/50 rounded-lg transition-colors duration-200"
-        aria-label="Go back"
-      >
-        <ChevronLeft size={20} className="text-slate-400" />
-      </button>
+
 
       {/* Main content - Logo first, brand-forward */}
       <div className="min-h-full flex flex-col items-center justify-center px-5 py-8">

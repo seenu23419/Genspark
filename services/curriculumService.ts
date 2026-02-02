@@ -30,6 +30,16 @@ export const curriculumService = {
             }
 
             const url = explicitUrl || `${baseUrl}/${langId}.json`;
+
+            // Check if we should prefer local data for this language
+            const preferLocalKey = `VITE_CURRICULUM_${langId.toUpperCase()}_PREFER_LOCAL`;
+            const preferLocal = import.meta.env[preferLocalKey] === 'true';
+
+            if (preferLocal) {
+                console.log(`[Curriculum] Prefer local data enabled for ${langId}, skipping remote fetch.`);
+                return [];
+            }
+
             const response = await fetch(url);
 
             if (!response.ok) {

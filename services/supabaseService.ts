@@ -153,10 +153,6 @@ class SupabaseService {
       lastName: profile.last_name,
       name: profile.name || (profile.first_name ? `${profile.first_name} ${profile.last_name || ''}`.trim() : 'User'),
       avatar: profile.avatar,
-      isPro: profile.is_pro || false,
-      subscriptionTier: profile.subscription_tier,
-      billingCycle: profile.billing_cycle,
-      nextBillingDate: profile.next_billing_date ? new Date(profile.next_billing_date) : undefined,
       lessonsCompleted: completedIds.length,
       completedLessonIds: completedIds,
       unlockedLessonIds: unlockedIds,
@@ -341,7 +337,7 @@ class SupabaseService {
    * Handles complex logic to split updates between 'users' table and 'user_progress' table
    */
   async updateOne(id: string, updates: Partial<User>): Promise<User> {
-    console.log("[SupabaseService] updateOne CALLED for:", id, "Updates:", Object.keys(updates));
+    console.log("[SupabaseService] updateOne CALLED for:", id, "With Updates:", updates);
     if (!this.isConfigured) {
       console.error("[SupabaseService] Database not configured");
       throw new Error("Database not configured");
@@ -349,7 +345,6 @@ class SupabaseService {
 
     // 1. Update Profile Fields (Exclude XP/Streak - now managed by RPC)
     const profileUpdates: any = {};
-    if (updates.isPro !== undefined) profileUpdates.is_pro = updates.isPro;
     if (updates.avatar !== undefined) profileUpdates.avatar = updates.avatar;
     if (updates.firstName !== undefined) profileUpdates.first_name = updates.firstName;
     if (updates.lastName !== undefined) profileUpdates.last_name = updates.lastName;
@@ -388,6 +383,12 @@ class SupabaseService {
         .update(profileUpdates)
         .eq('id', id)
         .select();
+
+      if (error) {
+        console.error("❌ [DB_FAILURE] Supabase update failed for user", id, error);
+      } else {
+        console.log("✅ [DB_SUCCESS] Supabase update succeeded", data?.[0]?.onboarding_completed);
+      }
 
       if (error && (error.code === '42703' || error.message?.includes('column'))) {
         console.warn("[SupabaseService] Missing columns during update, retrying with strictly compatible fields");

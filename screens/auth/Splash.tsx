@@ -9,20 +9,9 @@ import React, { useState, useEffect } from 'react';
  * - 3-second display with immediate skip if app loads
  */
 const Splash: React.FC = () => {
-    const [fadeOut, setFadeOut] = useState(false);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setFadeOut(true);
-        }, 4000);
-
-        return () => clearTimeout(timer);
-    }, []);
-
     return (
         <div
-            className={`fixed inset-0 w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 z-[9999] touch-none select-none overflow-hidden transition-opacity duration-300 ${fadeOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
-                }`}
+            className="fixed inset-0 w-full h-full flex flex-col items-center justify-center bg-[#0a0b14] z-[9999] touch-none select-none overflow-hidden animate-in fade-in duration-500"
         >
             {/* Subtle background grid */}
             <div
@@ -36,26 +25,21 @@ const Splash: React.FC = () => {
             {/* Main Content */}
             <div className="flex-1 flex flex-col items-center justify-center relative z-10 w-full px-6">
                 {/* Logo with entrance animation */}
-                <div className="animate-in fade-in zoom-in duration-700 ease-out">
+                <div className="flex items-center justify-center w-full">
                     <img
-                        src="/icons/logo.png"
+                        src="/logo.png"
                         alt="GenSpark"
-                        className="w-56 h-56 md:w-64 md:h-64 object-contain drop-shadow-lg"
+                        className="w-[65%] md:w-80 lg:w-96 h-auto object-contain drop-shadow-2xl"
                         draggable={false}
                     />
                 </div>
             </div>
 
-            {/* Tagline - repositioned to bottom area */}
-            <div className="absolute bottom-32 w-full px-6 animate-in fade-in duration-1000 ease-out delay-500 z-10">
-                <p className="text-center text-xs md:text-sm font-medium tracking-[0.3em] text-white opacity-80 uppercase">
+            {/* Tagline */}
+            <div className="absolute bottom-20 w-full px-6 z-10">
+                <p className="text-center text-[10px] md:text-sm font-bold tracking-[0.4em] text-white/90 uppercase">
                     IGNITE YOUR CODING JOURNEY
                 </p>
-            </div>
-
-            {/* Minimal Loading Indicator - Thin fade line */}
-            <div className="absolute bottom-16 w-full flex justify-center relative z-10">
-                <div className="w-12 h-px bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50 animate-pulse" />
             </div>
         </div>
     );

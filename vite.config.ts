@@ -7,64 +7,69 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
   return {
     server: {
-      port: 3000,
+      port: 3001,
       host: '0.0.0.0',
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+      },
     },
     plugins: [
       react(),
-      VitePWA({
-        registerType: 'prompt',
-        includeAssets: ['favicon.ico', 'icons/*'],
-        manifest: {
-          name: 'GenSpark',
-          short_name: 'GenSpark',
-          description: 'Master coding with GenSpark',
-          theme_color: '#0a0b14',
-          background_color: '#0a0b14',
-          display: 'standalone',
-          icons: [
-            {
-              src: '/icons/logo.png',
-              sizes: '192x192',
-              type: 'image/png'
-            },
-            {
-              src: '/icons/logo.png',
-              sizes: '512x512',
-              type: 'image/png'
-            }
-          ]
-        },
-        workbox: {
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,json,ts}'],
-          runtimeCaching: [
-            {
-              urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-              handler: 'CacheFirst',
-              options: {
-                cacheName: 'google-fonts-cache',
-                expiration: {
-                  maxEntries: 10,
-                  maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
-                },
-                cacheableResponse: {
-                  statuses: [0, 200]
-                }
-              }
-            },
-            {
-              urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,
-              handler: 'StaleWhileRevalidate',
-              options: {
-                cacheName: 'images-cache',
-                expiration: {
-                  maxEntries: 50
-                }
-              }
-            }
-          ]
-        }
-      })
+      // VitePWA({
+      //   registerType: 'prompt',
+      //   includeAssets: ['favicon.ico', 'icons/*'],
+      //   manifest: {
+      //     name: 'GenSpark',
+      //     short_name: 'GenSpark',
+      //     description: 'Master coding with GenSpark',
+      //     theme_color: '#0a0b14',
+      //     background_color: '#0a0b14',
+      //     display: 'standalone',
+      //     icons: [
+      //       {
+      //         src: '/icons/logo.png',
+      //         sizes: '192x192',
+      //         type: 'image/png'
+      //       },
+      //       {
+      //         src: '/icons/logo.png',
+      //         sizes: '512x512',
+      //         type: 'image/png'
+      //       }
+      //     ]
+      //   },
+      //   workbox: {
+      //     globPatterns: ['**/*.{js,css,html,ico,png,svg,json,ts}'],
+      //     runtimeCaching: [
+      //       {
+      //         urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+      //         handler: 'CacheFirst',
+      //         options: {
+      //           cacheName: 'google-fonts-cache',
+      //           expiration: {
+      //             maxEntries: 10,
+      //             maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
+      //           },
+      //           cacheableResponse: {
+      //             statuses: [0, 200]
+      //           }
+      //         }
+      //       },
+      //       {
+      //         urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,
+      //         handler: 'StaleWhileRevalidate',
+      //         options: {
+      //           cacheName: 'images-cache',
+      //           expiration: {
+      //             maxEntries: 50
+      //           }
+      //         }
+      //       }
+      //     ]
+      //   }
+      // })
     ],
     define: {
       'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),

@@ -37,7 +37,7 @@ import Profile from './screens/profile/Profile';
 
 const ForgotPassword = lazyWithRetry(() => import('./screens/auth/ForgotPassword'));
 const OTP = lazyWithRetry(() => import('./screens/auth/OTP'));
-const Onboarding = lazyWithRetry(() => import('./screens/auth/Onboarding'));
+import Onboarding from './screens/auth/Onboarding';
 const ChallengesList = lazyWithRetry(() => import('./screens/challenges/ChallengesList'));
 const ChallengeDetail = lazyWithRetry(() => import('./screens/challenges/ChallengeDetail'));
 const Settings = lazyWithRetry(() => import('./screens/profile/Settings'));
@@ -46,7 +46,6 @@ const PrivacyPolicy = lazyWithRetry(() => import('./screens/legal/PrivacyPolicy'
 
 const LessonView = lazyWithRetry(() => import('./screens/lessons/LessonView'));
 const CodingProblemWrapper = lazyWithRetry(() => import('./screens/practice/CodingProblemWrapper'));
-const SubscriptionPlan = lazyWithRetry(() => import('./screens/subscription/SubscriptionPlan'));
 const Quiz = lazyWithRetry(() => import('./screens/quiz/Quiz'));
 const AdminCurriculumSync = lazyWithRetry(() => import('./screens/admin/AdminCurriculumSync'));
 const DiagnosticTool = lazyWithRetry(() => import('./screens/admin/DiagnosticTool'));
@@ -120,32 +119,41 @@ const ProtectedRoute = () => {
         return <Splash />;
       }
 
-      // Smart Redirect: Returning users go to Login, New users go to Signup
-      const isReturningUser = typeof localStorage !== 'undefined' && localStorage.getItem('genspark_returning_user') === 'true';
-      const redirectPath = isReturningUser ? '/login' : '/signup';
+      // Redirect unauthenticated users to Login page
+      const redirectPath = '/login';
 
       console.log(`🔒 ProtectedRoute: No user, redirecting to ${redirectPath}`);
       return <Navigate to={redirectPath} state={{ from: location }} replace />;
     }
 
     // Redirect to onboarding if not completed and not already there
-    const hasNamesFilled = user?.firstName && user?.firstName.trim() !== '';
-    const needsOnboarding = onboardingCompleted === false || (onboardingCompleted === undefined && !hasNamesFilled);
+    // REFINED: Ignore placeholder names from authService
+    const name = user?.name?.trim();
+    const isPlaceholderName = !name || name === 'User' || (user?.email && name === user.email.split('@')[0]);
 
-    if (needsOnboarding && currentPath !== '/onboarding' && currentPath !== '/settings') {
-      console.log("➡️ ProtectedRoute: User needs onboarding, redirecting home");
+    const hasFirstName = !!user?.firstName?.trim();
+    const hasRealName = hasFirstName || !isPlaceholderName;
+
+    const isActuallyComplete = !!(user?.onboardingCompleted || hasRealName);
+    const needsOnboarding = !isActuallyComplete;
+
+    // TEMPORARY BYPASS - Force user through to debug state issue
+    const BYPASS_ONBOARDING = true;
+
+    if (needsOnboarding && currentPath !== '/onboarding' && currentPath !== '/settings' && !BYPASS_ONBOARDING) {
+      console.log(`➡️ [DIAGNOSTIC] ProtectedRoute: Redirecting to onboarding. State:`, { isActuallyComplete, onboardingFlag: user?.onboardingCompleted, hasRealName, name });
       return <Navigate to="/onboarding" replace />;
     }
 
     // Redirect home if they land on auth pages while logged in
     if (['/login', '/signup', '/forgot-password', '/otp'].includes(currentPath)) {
-      console.log("✅ ProtectedRoute: Logged in user on auth page, redirecting home");
+      console.log("✅ [V3.1] ProtectedRoute: Logged in user on auth page, redirecting home");
       return <Navigate to="/" replace />;
     }
 
     // If onboarding is done, prevent going back to onboarding screen
-    if (onboardingCompleted && currentPath === '/onboarding') {
-      console.log("✅ ProtectedRoute: Onboarding already completed, redirecting home");
+    if (isActuallyComplete && currentPath === '/onboarding') {
+      console.log("✅ ProtectedRoute: Onboarding already done, redirecting home");
       return <Navigate to="/" replace />;
     }
 
@@ -186,7 +194,6 @@ const ProtectedRoute = () => {
     currentPath.startsWith('/track/') ||
     currentPath.startsWith('/practice/problem/') ||
     currentPath.startsWith('/challenge/') ||
-    currentPath.startsWith('/subscription') ||
     currentPath.startsWith('/certificate/verify/');
 
   if (isFullScreenPage) {
@@ -201,13 +208,20 @@ const ProtectedRoute = () => {
   }
 
   return (
-    <div className="animate-in fade-in duration-300">
-      <OfflineBanner />
-      <Layout currentScreen={screen} setScreen={() => { }} user={user!}>
-        <Suspense fallback={<ScreenLoader />}>
-          <Outlet />
-        </Suspense>
-      </Layout>
+    <div className="relative min-h-screen">
+      {/* STEALTH DIAGNOSTIC OVERLAY */}
+      <div className="fixed bottom-0 right-0 z-[9999] bg-black/80 text-[8px] text-white p-1 pointer-events-none font-mono">
+        UID:{user?._id?.slice(0, 5)} | ONB:{user?.onboardingCompleted ? 'Y' : 'N'} | FN:{user?.firstName ? 'Y' : 'N'} | NM:{user?.name?.slice(0, 8)}
+      </div>
+
+      <div className="animate-in fade-in duration-300">
+        <OfflineBanner />
+        <Layout currentScreen={screen} setScreen={() => { }} user={user!}>
+          <Suspense fallback={<ScreenLoader />}>
+            <Outlet />
+          </Suspense>
+        </Layout>
+      </div>
     </div>
   );
 };
@@ -223,7 +237,8 @@ const PublicRoute = () => {
 
   if (loading && !authHasFinished.current) return <Splash />;
 
-  if (user && !loading) {
+  if (user) {
+    console.log("✅ PublicRoute: User logged in, redirecting to /");
     return <Navigate to="/" replace />;
   }
 
@@ -276,7 +291,6 @@ const router = createBrowserRouter([
       { path: "lesson/:lessonId", element: <LessonView /> },
       { path: "quiz/:quizId", element: <Quiz /> },
       { path: "challenge/:challengeId", element: <ChallengeDetail /> },
-      { path: "subscription", element: <SubscriptionPlan /> },
       { path: "certificate/verify/:certificateId", element: <CertificateVerify /> },
       { path: "diagnostic", element: <DiagnosticTool /> },
     ]

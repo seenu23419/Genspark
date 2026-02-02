@@ -41,12 +41,6 @@ export interface User {
   unlockedLessonIds: string[];
   createdAt: Date;
   onboardingCompleted: boolean;
-  isPro?: boolean; // Legacy: All users are now Pro
-  subscriptionTier?: 'Free' | 'Pro'; // Legacy
-  subscriptionStatus?: 'FREE' | 'PREMIUM_ACTIVE' | 'PREMIUM_EXPIRED'; // Legacy: Always PREMIUM_ACTIVE
-  subscriptionEndDate?: string; // Legacy
-  billingCycle?: 'Monthly' | 'Yearly' | 'None'; // Legacy
-  nextBillingDate?: Date; // Legacy
   avatar?: string;
   lastLogin?: Date;
   lastLessonId?: string;
@@ -142,29 +136,6 @@ export interface Challenge {
   inputFormat: string;
   outputFormat: string;
   constraints: string;
-}
-
-export interface Subscription {
-  id: string;
-  user_id: string;
-  plan: 'FREE' | 'PREMIUM';
-  status: 'FREE' | 'PREMIUM_ACTIVE' | 'PREMIUM_EXPIRED';
-  start_date: string;
-  end_date: string;
-  razorpay_subscription_id?: string;
-  created_at: string;
-}
-
-export interface Payment {
-  id: string;
-  user_id: string;
-  amount: number;
-  currency: string;
-  status: 'pending' | 'completed' | 'failed' | 'refunded';
-  razorpay_payment_id: string;
-  razorpay_subscription_id: string;
-  verified: boolean;
-  created_at: string;
 }
 
 export interface Certificate {

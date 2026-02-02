@@ -4,6 +4,17 @@ import { authService } from '../services/authService';
 import { supabaseDB } from '../services/supabaseService';
 import { StreakService } from '../services/streakService';
 
+// Redefine essential fields for internal ref tracking to avoid import conflicts and missing fields
+interface AuthUser {
+    _id: string;
+    firstName?: string;
+    lastName?: string;
+    onboardingCompleted?: boolean;
+    lessonsCompleted?: number;
+    completedLessonIds?: string[];
+    unlockedLessonIds?: string[];
+}
+
 interface AuthContextType {
     user: User | null;
     loading: boolean;
@@ -31,12 +42,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return null;
     });
     const [initializing, setInitializing] = useState(!user);
-    const [minSplashDone, setMinSplashDone] = useState(false); // Reset to false and let the timer handle it for consistency
+    const [minSplashDone, setMinSplashDone] = useState(false);
 
     // State guard: Track the ACTUAL values we care about, not object references
     const userStateRef = useRef<{
         userId: string | null;
         firstName: string | null | undefined;
+        lastName: string | null | undefined;
         onboardingCompleted: boolean | undefined;
         lessonsCompleted: number | undefined;
         completedLessonIds: string[];
@@ -44,6 +56,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }>({
         userId: null,
         firstName: null,
+        lastName: null,
         onboardingCompleted: undefined,
         lessonsCompleted: undefined,
         completedLessonIds: [],
@@ -76,6 +89,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     userStateRef.current = {
                         userId: fresh._id,
                         firstName: fresh.firstName,
+                        lastName: fresh.lastName,
                         onboardingCompleted: fresh.onboardingCompleted,
                         lessonsCompleted: fresh.lessonsCompleted,
                         completedLessonIds: freshCompleted,
@@ -94,10 +108,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     useEffect(() => {
         let mounted = true;
 
-        // 1. Min Splash Timer (Adjusted to 4s per user request)
+        // 1. Min Splash Timer (Reduced to 1s for better UX)
         const splashTimer = setTimeout(() => {
             if (mounted) setMinSplashDone(true);
-        }, 4000);
+        }, 1000);
 
         // 2. Initial Session Check
         const initSession = async () => {
@@ -110,6 +124,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                         userStateRef.current = {
                             userId: currentUser._id,
                             firstName: currentUser.firstName,
+                            lastName: currentUser.lastName,
                             onboardingCompleted: currentUser.onboardingCompleted,
                             lessonsCompleted: currentUser.lessonsCompleted,
                             completedLessonIds: currentUser.completedLessonIds || [],
@@ -131,8 +146,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const initTimer = setTimeout(initSession, 100);
 
         // 3. Safety Timeout (Fallback)
-        // If Supabase fails to respond within 5 seconds (common on spotty mobile LANs), 
-        // force entry to the app (will load as logged out).
+        // If Supabase fails to respond within 5 seconds, force entry to the app.
         const safetyTimer = setTimeout(() => {
             if (mounted && initializing) {
                 console.warn("AuthContext: Session check timed out, forcing entry.");
@@ -141,13 +155,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }, 5000);
 
         // 3. Listen for Auth Changes with State Guard
-        const unsubscribe = authService.onAuthStateChange((updatedUser) => {
+        const unsubscribe = authService.onAuthStateChange(async (updatedUser) => {
             if (!mounted) return;
 
             const currentState = userStateRef.current;
+
+            // Fetch fresh profile data to ensure we have the absolute latest if possible
+            // However, we apply a local "most-progressive" merge strategy below.
             const newState = updatedUser ? {
                 userId: updatedUser._id,
                 firstName: updatedUser.firstName,
+                lastName: updatedUser.lastName,
                 onboardingCompleted: updatedUser.onboardingCompleted,
                 lessonsCompleted: updatedUser.lessonsCompleted,
                 completedLessonIds: updatedUser.completedLessonIds || [],
@@ -155,64 +173,58 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             } : {
                 userId: null,
                 firstName: null,
+                lastName: null,
                 onboardingCompleted: undefined,
                 lessonsCompleted: undefined,
                 completedLessonIds: [],
                 unlockedLessonIds: ['c1']
             };
 
+            // MERGE STRATEGY: Do not let server-side staleness (delay in reflecting updates)
+            // revert critical local progress like onboarding completion.
+            const mergedUser = updatedUser ? {
+                ...updatedUser,
+                onboardingCompleted: currentState.onboardingCompleted || updatedUser.onboardingCompleted,
+                firstName: updatedUser.firstName || currentState.firstName,
+                lastName: updatedUser.lastName || currentState.lastName,
+            } : null;
+
             // **THE CRITICAL CHECK**: Only update if actual data changed
             const hasChanged =
                 currentState.userId !== newState.userId ||
-                currentState.firstName !== newState.firstName ||
-                currentState.onboardingCompleted !== newState.onboardingCompleted ||
+                (newState.firstName && currentState.firstName !== newState.firstName) ||
+                (newState.onboardingCompleted !== undefined && currentState.onboardingCompleted !== newState.onboardingCompleted) ||
                 JSON.stringify(currentState.completedLessonIds) !== JSON.stringify(newState.completedLessonIds);
 
-            console.log("AuthContext: Auth state change", {
-                hasChanged,
-                currentState,
-                newState,
-                event: updatedUser ? 'user_update' : 'logout'
+            console.log("AuthContext: Auth change detected", {
+                userId: newState.userId,
+                serverOnboarding: newState.onboardingCompleted,
+                localOnboarding: currentState.onboardingCompleted,
+                hasChanged
             });
 
             if (hasChanged) {
-                console.log("✅ AuthContext: State CHANGED - updating user");
-                userStateRef.current = newState;
+                console.log("✅ AuthContext: Applying state update (with merge if applicable)");
 
-                // Smart merge for optimistic updates
-                setUser(prev => {
-                    if (prev?.firstName && !updatedUser?.firstName && prev?._id === updatedUser?._id) {
-                        console.log("AuthContext: Preserving optimistic firstName");
-                        return {
-                            ...updatedUser,
-                            firstName: prev.firstName,
-                            lastName: prev.lastName,
-                            name: prev.name,
-                            onboardingCompleted: true
-                        } as User;
-                    }
-                    return updatedUser;
-                });
-                setInitializing(false);
-            } else {
-                console.log("⏭️ AuthContext: State UNCHANGED - skipping setUser (prevents re-render)");
-
-                // If we are in an OAuth flow (detectable via URL), don't stop initializing on a null state yet.
-                // This prevents flickering the login screen while Supabase processes the redirect params.
-                const hasAuthParams =
-                    window.location.hash.includes('access_token') ||
-                    window.location.hash.includes('code') ||
-                    window.location.search.includes('code') ||
-                    window.location.search.includes('state');
-
-                if (initializing) {
-                    if (!hasAuthParams || updatedUser) {
-                        setInitializing(false);
-                    } else {
-                        console.log("🔐 AuthContext: OAuth tokens detected, keeping loading state active...");
-                        // Safety fallback: if nothing happens, the 5s safetyTimer already in place will rescue us.
-                    }
+                if (mergedUser) {
+                    userStateRef.current = {
+                        userId: mergedUser._id,
+                        firstName: mergedUser.firstName,
+                        lastName: mergedUser.lastName, // Added missing lastName
+                        onboardingCompleted: mergedUser.onboardingCompleted,
+                        lessonsCompleted: mergedUser.lessonsCompleted,
+                        completedLessonIds: mergedUser.completedLessonIds || [],
+                        unlockedLessonIds: mergedUser.unlockedLessonIds || ['c1']
+                    };
+                    setUser(mergedUser as User);
+                } else {
+                    userStateRef.current = newState;
+                    setUser(null);
                 }
+
+                setInitializing(false);
+            } else if (initializing) {
+                setInitializing(false);
             }
         });
 
@@ -304,12 +316,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 const last = updates.lastName || baseUser.lastName || '';
                 optimisticUser.name = `${first} ${last}`.trim() || baseUser.name;
                 optimisticUser.firstName = first;
+                optimisticUser.lastName = last;
             }
 
             // 3. Update memory ref and optimistic UI
             userStateRef.current = {
                 userId: optimisticUser._id,
                 firstName: optimisticUser.firstName,
+                lastName: optimisticUser.lastName,
                 onboardingCompleted: optimisticUser.onboardingCompleted,
                 lessonsCompleted: optimisticUser.lessonsCompleted,
                 completedLessonIds: newCompleted,
@@ -320,14 +334,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
             try {
                 // 4. Persist to DB
-                console.log("AuthContext: Starting DB update for", baseUser._id, mergedUpdates);
+                console.log("📦 [AuthContext] Starting DB update for", baseUser._id, mergedUpdates);
+                console.log("📦 [AuthContext] Optimistic state BEFORE DB call:", {
+                    onboardingCompleted: optimisticUser.onboardingCompleted,
+                    firstName: optimisticUser.firstName,
+                    lastName: optimisticUser.lastName
+                });
+
                 const updated = await supabaseDB.updateOne(baseUser._id, mergedUpdates);
-                console.log("AuthContext: DB update SUCCESS", updated._id);
+
+                console.log("✅ [AuthContext] DB update SUCCESS. Returned data:", {
+                    userId: updated._id,
+                    onboardingCompleted: updated.onboardingCompleted,
+                    firstName: updated.firstName,
+                    lastName: updated.lastName
+                });
 
                 // 5. Final sync with DB result
                 userStateRef.current = {
                     userId: updated._id,
                     firstName: updated.firstName,
+                    lastName: updated.lastName,
                     onboardingCompleted: updated.onboardingCompleted,
                     lessonsCompleted: updated.lessonsCompleted,
                     completedLessonIds: updated.completedLessonIds || [],
