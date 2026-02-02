@@ -138,17 +138,3 @@ export interface Challenge {
   constraints: string;
 }
 
-export interface Certificate {
-  id: string;
-  user_id: string;
-  course_name: string;
-  mentor_name: string;
-  completion_date: string;
-  certificate_id: string;
-  pdf_url?: string;
-  created_at: string;
-  users?: {
-    name: string;
-    email: string;
-  };
-}

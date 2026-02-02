@@ -49,7 +49,6 @@ const CodingProblemWrapper = lazyWithRetry(() => import('./screens/practice/Codi
 const Quiz = lazyWithRetry(() => import('./screens/quiz/Quiz'));
 const AdminCurriculumSync = lazyWithRetry(() => import('./screens/admin/AdminCurriculumSync'));
 const DiagnosticTool = lazyWithRetry(() => import('./screens/admin/DiagnosticTool'));
-const CertificateVerify = lazyWithRetry(() => import('./screens/profile/CertificateVerify'));
 const StreaksActivity = lazyWithRetry(() => import('./screens/profile/StreaksActivity'));
 
 // Query Client for React Query
@@ -287,7 +286,6 @@ const router = createBrowserRouter([
       { path: "lesson/:lessonId", element: <LessonView /> },
       { path: "quiz/:quizId", element: <Quiz /> },
       { path: "challenge/:challengeId", element: <ChallengeDetail /> },
-      { path: "certificate/verify/:certificateId", element: <CertificateVerify /> },
       { path: "diagnostic", element: <DiagnosticTool /> },
     ]
   },
