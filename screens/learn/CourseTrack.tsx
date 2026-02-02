@@ -418,6 +418,7 @@ const CourseTrack: React.FC = () => {
         </div>
 
         {/* Certificate Section */}
+      </main>
     </div>
   );
 };
