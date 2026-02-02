@@ -210,11 +210,6 @@ const ProtectedRoute = () => {
 
   return (
     <div className="relative min-h-screen">
-      {/* STEALTH DIAGNOSTIC OVERLAY */}
-      <div className="fixed bottom-0 right-0 z-[9999] bg-black/80 text-[8px] text-white p-1 pointer-events-none font-mono">
-        UID:{user?._id?.slice(0, 5)} | ONB:{user?.onboardingCompleted ? 'Y' : 'N'} | FN:{user?.firstName ? 'Y' : 'N'} | NM:{user?.name?.slice(0, 8)}
-      </div>
-
       <div className="animate-in fade-in duration-300">
         <OfflineBanner />
         <Layout currentScreen={screen} setScreen={() => { }} user={user!}>
