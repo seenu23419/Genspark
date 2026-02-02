@@ -139,6 +139,7 @@ const ProtectedRoute = () => {
 
     // TEMPORARY BYPASS - Force user through to debug state issue
     const BYPASS_ONBOARDING = true;
+    console.log('🔥🔥🔥 [APP.TSX V5.0] BYPASS_ONBOARDING =', BYPASS_ONBOARDING, '🔥🔥🔥');
 
     if (needsOnboarding && currentPath !== '/onboarding' && currentPath !== '/settings' && !BYPASS_ONBOARDING) {
       console.log(`➡️ [DIAGNOSTIC] ProtectedRoute: Redirecting to onboarding. State:`, { isActuallyComplete, onboardingFlag: user?.onboardingCompleted, hasRealName, name });
