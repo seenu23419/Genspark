@@ -4,10 +4,8 @@ import { ArrowLeft, Lock, Play, CheckCircle, Clock, Loader2, AlertCircle, Sparkl
 import { useAuth } from '../../contexts/AuthContext';
 import { useCurriculum } from '../../contexts/useCurriculum';
 import { LANGUAGES } from '../../constants';
-import { Language, Lesson, Certificate } from '../../types';
+import { Language, Lesson } from '../../types';
 import { usePractice } from '../../contexts/PracticeContext';
-import { certificateService } from '../../services/certificateService';
-import { CertificateModal } from '../../components/CertificateModal';
 import { supabaseDB } from '../../services/supabaseService';
 
 // Level descriptions - provide emotional context and guide
@@ -126,8 +124,6 @@ const CourseTrack: React.FC = () => {
 
   // 1. State declarations
   const [expandedLevels, setExpandedLevels] = useState<Record<number, boolean>>({});
-  const [showCertModal, setShowCertModal] = useState(false);
-  const [isClaiming, setIsClaiming] = useState(false);
 
   // 2. Computed values
   const language = useMemo(() => LANGUAGES.find(l => l.id === langId), [langId]);
@@ -201,36 +197,6 @@ const CourseTrack: React.FC = () => {
     }));
   };
 
-  const handleClaimCertificate = async () => {
-    if (!user || !language || modules.length === 0) return;
-    setIsClaiming(true);
-    try {
-      const courseId = language.id;
-      const courseName = language.name + ' Programming';
-
-      // Dynamically find the last lesson ID of the last module
-      const lastModule = modules[modules.length - 1];
-      const lessons = lastModule.lessons || [];
-      const finalLessonId = lessons.length > 0 ? lessons[lessons.length - 1].id : '';
-
-      const cert = await certificateService.generateCertificateForCourse(user._id, courseId, courseName, finalLessonId);
-      if (cert) {
-        setShowCertModal(true);
-        // Tag OneSignal to trigger "Congratulations" automation
-        try {
-          const OneSignal = (window as any).OneSignal;
-          if (OneSignal) {
-            OneSignal.User.addTag("certificate_claimed", "true");
-          }
-        } catch (e) { }
-      }
-      else alert("Requirement not met. You must complete the final certification exam to claim your certificate.");
-    } catch (e) {
-      alert('Failed to generate certificate. Please try again later.');
-    } finally {
-      setIsClaiming(false);
-    }
-  };
 
   const handleLessonClick = (lesson: Lesson, levelIndex: number) => {
     if (!isLevelUnlocked(levelIndex)) return;
@@ -366,8 +332,8 @@ const CourseTrack: React.FC = () => {
                           disabled={!isLevelUnlocked(levelIndex)}
                           onClick={() => handleLessonClick(lesson, levelIndex)}
                           className={`w-full flex items-center justify-between p-4 rounded-xl transition-all ${isCompleted ? 'bg-emerald-500/10 border border-emerald-500/20' :
-                              isFirstIncomplete ? 'bg-indigo-600/10 border border-indigo-500/30' :
-                                'hover:bg-slate-800/30'
+                            isFirstIncomplete ? 'bg-indigo-600/10 border border-indigo-500/30' :
+                              'hover:bg-slate-800/30'
                             } ${!isLevelUnlocked(levelIndex) ? 'opacity-50 grayscale cursor-not-allowed' : ''}`}
                         >
                           <div className="flex items-center gap-4 min-w-0">
@@ -452,42 +418,6 @@ const CourseTrack: React.FC = () => {
         </div>
 
         {/* Certificate Section */}
-        {progressPercent === 100 && (
-          <div className="mt-16 p-8 md:p-12 rounded-3xl bg-gradient-to-br from-indigo-600 to-violet-700 text-white text-center shadow-2xl shadow-indigo-500/20 border border-white/10 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-400/10 blur-3xl rounded-full -translate-x-1/2 translate-y-1/2" />
-
-            <div className="relative z-10">
-              <div className="w-20 h-20 bg-yellow-400/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-yellow-400/30">
-                <Trophy size={40} className="text-yellow-300" />
-              </div>
-              <h2 className="text-3xl font-black mb-3">Mastery Achieved!</h2>
-              <p className="text-indigo-100 mb-8 max-w-md mx-auto">
-                You've completed every lesson in the {language.name} Track. You're now ready to showcase your skills to the world.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <button
-                  onClick={handleClaimCertificate}
-                  disabled={isClaiming}
-                  className="group relative px-6 py-4 bg-white text-indigo-600 rounded-2xl font-black uppercase tracking-widest text-xs hover:scale-105 transition-all active:scale-95 disabled:opacity-70 disabled:hover:scale-100 shadow-xl shadow-white/10 flex items-center gap-2"
-                >
-                  {isClaiming ? <Loader2 className="animate-spin" size={20} /> : <Award size={18} className="group-hover:rotate-12 transition-transform" />}
-                  {isClaiming ? 'Generating...' : 'Claim My Certificate'}
-                </button>
-                <button
-                  onClick={() => navigate('/learn')}
-                  className="px-6 py-4 bg-indigo-500/20 text-white border border-indigo-400/30 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-indigo-500/30 transition-all flex items-center gap-2"
-                >
-                  <Search size={18} />
-                  Select Another Language
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-      </main>
-
-      {user && language && <CertificateModal isOpen={showCertModal} onClose={() => setShowCertModal(false)} userId={user._id} courseId={language.id} courseName={language.name} />}
     </div>
   );
 };

@@ -3,7 +3,6 @@ import { PYTHON_CURRICULUM } from '../constants';
 import { PythonLessonView } from './PythonLessonView';
 import { PythonCurriculumCard } from './PythonCurriculumCard';
 import { ChevronLeft, BookOpen, Zap } from 'lucide-react';
-import CertificateModal from './CertificateModal';
 import { useAuth } from '../contexts/AuthContext';
 
 interface PythonCourseViewProps {
@@ -13,17 +12,11 @@ interface PythonCourseViewProps {
 export const PythonCourseView: React.FC<PythonCourseViewProps> = ({ onBack }) => {
   const [selectedLessonId, setSelectedLessonId] = useState<string | null>(null);
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set());
-  const [showCertificateModal, setShowCertificateModal] = useState(false);
 
   const { user, updateProfile } = useAuth();
 
   const totalLessons = PYTHON_CURRICULUM.flatMap((m) => m.lessons).length;
 
-  useEffect(() => {
-    if (totalLessons > 0 && completedLessons.size >= totalLessons) {
-      setShowCertificateModal(true);
-    }
-  }, [completedLessons, totalLessons]);
 
   // Find selected lesson
   const selectedLesson = PYTHON_CURRICULUM.flatMap((module) => module.lessons).find(
@@ -98,15 +91,6 @@ export const PythonCourseView: React.FC<PythonCourseViewProps> = ({ onBack }) =>
           lesson={selectedLesson}
           onComplete={handleCompleteLesson}
         />
-        {user && (
-          <CertificateModal
-            isOpen={showCertificateModal}
-            onClose={() => setShowCertificateModal(false)}
-            userId={user._id}
-            courseId="python"
-            courseName="Master Python"
-          />
-        )}
       </div>
     );
   }
@@ -216,16 +200,6 @@ export const PythonCourseView: React.FC<PythonCourseViewProps> = ({ onBack }) =>
           </button>
         </div>
       </div>
-      {/* Certificate Modal */}
-      {user && (
-        <CertificateModal
-          isOpen={showCertificateModal}
-          onClose={() => setShowCertificateModal(false)}
-          userId={user._id}
-          courseId="python"
-          courseName="Master Python"
-        />
-      )}
     </div>
   );
 };
