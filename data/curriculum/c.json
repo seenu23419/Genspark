@@ -3169,13 +3169,13 @@
     },
     {
         "id": "c-l9",
-        "title": "LEVEL 9: Final Certification",
+        "title": "LEVEL 9: Final Assessment",
         "lessons": [
             {
                 "id": "c41",
-                "title": "41. Final C Certification Exam",
+                "title": "41. Final C Assessment",
                 "duration": "60 mins",
-                "content": "# 🎓 Final Certification Exam\n\n**Congratulations!** You have reached the final milestone of the C Programming Masterclass.\n\nThis certification lesson is a comprehensive review of everything you have learned, from basic variables to advanced file handling and dynamic memory management.\n\n---\n\n## 📈 What this Certification Means\n\nBy passing this final quiz, you demonstrate proficiency in:\n1.  **Fundamental C Syntax**: Data types, operators, and control flow.\n2.  **Modular Programming**: Using functions and managing variable scope.\n3.  **Data Structures**: Working with arrays, strings, and the powerful `struct` system.\n4.  **Memory Mastery**: Understanding pointers and manual memory allocation (DMA).\n5.  **Systems Thinking**: Handling files and preprocessor directives.\n\n---\n\n## 📝 Exam Instructions\n\n- The exam consists of **20 comprehensive questions**.\n- You must achieve a score of **70% or higher** (14 correct answers) to pass.\n- If you pass, you will be and to claim your **Official C Programming Certificate**.\n\n---\n\n## 🚀 Ready to Graduate?\n\nTake a deep breath, review your notes if needed, and click the button below to start your final assessment.\n\n**Good luck! We are rooting for you.**",
+                "content": "# 🎓 Final Assessment\n\n**Congratulations!** You have reached the final milestone of the C Programming Masterclass.\n\nThis final lesson is a comprehensive review of everything you have learned, from basic variables to advanced file handling and dynamic memory management.\n\n---\n\n## 📈 What this Assessment Means\n\nBy passing this final quiz, you demonstrate proficiency in:\n1.  **Fundamental C Syntax**: Data types, operators, and control flow.\n2.  **Modular Programming**: Using functions and managing variable scope.\n3.  **Data Structures**: Working with arrays, strings, and the powerful `struct` system.\n4.  **Memory Mastery**: Understanding pointers and manual memory allocation (DMA).\n5.  **Systems Thinking**: Handling files and preprocessor directives.\n\n---\n\n## 📝 Exam Instructions\n\n- The exam consists of **20 comprehensive questions**.\n- You must achieve a score of **70% or higher** (14 correct answers) to pass.\n- If you pass, you will successfully complete the course.\n\n---\n\n## 🚀 Ready to Graduate?\n\nTake a deep breath, review your notes if needed, and click the button below to start your final assessment.\n\n**Good luck! We are rooting for you.**",
                 "quizQuestions": [
                     {
                         "id": 1,

@@ -288,14 +288,14 @@
         "lessons": [
             {
                 "id": "hc9.1",
-                "title": "9.1 Web Design Master Certification",
+                "title": "9.1 Web Design Master Assessment",
                 "duration": "45 mins",
                 "difficultyLevel": "Master",
                 "topics": [
                     "Final Exam",
-                    "Certification"
+                    "Final Assessment"
                 ],
-                "content": "# Final Web Certification\n\n**Welcome, Designer!** You have mastered the pillars of the web: Structure (HTML) and Style (CSS). This final exam will verify your expertise.\n\n## Assessment Content:\n- **Structure**: Semantic tags, Forms, SEO best practices.\n- **Layout**: Flexbox, CSS Grid, and responsive strategies.\n- **Style**: Selectors, specificity, variables, and units (rem/em).\n- **User Experience**: Accessibility (ARIA), transitions, and animation logic.\n\n## Graduation Track:\n- Complete the quiz below with 100% accuracy to earn the **GenSpark Web Professional Certificate**.",
+                "content": "# Final Web Assessment\n\n**Welcome, Designer!** You have mastered the pillars of the web: Structure (HTML) and Style (CSS). This final exam will verify your expertise.\n\n## Assessment Content:\n- **Structure**: Semantic tags, Forms, SEO best practices.\n- **Layout**: Flexbox, CSS Grid, and responsive strategies.\n- **Style**: Selectors, specificity, variables, and units (rem/em).\n- **User Experience**: Accessibility (ARIA), transitions, and animation logic.\n\n## Graduation Track:\n- Complete the quiz below with 100% accuracy to earn the **GenSpark Web Professional Status**.",
                 "fullProgram": "<!-- Final Project Mockup: Glassmorphism Hero Section -->\n<div class=\"hero\">\n    <div class=\"glass-card\">\n        <h1>Design the Future</h1>\n        <p>Web Development Masterclass.</p>\n        <button>Get Started</button>\n    </div>\n</div>\n\n<style>\n.hero {\n    height: 100vh;\n    background: linear-gradient(45deg, #4158D0, #C850C0);\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n.glass-card {\n    background: rgba(255, 255, 255, 0.1);\n    backdrop-filter: blur(10px);\n    padding: 3rem;\n    border-radius: 20px;\n    border: 1px solid rgba(255, 255, 255, 0.2);\n    color: white;\n    text-align: center;\n}\n</style>",
                 "expectedOutput": "A beautiful hero section with a frosted-glass card effect.",
                 "quizQuestions": [

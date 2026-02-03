@@ -9,6 +9,8 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { Loader2 } from 'lucide-react';
 import { Screen } from './types';
 import { initSentry } from './services/sentryService';
+import { App as CapApp } from '@capacitor/app';
+import { supabaseDB } from './services/supabaseService';
 
 // Helper to handle dynamic import failures
 const lazyWithRetry = (componentImport: () => Promise<{ default: React.ComponentType<any> }>) =>
@@ -193,8 +195,7 @@ const ProtectedRoute = () => {
     currentPath.startsWith('/quiz/') ||
     currentPath.startsWith('/track/') ||
     currentPath.startsWith('/practice/problem/') ||
-    currentPath.startsWith('/challenge/') ||
-    currentPath.startsWith('/certificate/verify/');
+    currentPath.startsWith('/challenge/');
 
   if (isFullScreenPage) {
     return (
@@ -399,6 +400,33 @@ const App: React.FC = () => {
     };
 
     runOneSignal();
+
+    // --- DEEP LINK HANDLING ---
+    const handleDeepLink = () => {
+      CapApp.addListener('appUrlOpen', async (data: any) => {
+        console.log('🔗 Deep Link Received:', data.url);
+
+        // Supabase OAuth redirects come in with a hash (#access_token=...)
+        // We need to pass this URL to Supabase to handle the session
+        const url = new URL(data.url);
+        const { error } = await supabaseDB.supabase.auth.setSession({
+          access_token: url.hash.split('&')[0].split('=')[1],
+          refresh_token: url.hash.split('&')[1].split('=')[1],
+        });
+
+        if (error) {
+          console.error('❌ Deep Link Auth Error:', error);
+        } else {
+          console.log('✅ Deep Link Auth Success');
+          // Navigate to home or intended destination
+        }
+      });
+    };
+
+    // @ts-ignore
+    if (window.Capacitor?.isNativePlatform()) {
+      handleDeepLink();
+    }
   }, []);
 
   return (

@@ -1806,9 +1806,9 @@
             },
             {
                 "id": "js-final-cert",
-                "title": "30. Final JS Certification",
+                "title": "30. Final JS Assessment",
                 "duration": "90 mins",
-                "content": "# Congratulations!\n\nYou have mastered the language of the web. Score 90% in this final exam to claim your certificate.",
+                "content": "# Congratulations!\n\nYou have mastered the language of the web. Score 90% in this final exam to claim your **GenSpark JS Mastery Status**.",
                 "quizQuestions": [
                     {
                         "id": 1,

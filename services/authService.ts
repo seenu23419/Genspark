@@ -28,9 +28,14 @@ class AuthService {
 
   // --- OAuth (Google / GitHub) ---
   async signInWithOAuth(provider: 'google' | 'github'): Promise<void> {
-    // FIXED: Use window.location.origin to support both Localhost and Production (Netlify/Vercel)
-    // This dynamically handles http://localhost:3000 vs https://your-app.netlify.app
-    const redirectUrl = window.location.origin;
+    // FIXED: Use window.location.origin for Web, but Custom Scheme for Mobile
+    let redirectUrl = window.location.origin;
+
+    // Check if we are running in a Capacitor app
+    // @ts-ignore - Capacitor might not be defined in all environments
+    if (window.Capacitor && window.Capacitor.isNativePlatform()) {
+      redirectUrl = 'com.genspark.app://';
+    }
 
     const { error } = await supabaseDB.supabase.auth.signInWithOAuth({
       provider: provider,
@@ -210,8 +215,6 @@ class AuthService {
             email: session.user.email!,
             name: session.user.user_metadata.full_name || session.user.user_metadata.name || session.user.email?.split('@')[0] || 'User',
             avatar: session.user.user_metadata.avatar_url || session.user.user_metadata.picture || `https://api.dicebear.com/7.x/avataaars/svg?seed=${userId}`,
-            subscriptionStatus: 'PREMIUM_ACTIVE',
-            subscriptionEndDate: null,
             onboardingCompleted: false
           });
           console.log("authService: Profile created", newUser);

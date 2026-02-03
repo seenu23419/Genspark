@@ -312,7 +312,7 @@ const LearningProfile: React.FC = () => {
                                 </div>
                                 <div className="mt-8 pt-6 border-t border-white/5">
                                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
-                                        You've mastered the basics! Course completed.
+                                        GenSpark Status Unlocked! You've mastered the basics.
                                     </p>
                                 </div>
                             </div>
@@ -325,12 +325,12 @@ const LearningProfile: React.FC = () => {
                                     </div>
                                     <div className="space-y-1">
                                         <h4 className="text-xl font-black text-slate-300 tracking-tight italic uppercase">{courseName}</h4>
-                                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Reward Locked</p>
+                                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Status Locked</p>
                                     </div>
                                 </div>
                                 <div className="mt-8 pt-6 border-t border-white/5">
                                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
-                                        Complete {Math.max(0, requirements.lessons - courseLessons)} more lessons to unlock.
+                                        Complete {Math.max(0, requirements.lessons - courseLessons)} more lessons to unlock status.
                                     </p>
                                 </div>
                             </div>

@@ -287,7 +287,7 @@ export const checkCourseCompletion = async (userId, courseId) => {
             totalQuizzes: data.total_quizzes,
             progress: overallProgress,
             completionDate: data.completion_date,
-            message: isComplete ? 'Course completed! Ready for certificate.' : 'Course in progress'
+            message: isComplete ? 'Course completed! You have mastered this subject.' : 'Course in progress'
         };
 
     } catch (err) {
@@ -340,8 +340,8 @@ export const getUserAllProgress = async (userId) => {
         return (data || []).map(progress => ({
             ...progress,
             completionPercentage: Math.round(
-                ((progress.completed_lessons / progress.total_lessons) * 100 + 
-                 (progress.completed_quizzes / progress.total_quizzes) * 100) / 2
+                ((progress.completed_lessons / progress.total_lessons) * 100 +
+                    (progress.completed_quizzes / progress.total_quizzes) * 100) / 2
             )
         }));
 
@@ -418,16 +418,16 @@ export const getCompletionStats = async () => {
             .select('count', { count: 'exact' })
             .eq('is_course_complete', true);
 
-        // Total certificates issued
-        const { data: certificates, error: error2 } = await supabase
-            .from('certificates')
-            .select('count', { count: 'exact' });
+        // Total certificates issued (Deprecated)
+        // const { data: certificates, error: error2 } = await supabase
+        //     .from('certificates')
+        //     .select('count', { count: 'exact' });
 
-        if (error1 || error2) throw new Error('Failed to fetch stats');
+        if (error1) throw new Error('Failed to fetch stats');
 
         return {
             completedCourses: completedCourses?.count || 0,
-            certificatesIssued: certificates?.count || 0
+            certificatesIssued: 0 // certificates?.count || 0
         };
 
     } catch (err) {
@@ -469,7 +469,7 @@ export default {
  * // Check if course is complete
  * const completion = await courseCompletion.checkCourseCompletion(userId, 'javascript');
  * if (completion.complete) {
- *     console.log('Course completed! Ready for certificate.');
+ *     console.log('Course completed! You have mastered this subject.');
  * }
  * 
  * COMPLETION REQUIREMENTS:

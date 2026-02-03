@@ -15,7 +15,7 @@ const LEVEL_DESCRIPTIONS: { [key: string]: string } = {
   'Intermediates': 'Deepen your core knowledge',
   'Advanced': 'Explore complex professional patterns',
   'Real-world Projects': 'Apply what you\'ve learned to real apps',
-  'Final Certification': 'The final milestone. Verify your mastery.',
+  'Final Assessment': 'The final milestone. Verify your mastery.',
 
   // JavaScript
   'JavaScript Basics': 'Enter the world of dynamic web logic',
@@ -26,7 +26,7 @@ const LEVEL_DESCRIPTIONS: { [key: string]: string } = {
   'Classes & Object-Oriented JS': 'Master blueprint-based programming and design',
   'Functional Programming & Advanced Patterns': 'Write cleaner, more predictable code',
   'Modules & Modern Tooling': 'Structure large-scale applications',
-  'Final JS Certification': 'Verify your JavaScript mastery and claim your reward.',
+  'Final JS Assessment': 'Verify your JavaScript mastery.',
 
   // Python
   'Python Foundations': 'Start your journey with the world\'s most popular language',
@@ -37,7 +37,7 @@ const LEVEL_DESCRIPTIONS: { [key: string]: string } = {
   'Object-Oriented Programming (OOP)': 'Master classes, inheritance, and encapsulation',
   'Advanced Python Features': 'Decorators, generators, and magic methods',
   'Web Scraping & APIs': 'Extract data from the web and connect to services',
-  'Python Certification': 'Verify your Python expertise and claim your reward.',
+  'Python Mastery': 'Verify your Python expertise.',
 
   // Java
   'Java Basics (Zero Level)': 'Enter the world of enterprise development',
@@ -48,7 +48,7 @@ const LEVEL_DESCRIPTIONS: { [key: string]: string } = {
   'OOP Pillar 3 & 4 (Advanced)': 'Master abstraction and professional patterns',
   'Collections Framework': 'Handle complex data structures efficiently',
   'Modern Java & Concurrency': 'Master functional style and multithreading',
-  'Final Java Certification': 'Prove your mastery and claim your reward.',
+  'Final Java Assessment': 'Prove your mastery.',
 
   // C++
   'C++ Foundations': 'Master the basics of high-performance coding',
@@ -58,7 +58,7 @@ const LEVEL_DESCRIPTIONS: { [key: string]: string } = {
   'Modern C++ & Smart Pointers': 'Master memory safety and RAII patterns',
   'Advanced Memory & Move Semantics': 'Zero-cost abstractions and extreme efficiency',
   'Concurrency & Multithreading': 'Build high-performance parallel systems',
-  'Final C++ Certification': 'The ultimate systems programming milestone.',
+  'Final C++ Assessment': 'The ultimate systems programming milestone.',
 
   // DSA
   'Fundamentals & Complexity': 'Learn to analyze and optimize your code',
@@ -69,7 +69,7 @@ const LEVEL_DESCRIPTIONS: { [key: string]: string } = {
   'Advanced Graphs & Segment Trees': 'Master connectivity and range queries',
   'Greedy Algorithms & Bitwise': 'Exploit patterns for extreme efficiency',
   'Advanced Strings & Tries': 'Master pattern matching and dictionaries',
-  'Final DSA Certification': 'The ultimate test of algorithmic mastery.',
+  'Final DSA Assessment': 'The ultimate test of algorithmic mastery.',
 
   // HTML/CSS
   'Semantic HTML5': 'Build the skeleton of the web with modern standards',
@@ -91,7 +91,7 @@ const LEVEL_DESCRIPTIONS: { [key: string]: string } = {
   'Subqueries & CTEs': 'Write advanced and nested logical queries',
   'Database Normalization': 'Optimize storage and reduce redundancy',
   'Transactions & Performance': 'Handle critical operations and scale',
-  'Final Database Certification': 'Prove your SQL Grandmaster status.',
+  'Final Database Assessment': 'Prove your SQL Grandmaster status.',
 
   // Fullstack
   'Modern Frontend (React)': 'Build dynamic user interfaces with components',
@@ -274,7 +274,7 @@ const CourseTrack: React.FC = () => {
           {modules.map((module, levelIndex) => {
             const lessons = module.lessons || [];
             const isExpanded = !!expandedLevels[levelIndex];
-            const isCertLevel = module.title.includes('Final Certification');
+            const isCertLevel = module.title.includes('Final Assessment') || module.title.includes('Mastery');
             const isCurrentLevel = levelIndex === currentLevelIndex;
             const isCompletedLevel = lessons.every((l: Lesson) => completedLessonIds.includes(l.id));
             const completedInLevel = lessons.filter((l: Lesson) => completedLessonIds.includes(l.id)).length;

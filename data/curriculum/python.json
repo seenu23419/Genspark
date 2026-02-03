@@ -3325,7 +3325,7 @@
     },
     {
         "id": "python-l9",
-        "title": "LEVEL 9: Python Certification",
+        "title": "LEVEL 9: Python Mastery",
         "subtitle": "🎓 Prove your skills. Master the interview and follow professional standards.",
         "lessons": [
             {
@@ -3534,9 +3534,9 @@
             },
             {
                 "id": "py44",
-                "title": "44. Final Level Certification",
+                "title": "44. Final Level Assessment",
                 "duration": "30 mins",
-                "content": "# 🏆 Final Level Certification\n\nCongratulations! You have journeyed from \"Hello World\" to building real-world bots and understanding complex system memory. This final lesson is a review of your path to becoming a Python Developer.\n\n### Your Journey Recap\n1. **Foundations**: Variables, Types, and Math.\n2. **Logic**: Loops and Decision Making.\n3. **Data**: Lists, Dicts, and Sets.\n4. **Functions**: Modular and reusable code.\n5. **I/O**: Handling text and files.\n6. **OOP**: Thinking in blueprints and objects.\n7. **Advanced**: Decorators, Generators, and Exceptions.\n8. **Applications**: APIs, Data Science, and Automation.\n9. **Professionalism**: PEP 8 and Interview Readiness.\n\n### 🎓 The Next Steps\n- **Build a Portfolio**: Create 3 unique projects on GitHub (e.g., a weather app, a game, a data scraper).\n- **Keep Learning**: Python is massive. Look into frameworks like **Django** (Web), **PyTorch** (AI), or **Pytest** (Testing).\n- **Contribute**: Find an 'Open Source' project and help fix a small bug.\n\n### 🔍 Final Reflection\nProgramming is a superpower. You can now use a plain text file to tell a computer how to solve complex medical problems, manage millions of dollars, or simply automate your chores. Use this power to create value and stay curious!\n\n**YOU ARE NOW A PYTHON GRADUATE. PRESS COMPLETE TO CLAIM YOUR CERTIFICATE.**\n\n### What to Remember\n- Learning doesn't stop here.\n- Focus on building projects, not just watching tutorials.\n- The best way to learn is to teach someone else.",
+                "content": "# 🏆 Final Level Assessment\n\nCongratulations! You have journeyed from \"Hello World\" to building real-world bots and understanding complex system memory. This final lesson is a review of your path to becoming a Python Developer.\n\n### Your Journey Recap\n1. **Foundations**: Variables, Types, and Math.\n2. **Logic**: Loops and Decision Making.\n3. **Data**: Lists, Dicts, and Sets.\n4. **Functions**: Modular and reusable code.\n5. **I/O**: Handling text and files.\n6. **OOP**: Thinking in blueprints and objects.\n7. **Advanced**: Decorators, Generators, and Exceptions.\n8. **Applications**: APIs, Data Science, and Automation.\n9. **Professionalism**: PEP 8 and Interview Readiness.\n\n### 🎓 The Next Steps\n- **Build a Portfolio**: Create 3 unique projects on GitHub (e.g., a weather app, a game, a data scraper).\n- **Keep Learning**: Python is massive. Look into frameworks like **Django** (Web), **PyTorch** (AI), or **Pytest** (Testing).\n- **Contribute**: Find an 'Open Source' project and help fix a small bug.\n\n### 🔍 Final Reflection\nProgramming is a superpower. You can now use a plain text file to tell a computer how to solve complex medical problems, manage millions of dollars, or simply automate your chores. Use this power to create value and stay curious!\n\n**YOU ARE NOW A PYTHON GRADUATE. PRESS COMPLETE TO FINISH.**\n\n### What to Remember\n- Learning doesn't stop here.\n- Focus on building projects, not just watching tutorials.\n- The best way to learn is to teach someone else.",
                 "quizQuestions": [
                     {
                         "id": 1,
@@ -3592,7 +3592,7 @@
                         "options": [
                             "Yes, there is nothing left to learn",
                             "No, software engineering is a lifelong journey of learning",
-                            "Only if you get the certificate",
+                            "Only if you get the full mastery",
                             "only if you memorize PEP 8"
                         ],
                         "correctAnswer": 1,
