@@ -164,7 +164,25 @@ class SupabaseService {
       lastLanguageId: profile.last_language_id,
       lastLessonId: profile.last_lesson_id,
       activity_log: profile.activity_log || [],
-      activity_history: StreakService.loadHistory(profile.id) || []
+      activity_history: (() => {
+        const dbHistory = profile.activity_history || [];
+        const localHistory = StreakService.loadHistory(profile.id) || [];
+
+        if (dbHistory.length === 0) return localHistory;
+
+        // Merge strategy: DB is the source of truth, but local might have ultra-recent items 
+        // that haven't synced yet. We merge by ID and sort by date.
+        const merged = [...dbHistory];
+        const dbIds = new Set(dbHistory.map((h: any) => h.id));
+
+        localHistory.forEach((lh: any) => {
+          if (!dbIds.has(lh.id)) {
+            merged.push(lh);
+          }
+        });
+
+        return merged.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 100);
+      })()
     };
   }
 

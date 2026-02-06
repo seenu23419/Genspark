@@ -2,7 +2,7 @@ import React, { useMemo, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Lock, Play, CheckCircle, Clock, Loader2, AlertCircle, Sparkles, ChevronDown, Trophy, Medal, Target, Award, BookOpen, Search } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
-import { useCurriculum } from '../../contexts/useCurriculum';
+import { useCurriculum } from '../../contexts/CurriculumContext';
 import { LANGUAGES } from '../../constants';
 import { Language, Lesson } from '../../types';
 import { usePractice } from '../../contexts/PracticeContext';

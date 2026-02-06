@@ -134,6 +134,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     }
                     setUser(currentUser);
                     setInitializing(false);
+
+                    // --- NEW: Trigger streak update on initialization for accuracy ---
+                    if (currentUser) {
+                        StreakService.updateStreak(currentUser).then(updated => {
+                            if (updated && mounted) setUser(updated);
+                        });
+                    }
                 }
             } catch (error) {
                 console.error("AuthContext: Init error:", error);

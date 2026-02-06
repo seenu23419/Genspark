@@ -11,60 +11,50 @@ export class StreakService {
 
         const now = new Date();
         const lastActive = user.lastActiveAt ? new Date(user.lastActiveAt) : null;
-        const currentStreak = user.streak || 0;
+
+        // --- NEW: Recalculate streak from logs for absolute accuracy ---
+        const activityLog = [...(user.activity_log || [])];
+        const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+
+        // Ensure today is in log if updating
+        if (!activityLog.includes(todayStr)) {
+            activityLog.push(todayStr);
+        }
+
+        const currentCalculatedStreak = this.recalculateStreak(activityLog);
+        const currentStreakInProfile = user.streak || 0;
 
         // Normalize dates to midnight for easy comparison
         const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         const yesterday = new Date(today);
         yesterday.setDate(yesterday.getDate() - 1);
 
-        let newStreak = currentStreak;
         let shouldUpdate = false;
 
-        if (!lastActive) {
-            // First time setting a streak
-            newStreak = 1;
+        // Update if streak number is different from calculation OR lastActive is missing/old
+        if (currentStreakInProfile !== currentCalculatedStreak) {
+            shouldUpdate = true;
+        } else if (!lastActive) {
             shouldUpdate = true;
         } else {
             const lastActiveDate = new Date(lastActive.getFullYear(), lastActive.getMonth(), lastActive.getDate());
-
-            if (lastActiveDate.getTime() === today.getTime()) {
-                // Already active today, no change to streak
-                shouldUpdate = false;
-            } else if (lastActiveDate.getTime() === yesterday.getTime()) {
-                // Active yesterday, increment streak
-                newStreak = currentStreak + 1;
-                shouldUpdate = true;
-            } else {
-                // Missed a day (or more), reset streak to 1
-                newStreak = 1;
+            if (lastActiveDate.getTime() < today.getTime()) {
                 shouldUpdate = true;
             }
         }
 
         if (shouldUpdate) {
-            // Manage activity log (keep last 60 active days)
-            const activityLog = [...(user.activity_log || [])];
-
-            // Timezone-safe date string (YYYY-MM-DD)
-            const dateStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-
-            if (!activityLog.includes(dateStr)) {
-                activityLog.push(dateStr);
-                // Keep only last 60 unique active days
-                if (activityLog.length > 60) {
-                    activityLog.shift();
-                }
-            }
+            // Keep only last 60 unique active days
+            let finalLog = [...new Set(activityLog)].sort().slice(-60);
 
             const updates = {
-                streak: newStreak,
+                streak: currentCalculatedStreak,
                 lastActiveAt: now.toISOString(),
-                activity_log: activityLog
+                activity_log: finalLog
             };
 
             try {
-                console.log(`[StreakService] Updating streak for ${user._id} to ${newStreak} with activity log`);
+                console.log(`[StreakService] Syncing streak for ${user._id} to ${currentCalculatedStreak}`);
                 const updatedUser = await supabaseDB.updateOne(user._id, updates);
                 return updatedUser;
             } catch (error) {
@@ -73,18 +63,47 @@ export class StreakService {
             }
         }
 
-        // Even if streak doesn't increment (already active today), 
-        // we might want to ensure today is in the log just in case
-        if (user.activity_log) {
-            const dateStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-            if (!user.activity_log.includes(dateStr)) {
-                // This shouldn't happen usually but ensures robustness
-                const activityLog = [...user.activity_log, dateStr].slice(-60);
-                await supabaseDB.updateOne(user._id, { activity_log: activityLog });
+        return user;
+    }
+
+    /**
+     * Absolute source of truth for streak calculation
+     */
+    static recalculateStreak(activityLog: string[]): number {
+        if (!activityLog || activityLog.length === 0) return 0;
+
+        // 1. Convert to sorted unique date objects (midnight)
+        const sortedDates = [...new Set(activityLog)]
+            .map(dateStr => {
+                const [y, m, d] = dateStr.split('-').map(Number);
+                return new Date(y, m - 1, d).getTime();
+            })
+            .sort((a, b) => b - a); // Descending (latest first)
+
+        const now = new Date();
+        const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+        const yesterdayMidnight = todayMidnight - (24 * 60 * 60 * 1000);
+
+        // 2. Check if streak is broken (haven't been active today OR yesterday)
+        const latestActivity = sortedDates[0];
+        if (latestActivity < yesterdayMidnight) {
+            return 0; // Streak broken
+        }
+
+        // 3. Count consecutive days backwards
+        let streak = 0;
+        let expectedTime = latestActivity;
+
+        for (const date of sortedDates) {
+            if (date === expectedTime) {
+                streak++;
+                expectedTime -= (24 * 60 * 60 * 1000);
+            } else {
+                break;
             }
         }
 
-        return user;
+        return streak;
     }
 
     /**
@@ -133,31 +152,38 @@ export class StreakService {
             hasLogUpdates = true;
         }
 
-        // 2. Update detailed activity history (LocalStorage)
-        // Load latest from storage to ensure we don't overwrite with stale state
+        // 2. Update detailed activity history (LocalStorage + DB fallback)
         let activityHistory = this.loadHistory(user._id);
         let hasHistoryUpdates = false;
 
         if (specificActivity) {
-            const newItem = {
-                id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-                date: now.toISOString(),
-                ...specificActivity
-            };
-            activityHistory.unshift(newItem); // Add to beginning
-            if (activityHistory.length > 100) activityHistory = activityHistory.slice(0, 100); // Keep last 100 items
+            // DEDUPLICATION: Check if this exact activity was logged TODAY (per calendar day)
+            // This is safer than a 24-hour window which might block completions at 11:59PM and 12:01AM.
+            const isDuplicate = activityHistory.some((item: any) =>
+                item.title === specificActivity.title &&
+                item.type === specificActivity.type &&
+                new Date(item.date).toDateString() === now.toDateString()
+            );
 
-            this.saveHistory(user._id, activityHistory);
-            hasHistoryUpdates = true;
-        } else if (user.activity_history && user.activity_history.length > activityHistory.length) {
-            // Edge case: State has more items than storage? (Unlikely but safe sync)
-            // this.saveHistory(user._id, user.activity_history);
+            if (isDuplicate) {
+                console.log(`[StreakService] Skipping duplicate activity for today: ${specificActivity.title}`);
+            } else {
+                const newItem = {
+                    id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+                    date: now.toISOString(),
+                    ...specificActivity
+                };
+                activityHistory.unshift(newItem); // Add to beginning
+                if (activityHistory.length > 100) activityHistory = activityHistory.slice(0, 100); // Keep last 100 items
+
+                this.saveHistory(user._id, activityHistory);
+                hasHistoryUpdates = true;
+            }
         }
 
         if (hasLogUpdates || hasHistoryUpdates) {
             const updates: Partial<User> = { lastActiveAt: now.toISOString() };
             if (hasLogUpdates) updates.activity_log = activityLog;
-            // We return activity_history so the context updates the UI state immediately
             if (hasHistoryUpdates || specificActivity) updates.activity_history = activityHistory;
 
             return updates;

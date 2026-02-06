@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { useCurriculum } from '../../contexts/useCurriculum';
+import { useCurriculum } from '../../contexts/CurriculumContext';
 import { CURRICULUM, LANGUAGES } from '../../constants';
 import { Play, Settings, Flame, BookOpen, Code, Trophy, Zap, Brain, Award, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';

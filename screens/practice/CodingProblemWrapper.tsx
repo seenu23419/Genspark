@@ -6,7 +6,7 @@ import { PracticeProblem } from '../../data/practiceProblems';
 import { usePracticeProgress } from '../../hooks/usePracticeProgress';
 
 import { usePractice } from '../../contexts/PracticeContext';
-import { useCurriculum } from '../../contexts/useCurriculum';
+import { useCurriculum } from '../../contexts/CurriculumContext';
 import { Loader2 } from 'lucide-react';
 
 const CodingProblemWrapper: React.FC = () => {

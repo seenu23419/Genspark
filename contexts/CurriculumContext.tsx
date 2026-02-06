@@ -22,8 +22,6 @@ export const CurriculumProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     const [error, setError] = useState<Record<string, string | null>>({});
 
     // Merge static curriculum with remote overrides
-    // Note: We intentionally don't add STATIC_CURRICULUM to dependencies to avoid
-    // constant recalculation during HMR updates in development
     const data = React.useMemo(() => {
         return {
             ...STATIC_CURRICULUM,
@@ -75,3 +73,10 @@ export const CurriculumProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     );
 };
 
+export const useCurriculum = () => {
+    const context = useContext(CurriculumContext);
+    if (context === undefined) {
+        throw new Error('useCurriculum must be used within a CurriculumProvider');
+    }
+    return context;
+};

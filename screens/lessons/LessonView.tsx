@@ -20,7 +20,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { useCurriculum } from '../../contexts/useCurriculum';
+import { useCurriculum } from '../../contexts/CurriculumContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { Lesson } from '../../types';
 import { offlineService } from '../../services/offlineService';

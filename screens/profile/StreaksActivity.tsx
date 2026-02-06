@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Flame, ChevronLeft, ChevronRight, Zap, CheckCircle2, Trophy, XCircle, Award, BarChart3, BookOpen } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
-import { useCurriculum } from '../../contexts/useCurriculum';
+import { useCurriculum } from '../../contexts/CurriculumContext';
 import { CURRICULUM } from '../../constants';
 
 const StreaksActivity: React.FC = () => {
@@ -338,10 +338,17 @@ const StreaksActivity: React.FC = () => {
                     <div className="mt-4 pt-4 border-t border-white/5">
                         {(() => {
                             const dateStr = selectedDay.dateStr;
-                            const historyItems = user.activity_history?.filter(item =>
-                                item.date.startsWith(dateStr) ||
-                                new Date(item.date).toDateString() === selectedDay.date.toDateString()
-                            ) || [];
+                            // DEDUPLICATE: Prevent same activity (type+title) from being shown twice for the same day
+                            const historyItems = (user.activity_history || [])
+                                .filter(item =>
+                                    item.date.startsWith(dateStr) ||
+                                    new Date(item.date).toDateString() === selectedDay.date.toDateString()
+                                )
+                                .filter((item, index, self) =>
+                                    index === self.findIndex((t) => (
+                                        t.type === item.type && t.title === item.title
+                                    ))
+                                );
 
                             if (historyItems.length > 0) {
                                 return (

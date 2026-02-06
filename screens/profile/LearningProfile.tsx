@@ -51,6 +51,18 @@ const LearningProfile: React.FC = () => {
     // Dynamic Activity Data Calculation
     const [activityData, setActivityData] = useState<{ name: string; time: number }[]>([]);
 
+    // 1. Deduplicate Activity History (Same title/type on same day counts as one)
+    const uniqueHistory = React.useMemo(() => {
+        if (!user?.activity_history) return [];
+        return (user.activity_history as any[]).filter((item, index, self) =>
+            index === self.findIndex((t) => (
+                new Date(t.date).toDateString() === new Date(item.date).toDateString() &&
+                t.type === item.type &&
+                t.title === item.title
+            ))
+        );
+    }, [user?.activity_history]);
+
     useEffect(() => {
         const calculateStats = () => {
             if (!user) return;
@@ -63,7 +75,7 @@ const LearningProfile: React.FC = () => {
 
             // Map for quick lookup: dateStr -> count
             const activityMap = new Map<string, number>();
-            (user.activity_history || []).forEach(item => {
+            uniqueHistory.forEach(item => {
                 const dateStr = item.date.split('T')[0]; // ISO string YYYY-MM-DD
                 activityMap.set(dateStr, (activityMap.get(dateStr) || 0) + 1);
             });
@@ -87,14 +99,14 @@ const LearningProfile: React.FC = () => {
         };
 
         calculateStats();
-    }, [user]);
+    }, [user, uniqueHistory]);
 
     // Calculate Total Time (Memoized for render)
     const totalTimeHours = React.useMemo(() => {
-        if (!user?.activity_history) return ((user?.lessonsCompleted || 0) * 15) / 60; // Fallback
+        if (!uniqueHistory.length) return ((user?.lessonsCompleted || 0) * 15) / 60; // Fallback
 
         let minutes = 0;
-        user.activity_history.forEach(item => {
+        uniqueHistory.forEach(item => {
             if (item.type === 'lesson') minutes += 15; // 15m per lesson
             else if (item.type === 'practice') minutes += 10; // 10m per practice
             else if ((item.type as string) === 'quiz' || (item.type as string) === 'challenge') minutes += 5; // 5m per quiz
@@ -102,7 +114,7 @@ const LearningProfile: React.FC = () => {
         });
 
         return minutes / 60;
-    }, [user]);
+    }, [uniqueHistory, user?.lessonsCompleted]);
 
     useEffect(() => {
         const fetchPracticeStats = async () => {
