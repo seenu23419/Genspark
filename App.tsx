@@ -406,19 +406,41 @@ const App: React.FC = () => {
       CapApp.addListener('appUrlOpen', async (data: any) => {
         console.log('🔗 Deep Link Received:', data.url);
 
-        // Supabase OAuth redirects come in with a hash (#access_token=...)
-        // We need to pass this URL to Supabase to handle the session
-        const url = new URL(data.url);
-        const { error } = await supabaseDB.supabase.auth.setSession({
-          access_token: url.hash.split('&')[0].split('=')[1],
-          refresh_token: url.hash.split('&')[1].split('=')[1],
-        });
+        try {
+          const url = new URL(data.url);
 
-        if (error) {
-          console.error('❌ Deep Link Auth Error:', error);
-        } else {
-          console.log('✅ Deep Link Auth Success');
-          // Navigate to home or intended destination
+          // Check if this is a Google Auth redirect
+          if (url.host === 'google-auth' || url.pathname.includes('google-auth')) {
+            console.log('🔗 Handling Google Auth Redirect');
+
+            // Extract hash parameters (Supabase sends tokens in the hash)
+            // The hash might look like #access_token=...&refresh_token=...
+            const hash = url.hash.substring(1); // Remove leading #
+            const params = new URLSearchParams(hash);
+
+            const accessToken = params.get('access_token');
+            const refreshToken = params.get('refresh_token');
+
+            if (accessToken && refreshToken) {
+              console.log('✅ Found tokens in deep link');
+              const { error } = await supabaseDB.supabase.auth.setSession({
+                access_token: accessToken,
+                refresh_token: refreshToken,
+              });
+
+              if (error) {
+                console.error('❌ Deep Link Auth Error:', error);
+              } else {
+                console.log('✅ Deep Link Auth Success - Session Set');
+                // Force navigation to home to ensure state update
+                // window.location.href = '/'; 
+              }
+            } else {
+              console.warn('⚠️ No tokens found in Google Auth deep link', hash);
+            }
+          }
+        } catch (e) {
+          console.error('❌ Error processing deep link:', e);
         }
       });
     };

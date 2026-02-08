@@ -248,7 +248,7 @@ const LearnHub: React.FC = () => {
             const isBeginnerCompleted = userState.completedBeginnerPaths.length > 0;
 
             sections.push({
-                title: 'Build Advanced Skills',
+                title: 'Advanced Skills',
                 description: isBeginnerCompleted
                     ? 'Continue growing your skills'
                     : 'Recommended after completing a beginner path',
@@ -270,24 +270,15 @@ const LearnHub: React.FC = () => {
 
         const isBeginnerCompleted = userState.completedBeginnerPaths.length > 0;
         const isAdvancedSection = sectionIndex >= 2;
-        const isAdvancedLocked = isAdvancedSection && !isBeginnerCompleted && userState.state !== 'no_path_selected';
+        const isAdvancedLocked = false; // isAdvancedSection && !isBeginnerCompleted && userState.state !== 'no_path_selected';
 
         const handleClick = () => {
             if (!isAdvancedLocked) {
-                // Determine if we should "Swap" the featured path
-                // Only swap if:
-                // 1. Current path is completed
-                // 2. OR No path is selected yet (state is 'no_path_selected')
-                // 3. AND we are clicking a different language than the current lastLanguageId
-                const isMastered = userState.state === 'path_completed';
-                const isNoPath = userState.state === 'no_path_selected';
-                const isDifferent = lang.id !== user?.lastLanguageId;
-
-                if ((isMastered || isNoPath) && isDifferent) {
-                    console.log(`LearnHub: Swapping featured path from ${user?.lastLanguageId} to ${lang.id}`);
+                // Always set as active path when clicked
+                if (user?.lastLanguageId !== lang.id) {
+                    console.log(`LearnHub: Switching active path to ${lang.id}`);
                     updateUser({ lastLanguageId: lang.id }).catch(console.error);
                 }
-
                 navigate(`/track/${lang.id}`);
             }
         };
@@ -459,7 +450,7 @@ const LearnHub: React.FC = () => {
                     {/* Main Content */}
                     <div className="space-y-12 md:space-y-16">
                         {sections.map((section, sectionIndex) => {
-                            const isAdvancedSection = section.title === 'Build Advanced Skills';
+                            const isAdvancedSection = section.title === 'Advanced Skills';
                             const shouldRender = true;
 
                             if (!shouldRender) return null;

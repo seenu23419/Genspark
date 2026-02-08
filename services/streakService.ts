@@ -136,7 +136,7 @@ export class StreakService {
     }
 
     static getActivityUpdates(user: User, specificActivity?: { type: 'lesson' | 'practice' | 'project' | 'challenge', title: string, xp?: number }): Partial<User> | null {
-        if (!user) return null; // streakEnabled check moved to internal logic if needed
+        if (!user) return null;
 
         const now = new Date();
         // Use local date for calendar consistency
@@ -154,37 +154,60 @@ export class StreakService {
 
         // 2. Update detailed activity history (LocalStorage + DB fallback)
         let activityHistory = this.loadHistory(user._id);
+
+        // Merge from user profile if local storage is empty but profile has history (migration/sync)
+        if (activityHistory.length === 0 && user.activity_history && user.activity_history.length > 0) {
+            activityHistory = [...user.activity_history];
+        }
+
         let hasHistoryUpdates = false;
 
         if (specificActivity) {
-            // DEDUPLICATION: Check if this exact activity was logged TODAY (per calendar day)
-            // This is safer than a 24-hour window which might block completions at 11:59PM and 12:01AM.
-            const isDuplicate = activityHistory.some((item: any) =>
-                item.title === specificActivity.title &&
-                item.type === specificActivity.type &&
-                new Date(item.date).toDateString() === now.toDateString()
-            );
+            const newItem = {
+                id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+                date: now.toISOString(),
+                ...specificActivity
+            };
 
-            if (isDuplicate) {
-                console.log(`[StreakService] Skipping duplicate activity for today: ${specificActivity.title}`);
-            } else {
-                const newItem = {
-                    id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-                    date: now.toISOString(),
-                    ...specificActivity
-                };
-                activityHistory.unshift(newItem); // Add to beginning
-                if (activityHistory.length > 100) activityHistory = activityHistory.slice(0, 100); // Keep last 100 items
+            // Add new item to the front
+            activityHistory.unshift(newItem);
+            hasHistoryUpdates = true;
+        }
 
-                this.saveHistory(user._id, activityHistory);
-                hasHistoryUpdates = true;
+        // --- ROBUST DEDUPLICATION ---
+        // Filter to keep only the FIRST occurrence of any (date_string + type + title) combination
+        // This cleans up both existing duplicates and prevents new ones
+        const uniqueHistory: any[] = [];
+        const seen = new Set();
+
+        for (const item of activityHistory) {
+            const itemDateStr = new Date(item.date).toDateString(); // "Mon Jan 01 2024"
+            const key = `${itemDateStr}|${item.type}|${item.title}`;
+
+            if (!seen.has(key)) {
+                seen.add(key);
+                uniqueHistory.push(item);
             }
+        }
+
+        // Check if deduplication actually removed anything or if we added something new
+        if (uniqueHistory.length !== activityHistory.length || hasHistoryUpdates) {
+            activityHistory = uniqueHistory;
+
+            if (activityHistory.length > 100) {
+                activityHistory = activityHistory.slice(0, 100); // Keep last 100 items
+            }
+
+            this.saveHistory(user._id, activityHistory);
+            hasHistoryUpdates = true;
         }
 
         if (hasLogUpdates || hasHistoryUpdates) {
             const updates: Partial<User> = { lastActiveAt: now.toISOString() };
             if (hasLogUpdates) updates.activity_log = activityLog;
-            if (hasHistoryUpdates || specificActivity) updates.activity_history = activityHistory;
+
+            // Always update history if it changed (deduped or new)
+            if (hasHistoryUpdates) updates.activity_history = activityHistory;
 
             return updates;
         }

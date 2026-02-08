@@ -54,7 +54,7 @@ const Profile: React.FC = () => {
   if (!user) return null;
 
   return (
-    <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-8 pb-32 animate-in fade-in duration-500 bg-[#0a0b14] min-h-screen">
+    <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-8 pb-32 animate-in fade-in duration-500 min-h-screen">
 
       {/* 1. Personal Header - Centered & Premium */}
       <section className="relative overflow-hidden rounded-[3rem] bg-slate-900 border border-white/5 shadow-2xl p-10 mt-4">

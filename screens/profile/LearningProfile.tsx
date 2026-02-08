@@ -136,7 +136,9 @@ const LearningProfile: React.FC = () => {
     const getCourseLessonsCompleted = (courseId: string): number => {
         const prefix = LESSON_PREFIXES[courseId];
         if (!prefix || !user.completedLessonIds) return 0;
-        return user.completedLessonIds.filter(id => id.startsWith(prefix)).length;
+        // DEDUPLICATE: Use Set to count unique lesson IDs only
+        const uniqueIds = new Set(user.completedLessonIds);
+        return Array.from(uniqueIds).filter(id => id.startsWith(prefix)).length;
     };
 
     const lessonsStarted = user.lessonsCompleted || 0;
@@ -297,57 +299,59 @@ const LearningProfile: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                     {/* Dynamic Course Achievements */}
-                    {LANGUAGES.map((lang) => {
-                        const courseId = lang.id;
-                        const courseName = lang.name;
-                        const requirements = ACHIEVEMENT_REQUIREMENTS[courseId];
+                    {Array.from(new Set(LANGUAGES.map(l => l.id)))
+                        .map(id => LANGUAGES.find(l => l.id === id)!)
+                        .map((lang) => {
+                            const courseId = lang.id;
+                            const courseName = lang.name;
+                            const requirements = ACHIEVEMENT_REQUIREMENTS[courseId];
 
-                        // Skip if no requirements defined for this course
-                        if (!requirements) return null;
+                            // Skip if no requirements defined for this course
+                            if (!requirements) return null;
 
-                        const courseLessons = getCourseLessonsCompleted(courseId);
-                        const isCompleted = courseLessons >= requirements.lessons && solvedProblemsCount >= requirements.problems;
+                            const courseLessons = getCourseLessonsCompleted(courseId);
+                            const isCompleted = courseLessons >= requirements.lessons && solvedProblemsCount >= requirements.problems;
 
-                        return isCompleted ? (
-                            // Completed State
-                            <div key={courseId} className="bg-gradient-to-br from-emerald-900/40 to-slate-900 border border-emerald-500/20 rounded-[2.5rem] p-8 flex flex-col justify-between shadow-2xl shadow-emerald-500/5">
-                                <div className="space-y-6">
-                                    <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 border border-emerald-500/20">
-                                        <CheckCircle2 size={28} />
-                                    </div>
-                                    <div className="space-y-1">
-                                        <h4 className="text-xl font-black text-white tracking-tight uppercase">{courseName}</h4>
-                                        <div className="px-2 py-1 bg-emerald-500/10 rounded-lg border border-emerald-500/20 inline-block">
-                                            <p className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Completed</p>
+                            return isCompleted ? (
+                                // Completed State
+                                <div key={courseId} className="bg-gradient-to-br from-emerald-900/40 to-slate-900 border border-emerald-500/20 rounded-[2.5rem] p-8 flex flex-col justify-between shadow-2xl shadow-emerald-500/5">
+                                    <div className="space-y-6">
+                                        <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 border border-emerald-500/20">
+                                            <CheckCircle2 size={28} />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <h4 className="text-xl font-black text-white tracking-tight uppercase">{courseName}</h4>
+                                            <div className="px-2 py-1 bg-emerald-500/10 rounded-lg border border-emerald-500/20 inline-block">
+                                                <p className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Completed</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="mt-8 pt-6 border-t border-white/5">
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
-                                        GenSpark Status Unlocked! You've mastered the basics.
-                                    </p>
-                                </div>
-                            </div>
-                        ) : (
-                            // Locked State
-                            <div key={courseId} className="bg-slate-900/40 border border-dashed border-white/10 rounded-[2.5rem] p-8 flex flex-col justify-between">
-                                <div className="space-y-6">
-                                    <div className="w-14 h-14 bg-slate-800 rounded-2xl flex items-center justify-center text-slate-400">
-                                        <ShieldCheck size={28} />
-                                    </div>
-                                    <div className="space-y-1">
-                                        <h4 className="text-xl font-black text-slate-300 tracking-tight italic uppercase">{courseName}</h4>
-                                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Status Locked</p>
+                                    <div className="mt-8 pt-6 border-t border-white/5">
+                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
+                                            GenSpark Status Unlocked! You've mastered the basics.
+                                        </p>
                                     </div>
                                 </div>
-                                <div className="mt-8 pt-6 border-t border-white/5">
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
-                                        Complete {Math.max(0, requirements.lessons - courseLessons)} more lessons to unlock status.
-                                    </p>
+                            ) : (
+                                // Locked State
+                                <div key={courseId} className="bg-slate-900/40 border border-dashed border-white/10 rounded-[2.5rem] p-8 flex flex-col justify-between">
+                                    <div className="space-y-6">
+                                        <div className="w-14 h-14 bg-slate-800 rounded-2xl flex items-center justify-center text-slate-400">
+                                            <ShieldCheck size={28} />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <h4 className="text-xl font-black text-slate-300 tracking-tight italic uppercase">{courseName}</h4>
+                                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Status Locked</p>
+                                        </div>
+                                    </div>
+                                    <div className="mt-8 pt-6 border-t border-white/5">
+                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
+                                            Complete {Math.max(0, requirements.lessons - courseLessons)} more lessons to unlock status.
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
 
                     <div className="bg-slate-900/40 border border-dashed border-white/10 rounded-[2.5rem] p-8 flex flex-col justify-between">
                         <div className="space-y-6">

@@ -338,9 +338,10 @@ const StreaksActivity: React.FC = () => {
                     <div className="mt-4 pt-4 border-t border-white/5">
                         {(() => {
                             const dateStr = selectedDay.dateStr;
-                            // DEDUPLICATE: Prevent same activity (type+title) from being shown twice for the same day
+                            // DEDUPLICATE: Prevent same activity (type+title) from being visible even if DB has duplicates
                             const historyItems = (user.activity_history || [])
                                 .filter(item =>
+                                    // Check against both ISO string match and date string match for robustness
                                     item.date.startsWith(dateStr) ||
                                     new Date(item.date).toDateString() === selectedDay.date.toDateString()
                                 )

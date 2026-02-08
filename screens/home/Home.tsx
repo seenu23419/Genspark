@@ -58,6 +58,7 @@ const Home: React.FC = () => {
 
     const handlePathSelect = (pathId: string) => {
         setSelectedPathId(pathId);
+        updateUser({ lastLanguageId: pathId }).catch(console.error);
     };
 
     // Derived Data
@@ -95,7 +96,7 @@ const Home: React.FC = () => {
     const completedCount = modules.reduce((sum, m) => sum + m.lessons.filter((l: any) => completedLessonIds.includes(l.id)).length, 0);
     const isPathCompleted = totalLessons > 0 && completedCount === totalLessons;
 
-    if (loading || !user) return null;
+    if (!user) return null;
 
     return (
         <div className="min-h-screen bg-[#0a0b14] text-white pb-24 font-sans selection:bg-indigo-500/30">
@@ -198,7 +199,7 @@ const Home: React.FC = () => {
                                     <Flame size={16} className="text-indigo-400" />
                                     Current Streak
                                 </div>
-                                <div className="text-3xl font-bold text-white">7 days</div>
+                                <div className="text-3xl font-bold text-white">{user?.streak || 0} days</div>
                             </div>
                             <ChevronRight size={20} className="text-slate-600 group-hover:text-slate-400 transition-colors" />
                         </div>

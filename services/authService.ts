@@ -1,3 +1,4 @@
+import { Capacitor } from '@capacitor/core';
 import { supabaseDB } from './supabaseService';
 import { User } from '../types';
 import { StreakService } from './streakService';
@@ -32,10 +33,13 @@ class AuthService {
     let redirectUrl = window.location.origin;
 
     // Check if we are running in a Capacitor app
-    // @ts-ignore - Capacitor might not be defined in all environments
-    if (window.Capacitor && window.Capacitor.isNativePlatform()) {
-      redirectUrl = 'com.genspark.app://';
+    if (Capacitor.isNativePlatform()) {
+      redirectUrl = 'com.genspark.app://google-auth';
+    } else {
+      console.log("⚠️ [AuthService] Not native platform, utilizing origin:", redirectUrl);
     }
+
+    console.log("🔐 [AuthService] Initiating OAuth with Redirect URL:", redirectUrl);
 
     const { error } = await supabaseDB.supabase.auth.signInWithOAuth({
       provider: provider,
