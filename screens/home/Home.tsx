@@ -99,7 +99,7 @@ const Home: React.FC = () => {
     if (!user) return null;
 
     return (
-        <div className="min-h-screen bg-[#0a0b14] text-white pb-24 font-sans selection:bg-indigo-500/30">
+        <div className="min-h-screen bg-[#020308] text-white pb-24 font-sans selection:bg-indigo-500/30">
             {/* Minimal background glow */}
             <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/5 blur-[120px] rounded-full opacity-50" />
@@ -126,7 +126,7 @@ const Home: React.FC = () => {
                 </div>
 
                 {/* 7. LANGUAGE PATH INDICATOR - Premium Redesign */}
-                <section className="mb-10 p-6 bg-slate-900/40 border border-slate-700/40 rounded-2xl shadow-xl shadow-indigo-500/5">
+                <section className="mb-10 p-6 bg-slate-800/40 border border-slate-600/40 rounded-2xl shadow-xl shadow-indigo-500/5">
                     <div className="flex items-center gap-2 mb-6">
                         <Zap size={18} className="text-indigo-400" />
                         <h3 className="text-sm font-black text-white uppercase tracking-wider">Learning Path</h3>
@@ -151,8 +151,8 @@ const Home: React.FC = () => {
                 {/* 3. PRIMARY ACTION CARD - Enhanced */}
                 <section className="mb-6">
                     <div className={`relative overflow-hidden rounded-2xl border backdrop-blur-sm transition-all duration-300 shadow-xl shadow-indigo-500/10 ${isPathCompleted
-                        ? 'bg-gradient-to-br from-emerald-600/20 to-teal-600/20 border-emerald-500/30 hover:border-emerald-500/50'
-                        : 'bg-gradient-to-br from-indigo-600/20 to-purple-600/20 border-indigo-500/30 hover:border-indigo-500/50'
+                        ? 'bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border-emerald-400/30 hover:border-emerald-400/50'
+                        : 'bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border-indigo-400/30 hover:border-indigo-400/50'
                         }`}>
                         <div className="p-6 md:p-8">
                             <div className="flex items-start justify-between mb-4">
@@ -167,8 +167,41 @@ const Home: React.FC = () => {
                                         {currentPath?.name} • {isPathCompleted ? `All ${totalLessons} Lessons Completed` : `Lesson ${completedCount + 1} of ${totalLessons}`}
                                     </p>
                                 </div>
-                                <div className={`hidden md:flex items-center justify-center w-16 h-16 rounded-xl ${isPathCompleted ? 'bg-emerald-500/20' : 'bg-indigo-500/20'}`}>
-                                    {isPathCompleted ? <Trophy size={32} className="text-emerald-400" /> : <BookOpen size={32} className="text-indigo-400" />}
+                                <div className="flex items-center justify-center relative w-16 h-16 md:w-20 md:h-20 shrink-0 ml-4">
+                                    {/* Circular Progress */}
+                                    <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 36 36">
+                                        <defs>
+                                            <linearGradient id="progressGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                                <stop offset="0%" stopColor="#e879f9" /> {/* fuchsia-400 */}
+                                                <stop offset="100%" stopColor="#c026d3" /> {/* fuchsia-600 */}
+                                            </linearGradient>
+                                        </defs>
+                                        {/* Background Circle */}
+                                        <path
+                                            className={`${isPathCompleted ? 'text-emerald-900/40' : 'text-fuchsia-900/40'}`}
+                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="3"
+                                        />
+                                        {/* Progress Circle */}
+                                        <path
+                                            className={`${isPathCompleted ? 'text-emerald-400' : ''} transition-all duration-1000 ease-out`}
+                                            stroke={isPathCompleted ? 'currentColor' : 'url(#progressGradient)'}
+                                            strokeDasharray={`${(completedCount / totalLessons) * 100}, 100`}
+                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                            fill="none"
+                                            strokeWidth="3"
+                                            strokeLinecap="round"
+                                        />
+                                    </svg>
+
+                                    {/* Percentage Center */}
+                                    <div className={`relative z-10 w-12 h-12 rounded-full flex items-center justify-center ${isPathCompleted ? 'text-emerald-400' : 'text-fuchsia-400'}`}>
+                                        <span className="text-xs md:text-sm font-bold">
+                                            {Math.round((completedCount / totalLessons) * 100) || 0}%
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -190,7 +223,7 @@ const Home: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                     <button
                         onClick={() => navigate('/profile/streaks')}
-                        className="relative p-5 bg-slate-900/40 border border-slate-700/30 rounded-xl hover:bg-slate-900/60 transition-all duration-300 group overflow-hidden text-left"
+                        className="relative p-5 bg-indigo-900/20 border border-indigo-500/30 rounded-xl hover:bg-indigo-900/30 transition-all duration-300 group overflow-hidden text-left"
                     >
                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-400 via-indigo-500 to-indigo-600 rounded-full shadow-[0_0_20px_rgba(99,102,241,0.7)]"></div>
                         <div className="flex items-center justify-between">
@@ -207,7 +240,7 @@ const Home: React.FC = () => {
 
                     <button
                         onClick={() => navigate('/learn', { state: { initialFilter: 'completed' } })}
-                        className="relative p-5 bg-slate-900/40 border border-slate-700/30 rounded-xl hover:bg-slate-900/60 transition-all duration-300 group overflow-hidden text-left"
+                        className="relative p-5 bg-rose-900/20 border border-rose-500/30 rounded-xl hover:bg-rose-900/30 transition-all duration-300 group overflow-hidden text-left"
                     >
                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-rose-400 via-rose-500 to-rose-600 rounded-full shadow-[0_0_20px_rgba(244, 63, 94, 0.7)]"></div>
                         <div className="flex items-center justify-between">
@@ -227,18 +260,18 @@ const Home: React.FC = () => {
 
                     <button
                         onClick={() => navigate('/practice')}
-                        className="relative p-5 bg-slate-900/40 border border-slate-700/30 rounded-xl hover:bg-slate-900/60 transition-all duration-300 group overflow-hidden text-left"
+                        className="relative p-5 bg-amber-900/20 border border-amber-500/30 rounded-xl hover:bg-amber-900/30 transition-all duration-300 group overflow-hidden text-left"
                     >
-                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.7)]"></div>
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 rounded-full shadow-[0_0_20px_rgba(245,158,11,0.7)]"></div>
                         <div className="flex items-center justify-between">
                             <div className="ml-3 flex-1">
                                 <div className="text-sm text-slate-300 font-medium mb-2 flex items-center gap-2">
-                                    <Code size={16} className="text-purple-400" />
+                                    <Code size={16} className="text-amber-400" />
                                     Practice Solved
                                 </div>
                                 <div className="text-3xl font-bold text-white mb-2">0</div>
                                 <div className="w-full bg-slate-700/50 rounded-full h-1.5">
-                                    <div className="bg-purple-500 h-1.5 rounded-full transition-all duration-500" style={{ width: '0%' }}></div>
+                                    <div className="bg-amber-500 h-1.5 rounded-full transition-all duration-500" style={{ width: '0%' }}></div>
                                 </div>
                             </div>
                             <ChevronRight size={20} className="text-slate-600 group-hover:text-slate-400 transition-colors" />
@@ -246,33 +279,7 @@ const Home: React.FC = () => {
                     </button>
                 </div>
 
-                {/* 6. QUICK ACTIONS - NEW */}
-                <section className="mb-10">
-                    <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">Quick Actions</h3>
-                    <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-                        <button
-                            onClick={() => navigate('/practice')}
-                            className="flex-shrink-0 px-6 py-3 bg-slate-800/70 hover:bg-slate-800 border border-slate-700 rounded-xl text-white text-sm font-semibold transition-all duration-200 flex items-center gap-2"
-                        >
-                            <Zap size={16} className="text-yellow-400" />
-                            Practice 1 Min
-                        </button>
-                        <button
-                            onClick={() => navigate('/quiz')}
-                            className="flex-shrink-0 px-6 py-3 bg-slate-800/70 hover:bg-slate-800 border border-slate-700 rounded-xl text-white text-sm font-semibold transition-all duration-200 flex items-center gap-2"
-                        >
-                            <Brain size={16} className="text-purple-400" />
-                            Take Quiz
-                        </button>
-                        <button
-                            onClick={() => navigate('/learn')}
-                            className="flex-shrink-0 px-6 py-3 bg-slate-800/70 hover:bg-slate-800 border border-slate-700 rounded-xl text-white text-sm font-semibold transition-all duration-200 flex items-center gap-2"
-                        >
-                            <Trophy size={16} className="text-cyan-400" />
-                            Switch Language
-                        </button>
-                    </div>
-                </section>
+
             </div>
         </div>
     );

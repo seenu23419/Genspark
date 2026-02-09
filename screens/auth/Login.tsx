@@ -8,6 +8,7 @@ import { Loader2, AlertCircle, Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { authService } from '../../services/authService';
 import { useNavigate } from 'react-router-dom';
+import { Capacitor } from '@capacitor/core';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -19,6 +20,11 @@ const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+
+  // Debug Info
+  const platform = Capacitor.getPlatform();
+  const isNative = Capacitor.isNativePlatform();
+  const redirectUrl = isNative ? 'com.genspark.app://google-auth' : window.location.origin;
 
   // Validation
   const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -239,6 +245,12 @@ const Login: React.FC = () => {
               Sign up
             </button>
           </p>
+
+          {/* DEBUG INFO */}
+          <div className="mt-8 p-3 bg-black/40 rounded text-[10px] text-slate-600 font-mono text-center">
+            <p>Platform: {platform} (Native: {isNative ? 'YES' : 'NO'})</p>
+            <p className="break-all mt-1">Redirect: {redirectUrl}</p>
+          </div>
 
         </div>
       </div>
