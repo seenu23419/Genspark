@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Enable class-based dark mode for Tailwind 4 */
+@variant dark (&:where(.dark, .dark *));
+
 /* Smooth fade-in animation for page transitions */
 @keyframes fadeIn {
   from {
@@ -30,17 +33,39 @@
   --animate-in-timing: ease-in-out;
 }
 
-/* Ensure no white flashes during page loads */
-html {
-  @apply bg-slate-50 text-slate-900 transition-colors duration-300;
+/* Enable class-based dark mode for Tailwind 4 */
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-app-bg: #f1f5f9;
+  --color-app-text: #0f172a;
+
+  --dark-color-app-bg: #000000;
+  --dark-color-app-text: #f8fafc;
 }
 
-html.dark {
-  @apply bg-[#0a0b14] text-slate-50;
+/* Base Styles with CSS Variables for max reliability */
+:root {
+  --bg: #f1f5f9;
+  --text: #0f172a;
+  color-scheme: light;
+}
+
+:root.dark {
+  --bg: #000000;
+  --text: #f8fafc;
+  color-scheme: dark;
+}
+
+html {
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+  @apply transition-colors duration-300;
 }
 
 body {
-  @apply bg-transparent text-inherit;
+  background-color: transparent !important;
+  color: inherit;
 }
 
 /* Smooth scrolling */

@@ -195,13 +195,7 @@ button:active:not(:disabled) {
   }
 }
 
-/* Dark mode (always on for this app) */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #020617;
-    color: #f1f5f9;
-  }
-}
+/* Dark mode fully handled by global index.css and .dark class */
 
 /* Print styles (for reference) */
 @media print {

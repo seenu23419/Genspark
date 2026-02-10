@@ -279,12 +279,12 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
    };
 
    return (
-      <div className="flex h-screen bg-slate-950 overflow-hidden font-sans text-slate-200">
+      <div className="flex h-screen bg-slate-100 dark:bg-slate-950 overflow-hidden font-sans text-slate-900 dark:text-slate-200 transition-colors duration-300">
 
          {/* Sidebar - App Themed Style */}
          <aside className={`
             ${isMobile ? 'absolute inset-y-0 left-0 z-50 w-[260px]' : 'relative w-[260px]'} 
-            bg-slate-900 flex flex-col transition-all duration-300 ease-in-out shrink-0 border-r border-slate-800
+            bg-slate-200/50 dark:bg-slate-900 flex flex-col transition-all duration-300 ease-in-out shrink-0 border-r border-slate-300 dark:border-slate-800
             ${!isSidebarOpen && !isMobile ? '-ml-[260px]' : ''}
             ${isMobile && !isSidebarOpen ? '-translate-x-full' : 'translate-x-0'}
          `}>
@@ -292,7 +292,7 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
             <div className="p-3 flex items-center gap-2">
                <button
                   onClick={handleNewChat}
-                  className="flex-1 flex items-center justify-between px-3 py-3 rounded-lg hover:bg-slate-800 text-white text-sm transition-colors group border border-slate-800/50 hover:border-slate-700"
+                  className="flex-1 flex items-center justify-between px-3 py-3 rounded-lg bg-white/50 dark:bg-slate-800 hover:bg-white dark:hover:bg-slate-700 text-slate-900 dark:text-white text-sm transition-colors group border border-slate-200 dark:border-slate-800/50 hover:border-slate-300 dark:hover:border-slate-700"
                >
                   <div className="flex items-center gap-3">
                      <div className="w-7 h-7 bg-indigo-600 rounded-full flex items-center justify-center shadow-lg shadow-indigo-500/20">
@@ -348,27 +348,27 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
             </div>
 
             {/* User Profile / Pro Badge */}
-            <div className="p-3 mt-auto border-t border-slate-800">
+            <div className="p-3 mt-auto border-t border-slate-200 dark:border-slate-800">
                {user?.isPro && (
-                  <div className="mb-2 p-3 bg-gradient-to-br from-indigo-950/30 to-slate-900 rounded-xl border border-indigo-500/20">
-                     <div className="flex items-center gap-2 text-xs font-bold text-yellow-500 mb-1">
+                  <div className="mb-2 p-3 bg-gradient-to-br from-indigo-50 dark:from-indigo-950/30 to-white dark:to-slate-900 rounded-xl border border-indigo-200 dark:border-indigo-500/20 shadow-sm">
+                     <div className="flex items-center gap-2 text-xs font-black text-amber-600 dark:text-yellow-500 mb-1 uppercase tracking-wider">
                         <Crown size={12} fill="currentColor" />
                         GENSPARK PRO
                      </div>
-                     <p className="text-[10px] text-slate-400">Unlimited high-reasoning tokens active.</p>
+                     <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400">Unlimited high-reasoning tokens active.</p>
                   </div>
                )}
                <button
                   onClick={() => { }}  // Add user profile handler
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors text-left group">
-                  <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-sm shrink-0 ring-2 ring-slate-800 group-hover:ring-slate-700 transition-all">
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-left group">
+                  <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-sm shrink-0 ring-2 ring-slate-100 dark:ring-slate-800 group-hover:ring-slate-200 dark:group-hover:ring-slate-700 transition-all">
                      {user?.name?.[0]?.toUpperCase() || 'U'}
                   </div>
                   <div className="flex-1 min-w-0">
-                     <div className="text-sm font-medium text-white truncate">{user?.name || 'User'}</div>
-                     <div className="text-[10px] text-slate-400 truncate">Free Plan</div>
+                     <div className="text-sm font-bold text-slate-900 dark:text-white truncate">{user?.name || 'User'}</div>
+                     <div className="text-[10px] font-black text-slate-400 dark:text-slate-500 truncate uppercase tracking-widest">{user?.isPro ? 'Pro Member' : 'Free Plan'}</div>
                   </div>
-                  <Settings size={16} className="text-slate-500 group-hover:text-white transition-colors" />
+                  <Settings size={16} className="text-slate-400 dark:text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white transition-colors" />
                </button>
             </div>
          </aside>
@@ -377,22 +377,22 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
          <div className="flex-1 flex flex-col h-full min-w-0 relative">
 
             {/* Header */}
-            <header className="flex items-center justify-between px-3 md:px-4 h-14 sticky top-0 z-30 bg-slate-950/95 backdrop-blur-sm border-b border-slate-800/50 shrink-0">
+            <header className="flex items-center justify-between px-3 md:px-4 h-14 sticky top-0 z-30 bg-slate-100/95 dark:bg-slate-950/95 backdrop-blur-sm border-b border-slate-300 dark:border-slate-800/50 shrink-0">
                <div className="flex items-center gap-1 md:gap-2">
                   {/* Toggle Sidebar - Visible on Desktop/Mobile */}
                   <button
                      onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                     className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-900 transition-colors"
+                     className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors"
                      title={isSidebarOpen ? "Close Sidebar" : "Open Sidebar"}
                   >
-                     <PanelLeft className={`w-4.5 h-4.5 md:w-5 md:h-5 ${isSidebarOpen ? "text-indigo-400" : ""}`} />
+                     <PanelLeft className={`w-4.5 h-4.5 md:w-5 md:h-5 ${isSidebarOpen ? "text-indigo-600 dark:text-indigo-400" : ""}`} />
                   </button>
 
-                  <button onClick={onBack} className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-900">
+                  <button onClick={onBack} className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900">
                      <ArrowLeft className="w-4.5 h-4.5 md:w-5 md:h-5" />
                   </button>
-                  <div className="flex items-center gap-1 px-1.5 py-1 rounded-lg text-base md:text-lg font-bold text-white hover:bg-slate-900 cursor-pointer transition-colors group">
-                     4.0 <ChevronDown size={14} className="text-slate-500 group-hover:text-white" />
+                  <div className="flex items-center gap-1 px-1.5 py-1 rounded-lg text-base md:text-lg font-black text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-900 cursor-pointer transition-colors group">
+                     4.0 <ChevronDown size={14} className="text-slate-400 dark:text-slate-500 group-hover:text-indigo-600 dark:group-hover:text-white" />
                   </div>
                </div>
             </header>
@@ -402,11 +402,11 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                <div className="max-w-3xl mx-auto px-4 py-8">
                   {messages.length === 0 && (
                      <div className="h-full flex flex-col items-center justify-center pt-10 md:pt-20 text-center animate-in fade-in duration-500">
-                        <div className="w-14 h-14 md:w-16 md:h-16 bg-slate-900 rounded-full flex items-center justify-center mb-6 shadow-2xl shadow-indigo-500/10 ring-1 ring-white/10">
-                           <Bot className="w-7 h-7 md:w-8 md:h-8 text-indigo-400" />
+                        <div className="w-14 h-14 md:w-16 md:h-16 bg-slate-200 dark:bg-slate-900 rounded-full flex items-center justify-center mb-6 shadow-2xl shadow-indigo-500/5 dark:shadow-indigo-500/10 ring-1 ring-slate-300 dark:ring-white/10">
+                           <Bot className="w-7 h-7 md:w-8 md:h-8 text-indigo-600 dark:text-indigo-400" />
                         </div>
-                        <h2 className="text-xl md:text-2xl font-bold text-white mb-2">How can I help you?</h2>
-                        <p className="text-slate-400 mb-8 max-w-sm md:max-w-md px-4 text-sm md:text-base">I can check your code, explain complex topics, or help you brainstorm new ideas.</p>
+                        <h2 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white mb-2">How can I help you?</h2>
+                        <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-sm md:max-w-md px-4 text-sm md:text-base font-medium">I can check your code, explain complex topics, or help you brainstorm new ideas.</p>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-2xl px-2">
                            {[
@@ -418,10 +418,10 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                               <button
                                  key={suggestion}
                                  onClick={() => handleSend(suggestion)}
-                                 className="p-3.5 md:p-4 rounded-xl border border-slate-800 bg-slate-900/40 hover:bg-slate-800 hover:border-slate-700 text-left text-xs md:text-sm transition-all hover:translate-y-[-2px] active:scale-[0.98]"
+                                 className="p-3.5 md:p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/40 hover:bg-white dark:hover:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-left text-xs md:text-sm transition-all hover:translate-y-[-2px] active:scale-[0.98] shadow-sm"
                                  style={{ animationDelay: `${idx * 100}ms` }}
                               >
-                                 <span className="font-medium text-slate-300">{suggestion}</span>
+                                 <span className="font-bold text-slate-600 dark:text-slate-300">{suggestion}</span>
                               </button>
                            ))}
                         </div>
@@ -434,19 +434,19 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                         className={`py-4 md:py-6 flex gap-3 md:gap-6 group ${m.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
                      >
                         <div className="shrink-0 pt-1">
-                           <div className={`w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center overflow-hidden ${m.role === 'user' ? 'bg-indigo-600' : 'bg-transparent border border-slate-700'} shadow-sm shadow-indigo-500/10`}>
+                           <div className={`w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center overflow-hidden shadow-sm ${m.role === 'user' ? 'bg-indigo-600' : 'bg-slate-100 dark:bg-transparent border border-slate-200 dark:border-slate-700'}`}>
                               {m.role === 'user' ? (
                                  <span className="text-white text-xs font-bold">U</span>
                               ) : (
-                                 <Bot className="w-4 h-4 md:w-[18px] md:h-[18px] text-indigo-400" />
+                                 <Bot className="w-4 h-4 md:w-[18px] md:h-[18px] text-indigo-600 dark:text-indigo-400" />
                               )}
                            </div>
                         </div>
                         <div className={`flex-1 space-y-1.5 md:space-y-2 overflow-hidden ${m.role === 'user' ? 'text-right' : 'text-left'}`}>
-                           <div className="font-bold text-xs md:text-sm text-slate-100 flex items-center gap-2 justify-inherit px-1">
+                           <div className="font-bold text-xs md:text-sm text-slate-500 dark:text-slate-400 flex items-center gap-2 justify-inherit px-1 uppercase tracking-wider">
                               {m.role === 'user' ? 'You' : 'GenSpark AI'}
                            </div>
-                           <div className={`markdown-content prose prose-invert max-w-none text-sm md:text-[15px] leading-relaxed inline-block ${m.role === 'user' ? 'bg-indigo-600/10 border border-indigo-500/20 p-3.5 md:p-4 rounded-2xl rounded-tr-none' : ''}`}>
+                           <div className={`markdown-content prose dark:prose-invert max-w-none text-sm md:text-[15px] leading-relaxed inline-block ${m.role === 'user' ? 'bg-indigo-600/10 dark:bg-indigo-600/10 border border-indigo-500/20 dark:border-indigo-500/20 p-3.5 md:p-4 rounded-2xl rounded-tr-none' : ''}`}>
                               {m.content ? (
                                  <ReactMarkdown
                                     remarkPlugins={[remarkGfm]}
@@ -455,10 +455,10 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                                           const match = /language-(\w+)/.exec(className || '');
                                           if (!inline && match) {
                                              return (
-                                                <div className="relative my-4 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 text-left">
+                                                <div className="relative my-4 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-left shadow-sm">
                                                    <div className="absolute top-3 right-3 z-10 px-2 py-0.5 rounded-full bg-white/6 text-[11px] font-mono text-slate-300 uppercase">{match[1]}</div>
                                                    <div className="absolute top-3 left-3 z-10">
-                                                      <button onClick={() => navigator.clipboard.writeText(String(children).replace(/\n$/, ''))} className="flex items-center gap-1 px-2 py-0.5 bg-slate-800/60 rounded-md text-slate-200 text-xs">
+                                                      <button onClick={() => navigator.clipboard.writeText(String(children).replace(/\n$/, ''))} className="flex items-center gap-1 px-2 py-0.5 bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-transparent rounded-md text-slate-600 dark:text-slate-200 text-xs shadow-sm shadow-black/5 transition-all active:scale-95">
                                                          <Copy size={12} />
                                                       </button>
                                                    </div>
@@ -475,11 +475,11 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                                              );
                                           }
 
-                                          return <code className="bg-slate-800 rounded px-1.5 py-0.5 text-indigo-300 font-mono text-sm" {...props}>{children}</code>;
+                                          return <code className="bg-slate-100 dark:bg-slate-800 rounded px-1.5 py-0.5 text-indigo-600 dark:text-indigo-300 font-mono text-sm" {...props}>{children}</code>;
                                        },
-                                       h1: ({ node, ...props }) => <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mt-4 mb-3" {...props} />,
-                                       h2: ({ node, ...props }) => <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mt-4 mb-2" {...props} />,
-                                       h3: ({ node, ...props }) => <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-3 mb-2" {...props} />,
+                                       h1: ({ node, ...props }) => <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white mt-4 mb-3 tracking-tight" {...props} />,
+                                       h2: ({ node, ...props }) => <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 dark:text-white mt-4 mb-2 tracking-tight" {...props} />,
+                                       h3: ({ node, ...props }) => <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white mt-3 mb-2 tracking-tight" {...props} />,
                                     }}
                                  >
                                     {m.content}
@@ -501,44 +501,44 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
             </div>
 
             {/* Input Wrapper */}
-            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent pb-6 px-4">
+            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-slate-50 dark:from-slate-950 via-slate-50/95 dark:via-slate-950/90 to-transparent pb-6 px-4">
                <div className="max-w-3xl mx-auto relative">
 
                   {/* Preview Area */}
                   {previewUrl && (
-                     <div className="mb-3 flex items-center gap-3 p-2 bg-slate-900 rounded-xl border border-slate-800 w-fit animate-in slide-in-from-bottom-2">
-                        <img src={previewUrl} className="w-12 h-12 rounded bg-black object-cover" alt="Preview" />
-                        <button onClick={() => { setAttachment(null); setPreviewUrl(null); }} className="p-1 hover:bg-slate-800 rounded-full text-slate-400">
+                     <div className="mb-3 flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 w-fit animate-in slide-in-from-bottom-2 shadow-sm">
+                        <img src={previewUrl} className="w-12 h-12 rounded bg-white dark:bg-black object-cover" alt="Preview" />
+                        <button onClick={() => { setAttachment(null); setPreviewUrl(null); }} className="p-1 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-full text-slate-500 dark:text-slate-400">
                            <X size={14} />
                         </button>
                      </div>
                   )}
 
                   {/* Input Box */}
-                  <div className="relative bg-slate-900 border border-slate-800 rounded-2xl p-3 shadow-2xl focus-within:border-indigo-500/50 focus-within:ring-1 focus-within:ring-indigo-500/20 transition-all">
+                  <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow-2xl focus-within:border-indigo-500/50 focus-within:ring-1 focus-within:ring-indigo-500/20 transition-all">
                      <textarea
                         rows={1}
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && (e.preventDefault(), handleSend())}
                         placeholder="Message GenSpark..."
-                        className="w-full bg-transparent border-none outline-none text-white placeholder:text-slate-500 resize-none max-h-[200px] px-2 py-1 text-[15px]"
+                        className="w-full bg-transparent border-none outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none max-h-[200px] px-2 py-1 text-[15px] font-medium"
                      />
                      <div className="flex items-center justify-between mt-2 px-1">
                         <div className="flex items-center gap-1">
-                           <button onClick={() => handleFileUpload('image')} className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
+                           <button onClick={() => handleFileUpload('image')} className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors">
                               <ImageIcon size={18} />
                            </button>
                            <button
                               onClick={() => { }}  // Add voice input handler when ready
-                              className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
+                              className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors">
                               <Mic size={18} />
                            </button>
                         </div>
                         <button
                            onClick={() => handleSend()}
                            disabled={(!input.trim() && !attachment) || isLoading}
-                           className={`p-1.5 rounded-lg transition-all ${(input.trim() || attachment) && !isLoading ? 'bg-indigo-600 text-white' : 'text-slate-700'
+                           className={`p-1.5 rounded-lg transition-all ${(input.trim() || attachment) && !isLoading ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-300 dark:text-slate-700'
                               }`}
                         >
                            <Send size={18} />

@@ -21,9 +21,21 @@ const Settings: React.FC<{ onBack?: () => void }> = ({ onBack: propOnBack }) => 
 
   const [activeSub, setActiveSub] = useState<SubSection>('MAIN');
   const [darkMode, setDarkMode] = useState(() => {
-    return document.documentElement.classList.contains('dark') ||
-      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    const saved = localStorage.getItem('theme');
+    if (saved) return saved === 'dark';
+    return true; // Default to dark as per user request
   });
+
+  const toggleTheme = (isDark: boolean) => {
+    setDarkMode(isDark);
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  };
   const [pushNotifs, setPushNotifs] = useState(true);
   const [rating, setRating] = useState(0);
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
@@ -44,15 +56,7 @@ const Settings: React.FC<{ onBack?: () => void }> = ({ onBack: propOnBack }) => 
     }
   }, [location, user]);
 
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [darkMode]);
+  // Theme persistence and class application is now handled by toggleTheme and App.tsx
 
   if (loading || !user) return null;
 
@@ -116,7 +120,7 @@ const Settings: React.FC<{ onBack?: () => void }> = ({ onBack: propOnBack }) => 
   const SectionItem = ({ icon: Icon, color, title, desc, action, toggle, toggleState }: any) => (
     <div
       onClick={action && !toggle ? () => action() : undefined}
-      className="p-4 md:p-5 flex items-center justify-between border-b border-slate-200 dark:border-slate-800/50 last:border-0 group cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/20 active:bg-slate-100 dark:active:bg-slate-800/40 transition-all"
+      className="p-4 md:p-5 flex items-center justify-between border-b border-slate-300 dark:border-slate-800/50 last:border-0 group cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/20 active:bg-slate-100 dark:active:bg-slate-800/40 transition-all"
     >
       <div className="flex items-center gap-4">
         <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${color} bg-slate-100 dark:bg-slate-800/50 group-hover:scale-110 transition-transform`}>
@@ -163,7 +167,7 @@ const Settings: React.FC<{ onBack?: () => void }> = ({ onBack: propOnBack }) => 
           </div>
 
           {/* Form Section */}
-          <div className="space-y-6 bg-white dark:bg-slate-900/50 p-6 md:p-8 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="space-y-6 bg-slate-200/50 dark:bg-slate-900/50 p-6 md:p-8 rounded-[2rem] border border-slate-300 dark:border-slate-800 shadow-sm">
             <div>
               <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-3 ml-2">Full Name</label>
               <input
@@ -265,7 +269,7 @@ const Settings: React.FC<{ onBack?: () => void }> = ({ onBack: propOnBack }) => 
             "How do I reset my progress?",
             "How does the AI tutor work?"
           ].map((q, i) => (
-            <div key={i} className="p-4 border border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-900/50 cursor-pointer">
+            <div key={i} className="p-4 border border-slate-300 dark:border-slate-800 rounded-2xl flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-900/50 cursor-pointer">
               <span className="font-medium text-slate-700 dark:text-slate-300">{q}</span>
               <ChevronRight size={16} className="text-slate-400" />
             </div>
@@ -283,13 +287,13 @@ const Settings: React.FC<{ onBack?: () => void }> = ({ onBack: propOnBack }) => 
   // ... (Other subsections remain the same)
 
   return (
-    <div className="p-5 md:p-10 max-w-3xl mx-auto pb-32 animate-in fade-in duration-500">
+    <div className="p-5 md:p-10 max-w-3xl mx-auto pb-32 animate-in fade-in duration-500 min-h-screen bg-slate-100 dark:bg-slate-950">
       <header className="px-1 mb-8">
         <h1 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tighter mb-2">Settings</h1>
         <p className="text-slate-500 font-bold uppercase text-[10px] tracking-[0.2em]">Manage your preferences</p>
       </header>
 
-      <div className="mb-8 p-6 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] flex items-center gap-6">
+      <div className="mb-8 p-6 bg-slate-200/40 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-800 rounded-[2.5rem] flex items-center gap-6">
         <div className="w-16 h-16 rounded-full bg-indigo-500/10 text-indigo-500 flex items-center justify-center text-2xl font-black border border-indigo-500/20">
           {(user.name && user.name !== 'User' ? user.name : user.email)?.charAt(0).toUpperCase() || 'U'}
         </div>
@@ -332,7 +336,7 @@ const Settings: React.FC<{ onBack?: () => void }> = ({ onBack: propOnBack }) => 
               desc="Easier on the eyes at night"
               toggle={true}
               toggleState={darkMode}
-              action={setDarkMode}
+              action={toggleTheme}
             />
             <SectionItem
               icon={Bell}
@@ -368,7 +372,7 @@ const Settings: React.FC<{ onBack?: () => void }> = ({ onBack: propOnBack }) => 
                   Your feedback helps us build the best coding platform for everyone.
                 </p>
 
-                <div className="flex items-center justify-center gap-2 mb-6 p-2 bg-white dark:bg-slate-800 rounded-full shadow-sm w-fit mx-auto border border-slate-100 dark:border-slate-700">
+                <div className="flex items-center justify-center gap-2 mb-6 p-2 bg-slate-200/50 dark:bg-slate-800 rounded-full shadow-sm w-fit mx-auto border border-slate-300 dark:border-slate-700">
                   {[1, 2, 3, 4, 5].map((s) => (
                     <button
                       key={s}
@@ -384,7 +388,7 @@ const Settings: React.FC<{ onBack?: () => void }> = ({ onBack: propOnBack }) => 
                 {rating > 0 && (
                   <div className="animate-in fade-in slide-in-from-bottom-4 duration-300">
                     <textarea
-                      className="w-full text-sm p-3 bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700/50 rounded-xl mb-3 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-500 transition-colors resize-none placeholder:text-slate-400"
+                      className="w-full text-sm p-3 bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700/50 rounded-xl mb-3 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-500 transition-colors resize-none placeholder:text-slate-400"
                       rows={2}
                       placeholder="Tell us what you love (or hate)..."
                     ></textarea>

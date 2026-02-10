@@ -293,8 +293,8 @@ const LearnHub: React.FC = () => {
                 onClick={handleClick}
                 className={`group relative rounded-2xl cursor-pointer overflow-hidden transition-all active:scale-[0.98] ${isAdvancedLocked ? 'opacity-50 cursor-not-allowed' : ''
                     } ${isFeaturedCard
-                        ? `col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2 bg-slate-900 border-2 p-6 md:p-8 shadow-2xl transition-all ${borderClass}`
-                        : 'bg-slate-900/80 border border-slate-800 p-5 md:p-6 shadow-lg hover:border-slate-700 hover:bg-slate-900'
+                        ? `col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2 bg-white dark:bg-slate-900 border-2 p-6 md:p-8 shadow-2xl transition-all ${borderClass}`
+                        : 'bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-5 md:p-6 shadow-lg hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-900'
                     }`}
             >
                 <div className={`absolute -top-10 -right-10 w-32 h-32 rounded-full blur-3xl transition-all ${isFeaturedCard
@@ -320,12 +320,12 @@ const LearnHub: React.FC = () => {
                     )}
                 </div>
 
-                <h3 className={`font-black text-white mb-2 group-hover:text-indigo-300 transition-colors ${isFeaturedCard ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl'
+                <h3 className={`font-black text-slate-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors ${isFeaturedCard ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl'
                     }`}>
                     {lang.name}
                 </h3>
 
-                <p className={`font-medium mb-6 leading-relaxed ${isFeaturedCard ? 'text-slate-300 text-base md:text-lg' : 'text-slate-300 text-sm md:text-base'
+                <p className={`font-medium mb-6 leading-relaxed ${isFeaturedCard ? 'text-slate-600 dark:text-slate-300 text-base md:text-lg' : 'text-slate-600 dark:text-slate-300 text-sm md:text-base'
                     }`}>
                     {LANGUAGE_OUTCOMES[lang.id] || `Learn ${lang.name}`}
                 </p>
@@ -401,7 +401,7 @@ const LearnHub: React.FC = () => {
             <header className="space-y-4 md:space-y-6 px-1">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div>
-                        <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight flex items-center gap-2 md:gap-3">
+                        <h1 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2 md:gap-3">
                             <GraduationCap className="text-indigo-500 w-8 h-8 md:w-9 md:h-9" />
                             Learn Hub
                         </h1>
@@ -409,7 +409,7 @@ const LearnHub: React.FC = () => {
                     </div>
 
                     {/* Tab Navigation */}
-                    <div className="flex bg-slate-900 border border-white/5 rounded-xl p-1 shrink-0">
+                    <div className="flex bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-white/5 rounded-xl p-1 shrink-0 shadow-inner">
                         <button
                             onClick={() => setActiveTab('TRACKS')}
                             className={`px-6 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'TRACKS' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'
@@ -441,7 +441,7 @@ const LearnHub: React.FC = () => {
                                     placeholder="Find a language..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full pl-11 pr-4 py-3 md:py-3.5 bg-slate-900 border border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-white transition-all shadow-lg text-sm md:text-base"
+                                    className="w-full pl-11 pr-4 py-3 md:py-3.5 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-slate-900 dark:text-white transition-all shadow-lg text-sm md:text-base"
                                 />
                             </div>
                         </div>
@@ -500,7 +500,7 @@ const LearnHub: React.FC = () => {
             ) : (
                 /* Completed Lessons View */
                 <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
-                    <div className="bg-slate-900/60 border border-white/5 rounded-[2.5rem] p-8 flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden relative">
+                    <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-white/5 rounded-[2.5rem] p-8 flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden relative shadow-sm">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 blur-3xl rounded-full translate-x-12 -translate-y-12" />
                         <div>
                             <h2 className="text-2xl md:text-3xl font-black text-white mb-2 uppercase italic tracking-tight">Your Achievements</h2>
@@ -518,7 +518,7 @@ const LearnHub: React.FC = () => {
                                 <button
                                     key={lesson.id}
                                     onClick={() => navigate(`/lesson/${lesson.id}`)}
-                                    className="group p-5 bg-slate-900/60 border border-white/5 rounded-2xl flex items-center justify-between hover:bg-slate-900 hover:border-emerald-500/30 transition-all active:scale-[0.98] text-left"
+                                    className="group p-5 bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-white/5 rounded-2xl flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-900 hover:border-emerald-500/30 transition-all active:scale-[0.98] text-left shadow-sm"
                                 >
                                     <div className="flex items-center gap-4 min-w-0">
                                         <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-colors">

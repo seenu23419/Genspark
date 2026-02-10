@@ -40,7 +40,7 @@ const ChallengesList: React.FC<ChallengesListProps> = ({ onSelect, onBack: propO
   };
 
   return (
-    <div className="p-6 md:p-10 max-w-5xl mx-auto space-y-8 bg-[#0a0b14] min-h-screen">
+    <div className="p-6 md:p-10 max-w-5xl mx-auto space-y-8 bg-[#000000] min-h-screen">
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <button onClick={handleBack} className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-all">
@@ -100,7 +100,7 @@ const ChallengesList: React.FC<ChallengesListProps> = ({ onSelect, onBack: propO
               </div>
             </div>
 
-            <button 
+            <button
               onClick={() => handleSelect(challenge)}
               className="flex items-center justify-center gap-2 bg-slate-800 text-slate-200 px-6 py-3 rounded-2xl font-bold group-hover:bg-indigo-600 group-hover:text-white transition-all active:scale-95">
               Solve Problem

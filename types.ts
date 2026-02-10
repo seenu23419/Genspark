@@ -49,6 +49,7 @@ export interface User {
   lastActiveAt?: string; // ISO string
   activity_log?: string[]; // Array of YYYY-MM-DD strings
   activity_history?: ActivityItem[]; // Detailed log of actions
+  isPro?: boolean;
 }
 
 export interface ActivityItem {

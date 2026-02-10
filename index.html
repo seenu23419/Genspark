@@ -5,6 +5,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark' || (!savedTheme && true)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -53,14 +63,6 @@
 </script>
 
   <style>
-    /* Force dark background on all elements before anything loads */
-    html,
-    body,
-    #root {
-      background-color: #0a0b14 !important;
-      color: #f8fafc !important;
-    }
-
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;

@@ -71,7 +71,7 @@ const PracticeList: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col h-screen bg-[#0a0b14] items-center justify-center">
+      <div className="flex flex-col h-screen bg-[#000000] items-center justify-center">
         <Loader2 className="w-12 h-12 text-indigo-500 animate-spin mb-4" />
         <p className="text-slate-400 font-black uppercase tracking-widest text-xs">Loading Progress...</p>
       </div>
@@ -104,7 +104,7 @@ const PracticeList: React.FC = () => {
   // ═══════════════════════════════════════════════════════════
 
   return (
-    <div className="flex flex-col h-screen bg-[#0a0b14]">
+    <div className="flex flex-col h-screen bg-[#000000]">
       {/* HEADER */}
       <div className="bg-gradient-to-r from-indigo-900/20 to-slate-900/20 border-b border-slate-700/50 px-6 py-8 sticky top-0 z-40 backdrop-blur-md">
         <div className="flex flex-col gap-1">

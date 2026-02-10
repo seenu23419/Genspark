@@ -194,9 +194,9 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
   // 7. Render Loading/Error States
   if (!question && !isFinished) {
     return (
-      <div className="min-h-screen bg-[#0a0b14] flex flex-col items-center justify-center p-4 text-center">
+      <div className="min-h-screen bg-white dark:bg-black flex flex-col items-center justify-center p-4 text-center transition-colors duration-300">
         <AlertCircle size={48} className="text-slate-700 mb-4" />
-        <h2 className="text-xl font-bold text-white mb-2">Quiz Not Found</h2>
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Quiz Not Found</h2>
         <p className="text-slate-500 text-sm mb-6">We couldn't locate the quiz content.</p>
         <button onClick={() => navigate(-1)} className="px-6 py-3 bg-indigo-600 rounded-xl text-white font-bold transition-all flex items-center gap-2">
           <ArrowRight size={20} className="rotate-180" /> Go Back
@@ -211,7 +211,7 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
     const isPassed = score >= (questions.length * passPercentage) / 100;
 
     return (
-      <div className="min-h-screen bg-[#0a0b14] flex flex-col items-center justify-center p-6 overflow-hidden">
+      <div className="min-h-screen bg-white dark:bg-black flex flex-col items-center justify-center p-6 overflow-hidden transition-colors duration-300">
         <div className="relative z-10 max-w-md w-full space-y-8 text-center animate-in fade-in duration-500">
           {isPassed && (
             <div className="flex justify-center pt-4">
@@ -223,16 +223,16 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
           )}
 
           <div className="space-y-3">
-            <h1 className="text-4xl font-black text-white">{isPassed ? 'Quiz Passed! 🎉' : 'Not Quite There'}</h1>
-            <p className="text-slate-400 font-medium">
+            <h1 className="text-4xl font-black text-slate-900 dark:text-white">{isPassed ? 'Quiz Passed! 🎉' : 'Not Quite There'}</h1>
+            <p className="text-slate-600 dark:text-slate-400 font-bold">
               {isPassed ? 'Lesson Unlocked' : `You need ${Math.ceil(questions.length * passPercentage / 100)} correct answers to pass`}
             </p>
           </div>
 
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm">
+          <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl p-8 backdrop-blur-sm shadow-xl transition-colors duration-300">
             <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Your Score</p>
-            <p className="text-5xl font-black text-white">{Math.min(score, questions.length)} / {questions.length}</p>
-            <p className="text-slate-400 text-sm mt-2">correct answers</p>
+            <p className="text-5xl font-black text-slate-900 dark:text-white">{Math.min(score, questions.length)} / {questions.length}</p>
+            <p className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mt-2">correct answers</p>
           </div>
 
           <div className="space-y-3">
@@ -258,7 +258,7 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
                   setIsAnswerCorrect(null);
                   setIsFinished(false);
                 }}
-                className="w-full py-5 border-2 border-white/20 text-white rounded-2xl font-bold hover:bg-white/5 active:scale-95"
+                className="w-full py-5 border-2 border-slate-200 dark:border-white/20 text-slate-600 dark:text-white rounded-2xl font-bold hover:bg-slate-50 dark:hover:bg-white/5 active:scale-95 transition-all"
               >
                 Retry Quiz
               </button>
@@ -271,10 +271,10 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
 
   // 9. Main Quiz UI
   return (
-    <div className="min-h-screen bg-[#0a0b14] flex flex-col pb-20 sm:pb-0">
-      <div className="bg-gradient-to-b from-[#1a1d2e] to-[#0a0b14] border-b border-white/5 sticky top-0 z-40">
+    <div className="min-h-screen bg-white dark:bg-black flex flex-col pb-20 sm:pb-0 transition-colors duration-300">
+      <div className="bg-gradient-to-b from-slate-50 dark:from-[#1a1d2e] to-white dark:to-[#000000] border-b border-slate-200 dark:border-white/5 sticky top-0 z-40 transition-colors duration-300">
         <div className="max-w-full mx-auto px-6 py-8 w-full">
-          <h1 className="text-xl sm:text-3xl font-black text-white tracking-tight mb-6">Knowledge Check</h1>
+          <h1 className="text-xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-6">Knowledge Check</h1>
           <div className="w-full h-0.5 bg-white/10 rounded-full overflow-hidden">
             <div className="h-full bg-blue-500" style={{ width: `${progress}%` }}></div>
           </div>
@@ -285,7 +285,7 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
         <div className="max-w-4xl mx-auto w-full px-6 py-8 flex flex-col">
           <div className="flex items-center justify-between gap-3 mb-8">
             <p className="text-blue-400 font-bold text-xs uppercase tracking-widest">Question {currentQuestion + 1} of {questions.length}</p>
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center font-mono font-bold text-sm border-2 ${timeLeft <= 10 ? 'border-red-500 text-red-400' : 'border-blue-500 text-slate-300'}`}>
+            <div className={`w-12 h-12 rounded-full flex items-center justify-center font-mono font-bold text-sm border-2 ${timeLeft <= 10 ? 'border-red-500 text-red-500 dark:text-red-400' : 'border-indigo-500 text-slate-700 dark:text-slate-300'}`}>
               {isFinalExam ? formatTime(timeLeft) : `${timeLeft}s`}
             </div>
           </div>
@@ -295,8 +295,8 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  p: ({ children }) => <p className="text-lg sm:text-2xl font-bold text-white leading-relaxed">{children}</p>,
-                  code: ({ children, inline }: any) => inline ? <code className="bg-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded text-sm font-mono">{children}</code> : <pre className="my-4 p-4 rounded-xl bg-black/40 border border-white/10 text-emerald-400 font-mono text-base overflow-x-auto"><code>{children}</code></pre>
+                  p: ({ children }) => <p className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white leading-relaxed">{children}</p>,
+                  code: ({ children, inline }: any) => inline ? <code className="bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-300 px-1.5 py-0.5 rounded text-sm font-mono">{children}</code> : <pre className="my-4 p-4 rounded-xl bg-slate-900 dark:bg-black/40 border border-slate-200 dark:border-white/10 text-emerald-500 dark:text-emerald-400 font-mono text-sm sm:text-base overflow-x-auto shadow-inner"><code>{children}</code></pre>
                 }}
               >
                 {question.text}
@@ -310,12 +310,12 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
               const isSubmitted = submittedAnswer !== null;
               const isCorrect = index === question.correctAnswer;
 
-              let styles = "bg-white/5 border-2 border-white/20 hover:border-white/40";
+              let styles = "bg-slate-50 dark:bg-white/5 border-2 border-slate-200 dark:border-white/20 hover:border-indigo-500 transition-colors duration-300";
               if (isSubmitted) {
                 if (isCorrect) styles = "bg-green-500/20 border-green-500 text-green-300";
                 else if (isSelected) styles = "bg-red-500/20 border-red-500 text-red-300";
               } else if (isSelected) {
-                styles = "bg-blue-600/20 border-blue-500 text-white";
+                styles = "bg-blue-600/20 border-blue-500 text-slate-900 dark:text-white";
               }
 
               return (
@@ -325,7 +325,7 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
                   disabled={isSubmitted}
                   className={`w-full p-5 rounded-2xl border transition-all text-left flex items-center gap-4 ${styles}`}
                 >
-                  <div className={`w-8 h-8 rounded flex items-center justify-center font-bold ${isSelected || (isSubmitted && isCorrect) ? 'bg-current text-[#0a0b14]' : 'bg-white/10'}`}>
+                  <div className={`w-8 h-8 rounded flex items-center justify-center font-bold ${isSelected || (isSubmitted && isCorrect) ? 'bg-indigo-600 text-white' : 'bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-400'}`}>
                     {String.fromCharCode(65 + index)}
                   </div>
                   <span className="font-medium flex-1">{option}</span>
@@ -340,8 +340,8 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
               <div className="flex gap-4">
                 <Info className={isAnswerCorrect ? 'text-green-400' : 'text-blue-400'} />
                 <div>
-                  <h4 className="font-bold text-white mb-2">Why?</h4>
-                  <p className="text-slate-300 text-sm leading-relaxed">{question.explanation}</p>
+                  <h4 className="font-extrabold text-slate-900 dark:text-white mb-2">Detailed Explanation</h4>
+                  <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed font-medium">{question.explanation}</p>
                 </div>
               </div>
             </div>
@@ -351,7 +351,7 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
             <button
               onClick={submittedAnswer !== null ? (currentQuestion === questions.length - 1 ? handleFinishQuiz : handleNextQuestion) : handleCheckAnswer}
               disabled={selectedOption === null || isSubmittingFinish}
-              className={`w-full py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 transition-all ${selectedOption === null ? 'bg-white/5 text-slate-500' : 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'}`}
+              className={`w-full py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all ${selectedOption === null ? 'bg-slate-100 dark:bg-white/5 text-slate-400 dark:text-slate-600' : 'bg-indigo-600 text-white shadow-xl shadow-indigo-600/20 scale-100 active:scale-95'}`}
             >
               {isSubmittingFinish ? <Loader2 className="animate-spin" /> : (submittedAnswer !== null ? (currentQuestion === questions.length - 1 ? 'Finish Quiz' : 'Next Question') : 'Check Answer')}
               <ArrowRight size={20} />

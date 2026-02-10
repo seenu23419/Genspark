@@ -88,7 +88,7 @@ const DiagnosticTool: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-slate-950 p-6">
+        <div className="min-h-screen bg-slate-100 dark:bg-slate-950 p-6 md:p-10 space-y-8 animate-in fade-in duration-500">
             <div className="max-w-4xl mx-auto">
                 <h1 className="text-2xl font-bold text-white mb-6">GenSpark Diagnostic Tool</h1>
 
@@ -101,7 +101,7 @@ const DiagnosticTool: React.FC = () => {
                 </button>
 
                 {results && (
-                    <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
+                    <div className="bg-slate-200/50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-800 p-6 rounded-[2rem] flex flex-col md:flex-row gap-6 items-center">
                         <pre className="text-xs text-slate-300 overflow-auto">
                             {JSON.stringify(results, null, 2)}
                         </pre>

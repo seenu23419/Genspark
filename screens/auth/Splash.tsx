@@ -11,7 +11,7 @@ import React, { useState, useEffect } from 'react';
 const Splash: React.FC = () => {
     return (
         <div
-            className="fixed inset-0 w-full h-full flex flex-col items-center justify-center bg-[#0a0b14] z-[9999] touch-none select-none overflow-hidden animate-in fade-in duration-500"
+            className="fixed inset-0 w-full h-full flex flex-col items-center justify-center bg-white dark:bg-[#000000] z-[9999] touch-none select-none overflow-hidden animate-in fade-in duration-500 transition-colors duration-300"
         >
             {/* Subtle background grid */}
             <div
@@ -37,7 +37,7 @@ const Splash: React.FC = () => {
 
             {/* Tagline */}
             <div className="absolute bottom-20 w-full px-6 z-10">
-                <p className="text-center text-[10px] md:text-sm font-bold tracking-[0.4em] text-white/90 uppercase">
+                <p className="text-center text-[10px] md:text-sm font-bold tracking-[0.4em] text-slate-900/90 dark:text-white/90 uppercase">
                     IGNITE YOUR CODING JOURNEY
                 </p>
             </div>

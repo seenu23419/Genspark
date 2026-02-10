@@ -30,7 +30,7 @@ const PracticeHub: React.FC = () => {
     // Minimalist Loading State
     if (loading && topics.length === 0) {
         return (
-            <div className="h-full flex flex-col items-center justify-center bg-slate-950 gap-4">
+            <div className="h-full flex flex-col items-center justify-center bg-white dark:bg-slate-950 gap-4 transition-colors duration-300">
                 <div className="w-12 h-12 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin" />
                 <p className="text-slate-500 font-black text-[10px] uppercase tracking-[0.2em] animate-pulse">Initializing Hub...</p>
             </div>
@@ -39,11 +39,11 @@ const PracticeHub: React.FC = () => {
 
     if (topics.length === 0) {
         return (
-            <div className="h-full flex flex-col items-center justify-center bg-slate-950 p-10 text-center">
-                <div className="w-24 h-24 bg-slate-900 rounded-[2.5rem] border border-white/5 flex items-center justify-center mb-8 shadow-2xl">
-                    <div className="w-10 h-10 rounded-full bg-slate-800 animate-pulse" />
+            <div className="h-full flex flex-col items-center justify-center bg-white dark:bg-slate-950 p-10 text-center transition-colors duration-300">
+                <div className="w-24 h-24 bg-slate-50 dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-white/5 flex items-center justify-center mb-8 shadow-2xl">
+                    <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 animate-pulse" />
                 </div>
-                <h2 className="text-2xl font-black text-white mb-2 uppercase tracking-tight italic">No Content Found</h2>
+                <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2 uppercase tracking-tight italic">No Content Found</h2>
                 <p className="text-slate-500 text-xs font-medium max-w-xs italic leading-relaxed">
                     We couldn't synchronize the practice modules. Please check your network or refresh the session.
                 </p>
@@ -77,13 +77,13 @@ const PracticeHub: React.FC = () => {
 
 
     return (
-        <div className="h-full flex flex-col bg-slate-950 font-sans relative">
+        <div className="min-h-screen bg-slate-100 dark:bg-black text-slate-900 dark:text-white pb-24 font-sans selection:bg-indigo-500/30 transition-colors duration-300">
             {/* 1. Header (Static) */}
-            <div className="shrink-0 bg-slate-950 px-6 pt-10 pb-4">
+            <div className="shrink-0 bg-slate-50 dark:bg-slate-950 px-6 pt-10 pb-4">
                 <div className="max-w-5xl mx-auto flex flex-col gap-3">
                     <div className="flex items-end justify-between">
                         <div>
-                            <h1 className="text-3xl font-black text-white tracking-tighter uppercase italic">PRACTICE PLAYGROUND</h1>
+                            <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">PRACTICE PLAYGROUND</h1>
                         </div>
                         <div className="text-right pb-1">
                             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest shrink-0">
@@ -92,7 +92,7 @@ const PracticeHub: React.FC = () => {
                         </div>
                     </div>
                     {/* Progress Bar */}
-                    <div className="h-1 w-full bg-slate-900 rounded-full overflow-hidden">
+                    <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-900 rounded-full overflow-hidden">
                         <div
                             className="h-full bg-indigo-500 transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(79,70,229,0.5)]"
                             style={{ width: `${progressPercent}%` }}
@@ -102,7 +102,7 @@ const PracticeHub: React.FC = () => {
             </div>
 
             {/* 2. Topic Selector (Sticky) */}
-            <div className="shrink-0 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-30">
+            <div className="shrink-0 bg-slate-100/80 dark:bg-slate-950/80 backdrop-blur-xl sticky top-0 z-30 border-b border-slate-200 dark:border-white/10">
                 <div className="px-6 py-2 max-w-5xl mx-auto">
                     <div className="flex items-center gap-6 overflow-x-auto no-scrollbar py-2">
                         {topics.map((topic) => {
@@ -114,7 +114,7 @@ const PracticeHub: React.FC = () => {
                                     onClick={() => setActiveTopicId(topic.id)}
                                     className={`shrink-0 flex flex-col items-center gap-1.5 transition-all duration-300 group`}
                                 >
-                                    <span className={`text-[10px] font-black uppercase tracking-[0.2em] transition-colors ${isActive ? 'text-white' : 'text-slate-600 group-hover:text-slate-400'}`}>
+                                    <span className={`text-[10px] font-black uppercase tracking-[0.2em] transition-colors ${isActive ? 'text-indigo-600 dark:text-white' : 'text-slate-500 dark:text-slate-600 group-hover:text-slate-700 dark:group-hover:text-slate-400'}`}>
                                         {topic.title}
                                     </span>
                                     <div className={`h-0.5 rounded-full transition-all duration-300 ${isActive ? 'w-full bg-indigo-500 shadow-[0_0_8px_rgba(79,70,229,1)]' : 'w-0 bg-transparent'}`} />
@@ -126,7 +126,7 @@ const PracticeHub: React.FC = () => {
             </div>
 
             {/* 2. Problem List (Only Scrollable Area) */}
-            <div className="flex-1 overflow-y-auto no-scrollbar bg-slate-950 pb-32">
+            <div className="flex-1 overflow-y-auto no-scrollbar bg-slate-50 dark:bg-slate-950 pb-32">
                 <div className="px-6 py-8 max-w-5xl mx-auto">
                     {filteredProblems.length > 0 ? (
                         <div className="grid grid-cols-1 gap-4">
@@ -155,15 +155,15 @@ const PracticeHub: React.FC = () => {
                                 const isCompleted = status === 'COMPLETED';
                                 const isInProgress = status === 'IN_PROGRESS';
 
-                                const accentColor = isCompleted ? 'bg-emerald-500' : (isInProgress ? 'bg-blue-500' : 'bg-slate-600 shadow-[0_0_10px_rgba(71,85,105,0.2)]');
+                                const accentColor = isCompleted ? 'bg-emerald-500' : (isInProgress ? 'bg-blue-500' : 'bg-slate-200 dark:bg-slate-600 shadow-sm');
                                 const statusText = isCompleted ? 'COMPLETED ✓' : (isInProgress ? 'IN PROGRESS' : 'NOT STARTED');
-                                const statusColor = isCompleted ? 'text-emerald-400 border-emerald-500/20 bg-emerald-500/5' : (isInProgress ? 'text-blue-400 border-blue-500/20 bg-blue-500/5' : 'text-slate-500 border-white/5 bg-slate-800/50');
+                                const statusColor = isCompleted ? 'text-emerald-600 dark:text-emerald-400 border-emerald-500/20 bg-emerald-500/5' : (isInProgress ? 'text-blue-600 dark:text-blue-400 border-blue-500/20 bg-blue-500/5' : 'text-slate-400 dark:text-slate-500 border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-slate-800/50');
 
                                 return (
                                     <div
                                         key={problem.id}
                                         onClick={() => navigate(`/practice/problem/${problem.id}`)}
-                                        className="bg-slate-900/30 border border-white/5 rounded-2xl p-6 relative transition-all active:scale-[0.98] cursor-pointer group hover:bg-slate-900/50"
+                                        className="bg-slate-50 dark:bg-slate-900/30 border border-slate-300 dark:border-white/5 rounded-2xl p-6 relative transition-all active:scale-[0.98] cursor-pointer group hover:bg-slate-200/50 dark:hover:bg-slate-900/50 shadow-sm hover:shadow-md"
                                     >
                                         {/* Status Dot (Top-Right) */}
                                         <div className="absolute top-6 right-6 flex flex-col items-end gap-1">
@@ -189,7 +189,7 @@ const PracticeHub: React.FC = () => {
 
                                             {/* Title */}
                                             <div>
-                                                <h3 className={`text-lg font-bold group-hover:text-indigo-400 transition-colors tracking-tight ${isCompleted ? 'text-emerald-400' : 'text-white'}`}>
+                                                <h3 className={`text-lg font-bold group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors tracking-tight ${isCompleted ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-white'}`}>
                                                     {problem.title}
                                                 </h3>
                                             </div>
@@ -237,7 +237,7 @@ const PracticeHub: React.FC = () => {
                         </div>
                     ) : (
                         <div className="flex flex-col items-center justify-center p-12 text-center">
-                            <h3 className="text-xl font-black text-white/20 uppercase tracking-tighter">No problems in this topic</h3>
+                            <h3 className="text-xl font-black text-slate-200 dark:text-white/20 uppercase tracking-tighter">No problems in this topic</h3>
                         </div>
                     )}
                 </div>

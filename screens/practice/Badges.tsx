@@ -13,7 +13,7 @@ const BadgesPage: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="p-6 max-w-4xl mx-auto bg-[#0a0b14] min-h-screen">
+    <div className="p-6 max-w-4xl mx-auto bg-[#000000] min-h-screen">
       <header className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-black text-white">Badges</h1>

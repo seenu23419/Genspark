@@ -71,7 +71,7 @@ const CodingProblemWrapper: React.FC = () => {
 
     if (loading && !problem) {
         return (
-            <div className="flex flex-col items-center justify-center h-screen bg-[#0a0b14] gap-4">
+            <div className="flex flex-col items-center justify-center h-screen bg-[#000000] gap-4">
                 <Loader2 size={40} className="text-indigo-500 animate-spin" />
                 <p className="text-slate-500 font-black text-[10px] uppercase tracking-widest animate-pulse">Synchronizing Workspace...</p>
             </div>
@@ -80,7 +80,7 @@ const CodingProblemWrapper: React.FC = () => {
 
     if (!problem) {
         return (
-            <div className="flex flex-col items-center justify-center h-screen bg-[#0a0b14] text-white">
+            <div className="flex flex-col items-center justify-center h-screen bg-[#000000] text-white">
                 <h2 className="text-2xl font-bold mb-4">Problem Not Found</h2>
                 <button
                     onClick={() => navigate('/practice')}

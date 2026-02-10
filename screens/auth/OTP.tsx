@@ -87,7 +87,7 @@ const OTP: React.FC<OTPProps> = ({ email, onVerify }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0b14] flex items-center justify-center p-6 relative">
+    <div className="min-h-screen bg-[#000000] flex items-center justify-center p-6 relative">
       <div className="max-w-md w-full text-center space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
         <div className="space-y-4">
           <div className="w-20 h-20 bg-emerald-500/10 rounded-[2rem] flex items-center justify-center mx-auto text-emerald-500 mb-6">

@@ -151,7 +151,7 @@ const LearningProfile: React.FC = () => {
     const isCCertified = (user.lessonsCompleted || 0) >= cReqs.lessons && solvedProblemsCount >= cReqs.problems;
 
     return (
-        <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-8 pb-32 animate-in fade-in duration-500 bg-[#0a0b14] min-h-screen">
+        <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-8 pb-32 animate-in fade-in duration-500 bg-[#000000] min-h-screen">
 
             {/* Header with Back Button */}
             <header className="flex items-center gap-4 mb-4">

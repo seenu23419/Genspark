@@ -35,7 +35,7 @@ const Explore: React.FC<ExploreProps> = ({ onSelectLanguage, onBack: propOnBack 
   };
 
   return (
-    <div className="p-6 md:p-10 max-w-6xl mx-auto space-y-8 pb-24 bg-[#0a0b14] min-h-screen">
+    <div className="p-6 md:p-10 max-w-6xl mx-auto space-y-8 pb-24 bg-[#000000] min-h-screen">
       <header className="flex flex-col md:flex-row md:items-center gap-6">
         <button
           onClick={handleBack}

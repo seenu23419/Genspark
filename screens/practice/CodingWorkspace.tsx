@@ -404,9 +404,9 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#0a0b14] overflow-hidden font-sans practice-ui-root">
+    <div className="flex flex-col h-screen bg-[#000000] overflow-hidden font-sans practice-ui-root">
       {/* HEADER */}
-      <header className="h-14 shrink-0 bg-[#0a0b14] border-b border-white/5 flex items-center px-4 z-50">
+      <header className="h-14 shrink-0 bg-[#000000] border-b border-white/5 flex items-center px-4 z-50">
         <button onClick={onBack} className="p-2 -ml-1 text-slate-500 hover:text-white transition"><ChevronLeft size={24} /></button>
         <div className="flex items-center gap-3 px-3">
           <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20"><Code2 size={16} className="text-indigo-400" /></div>
@@ -418,7 +418,7 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
 
         {/* LEFT: INFORMATION */}
-        <div className="hidden lg:flex flex-col w-[340px] bg-[#0a0b14] border-r border-white/5">
+        <div className="hidden lg:flex flex-col w-[340px] bg-[#000000] border-r border-white/5">
           <div className="pro-panel-header">
             <div className="pro-tab-btn active"><BookOpen size={14} />Description</div>
           </div>
@@ -489,7 +489,7 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
         </div>
 
         {/* RIGHT: RESULTS & AI */}
-        <div className="hidden lg:flex flex-col w-[380px] bg-[#0a0b14] border-l border-white/5 shrink-0 overflow-hidden">
+        <div className="hidden lg:flex flex-col w-[380px] bg-[#000000] border-l border-white/5 shrink-0 overflow-hidden">
           <div className="pro-panel-header px-4">
             <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2"><Zap size={14} />Execution Results</span>
           </div>
@@ -499,7 +499,7 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
 
       {/* SUCCESS MODAL */}
       {showSuccess && (
-        <div className="fixed inset-0 z-[100] bg-[#0a0b14]/95 backdrop-blur-xl flex items-center justify-center p-6 animate-in fade-in duration-700">
+        <div className="fixed inset-0 z-[100] bg-[#000000]/95 backdrop-blur-xl flex items-center justify-center p-6 animate-in fade-in duration-700">
           <div className="w-full max-w-sm bg-[#0d0e1a] border border-emerald-500/20 rounded-[3rem] p-10 flex flex-col items-center text-center gap-8 shadow-2xl">
             <div className="w-24 h-24 bg-emerald-500 text-white rounded-full flex items-center justify-center shadow-2xl shadow-emerald-500/30 scale-110"><Check size={56} strokeWidth={4} /></div>
             <div className="space-y-3">

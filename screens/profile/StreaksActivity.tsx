@@ -162,7 +162,7 @@ const StreaksActivity: React.FC = () => {
     if (!user) return null;
 
     return (
-        <div className="min-h-screen bg-[#0a0b14] text-white p-4 md:p-6 max-w-xl mx-auto space-y-4 animate-in fade-in duration-500 pb-12">
+        <div className="min-h-screen bg-[#000000] text-white p-4 md:p-6 max-w-xl mx-auto space-y-4 animate-in fade-in duration-500 pb-12">
             {/* Header - Compact */}
             <header className="flex items-center gap-3 mb-1">
                 <button

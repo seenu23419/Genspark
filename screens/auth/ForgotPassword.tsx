@@ -36,7 +36,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBack }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0b14] flex items-center justify-center p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#000000] flex items-center justify-center p-6 relative overflow-hidden">
       <div className="max-w-md w-full relative z-10 flex flex-col max-h-[90vh] overflow-y-auto no-scrollbar py-8 px-2 animate-in fade-in slide-in-from-bottom-4 duration-700">
         <button onClick={onBack} className="flex items-center gap-2 text-slate-500 hover:text-white mb-8 group transition-colors shrink-0 w-fit">
           <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />

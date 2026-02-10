@@ -90,7 +90,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#0a0b14]">
+    <div className="flex flex-col h-screen bg-[#000000]">
       {/* HEADER */}
       <div className="bg-gradient-to-r from-indigo-900/20 to-slate-900/20 border-b border-slate-700/50 px-4 py-6 sticky top-0 z-40">
         <h1 className="text-3xl font-black text-indigo-100 mb-2">Choose Your Language</h1>
@@ -104,11 +104,10 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
             <div
               key={lang.id}
               onClick={() => handleSelect(lang.id)}
-              className={`relative rounded-lg border-2 p-4 cursor-pointer transition-all duration-300 ${
-                selectedLanguage === lang.id
+              className={`relative rounded-lg border-2 p-4 cursor-pointer transition-all duration-300 ${selectedLanguage === lang.id
                   ? 'border-indigo-500 bg-indigo-900/20 shadow-lg shadow-indigo-500/20'
                   : 'border-slate-700 bg-slate-900/30 hover:border-indigo-500/50 hover:bg-slate-900/50'
-              }`}
+                }`}
             >
               {/* Popular Badge */}
               {lang.popular && (
@@ -129,11 +128,10 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
               {/* Level Badge */}
               <div className="mb-3">
                 <span
-                  className={`inline-block px-2 py-0.5 rounded-full text-xs font-bold ${
-                    lang.level === 'Beginner'
+                  className={`inline-block px-2 py-0.5 rounded-full text-xs font-bold ${lang.level === 'Beginner'
                       ? 'bg-green-900/30 text-green-300'
                       : 'bg-yellow-900/30 text-yellow-300'
-                  }`}
+                    }`}
                 >
                   {lang.level}
                 </span>
@@ -172,11 +170,10 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
         <button
           disabled={!selectedLanguage}
           onClick={handleContinue}
-          className={`flex-1 px-6 py-3 rounded-lg font-bold text-lg transition flex items-center justify-center gap-2 ${
-            selectedLanguage
+          className={`flex-1 px-6 py-3 rounded-lg font-bold text-lg transition flex items-center justify-center gap-2 ${selectedLanguage
               ? 'bg-indigo-600 hover:bg-indigo-700 text-white'
               : 'bg-slate-800 text-slate-500 cursor-not-allowed'
-          }`}
+            }`}
         >
           {selectedLanguage ? 'Continue' : 'Select a Language'}
           {selectedLanguage && <ChevronRight size={20} />}

@@ -206,7 +206,7 @@ const CourseTrack: React.FC = () => {
   // 5. Render States
   if (loading[langId || ''] && modules.length === 0) {
     return (
-      <div className="min-h-screen bg-[#0a0b14] flex flex-col items-center justify-center p-6">
+      <div className="min-h-screen bg-slate-100 dark:bg-black flex flex-col items-center justify-center p-6 transition-colors duration-300">
         <div className="relative w-12 h-12 flex items-center justify-center">
           <div className="absolute inset-0 rounded-full border-4 border-indigo-500/10" />
           <Loader2 className="animate-spin text-indigo-500/60" size={40} />
@@ -217,9 +217,9 @@ const CourseTrack: React.FC = () => {
 
   if (!language || (error[langId || ''] && modules.length === 0)) {
     return (
-      <div className="min-h-screen bg-[#0a0b14] flex flex-col items-center justify-center p-6 text-center">
+      <div className="min-h-screen bg-slate-100 dark:bg-black flex flex-col items-center justify-center p-6 text-center transition-colors duration-300">
         <AlertCircle size={48} className="text-red-500/50 mb-4" />
-        <h2 className="text-xl font-bold text-white mb-2 font-black uppercase tracking-widest text-[10px]">Track Not Found</h2>
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2 font-black uppercase tracking-widest text-[10px]">Track Not Found</h2>
         <button onClick={() => navigate('/')} className="px-6 py-2 bg-indigo-600 text-white rounded-lg mt-4 font-bold text-sm">Go Back</button>
       </div>
     );
@@ -232,22 +232,22 @@ const CourseTrack: React.FC = () => {
   const progressPercent = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
 
   return (
-    <div className="relative min-h-screen bg-[#0a0b14]">
+    <div className="relative min-h-screen bg-slate-100 dark:bg-black transition-colors duration-300">
       <div className="absolute top-0 left-1/2 w-[1200px] h-[800px] bg-indigo-500/5 blur-[150px] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
-      <header className="sticky top-0 z-40 bg-[#0a0b14]/95 backdrop-blur-sm border-b border-white/5 px-6 py-4">
+      <header className="sticky top-0 z-40 bg-slate-100/95 dark:bg-black/95 backdrop-blur-sm border-b border-slate-300 dark:border-white/5 px-6 py-4 transition-colors duration-300">
         <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
           <button onClick={() => navigate('/')} className="p-2 -ml-2 text-slate-400 hover:text-white rounded-lg">
             <ArrowLeft size={24} />
           </button>
           <div className="flex items-center gap-3 min-w-0 flex-1">
-            <div className="w-8 h-8 rounded-lg bg-white/5 p-1 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-slate-200 dark:bg-white/5 p-1 flex items-center justify-center">
               <img src={language.icon} alt={language.name} className="w-full h-full object-contain" />
             </div>
-            <h1 className="text-lg md:text-xl font-black text-white truncate">{language.name} Track</h1>
+            <h1 className="text-lg md:text-xl font-black text-slate-900 dark:text-white truncate">{language.name} Track</h1>
           </div>
           <div className="flex items-center gap-2 shrink-0">
-            <div className="w-12 h-12 rounded-lg bg-slate-900 border border-slate-800 flex flex-col items-center justify-center">
+            <div className="w-12 h-12 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center shadow-sm">
               <span className="text-sm font-black text-emerald-400">{progressPercent}%</span>
               <span className="text-[8px] text-slate-500 uppercase tracking-tighter">Done</span>
             </div>
@@ -263,7 +263,7 @@ const CourseTrack: React.FC = () => {
               <span>Overall Progress</span>
               <span>{progressPercent}%</span>
             </div>
-            <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+            <div className="h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
               <div className="h-full bg-emerald-500 transition-all duration-1000" style={{ width: `${progressPercent}%` }} />
             </div>
           </div>
@@ -285,7 +285,7 @@ const CourseTrack: React.FC = () => {
                   onClick={() => toggleLevel(levelIndex)}
                   className={`w-full group flex items-start justify-between gap-4 p-5 rounded-xl transition-all ${isCurrentLevel
                     ? 'bg-indigo-600/15 border border-indigo-500/40'
-                    : 'bg-slate-900/40 border border-slate-800/50 hover:bg-slate-900/60'
+                    : 'bg-slate-50 dark:bg-slate-900/40 border border-slate-300 dark:border-slate-800/50 hover:bg-slate-200 dark:hover:bg-slate-900/60 shadow-sm'
                     }`}
                 >
                   <div className="flex items-start gap-4 flex-1 min-w-0 text-left">
@@ -337,11 +337,11 @@ const CourseTrack: React.FC = () => {
                             } ${!isLevelUnlocked(levelIndex) ? 'opacity-50 grayscale cursor-not-allowed' : ''}`}
                         >
                           <div className="flex items-center gap-4 min-w-0">
-                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${isCompleted ? 'bg-emerald-500/10 text-emerald-400' : isFirstIncomplete ? 'bg-indigo-500/20 text-indigo-400' : 'bg-slate-800 text-slate-500'}`}>
+                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${isCompleted ? 'bg-emerald-500/10 text-emerald-400' : isFirstIncomplete ? 'bg-indigo-500/20 text-indigo-400' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-500'}`}>
                               {!isLevelUnlocked(levelIndex) ? <Lock size={20} /> : isCompleted ? <CheckCircle size={20} /> : <BookOpen size={20} />}
                             </div>
                             <div className="text-left font-medium min-w-0">
-                              <p className={`text-sm md:text-base truncate ${isCompleted ? 'text-slate-400' : 'text-white'}`}>{lesson.title}</p>
+                              <p className={`text-sm md:text-base truncate ${isCompleted ? 'text-slate-400' : 'text-slate-900 dark:text-white'}`}>{lesson.title}</p>
                             </div>
                           </div>
                           {isFirstIncomplete && isLevelUnlocked(levelIndex) && <Sparkles size={16} className="text-indigo-400 shrink-0" />}
@@ -376,7 +376,7 @@ const CourseTrack: React.FC = () => {
                                   ? 'bg-emerald-500/5 border-emerald-500/20 hover:bg-emerald-500/10'
                                   : isUnlocked
                                     ? 'bg-indigo-600/5 border-indigo-500/20 hover:bg-indigo-600/10 hover:border-indigo-500/40'
-                                    : 'bg-slate-900/40 border-slate-800/50 opacity-50 grayscale'
+                                    : 'bg-slate-100 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800/50 opacity-50 grayscale shadow-none'
                                   }`}
                               >
                                 <div className="flex items-center gap-4 min-w-0">
@@ -390,7 +390,7 @@ const CourseTrack: React.FC = () => {
                                   </div>
                                   <div className="text-left overflow-hidden">
                                     <div className="flex items-center gap-2 mb-1">
-                                      <h4 className={`font-bold text-sm ${isUnlocked ? 'text-white' : 'text-slate-500'}`}>{prob.title}</h4>
+                                      <h4 className={`font-bold text-sm ${isUnlocked ? 'text-slate-900 dark:text-white' : 'text-slate-500'}`}>{prob.title}</h4>
                                       <span className={`text-[8px] px-1.5 py-0.5 rounded-full font-black uppercase ${prob.difficulty === 'easy' ? 'bg-emerald-500/10 text-emerald-500' :
                                         prob.difficulty === 'medium' ? 'bg-amber-500/10 text-amber-500' :
                                           'bg-rose-500/10 text-rose-500'

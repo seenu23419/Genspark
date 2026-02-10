@@ -51,7 +51,7 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
     };
 
     return (
-        <div className="flex h-screen bg-[#0a0b14] text-slate-200 overflow-hidden font-sans selection:bg-indigo-500/30">
+        <div className="flex h-screen bg-slate-50 dark:bg-black text-slate-900 dark:text-slate-200 overflow-hidden font-sans selection:bg-indigo-500/30 transition-colors duration-300">
             {/* Desktop Left Sidebar */}
             <nav className="hidden md:flex flex-col w-72 h-screen sticky top-0 bg-white/50 dark:bg-slate-950/50 backdrop-blur-xl border-r border-slate-200 dark:border-slate-800/50 p-6 shrink-0 z-50">
                 <div className="flex items-center gap-4 mb-10 px-2 cursor-pointer group" onClick={() => navigate('/')}>
@@ -108,13 +108,14 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
             {/* Main Container */}
             <div className="flex-1 flex flex-col min-w-0 relative">
                 {/* Mobile Header - Material Design 56 dp */}
-                <header className="md:hidden flex items-center justify-between px-4 bg-[#0a0b14]/95 backdrop-blur-2xl border-b border-white/5 sticky top-0 z-40 h-[60px] min-h-[60px] shadow-lg shadow-black/20 transition-all duration-300">
+                <header className="md:hidden flex items-center justify-between px-5 bg-slate-50/90 dark:bg-black/90 backdrop-blur-2xl border-b border-slate-300 dark:border-white/5 sticky top-0 z-40 h-[64px] min-h-[64px] transition-all duration-300 shadow-sm">
                     <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-3" onClick={() => navigate('/')}>
-                            <div className="relative group">
-                                <img src="/icons/logo.png" alt="GenSpark" className="h-10 w-auto relative z-10" />
-                            </div>
-                            <span className="text-xl font-bold bg-gradient-to-r from-white via-indigo-200 to-indigo-100 bg-clip-text text-transparent tracking-tight">GenSpark</span>
+                        <div
+                            className="flex items-center gap-3 active:scale-95 transition-all cursor-pointer group"
+                            onClick={() => navigate('/')}
+                        >
+                            <img src="/icons/logo.png" alt="GenSpark" className="h-10 w-10 relative z-10 object-contain" />
+                            <span className="text-xl font-black text-slate-900 dark:text-white tracking-tighter">GenSpark</span>
                         </div>
                     </div>
                     <button
@@ -127,13 +128,13 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
                 </header>
 
                 {/* Content Area with smooth fade transition - proper padding for mobile */}
-                <main className="flex-1 overflow-y-auto scroll-smooth relative no-scrollbar pb-20 animate-in fade-in duration-300 bg-[#0a0b14]">
+                <main className="flex-1 overflow-y-auto scroll-smooth relative no-scrollbar pb-20 animate-in fade-in duration-300 bg-slate-100 dark:bg-black transition-colors duration-300">
                     <Outlet />
                 </main>
 
                 {/* Mobile Bottom Navigation - Material Design 56 dp, 4 tabs exact */}
                 <div className="md:hidden fixed bottom-0 left-0 right-0 z-50">
-                    <nav className="flex items-center justify-around bg-[#0a0b14] backdrop-blur-xl border-t border-white/10 shadow-[0_-2px_12px_rgba(0,0,0,0.4)] h-[56px]">
+                    <nav className="flex items-center justify-around bg-slate-100/95 dark:bg-black backdrop-blur-xl border-t border-slate-300 dark:border-white/10 shadow-[0_-2px_12px_rgba(0,0,0,0.05)] dark:shadow-[0_-2px_12px_rgba(0,0,0,0.4)] h-[56px] transition-colors duration-300">
                         {navItems.map((item) => {
                             const isActive = currentScreen === item.id || (item.id === 'PROFILE' && (currentScreen === 'SETTINGS' || currentScreen === 'ANALYTICS' || window.location.pathname.startsWith('/profile')));
                             return (
@@ -146,10 +147,10 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
                                 >
                                     <item.icon
                                         size={24}
-                                        className={`transition-all ${isActive ? 'text-indigo-400' : 'text-slate-500 dark:text-slate-500'}`}
+                                        className={`transition-all ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500'}`}
                                         strokeWidth={isActive ? 2.5 : 2}
                                     />
-                                    <span className={`text-[12px] font-medium transition-colors ${isActive ? 'text-indigo-400' : 'text-slate-500 dark:text-slate-500'}`}>
+                                    <span className={`text-[12px] font-bold transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500'}`}>
                                         {item.label}
                                     </span>
                                 </button>

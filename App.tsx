@@ -76,8 +76,6 @@ const ProtectedRoute = () => {
 
   // Global styles for the app background - ENSURE SCROLLING IS ENABLED
   useEffect(() => {
-    document.documentElement.style.backgroundColor = '#0a0b14';
-    document.body.style.backgroundColor = '#0a0b14';
     document.documentElement.style.overflow = '';
     document.documentElement.style.height = '';
     document.body.style.overflow = '';
@@ -199,7 +197,7 @@ const ProtectedRoute = () => {
 
   if (isFullScreenPage) {
     return (
-      <div className="animate-in fade-in duration-300 h-screen overflow-y-auto relative bg-[#0a0b14] no-scrollbar">
+      <div className="animate-in fade-in duration-300 h-screen overflow-y-auto relative bg-slate-50 dark:bg-black no-scrollbar transition-colors duration-300 text-slate-900 dark:text-white">
         <Suspense fallback={<ScreenLoader />}>
           <OfflineBanner />
           <Outlet />
@@ -451,8 +449,19 @@ const App: React.FC = () => {
     }
   }, []);
 
+  // --- THEME INITIALIZATION ---
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    const isDark = savedTheme === 'dark' || (!savedTheme && true);
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
   return (
-    <div className="bg-[#0a0b14] min-h-screen">
+    <div className="bg-slate-50 dark:bg-[#000000] min-h-screen transition-colors duration-300">
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <CurriculumProvider>

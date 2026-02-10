@@ -90,7 +90,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-950 overflow-y-auto">
+    <div className="fixed inset-0 bg-slate-100 dark:bg-slate-950 overflow-y-auto transition-colors duration-300">
       <div className="min-h-full flex flex-col items-center justify-center px-6 py-8">
         <div className="w-full max-w-[340px] space-y-5">
 
@@ -106,10 +106,10 @@ const Login: React.FC = () => {
 
           {/* Headline + Subtext - Standard Professional Size */}
           <div className="text-center space-y-1">
-            <h1 className="text-xl font-bold text-white tracking-tight">
+            <h1 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">
               Welcome to GenSpark
             </h1>
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em]">
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-[0.2em]">
               Start your journey today
             </p>
           </div>
