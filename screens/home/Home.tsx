@@ -126,8 +126,8 @@ const Home: React.FC = () => {
                 </div>
 
                 {/* 7. LANGUAGE PATH INDICATOR - Premium Redesign */}
-                <section className="mb-10 p-6 bg-slate-200/30 dark:bg-slate-900/40 border-2 border-slate-300 dark:border-white/10 rounded-2xl relative overflow-hidden hover:border-indigo-500/30 transition-all duration-500">
-                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 via-transparent to-transparent pointer-events-none" />
+                <section className="mb-10 p-6 bg-slate-200/30 dark:bg-slate-900/60 border-2 border-slate-300 dark:border-white/20 dark:ring-1 dark:ring-white/5 rounded-2xl relative overflow-hidden hover:border-indigo-500/30 transition-all duration-500 shadow-sm">
+                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-transparent to-transparent pointer-events-none" />
                     <div className="flex items-center gap-2 mb-6">
                         <Zap size={18} className="text-indigo-600 dark:text-indigo-400" />
                         <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider">Learning Path</h3>
@@ -152,8 +152,8 @@ const Home: React.FC = () => {
                 {/* 3. PRIMARY ACTION CARD - Enhanced */}
                 <section className="mb-6">
                     <div className={`relative overflow-hidden rounded-2xl border-2 backdrop-blur-xl transition-all duration-500 group ${isPathCompleted
-                        ? 'bg-slate-50 dark:bg-emerald-950/20 border-emerald-300/50 dark:border-emerald-500/40 hover:border-emerald-500'
-                        : 'bg-slate-50 dark:bg-indigo-950/20 border-indigo-300/50 dark:border-indigo-500/40 hover:border-indigo-500'
+                        ? 'bg-slate-50 dark:bg-emerald-950/30 border-emerald-300/50 dark:border-emerald-500/60 hover:border-emerald-500 shadow-lg shadow-emerald-500/5'
+                        : 'bg-slate-50 dark:bg-indigo-950/30 border-indigo-300/50 dark:border-indigo-500/60 hover:border-indigo-500 shadow-lg shadow-indigo-500/10'
                         }`}>
                         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         <div className="p-6 md:p-8">
@@ -169,36 +169,61 @@ const Home: React.FC = () => {
                                         {currentPath?.name} • {isPathCompleted ? `All ${totalLessons} Lessons Completed` : `Lesson ${completedCount + 1} of ${totalLessons}`}
                                     </p>
                                 </div>
-                                <div className="flex items-center justify-center relative w-16 h-16 md:w-20 md:h-20 shrink-0 ml-4">
-                                    {/* Circular Progress */}
-                                    {/* Circular Progress (Liquid Fill style: Bottom to Top) */}
-                                    <svg className="absolute inset-0 w-full h-full" viewBox="0 0 36 36">
+                                <div className="flex items-center justify-center relative w-24 h-24 md:w-28 md:h-28 shrink-0 ml-4 group/progress">
+                                    <svg className="w-full h-full transform -rotate-90 drop-shadow-xl" viewBox="0 0 100 100">
+                                        {/* Outer Glow Background */}
+                                        <circle
+                                            cx="50"
+                                            cy="50"
+                                            r="45"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="8"
+                                            className="text-slate-200 dark:text-white/5"
+                                        />
+
+                                        {/* Progress Ring */}
+                                        <circle
+                                            cx="50"
+                                            cy="50"
+                                            r="45"
+                                            fill="none"
+                                            stroke="url(#progressGradient)"
+                                            strokeWidth="8"
+                                            strokeLinecap="round"
+                                            strokeDasharray={`${283 * (completedCount / totalLessons)}, 283`}
+                                            className="transition-all duration-1000 ease-out"
+                                        />
+
                                         <defs>
-                                            <linearGradient id="liquidFill" x1="0%" y1="100%" x2="0%" y2="0%">
-                                                {/* Filled portion (fuchsia) */}
-                                                <stop offset={`${totalLessons > 0 ? Math.min(100, Math.max(0, (completedCount / totalLessons) * 100)) : 0}%`} stopColor="#c026d3" />
-                                                {/* Empty portion (transparent/bg) */}
-                                                <stop offset={`${totalLessons > 0 ? Math.min(100, Math.max(0, (completedCount / totalLessons) * 100)) : 0}%`} stopColor="rgba(112, 26, 117, 0.2)" />
+                                            <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stopColor="#4f46e5" /> {/* Indigo */}
+                                                <stop offset="100%" stopColor="#06b6d4" /> {/* Cyan */}
                                             </linearGradient>
                                         </defs>
 
-                                        {/* Main Circle with Fill */}
+                                        {/* Center Fill (Subtle) */}
                                         <circle
-                                            cx="18"
-                                            cy="18"
-                                            r="16"
-                                            fill={isPathCompleted ? '#10b981' : 'url(#liquidFill)'}
-                                            stroke={isPathCompleted ? 'none' : 'rgba(112, 26, 117, 0.4)'}
-                                            strokeWidth="1.5"
+                                            cx="50"
+                                            cy="50"
+                                            r="35"
+                                            className="fill-white/10 dark:fill-white/5"
                                         />
                                     </svg>
 
                                     {/* Percentage Center */}
-                                    <div className={`relative z-10 w-12 h-12 rounded-full flex items-center justify-center ${isPathCompleted ? 'text-emerald-900' : 'text-white'}`}>
-                                        <span className="text-xs md:text-sm font-bold drop-shadow-md">
-                                            {Math.round((completedCount / totalLessons) * 100) || 0}%
+                                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                                        <span className="text-2xl md:text-3xl font-black text-slate-800 dark:text-white tracking-tighter">
+                                            {Math.round((completedCount / totalLessons) * 100) || 0}
+                                            <span className="text-xs ml-0.5 text-indigo-500 font-bold">%</span>
                                         </span>
+                                        <span className="text-[8px] md:text-[10px] font-black uppercase tracking-tighter text-slate-400 group-hover:text-indigo-400 transition-colors">Progress</span>
                                     </div>
+
+                                    {/* Active Pulse (Only if in progress) */}
+                                    {!isPathCompleted && completedCount > 0 && (
+                                        <div className="absolute inset-0 rounded-full border-4 border-indigo-500/20 animate-ping pointer-events-none" />
+                                    )}
                                 </div>
                             </div>
 
@@ -220,7 +245,7 @@ const Home: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                     <button
                         onClick={() => navigate('/profile/streaks')}
-                        className="relative p-5 bg-slate-200/40 dark:bg-slate-900/40 backdrop-blur-sm border border-slate-300 dark:border-indigo-500/20 rounded-xl hover:border-indigo-500 hover:shadow-[0_0_30px_rgba(99,102,241,0.05)] dark:hover:shadow-[0_0_30_rgba(99,102,241,0.3)] transition-all duration-500 group overflow-hidden text-left"
+                        className="relative p-5 bg-slate-200/40 dark:bg-slate-900/60 backdrop-blur-sm border border-slate-300 dark:border-indigo-500/40 dark:ring-1 dark:ring-white/5 rounded-xl hover:border-indigo-500 hover:shadow-[0_0_30px_rgba(99,102,241,0.05)] dark:hover:shadow-[0_0_30px_rgba(99,102,241,0.2)] transition-all duration-500 group overflow-hidden text-left shadow-sm"
                     >
                         <div className="absolute inset-0 bg-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-400 via-indigo-500 to-indigo-600 rounded-full shadow-[0_0_20px_rgba(99,102,241,0.3)]"></div>
@@ -238,7 +263,7 @@ const Home: React.FC = () => {
 
                     <button
                         onClick={() => navigate('/learn', { state: { initialFilter: 'completed' } })}
-                        className="relative p-5 bg-slate-200/40 dark:bg-slate-900/40 backdrop-blur-sm border border-slate-300 dark:border-rose-500/20 rounded-xl hover:border-rose-500 hover:shadow-[0_0_30px_rgba(244,63,94,0.05)] dark:hover:shadow-[0_0_30px_rgba(244,63,94,0.3)] transition-all duration-500 group overflow-hidden text-left"
+                        className="relative p-5 bg-slate-200/40 dark:bg-slate-900/60 backdrop-blur-sm border border-slate-300 dark:border-rose-500/40 dark:ring-1 dark:ring-white/5 rounded-xl hover:border-rose-500 hover:shadow-[0_0_30px_rgba(244,63,94,0.05)] dark:hover:shadow-[0_0_30px_rgba(244,63,94,0.2)] transition-all duration-500 group overflow-hidden text-left shadow-sm"
                     >
                         <div className="absolute inset-0 bg-rose-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-rose-400 via-rose-500 to-rose-600 rounded-full shadow-[0_0_20px_rgba(244,63,94,0.3)]"></div>
@@ -259,7 +284,7 @@ const Home: React.FC = () => {
 
                     <button
                         onClick={() => navigate('/practice')}
-                        className="relative p-5 bg-slate-200/40 dark:bg-slate-900/40 backdrop-blur-sm border border-slate-300 dark:border-amber-500/20 rounded-xl hover:border-amber-500 hover:shadow-[0_0_30px_rgba(245,158,11,0.05)] dark:hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] transition-all duration-500 group overflow-hidden text-left"
+                        className="relative p-5 bg-slate-200/40 dark:bg-slate-900/60 backdrop-blur-sm border border-slate-300 dark:border-amber-500/40 dark:ring-1 dark:ring-white/5 rounded-xl hover:border-amber-500 hover:shadow-[0_0_30px_rgba(245,158,11,0.05)] dark:hover:shadow-[0_0_30px_rgba(245,158,11,0.2)] transition-all duration-500 group overflow-hidden text-left shadow-sm"
                     >
                         <div className="absolute inset-0 bg-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 rounded-full shadow-[0_0_20px_rgba(245,158,11,0.3)]"></div>

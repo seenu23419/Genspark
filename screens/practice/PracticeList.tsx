@@ -71,9 +71,9 @@ const PracticeList: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col h-screen bg-[#000000] items-center justify-center">
+      <div className="flex flex-col h-screen bg-white dark:bg-black items-center justify-center transition-colors duration-300">
         <Loader2 className="w-12 h-12 text-indigo-500 animate-spin mb-4" />
-        <p className="text-slate-400 font-black uppercase tracking-widest text-xs">Loading Progress...</p>
+        <p className="text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest text-xs">Loading Progress...</p>
       </div>
     );
   }
@@ -104,12 +104,12 @@ const PracticeList: React.FC = () => {
   // ═══════════════════════════════════════════════════════════
 
   return (
-    <div className="flex flex-col h-screen bg-[#000000]">
+    <div className="flex flex-col h-screen bg-slate-50 dark:bg-black transition-colors duration-300">
       {/* HEADER */}
-      <div className="bg-gradient-to-r from-indigo-900/20 to-slate-900/20 border-b border-slate-700/50 px-6 py-8 sticky top-0 z-40 backdrop-blur-md">
+      <div className="bg-gradient-to-r from-indigo-500/5 to-slate-200/5 dark:from-indigo-900/20 dark:to-slate-900/20 border-b border-slate-200 dark:border-slate-800/50 px-6 py-8 sticky top-0 z-40 backdrop-blur-md">
         <div className="flex flex-col gap-1">
-          <h1 className="text-3xl font-black text-indigo-100 tracking-tight">Introduction</h1>
-          <p className="text-slate-400 text-sm font-medium">
+          <h1 className="text-3xl font-black text-slate-900 dark:text-indigo-100 tracking-tight uppercase italic">Introduction</h1>
+          <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">
             Pick a problem and start coding. You can return anytime.
           </p>
         </div>
@@ -147,8 +147,8 @@ const PracticeList: React.FC = () => {
               <div
                 key={problem.id}
                 className={`group relative overflow-hidden flex flex-col border rounded-2xl transition-all duration-300 cursor-pointer ${isCompleted
-                  ? 'border-green-500/10 bg-green-500/[0.02] opacity-70'
-                  : 'border-slate-800 bg-slate-900/30 hover:border-indigo-500/30 hover:bg-slate-900/50'
+                  ? 'border-emerald-500/20 bg-emerald-500/[0.02] opacity-70'
+                  : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/30 hover:border-indigo-500/30 dark:hover:bg-slate-900/50 hover:shadow-lg'
                   }`}
                 onClick={() => setSelectedProblem(problem)}
               >
@@ -178,7 +178,7 @@ const PracticeList: React.FC = () => {
                   {/* Body: Title & Tags */}
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
-                      <h3 className="text-lg font-bold text-slate-100 group-hover:text-indigo-300 transition-colors leading-tight">
+                      <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors leading-tight">
                         {problem.title}
                       </h3>
                       {isCompleted && (

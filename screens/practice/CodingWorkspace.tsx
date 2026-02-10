@@ -40,12 +40,12 @@ interface AISectionProps {
 }
 
 const AISection: React.FC<AISectionProps> = ({ title, content, icon }) => (
-  <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-2 translate-y-0 hover:translate-y-[-2px] transition-transform duration-300">
+  <div className="bg-slate-100/50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-4 space-y-2 translate-y-0 hover:translate-y-[-2px] transition-transform duration-300">
     <div className="flex items-center gap-2">
-      <div className="text-indigo-400">{icon}</div>
-      <span className="text-[10px] font-black text-indigo-300 uppercase tracking-widest">{title}</span>
+      <div className="text-indigo-600 dark:text-indigo-400">{icon}</div>
+      <span className="text-[10px] font-black text-indigo-700 dark:text-indigo-300 uppercase tracking-widest">{title}</span>
     </div>
-    <p className="text-xs text-slate-300 leading-relaxed font-medium">{content}</p>
+    <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">{content}</p>
   </div>
 );
 
@@ -266,13 +266,13 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   const renderDescription = () => (
     <div className="p-6 space-y-8 animate-in fade-in duration-500">
       <div className="space-y-4">
-        <h2 className="text-2xl font-black text-white tracking-tight">{problem.title}</h2>
+        <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{problem.title}</h2>
         <div className="flex items-center gap-2">
-          <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest border ${problem.difficulty === 'easy' ? 'text-emerald-400 border-emerald-500/20' : 'text-rose-400 border-rose-500/20'}`}>{problem.difficulty}</span>
-          <span className="px-2 py-0.5 rounded text-[9px] font-bold uppercase text-slate-500 border border-white/5">{problem.concept || 'C LANGUAGE'}</span>
+          <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest border ${problem.difficulty === 'easy' ? 'text-emerald-600 dark:text-emerald-400 border-emerald-500/20' : 'text-rose-600 dark:text-rose-400 border-rose-500/20'}`}>{problem.difficulty}</span>
+          <span className="px-2 py-0.5 rounded text-[9px] font-bold uppercase text-slate-500 border border-slate-200 dark:border-white/5">{problem.concept || 'C LANGUAGE'}</span>
         </div>
       </div>
-      <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">{problem.description}</p>
+      <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">{problem.description}</p>
 
       {/* INPUT FORMAT */}
       {problem.inputFormat && (
@@ -285,16 +285,16 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
       {/* EXAMPLES SECTION (Merged from previous tab) */}
       {problem.test_cases && problem.test_cases.length > 0 && (
         <div className="space-y-6 pt-4 border-t border-white/5">
-          <h3 className="text-xs font-black text-white uppercase tracking-widest flex items-center gap-2">
+          <h3 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest flex items-center gap-2">
             <Terminal size={14} className="text-indigo-400" />
             Examples
           </h3>
           {problem.test_cases.map((tc, i) => (
             <div key={i} className="space-y-3">
               <h4 className="text-[10px] font-black text-slate-500 uppercase">Example {i + 1}</h4>
-              <div className="bg-slate-950 border border-white/5 rounded-xl overflow-hidden font-mono text-xs">
-                {tc.stdin && <div className="p-4 border-b border-white/5"><div className="text-amber-500 mb-1 opacity-50 text-[9px]">INPUT</div><div className="text-amber-400">{tc.stdin}</div></div>}
-                <div className="p-4"><div className="text-emerald-500 mb-1 opacity-50 text-[9px]">EXPECTED</div><div className="text-emerald-400">{tc.expected_output}</div></div>
+              <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-white/5 rounded-xl overflow-hidden font-mono text-xs">
+                {tc.stdin && <div className="p-4 border-b border-slate-200 dark:border-white/5"><div className="text-amber-600 dark:text-amber-500 mb-1 opacity-50 text-[9px]">INPUT</div><div className="text-amber-700 dark:text-amber-400">{tc.stdin}</div></div>}
+                <div className="p-4"><div className="text-emerald-600 dark:text-emerald-500 mb-1 opacity-50 text-[9px]">EXPECTED</div><div className="text-emerald-700 dark:text-emerald-400">{tc.expected_output}</div></div>
               </div>
             </div>
           ))}
@@ -321,8 +321,8 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
               {executionResult.accepted ? <Check size={20} /> : <AlertCircle size={20} />}
             </div>
             <div>
-              <p className="text-xs font-black text-white uppercase tracking-tight">{executionResult.accepted ? 'Accepted' : 'Failed'}</p>
-              <p className="text-[10px] text-slate-500 font-bold uppercase">{executionResult.status.description}</p>
+              <p className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">{executionResult.accepted ? 'Accepted' : 'Failed'}</p>
+              <p className="text-[10px] text-slate-600 dark:text-slate-400 font-bold uppercase">{executionResult.status.description}</p>
             </div>
           </div>
           {!executionResult.accepted && !aiExplanation && !isGeneratingExplanation && (
@@ -339,8 +339,8 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
         {(aiExplanation || isGeneratingExplanation) && (
           <div className="space-y-4 animate-in fade-in zoom-in duration-500">
             <div className="flex items-center gap-2">
-              <Bot size={16} className="text-indigo-400" />
-              <span className="text-[10px] font-black text-white uppercase">AI Diagnostics</span>
+              <Bot size={16} className="text-indigo-600 dark:text-indigo-400" />
+              <span className="text-[10px] font-black text-slate-900 dark:text-white uppercase">AI Diagnostics</span>
               {isGeneratingExplanation && <Loader2 size={12} className="animate-spin text-indigo-400" />}
             </div>
             <div className="grid gap-3">
@@ -356,15 +356,15 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
                 // If no sections matched, show raw response as fallback
                 if (sections.length === 0) {
                   return (
-                    <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-                      <p className="text-xs text-slate-300 leading-relaxed whitespace-pre-wrap">{aiExplanation}</p>
+                    <div className="bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-4">
+                      <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">{aiExplanation}</p>
                     </div>
                   );
                 }
 
                 return sections;
               })() : (
-                <div className="text-slate-400 text-xs italic">Analyzing your code...</div>
+                <div className="text-slate-500 dark:text-slate-400 text-xs italic">Analyzing your code...</div>
               )}
             </div>
           </div>
@@ -390,7 +390,7 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
 
         <div className="space-y-2">
           <h4 className="text-[10px] font-black text-slate-600 uppercase">Standard Output</h4>
-          <pre className="bg-slate-950 p-4 rounded-xl border border-white/5 text-xs text-slate-300 font-mono overflow-auto max-h-40">{executionResult.stdout || '(Empty)'}</pre>
+          <pre className="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-white/5 text-xs text-slate-600 dark:text-slate-300 font-mono overflow-auto max-h-40">{executionResult.stdout || '(Empty)'}</pre>
         </div>
 
         {hasError && (
@@ -404,13 +404,13 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#000000] overflow-hidden font-sans practice-ui-root">
+    <div className="flex flex-col h-screen bg-slate-50 dark:bg-black overflow-hidden font-sans practice-ui-root transition-colors duration-300">
       {/* HEADER */}
-      <header className="h-14 shrink-0 bg-[#000000] border-b border-white/5 flex items-center px-4 z-50">
-        <button onClick={onBack} className="p-2 -ml-1 text-slate-500 hover:text-white transition"><ChevronLeft size={24} /></button>
+      <header className="h-14 shrink-0 bg-white dark:bg-black border-b border-slate-200 dark:border-white/5 flex items-center px-4 z-50">
+        <button onClick={onBack} className="p-2 -ml-1 text-slate-400 hover:text-slate-900 dark:hover:text-white transition"><ChevronLeft size={24} /></button>
         <div className="flex items-center gap-3 px-3">
-          <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20"><Code2 size={16} className="text-indigo-400" /></div>
-          <h1 className="text-sm font-black text-white uppercase tracking-tight italic">{problem.title}</h1>
+          <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20"><Code2 size={16} className="text-indigo-600 dark:text-indigo-400" /></div>
+          <h1 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight italic">{problem.title}</h1>
         </div>
       </header>
 
@@ -418,21 +418,21 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
 
         {/* LEFT: INFORMATION */}
-        <div className="hidden lg:flex flex-col w-[340px] bg-[#000000] border-r border-white/5">
-          <div className="pro-panel-header">
-            <div className="pro-tab-btn active"><BookOpen size={14} />Description</div>
+        <div className="hidden lg:flex flex-col w-[340px] bg-white dark:bg-black border-r border-slate-200 dark:border-white/5">
+          <div className="pro-panel-header border-b border-slate-100 dark:border-white/5">
+            <div className="pro-tab-btn active text-indigo-600 dark:text-indigo-400"><BookOpen size={14} />Description</div>
           </div>
           <div className="flex-1 overflow-y-auto no-scrollbar">{renderDescription()}</div>
         </div>
 
         {/* CENTER: IDE */}
-        <div className="flex-1 flex flex-col min-w-0 bg-[#0d0e1a] z-10">
-          <div className="editor-toolbar">
+        <div className="flex-1 flex flex-col min-w-0 bg-white dark:bg-[#0d0e1a] z-10 transition-colors duration-300">
+          <div className="editor-toolbar border-b border-slate-200 dark:border-white/5 bg-white dark:bg-[#1a1b2e]">
             <div className="flex items-center gap-4">
-              <select value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)} className="bg-transparent border-none text-indigo-400 text-[10px] font-black uppercase tracking-widest focus:ring-0 cursor-pointer">
-                {Object.keys((problem as any).starter_codes || {}).map(l => <option key={l} value={l} className="bg-slate-900">{l.toUpperCase()}</option>)}
+              <select value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)} className="bg-transparent border-none text-indigo-600 dark:text-indigo-400 text-[10px] font-black uppercase tracking-widest focus:ring-0 cursor-pointer">
+                {Object.keys((problem as any).starter_codes || {}).map(l => <option key={l} value={l} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">{l.toUpperCase()}</option>)}
               </select>
-              <div className="w-px h-4 bg-white/10" />
+              <div className="w-px h-4 bg-slate-200 dark:bg-white/10" />
               <button onClick={handleReset} className="btn-icon-pro" title="Reset Code"><RotateCcw size={16} /></button>
             </div>
             <div className="flex items-center gap-3">
@@ -445,53 +445,57 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
             </div>
           </div>
           <div className="flex-1 relative overflow-hidden">
-            {/* Mobile layout fallback switch */}
-            <div className="h-14 bg-slate-900/50 flex shrink-0 lg:hidden">
+            {/* MOBILE TABS (Switch) */}
+            <div className="h-14 bg-white dark:bg-slate-900/50 border-b border-slate-100 dark:border-white/5 flex shrink-0 lg:hidden px-2">
               {['PROBLEM', 'CODE', 'RESULT'].map(t => (
-                <button key={t} onClick={() => setActiveTab(t as TabType)} className={`flex-1 text-[10px] font-black tracking-widest ${activeTab === t ? 'text-indigo-400' : 'text-slate-600'}`}>{t}</button>
+                <button key={t} onClick={() => setActiveTab(t as TabType)} className={`flex-1 text-[10px] font-black tracking-widest transition-all ${activeTab === t ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 dark:border-indigo-400' : 'text-slate-400 dark:text-slate-600'}`}>{t}</button>
               ))}
             </div>
-            <div className="absolute inset-0 top-14 lg:top-0 h-[calc(100%-56px)] lg:h-full">
-              {(activeTab === 'CODE' || window.innerWidth >= 1024) && (
-                <Compiler
-                  key={problem.id}
-                  language={selectedLanguage.toLowerCase()}
-                  initialCode={editorSyncCode}
-                  onCodeChange={setUserCode}
-                  onRun={handleRunResult}
-                  ref={compilerRef}
-                  readOnly={isSubmitting}
-                />
-              )}
-              {(activeTab === 'PROBLEM' && window.innerWidth < 1024) && <div className="h-full overflow-y-auto no-scrollbar bg-slate-950">{renderDescription()}</div>}
-              {(activeTab === 'RESULT' && window.innerWidth < 1024) && <div className="h-full overflow-y-auto no-scrollbar bg-slate-950">{renderResults()}</div>}
-            </div>
+            <div className="flex-1 flex flex-col relative overflow-hidden">
+              <div className="flex-1 relative overflow-hidden">
+                {(activeTab === 'CODE' || window.innerWidth >= 1024) && (
+                  <Compiler
+                    key={problem.id}
+                    language={selectedLanguage.toLowerCase()}
+                    initialCode={editorSyncCode}
+                    onCodeChange={setUserCode}
+                    onRun={handleRunResult}
+                    ref={compilerRef}
+                    readOnly={isSubmitting}
+                  />
+                )}
+                {(activeTab === 'PROBLEM' && window.innerWidth < 1024) && <div className="absolute inset-0 h-full overflow-y-auto no-scrollbar bg-white dark:bg-slate-950">{renderDescription()}</div>}
+                {(activeTab === 'RESULT' && window.innerWidth < 1024) && <div className="absolute inset-0 h-full overflow-y-auto no-scrollbar bg-white dark:bg-slate-950">{renderResults()}</div>}
+              </div>
 
-            {/* MOBILE KEYBOARD ACCESSORY & DEL BUTTON */}
-            <div className="lg:hidden absolute bottom-0 left-0 right-0 h-12 bg-[#0d0e1a] border-t border-white/5 flex items-center gap-1.5 px-3 overflow-x-auto no-scrollbar z-20">
-              {['{', '}', '(', ')', ';', '"', "'", '<', '>', '/', '*', '=', '+', ':'].map(char => (
-                <button
-                  key={char}
-                  onClick={() => compilerRef.current?.insertText(char)}
-                  className="h-8 min-w-[36px] bg-slate-800/50 border border-white/5 rounded-lg text-slate-300 font-mono text-sm active:bg-indigo-600 transition"
-                >
-                  {char}
-                </button>
-              ))}
-              <button
-                onClick={() => compilerRef.current?.deleteLastChar()}
-                className="h-8 px-4 bg-rose-500/10 border border-rose-500/20 rounded-lg text-rose-400 font-black text-[9px] uppercase active:scale-95 transition"
-              >
-                DEL
-              </button>
+              {/* MOBILE KEYBOARD ACCESSORY & DEL BUTTON (Now Flex-Static at Bottom) */}
+              {activeTab === 'CODE' && (
+                <div className="lg:hidden shrink-0 h-12 bg-white dark:bg-[#0d0e1a] border-t border-slate-200 dark:border-white/5 flex items-center gap-1.5 px-3 overflow-x-auto no-scrollbar z-20">
+                  {['{', '}', '(', ')', ';', '"', "'", '<', '>', '/', '*', '=', '+', ':'].map(char => (
+                    <button
+                      key={char}
+                      onClick={() => compilerRef.current?.insertText(char)}
+                      className="h-8 min-w-[36px] bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-white/5 rounded-lg text-slate-600 dark:text-slate-300 font-mono text-sm active:bg-indigo-600 dark:active:bg-indigo-600 active:text-white transition"
+                    >
+                      {char}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() => compilerRef.current?.deleteLastChar()}
+                    className="h-8 px-4 bg-rose-500/10 dark:bg-rose-500/10 border border-rose-500/20 rounded-lg text-rose-600 dark:text-rose-400 font-black text-[9px] uppercase active:scale-95 transition"
+                  >
+                    DEL
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
         {/* RIGHT: RESULTS & AI */}
-        <div className="hidden lg:flex flex-col w-[380px] bg-[#000000] border-l border-white/5 shrink-0 overflow-hidden">
-          <div className="pro-panel-header px-4">
-            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2"><Zap size={14} />Execution Results</span>
+        <div className="hidden lg:flex flex-col w-[380px] bg-white dark:bg-black border-l border-slate-200 dark:border-white/5 shrink-0 overflow-hidden transition-colors duration-300">
+          <div className="pro-panel-header px-4 border-b border-slate-100 dark:border-white/5">
+            <span className="text-[10px] font-black text-slate-500 dark:text-slate-500 uppercase tracking-widest flex items-center gap-2"><Zap size={14} className="text-amber-500" />Execution Results</span>
           </div>
           <div className="flex-1 overflow-y-auto no-scrollbar">{renderResults()}</div>
         </div>
@@ -499,12 +503,12 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
 
       {/* SUCCESS MODAL */}
       {showSuccess && (
-        <div className="fixed inset-0 z-[100] bg-[#000000]/95 backdrop-blur-xl flex items-center justify-center p-6 animate-in fade-in duration-700">
-          <div className="w-full max-w-sm bg-[#0d0e1a] border border-emerald-500/20 rounded-[3rem] p-10 flex flex-col items-center text-center gap-8 shadow-2xl">
+        <div className="fixed inset-0 z-[100] bg-slate-900/40 dark:bg-[#000000]/95 backdrop-blur-xl flex items-center justify-center p-6 animate-in fade-in duration-700">
+          <div className="w-full max-w-sm bg-white dark:bg-[#0d0e1a] border border-emerald-500/20 dark:border-emerald-500/20 rounded-[3rem] p-10 flex flex-col items-center text-center gap-8 shadow-2xl transition-colors duration-300">
             <div className="w-24 h-24 bg-emerald-500 text-white rounded-full flex items-center justify-center shadow-2xl shadow-emerald-500/30 scale-110"><Check size={56} strokeWidth={4} /></div>
             <div className="space-y-3">
-              <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter">Mission Accomplished!</h2>
-              <p className="text-slate-500 font-medium italic text-sm">Your solution is accurate and optimized.</p>
+              <h2 className="text-3xl font-black text-slate-900 dark:text-white italic uppercase tracking-tighter">Mission Accomplished!</h2>
+              <p className="text-slate-500 dark:text-slate-500 font-medium italic text-sm">Your solution is accurate and optimized.</p>
             </div>
             <div className="w-full space-y-4">
               {hasNextProblem ? (

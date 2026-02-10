@@ -28,6 +28,23 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
     const [currentInitialCode, setCurrentInitialCode] = useState(initialCode);
     const editorRef = useRef<any>(null);
     const monacoRef = useRef<Monaco | null>(null);
+    const [isDarkMode, setIsDarkMode] = useState(() => document.documentElement.classList.contains('dark'));
+
+    // Synchronize theme state with global class
+    useEffect(() => {
+        const observer = new MutationObserver(() => {
+            setIsDarkMode(document.documentElement.classList.contains('dark'));
+        });
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        return () => observer.disconnect();
+    }, []);
+
+    // Update Monaco theme whenever isDarkMode changes
+    useEffect(() => {
+        if (monacoRef.current) {
+            monacoRef.current.editor.setTheme(isDarkMode ? 'genspark-dark' : 'vs');
+        }
+    }, [isDarkMode]);
 
     // Reset editor ONLY if content actually differs (Prevents cursor jumping)
     useEffect(() => {
@@ -118,16 +135,16 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
         editorRef.current = editor;
         monacoRef.current = monaco;
 
-        // Define custom theme
-        monaco.editor.defineTheme('genspark-theme', {
+        // Define custom dark theme
+        monaco.editor.defineTheme('genspark-dark', {
             base: 'vs-dark',
             inherit: true,
             rules: [],
-            colors: {
-                'editor.background': '#0a0b14',
-            }
+            colors: { 'editor.background': '#0a0b14' }
         });
-        monaco.editor.setTheme('genspark-theme');
+
+        // Initial theme set
+        monaco.editor.setTheme(isDarkMode ? 'genspark-dark' : 'vs');
 
         // BLOCK COPY/PASTE - Removed aggressive alerts based on user feedback
         const editorDomNode = editor.getDomNode();
@@ -211,7 +228,7 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
                     onCodeChange?.(val || '');
                 }}
                 onMount={handleEditorDidMount}
-                theme="genspark-theme"
+                theme={isDarkMode ? 'genspark-dark' : 'vs'}
                 options={{
                     fontSize: window.innerWidth < 768 ? 16 : 14,
                     minimap: { enabled: false },

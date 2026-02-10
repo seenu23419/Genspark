@@ -79,7 +79,7 @@ const PracticeHub: React.FC = () => {
     return (
         <div className="min-h-screen bg-slate-100 dark:bg-black text-slate-900 dark:text-white pb-24 font-sans selection:bg-indigo-500/30 transition-colors duration-300">
             {/* 1. Header (Static) */}
-            <div className="shrink-0 bg-slate-50 dark:bg-slate-950 px-6 pt-10 pb-4">
+            <div className="shrink-0 bg-white dark:bg-slate-950 px-6 pt-10 pb-4 border-b border-slate-100 dark:border-white/5">
                 <div className="max-w-5xl mx-auto flex flex-col gap-3">
                     <div className="flex items-end justify-between">
                         <div>
@@ -163,7 +163,7 @@ const PracticeHub: React.FC = () => {
                                     <div
                                         key={problem.id}
                                         onClick={() => navigate(`/practice/problem/${problem.id}`)}
-                                        className="bg-slate-50 dark:bg-slate-900/30 border border-slate-300 dark:border-white/5 rounded-2xl p-6 relative transition-all active:scale-[0.98] cursor-pointer group hover:bg-slate-200/50 dark:hover:bg-slate-900/50 shadow-sm hover:shadow-md"
+                                        className="bg-white dark:bg-slate-900/30 border border-slate-200 dark:border-white/5 rounded-2xl p-6 relative transition-all active:scale-[0.98] cursor-pointer group hover:bg-slate-100 dark:hover:bg-slate-900/50 shadow-sm hover:shadow-lg"
                                     >
                                         {/* Status Dot (Top-Right) */}
                                         <div className="absolute top-6 right-6 flex flex-col items-end gap-1">

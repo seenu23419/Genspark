@@ -53,10 +53,15 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
     return (
         <div className="flex h-screen bg-slate-50 dark:bg-black text-slate-900 dark:text-slate-200 overflow-hidden font-sans selection:bg-indigo-500/30 transition-colors duration-300">
             {/* Desktop Left Sidebar */}
-            <nav className="hidden md:flex flex-col w-72 h-screen sticky top-0 bg-white/50 dark:bg-slate-950/50 backdrop-blur-xl border-r border-slate-200 dark:border-slate-800/50 p-6 shrink-0 z-50">
+            <nav className="hidden md:flex flex-col w-72 h-screen sticky top-0 bg-white/50 dark:bg-slate-950/70 backdrop-blur-2xl border-r border-slate-200 dark:border-white/10 p-6 shrink-0 z-50">
                 <div className="flex items-center gap-4 mb-10 px-2 cursor-pointer group" onClick={() => navigate('/')}>
-                    <div className="relative">
-                        <img src="/icons/logo.png" alt="GenSpark" className="h-14 w-auto relative z-10 transition-transform duration-300 group-hover:scale-105" />
+                    <div className="relative p-1.5 bg-slate-900 rounded-xl shadow-2xl shadow-slate-950 border border-slate-700 dark:border-indigo-500/30 transition-all duration-300 group-hover:scale-105 group-hover:border-indigo-500/60">
+                        <img
+                            src="/icons/logo.png"
+                            alt="GenSpark"
+                            className="h-9 w-auto relative z-10 transition-all duration-300"
+                            style={{ filter: 'saturate(1.4) contrast(1.1)' }}
+                        />
                     </div>
                     <span className="text-2xl font-bold bg-gradient-to-r from-slate-800 via-indigo-600 to-indigo-500 dark:from-white dark:via-indigo-200 dark:to-indigo-100 bg-clip-text text-transparent tracking-tight">GenSpark</span>
                 </div>
@@ -114,7 +119,14 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
                             className="flex items-center gap-3 active:scale-95 transition-all cursor-pointer group"
                             onClick={() => navigate('/')}
                         >
-                            <img src="/icons/logo.png" alt="GenSpark" className="h-10 w-10 relative z-10 object-contain" />
+                            <div className="p-1 bg-slate-900 rounded-lg shadow-md border border-slate-800">
+                                <img
+                                    src="/icons/logo.png"
+                                    alt="GenSpark"
+                                    className="h-7 w-7 relative z-10 object-contain"
+                                    style={{ filter: 'saturate(1.4) contrast(1.1)' }}
+                                />
+                            </div>
                             <span className="text-xl font-black text-slate-900 dark:text-white tracking-tighter">GenSpark</span>
                         </div>
                     </div>
