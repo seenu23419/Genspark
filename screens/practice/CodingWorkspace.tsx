@@ -444,7 +444,7 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
               <button onClick={handleSubmit} disabled={isSubmitting} className="btn-submit-pro">Submit</button>
             </div>
           </div>
-          <div className="flex-1 relative overflow-hidden">
+          <div className="flex-1 flex flex-col relative overflow-hidden">
             {/* MOBILE TABS (Switch) */}
             <div className="h-14 bg-white dark:bg-slate-900/50 border-b border-slate-100 dark:border-white/5 flex shrink-0 lg:hidden px-2">
               {['PROBLEM', 'CODE', 'RESULT'].map(t => (
