@@ -71,7 +71,7 @@ const Signup: React.FC = () => {
 
     try {
       const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Connection timeout. Please try again.')), 12000)
+        setTimeout(() => reject(new Error('Connection timeout. Please try again.')), 30000)
       );
 
       const signupPromise = authService.signUp(email, password, name);
@@ -103,7 +103,7 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-950 overflow-y-auto">
+    <div className="fixed inset-0 bg-black overflow-y-auto">
 
 
       {/* Main content - Logo first, brand-forward */}
@@ -148,8 +148,9 @@ const Signup: React.FC = () => {
                 value={name}
                 onChange={handleNameChange}
                 placeholder="John Doe"
+                autoComplete="name"
                 disabled={isLoading || isGoogleLoading}
-                className="w-full pl-11 pr-4 py-3 bg-slate-900/80 border border-slate-700/60 rounded-xl text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-600/40 focus:border-indigo-500 focus:bg-slate-900 focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                className="w-full pl-11 pr-4 py-3 bg-white/5 border border-slate-800/60 rounded-xl text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-600/40 focus:border-indigo-500 focus:bg-black focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
               />
             </div>
           </div>
@@ -167,8 +168,9 @@ const Signup: React.FC = () => {
                 value={email}
                 onChange={handleEmailChange}
                 placeholder="you@example.com"
+                autoComplete="email"
                 disabled={isLoading || isGoogleLoading}
-                className="w-full pl-11 pr-4 py-3 bg-slate-900/80 border border-slate-700/60 rounded-xl text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-600/40 focus:border-indigo-500 focus:bg-slate-900 focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                className="w-full pl-11 pr-4 py-3 bg-white/5 border border-slate-800/60 rounded-xl text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-600/40 focus:border-indigo-500 focus:bg-black focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
               />
             </div>
           </div>
@@ -186,8 +188,9 @@ const Signup: React.FC = () => {
                 value={password}
                 onChange={handlePasswordChange}
                 placeholder="••••••••"
+                autoComplete="new-password"
                 disabled={isLoading || isGoogleLoading}
-                className="w-full pl-11 pr-11 py-3 bg-slate-900/60 border border-slate-700 rounded-xl text-white text-sm placeholder:text-slate-600 focus:ring-2 focus:ring-indigo-700/80 focus:border-indigo-600 focus:bg-slate-950 focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                className="w-full pl-11 pr-11 py-3 bg-white/5 border border-slate-800 rounded-xl text-white text-sm placeholder:text-slate-600 focus:ring-2 focus:ring-indigo-700/80 focus:border-indigo-600 focus:bg-black focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               />
               <button
                 type="button"
@@ -213,8 +216,9 @@ const Signup: React.FC = () => {
                 value={confirmPassword}
                 onChange={handleConfirmChange}
                 placeholder="••••••••"
+                autoComplete="new-password"
                 disabled={isLoading || isGoogleLoading}
-                className="w-full pl-11 pr-11 py-3 bg-slate-900/60 border border-slate-700 rounded-xl text-white text-sm placeholder:text-slate-600 focus:ring-2 focus:ring-indigo-700/80 focus:border-indigo-600 focus:bg-slate-950 focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                className="w-full pl-11 pr-11 py-3 bg-white/5 border border-slate-800 rounded-xl text-white text-sm placeholder:text-slate-600 focus:ring-2 focus:ring-indigo-700/80 focus:border-indigo-600 focus:bg-black focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               />
               <button
                 type="button"
@@ -268,7 +272,7 @@ const Signup: React.FC = () => {
           type="button"
           onClick={handleGoogleSignup}
           disabled={isLoading || isGoogleLoading}
-          className="w-full max-w-xs py-3 bg-slate-800/60 border border-slate-700 hover:border-slate-600 hover:bg-slate-800 rounded-full text-slate-200 text-sm font-semibold flex items-center justify-center gap-3 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full max-w-xs py-3 bg-white/5 border border-slate-800 hover:border-slate-700 hover:bg-white/10 rounded-full text-slate-200 text-sm font-semibold flex items-center justify-center gap-3 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isGoogleLoading ? (
             <>

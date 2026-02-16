@@ -8,7 +8,7 @@ import { Loader2, AlertCircle, Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { authService } from '../../services/authService';
 import { useNavigate } from 'react-router-dom';
-import { Capacitor } from '@capacitor/core';
+
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -20,11 +20,6 @@ const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
-
-  // Debug Info
-  const platform = Capacitor.getPlatform();
-  const isNative = Capacitor.isNativePlatform();
-  const redirectUrl = isNative ? 'com.genspark.app://google-auth' : window.location.origin;
 
   // Validation
   const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -61,7 +56,7 @@ const Login: React.FC = () => {
 
     try {
       const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Connection timeout. Please try again.')), 12000)
+        setTimeout(() => reject(new Error('Connection timeout. Please try again.')), 30000)
       );
 
       const loginPromise = authService.signIn(email, password);
@@ -85,31 +80,30 @@ const Login: React.FC = () => {
       setIsGoogleLoading(false);
       const errorMsg = err.message?.replace('AuthApiError: ', '') || 'Google login failed';
       setError(errorMsg);
-      console.error('Google login error:', err);
     }
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-100 dark:bg-slate-950 overflow-y-auto transition-colors duration-300">
+    <div className="fixed inset-0 bg-black overflow-y-auto transition-colors duration-300">
       <div className="min-h-full flex flex-col items-center justify-center px-6 py-8">
         <div className="w-full max-w-[340px] space-y-5">
 
           {/* Logo - Centered with minimal spacing */}
-          <div className="flex justify-center -mb-10">
+          <div className="flex justify-center -mb-6">
             <img
               src="/icons/logo.png"
               alt="GenSpark"
-              className="h-36 w-36 object-contain drop-shadow-2xl"
+              className="h-28 w-28 object-contain"
               draggable={false}
             />
           </div>
 
-          {/* Headline + Subtext - Standard Professional Size */}
-          <div className="text-center space-y-1">
-            <h1 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">
+          {/* Headline + Subtext */}
+          <div className="text-center space-y-1 pb-2">
+            <h1 className="text-2xl font-black text-white tracking-tight">
               Welcome to GenSpark
             </h1>
-            <p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-[0.2em]">
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em]">
               Start your journey today
             </p>
           </div>
@@ -124,8 +118,7 @@ const Login: React.FC = () => {
 
           {/* Login Form */}
           <form onSubmit={handleLogin} className="space-y-5">
-            {/* Email field - Professional with Icon & Label */}
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <label htmlFor="email" className="text-xs font-bold text-slate-300 uppercase tracking-widest block ml-1">
                 Email
               </label>
@@ -137,14 +130,14 @@ const Login: React.FC = () => {
                   value={email}
                   onChange={handleEmailChange}
                   placeholder="Email address"
+                  autoComplete="email"
                   disabled={isLoading || isGoogleLoading}
-                  className="w-full pl-11 pr-4 py-3 bg-slate-900/60 border border-slate-700 rounded-xl text-white text-sm placeholder:text-slate-600 focus:ring-2 focus:ring-indigo-700/80 focus:border-indigo-600 focus:bg-slate-950 focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                  className="w-full pl-11 pr-4 py-3 bg-white/5 border border-slate-800 rounded-xl text-white text-sm placeholder:text-slate-600 focus:ring-2 focus:ring-indigo-700/80 focus:border-indigo-600 focus:bg-black focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
                 />
               </div>
             </div>
 
-            {/* Password field - Professional with Icon & Label */}
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <label htmlFor="password" className="text-xs font-bold text-slate-300 uppercase tracking-widest block ml-1">
                 Password
               </label>
@@ -156,8 +149,9 @@ const Login: React.FC = () => {
                   value={password}
                   onChange={handlePasswordChange}
                   placeholder="Password"
+                  autoComplete="current-password"
                   disabled={isLoading || isGoogleLoading}
-                  className="w-full pl-11 pr-4 py-3 bg-slate-900/80 border border-slate-700/60 rounded-xl text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-600/40 focus:border-indigo-500 focus:bg-slate-900 focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                  className="w-full pl-11 pr-4 py-3 bg-white/5 border border-slate-800 rounded-xl text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-600/40 focus:border-indigo-500 focus:bg-black focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
                 />
                 <button
                   type="button"
@@ -212,7 +206,7 @@ const Login: React.FC = () => {
             type="button"
             onClick={handleGoogleLogin}
             disabled={isLoading || isGoogleLoading}
-            className="w-full py-3.5 bg-slate-800/60 border border-slate-700 hover:border-slate-600 hover:bg-slate-800 rounded-lg text-slate-200 text-sm font-medium flex items-center justify-center gap-3 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3.5 bg-white/5 border border-slate-800 hover:border-slate-700 hover:bg-white/10 rounded-lg text-slate-200 text-sm font-medium flex items-center justify-center gap-3 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isGoogleLoading ? (
               <>
@@ -245,13 +239,6 @@ const Login: React.FC = () => {
               Sign up
             </button>
           </p>
-
-          {/* DEBUG INFO */}
-          <div className="mt-8 p-3 bg-black/40 rounded text-[10px] text-slate-600 font-mono text-center">
-            <p>Platform: {platform} (Native: {isNative ? 'YES' : 'NO'})</p>
-            <p className="break-all mt-1">Redirect: {redirectUrl}</p>
-          </div>
-
         </div>
       </div>
     </div>

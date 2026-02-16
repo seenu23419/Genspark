@@ -76,7 +76,8 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBack }) => {
                 value={email}
                 onChange={handleEmailChange}
                 placeholder="Enter your email"
-                className="w-full pl-12 pr-4 py-4 bg-slate-900 border border-slate-800 rounded-2xl focus:ring-2 focus:ring-indigo-500/50 focus:outline-none text-white transition-all font-medium"
+                autoComplete="email"
+                className="w-full pl-12 pr-4 py-4 bg-white/5 border border-slate-800 rounded-2xl focus:ring-2 focus:ring-indigo-500/50 focus:outline-none text-white transition-all font-medium focus:bg-black"
               />
             </div>
 

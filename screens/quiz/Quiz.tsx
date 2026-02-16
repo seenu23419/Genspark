@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabaseDB } from '../../services/supabaseService';
 import { CURRICULUM } from '../../constants';
+import { useCurriculum } from '../../contexts/CurriculumContext';
 import { QuizQuestion } from '../../types';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -29,6 +30,7 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
   const { quizId } = useParams();
   const isFinalExam = quizId === 'c41';
   const { user, refreshProfile, updateProfile } = useAuth();
+  const { getLesson, data: curriculumData } = useCurriculum();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -36,8 +38,11 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
   const lessonData = useMemo(() => {
     if (propQuestions) return { lesson: null, questions: propQuestions, nextId: undefined, langId: null };
 
-    for (const langId in CURRICULUM) {
-      const languageModules = CURRICULUM[langId];
+    // Use merged curriculum data if available, fallback to static
+    const source = (curriculumData && Object.keys(curriculumData).length > 0) ? curriculumData : CURRICULUM;
+
+    for (const langId in source) {
+      const languageModules = source[langId];
       for (let mIdx = 0; mIdx < languageModules.length; mIdx++) {
         const module = languageModules[mIdx];
         const lIdx = module.lessons.findIndex(l => l.id === quizId);
@@ -54,7 +59,7 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
       }
     }
     return { lesson: null, questions: [], nextId: undefined, langId: null };
-  }, [quizId, propQuestions]);
+  }, [quizId, propQuestions, curriculumData]);
 
   const { questions, nextId, langId } = lessonData;
 
@@ -75,6 +80,7 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
 
   // Ref for scrollable content area
   const contentRef = useRef<HTMLDivElement>(null);
+  const startTimeRef = useRef<number>(Date.now());
 
   // 4. Utility Functions
   const formatTime = (seconds: number) => {
@@ -136,13 +142,15 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
     }
 
     // BACKGROUND: Sync progress and check for certificates
-    if (user && quizId) {
+    if (user && quizId && isPassed) {
       (async () => {
+        setIsSubmittingFinish(true); // Show loader while syncing
         try {
           const courseId = langId || '';
           if (!courseId) return;
 
-          console.log("[Quiz] Syncing progress for:", quizId);
+          const timeSpent = Math.floor((Date.now() - startTimeRef.current) / 1000);
+          console.log("[Quiz] Syncing progress for:", quizId, { finalScore, timeSpent });
           const updates: any = {
             completedLessonIds: [quizId]
           };
@@ -151,6 +159,7 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
             updates.unlockedLessonIds = [nextId];
           }
 
+          // Await to ensure persistence before navigation
           await updateProfile({
             ...updates,
             lastLanguageId: langId,
@@ -158,11 +167,16 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
           }, {
             type: 'challenge',
             title: `Passed Quiz: ${lessonData.lesson?.title || 'Knowledge Check'}`,
-            xp: 100
+            xp: 100,
+            score: finalScore,
+            timeSpent,
+            itemId: quizId
           });
-
+          console.log("[Quiz] Progress synced successfully.");
         } catch (err) {
           console.error('Error in background quiz sync:', err);
+        } finally {
+          setIsSubmittingFinish(false);
         }
       })();
     }
@@ -213,6 +227,8 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
     return (
       <div className="min-h-screen bg-white dark:bg-black flex flex-col items-center justify-center p-6 overflow-hidden transition-colors duration-300">
         <div className="relative z-10 max-w-md w-full space-y-8 text-center animate-in fade-in duration-500">
+
+
           {isPassed && (
             <div className="flex justify-center pt-4">
               <div className="absolute w-32 h-32 bg-green-500 rounded-full blur-3xl opacity-40 animate-pulse" />
@@ -223,7 +239,7 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
           )}
 
           <div className="space-y-3">
-            <h1 className="text-4xl font-black text-slate-900 dark:text-white">{isPassed ? 'Quiz Passed! 🎉' : 'Not Quite There'}</h1>
+            <h1 className="text-4xl font-black text-slate-900 dark:text-white">{isPassed ? 'Quiz Passed!' : 'Not Quite There'}</h1>
             <p className="text-slate-600 dark:text-slate-400 font-bold">
               {isPassed ? 'Lesson Unlocked' : `You need ${Math.ceil(questions.length * passPercentage / 100)} correct answers to pass`}
             </p>

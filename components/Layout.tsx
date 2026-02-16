@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import {
     LayoutDashboard,
     GraduationCap,
-    Code2,
+    Puzzle,
     Settings,
     LogOut,
     Loader2,
@@ -29,7 +29,7 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
     const navItems = [
         { id: 'HOME', path: '/', icon: LayoutDashboard, label: 'Home' },
         { id: 'LEARN', path: '/learn', icon: GraduationCap, label: 'Learn' },
-        { id: 'PRACTICE', path: '/practice', icon: Code2, label: 'Practice' },
+        { id: 'PRACTICE', path: '/practice', icon: Puzzle, label: 'Practice' },
         { id: 'PROFILE', path: '/profile', icon: User, label: 'Profile' },
     ];
 
@@ -55,11 +55,11 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
             {/* Desktop Left Sidebar */}
             <nav className="hidden md:flex flex-col w-72 h-screen sticky top-0 bg-white/50 dark:bg-slate-950/70 backdrop-blur-2xl border-r border-slate-200 dark:border-white/10 p-6 shrink-0 z-50">
                 <div className="flex items-center gap-4 mb-10 px-2 cursor-pointer group" onClick={() => navigate('/')}>
-                    <div className="relative p-1.5 bg-slate-900 rounded-xl shadow-2xl shadow-slate-950 border border-slate-700 dark:border-indigo-500/30 transition-all duration-300 group-hover:scale-105 group-hover:border-indigo-500/60">
+                    <div className="relative p-1.5 bg-slate-900 rounded-lg shadow-2xl shadow-slate-950 border border-slate-700 dark:border-indigo-500/30 transition-all duration-300 group-hover:scale-105 group-hover:border-indigo-500/60">
                         <img
                             src="/icons/logo.png"
                             alt="GenSpark"
-                            className="h-9 w-auto relative z-10 transition-all duration-300"
+                            className="h-6 w-auto relative z-10 transition-all duration-300"
                             style={{ filter: 'saturate(1.4) contrast(1.1)' }}
                         />
                     </div>
@@ -79,7 +79,6 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
                                     : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900'
                                     }`}
                             >
-                                {isActive && <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] animate-shimmer" />}
                                 <item.icon size={20} className={`${isActive ? 'scale-110' : 'group-hover:scale-110'} transition-transform`} strokeWidth={isActive ? 2.5 : 2} />
                                 {item.label}
                             </button>
@@ -119,11 +118,11 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
                             className="flex items-center gap-3 active:scale-95 transition-all cursor-pointer group"
                             onClick={() => navigate('/')}
                         >
-                            <div className="p-1 bg-slate-900 rounded-lg shadow-md border border-slate-800">
+                            <div className="p-0.5 bg-slate-900 rounded-md shadow-md border border-slate-800">
                                 <img
                                     src="/icons/logo.png"
                                     alt="GenSpark"
-                                    className="h-7 w-7 relative z-10 object-contain"
+                                    className="h-4 w-4 relative z-10 object-contain"
                                     style={{ filter: 'saturate(1.4) contrast(1.1)' }}
                                 />
                             </div>

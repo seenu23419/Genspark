@@ -58,6 +58,11 @@ export interface ActivityItem {
   title: string;
   date: string; // ISO string
   xp?: number;
+  executionTime?: string;
+  language?: string;
+  itemId?: string;
+  score?: number; // Quiz score or practice accuracy
+  timeSpent?: number; // Time spent in seconds
 }
 
 export interface Language {
@@ -94,8 +99,21 @@ export interface QuizQuestion {
 }
 
 export interface PracticeProblem {
+  id: string;
+  title: string;
+  description: string;
   problem: string;
   solution: string;
+  difficulty?: 'easy' | 'medium' | 'hard';
+  concept?: string;
+  inputFormat?: string;
+  outputFormat?: string;
+  constraints?: string;
+  explanation?: string;
+  initialCode?: string;
+  starter_codes?: Record<string, string>;
+  estimatedTime?: number;
+  test_cases?: any[];
 }
 
 export interface VivaQuestion {

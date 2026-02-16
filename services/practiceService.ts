@@ -13,6 +13,7 @@ export interface PracticeProblem {
     test_cases: TestCase[];
     inputFormat?: string;
     outputFormat?: string;
+    constraints?: string;
     sampleInput?: string;
     sampleOutput?: string;
     initialCode?: string;

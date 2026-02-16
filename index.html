@@ -4,7 +4,83 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+  <style>
+    /* CRITICAL: Anti-zoom fixes - loaded inline to ensure they apply immediately */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box !important;
+    }
+
+    html,
+    body,
+    #root {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 100vh !important;
+      max-width: 100% !important;
+      overflow-x: hidden !important;
+      position: relative !important;
+      display: block !important;
+    }
+
+    input,
+    select,
+    textarea {
+      font-size: max(16px, 1em) !important;
+      -webkit-text-size-adjust: 100% !important;
+    }
+
+    body,
+    button,
+    a {
+      touch-action: manipulation !important;
+    }
+  </style>
+  <script>
+    // CRITICAL: Prevent ALL zoom gestures
+    (function () {
+      // Prevent pinch-to-zoom
+      document.addEventListener('gesturestart', function (e) {
+        e.preventDefault();
+      }, { passive: false });
+
+      document.addEventListener('gesturechange', function (e) {
+        e.preventDefault();
+      }, { passive: false });
+
+      document.addEventListener('gestureend', function (e) {
+        e.preventDefault();
+      }, { passive: false });
+
+      // Prevent double-tap zoom
+      let lastTouchEnd = 0;
+      document.addEventListener('touchend', function (e) {
+        const now = Date.now();
+        if (now - lastTouchEnd <= 300) {
+          e.preventDefault();
+        }
+        lastTouchEnd = now;
+      }, { passive: false });
+
+      // Prevent keyboard zoom (Ctrl/Cmd + Plus/Minus)
+      document.addEventListener('keydown', function (e) {
+        if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '=')) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+
+      // Prevent mouse wheel zoom
+      document.addEventListener('wheel', function (e) {
+        if (e.ctrlKey || e.metaKey) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+    })();
+  </script>
   <script>
     (function () {
       const savedTheme = localStorage.getItem('theme');
@@ -45,22 +121,6 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
     rel="stylesheet">
 
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react-dom": "https://esm.sh/react-dom@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.474.0",
-    "recharts": "https://esm.sh/recharts@^2.15.0",
-    "dotenv": "https://esm.sh/dotenv@^17.2.3",
-    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.39.7",
-    "cors": "https://esm.sh/cors@^2.8.5",
-    "express": "https://esm.sh/express@^5.2.1"
-  }
-}
-</script>
 
   <style>
     body {

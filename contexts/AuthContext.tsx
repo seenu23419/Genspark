@@ -23,8 +23,18 @@ interface AuthContextType {
     signInWithGithub: () => Promise<void>;
     logout: () => Promise<void>;
     refreshProfile: () => Promise<void>;
-    updateProfile: (updates: Partial<User>, specificActivity?: { type: 'lesson' | 'practice' | 'project' | 'challenge', title: string, xp?: number }) => Promise<void>;
+    updateProfile: (updates: Partial<User>, specificActivity?: {
+        type: 'lesson' | 'practice' | 'project' | 'challenge',
+        title: string,
+        xp?: number,
+        score?: number,
+        timeSpent?: number,
+        language?: string,
+        executionTime?: string,
+        itemId?: string
+    }) => Promise<void>;
     updateUser: (updates: Partial<User>) => Promise<void>;
+    loadActivityHistory: () => Promise<void>;
     setInitializing: (val: boolean) => void;
 }
 
@@ -54,14 +64,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         completedLessonIds: string[];
         unlockedLessonIds: string[];
     }>({
-        userId: null,
-        firstName: null,
-        lastName: null,
-        onboardingCompleted: undefined,
-        lessonsCompleted: undefined,
-        completedLessonIds: [],
-        unlockedLessonIds: ['c1']
+        userId: user?._id || null,
+        firstName: user?.firstName || null,
+        lastName: user?.lastName || null,
+        onboardingCompleted: user?.onboardingCompleted,
+        lessonsCompleted: user?.completedLessonIds?.length,
+        completedLessonIds: user?.completedLessonIds || [],
+        unlockedLessonIds: user?.unlockedLessonIds || ['c1']
     });
+
+    // Safety Ref to avoid stale closures in timeouts
+    const initializingRef = useRef(initializing);
+    useEffect(() => {
+        initializingRef.current = initializing;
+    }, [initializing]);
 
     const loading = initializing || !minSplashDone;
 
@@ -103,45 +119,48 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         } catch (error) {
             console.error("AuthContext: refreshProfile error", error);
         }
-    }, []); // No dependencies - uses ref instead
+    }, []);
+
+    const loadActivityHistory = useCallback(async () => {
+        const currentUserId = userStateRef.current.userId;
+        if (!currentUserId || !user) return;
+
+        // Skip if already loaded
+        if (user.activity_history && user.activity_history.length > 0) return;
+
+        console.log("AuthContext: Lazy-loading activity history for", currentUserId);
+        try {
+            const data = await supabaseDB.fetchFields(currentUserId, ['activity_log', 'activity_history']);
+            if (data && (data.activity_log || data.activity_history)) {
+                setUser(prev => prev ? ({
+                    ...prev,
+                    activity_log: data.activity_log || prev.activity_log || [],
+                    activity_history: data.activity_history || prev.activity_history || []
+                }) : null);
+                console.log("AuthContext: Activity history loaded successfully");
+            }
+        } catch (error) {
+            console.error("AuthContext: loadActivityHistory error", error);
+        }
+    }, [user]);
 
     useEffect(() => {
         let mounted = true;
 
-        // 1. Min Splash Timer (Reduced to 1s for better UX)
+        // 1. Min Splash Timer (Optimized to 400ms for responsiveness)
         const splashTimer = setTimeout(() => {
             if (mounted) setMinSplashDone(true);
-        }, 1000);
+        }, 400);
 
-        // 2. Initial Session Check
+        // 2. Initial Session Check - Optimized to rely on onAuthStateChange
         const initSession = async () => {
-            console.log("AuthContext: Initializing session");
-
             try {
-                const currentUser = await authService.getCurrentUser();
-                if (mounted) {
-                    if (currentUser) {
-                        userStateRef.current = {
-                            userId: currentUser._id,
-                            firstName: currentUser.firstName,
-                            lastName: currentUser.lastName,
-                            onboardingCompleted: currentUser.onboardingCompleted,
-                            lessonsCompleted: currentUser.lessonsCompleted,
-                            completedLessonIds: currentUser.completedLessonIds || [],
-                            unlockedLessonIds: currentUser.unlockedLessonIds || ['c1']
-                        };
-                        console.log("AuthContext: Initial user loaded", userStateRef.current);
-                    }
-                    setUser(currentUser);
+                // Just check if we have a session to determine initializing state
+                const { data: { session } } = await supabaseDB.supabase.auth.getSession();
+                if (mounted && !session?.user) {
                     setInitializing(false);
-
-                    // --- NEW: Trigger streak update on initialization for accuracy ---
-                    if (currentUser) {
-                        StreakService.updateStreak(currentUser).then(updated => {
-                            if (updated && mounted) setUser(updated);
-                        });
-                    }
                 }
+                // If session exists, onAuthStateChange will handle the profile load
             } catch (error) {
                 console.error("AuthContext: Init error:", error);
                 if (mounted) setInitializing(false);
@@ -153,10 +172,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const initTimer = setTimeout(initSession, 100);
 
         // 3. Safety Timeout (Fallback)
-        // If Supabase fails to respond within 5 seconds, force entry to the app.
         const safetyTimer = setTimeout(() => {
-            if (mounted && initializing) {
-                console.warn("AuthContext: Session check timed out, forcing entry.");
+            if (mounted && initializingRef.current) {
+                console.warn("AuthContext: Session check EXCEEDED safety limit, forcing entry.");
                 setInitializing(false);
             }
         }, 5000);
@@ -167,8 +185,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
             const currentState = userStateRef.current;
 
-            // Fetch fresh profile data to ensure we have the absolute latest if possible
-            // However, we apply a local "most-progressive" merge strategy below.
             const newState = updatedUser ? {
                 userId: updatedUser._id,
                 firstName: updatedUser.firstName,
@@ -187,50 +203,49 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 unlockedLessonIds: ['c1']
             };
 
-            // MERGE STRATEGY: Do not let server-side staleness (delay in reflecting updates)
-            // revert critical local progress like onboarding completion.
             const mergedUser = updatedUser ? {
                 ...updatedUser,
                 onboardingCompleted: currentState.onboardingCompleted || updatedUser.onboardingCompleted,
                 firstName: updatedUser.firstName || currentState.firstName,
                 lastName: updatedUser.lastName || currentState.lastName,
+                completedLessonIds: [...new Set([...(currentState.completedLessonIds || []), ...(updatedUser.completedLessonIds || [])])],
+                unlockedLessonIds: [...new Set([...(currentState.unlockedLessonIds || []), ...(updatedUser.unlockedLessonIds || [])])]
             } : null;
 
-            // **THE CRITICAL CHECK**: Only update if actual data changed
             const hasChanged =
                 currentState.userId !== newState.userId ||
                 (newState.firstName && currentState.firstName !== newState.firstName) ||
                 (newState.onboardingCompleted !== undefined && currentState.onboardingCompleted !== newState.onboardingCompleted) ||
+                (mergedUser && currentState.completedLessonIds.length < mergedUser.completedLessonIds.length) ||
                 JSON.stringify(currentState.completedLessonIds) !== JSON.stringify(newState.completedLessonIds);
-
-            console.log("AuthContext: Auth change detected", {
-                userId: newState.userId,
-                serverOnboarding: newState.onboardingCompleted,
-                localOnboarding: currentState.onboardingCompleted,
-                hasChanged
-            });
 
             if (hasChanged) {
                 console.log("✅ AuthContext: Applying state update (with merge if applicable)");
 
                 if (mergedUser) {
-                    userStateRef.current = {
-                        userId: mergedUser._id,
-                        firstName: mergedUser.firstName,
-                        lastName: mergedUser.lastName, // Added missing lastName
-                        onboardingCompleted: mergedUser.onboardingCompleted,
-                        lessonsCompleted: mergedUser.lessonsCompleted,
-                        completedLessonIds: mergedUser.completedLessonIds || [],
-                        unlockedLessonIds: mergedUser.unlockedLessonIds || ['c1']
+                    const finalUser = {
+                        ...mergedUser,
+                        completedLessonIds: [...new Set([...currentState.completedLessonIds, ...(mergedUser.completedLessonIds || [])])],
+                        unlockedLessonIds: [...new Set([...currentState.unlockedLessonIds, ...(mergedUser.unlockedLessonIds || [])])]
                     };
-                    setUser(mergedUser as User);
+
+                    userStateRef.current = {
+                        userId: finalUser._id,
+                        firstName: finalUser.firstName,
+                        lastName: finalUser.lastName,
+                        onboardingCompleted: finalUser.onboardingCompleted,
+                        lessonsCompleted: finalUser.completedLessonIds.length,
+                        completedLessonIds: finalUser.completedLessonIds || [],
+                        unlockedLessonIds: finalUser.unlockedLessonIds || ['c1']
+                    };
+                    setUser(finalUser as User);
                 } else {
                     userStateRef.current = newState;
                     setUser(null);
                 }
 
                 setInitializing(false);
-            } else if (initializing) {
+            } else {
                 setInitializing(false);
             }
         });
@@ -239,20 +254,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             mounted = false;
             if (typeof unsubscribe === 'function') unsubscribe();
             clearTimeout(splashTimer);
+            clearTimeout(initTimer);
+            clearTimeout(safetyTimer);
         };
     }, []);
 
-    // 4. Persistence Effect: Save user to localStorage to avoid refresh-flashes
     useEffect(() => {
         if (user) {
             localStorage.setItem('genspark_user_backup', JSON.stringify(user));
-            // Flag that this user has successfully authenticated at least once
             localStorage.setItem('genspark_returning_user', 'true');
         } else if (!loading) {
             localStorage.removeItem('genspark_user_backup');
         }
     }, [user, loading]);
-
 
     const value = {
         user,
@@ -263,15 +277,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         logout: async () => {
             console.log("AuthContext: Starting logout...");
             try {
-                // 1. Attempt server-side logout, but don't wait forever (max 2s)
                 const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('Logout timed out')), 2000));
                 await Promise.race([authService.signOut(), timeout]);
             } catch (error) {
                 console.warn("AuthContext: Sign out error/timeout:", error);
             } finally {
-                // 2. ALWAYS clear local state and force redirect
                 localStorage.clear();
-                localStorage.removeItem('genspark_user_backup'); // Explicitly remove backup
+                localStorage.removeItem('genspark_user_backup');
                 sessionStorage.clear();
                 setUser(null);
                 setInitializing(false);
@@ -280,10 +292,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             }
         },
         refreshProfile,
-        updateProfile: useCallback(async (updates: Partial<User>, specificActivity?: { type: 'lesson' | 'practice' | 'project' | 'challenge', title: string, xp?: number }) => {
+        loadActivityHistory,
+        updateProfile: useCallback(async (updates: Partial<User>, specificActivity?: {
+            type: 'lesson' | 'practice' | 'project' | 'challenge',
+            title: string,
+            xp?: number,
+            score?: number,
+            timeSpent?: number,
+            language?: string,
+            executionTime?: string,
+            itemId?: string
+        }) => {
             if (!userStateRef.current.userId) return;
 
-            // 1. Get latest state for merging
             let baseUser: User | null = null;
             setUser(prev => {
                 baseUser = prev;
@@ -292,7 +313,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
             if (!baseUser) return;
 
-            // 2. High-integrity Merge (Using latest state)
             const currentCompleted = baseUser.completedLessonIds || [];
             const newCompleted = updates.completedLessonIds
                 ? [...new Set([...currentCompleted, ...updates.completedLessonIds])]
@@ -326,7 +346,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 optimisticUser.lastName = last;
             }
 
-            // 3. Update memory ref and optimistic UI
             userStateRef.current = {
                 userId: optimisticUser._id,
                 firstName: optimisticUser.firstName,
@@ -340,39 +359,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             setUser(optimisticUser as User);
 
             try {
-                // 4. Persist to DB
-                console.log("📦 [AuthContext] Starting DB update for", baseUser._id, mergedUpdates);
-                console.log("📦 [AuthContext] Optimistic state BEFORE DB call:", {
-                    onboardingCompleted: optimisticUser.onboardingCompleted,
-                    firstName: optimisticUser.firstName,
-                    lastName: optimisticUser.lastName
-                });
-
                 const updated = await supabaseDB.updateOne(baseUser._id, mergedUpdates);
-
-                console.log("✅ [AuthContext] DB update SUCCESS. Returned data:", {
-                    userId: updated._id,
-                    onboardingCompleted: updated.onboardingCompleted,
-                    firstName: updated.firstName,
-                    lastName: updated.lastName
-                });
-
-                // 5. Final sync with DB result
-                userStateRef.current = {
-                    userId: updated._id,
-                    firstName: updated.firstName,
-                    lastName: updated.lastName,
-                    onboardingCompleted: updated.onboardingCompleted,
-                    lessonsCompleted: updated.lessonsCompleted,
-                    completedLessonIds: updated.completedLessonIds || [],
-                    unlockedLessonIds: updated.unlockedLessonIds || ['c1']
+                const finalUser = {
+                    ...updated,
+                    completedLessonIds: [...new Set([...newCompleted, ...(updated.completedLessonIds || [])])],
+                    unlockedLessonIds: [...new Set([...newUnlocked, ...(updated.unlockedLessonIds || [])])]
                 };
-                setUser(updated);
+
+                userStateRef.current = {
+                    userId: finalUser._id,
+                    firstName: finalUser.firstName,
+                    lastName: finalUser.lastName,
+                    onboardingCompleted: finalUser.onboardingCompleted,
+                    lessonsCompleted: finalUser.completedLessonIds.length,
+                    completedLessonIds: finalUser.completedLessonIds || [],
+                    unlockedLessonIds: finalUser.unlockedLessonIds || ['c1']
+                };
+                setUser(finalUser);
             } catch (error: any) {
                 console.error("Profile update failed, checking for partial success...", error);
-
-                // CRITICAL SAFETY: Repopulate from server to see if user_progress table actually updated
-                // even if the users table (cache) failed.
                 try {
                     const fresh = await supabaseDB.findOne({ _id: baseUser._id });
                     if (fresh) {
@@ -382,8 +387,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 } catch (e) {
                     console.error("Recovery fetch failed", e);
                 }
-
-                // Only revert if we truly failed everything and the user doesn't already have the data
                 setUser(previousUser);
                 throw error;
             }
@@ -392,7 +395,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setInitializing
     };
 
-    // Alias updateUser to updateProfile
     value.updateUser = value.updateProfile;
 
     return (

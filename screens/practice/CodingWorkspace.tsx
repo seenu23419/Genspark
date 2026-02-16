@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ChevronLeft, Play, RotateCcw, Check, Loader2, AlertCircle, BookOpen, Code2, Zap, X, Terminal, Bot, ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, RotateCcw, Check, Loader2, AlertCircle, BookOpen, Code2, Zap, X, Terminal, Bot, ChevronDown, ChevronUp, Clock } from 'lucide-react';
 import Compiler, { CompilerRef } from '../../screens/compiler/Compiler';
 import { PracticeProblem } from '../../services/practiceService';
 import { genSparkAIService } from '../../services/geminiService';
@@ -82,6 +82,13 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   });
   /* Removed sidebarTab state */
   const [isEditingCompleted, setIsEditingCompleted] = useState(false);
+  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1024);
+
+  useEffect(() => {
+    const handleResize = () => setIsLargeScreen(window.innerWidth >= 1024);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const compilerRef = useRef<CompilerRef>(null);
 
@@ -117,18 +124,29 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   const [isSubmission, setIsSubmission] = useState(false);
 
   const handleRunCode = async () => {
-    if (!userCode.trim() || isSubmitting) return;
+    console.log("[CodingWorkspace] Run Code Clicked");
+    if (!userCode.trim() || isSubmitting) {
+      console.warn("[CodingWorkspace] Run Code skipped: Code empty or submitting");
+      return;
+    }
     setIsSubmitting(true);
     setIsSubmission(false); // Run mode: Just execute, don't submit
     setExecutionResult(null);
     setAiExplanation(null);
+    console.log("[CodingWorkspace] Calling Code Execution...");
     try {
-      await compilerRef.current?.runCode();
-    } catch (e) { console.error(e); }
+      if (compilerRef.current) {
+        await compilerRef.current?.runCode();
+        console.log("[CodingWorkspace] Code Execution Completed");
+      } else {
+        console.error("[CodingWorkspace] Compiler Ref is NULL");
+      }
+    } catch (e) { console.error("[CodingWorkspace] Code Execution Failed", e); }
     finally { setIsSubmitting(false); }
   };
 
   const handleSubmit = async () => {
+    console.log("[CodingWorkspace] Submit Clicked");
     if (!userCode.trim() || isSubmitting) return;
     setIsSubmitting(true);
     setIsSubmission(true); // Submit mode: Verify and complete
@@ -224,16 +242,20 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   useEffect(() => { onCompleteRef.current = onComplete; }, [onComplete]);
 
   const handleRunResult = useCallback(async (result: any) => {
+    console.log('[RESULT] Received result:', { accepted: result.accepted, isSubmission: isSubmissionRef.current });
     setExecutionResult(result);
     setActiveTab('RESULT');
 
     // Only save attempt if it's a submission
     if (user?._id && isSubmissionRef.current) {
-      await supabaseDB.savePracticeAttempt(problem.id, userCodeRef.current, result.accepted, selectedLanguage);
+      console.log('[SAVE] Saving practice attempt...', { problemId: problem.id, accepted: result.accepted });
+      await supabaseDB.savePracticeAttempt(problem.id, userCodeRef.current, result.accepted, selectedLanguage, result.time || '0s');
+      console.log('[SAVE] Practice attempt saved successfully');
     }
 
     // Only mark complete if it's a submission AND accepted
     if (result.accepted && isSubmissionRef.current) {
+      console.log('[COMPLETE] Marking problem as completed');
       setCurrentStatus('COMPLETED');
       onCompleteRef.current(problem.id);
       setShowSuccess(true);
@@ -264,40 +286,102 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
 
   /* MERGED EXAMPLES INTO DESCRIPTION */
   const renderDescription = () => (
-    <div className="p-6 space-y-8 animate-in fade-in duration-500">
+    <div className="p-6 space-y-8 animate-in fade-in duration-500 overflow-y-auto no-scrollbar h-full">
+      {/* 1. Header Section */}
       <div className="space-y-4">
-        <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{problem.title}</h2>
-        <div className="flex items-center gap-2">
-          <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest border ${problem.difficulty === 'easy' ? 'text-emerald-600 dark:text-emerald-400 border-emerald-500/20' : 'text-rose-600 dark:text-rose-400 border-rose-500/20'}`}>{problem.difficulty}</span>
-          <span className="px-2 py-0.5 rounded text-[9px] font-bold uppercase text-slate-500 border border-slate-200 dark:border-white/5">{problem.concept || 'C LANGUAGE'}</span>
+        <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">{problem.title}</h2>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest border transition-colors ${problem.difficulty === 'easy' ? 'text-emerald-600 dark:text-emerald-400 border-emerald-500/20 bg-emerald-500/5' :
+            problem.difficulty === 'medium' ? 'text-amber-600 dark:text-amber-400 border-amber-500/20 bg-amber-500/5' :
+              'text-rose-600 dark:text-rose-400 border-rose-500/20 bg-rose-500/5'
+            }`}>
+            {problem.difficulty}
+          </span>
+          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5">
+            {problem.concept || 'PRACTICE'}
+          </span>
+          {problem.estimatedTime && (
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5 flex items-center gap-1.5">
+              <Clock size={10} /> {problem.estimatedTime}m
+            </span>
+          )}
         </div>
       </div>
-      <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">{problem.description}</p>
 
-      {/* INPUT FORMAT */}
-      {problem.inputFormat && (
-        <div className="space-y-2">
-          <h4 className="text-[10px] font-black text-indigo-400 uppercase">Input Format</h4>
-          <div className="p-3 bg-white/[0.02] border border-white/5 rounded-lg text-xs text-slate-400 italic">{problem.inputFormat}</div>
+      {/* 2. Problem Statement */}
+      <div className="space-y-3">
+        <h3 className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Problem Statement</h3>
+        <p className="text-slate-700 dark:text-slate-200 text-sm leading-relaxed whitespace-pre-wrap font-medium">
+          {problem.description}
+        </p>
+      </div>
+
+      {/* 3. Input & Output Format */}
+      {(problem.inputFormat || problem.outputFormat) && (
+        <div className="grid grid-cols-1 gap-6 pt-4 border-t border-slate-100 dark:border-white/5">
+          {problem.inputFormat && (
+            <div className="space-y-2">
+              <h4 className="text-[10px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest">Input Format</h4>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed italic">{problem.inputFormat}</p>
+            </div>
+          )}
+          {problem.outputFormat && (
+            <div className="space-y-2">
+              <h4 className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Output Format</h4>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed italic">{problem.outputFormat}</p>
+            </div>
+          )}
         </div>
       )}
 
-      {/* EXAMPLES SECTION (Merged from previous tab) */}
+      {/* 4. Constraints */}
+      {problem.constraints && (
+        <div className="space-y-3 pt-4 border-t border-slate-100 dark:border-white/5">
+          <h3 className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Constraints</h3>
+          <div className="bg-slate-50 dark:bg-slate-950/50 rounded-xl p-4 font-mono text-xs text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-white/5">
+            {problem.constraints}
+          </div>
+        </div>
+      )}
+
+      {/* 5. Examples SECTION */}
       {problem.test_cases && problem.test_cases.length > 0 && (
-        <div className="space-y-6 pt-4 border-t border-white/5">
-          <h3 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest flex items-center gap-2">
-            <Terminal size={14} className="text-indigo-400" />
-            Examples
-          </h3>
-          {problem.test_cases.map((tc, i) => (
-            <div key={i} className="space-y-3">
-              <h4 className="text-[10px] font-black text-slate-500 uppercase">Example {i + 1}</h4>
-              <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-white/5 rounded-xl overflow-hidden font-mono text-xs">
-                {tc.stdin && <div className="p-4 border-b border-slate-200 dark:border-white/5"><div className="text-amber-600 dark:text-amber-500 mb-1 opacity-50 text-[9px]">INPUT</div><div className="text-amber-700 dark:text-amber-400">{tc.stdin}</div></div>}
-                <div className="p-4"><div className="text-emerald-600 dark:text-emerald-500 mb-1 opacity-50 text-[9px]">EXPECTED</div><div className="text-emerald-700 dark:text-emerald-400">{tc.expected_output}</div></div>
+        <div className="space-y-6 pt-6 border-t border-slate-100 dark:border-white/5">
+          <div className="flex items-center justify-between">
+            <h3 className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Example Samples</h3>
+          </div>
+
+          <div className="space-y-8">
+            {problem.test_cases.slice(0, 2).map((tc, i) => (
+              <div key={i} className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <div className="px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-500 text-[10px] font-black">SAMPLE {i + 1}</div>
+                </div>
+                <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-white/5 rounded-xl overflow-hidden font-mono text-xs shadow-sm">
+                  {tc.stdin && (
+                    <div className="p-4 border-b border-slate-200 dark:border-white/5 bg-white/30 dark:bg-white/[0.02]">
+                      <div className="text-amber-600 dark:text-amber-500 mb-2 opacity-70 text-[9px] font-black uppercase tracking-widest">Sample Input</div>
+                      <div className="text-slate-800 dark:text-amber-200 leading-relaxed">{tc.stdin}</div>
+                    </div>
+                  )}
+                  <div className="p-4 bg-emerald-500/[0.02]">
+                    <div className="text-emerald-600 dark:text-emerald-500 mb-2 opacity-70 text-[9px] font-black uppercase tracking-widest">Sample Output</div>
+                    <div className="text-slate-800 dark:text-emerald-400 leading-relaxed">{tc.expected_output}</div>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* 6. Explanation */}
+      {problem.explanation && (
+        <div className="space-y-3 pt-6 border-t border-slate-100 dark:border-white/5 pb-10">
+          <h3 className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Explanation</h3>
+          <div className="p-4 bg-indigo-500/5 dark:bg-indigo-500/[0.03] border border-indigo-500/10 rounded-2xl text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+            {problem.explanation}
+          </div>
         </div>
       )}
     </div>
@@ -406,11 +490,20 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   return (
     <div className="flex flex-col h-screen bg-slate-50 dark:bg-black overflow-hidden font-sans practice-ui-root transition-colors duration-300">
       {/* HEADER */}
-      <header className="h-14 shrink-0 bg-white dark:bg-black border-b border-slate-200 dark:border-white/5 flex items-center px-4 z-50">
-        <button onClick={onBack} className="p-2 -ml-1 text-slate-400 hover:text-slate-900 dark:hover:text-white transition"><ChevronLeft size={24} /></button>
-        <div className="flex items-center gap-3 px-3">
-          <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20"><Code2 size={16} className="text-indigo-600 dark:text-indigo-400" /></div>
-          <h1 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight italic">{problem.title}</h1>
+      <header className="h-14 shrink-0 bg-[#0a0b14] border-b border-white/10 flex items-center px-4 z-50 justify-between">
+        <div className="flex items-center gap-4">
+          <button onClick={onBack} className="p-2 -ml-2 text-slate-400 hover:text-white transition"><ChevronLeft size={20} /></button>
+          <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
+            <span className="hover:text-white cursor-pointer transition-colors" onClick={onBack}>Home</span>
+            <ChevronRight size={10} />
+            <span className="hover:text-white cursor-pointer transition-colors">C Language</span>
+            <ChevronRight size={10} />
+            <span className="text-white">{problem.title}</span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4">
+          {/* User Profile / Timer could go here */}
         </div>
       </header>
 
@@ -427,21 +520,25 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
 
         {/* CENTER: IDE */}
         <div className="flex-1 flex flex-col min-w-0 bg-white dark:bg-[#0d0e1a] z-10 transition-colors duration-300">
-          <div className="editor-toolbar border-b border-slate-200 dark:border-white/5 bg-white dark:bg-[#1a1b2e]">
+          <div className="editor-toolbar border-b border-white/5 bg-[#1a1b2e] px-4 h-14 flex items-center justify-between">
+            {/* Language Selector & Reset */}
             <div className="flex items-center gap-4">
-              <select value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)} className="bg-transparent border-none text-indigo-600 dark:text-indigo-400 text-[10px] font-black uppercase tracking-widest focus:ring-0 cursor-pointer">
-                {Object.keys((problem as any).starter_codes || {}).map(l => <option key={l} value={l} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">{l.toUpperCase()}</option>)}
+              <select value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)} className="bg-transparent border-none text-indigo-400 text-[10px] font-black uppercase tracking-widest focus:ring-0 cursor-pointer">
+                {Object.keys((problem as any).starter_codes || {}).map(l => <option key={l} value={l} className="bg-[#0f111a] text-white">{l.toUpperCase()}</option>)}
               </select>
-              <div className="w-px h-4 bg-slate-200 dark:bg-white/10" />
-              <button onClick={handleReset} className="btn-icon-pro" title="Reset Code"><RotateCcw size={16} /></button>
+              <div className="w-px h-4 bg-white/10" />
+              <button onClick={handleReset} className="text-slate-500 hover:text-white transition" title="Reset Code"><RotateCcw size={14} /></button>
             </div>
+
+            {/* Action Buttons */}
             <div className="flex items-center gap-3">
-              <span className="hidden xl:block kbd-hint mr-2 opacity-50 italic">Ctrl + Enter</span>
-              <button onClick={handleRunCode} disabled={isSubmitting} className="btn-run-pro">
+              <button onClick={handleRunCode} disabled={isSubmitting} className="h-8 px-4 bg-[#2e3142] hover:bg-[#3e4155] text-white rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-2 transition-all active:scale-95">
                 {isSubmitting ? <Loader2 size={12} className="animate-spin" /> : <Play size={10} fill="currentColor" />}
                 Run Code
               </button>
-              <button onClick={handleSubmit} disabled={isSubmitting} className="btn-submit-pro">Submit</button>
+              <button onClick={handleSubmit} disabled={isSubmitting} className="h-8 px-6 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-[10px] font-black uppercase tracking-widest transition-all shadow-lg shadow-indigo-600/20 active:scale-95">
+                Submit
+              </button>
             </div>
           </div>
           <div className="flex-1 flex flex-col relative overflow-hidden">
@@ -453,7 +550,7 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
             </div>
             <div className="flex-1 flex flex-col relative overflow-hidden">
               <div className="flex-1 relative overflow-hidden">
-                {(activeTab === 'CODE' || window.innerWidth >= 1024) && (
+                {(activeTab === 'CODE' || isLargeScreen) && (
                   <Compiler
                     key={problem.id}
                     language={selectedLanguage.toLowerCase()}
@@ -464,8 +561,8 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
                     readOnly={isSubmitting}
                   />
                 )}
-                {(activeTab === 'PROBLEM' && window.innerWidth < 1024) && <div className="absolute inset-0 h-full overflow-y-auto no-scrollbar bg-white dark:bg-slate-950">{renderDescription()}</div>}
-                {(activeTab === 'RESULT' && window.innerWidth < 1024) && <div className="absolute inset-0 h-full overflow-y-auto no-scrollbar bg-white dark:bg-slate-950">{renderResults()}</div>}
+                {(activeTab === 'PROBLEM' && !isLargeScreen) && <div className="absolute inset-0 h-full overflow-y-auto no-scrollbar bg-white dark:bg-slate-950">{renderDescription()}</div>}
+                {(activeTab === 'RESULT' && !isLargeScreen) && <div className="absolute inset-0 h-full overflow-y-auto no-scrollbar bg-white dark:bg-slate-950">{renderResults()}</div>}
               </div>
 
               {/* MOBILE KEYBOARD ACCESSORY & DEL BUTTON (Now Flex-Static at Bottom) */}

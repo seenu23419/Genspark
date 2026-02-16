@@ -14,7 +14,8 @@ interface CurriculumContextType extends CurriculumState {
     getLesson: (lessonId: string) => any;
 }
 
-export const CurriculumContext = createContext<CurriculumContextType | undefined>(undefined);
+const CurriculumContext = createContext<CurriculumContextType | undefined>(undefined);
+export { CurriculumContext };
 
 export const CurriculumProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [remoteData, setRemoteData] = useState<Record<string, LessonModule[]>>({});

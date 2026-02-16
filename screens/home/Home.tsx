@@ -2,12 +2,14 @@ import React, { useMemo } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCurriculum } from '../../contexts/CurriculumContext';
 import { CURRICULUM, LANGUAGES } from '../../constants';
-import { Play, Settings, Flame, BookOpen, Code, Trophy, Zap, Brain, Award, ChevronRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Play, Settings, Flame, BookOpen, Code, Trophy, Zap, Brain, Award, ChevronRight, Activity, Terminal } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { usePractice } from '../../contexts/PracticeContext';
 
 const Home: React.FC = () => {
     const { user, loading, updateUser } = useAuth();
     const { data: curriculumData } = useCurriculum();
+    const { progress } = usePractice();
     const navigate = useNavigate();
 
     // Track selected path locally
@@ -101,9 +103,21 @@ const Home: React.FC = () => {
     return (
         <div className="min-h-screen bg-slate-100 dark:bg-black text-slate-900 dark:text-white pb-24 font-sans selection:bg-indigo-500/30 transition-colors duration-300">
             {/* Minimal background glow */}
-            <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/5 blur-[120px] rounded-full opacity-50" />
-            </div>
+            {/* DEBUG OVERLAY - Only visible in development if enabled or for specific users */}
+            {user?.email === 'seenu@gmail.com' && (
+                <div className="fixed top-20 right-4 z-[9999] bg-black/90 text-emerald-400 p-4 rounded-2xl border border-emerald-500/30 text-[10px] font-mono shadow-2xl backdrop-blur-md max-w-[200px]">
+                    <div className="flex items-center gap-2 mb-2 border-b border-emerald-500/20 pb-1">
+                        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                        <span className="font-bold uppercase">System Debug</span>
+                    </div>
+                    <div className="space-y-1">
+                        <p><span className="text-slate-500 text-[8px]">PATH:</span> {selectedPathId}</p>
+                        <p><span className="text-slate-500 text-[8px]">LESSON:</span> {currentLesson?.id || 'NULL'}</p>
+                        <p><span className="text-slate-500 text-[8px]">DONE:</span> {completedCount}/{totalLessons} ({Math.round(isPathCompleted ? 100 : (completedCount / totalLessons) * 100)}%)</p>
+                        <p><span className="text-slate-500 text-[8px]">TARGET:</span> {isPathCompleted ? '/profile' : `/lesson/${currentLesson?.id || 'c1'}`}</p>
+                    </div>
+                </div>
+            )}
 
             <div className="relative z-10 max-w-6xl mx-auto px-6 pt-6">
 
@@ -126,8 +140,7 @@ const Home: React.FC = () => {
                 </div>
 
                 {/* 7. LANGUAGE PATH INDICATOR - Premium Redesign */}
-                <section className="mb-10 p-6 bg-slate-200/30 dark:bg-slate-900/60 border-2 border-slate-300 dark:border-white/20 dark:ring-1 dark:ring-white/5 rounded-2xl relative overflow-hidden hover:border-indigo-500/30 transition-all duration-500 shadow-sm">
-                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-transparent to-transparent pointer-events-none" />
+                <section className="mb-10 p-6 bg-slate-200/30 dark:bg-slate-900/60 border-[3px] border-slate-400 dark:border-white/40 dark:ring-1 dark:ring-white/5 rounded-2xl relative overflow-hidden hover:border-indigo-500/70 transition-all duration-500 shadow-sm">
                     <div className="flex items-center gap-2 mb-6">
                         <Zap size={18} className="text-indigo-600 dark:text-indigo-400" />
                         <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider">Learning Path</h3>
@@ -137,10 +150,13 @@ const Home: React.FC = () => {
                         {(LANGUAGES as any).map((lang: any) => (
                             <button
                                 key={lang.id}
-                                onClick={() => handlePathSelect(lang.id)}
-                                className={`flex-shrink-0 px-6 py-3 rounded-xl text-sm font-black transition-all duration-300 border-2 ${selectedPathId === lang.id
-                                    ? 'bg-indigo-600 border-indigo-400 text-white scale-105'
-                                    : 'bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 hover:border-slate-400 dark:hover:border-slate-500'
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handlePathSelect(lang.id);
+                                }}
+                                className={`flex-shrink-0 px-6 py-3 rounded-xl text-sm font-black transition-all duration-300 border-[3px] ${selectedPathId === lang.id
+                                    ? 'bg-indigo-600 border-indigo-400 text-white shadow-lg shadow-indigo-500/50'
+                                    : 'bg-slate-50 dark:bg-slate-800/80 border-slate-400 dark:border-slate-600 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 hover:border-slate-500 dark:hover:border-slate-500'
                                     }`}
                             >
                                 {lang.name}
@@ -151,16 +167,24 @@ const Home: React.FC = () => {
 
                 {/* 3. PRIMARY ACTION CARD - Enhanced */}
                 <section className="mb-6">
-                    <div className={`relative overflow-hidden rounded-2xl border-2 backdrop-blur-xl transition-all duration-500 group ${isPathCompleted
-                        ? 'bg-slate-50 dark:bg-emerald-950/30 border-emerald-300/50 dark:border-emerald-500/60 hover:border-emerald-500 shadow-lg shadow-emerald-500/5'
-                        : 'bg-slate-50 dark:bg-indigo-950/30 border-indigo-300/50 dark:border-indigo-500/60 hover:border-indigo-500 shadow-lg shadow-indigo-500/10'
-                        }`}>
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        <div className="p-6 md:p-8">
+                    <div
+                        onClick={(e) => {
+                            // Robust check: don't navigate to track if a link or button was clicked inside the card
+                            const target = e.target as HTMLElement;
+                            if (target.closest('a') || target.closest('button')) return;
+
+                            console.log("[NAV DEBUG] Card Background Clicked -> Navigating to track:", selectedPathId);
+                            navigate(`/track/${selectedPathId}`);
+                        }}
+                        className={`relative overflow-hidden rounded-2xl border-[3px] backdrop-blur-xl transition-all duration-500 group cursor-pointer ${isPathCompleted
+                            ? 'bg-slate-50 dark:bg-emerald-950/30 border-emerald-400 dark:border-emerald-500/80 hover:border-emerald-500 shadow-lg shadow-emerald-500/20'
+                            : 'bg-slate-50 dark:bg-indigo-950/30 border-indigo-400 dark:border-indigo-500/80 hover:border-indigo-500 shadow-lg shadow-indigo-500/30'
+                            }`}>
+                        <div className="p-6 md:p-8 relative z-10">
                             <div className="flex items-start justify-between mb-4">
                                 <div>
                                     <p className={`text-xs font-black uppercase tracking-wider mb-2 ${isPathCompleted ? 'text-emerald-600 dark:text-emerald-300' : 'text-indigo-600 dark:text-indigo-300'}`}>
-                                        {isPathCompleted ? 'Path Mastered' : 'Continue Learning'}
+                                        {isPathCompleted ? 'Path Mastered' : (completedCount === 0 ? 'Start Your Journey' : 'Continue Learning')}
                                     </p>
                                     <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-1">
                                         {isPathCompleted ? `${currentPath?.name} Mastered! 🎉` : (currentLesson?.title || 'Introduction to C')}
@@ -169,7 +193,7 @@ const Home: React.FC = () => {
                                         {currentPath?.name} • {isPathCompleted ? `All ${totalLessons} Lessons Completed` : `Lesson ${completedCount + 1} of ${totalLessons}`}
                                     </p>
                                 </div>
-                                <div className="flex items-center justify-center relative w-24 h-24 md:w-28 md:h-28 shrink-0 ml-4 group/progress">
+                                <div className="flex items-center justify-center relative w-24 h-24 md:w-28 md:h-28 shrink-0 ml-4 mt-6 group/progress">
                                     <svg className="w-full h-full transform -rotate-90 drop-shadow-xl" viewBox="0 0 100 100">
                                         {/* Outer Glow Background */}
                                         <circle
@@ -227,16 +251,20 @@ const Home: React.FC = () => {
                                 </div>
                             </div>
 
-                            <button
-                                onClick={() => isPathCompleted ? navigate('/profile') : navigate(`/lesson/${currentLesson?.id || 'c1'}`)}
-                                className={`w-full md:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold transition-all duration-200 shadow-lg ${isPathCompleted
+                            <Link
+                                to={isPathCompleted ? '/profile/history' : `/lesson/${currentLesson?.id || modules[0]?.lessons[0]?.id || (selectedPathId + '1')}`}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    console.log(`[NAV DEBUG] Link Clicked. LessonID: ${currentLesson?.id}`);
+                                }}
+                                className={`w-full md:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold transition-all duration-200 shadow-lg relative z-20 ${isPathCompleted
                                     ? 'bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white shadow-emerald-500/20'
                                     : 'bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white shadow-indigo-500/20'
                                     }`}
                             >
                                 {isPathCompleted ? <Trophy size={18} /> : <Play size={18} className="fill-current" />}
-                                {isPathCompleted ? 'View Performance' : 'Resume Lesson'}
-                            </button>
+                                {isPathCompleted ? 'View Performance' : (completedCount === 0 ? 'Start Lesson' : 'Resume Lesson')}
+                            </Link>
                         </div>
                     </div>
                 </section>
@@ -245,14 +273,14 @@ const Home: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                     <button
                         onClick={() => navigate('/profile/streaks')}
-                        className="relative p-5 bg-slate-200/40 dark:bg-slate-900/60 backdrop-blur-sm border border-slate-300 dark:border-indigo-500/40 dark:ring-1 dark:ring-white/5 rounded-xl hover:border-indigo-500 hover:shadow-[0_0_30px_rgba(99,102,241,0.05)] dark:hover:shadow-[0_0_30px_rgba(99,102,241,0.2)] transition-all duration-500 group overflow-hidden text-left shadow-sm"
+                        className="relative p-5 bg-slate-200/40 dark:bg-slate-900/60 backdrop-blur-sm border-2 border-slate-400 dark:border-indigo-500/70 dark:ring-1 dark:ring-white/5 rounded-xl hover:border-indigo-500 transition-all duration-500 group overflow-hidden text-left shadow-sm"
                     >
                         <div className="absolute inset-0 bg-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-400 via-indigo-500 to-indigo-600 rounded-full shadow-[0_0_20px_rgba(99,102,241,0.3)]"></div>
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-400 via-indigo-500 to-indigo-600 rounded-full"></div>
                         <div className="flex items-center justify-between relative z-10">
                             <div className="ml-3">
                                 <div className="text-sm text-slate-600 dark:text-slate-400 font-bold mb-2 flex items-center gap-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-200 transition-colors">
-                                    <Flame size={16} className="text-indigo-500 dark:text-indigo-400" />
+                                    <Activity size={16} className="text-indigo-500 dark:text-indigo-400" />
                                     Current Streak
                                 </div>
                                 <div className="text-3xl font-black text-slate-900 dark:text-white transition-colors duration-300">{user?.streak || 0} days</div>
@@ -262,20 +290,20 @@ const Home: React.FC = () => {
                     </button>
 
                     <button
-                        onClick={() => navigate('/learn', { state: { initialFilter: 'completed' } })}
-                        className="relative p-5 bg-slate-200/40 dark:bg-slate-900/60 backdrop-blur-sm border border-slate-300 dark:border-rose-500/40 dark:ring-1 dark:ring-white/5 rounded-xl hover:border-rose-500 hover:shadow-[0_0_30px_rgba(244,63,94,0.05)] dark:hover:shadow-[0_0_30px_rgba(244,63,94,0.2)] transition-all duration-500 group overflow-hidden text-left shadow-sm"
+                        onClick={() => navigate('/profile/history')}
+                        className="relative p-5 bg-slate-200/40 dark:bg-slate-900/60 backdrop-blur-sm border-2 border-slate-400 dark:border-rose-500/70 dark:ring-1 dark:ring-white/5 rounded-xl hover:border-rose-500 transition-all duration-500 group overflow-hidden text-left shadow-sm"
                     >
                         <div className="absolute inset-0 bg-rose-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-rose-400 via-rose-500 to-rose-600 rounded-full shadow-[0_0_20px_rgba(244,63,94,0.3)]"></div>
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-rose-400 via-rose-500 to-rose-600 rounded-full"></div>
                         <div className="flex items-center justify-between relative z-10">
                             <div className="ml-3 flex-1">
                                 <div className="text-sm text-slate-500 dark:text-slate-400 font-bold mb-2 flex items-center gap-2 group-hover:text-rose-600 dark:group-hover:text-rose-200 transition-colors">
-                                    <BookOpen size={16} className="text-rose-500 dark:text-rose-400" />
+                                    <Award size={16} className="text-rose-500 dark:text-rose-400" />
                                     Lessons Completed
                                 </div>
                                 <div className="text-3xl font-black text-slate-900 dark:text-white mb-2 transition-colors duration-300">{completedCount} / {totalLessons}</div>
                                 <div className="w-full bg-slate-100 dark:bg-slate-800/50 rounded-full h-1.5">
-                                    <div className="bg-rose-500 h-1.5 rounded-full transition-all duration-500 shadow-[0_0_10px_rgba(244,63,94,0.3)]" style={{ width: `${totalLessons > 0 ? (completedCount / totalLessons) * 100 : 0}%` }}></div>
+                                    <div className="bg-rose-500 h-1.5 rounded-full transition-all duration-500" style={{ width: `${totalLessons > 0 ? (completedCount / totalLessons) * 100 : 0}%` }}></div>
                                 </div>
                             </div>
                             <ChevronRight size={20} className="text-slate-400 group-hover:text-rose-600 transition-colors" />
@@ -283,20 +311,35 @@ const Home: React.FC = () => {
                     </button>
 
                     <button
-                        onClick={() => navigate('/practice')}
-                        className="relative p-5 bg-slate-200/40 dark:bg-slate-900/60 backdrop-blur-sm border border-slate-300 dark:border-amber-500/40 dark:ring-1 dark:ring-white/5 rounded-xl hover:border-amber-500 hover:shadow-[0_0_30px_rgba(245,158,11,0.05)] dark:hover:shadow-[0_0_30px_rgba(245,158,11,0.2)] transition-all duration-500 group overflow-hidden text-left shadow-sm"
+                        onClick={() => navigate('/practice/history')}
+                        className="relative p-5 bg-slate-200/40 dark:bg-slate-900/60 backdrop-blur-sm border-2 border-slate-400 dark:border-amber-500/70 dark:ring-1 dark:ring-white/5 rounded-xl hover:border-amber-500 transition-all duration-500 group overflow-hidden text-left shadow-sm"
                     >
                         <div className="absolute inset-0 bg-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 rounded-full shadow-[0_0_20px_rgba(245,158,11,0.3)]"></div>
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 rounded-full"></div>
                         <div className="flex items-center justify-between relative z-10">
                             <div className="ml-3 flex-1">
                                 <div className="text-sm text-slate-500 dark:text-slate-400 font-bold mb-2 flex items-center gap-2 group-hover:text-amber-600 dark:group-hover:text-amber-200 transition-colors">
-                                    <Code size={16} className="text-amber-500 dark:text-amber-400" />
+                                    <Terminal size={16} className="text-amber-500 dark:text-amber-400" />
                                     Practice Solved
                                 </div>
-                                <div className="text-3xl font-black text-slate-900 dark:text-white mb-2 transition-colors duration-300">0</div>
+                                <div className="text-3xl font-black text-slate-900 dark:text-white mb-2 transition-colors duration-300">
+                                    {Math.max(
+                                        Object.values(progress || {}).filter(p => p && (p.status === 'completed' || p.status === 'COMPLETED')).length,
+                                        (() => {
+                                            try {
+                                                const raw = localStorage.getItem('practice_progress_local');
+                                                if (!raw) return 0;
+                                                const parsed = JSON.parse(raw);
+                                                return Object.values(parsed).filter((p: any) => p.status === 'completed' || p.status === 'COMPLETED').length;
+                                            } catch (e) { return 0; }
+                                        })()
+                                    )}
+                                </div>
                                 <div className="w-full bg-slate-100 dark:bg-slate-800/50 rounded-full h-1.5">
-                                    <div className="bg-amber-500 h-1.5 rounded-full transition-all duration-500 shadow-[0_0_10px_rgba(245,158,11,0.3)]" style={{ width: '0%' }}></div>
+                                    <div
+                                        className="bg-amber-500 h-1.5 rounded-full transition-all duration-500"
+                                        style={{ width: `${Math.min(100, (Object.values(progress || {}).filter(p => p && (p.status === 'completed' || p.status === 'COMPLETED')).length / 20) * 100)}%` }}
+                                    ></div>
                                 </div>
                             </div>
                             <ChevronRight size={20} className="text-slate-400 group-hover:text-amber-600 transition-colors" />

@@ -146,13 +146,35 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
         // Initial theme set
         monaco.editor.setTheme(isDarkMode ? 'genspark-dark' : 'vs');
 
-        // BLOCK COPY/PASTE - Removed aggressive alerts based on user feedback
+        // BLOCK COPY/PASTE - Nuclear enforcement across all layers
+        const blockPaste = (e: any) => {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+        };
+
+        // Layer 1: Keyboard Shortcuts
+        editor.onKeyDown((e: any) => {
+            const isPaste = (e.ctrlKey || e.metaKey) && e.keyCode === 52; // KeyV is 52 in Monaco KeyCode
+            const isShiftInsert = e.shiftKey && e.keyCode === 45; // Insert is 45
+            if (isPaste || isShiftInsert) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        });
+
+        // Layer 2: DOM Events (Directly on editor and its internal input area)
         const editorDomNode = editor.getDomNode();
         if (editorDomNode) {
-            // We can keep the event listeners if we want to blocking, but silently or less aggressively?
-            // User feedback "too bad" suggests removing the annoyance.
-            // Let's comment them out for now to restore standard editor behavior or make it silent.
-            // If blocking is a hard requirement, we should just return false, not alert.
+            editorDomNode.addEventListener('paste', blockPaste, true);
+            editorDomNode.addEventListener('drop', blockPaste, true);
+
+            // Monaco uses a hidden textarea for input - target it specifically
+            const textArea = editorDomNode.querySelector('textarea');
+            if (textArea) {
+                textArea.addEventListener('paste', blockPaste, true);
+            }
         }
 
         /*

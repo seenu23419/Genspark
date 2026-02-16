@@ -164,25 +164,7 @@ class SupabaseService {
       lastLanguageId: profile.last_language_id,
       lastLessonId: profile.last_lesson_id,
       activity_log: profile.activity_log || [],
-      activity_history: (() => {
-        const dbHistory = profile.activity_history || [];
-        const localHistory = StreakService.loadHistory(profile.id) || [];
-
-        if (dbHistory.length === 0) return localHistory;
-
-        // Merge strategy: DB is the source of truth, but local might have ultra-recent items 
-        // that haven't synced yet. We merge by ID and sort by date.
-        const merged = [...dbHistory];
-        const dbIds = new Set(dbHistory.map((h: any) => h.id));
-
-        localHistory.forEach((lh: any) => {
-          if (!dbIds.has(lh.id)) {
-            merged.push(lh);
-          }
-        });
-
-        return merged.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 100);
-      })()
+      activity_history: profile.activity_history || [] // Simplified: no merging during login for performance
     };
   }
 
@@ -247,7 +229,7 @@ class SupabaseService {
     if (query._id) {
       const profileBuilder = this.supabase
         .from('users')
-        .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, activity_history, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id')
+        .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id')
         .eq('id', query._id);
 
       const progressPromise = this.supabase
@@ -267,7 +249,7 @@ class SupabaseService {
 
     // Fallback for Email query (Sequential)
     let builder = this.supabase.from('users')
-      .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, activity_history, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id');
+      .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id');
 
     if (query.email) builder = builder.eq('email', query.email);
     else return null;
@@ -276,6 +258,26 @@ class SupabaseService {
     if (!data) return null;
 
     return this.formatUserForApp(data);
+  }
+
+  /**
+   * Fetch specific fields for a user (used for lazy-loading heavy data)
+   */
+  async fetchFields(userId: string, fields: string[]): Promise<any> {
+    if (!this.isConfigured) return null;
+
+    const { data, error } = await this.supabase
+      .from('users')
+      .select(fields.join(', '))
+      .eq('id', userId)
+      .single();
+
+    if (error) {
+      console.error(`[SupabaseService] Failed to fetch fields ${fields}:`, error);
+      return null;
+    }
+
+    return data;
   }
 
   /**
@@ -313,7 +315,7 @@ class SupabaseService {
         onboarding_completed: false, // Always false for new users
         created_at: userData.createdAt || new Date()
       })
-      .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id');
+      .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id');
 
     let { data: profile, error } = await profileRequest.single();
 
@@ -521,7 +523,15 @@ class SupabaseService {
       // Update streak on lesson completion
       try {
         const u = await this.findOne({ _id: id });
-        if (u) await StreakService.updateStreak(u);
+        if (u) {
+          const streakUpdates = StreakService.getStreakMismatch(u, this.isStreakEnabled());
+          if (streakUpdates) {
+            // Determine if we should recursively call updateOne or just direct update
+            // Direct update is safer to avoid loops, but updateOne handles logic.
+            // Since getStreakMismatch implies a drift, calling updateOne is okay as long as it converges.
+            await this.updateOne(id, streakUpdates);
+          }
+        }
       } catch (e) {
         console.error("Streak sync failed", e);
       }
@@ -534,6 +544,17 @@ class SupabaseService {
     // Return fresh state
     const freshUser = await this.findOne({ _id: id });
     if (!freshUser) throw new Error("Update failed");
+
+    // DATA INTEGRITY GUARD: Ensure we don't return a stale user if findOne lags
+    if (updates.completedLessonIds && freshUser.completedLessonIds.length < updates.completedLessonIds.length) {
+      console.warn("[SupabaseService] findOne returned stale data after update, merging manually.");
+      return {
+        ...freshUser,
+        completedLessonIds: [...new Set([...(freshUser.completedLessonIds || []), ...updates.completedLessonIds])],
+        unlockedLessonIds: [...new Set([...(freshUser.unlockedLessonIds || []), ...(updates.unlockedLessonIds || [])])]
+      };
+    }
+
     return freshUser;
   }
 
@@ -591,7 +612,7 @@ class SupabaseService {
     console.log("✅ Sync Complete");
   }
 
-  async savePracticeAttempt(challengeId: string, code: string, solved: boolean, language: string): Promise<void> {
+  async savePracticeAttempt(challengeId: string, code: string, solved: boolean, language: string, executionTime?: string): Promise<void> {
     // EMERGENCY FALLBACK: Save to localStorage FIRST for demo reliability
     try {
       const localKey = 'practice_progress_local';
@@ -600,6 +621,7 @@ class SupabaseService {
         status: solved ? 'completed' : 'attempted',
         code_snapshot: code,
         language_used: language,
+        execution_time: executionTime,
         last_attempt_at: new Date().toISOString()
       };
       localStorage.setItem(localKey, JSON.stringify(existing));
@@ -633,6 +655,7 @@ class SupabaseService {
       attempts_count: newAttemptsCount,
       last_attempt_at: new Date(),
       last_opened_at: new Date(),
+      execution_time: executionTime,
       ...(solved ? { completed_at: new Date() } : {})
     }, { onConflict: 'user_id, challenge_id' });
 
@@ -644,10 +667,31 @@ class SupabaseService {
 
     if (solved && (!existing || existing.status !== 'completed')) {
       await this.awardXP(20, `practice_${challengeId}`);
-      // Update streak on solving a practice problem
-      const { data: profile } = await this.supabase.from('users').select('*').eq('id', user.id).single();
-      const mappedUser = await this.formatUserForApp(profile);
-      if (mappedUser) StreakService.updateStreak(mappedUser).catch(e => console.error("Streak update failed", e));
+
+      // Update streak and activity log
+      try {
+        const { data: profile } = await this.supabase.from('users').select('*').eq('id', user.id).single();
+        if (profile) {
+          const mappedUser = await this.formatUserForApp(profile);
+          if (mappedUser) {
+            const activityUpdates = StreakService.getActivityUpdates(mappedUser, {
+              type: 'practice',
+              title: `Solved Challenge: ${challengeId}`,
+              xp: 20,
+              executionTime,
+              language,
+              itemId: challengeId
+            });
+
+            if (activityUpdates) {
+              console.log("[SupabaseService] Saving streak updates for practice completion:", activityUpdates);
+              await this.updateOne(user.id, activityUpdates);
+            }
+          }
+        }
+      } catch (e) {
+        console.error("Streak update failed", e);
+      }
     }
   }
 
@@ -712,7 +756,7 @@ class SupabaseService {
     // 2. Get DB Data
     const { data, error } = await this.supabase
       .from('practice_progress')
-      .select('challenge_id, status, last_attempt_at, completed_at, language_used, attempts_count')
+      .select('challenge_id, status, last_attempt_at, completed_at, language_used, attempts_count, execution_time')
       .eq('user_id', user.id);
 
     if (error) {

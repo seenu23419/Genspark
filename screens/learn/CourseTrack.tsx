@@ -1,6 +1,6 @@
 import React, { useMemo, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Lock, Play, CheckCircle, Clock, Loader2, AlertCircle, Sparkles, ChevronDown, Trophy, Medal, Target, Award, BookOpen, Search } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Lock, Play, CheckCircle, Clock, Loader2, AlertCircle, Sparkles, ChevronDown, Trophy, Medal, Target, Award, BookOpen, Search, Zap } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCurriculum } from '../../contexts/CurriculumContext';
 import { LANGUAGES } from '../../constants';
@@ -124,6 +124,7 @@ const CourseTrack: React.FC = () => {
 
   // 1. State declarations
   const [expandedLevels, setExpandedLevels] = useState<Record<number, boolean>>({});
+  const [expandedAssignments, setExpandedAssignments] = useState<Record<number, boolean>>({});
 
   // 2. Computed values
   const language = useMemo(() => LANGUAGES.find(l => l.id === langId), [langId]);
@@ -134,22 +135,9 @@ const CourseTrack: React.FC = () => {
     return (curriculumData[language.id] || []) as any[];
   }, [language, curriculumData]);
 
-  // All levels are now unlocked for all languages, EXCEPT C which requires completion
+  // All levels are now unlocked for all languages
   const isLevelUnlocked = (levelIndex: number): boolean => {
-    if (langId !== 'c') return true;
-    if (levelIndex === 0) return true;
-
-    // Check if previous level is fully completed (lessons + problems)
-    const prevModule = modules[levelIndex - 1];
-    if (!prevModule) return true;
-
-    const lessons = prevModule.lessons || [];
-    const problems = prevModule.problems || [];
-
-    const allLessonsDone = lessons.every((l: Lesson) => completedLessonIds.includes(l.id));
-    const allProblemsDone = problems.every((p: any) => getProblemStatus(p.id) === 'COMPLETED');
-
-    return allLessonsDone && allProblemsDone;
+    return true;
   };
 
   const currentLevelIndex = useMemo(() => {
@@ -197,6 +185,13 @@ const CourseTrack: React.FC = () => {
     }));
   };
 
+  const toggleAssignments = (index: number) => {
+    setExpandedAssignments(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
 
   const handleLessonClick = (lesson: Lesson, levelIndex: number) => {
     if (!isLevelUnlocked(levelIndex)) return;
@@ -232,12 +227,19 @@ const CourseTrack: React.FC = () => {
   const progressPercent = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
 
   return (
-    <div className="relative min-h-screen bg-slate-100 dark:bg-black transition-colors duration-300">
-      <div className="absolute top-0 left-1/2 w-[1200px] h-[800px] bg-indigo-500/5 blur-[150px] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+    <div
+      className="relative min-h-screen bg-slate-100 dark:bg-black transition-colors duration-300 overflow-x-hidden"
+      style={{ touchAction: 'pan-y' }}
+    >
+      {/* Constrained background glow for mobile */}
 
       <header className="sticky top-0 z-40 bg-slate-100/95 dark:bg-black/95 backdrop-blur-sm border-b border-slate-300 dark:border-white/5 px-6 py-4 transition-colors duration-300">
         <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
-          <button onClick={() => navigate('/')} className="p-2 -ml-2 text-slate-400 hover:text-white rounded-lg">
+          <button
+            onClick={() => navigate('/')}
+            className="p-2 -ml-2 text-slate-400 hover:text-white rounded-lg transition-all active:scale-95"
+            style={{ touchAction: 'manipulation' }}
+          >
             <ArrowLeft size={24} />
           </button>
           <div className="flex items-center gap-3 min-w-0 flex-1">
@@ -247,7 +249,7 @@ const CourseTrack: React.FC = () => {
             <h1 className="text-lg md:text-xl font-black text-slate-900 dark:text-white truncate">{language.name} Track</h1>
           </div>
           <div className="flex items-center gap-2 shrink-0">
-            <div className="w-12 h-12 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center shadow-sm">
+            <div className="w-12 h-12 rounded-lg bg-slate-50 dark:bg-slate-900 border-2 border-slate-400 dark:border-slate-700 flex flex-col items-center justify-center shadow-sm">
               <span className="text-sm font-black text-emerald-400">{progressPercent}%</span>
               <span className="text-[8px] text-slate-500 uppercase tracking-tighter">Done</span>
             </div>
@@ -283,13 +285,14 @@ const CourseTrack: React.FC = () => {
               <section key={module.id} className="border-b border-slate-800/40 last:border-b-0 pb-6 last:pb-0">
                 <button
                   onClick={() => toggleLevel(levelIndex)}
+                  style={{ touchAction: 'manipulation' }}
                   className={`w-full group flex items-start justify-between gap-4 p-5 rounded-xl transition-all ${isCurrentLevel
-                    ? 'bg-indigo-600/15 border border-indigo-500/40'
-                    : 'bg-slate-50 dark:bg-slate-900/40 border border-slate-300 dark:border-slate-800/50 hover:bg-slate-200 dark:hover:bg-slate-900/60 shadow-sm'
+                    ? 'bg-indigo-600/15 border-2 border-indigo-500/70'
+                    : 'bg-slate-50 dark:bg-slate-900/40 border-2 border-slate-400 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-900/60 hover:border-slate-500 dark:hover:border-slate-600 shadow-sm'
                     }`}
                 >
                   <div className="flex items-start gap-4 flex-1 min-w-0 text-left">
-                    <div className={`w-1.5 h-8 rounded-full shrink-0 ${isCurrentLevel ? 'bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]' : isCompletedLevel ? 'bg-emerald-500' : 'bg-slate-700'}`} />
+                    <div className={`w-1.5 h-8 rounded-full shrink-0 ${isCurrentLevel ? 'bg-indigo-500' : isCompletedLevel ? 'bg-emerald-500' : 'bg-slate-700'}`} />
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap mb-1">
                         <h2 className={`text-lg md:text-xl font-bold ${isCurrentLevel ? 'text-white' : 'text-slate-200'}`}>{module.title}</h2>
@@ -304,7 +307,7 @@ const CourseTrack: React.FC = () => {
                       </p>
                       {module.problems && module.problems.length > 0 && (
                         <div className="flex items-center gap-1.5 mt-2">
-                          <div className="px-1.5 py-0.5 rounded bg-indigo-500/10 border border-indigo-500/20 flex items-center gap-1">
+                          <div className="px-1.5 py-0.5 rounded bg-indigo-500/10 border-2 border-indigo-500/50 flex items-center gap-1">
                             <Target size={10} className="text-indigo-400" />
                             <span className="text-[9px] text-indigo-300 font-bold uppercase tracking-tight">
                               {module.problems.filter((p: any) => getProblemStatus(p.id) === 'COMPLETED').length}/{module.problems.length} Assignments
@@ -331,9 +334,10 @@ const CourseTrack: React.FC = () => {
                           key={lesson.id}
                           disabled={!isLevelUnlocked(levelIndex)}
                           onClick={() => handleLessonClick(lesson, levelIndex)}
-                          className={`w-full flex items-center justify-between p-4 rounded-xl transition-all ${isCompleted ? 'bg-emerald-500/10 border border-emerald-500/20' :
-                            isFirstIncomplete ? 'bg-indigo-600/10 border border-indigo-500/30' :
-                              'hover:bg-slate-800/30'
+                          style={{ touchAction: 'manipulation' }}
+                          className={`w-full flex items-center justify-between p-4 rounded-xl transition-all border-2 ${isCompleted ? 'bg-emerald-500/10 border-emerald-500/50' :
+                            isFirstIncomplete ? 'bg-indigo-600/10 border-indigo-500/60' :
+                              'border-slate-300 dark:border-slate-700 hover:bg-slate-800/30'
                             } ${!isLevelUnlocked(levelIndex) ? 'opacity-50 grayscale cursor-not-allowed' : ''}`}
                         >
                           <div className="flex items-center gap-4 min-w-0">
@@ -344,69 +348,67 @@ const CourseTrack: React.FC = () => {
                               <p className={`text-sm md:text-base truncate ${isCompleted ? 'text-slate-400' : 'text-slate-900 dark:text-white'}`}>{lesson.title}</p>
                             </div>
                           </div>
-                          {isFirstIncomplete && isLevelUnlocked(levelIndex) && <Sparkles size={16} className="text-indigo-400 shrink-0" />}
+                          {isFirstIncomplete && isLevelUnlocked(levelIndex) && <Zap size={16} className="text-indigo-400 shrink-0 fill-indigo-400" />}
                         </button>
                       );
                     })}
 
-                    {/* Level Assignments Section */}
+                    {/* Level Assignments Section - Dropdown Layout */}
                     {module.problems && module.problems.length > 0 && (
-                      <div className="mt-10 mb-6">
-                        <div className="flex items-center gap-3 px-2 mb-6">
-                          <div className="h-[1px] flex-1 bg-slate-800/60" />
-                          <div className="flex items-center gap-2">
-                            <Award size={14} className="text-indigo-400" />
-                            <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Assignment Phase</span>
+                      <div className="mt-4 pl-4 space-y-2">
+                        <button
+                          onClick={() => toggleAssignments(levelIndex)}
+                          className="w-full flex items-center justify-between p-4 rounded-xl transition-all border-2 border-slate-300 dark:border-slate-700 hover:bg-slate-800/30"
+                        >
+                          <div className="flex items-center gap-4 min-w-0">
+                            <div className="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center shrink-0">
+                              <Trophy className="text-indigo-500" size={20} />
+                            </div>
+                            <div className="text-left font-medium min-w-0">
+                              <p className="text-sm md:text-base truncate text-slate-900 dark:text-white">Assignments</p>
+                            </div>
                           </div>
-                          <div className="h-[1px] flex-1 bg-slate-800/60" />
-                        </div>
+                          <ChevronDown
+                            size={20}
+                            className={`text-slate-400 shrink-0 transition-transform duration-300 ${expandedAssignments[levelIndex] ? 'rotate-180' : ''}`}
+                          />
+                        </button>
 
-                        <div className="space-y-3">
-                          {module.problems.map((prob: any) => {
-                            const pStatus = getProblemStatus(prob.id);
-                            const isCompleted = pStatus === 'COMPLETED';
-                            const isUnlocked = levelIndex <= currentLevelIndex;
+                        <div className={`overflow-hidden transition-all duration-500 ${expandedAssignments[levelIndex] ? 'max-h-[1000px] mt-4 opacity-100' : 'max-h-0 opacity-0'}`}>
+                          <div className="space-y-3">
+                            {module.problems.map((prob: any, idx: number) => {
+                              const status = getProblemStatus(prob.id);
+                              const isCompleted = status === 'COMPLETED';
+                              // Determine if this is the next available one
+                              const activeProb = module.problems.find((p: any) => getProblemStatus(p.id) !== 'COMPLETED');
+                              const isActive = activeProb?.id === prob.id;
+                              const isUnlocked = levelIndex <= currentLevelIndex && (isActive || isCompleted || (!activeProb && isCompleted));
 
-                            return (
-                              <button
-                                key={prob.id}
-                                disabled={!isUnlocked}
-                                onClick={() => navigate(`/practice/problem/${prob.id}`)}
-                                className={`w-full group flex items-center justify-between p-5 rounded-2xl transition-all border ${isCompleted
-                                  ? 'bg-emerald-500/5 border-emerald-500/20 hover:bg-emerald-500/10'
-                                  : isUnlocked
-                                    ? 'bg-indigo-600/5 border-indigo-500/20 hover:bg-indigo-600/10 hover:border-indigo-500/40'
-                                    : 'bg-slate-100 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800/50 opacity-50 grayscale shadow-none'
-                                  }`}
-                              >
-                                <div className="flex items-center gap-4 min-w-0">
-                                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${isCompleted
-                                    ? 'bg-emerald-500/20 text-emerald-400'
-                                    : isUnlocked
-                                      ? 'bg-indigo-500/20 text-indigo-400'
-                                      : 'bg-slate-800 text-slate-600'
-                                    }`}>
-                                    {isCompleted ? <CheckCircle size={24} /> : isUnlocked ? <Target size={24} /> : <Lock size={24} />}
-                                  </div>
-                                  <div className="text-left overflow-hidden">
-                                    <div className="flex items-center gap-2 mb-1">
-                                      <h4 className={`font-bold text-sm ${isUnlocked ? 'text-slate-900 dark:text-white' : 'text-slate-500'}`}>{prob.title}</h4>
-                                      <span className={`text-[8px] px-1.5 py-0.5 rounded-full font-black uppercase ${prob.difficulty === 'easy' ? 'bg-emerald-500/10 text-emerald-500' :
-                                        prob.difficulty === 'medium' ? 'bg-amber-500/10 text-amber-500' :
-                                          'bg-rose-500/10 text-rose-500'
-                                        }`}>{prob.difficulty}</span>
+                              return (
+                                <button
+                                  key={prob.id}
+                                  disabled={!isUnlocked}
+                                  onClick={() => navigate(`/practice/problem/${prob.id}`)}
+                                  className={`w-full flex items-center justify-between p-4 rounded-xl transition-all border-2 ${isCompleted
+                                    ? 'bg-emerald-500/10 border-emerald-500/50'
+                                    : isActive
+                                      ? 'bg-indigo-600/10 border-indigo-500/60'
+                                      : 'border-slate-300 dark:border-slate-700 hover:bg-slate-800/30'
+                                    } ${!isUnlocked ? 'opacity-50 grayscale cursor-not-allowed' : ''}`}
+                                >
+                                  <div className="flex items-center gap-4 text-left">
+                                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${isCompleted ? 'bg-emerald-500/10 text-emerald-400' : isActive ? 'bg-indigo-500/20 text-indigo-400' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-500'}`}>
+                                      {isCompleted ? <CheckCircle size={20} /> : isActive ? <Target size={20} /> : <Lock size={20} />}
                                     </div>
-                                    <p className="text-[10px] text-slate-500 font-medium">Coding Assignment • Required to advance</p>
+                                    <div className="text-left font-medium min-w-0">
+                                      <p className={`text-sm md:text-base truncate ${isCompleted ? 'text-slate-400' : 'text-slate-900 dark:text-white'}`}>{prob.title}</p>
+                                    </div>
                                   </div>
-                                </div>
-                                {isUnlocked && !isCompleted && (
-                                  <div className="flex items-center gap-2 text-indigo-400 text-[10px] font-black uppercase tracking-widest group-hover:translate-x-1 transition-transform">
-                                    Start Assignment <Play size={10} fill="currentColor" />
-                                  </div>
-                                )}
-                              </button>
-                            );
-                          })}
+                                  {isActive && <Zap size={16} className="text-indigo-400 shrink-0 fill-indigo-400" />}
+                                </button>
+                              );
+                            })}
+                          </div>
                         </div>
                       </div>
                     )}

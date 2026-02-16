@@ -44,9 +44,16 @@ const ACHIEVEMENT_REQUIREMENTS: Record<string, { lessons: number; problems: numb
 };
 
 const LearningProfile: React.FC = () => {
-    const { user } = useAuth();
+    const { user, loadActivityHistory } = useAuth();
     const navigate = useNavigate();
     const [solvedProblemsCount, setSolvedProblemsCount] = useState(0);
+
+    // Trigger lazy-loading of detailed history if empty
+    useEffect(() => {
+        if (user && (!user.activity_history || user.activity_history.length === 0)) {
+            loadActivityHistory();
+        }
+    }, [user, loadActivityHistory]);
 
     // Dynamic Activity Data Calculation
     const [activityData, setActivityData] = useState<{ name: string; time: number }[]>([]);

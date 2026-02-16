@@ -59,10 +59,29 @@ export const PracticeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         }
     }, [user]);
 
-    const getProblemStatus = (id: string) => {
+    const getProblemStatus = (id: string): 'NOT_STARTED' | 'IN_PROGRESS' | 'COMPLETED' => {
+        // 1. Check in-memory progress (Synched from DB/Local)
         const p = progress[id];
-        if (p?.status === 'completed') return 'COMPLETED';
-        if (p?.status === 'attempted') return 'IN_PROGRESS';
+        if (p) {
+            const status = p.status?.toLowerCase();
+            if (status === 'completed') return 'COMPLETED';
+            if (status === 'attempted' || status === 'in_progress') return 'IN_PROGRESS';
+        }
+
+        // 2. Fallback to direct LocalStorage check (for immediate UI updates if sync is pending)
+        try {
+            const localRaw = localStorage.getItem('practice_progress_local');
+            if (localRaw) {
+                const localData = JSON.parse(localRaw);
+                const lp = localData[id];
+                if (lp) {
+                    const lStatus = lp.status?.toLowerCase();
+                    if (lStatus === 'completed') return 'COMPLETED';
+                    if (lStatus === 'attempted' || lStatus === 'in_progress') return 'IN_PROGRESS';
+                }
+            }
+        } catch (e) { /* ignore */ }
+
         return 'NOT_STARTED';
     };
 

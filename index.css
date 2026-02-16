@@ -98,15 +98,47 @@ html {
   animation: slideInFromBottom 400ms ease-in-out forwards;
 }
 
-/* Global scrollbar hiding while maintaining behavior */
+/* Box-sizing reset for all elements */
+* {
+  box-sizing: border-box;
+}
+
+/* Global layout safeguards */
 html,
 body,
 #root {
-  scrollbar-width: none;
-  /* Firefox */
-  -ms-overflow-style: none;
-  /* IE/Edge */
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden !important;
+  position: relative;
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior-x: none;
 }
+
+/* Prevent iOS zoom on input focus - CRITICAL: Must override Tailwind classes */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="number"],
+input[type="search"],
+input[type="url"],
+select,
+textarea {
+  font-size: 16px !important;
+  -webkit-text-size-adjust: 100% !important;
+}
+
+
+/* Disable double-tap zoom */
+body,
+button,
+a {
+  touch-action: manipulation;
+}
+
 
 ::-webkit-scrollbar {
   display: none;
@@ -117,4 +149,86 @@ body,
 
 .animate-shimmer {
   animation: shimmer 2s infinite linear;
+}
+
+/* ============================================
+   CRITICAL ANTI-ZOOM FIXES - MUST BE LAST
+   These MUST come after Tailwind to override
+   ============================================ */
+
+/* Force 16px on ALL inputs to prevent iOS zoom - NUCLEAR OPTION */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="number"],
+input[type="search"],
+input[type="url"],
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+select,
+textarea {
+  font-size: max(16px, 1em) !important;
+  -webkit-text-size-adjust: 100% !important;
+}
+
+/* Override ANY Tailwind text size class on inputs */
+input[class*="text-"],
+select[class*="text-"],
+textarea[class*="text-"] {
+  font-size: max(16px, 1em) !important;
+}
+
+/* Prevent media elements from exceeding viewport width */
+img,
+svg,
+video,
+canvas,
+iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Safety utility to prevent accidental horizontal overflow */
+.app-root,
+#root,
+main {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden !important;
+}
+
+/* ============================================
+   NUCLEAR ANTI-ZOOM - ABSOLUTE LAST RESORT
+   ============================================ */
+
+/* Lock the entire document to prevent any scaling */
+html {
+  touch-action: pan-x pan-y !important;
+  -ms-touch-action: pan-x pan-y !important;
+}
+
+body {
+  touch-action: pan-x pan-y !important;
+  -ms-touch-action: pan-x pan-y !important;
+  transform: scale(1) !important;
+  transform-origin: 0 0 !important;
+}
+
+/* Prevent any element from being scaled */
+* {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Allow text selection only on specific elements */
+input,
+textarea,
+[contenteditable] {
+  -webkit-user-select: text;
+  user-select: text;
 }

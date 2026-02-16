@@ -7,12 +7,14 @@ import { usePracticeProgress } from '../../hooks/usePracticeProgress';
 
 import { usePractice } from '../../contexts/PracticeContext';
 import { useCurriculum } from '../../contexts/CurriculumContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { Loader2 } from 'lucide-react';
 
 const CodingProblemWrapper: React.FC = () => {
     const { problemId } = useParams<{ problemId: string }>();
     const navigate = useNavigate();
     const { topics, loading, progress, getProblemStatus, refreshProgress } = usePractice();
+    const { refreshProfile } = useAuth();
 
     // Find the problem in the JSON content
     const { data: curriculumData } = useCurriculum();
@@ -53,19 +55,32 @@ const CodingProblemWrapper: React.FC = () => {
 
     // Find next problem for adaptive flow
     const getNextProblem = (currentId: string) => {
-        if (!topics) return null;
-        for (const topic of topics) {
-            const currentIdx = topic.problems.findIndex(p => p.id === currentId);
-            if (currentIdx !== -1) {
-                if (currentIdx + 1 < topic.problems.length) {
-                    return topic.problems[currentIdx + 1];
-                }
-                const topicIdx = topics.indexOf(topic);
-                if (topicIdx + 1 < topics.length) {
-                    return topics[topicIdx + 1].problems[0];
+        // 1. Try Practice Topics
+        if (topics) {
+            for (const topic of topics) {
+                const currentIdx = topic.problems.findIndex(p => p.id === currentId);
+                if (currentIdx !== -1) {
+                    if (currentIdx + 1 < topic.problems.length) return topic.problems[currentIdx + 1];
+                    const topicIdx = topics.indexOf(topic);
+                    if (topicIdx + 1 < topics.length) return topics[topicIdx + 1].problems[0];
                 }
             }
         }
+
+        // 2. Try Curriculum Data (Sequential Assignments)
+        if (curriculumData) {
+            const allProblems: any[] = [];
+            for (const langId in curriculumData) {
+                curriculumData[langId].forEach((module: any) => {
+                    if (module.problems) allProblems.push(...module.problems);
+                });
+            }
+            const currentIdx = allProblems.findIndex(p => p.id === currentId);
+            if (currentIdx !== -1 && currentIdx + 1 < allProblems.length) {
+                return allProblems[currentIdx + 1];
+            }
+        }
+
         return null;
     };
 
@@ -104,10 +119,14 @@ const CodingProblemWrapper: React.FC = () => {
                 hint: ''
             } as any}
             status={currentStatus}
-            onBack={() => navigate('/practice')}
-            onComplete={() => {
+            onBack={() => navigate(-1)}
+            onComplete={async () => {
                 // Refresh context so Practice Hub shows updated stats
-                refreshProgress();
+                await refreshProgress();
+                // Refresh user profile to show updated streak
+                await refreshProfile();
+                // Navigate back to previous page (course track or practice hub)
+                setTimeout(() => navigate(-1), 1500);
             }}
             onNext={() => {
                 if (nextProblem) navigate(`/practice/problem/${nextProblem.id}`);

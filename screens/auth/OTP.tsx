@@ -119,7 +119,7 @@ const OTP: React.FC<OTPProps> = ({ email, onVerify }) => {
               onChange={(e) => handleChange(e.target, index)}
               onKeyDown={(e) => handleBackspace(e, index)}
               disabled={isVerifying}
-              className={`w-12 h-16 md:w-14 md:h-20 bg-slate-900 border-2 rounded-2xl text-3xl font-black text-white text-center transition-all focus:outline-none ${isVerifying ? 'opacity-50 border-slate-800' : 'border-slate-800 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20'
+              className={`w-12 h-16 md:w-14 md:h-20 bg-white/5 border-2 rounded-2xl text-3xl font-black text-white text-center transition-all focus:outline-none ${isVerifying ? 'opacity-50 border-slate-800' : 'border-slate-800 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 focus:bg-black'
                 }`}
             />
           ))}

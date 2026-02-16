@@ -15,7 +15,6 @@ const PracticeList: React.FC = () => {
 
   useEffect(() => {
     const fetchProgress = async () => {
-      setLoading(true);
       try {
         const data = await supabaseDB.getAllPracticeProgress();
         const mappedProgress: ProgressState = {};
@@ -29,12 +28,15 @@ const PracticeList: React.FC = () => {
         setProgress(mappedProgress);
       } catch (e) {
         console.error("Failed to fetch practice progress:", e);
-      } finally {
-        setLoading(false);
       }
     };
     fetchProgress();
   }, []);
+
+  // Wait for context to finish loading topics
+  useEffect(() => {
+    setLoading(contextLoading);
+  }, [contextLoading]);
 
   const allProblems = useMemo(() => {
     const problems: PracticeProblem[] = [];
@@ -127,7 +129,7 @@ const PracticeList: React.FC = () => {
           </div>
           <div className="w-full h-1.5 bg-slate-800/50 rounded-full overflow-hidden border border-white/5">
             <div
-              className="h-full bg-gradient-to-r from-indigo-500 via-indigo-400 to-indigo-600 shadow-[0_0_10px_rgba(99,102,241,0.3)] transition-all duration-1000 ease-out"
+              className="h-full bg-gradient-to-r from-indigo-500 via-indigo-400 to-indigo-600 transition-all duration-1000 ease-out"
               style={{ width: `${totalCount > 0 ? (completedCount / totalCount) * 100 : 0}%` }}
             />
           </div>
@@ -153,8 +155,8 @@ const PracticeList: React.FC = () => {
                 onClick={() => setSelectedProblem(problem)}
               >
                 {/* State Accent Bar */}
-                <div className={`absolute left-0 top-0 bottom-0 w-1 ${isCompleted ? 'bg-green-500 shadow-[2px_0_10px_rgba(34,197,94,0.3)]' :
-                  isInProgress ? 'bg-indigo-500 shadow-[2px_0_10px_rgba(99,102,241,0.3)]' :
+                <div className={`absolute left-0 top-0 bottom-0 w-1 ${isCompleted ? 'bg-green-500' :
+                  isInProgress ? 'bg-indigo-500' :
                     'bg-slate-700'
                   }`} />
 

@@ -30,7 +30,7 @@ const PracticeHub: React.FC = () => {
     // Minimalist Loading State
     if (loading && topics.length === 0) {
         return (
-            <div className="h-full flex flex-col items-center justify-center bg-white dark:bg-slate-950 gap-4 transition-colors duration-300">
+            <div className="h-full flex flex-col items-center justify-center bg-slate-100 dark:bg-black gap-4 transition-colors duration-300">
                 <div className="w-12 h-12 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin" />
                 <p className="text-slate-500 font-black text-[10px] uppercase tracking-[0.2em] animate-pulse">Initializing Hub...</p>
             </div>
@@ -39,7 +39,7 @@ const PracticeHub: React.FC = () => {
 
     if (topics.length === 0) {
         return (
-            <div className="h-full flex flex-col items-center justify-center bg-white dark:bg-slate-950 p-10 text-center transition-colors duration-300">
+            <div className="h-full flex flex-col items-center justify-center bg-slate-100 dark:bg-black p-10 text-center transition-colors duration-300">
                 <div className="w-24 h-24 bg-slate-50 dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-white/5 flex items-center justify-center mb-8 shadow-2xl">
                     <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 animate-pulse" />
                 </div>
@@ -79,11 +79,11 @@ const PracticeHub: React.FC = () => {
     return (
         <div className="min-h-screen bg-slate-100 dark:bg-black text-slate-900 dark:text-white pb-24 font-sans selection:bg-indigo-500/30 transition-colors duration-300">
             {/* 1. Header (Static) */}
-            <div className="shrink-0 bg-white dark:bg-slate-950 px-6 pt-10 pb-4 border-b border-slate-100 dark:border-white/5">
+            <div className="shrink-0 bg-transparent px-6 pt-10 pb-4 border-b border-slate-200 dark:border-white/5">
                 <div className="max-w-5xl mx-auto flex flex-col gap-3">
                     <div className="flex items-end justify-between">
                         <div>
-                            <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">PRACTICE PLAYGROUND</h1>
+                            <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">PRACTICE HUB</h1>
                         </div>
                         <div className="text-right pb-1">
                             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest shrink-0">
@@ -94,7 +94,7 @@ const PracticeHub: React.FC = () => {
                     {/* Progress Bar */}
                     <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-900 rounded-full overflow-hidden">
                         <div
-                            className="h-full bg-indigo-500 transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(79,70,229,0.5)]"
+                            className="h-full bg-indigo-500 transition-all duration-1000 ease-out"
                             style={{ width: `${progressPercent}%` }}
                         />
                     </div>
@@ -102,7 +102,7 @@ const PracticeHub: React.FC = () => {
             </div>
 
             {/* 2. Topic Selector (Sticky) */}
-            <div className="shrink-0 bg-slate-100/80 dark:bg-slate-950/80 backdrop-blur-xl sticky top-0 z-30 border-b border-slate-200 dark:border-white/10">
+            <div className="shrink-0 bg-slate-100/80 dark:bg-black/80 backdrop-blur-xl sticky top-0 z-30 border-b border-slate-200 dark:border-white/10">
                 <div className="px-6 py-2 max-w-5xl mx-auto">
                     <div className="flex items-center gap-6 overflow-x-auto no-scrollbar py-2">
                         {topics.map((topic) => {
@@ -117,7 +117,7 @@ const PracticeHub: React.FC = () => {
                                     <span className={`text-[10px] font-black uppercase tracking-[0.2em] transition-colors ${isActive ? 'text-indigo-600 dark:text-white' : 'text-slate-500 dark:text-slate-600 group-hover:text-slate-700 dark:group-hover:text-slate-400'}`}>
                                         {topic.title}
                                     </span>
-                                    <div className={`h-0.5 rounded-full transition-all duration-300 ${isActive ? 'w-full bg-indigo-500 shadow-[0_0_8px_rgba(79,70,229,1)]' : 'w-0 bg-transparent'}`} />
+                                    <div className={`h-0.5 rounded-full transition-all duration-300 ${isActive ? 'w-full bg-indigo-500' : 'w-0 bg-transparent'}`} />
                                 </button>
                             );
                         })}
@@ -126,32 +126,13 @@ const PracticeHub: React.FC = () => {
             </div>
 
             {/* 2. Problem List (Only Scrollable Area) */}
-            <div className="flex-1 overflow-y-auto no-scrollbar bg-slate-50 dark:bg-slate-950 pb-32">
+            <div className="flex-1 overflow-y-auto no-scrollbar bg-transparent pb-32">
                 <div className="px-6 py-8 max-w-5xl mx-auto">
                     {filteredProblems.length > 0 ? (
                         <div className="grid grid-cols-1 gap-4">
                             {filteredProblems.map((problem) => {
                                 if (!problem) return null; // Defensive check
-                                // Robust Status Check (Context + LocalStorage Fallback)
-                                const getRealStatus = (pid: string) => {
-                                    if (!pid) return 'NOT_STARTED'; // Safety
-                                    // 1. Check Context
-                                    const ctxStatus = getProblemStatus(pid);
-                                    if (ctxStatus === 'COMPLETED') return 'COMPLETED';
-
-                                    // 2. Check LocalStorage (Force Green if locally done)
-                                    try {
-                                        const raw = localStorage.getItem('practice_progress_local');
-                                        if (raw) {
-                                            const parsed = JSON.parse(raw);
-                                            if (parsed[pid]?.status === 'completed') return 'COMPLETED';
-                                        }
-                                    } catch (e) { }
-
-                                    return ctxStatus;
-                                };
-
-                                const status = getRealStatus(problem.id);
+                                const status = getProblemStatus(problem.id);
                                 const isCompleted = status === 'COMPLETED';
                                 const isInProgress = status === 'IN_PROGRESS';
 
@@ -168,9 +149,9 @@ const PracticeHub: React.FC = () => {
                                         {/* Status Dot (Top-Right) */}
                                         <div className="absolute top-6 right-6 flex flex-col items-end gap-1">
                                             <div className={`w-2.5 h-2.5 rounded-full shadow-inner ${isCompleted
-                                                ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]'
+                                                ? 'bg-emerald-500'
                                                 : isInProgress
-                                                    ? 'bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.3)]'
+                                                    ? 'bg-blue-500'
                                                     : 'bg-slate-700'
                                                 }`} />
                                         </div>

@@ -1,14 +1,14 @@
 import { supabaseDB } from './supabaseService';
 
-// Piston Language Mapping
-export const LANGUAGE_MAPPING: Record<string, string> = {
-    'c': 'c',
-    'cpp': 'cpp',
-    'c++': 'cpp',
-    'java': 'java',
-    'python': 'python3',
-    'javascript': 'javascript',
-    'sql': 'sqlite3'
+// Wandbox Language Mapping
+export const WANDBOX_COMPILERS: Record<string, string> = {
+    'c': 'gcc-head',
+    'cpp': 'gcc-head',
+    'c++': 'gcc-head',
+    'java': 'openjdk-head',
+    'python': 'cpython-head',
+    'javascript': 'nodejs-head',
+    'sql': 'sqlite-head' // Valid check needed, but keeping placeholder
 };
 
 export interface ExecutionResult {
@@ -22,16 +22,16 @@ export interface ExecutionResult {
 }
 
 class GenSparkCompilerService {
-    private pistonBaseUrl = 'https://emkc.org/api/v2/piston/execute';
+    private wandboxUrl = 'https://wandbox.org/api/compile.json';
 
     async executeCode(language: string, sourceCode: string, userId?: string, stdin: string = ""): Promise<ExecutionResult> {
         const langKey = language.toLowerCase();
-        const pistonLang = LANGUAGE_MAPPING[langKey];
+        const compiler = WANDBOX_COMPILERS[langKey];
 
-        if (!pistonLang) {
+        if (!compiler) {
             return {
                 stdout: null,
-                stderr: `Language "${language}" is not supported by the Piston compiler.`,
+                stderr: `Language "${language}" is not supported by the Wandbox compiler.`,
                 compile_output: null,
                 message: 'Unsupported Language',
                 time: null,
@@ -41,42 +41,55 @@ class GenSparkCompilerService {
         }
 
         try {
-            console.log(`[Compiler] Using Piston API for ${language}`);
+            console.log(`[Compiler] Using Wandbox API for ${language} (${compiler})`);
 
-            const response = await fetch(this.pistonBaseUrl, {
+            // Compiler options for C/C++ to output as expected
+            let options = "";
+            if (langKey === 'c') options = "-std=c11";
+            if (langKey === 'cpp' || langKey === 'c++') options = "-std=c++17";
+
+            const response = await fetch(this.wandboxUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    language: pistonLang,
-                    version: "*",
-                    files: [
-                        {
-                            content: sourceCode
-                        }
-                    ],
-                    stdin: stdin
+                    code: sourceCode,
+                    compiler: compiler,
+                    options: options,
+                    stdin: stdin,
+                    save: false
                 })
             });
 
             if (!response.ok) {
-                throw new Error(`Piston API returned error: ${response.statusText}`);
+                throw new Error(`Wandbox API returned error: ${response.statusText}`);
             }
 
             const data = await response.json();
-            const { run, compile } = data;
+
+            // Map Wandbox response to ExecutionResult
+            // status: "0" is success in Wandbox
+            const isSuccess = data.status === '0';
+
+            // Combine program output and error
+            // Wandbox separates compiler messages (compile_message) from runtime (program_message, program_error)
 
             const result: ExecutionResult = {
-                stdout: run.stdout || null,
-                stderr: run.stderr || null,
-                compile_output: compile?.stderr || compile?.stdout || null,
-                message: run.signal ? `Signal: ${run.signal}` : null,
+                stdout: data.program_output || null,
+                stderr: data.program_error || null,
+                compile_output: data.compiler_output || data.compiler_error || null,
+                message: data.signal || null,
                 time: null,
                 memory: null,
                 status: {
-                    id: run.code === 0 ? 3 : 4, // 3: Accepted, 4: Runtime Error
-                    description: run.code === 0 ? 'Accepted' : (run.signal ? `Terminated (${run.signal})` : 'Runtime Error')
+                    id: isSuccess ? 3 : 4,
+                    description: isSuccess ? 'Accepted' : 'Runtime Error'
                 }
             };
+
+            // Handle Compile Errors specifically
+            if (data.compiler_error) {
+                result.status = { id: 6, description: 'Compilation Error' };
+            }
 
             // Silent Error Logging
             if (result.stderr || result.compile_output) {
@@ -90,7 +103,7 @@ class GenSparkCompilerService {
 
             return result;
         } catch (e: any) {
-            console.error(`[Compiler] Piston execution failed:`, e.message);
+            console.error(`[Compiler] Wandbox execution failed:`, e.message);
             return {
                 stdout: null,
                 stderr: 'Compiler is currently busy or unreachable. Please try again later.',

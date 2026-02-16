@@ -8,7 +8,7 @@
                 "id": "sql1",
                 "title": "1. Introduction to Databases & SQL",
                 "duration": "15 mins",
-                "content": "# 🚀 Introduction to Databases\n\nA **Database** is an organized collection of structured information, or data, typically stored electronically in a computer system.\n\n### What is SQL?\nSQL stands for **Structured Query Language**. it is the standard language used to communicate with relational databases.",
+                "content": "A **Database** is an organized collection of structured information, or data, typically stored electronically in a computer system.\n\n### What is SQL?\nSQL stands for **Structured Query Language**. it is the standard language used to communicate with relational databases.",
                 "quizQuestions": [
                     {
                         "id": 1,
@@ -71,7 +71,7 @@
                 "id": "sql2",
                 "title": "2. RDBMS vs NoSQL Overview",
                 "duration": "20 mins",
-                "content": "# Database Models\n\n### RDBMS (Relational)\n- **Structure**: Tables with rows and columns (Schema-based).\n- **Data**: Linked by keys (Relationships).\n- **Examples**: MySQL, PostgreSQL.\n\n### NoSQL (Non-Relational)\n- **Structure**: Flexible, documents, or key-value pairs.",
+                "content": "### RDBMS (Relational)\n- **Structure**: Tables with rows and columns (Schema-based).\n- **Data**: Linked by keys (Relationships).\n- **Examples**: MySQL, PostgreSQL.\n\n### NoSQL (Non-Relational)\n- **Structure**: Flexible, documents, or key-value pairs.",
                 "quizQuestions": [
                     {
                         "id": 1,
@@ -133,7 +133,7 @@
                 "id": "sql3",
                 "title": "3. DBMS & SQL Architecture",
                 "duration": "20 mins",
-                "content": "# The Database Engine\n\nA **DBMS** (Database Management System) is software used to manage databases.",
+                "content": "A **DBMS** (Database Management System) is software used to manage databases.",
                 "quizQuestions": [
                     {
                         "id": 1,
@@ -195,7 +195,7 @@
                 "id": "sql4",
                 "title": "4. Installing MySQL / PostgreSQL",
                 "duration": "25 mins",
-                "content": "# Setting Up Your Lab\n\n### MySQL Setup\nMySQL is popular for web apps. Use the **MySQL Installer** to set up the server and **MySQL Workbench** for a GUI.",
+                "content": "### MySQL Setup\nMySQL is popular for web apps. Use the **MySQL Installer** to set up the server and **MySQL Workbench** for a GUI.",
                 "quizQuestions": [
                     {
                         "id": 1,
@@ -258,7 +258,7 @@
                 "id": "sql5",
                 "title": "5. SQL Data Types",
                 "duration": "20 mins",
-                "content": "# Defining Data\n\n- `INT`: Whole numbers.\n- `VARCHAR(n)`: Text (Variable length).\n- `DECIMAL(p,s)`: Exact decimals (Money).",
+                "content": "- `INT`: Whole numbers.\n- `VARCHAR(n)`: Text (Variable length).\n- `DECIMAL(p,s)`: Exact decimals (Money).",
                 "quizQuestions": [
                     {
                         "id": 1,
@@ -321,7 +321,7 @@
                 "id": "sql6",
                 "title": "6. Creating Database & Tables",
                 "duration": "30 mins",
-                "content": "# Building the House\n\nCheck Syntax for CREATE TABLE.",
+                "content": "Check Syntax for CREATE TABLE.",
                 "quizQuestions": [
                     {
                         "id": 1,
@@ -384,7 +384,7 @@
                 "id": "sql7",
                 "title": "7. CRUD Operations (INSERT, SELECT)",
                 "duration": "25 mins",
-                "content": "# Working with Data\n\nINSERT and SELECT fundamentals.",
+                "content": "INSERT and SELECT fundamentals.",
                 "quizQuestions": [
                     {
                         "id": 1,
@@ -447,7 +447,7 @@
                 "id": "sql8",
                 "title": "8. The WHERE Clause",
                 "duration": "20 mins",
-                "content": "# Filtering Data\n\nLogic in record retrieval.",
+                "content": "Logic in record retrieval.",
                 "quizQuestions": [
                     {
                         "id": 1,
@@ -510,7 +510,7 @@
                 "id": "sql9",
                 "title": "9. ORDER BY",
                 "duration": "20 mins",
-                "content": "# Sorting Results\n\nASC and DESC examples.",
+                "content": "ASC and DESC examples.",
                 "quizQuestions": [
                     {
                         "id": 1,
@@ -573,7 +573,7 @@
                 "id": "sql10",
                 "title": "10. LIMIT / OFFSET",
                 "duration": "15 mins",
-                "content": "# Pagination logic.",
+                "content": "Pagination logic.",
                 "quizQuestions": [
                     {
                         "id": 1,
@@ -642,7 +642,7 @@
                 "id": "sql11",
                 "title": "11. DISTINCT",
                 "duration": "15 mins",
-                "content": "# Unique Values",
+                "content": "Purpose of DISTINCT?",
                 "quizQuestions": [
                     {
                         "id": 1,
@@ -703,7 +703,7 @@
                 "id": "sql12",
                 "title": "12. Logical Operators (AND, OR, NOT)",
                 "duration": "20 mins",
-                "content": "# Complex Conditions",
+                "content": "Complex Conditions",
                 "quizQuestions": [
                     {
                         "id": 1,
@@ -766,7 +766,7 @@
                 "id": "sql13",
                 "title": "13. Pattern Matching (LIKE, IN, BETWEEN)",
                 "duration": "25 mins",
-                "content": "# Search Mastery",
+                "content": "Search Mastery",
                 "quizQuestions": [
                     {
                         "id": 1,

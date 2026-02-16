@@ -1,115 +1,161 @@
 import { User } from '../types';
-import { supabaseDB } from './supabaseService';
+
 
 export class StreakService {
     /**
-     * Updates the user's streak based on their last active date.
-     * This should be called whenever the user performs a meaningful action (e.g., login, lesson completion).
+     * Calculates the user's streak based on strict rules:
+     * 1. Consecutive calendar days.
+     * 2. Missed day resets to 0.
+     * 3. Multiple completions = 1 day.
+     * 4. Timezone respected (uses local time of the environment).
      */
-    static async updateStreak(user: User): Promise<User | null> {
-        if (!user || !supabaseDB.isStreakEnabled()) return null;
-
-        const now = new Date();
-        const lastActive = user.lastActiveAt ? new Date(user.lastActiveAt) : null;
-
-        // --- NEW: Recalculate streak from logs for absolute accuracy ---
-        const activityLog = [...(user.activity_log || [])];
-        const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-
-        // Ensure today is in log if updating
-        if (!activityLog.includes(todayStr)) {
-            activityLog.push(todayStr);
-        }
-
-        const currentCalculatedStreak = this.recalculateStreak(activityLog);
-        const currentStreakInProfile = user.streak || 0;
-
-        // Normalize dates to midnight for easy comparison
-        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        const yesterday = new Date(today);
-        yesterday.setDate(yesterday.getDate() - 1);
-
-        let shouldUpdate = false;
-
-        // Update if streak number is different from calculation OR lastActive is missing/old
-        if (currentStreakInProfile !== currentCalculatedStreak) {
-            shouldUpdate = true;
-        } else if (!lastActive) {
-            shouldUpdate = true;
-        } else {
-            const lastActiveDate = new Date(lastActive.getFullYear(), lastActive.getMonth(), lastActive.getDate());
-            if (lastActiveDate.getTime() < today.getTime()) {
-                shouldUpdate = true;
-            }
-        }
-
-        if (shouldUpdate) {
-            // Keep only last 60 unique active days
-            let finalLog = [...new Set(activityLog)].sort().slice(-60);
-
-            const updates = {
-                streak: currentCalculatedStreak,
-                lastActiveAt: now.toISOString(),
-                activity_log: finalLog
+    static calculateStreak(activityLog: string[]): {
+        currentStreak: number;
+        longestStreak: number;
+        lastActiveDate: string | null;
+        isStreakAliveToday: boolean;
+        isActiveToday: boolean;
+    } {
+        if (!activityLog || activityLog.length === 0) {
+            return {
+                currentStreak: 0,
+                longestStreak: 0,
+                lastActiveDate: null,
+                isStreakAliveToday: false,
+                isActiveToday: false
             };
+        }
 
-            try {
-                console.log(`[StreakService] Syncing streak for ${user._id} to ${currentCalculatedStreak}`);
-                const updatedUser = await supabaseDB.updateOne(user._id, updates);
-                return updatedUser;
-            } catch (error) {
-                console.error('[StreakService] Failed to update streak:', error);
-                return null;
+        // 1. Sort and Deduplicate Dates (Timezone: Local 00:00:00)
+        // We assume activityLog contains 'YYYY-MM-DD' strings which are timezone agnostic dates
+        // OR ISO strings. We will normalize to 'YYYY-MM-DD' to represent "calendar days".
+        const sortedUniqueDays = [...new Set(activityLog.map(date => {
+            const d = new Date(date);
+            // Ensure we are working with local calendar dates for the user
+            return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        }))].sort((a, b) => b.localeCompare(a)); // Descending: Newest first
+
+        if (sortedUniqueDays.length === 0) {
+            return {
+                currentStreak: 0,
+                longestStreak: 0,
+                lastActiveDate: null,
+                isStreakAliveToday: false,
+                isActiveToday: false
+            };
+        }
+
+        const today = new Date();
+        const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        const yesterdayStr = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, '0')}-${String(yesterday.getDate()).padStart(2, '0')}`;
+
+        const latestActivityStr = sortedUniqueDays[0];
+        const lastActiveDate = latestActivityStr;
+        const isActiveToday = latestActivityStr === todayStr;
+
+        // 2. Calculate Current Streak
+        let currentStreak = 0;
+
+        // If the last active day was neither today nor yesterday, the streak is broken (0).
+        // Unless we are just calculating "what the streak WOULD be if they continued", 
+        // strictly speaking, if they missed yesterday and haven't done today, it's 0.
+        // If they did yesterday, it's alive.
+
+        // Check if streak is broken
+        // A streak is broken if the latest activity is before yesterday.
+        if (latestActivityStr < yesterdayStr) {
+            currentStreak = 0;
+        } else {
+            // Count backwards from the latest consecutive block
+            let expectedDate = new Date(latestActivityStr);
+            let streakCount = 0;
+
+            for (const dateStr of sortedUniqueDays) {
+                const current = new Date(dateStr);
+                // Reset time components for accurate comparison
+                current.setHours(0, 0, 0, 0);
+                const expected = new Date(expectedDate);
+                expected.setHours(0, 0, 0, 0);
+
+                if (current.getTime() === expected.getTime()) {
+                    streakCount++;
+                    expectedDate.setDate(expectedDate.getDate() - 1); // Move back one day
+                } else {
+                    break; // Gap found
+                }
             }
+            currentStreak = streakCount;
         }
 
-        return user;
-    }
+        // 3. Calculate Longest Streak
+        let longestStreak = 0;
+        let tempStreak = 0;
+        let prevDate: number | null = null;
 
-    /**
-     * Absolute source of truth for streak calculation
-     */
-    static recalculateStreak(activityLog: string[]): number {
-        if (!activityLog || activityLog.length === 0) return 0;
+        // Iterate oldest to newest for longest streak calc convenience, or just handle logic carefully.
+        // Let's use the sorted (descending) array.
+        for (const dateStr of sortedUniqueDays) {
+            const currentDate = new Date(dateStr).getTime();
 
-        // 1. Convert to sorted unique date objects (midnight)
-        const sortedDates = [...new Set(activityLog)]
-            .map(dateStr => {
-                const [y, m, d] = dateStr.split('-').map(Number);
-                return new Date(y, m - 1, d).getTime();
-            })
-            .sort((a, b) => b - a); // Descending (latest first)
-
-        const now = new Date();
-        const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-        const yesterdayMidnight = todayMidnight - (24 * 60 * 60 * 1000);
-
-        // 2. Check if streak is broken (haven't been active today OR yesterday)
-        const latestActivity = sortedDates[0];
-        if (latestActivity < yesterdayMidnight) {
-            return 0; // Streak broken
-        }
-
-        // 3. Count consecutive days backwards
-        let streak = 0;
-        let expectedTime = latestActivity;
-
-        for (const date of sortedDates) {
-            if (date === expectedTime) {
-                streak++;
-                expectedTime -= (24 * 60 * 60 * 1000);
+            if (prevDate === null) {
+                tempStreak = 1;
             } else {
-                break;
-            }
-        }
+                const diffTime = Math.abs(prevDate - currentDate);
+                const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
 
-        return streak;
+                if (diffDays === 1) {
+                    tempStreak++;
+                } else {
+                    longestStreak = Math.max(longestStreak, tempStreak);
+                    tempStreak = 1;
+                }
+            }
+            prevDate = currentDate;
+        }
+        longestStreak = Math.max(longestStreak, tempStreak);
+
+
+        // 4. Streak Alive Status
+        // Is the streak "alive"? 
+        // It is alive if they have been active today OR yesterday.
+        // If they were active yesterday, the streak is "at risk" but alive (they can extend it today).
+        // If they were active today, it is extended and safe.
+        const isStreakAliveToday = latestActivityStr === todayStr || latestActivityStr === yesterdayStr;
+
+        return {
+            currentStreak,
+            longestStreak,
+            lastActiveDate,
+            isStreakAliveToday,
+            isActiveToday
+        };
     }
 
     /**
-     * Explicitly record activity for today without necessarily updating the streak increment logic.
-     * Useful for non-streak-incrementing actions that still count as "activity".
+     * Checks if the user's streak needs to be updated based on their activity log.
+     * Returns the updates if necessary, or null if the streak is already correct.
+     * Use this to sync streak state without direct DB coupling.
      */
+    static getStreakMismatch(user: User, isStreakEnabled: boolean = true): Partial<User> | null {
+        if (!user || !isStreakEnabled) return null;
+
+        const activityLog = [...(user.activity_log || [])];
+        const stats = this.calculateStreak(activityLog);
+
+        // Update if streak number is different from calculation
+        if (user.streak !== stats.currentStreak) {
+            console.log(`[StreakService] Streak mismatch detected for ${user._id}: ${user.streak} -> ${stats.currentStreak}`);
+            return {
+                streak: stats.currentStreak
+            };
+        }
+
+        return null;
+    }
+
     // --- Persistence Helper for Detailed History (LocalStorage) ---
     private static getHistoryKey(userId: string): string {
         return `activity_history_${userId}`;
@@ -135,11 +181,19 @@ export class StreakService {
         }
     }
 
-    static getActivityUpdates(user: User, specificActivity?: { type: 'lesson' | 'practice' | 'project' | 'challenge', title: string, xp?: number }): Partial<User> | null {
+    static getActivityUpdates(user: User, specificActivity?: {
+        type: 'lesson' | 'practice' | 'project' | 'challenge',
+        title: string,
+        xp?: number,
+        executionTime?: string,
+        language?: string,
+        itemId?: string,
+        score?: number,
+        timeSpent?: number
+    }): Partial<User> | null {
         if (!user) return null;
 
         const now = new Date();
-        // Use local date for calendar consistency
         const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
         const activityLog = [...(user.activity_log || [])];
@@ -175,13 +229,12 @@ export class StreakService {
         }
 
         // --- ROBUST DEDUPLICATION ---
-        // Filter to keep only the FIRST occurrence of any (date_string + type + title) combination
-        // This cleans up both existing duplicates and prevents new ones
         const uniqueHistory: any[] = [];
         const seen = new Set();
 
         for (const item of activityHistory) {
-            const itemDateStr = new Date(item.date).toDateString(); // "Mon Jan 01 2024"
+            // Handle potentially missing date fields if legacy data
+            const itemDateStr = item.date ? new Date(item.date).toDateString() : 'Unknown Date';
             const key = `${itemDateStr}|${item.type}|${item.title}`;
 
             if (!seen.has(key)) {
@@ -190,23 +243,23 @@ export class StreakService {
             }
         }
 
-        // Check if deduplication actually removed anything or if we added something new
         if (uniqueHistory.length !== activityHistory.length || hasHistoryUpdates) {
             activityHistory = uniqueHistory;
-
-            if (activityHistory.length > 100) {
-                activityHistory = activityHistory.slice(0, 100); // Keep last 100 items
-            }
-
+            if (activityHistory.length > 100) activityHistory = activityHistory.slice(0, 100);
             this.saveHistory(user._id, activityHistory);
             hasHistoryUpdates = true;
         }
 
-        if (hasLogUpdates || hasHistoryUpdates) {
-            const updates: Partial<User> = { lastActiveAt: now.toISOString() };
-            if (hasLogUpdates) updates.activity_log = activityLog;
+        // Calculate new streak based on the updated log
+        const stats = this.calculateStreak(activityLog);
 
-            // Always update history if it changed (deduped or new)
+        if (hasLogUpdates || hasHistoryUpdates || user.streak !== stats.currentStreak) {
+            const updates: Partial<User> = {
+                lastActiveAt: now.toISOString(),
+                streak: stats.currentStreak // update streak immediately
+            };
+
+            if (hasLogUpdates) updates.activity_log = activityLog;
             if (hasHistoryUpdates) updates.activity_history = activityHistory;
 
             return updates;

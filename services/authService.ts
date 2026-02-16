@@ -33,38 +33,61 @@ class AuthService {
     let redirectUrl = window.location.origin;
 
     // Check if we are running in a Capacitor app
-    if (Capacitor.isNativePlatform()) {
-      redirectUrl = 'com.genspark.app://google-auth';
+    const isNative = Capacitor.isNativePlatform();
+
+    if (isNative) {
+      // Use the scheme defined in AndroidManifest.xml
+      redirectUrl = 'genspark://auth';
     } else {
       console.log("⚠️ [AuthService] Not native platform, utilizing origin:", redirectUrl);
     }
 
     console.log("🔐 [AuthService] Initiating OAuth with Redirect URL:", redirectUrl);
 
-    const { error } = await supabaseDB.supabase.auth.signInWithOAuth({
-      provider: provider,
-      options: {
-        redirectTo: redirectUrl,
-        skipBrowserRedirect: false
+    if (isNative) {
+      // For Native: Get the URL but don't redirect in the WebView
+      const { data, error } = await supabaseDB.supabase.auth.signInWithOAuth({
+        provider: provider,
+        options: {
+          redirectTo: redirectUrl,
+          skipBrowserRedirect: true
+        }
+      });
+
+      if (error) throw error;
+
+      if (data?.url) {
+        // Use the Capacitor Browser plugin to open the URL in the system browser
+        const { Browser } = await import('@capacitor/browser');
+        await Browser.open({ url: data.url, windowName: '_self' });
       }
-    });
+    } else {
+      // For Web: Standard redirect flow
+      const { error } = await supabaseDB.supabase.auth.signInWithOAuth({
+        provider: provider,
+        options: {
+          redirectTo: redirectUrl,
+          skipBrowserRedirect: false
+        }
+      });
 
-    if (error) {
-      console.error("Supabase OAuth Error:", error);
+      if (error) {
+        console.error("Supabase OAuth Error:", error);
 
-      const msg = error.message?.toLowerCase() || '';
-      const errorString = JSON.stringify(error).toLowerCase();
+        const msg = error.message?.toLowerCase() || '';
+        const errorString = JSON.stringify(error).toLowerCase();
 
-      if (msg.includes('apikey')) {
-        throw new Error("Supabase is not configured correctly. Missing API Key.");
+        if (msg.includes('apikey')) {
+          throw new Error("Supabase is not configured correctly. Missing API Key.");
+        }
+
+        if (msg.includes('provider is not enabled') || errorString.includes('provider is not enabled')) {
+          const providerName = provider.charAt(0).toUpperCase() + provider.slice(1);
+          throw new Error(`${providerName} Login is not enabled in this database. Please use "Create Account" or "Log In" with Email.`);
+        }
+
+        throw error;
       }
-
-      if (msg.includes('provider is not enabled') || errorString.includes('provider is not enabled')) {
-        const providerName = provider.charAt(0).toUpperCase() + provider.slice(1);
-        throw new Error(`${providerName} Login is not enabled in this database. Please use "Create Account" or "Log In" with Email.`);
-      }
-
-      throw error;
     }
   }
 
@@ -207,8 +230,12 @@ class AuthService {
 
       const userId = session.user.id;
 
-      // Fetch profile once per event
-      console.log("authService: Fetching profile for", userId);
+      // Fetch profile once per event - ONLY if needed
+      console.log("authService: Auth event handler", { event, userId });
+
+      // If the event is INITIAL_SESSION and we might already have a user from a previous check (unlikely in this service but safe)
+      // or if it's a token refresh we might occasionally skip, but for now we prioritize data integrity.
+      // Optimization: findOne is already parallelized, so it's relatively fast.
       let user = await supabaseDB.findOne({ _id: userId });
 
       if (!user) {
@@ -229,8 +256,7 @@ class AuthService {
         }
       } else {
         console.log("authService: Returning existing profile", { userId, firstName: user.firstName });
-        // Update streak on profile load
-        StreakService.updateStreak(user).catch(e => console.error("Streak check failed", e));
+        // Streak updates are handled by AuthContext to avoid duplication
         callback(user);
       }
     });

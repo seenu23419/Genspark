@@ -41,7 +41,6 @@
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(99, 102, 241, 0.1));
   border-color: rgba(99, 102, 241, 0.5);
   color: #e0e7ff;
-  transform: translateY(-2px);
 }
 
 @media (max-width: 640px) {
@@ -128,8 +127,6 @@
 .selection-none pre,
 .selection-none code {
   user-select: none !important;
-  pointer-events: none;
-  /* Disable selection in code specific blocks */
 }
 
 /* Code Block Enhancements (Legacy support for other parts) */
@@ -148,10 +145,10 @@
   font-family: 'Courier New', monospace;
   font-size: 0.95rem;
   line-height: 1.7;
-  white-space: pre-wrap;
-  word-break: break-word;
-  overflow-wrap: anywhere;
-  overflow-x: auto;
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+  overflow-x: hidden !important;
   box-sizing: border-box;
   padding-right: 3.5rem;
   scrollbar-width: thin;
@@ -312,8 +309,7 @@
   padding: 1.5rem;
   border-left: 4px solid #6366f1;
   background: rgba(99, 102, 241, 0.03);
-  border-radius: 0.75rem;
-  color: #64748b;
+  color: #475569;
   font-size: 0.95rem;
   font-style: normal;
   border-top: 1px solid rgba(99, 102, 241, 0.1);
@@ -326,7 +322,7 @@
 }
 
 .lesson-blockquote strong {
-  color: #e2e8f0;
+  color: #1e293b;
   font-weight: 800;
   display: block;
   margin-bottom: 0.5rem;
@@ -334,6 +330,11 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
+
+.dark .lesson-blockquote strong {
+  color: #e2e8f0;
+}
+
 
 /* Output Box Styling */
 .lesson-output-box {
@@ -404,6 +405,20 @@
 
 .dark .lesson-inline-code {
   color: #a5b4fc;
+}
+
+/* Data Type Specific Highlighting - Simple Colored Text */
+.lesson-data-type {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  color: #10b981;
+  /* Emerald-500 */
+  font-weight: 700;
+}
+
+.dark .lesson-data-type {
+  color: #34d399;
+  /* Emerald-400 */
 }
 
 /* Allow inline code to break on small screens rather than causing horizontal scroll */
@@ -478,18 +493,33 @@
     padding: 0.5rem 0.75rem;
   }
 
-  .lesson-section h1 {
-    font-size: 1.5rem;
-    margin-top: 2rem;
+  .lesson-header-h3 {
+    font-size: 1.15rem !important;
   }
+}
 
-  .lesson-section h2 {
-    font-size: 1.125rem;
-    margin-top: 1.5rem;
-  }
+.lesson-header-h3 {
+  color: #4f46e5 !important;
+  /* Indigo-600 */
+  margin-top: 1.5rem !important;
+  margin-bottom: 1rem !important;
+  font-weight: 800 !important;
+}
 
-  .lesson-code-block pre {
-    padding: 1rem;
-    font-size: 0.8rem;
-  }
+.dark .lesson-header-h3 {
+  color: #818cf8 !important;
+  /* Indigo-400 */
+}
+
+.lesson-code-block pre {
+  padding: 1rem;
+  font-size: 0.8rem;
+}
+
+/* Global Force Wrap Safeguard */
+pre,
+code {
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
 }

@@ -284,8 +284,8 @@ const LearnHub: React.FC = () => {
         };
 
         const borderClass = isPathMastered
-            ? 'border-emerald-500 shadow-emerald-500/20 hover:shadow-emerald-500/30'
-            : 'border-indigo-500 shadow-indigo-500/30 hover:shadow-indigo-500/40';
+            ? 'border-emerald-500 shadow-lg'
+            : 'border-indigo-500 shadow-lg';
 
         return (
             <div
@@ -293,14 +293,10 @@ const LearnHub: React.FC = () => {
                 onClick={handleClick}
                 className={`group relative rounded-2xl cursor-pointer overflow-hidden transition-all active:scale-[0.98] ${isAdvancedLocked ? 'opacity-50 cursor-not-allowed' : ''
                     } ${isFeaturedCard
-                        ? `col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2 bg-white dark:bg-slate-900 border-2 p-6 md:p-8 shadow-2xl transition-all ${borderClass}`
-                        : 'bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-5 md:p-6 shadow-lg hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-900'
+                        ? `col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2 bg-white dark:bg-slate-900 border-[3px] p-6 md:p-8 transition-all ${borderClass}`
+                        : 'bg-white dark:bg-slate-900/80 border-[3px] border-slate-400 dark:border-slate-600 p-5 md:p-6 shadow-md hover:border-slate-500 dark:hover:border-slate-500 hover:bg-slate-50 dark:hover:bg-slate-900'
                     }`}
             >
-                <div className={`absolute -top-10 -right-10 w-32 h-32 rounded-full blur-3xl transition-all ${isFeaturedCard
-                    ? (isPathMastered ? 'bg-emerald-500/20 group-hover:bg-emerald-500/25' : 'bg-indigo-500/20 group-hover:bg-indigo-500/25')
-                    : 'bg-indigo-500/5 group-hover:bg-indigo-500/10'
-                    }`}></div>
 
                 <div className="flex items-start justify-between mb-4">
                     <div className={`${isFeaturedCard ? 'w-16 h-16 md:w-20 md:h-20' : 'w-14 h-14 md:w-16 md:h-16'} bg-white/5 rounded-xl flex items-center justify-center p-2 shadow-inner group-hover:bg-white/10 transition-all`}>
@@ -311,9 +307,9 @@ const LearnHub: React.FC = () => {
                         />
                     </div>
                     {showBadge && (
-                        <span className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border ${isPathMastered
-                            ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
-                            : 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30'
+                        <span className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border-2 ${isPathMastered
+                            ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/80'
+                            : 'bg-indigo-500/20 text-indigo-300 border-indigo-500/80'
                             }`}>
                             {isPathMastered ? 'Mastered' : 'Beginner'}
                         </span>
@@ -339,7 +335,7 @@ const LearnHub: React.FC = () => {
                 {isPathMastered ? (
                     <div className="space-y-3">
                         <div className="flex flex-col sm:flex-row gap-3">
-                            <button className="flex-1 py-3.5 md:py-4 rounded-xl font-bold uppercase tracking-widest text-sm md:text-base transition-all flex items-center justify-center gap-2 px-4 bg-emerald-600/20 text-emerald-400 border border-emerald-500/30">
+                            <button className="flex-1 py-3.5 md:py-4 rounded-xl font-bold uppercase tracking-widest text-sm md:text-base transition-all flex items-center justify-center gap-2 px-4 bg-emerald-600/20 text-emerald-400 border-2 border-emerald-500/80">
                                 <CheckCircle2 size={20} />
                                 <span>Mastered</span>
                             </button>
@@ -501,7 +497,6 @@ const LearnHub: React.FC = () => {
                 /* Completed Lessons View */
                 <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
                     <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-white/5 rounded-[2.5rem] p-8 flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden relative shadow-sm">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 blur-3xl rounded-full translate-x-12 -translate-y-12" />
                         <div>
                             <h2 className="text-2xl md:text-3xl font-black text-white mb-2 uppercase italic tracking-tight">Your Achievements</h2>
                             <p className="text-slate-400 font-medium">You have mastered {completedLessons.length} lessons so far. Revisit them anytime to reinforce your knowledge.</p>

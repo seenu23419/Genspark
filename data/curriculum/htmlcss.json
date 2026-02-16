@@ -15,7 +15,7 @@
                     "Body",
                     "Tags"
                 ],
-                "content": "# HTML5 Document Structure\n\nEvery web page starts with a specific blueprint. HTML (HyperText Markup Language) defines the **structure** of your content.\n\n## 1. The Core Setup\n```html\n<!DOCTYPE html> <!-- Tells browser this is HTML5 -->\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>My Website</title>\n</head>\n<body>\n  <!-- Content goes here -->\n</body>\n</html>\n```\n\n## 2. Key Tags\n- `<h1>` to `<h6>`: Headings (SEO important!)\n- `<p>`: Paragraphs\n- `<a>`: Links (Anchor tags)\n- `<img>`: Images (Requires `src` and `alt` attributes)",
+                "content": "Every web page starts with a specific blueprint. HTML (HyperText Markup Language) defines the **structure** of your content.\n\n## 1. The Core Setup\n```html\n<!DOCTYPE html> <!-- Tells browser this is HTML5 -->\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>My Website</title>\n</head>\n<body>\n  <!-- Content goes here -->\n</body>\n</html>\n```\n\n## 2. Key Tags\n- `<h1>` to `<h6>`: Headings (SEO important!)\n- `<p>`: Paragraphs\n- `<a>`: Links (Anchor tags)\n- `<img>`: Images (Requires `src` and `alt` attributes)",
                 "fullProgram": "<!DOCTYPE html>\n<html>\n<head>\n    <title>GenSpark Portfolio</title>\n</head>\n<body>\n    <h1>Arjun's Portfolio</h1>\n    <p>Welcome to my professional web journey.</p>\n    <a href=\"#\">View My Projects</a>\n</body>\n</html>",
                 "expectedOutput": "A page with a large heading, a paragraph, and a link.",
                 "quizQuestions": [
