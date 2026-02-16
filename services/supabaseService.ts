@@ -207,15 +207,20 @@ class SupabaseService {
               console.error("[SupabaseService] Fallback fetch also failed:", fallbackResult.error);
               throw fallbackResult.error;
             }
+            console.log("[SupabaseService] Fallback fetch succeeded (streak-free mode).");
             return fallbackResult.data;
           }
           // For other errors, try the fallback anyway
-          console.warn("[SupabaseService] Unexpected fetch error, attempting fallback anyway");
+          console.warn("[SupabaseService] Unexpected fetch error, attempting last resort fallback", error);
           const lastResortBuilder = this.supabase.from('users')
-            .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, created_at') as any;
+            .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, completed_lesson_ids, unlocked_lesson_ids, created_at') as any;
           if (queryBuilder.id) lastResortBuilder.eq('id', queryBuilder.id);
           else if (queryBuilder.email) lastResortBuilder.eq('email', queryBuilder.email);
           const lastResortResult = await lastResortBuilder.single();
+
+          if (lastResortResult.data) {
+            console.log("[SupabaseService] Last resort fetch succeeded.");
+          }
           return lastResortResult.data || null;
         }
         return data;
@@ -303,7 +308,7 @@ class SupabaseService {
       firstName = userData.email.split('@')[0];
     }
 
-    let profileRequest = this.supabase
+    const profileRequest = this.supabase
       .from('users')
       .insert({
         id: userData._id,

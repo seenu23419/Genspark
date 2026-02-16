@@ -3,7 +3,7 @@
  * Initialize on app startup before rendering.
  */
 
-let Sentry: any = null;
+const Sentry: any = null;
 
 const loadSentry = async () => {
   // Return stub instead of real module to avoid Vite import errors

@@ -236,7 +236,7 @@ class AuthService {
       // If the event is INITIAL_SESSION and we might already have a user from a previous check (unlikely in this service but safe)
       // or if it's a token refresh we might occasionally skip, but for now we prioritize data integrity.
       // Optimization: findOne is already parallelized, so it's relatively fast.
-      let user = await supabaseDB.findOne({ _id: userId });
+      const user = await supabaseDB.findOne({ _id: userId });
 
       if (!user) {
         console.log("authService: Profile not found for existing session. Creating one...");

@@ -128,7 +128,11 @@ const CourseTrack: React.FC = () => {
 
   // 2. Computed values
   const language = useMemo(() => LANGUAGES.find(l => l.id === langId), [langId]);
-  const completedLessonIds = useMemo(() => user?.completedLessonIds || [], [user]);
+  const completedLessonIds = useMemo(() => {
+    const ids = user?.completedLessonIds || [];
+    console.log("[CourseTrack] User:", user?._id, "Completed IDs:", ids.length, ids);
+    return ids;
+  }, [user]);
 
   const modules = useMemo(() => {
     if (!language) return [];

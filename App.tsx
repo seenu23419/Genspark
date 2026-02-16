@@ -1,12 +1,9 @@
 import React, { Suspense, lazy } from 'react';
 import { createBrowserRouter, RouterProvider, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { CurriculumProvider } from './contexts/CurriculumContext';
-import { PracticeProvider } from './contexts/PracticeContext';
+import { useAuth } from './contexts/AuthContext';
 import Layout from './components/Layout';
 import Splash from './screens/auth/Splash';
-import { ErrorBoundary, MainErrorBoundary } from './components/ErrorBoundary';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { Loader2 } from 'lucide-react';
 import { Screen } from './types';
 
@@ -33,8 +30,7 @@ const LearningHistory = lazy(() => import('./screens/profile/LearningHistory'));
 const PracticeHistory = lazy(() => import('./screens/practice/PracticeHistory'));
 const CodingProblemWrapper = lazy(() => import('./screens/practice/CodingProblemWrapper'));
 
-// Query Client for React Query
-const queryClient = new QueryClient();
+
 
 // Loading Fallback
 // Minimal Loading Fallback
@@ -197,19 +193,10 @@ const router = createBrowserRouter([
   }
 ]);
 
+
 const App: React.FC = () => {
   return (
-    <MainErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <CurriculumProvider>
-            <PracticeProvider>
-              <RouterProvider router={router} />
-            </PracticeProvider>
-          </CurriculumProvider>
-        </AuthProvider>
-      </QueryClientProvider>
-    </MainErrorBoundary>
+    <RouterProvider router={router} />
   );
 };
 

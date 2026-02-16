@@ -77,6 +77,8 @@ export const CurriculumProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 export const useCurriculum = () => {
     const context = useContext(CurriculumContext);
     if (context === undefined) {
+        console.error("useCurriculum called outside provider!");
+        console.trace();
         throw new Error('useCurriculum must be used within a CurriculumProvider');
     }
     return context;

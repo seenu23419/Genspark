@@ -70,7 +70,7 @@ export class StreakService {
             currentStreak = 0;
         } else {
             // Count backwards from the latest consecutive block
-            let expectedDate = new Date(latestActivityStr);
+            const expectedDate = new Date(latestActivityStr);
             let streakCount = 0;
 
             for (const dateStr of sortedUniqueDays) {

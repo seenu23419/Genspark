@@ -347,47 +347,35 @@
                 "id": "c6",
                 "title": "6. C Operators",
                 "duration": "35 mins",
-                "content": "# C Operators\n\nOperators are special symbols that perform operations on values and variables. They are the engines of logic in your C programs.\n\n---\n\n## 1. Arithmetic Operators\n\nUsed for mathematical calculations. \n\n### ➤ `+`, `-`, `*`, `/`, `%` \n\n| Operator | Purpose | Example |\n| :--- | :--- | :--- |\n| `+` | Addition | `10 + 5 = 15` |\n| `-` | Subtraction | `10 - 5 = 5` |\n| `*` | Multiplication | `4 * 3 = 12` |\n| `/` | Division | `10 / 4 = 2` (Integer) |\n| `%` | Modulo | `10 % 3 = 1` |\n\n### ⚡ Example\n```c\nint a = 10, b = 3;\nprintf(\"Division: %d\\n\", a / b); // Output: 3\nprintf(\"Remainder: %d\\n\", a % b); // Output: 1\n```\n\n### Expected Output\n```text\nDivision: 3\nRemainder: 1\n```\n\n> [!TIP]\n> **Compiler Insight: The Integer Trap**\n> When dividing two integers in C, the result is *always* an integer. The decimal part is truncated (thrown away), not rounded. To get `2.5`, at least one number must be a `float`: `10.0 / 4` results in `2.5`.\n\n---\n\n## 2. Relational Operators\n\nUsed to compare two values. They return **1** for True and **0** for False.\n\n### ➤ `==`, `!=`, `>`, `<`, `>=`, `<=` \n\n| Operator | Meaning | True Example |\n| :--- | :--- | :--- |\n| `==` | Equal To | `5 == 5` |\n| `!=` | Not Equal To | `5 != 3` |\n| `>` | Greater Than | `10 > 7` |\n| `<` | Less Than | `3 < 8` |\n\n### ⚡ Example\n```c\nint x = 5, y = 10;\nprintf(\"Is x equal to y? %d\", x == y); // Returns 0\n```\n\n### Expected Output\n```text\nIs x equal to y? 0\n```\n\n---\n\n## 3. Logical Operators\n\nUsed to combine multiple conditions. \n\n### ➤ `&&` (AND), `||` (OR), `!` (NOT) \n\n*   **`&&` (AND)**: Returns 1 only if **both** sides are true.\n*   **`||` (OR)**: Returns 1 if **at least one** side is true.\n*   **`!` (NOT)**: Reverses the state (True becomes False).\n\n### ⚡ Example\n```c\nint age = 20, has_ticket = 1;\nif (age >= 18 && has_ticket) {\n    printf(\"Welcome to the show!\\n\");\n}\n```\n\n> [!WARNING]\n> **Short-Circuit Logic**\n> C is efficient! In `(A && B)`, if `A` is false, C **won't even check** `B` because the whole thing is already false. Similarly, in `(A || B)`, if `A` is true, C skips `B`.\n\n---\n\n## 4. Increment & Decrement\n\nUsed to increase or decrease a variable by exactly 1.\n\n### ➤ `++` (Increment), `--` (Decrement)\n\n*   **Prefix (`++a`)**: Increment first, then use the value.\n*   **Postfix (`a++`)**: Use the value first, then increment.\n\n### ⚡ Example\n```c\nint x = 5;\nprintf(\"%d \", ++x); // Prints 6, x is now 6\nprintf(\"%d\", x++);   // Prints 6, x is now 7\n```\n\n### Expected Output\n```text\n6 6\n```\n\n---\n\n## 5. Assignment Operators\n\nUsed to store values in variables. Combined operators (`+=`, `-=`) are shorthand for updates.\n\n### ➤ `=`, `+=`, `-=`, `*=`, `/=`\n\n| Expression | Equivalent To |\n| :--- | :--- |\n| `x += 5` | `x = x + 5` |\n| `x *= 2` | `x = x * 2` |\n\n---\n\n## 6. Precedence (The Rulebook)\n\nWhen multiple operators are in one line, C follows a strict order:\n1.  **Parentheses** `()` - Highest Priority\n2.  **Arithmetic** `* / %` then `+ -`\n3.  **Relational** `< >` then `== !=`\n4.  **Logical** `&&` then `||` \n5.  **Assignment** `=` - Lowest Priority\n\n### ⚡ Logic Master Example\n```c\n#include <stdio.h>\n\nint main() {\n    int a = 10, b = 20, c = 30;\n    int res = a + b * c > 500 && b != c;\n    // Steps: \n    // 1. b * c = 600\n    // 2. a + 600 = 610\n    // 3. 610 > 500 = 1 (True)\n    // 4. b != c = 1 (True)\n    // 5. 1 && 1 = 1\n    printf(\"Final Result: %d\", res);\n    return 0;\n}\n```\n\n### Expected Output\n```text\nFinal Result: 1\n```",
+                "content": "# C Operators\n\nOperators are special symbols that perform operations on values and variables. They are the engines of logic in your C programs.\n\n---\n\n## 1. Arithmetic Operators\n\nArithmetic operators form the mathematical foundation of C programming. Just like a standard calculator, C uses these symbols to perform fundamental operations such as addition, subtraction, multiplication, and division. \n\nThese operators work seamlessly on both integers (whole numbers) and floating-point numbers (decimals), allowing you to construct complex formulas for everything from simple counters to advanced physics simulations.\n\n### ➤ `+`, `-`, `*`, `/`, `%` \n\n| Operator | Purpose | Example |\n| :--- | :--- | :--- |\n| `+` | Addition | `10 + 5 = 15` |\n| `-` | Subtraction | `10 - 5 = 5` |\n| `*` | Multiplication | `4 * 3 = 12` |\n| `/` | Division | `10 / 4 = 2` (Integer) |\n| `%` | Modulo | `10 % 3 = 1` |\n\n### ⚡ Example\n```c\nint a = 10, b = 3;\nprintf(\"Division: %d\\n\", a / b); // Output: 3\nprintf(\"Remainder: %d\\n\", a % b); // Output: 1\n```\n\n### Expected Output\n```text\nDivision: 3\nRemainder: 1\n```\n\n> [!TIP]\n> **Compiler Insight: The Integer Trap**\n> When dividing two integers in C, the result is *always* an integer. The decimal part is truncated (thrown away), not rounded. To get `2.5`, at least one number must be a `float`: `10.0 / 4` results in `2.5`.\n\n---\n\n## 2. Relational Operators\n\nRelational operators are used to compare two values, essentially asking a question about their relationship (e.g., \"Is 5 greater than 3?\"). In C, these comparisons don't return \"True\" or \"False\" keywords; instead, they return integer values: **1** represents True, and **0** represents False. These are the decision-making tools for loops and if-statements.\n\n### ➤ `==`, `!=`, `>`, `<`, `>=`, `<=` \n\n| Operator | Meaning | True Example |\n| :--- | :--- | :--- |\n| `==` | Equal To | `5 == 5` |\n| `!=` | Not Equal To | `5 != 3` |\n| `>` | Greater Than | `10 > 7` |\n| `<` | Less Than | `3 < 8` |\n\n### ⚡ Example\n```c\nint x = 5, y = 10;\nprintf(\"Is x equal to y? %d\", x == y); // Returns 0\n```\n\n### Expected Output\n```text\nIs x equal to y? 0\n```\n\n---\n\n## 3. Logical Operators\n\nLogical operators allow you to combine multiple conditions into complex decision logic. They are essential for validating ranges (e.g., \"Is age between 18 AND 65?\") or checking multiple requirements (e.g., \"Has ticket OR is VIP\"). Like relational operators, they return 1 (True) or 0 (False).\n\n### ➤ `&&` (AND), `||` (OR), `!` (NOT) \n\n*   **`&&` (AND)**: Returns 1 only if **both** sides are true.\n*   **`||` (OR)**: Returns 1 if **at least one** side is true.\n*   **`!` (NOT)**: Reverses the state (True becomes False).\n\n### ⚡ Example\n```c\nint age = 20, has_ticket = 1;\nif (age >= 18 && has_ticket) {\n    printf(\"Welcome to the show!\\n\");\n}\n```\n\n> [!WARNING]\n> **Short-Circuit Logic**\n> C is efficient! In `(A && B)`, if `A` is false, C **won't even check** `B` because the whole thing is already false. Similarly, in `(A || B)`, if `A` is true, C skips `B`.\n\n---\n\n## 4. Increment & Decrement\n\nThese are unary operators (meaning they operate on a single variable) designed for convenience. They increase (`++`) or decrease (`--`) a variable's value by exactly 1. They are incredibly common in loops and counters. \n\nThe placement of the operator matters significantly: **Prefix** modifies the value *before* it's used, while **Postfix** uses the current value *before* modifying it.\n\n### ➤ `++` (Increment), `--` (Decrement)\n\n*   **Prefix (`++a`)**: Increment first, then use the value.\n*   **Postfix (`a++`)**: Use the value first, then increment.\n\n### ⚡ Example\n```c\nint x = 5;\nprintf(\"%d \", ++x); // Prints 6, x is now 6\nprintf(\"%d\", x++);   // Prints 6, x is now 7\n```\n\n### Expected Output\n```text\n6 6\n```\n\n---\n\n## 5. Assignment Operators\n\nAssignment operators are used to store or update values in variables. While the basic `=` is the most common, C offers \"Compound Assignment\" operators. These combine an arithmetic operation with assignment, making your code shorter and often easier to read (e.g., `x += 5` instead of `x = x + 5`).\n\n### ➤ `=`, `+=`, `-=`, `*=`, `/=`\n\n| Expression | Equivalent To |\n| :--- | :--- |\n| `x += 5` | `x = x + 5` |\n| `x *= 2` | `x = x * 2` |\n\n---\n\n## 6. Precedence (The Rulebook)\n\nJust like in standard mathematics (BODMAS/PEMDAS), C follows a strict order of operations known as Operator Precedence. This hierarchy dictates which parts of an expression are evaluated first. For instance, multiplication `*` is always performed before addition `+`. Understanding this prevents unexpected results in complex formulas.\n\nWhen multiple operators are in one line, C follows a strict order:\n1.  **Parentheses** `()` - Highest Priority\n2.  **Arithmetic** `* / %` then `+ -`\n3.  **Relational** `< >` then `== !=`\n4.  **Logical** `&&` then `||` \n5.  **Assignment** `=` - Lowest Priority\n\n### ⚡ Logic Master Example\n```c\n#include <stdio.h>\n\nint main() {\n    int a = 10, b = 20, c = 30;\n    int res = a + b * c > 500 && b != c;\n    // Steps: \n    // 1. b * c = 600\n    // 2. a + 600 = 610\n    // 3. 610 > 500 = 1 (True)\n    // 4. b != c = 1 (True)\n    // 5. 1 && 1 = 1\n    printf(\"Final Result: %d\", res);\n    return 0;\n}\n```\n\n### Expected Output\n```text\nFinal Result: 1\n```\n\n---\n\n## 7. The 3 Types of Operators\n\nYou might encounter these terms in technical documentation. They simply categorize operators based on the number of \"operands\" (values or variables) they require to function.\n\n| Type | Operands Needed | Examples |\n| :--- | :---: | :--- |\n| **Unary** | 1 | `++`, `--`, `!`, `sizeof`, `(type)` |\n| **Binary** | 2 | `+`, `-`, `*`, `/`, `%`, `>`, `<` |\n| **Ternary** | 3 | `? :` (Conditional Operator) |\n\n---\n\n## 8. Type Conversion & Casting\n\nIn C, you often need to mix different data types, such as adding an integer to a float. C has strict rules for how these types interact to ensure data integrity.\n\n### Implicit Conversion (Promotion)\nThis happens automatically when you mix smaller types with larger ones. C promotes the smaller value to the larger type to prevent data loss (e.g., `int` becomes `float`).\n\n### Explicit Conversion (Casting)\nSometimes you need to override C's automatic behavior. **Type Casting** allows you to manually force a value to be treated as a specific type, giving you full control over the operation.\n\n### ⚡ Example\n```c\n#include <stdio.h>\n\nint main() {\n    int i = 10;\n    float f = 5.5;\n\n    // Implicit Conversion\n    // 'i' becomes 10.0, result is 15.5\n    float result = i + f; \n    printf(\"Implicit: %.1f\\n\", result);\n\n    // Explicit Casting\n    // (int)f converts 5.5 to 5 (truncates decimal)\n    int truncated = (int)f;\n    printf(\"Casted to int: %d\\n\", truncated);\n\n    // Common Use Case: Integer Division fix\n    int a = 5, b = 2;\n    float div = (float)a / b; // 2.5 (Correct)\n    // Without cast: 5/2 = 2 (Incorrect for precise math)\n    printf(\"Division: %.1f\", div);\n\n    return 0;\n}\n```\n\n### Expected Output\n```text\nImplicit: 15.5\nCasted to int: 5\nDivision: 2.5\n```\n\n### Code Explanation\n1.  `int i = 10; float f = 5.5;`: We create an integer and a floating-point number.\n2.  `float result = i + f;`: **Implicit Promotion**. C sees you adding an `int` `10` to a `float` `5.5`. To avoid losing the `.5`, C temporarily converts `10` to `10.0`. The result `15.5` is stored in a `float`.\n3.  `int truncated = (int)f;`: **Explicit Casting**. You are forcing the `float` `5.5` to become an `int`. C does this by chopping off the decimal part (`.5`), leaving `5`. This is useful when you want to round down or remove precision.\n4.  `float div = (float)a / b;`: **The Division Fix**. If we did `a / b` (which is `5 / 2`), C would do integer division and give `2`. By casting `a` to `(float)a`, it becomes `5.0`. Now `5.0 / 2` triggers implicit promotion for `2`, resulting in the correct `2.5`.\n\n---\n\n## 9. The Ternary Operator (`?:`)\n\nThe Ternary Operator is a powerful, concise shorthand for simple `if-else` statements. It is unique in C because it is the only operator that takes **3 operands**. It allows you to make a decision and return a value in a single line of code, referencing the logic: \"If standard is met, do this; otherwise, do that.\"\n\n### Syntax\n`condition ? value_if_true : value_if_false`\n\n### ⚡ Example\n```c\n#include <stdio.h>\n\nint main() {\n    int age = 20;\n    // If age >= 18, assign 1 (True). Else assign 0 (False).\n    int isAdult = (age >= 18) ? 1 : 0;\n\n    printf(\"Is Adult? %d\\n\", isAdult);\n\n    // Inline usage\n    int a = 100, b = 200;\n    int max = (a > b) ? a : b;\n    printf(\"Maximum is: %d\", max);\n    \n    return 0;\n}\n```\n\n### Expected Output\n```text\nIs Adult? 1\nMaximum is: 200\n```\n\n### Code Explanation\n1.  `int isAdult = (age >= 18) ? 1 : 0;`: The condition is `age >= 18` (which is 20 >= 18, so **True**). The operator picks the first value after the `?` (which is `1`) and assigns it to `isAdult`.\n2.  `int max = (a > b) ? a : b;`: The condition is `a > b` (100 > 200, so **False**). The operator skips the first value `a` and picks the second value after the `:` (which is `b`, so 200) and assigns it to `max`.\n\n---\n\n## 10. The `sizeof` Operator\n\n`sizeof` is a compile-time Unary operator that is crucial for memory management. It tells you exactly how much memory (in bytes) a specific data type or variable occupies on your system. This is essential for writing portable code that works across different hardware architectures.\n\n### ⚡ Example\n```c\n#include <stdio.h>\n\nint main() {\n    int myInt;\n    double myDouble;\n    \n    printf(\"Size of int: %lu bytes\\n\", sizeof(myInt));\n    printf(\"Size of double: %lu bytes\\n\", sizeof(myDouble));\n    printf(\"Size of explicit char: %lu byte\", sizeof(char));\n    return 0;\n}\n```\n\n*(Note: Output may vary by system, typically int is 4 bytes)*\n\n### Code Explanation\n1.  `sizeof(myInt)`: You are asking C, \"How many memory bytes does this integer perform?\" On most modern systems, the answer is **4 bytes**.\n2.  `sizeof(myDouble)`: Doubles need more precision, so they take up more space. The answer is usually **8 bytes**.\n3.  `sizeof(char)`: A `char` is the smallest storage unit for text, taking up exactly **1 byte**.\n\n---\n\n## 11. Common Pitfall: The Equality Trap\n\nA very common bug is confusing Assignment (`=`) with Equality (`==`).\n\n### ❌ The Bug\n```c\nint x = 5;\nif (x = 10) {  // BUG! Assigns 10 to x. 10 is Non-Zero (True).\n    printf(\"x is 10\");\n}\n```\n*This code will ALWAYS print, and `x` will be changed to 10.*\n\n### ✅ The Fix\n```c\nint x = 5;\nif (x == 10) { // CORRECT. Checks if x is equal to 10.\n   printf(\"x is 10\");\n}\n```\n\n> [!TIP]\n> **Yoda Conditions**: Some new programmers write `if (10 == x)` so that if they accidentally write `if (10 = x)`, the compiler creates an error (you can't assign to 10).\n\n---\n\n## 12. Code Lab: Leap Year Calculator\n\nLet's build a real tool! A year is a **Leap Year** if:\n1.  It is divisible by 4 **AND** not divisible by 100.\n2.  **OR** it is divisible by 400.\n\n```c\n#include <stdio.h>\n\nint main() {\n    int year = 2024;\n\n    // Detailed Logic\n    // (year % 4 == 0) -> Divisible by 4\n    // (year % 100 != 0) -> NOT divisible by 100\n    // (year % 400 == 0) -> Divisible by 400\n\n    if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {\n        printf(\"%d is a Leap Year!\", year);\n    } else {\n        printf(\"%d is NOT a Leap Year.\", year);\n    }\n    return 0;\n}\n```\n\n### Expected Output\n```text\n2024 is a Leap Year!\n```",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "What is the result of the following expression in C?\n\n```c\nint x = 7, y = 2;\nprintf(\"%d\", x / y);\n```",
+                        "text": "What is the result of `(5 > 3) ? 10 : 20`?",
                         "options": [
-                            "3.5",
-                            "3",
-                            "4",
+                            "20",
+                            "10",
+                            "5",
                             "Error"
                         ],
                         "correctAnswer": 1,
-                        "explanation": "Because both x and y are integers, C performs integer division. The decimal part (.5) is truncated, leaving only 3."
+                        "explanation": "The condition (5 > 3) is True, so the ternary operator evaluates the first expression (before the colon), which is 10."
                     },
                     {
                         "id": 2,
-                        "text": "What will be the output of this code snippet?\n\n```c\nint a = 5;\nint b = a++;\nprintf(\"%d, %d\", a, b);\n```",
+                        "text": "What is the result of casting `(int)3.99`?",
                         "options": [
-                            "5, 5",
-                            "6, 6",
-                            "6, 5",
-                            "5, 6"
+                            "4",
+                            "3.99",
+                            "3",
+                            "0"
                         ],
                         "correctAnswer": 2,
-                        "explanation": "The postfix increment (a++) uses the current value (5) for assignment to b first, then increments a to 6."
+                        "explanation": "Casting a float to an int truncates the decimal part completely. It does NOT round up. So 3.99 becomes 3."
                     },
                     {
                         "id": 3,
-                        "text": "In the expression `(10 > 5 || x++)`, if `x` is 0, what is the final value of `x` after execution?",
-                        "options": [
-                            "0",
-                            "1",
-                            "True",
-                            "False"
-                        ],
-                        "correctAnswer": 0,
-                        "explanation": "This is Short-Circuiting. Since (10 > 5) is already true, the logical OR (||) skip checking the right side, so `x++` is never executed."
-                    },
-                    {
-                        "id": 4,
-                        "text": "Which operator has the HIGHEST precedence among the following?",
+                        "text": "Which operator has the HIGHEST precedence among these?",
                         "options": [
                             "&&",
                             "+",
@@ -395,19 +383,31 @@
                             "*"
                         ],
                         "correctAnswer": 3,
-                        "explanation": "Multiplication (*) has higher precedence than addition (+), relational (==), and logical (&&) operators."
+                        "explanation": "Multiplication (*) happens before addition (+), comparison (==), and logical AND (&&)."
+                    },
+                    {
+                        "id": 4,
+                        "text": "In `(1 || x++)`, does `x` get incremented?",
+                        "options": [
+                            "Yes",
+                            "No",
+                            "Only if x is 0",
+                            "Runtime Error"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "NO. This is short-circuiting. Since the left side `1` (True) is already true, C skips the right side `x++` entirely."
                     },
                     {
                         "id": 5,
-                        "text": "What does the expression `15 % 4` evaluate to?",
+                        "text": "What happens if you use `if(x = 10)` instead of `if(x == 10)` in C?",
                         "options": [
-                            "3",
-                            "3.75",
-                            "1",
-                            "0"
+                            "It causes a compilation error",
+                            "It assigns 10 to x and evaluates as True",
+                            "It checks if x is equal to 10",
+                            "It evaluates as False"
                         ],
-                        "correctAnswer": 0,
-                        "explanation": "15 divided by 4 is 3 with a remainder of 3. Modulo operator (%) calculates only the remainder."
+                        "correctAnswer": 1,
+                        "explanation": "This is a common bug. It performs an ASSIGNMENT, not a comparison. x becomes 10, which is non-zero (True)."
                     }
                 ]
             }
@@ -492,11 +492,11 @@
                 "id": "c7",
                 "title": "7. C Control Flow: `if` and `else` ",
                 "duration": "30 mins",
-                "content": "# C Control Flow (`if` / `else`)\n\nPrograms aren't just a list of instructions; they need to make decisions. Control flow allows your code to choose different paths based on conditions.\n\n---\n\n## 1. The `if` Statement\n\n### ➤ Purpose\nChecks a condition. If it is **True (Non-Zero)**, the code block runs. If **False (Zero)**, it is skipped.\n\n### ➤ Syntax\n```c\nif (condition) {\n    // Code runs if condition is true\n}\n```\n\n### ⚡ Example\n```c\nint score = 85;\nif (score >= 50) {\n    printf(\"You Passed!\\n\");\n}\n```\n\n---\n\n## 2. The `else` Clause\n\n### ➤ Purpose\nProvides a \"Plan B\". If the `if` condition is false, the `else` block executes.\n\n### ⚡ Example\n```c\nint age = 16;\nif (age >= 18) {\n    printf(\"Adult\\n\");\n} else {\n    printf(\"Minor\\n\");\n}\n```\n\n---\n\n## 3. The `else if` Ladder\n\n### ➤ Purpose\nUsed for multiple mutually exclusive conditions. The program checks them in order and only runs the **first** one that is true.\n\n### ⚡ Example\n```c\nint temp = 25;\nif (temp > 30) {\n    printf(\"Hot\\n\");\n} else if (temp > 20) {\n    printf(\"Warm\\n\");\n} else {\n    printf(\"Cold\\n\");\n}\n```\n\n> [!IMPORTANT]\n> **Compiler Insight: The Truth About True**\n> In C, there is no built-in \"Boolean\" type. C treats **0 as False** and **any non-zero value (1, -5) as True**.\n\n---\n\n## 4. Short-Circuit Logic\n\nWhen using `&&` or `||`, C optimizes execution:\n- **`&&` (AND)**: If the left part is false, the right part is **never** checked.\n- **`||` (OR)**: If the left part is true, the right part is **never** checked.\n\n> [!CAUTION]\n> **The Assignment Danger**\n> `if (x = 5)` assigns 5 to x and is always **True**. Always use `if (x == 5)` for comparison!\n",
+                "content": "# C Control Flow (`if` / `else`)\n\nPrograms aren't just a linear list of instructions; they need to make decisions and react to different situations. Control flow is the spinal cord of programming, allowing your code to choose different paths based on logic and data.\n\n---\n\n## 1. The `if` Statement\n\nThe `if` statement is the most fundamental decision-making tool. It evaluates a condition (a question that asks \"True or False?\"). If the answer is **True**, the code block behaves like a gate opening, allowing the instructions inside to run. If **False**, the gate stays closed, and the program skips over that block.\n\n### ➤ Syntax\n```c\nif (condition) {\n    // Code runs ONLY if condition is true\n}\n```\n\n### ⚡ Example\n```c\nint score = 85;\nif (score >= 50) {\n    // This runs because 85 is greater than 50\n    printf(\"You Passed!\\n\");\n}\n```\n\n---\n\n## 2. The `else` Clause\n\nThe `else` clause allows you to provide a \"Plan B\" or alternative path. It pairs with an `if` statement to handle the \"False\" case. Think of it as a fork in the road: you MUST go one way or the other. If the `if` condition is true, the first block runs. If it's false, the `else` block runs automatically.\n\n### ➤ Syntax\n```c\nif (condition) {\n    // Runs if True\n} else {\n    // Runs if False\n}\n```\n\n### ⚡ Example\n```c\nint age = 16;\nif (age >= 18) {\n    printf(\"Adult\\n\");\n} else {\n    printf(\"Minor\\n\"); // Runs because 16 is NOT >= 18\n}\n```\n\n---\n\n## 3. The `else if` Ladder\n\nWhat if you have more than two options? You can stack conditions using `else if`. This creates a ladder of logic. The computer checks them in order (top to bottom).\n*   It runs the **first** block where the condition is True.\n*   Once a match is found, it skips the rest of the ladder (it's mutually exclusive).\n*   The final `else` (optional) catches anything that didn't match above.\n\n### ⚡ Example\n```c\nint temp = 25;\n\nif (temp > 30) {\n    printf(\"It's Hot\\n\");\n} else if (temp > 20) {\n    printf(\"It's Warm\\n\"); // 25 > 20, so this runs!\n} else {\n    printf(\"It's Cold\\n\"); // Skipped\n}\n```\n\n> [!IMPORTANT]\n> **Compiler Insight: The Truth About True**\n> In C, there is no built-in \"Boolean\" type (in older standards). C treats **0 as False** and **any non-zero value (1, -5, 100) as True**.\n> `if (10) { ... }` will always run!\n\n---\n\n## 4. Short-Circuit Logic\n\nWhen using logical operators `&&` (AND) and `||` (OR) inside `if` statements, C is lazy (efficient).\n- **`&&` (AND)**: If the first condition is False, C stops checking. Why? Because `False && Anything` is always False.\n- **`||` (OR)**: If the first condition is True, C stops checking. Why? Because `True || Anything` is always True.\n\n---\n\n## 5. Nested If-Else\n\nYou can place an `if` statement **inside** another `if` statement. This is known as nesting. It allows you to check for \"prerequisite\" conditions. For example, you only check if a password is valid IF the username was found first.\n\n### ⚡ Example: Login System\n```c\nint userValid = 1;\nint passwordValid = 0;\n\nif (userValid) {\n    // Outer 'if' passed\n    if (passwordValid) {\n        printf(\"Login Successful\");\n    } else {\n        printf(\"Wrong Password\");\n    }\n} else {\n    printf(\"User not found\");\n}\n```\n\n---\n\n## 6. Common Pitfalls\n\n### ❌ The Dangling Else\nIn C, an `else` always belongs to the **nearest** preceding `if` that doesn't already have an `else`. Indentation doesn't matter to the compiler!\n\n```c\nif (a)\n    if (b)\n        printf(\"B\");\nelse\n    printf(\"A\"); // This 'else' pairs with 'if (b)', NOT 'if (a)'!\n```\n**Fix:** Always use braces `{}` to make your intent clear.\n\n### ❌ The Semicolon Trap\nPutting a semicolon `;` immediately after an `if` statement is a disaster. It tells C: \"If true, do nothing.\" The code block following it will then run *no matter what*.\n\n```c\nif (score > 100); {  // <-- BUG! The ';' ends the if statement.\n    printf(\"Invalid Score\"); // This always prints!\n}\n```\n\n---\n\n## 7. Code Lab: Max of Three Numbers\n\nLet's use what we learned to find the largest of three numbers. This uses the `else if` ladder logic effectively.\n\n```c\n#include <stdio.h>\n\nint main() {\n    int a = 10, b = 25, c = 15;\n\n    // We check 'a' first\n    if (a >= b && a >= c) {\n        printf(\"%d is largest\", a);\n    } \n    // If 'a' wasn't the largest, we check 'b'\n    else if (b >= a && b >= c) {\n        printf(\"%d is largest\", b);\n    } \n    // If neither 'a' nor 'b' were largest, it MUST be 'c'\n    else {\n        printf(\"%d is largest\", c);\n    }\n    return 0;\n}\n```\n\n### Expected Output\n```text\n25 is largest\n```\n\n\n### Code Explanation\n1.  `int a = 10, b = 25, c = 15;`: We declare three integer variables with different values.\n2.  `if (a >= b && a >= c)`: **The First Check**. We ask: \"Is 'a' the king?\" This line checks if `a` is greater than or equal to BOTH `b` AND `c`. If true, `a` is the largest, and we are done.\n3.  `else if (b >= a && b >= c)`: **The Second Check**. If the first check failed (meaning `a` is NOT the largest), we move here. We ask: \"Is 'b' the king?\" We check if `b` is greater than or equal to the others.\n4.  `else`: **The Final Resort**. If `a` wasn't the largest, AND `b` wasn't the largest, logic dictates that `c` MUST be the largest. We don't even need to check a condition here!\n",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "In C, what does the following condition evaluate to?\n`if (-5)` ",
+                        "text": "In C, what does the following condition evaluate to: `if (-5)` ?",
                         "options": [
                             "True",
                             "False",
@@ -508,15 +508,51 @@
                     },
                     {
                         "id": 2,
-                        "text": "What is wrong with this code?\n\n```c\nif (x == 10);\n{\n    printf(\"Hello\");\n}\n```",
+                        "text": "What is the fatal flaw in this code? `if (x == 10); { printf(\"Hi\"); }`",
                         "options": [
                             "Missing quotes",
-                            "Semicolon after 'if' terminates it",
+                            "Semicolon after 'if' kills the logic",
                             "Invalid comparison",
                             "Nothing is wrong"
                         ],
                         "correctAnswer": 1,
-                        "explanation": "Putting a semicolon immediately after `if(...)` creates an empty statement. The printf() block will run every time."
+                        "explanation": "Putting a semicolon immediately after `if(...)` creates an empty statement. The code inside `{}` becomes a separate block that runs every time, ignoring the condition."
+                    },
+                    {
+                        "id": 3,
+                        "text": "To which 'if' does an 'else' belong in nested structures?",
+                        "options": [
+                            "The first 'if' in the block",
+                            "The nearest preceding 'if' without an 'else'",
+                            "The 'if' with the same indentation",
+                            "To all 'if' statements"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "This is the 'Dangling Else' rule: an else always pairs with the nearest unmatched if, regardless of indentation."
+                    },
+                    {
+                        "id": 4,
+                        "text": "What is the output of the Nested If example if `userValid=1` but `passwordValid=0`?",
+                        "options": [
+                            "Login Successful",
+                            "User not found",
+                            "Wrong Password",
+                            "No output"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "The outer if (userValid) is true, entering the block. The inner if (passwordValid) is false, so it goes to the inner else: 'Wrong Password'."
+                    },
+                    {
+                        "id": 5,
+                        "text": "What happens if you omit braces `{}` but have two lines of code under an `if`?",
+                        "options": [
+                            "Both lines run only if true",
+                            "Only the first line depends on the if, the second runs always",
+                            "Compiler Error",
+                            "Both lines form a block automatically"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Without braces, an `if` statement only controls the immediate next statement. The specific second line is outside the `if` and runs regardless of the condition."
                     }
                 ]
             },
@@ -524,31 +560,67 @@
                 "id": "c8",
                 "title": "8. switch Statement",
                 "duration": "25 mins",
-                "content": "# C Switch-Case Statement\n\nThe `switch` statement is a multi-way selection statement. It's a cleaner way to handle multiple discrete values compared to a long `if-else if` ladder.\n\n---\n\n## Syntax\n\n```c\nswitch (expression) {\n    case 1:\n        // code\n        break;\n    case 2:\n        // code\n        break;\n    default:\n        // code if no match\n}\n```\n\n> [!NOTE]\n> **Fall-through**: If you forget `break`, C will execute ALL subsequent cases until it hits a break or the end.\n",
+                "content": "# C Switch-Case Statement\n\nThe `switch` statement is a specialized control structure used for multi-way decision making. While `if-else if` ladders are great for ranges (like grades or temperatures), `switch` is designed for selecting one option from a fixed list of discrete values, like a menu system or a vending machine.\n\n---\n\n## 1. Syntax Breakdown\n\nThe structure is clean and organized. It tests a single variable against multiple \"cases\".\n\n```c\nswitch (expression) {\n    case constant1:\n        // Code runs if expression == constant1\n        break; // Stops execution!\n    case constant2:\n        // Code runs if expression == constant2\n        break;\n    default:\n        // Code runs if no cases match (Automatic \"else\")\n}\n```\n\n### Key Components:\n1.  **Expression**: The variable you are testing (e.g., `choice`).\n2.  **Case**: A specific value to check against (e.g., `case 1:`, `case 'A':`).\n3.  **Break**: Crucial! It tells C to jump out of the switch block. Without it, the code \"falls through\".\n4.  **Default**: Optional but recommended. It handles unexpected values.\n\n---\n\n## 2. The Rules of Switch\n\nUnlike `if` statements, `switch` has strict rules:\n*   **Integers & Chars Only**: The expression MUST result in an integer or character. You **cannot** switch on `float`, `double`, or strings.\n*   **Constant Cases**: Case labels must be fixed values (like `5` or `'x'`). You cannot use variables like `case x:` or conditions like `case > 10:`.\n*   **Unique Cases**: You cannot have two cases with the same value.\n\n---\n\n## 3. The \"Fall-Through\" Behavior\n\nOne of C's most famous (and dangerous) features is **Fall-Through**. If you omit the `break` statement, C doesn't stop. It blindly executes the code for the *next* case as well, until it hits a break or the end of the switch.\n\n### ⚡ Example: Fall-Through\n```c\nint x = 1;\nswitch(x) {\n    case 1: printf(\"One \"); // No break!\n    case 2: printf(\"Two \");\n    case 3: printf(\"Three \");\n}\n```\n**Output**: `One Two Three `\n*(Because it started at 1 and just kept going!)*\n\n> [!TIP]\n> **When is this useful?**\n> You can stack cases to handle multiple values with the same code:\n> ```c\n> case 'a':\n> case 'e':\n> case 'i':\n>     printf(\"It is a vowel\");\n>     break;\n> ```\n\n---\n\n## 4. Common Pitfalls\n\n### ❌ Comparison in Case\nYou cannot write `case > 10:`. Switch checks for **Equality Only**.\n\n### ❌ Duplicate Cases\n```c\ncase 5: ...\ncase 1+4: ... // Error! 1+4 is also 5. Duplicate case.\n```\n\n---\n\n## 5. Code Lab: Simple Calculator\n\nLet's build a mini-calculator that takes an operator and two numbers. This is the perfect use case for `switch`.\n\n```c\n#include <stdio.h>\n\nint main() {\n    char operator;\n    double n1, n2;\n\n    operator = '+'; // Hardcoded for demo, usually user input\n    n1 = 10.0;\n    n2 = 5.0;\n\n    switch (operator) {\n        case '+':\n            printf(\"%.1lf + %.1lf = %.1lf\", n1, n2, n1 + n2);\n            break;\n        case '-':\n            printf(\"%.1lf - %.1lf = %.1lf\", n1, n2, n1 - n2);\n            break;\n        case '*':\n            printf(\"%.1lf * %.1lf = %.1lf\", n1, n2, n1 * n2);\n            break;\n        case '/':\n            printf(\"%.1lf / %.1lf = %.1lf\", n1, n2, n1 / n2);\n            break;\n        default:\n            printf(\"Error! Operator is not correct\");\n    }\n\n    return 0;\n}\n```\n\n### Expected Output\n```text\n10.0 + 5.0 = 15.0\n```\n\n### Code Explanation\n1.  **The Inputs**: We have an operator `+` and two numbers `10.0` and `5.0`.\n2.  **The Switch**: We check the `operator` variable.\n3.  **Matching**: C looks for a match. It finds `case '+':`.\n4.  **Execution**: It runs the `printf` statement for addition.\n5.  **The Break**: It hits `break;` and immediately exits the switch block, ignoring the subtraction, multiplication, and division cases.\n",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "What happens if a 'break' is missing in a switch case?",
+                        "text": "What happens if you forget the `break` statement in a case?",
                         "options": [
+                            "Compiler Error",
                             "The program crashes",
-                            "Execution falls through to the next case",
-                            "The switch exits",
-                            "Error"
+                            "It executes the next case's code automatically (Fall-through)",
+                            "It restarts the switch"
                         ],
-                        "correctAnswer": 1,
-                        "explanation": "Without a break, C continues executing the next cases sequentially until it hits a break or the end."
+                        "correctAnswer": 2,
+                        "explanation": "This is known as 'fall-through'. Execution continues into the subsequent cases until a break is found or the switch ends."
                     },
                     {
                         "id": 2,
-                        "text": "Which type is NOT allowed in switch expressions?",
+                        "text": "Which data type is INVALID for a switch expression?",
                         "options": [
                             "int",
                             "char",
                             "float",
-                            "short"
+                            "long"
                         ],
                         "correctAnswer": 2,
-                        "explanation": "Switch only works with integral types (int, char). Floats require range comparisons which switch doesn't do."
+                        "explanation": "Switch statements require integral types (integers, chars, enums). Floating-point numbers (float, double) are not allowed."
+                    },
+                    {
+                        "id": 3,
+                        "text": "When does the `default` case execute?",
+                        "options": [
+                            "Always",
+                            "Only if no other case matches",
+                            "Only if checks for NULL",
+                            "Before any other case"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "The default execution path is taken only when none of the specified cases match the expression."
+                    },
+                    {
+                        "id": 4,
+                        "text": "Can you check ranges in a standard C switch case (e.g., `case 1..5:`)?",
+                        "options": [
+                            "Yes, using two dots",
+                            "No, standard C only supports single constant values",
+                            "Yes, using a dash",
+                            "Yes, using the 'range' keyword"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Standard ANSI C does NOT support ranges. Some compilers (like GCC) have extensions for it, but standard C requires distinct cases: `case 1: case 2: ...`."
+                    },
+                    {
+                        "id": 5,
+                        "text": "Is this valid? `case x:` (where x is a variable)",
+                        "options": [
+                            "Yes",
+                            "No, case labels must be constants",
+                            "Yes, if x is const",
+                            "Yes, if x is global"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Case labels must be Compile-Time Constants (like `5` or `'A'`). You cannot use variables that change at runtime."
                     }
                 ]
             },
@@ -556,19 +628,67 @@
                 "id": "c9",
                 "title": "9. for Loop",
                 "duration": "30 mins",
-                "content": "# C for Loop Statement\n\nThe `for` loop is used when you want to repeat code a **fixed number of times**. It keeps initialization, condition, and increment in one line.\n\n---\n\n## Syntax\n\n```c\nfor (initialization; condition; increment) {\n    // code to repeat\n}\n```\n\n### How it Works:\n1. **initialization**: Runs once at the start.\n2. **condition**: Checked before every loop. If false, it stops.\n3. **increment**: Runs after the code block to update the variable.\n",
+                "content": "# C For Loop Statement\n\nThe `for` loop is the workhorse of C iteration. It is specifically designed for scenarios where you know **exactly how many times** you want to repeat a block of code. It packages the initialization, condition, and update logic into a single, concise line.\n\n---\n\n## 1. Syntax Breakdown\n\n```c\nfor (initialization; condition; update) {\n    // Body of the loop\n}\n```\n\n### The Three Pillars:\n1.  **Initialization** (`int i = 0`): Runs **once** at the very start. It sets up your counter variable.\n2.  **Condition** (`i < 5`): Checked **before** every single iteration. If true, the loop body runs. If false, the loop dies immediately.\n3.  **Update** (`i++`): Runs **after** the loop body execution. It updates your counter to prepare for the next check.\n\n---\n\n## 2. The Loop Lifecycle\n\nLet's trace `for (int i = 0; i < 3; i++)`:\n\n1.  **Start**: `i` becomes 0.\n2.  **Check**: Is `0 < 3`? Yes. Run body.\n3.  **Update**: `i` becomes 1.\n4.  **Check**: Is `1 < 3`? Yes. Run body.\n5.  **Update**: `i` becomes 2.\n6.  **Check**: Is `2 < 3`? Yes. Run body.\n7.  **Update**: `i` becomes 3.\n8.  **Check**: Is `3 < 3`? **No**. Stop!\n\n---\n\n## 3. Advanced Features\n\n### ➤ Infinite Loops\nIf you leave the parts empty, they default to \"True\". This creates a loop that runs forever.\n```c\nfor (;;) {\n    printf(\"Forever...\\n\");\n    // You usually need a 'break' inside to stop this\n}\n```\n\n### ➤ Multiple Variables\nYou can initialize and update multiple variables at once using the comma operator.\n```c\nfor (int i = 0, j = 10; i < j; i++, j--) {\n    printf(\"%d %d\\n\", i, j);\n}\n// Output: 0 10, 1 9, 2 8... until they meet\n```\n\n---\n\n## 4. Common Pitfalls\n\n### ❌ The Semicolon Trap (Again!)\nJust like with `if`, putting a semicolon after `for(...)` isolates the loop. It will run the *empty* statement N times, and then run your block once.\n```c\nfor (int i = 0; i < 5; i++); // <-- BUG!\n{\n    printf(\"Hi\"); // Prints \"Hi\" only once, after i reaches 5.\n}\n```\n\n### ❌ Off-By-One Errors\nConfusing `<` with `<=`.\n-   `for (i=0; i < 5; i++)` runs **5 times** (0,1,2,3,4).\n-   `for (i=0; i <= 5; i++)` runs **6 times** (0,1,2,3,4,5).\n\n---\n\n## 5. Code Lab: Factorial Calculator\n\nThe \"Hello World\" of loops is calculating a factorial (e.g., 5! = 5 * 4 * 3 * 2 * 1).\n\n```c\n#include <stdio.h>\n\nint main() {\n    int n = 5;\n    long long factorial = 1;\n\n    // Loop from 1 up to n\n    for (int i = 1; i <= n; i++) {\n        factorial *= i; // Same as: factorial = factorial * i;\n    }\n\n    printf(\"Factorial of %d is %lld\", n, factorial);\n    return 0;\n}\n```\n\n### Expected Output\n```text\nFactorial of 5 is 120\n```\n\n### Code Explanation\n1.  **Setup**: We declare `factorial` as `long long` because factorials grow HUGE very quickly. We start it at `1` (starting at 0 would kill the multiplication).\n2.  **The Loop**: `for (int i = 1; i <= n; i++)`. It starts `i` at 1 and keeps going until `i` is greater than 5.\n3.  **Iteration 1**: `factorial` (1) * `i` (1) = 1.\n4.  **Iteration 2**: `factorial` (1) * `i` (2) = 2.\n5.  **Iteration 3**: `factorial` (2) * `i` (3) = 6.\n6.  **Iteration 4**: `factorial` (6) * `i` (4) = 24.\n7.  **Iteration 5**: `factorial` (24) * `i` (5) = 120.\n8.  **Stop**: Loop ends because `i` becomes 6.\n",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "What are the three parts of a 'for' loop?",
+                        "text": "In `for(A; B; C)`, when does 'C' (the update) execute?",
                         "options": [
-                            "Start, Middle, End",
-                            "Input, Logic, Output",
-                            "Initialization, Condition, Increment",
-                            "Setup, Loop, Final"
+                            "At the start of the loop",
+                            "Before the condition check",
+                            "After the loop body executes",
+                            "Whenever the variable changes"
                         ],
                         "correctAnswer": 2,
-                        "explanation": "A for loop consists of initialization, condition checking, and an increment/decrement statement."
+                        "explanation": "The update step (like `i++`) always happens at the very end of an iteration, after the code block has run but before the next condition check."
+                    },
+                    {
+                        "id": 2,
+                        "text": "How do you write an infinite loop using `for`?",
+                        "options": [
+                            "for(1)",
+                            "for(;;)",
+                            "for(true)",
+                            "for(infinite)"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "The syntax `for(;;)` leaves all three parts empty. The condition defaults to true, creating an infinite loop."
+                    },
+                    {
+                        "id": 3,
+                        "text": "What is the output of `for(int i=0; i<3; i++); printf(\"%d\", i);`?",
+                        "options": [
+                            "012",
+                            "0 1 2",
+                            "3",
+                            "Compiler Data"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "The semicolon after the `for` makes the loop empty. It increments `i` until 3, then stops. The `printf` runs once with `i` as 3."
+                    },
+                    {
+                        "id": 4,
+                        "text": "If `i` is declared inside `for(int i=0;...)`, can you use `i` outside the loop in C99+?",
+                        "options": [
+                            "Yes, it persists",
+                            "No, it is out of scope",
+                            "Only if it was static",
+                            "Yes, but it resets to 0"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "In standard C99 and later, a variable declared in the `for` initialization is limited to the scope of that loop block."
+                    },
+                    {
+                        "id": 5,
+                        "text": "Which loop is correct to run exactly 10 times (0 to 9)?",
+                        "options": [
+                            "for(i=0; i<=10; i++)",
+                            "for(i=1; i<10; i++)",
+                            "for(i=0; i<10; i++)",
+                            "for(i=0; i!=9; i++)"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "`i=0; i<10` runs for 0, 1, ..., 9. That is exactly 10 iterations."
                     }
                 ]
             },
@@ -576,11 +696,11 @@
                 "id": "c10",
                 "title": "10. while Loop",
                 "duration": "25 mins",
-                "content": "# C while Loop Statement\n\nThe `while` loop repeats a block of code as long as a specific **condition is true**. \n\n**Use while when:**\n- You don't know exactly how many times the loop will run.\n- The loop depends on a dynamic value that changes during execution.\n\n---\n\n## Syntax\n\n```c\nwhile (condition) {\n    // code executes as long as condition is true\n}\n```\n\n### How it Works:\n1. **Check Condition**: If true, the loop body executes.\n2. **Repeat**: After finishing the body, it checks the condition again.\n3. **Exit**: If the condition results in **0 (false)**, the loop stops.\n\n> [!WARNING]\n> **Infinite Loop**: If you forget to update your control variable (e.g., `i++`), the condition will stay true forever!\n",
+                "content": "# C while Loop Statement\n\nThe `while` loop is the simplest looping structure in C. It repeats a block of code as long as a specific condition remains **True**. Unlike the `for` loop, which is built for fixed counts, `while` is perfect for scenarios where you don't know in advance how many times you need to loop (e.g., \"keep reading user input until they type 'exit'\").\n\n---\n\n## 1. Syntax Breakdown\n\n```c\nwhile (condition) {\n    // Code to run\n    // UPDATE step usually happens here\n}\n```\n\n### The Flow:\n1.  **Check**: C checks the `condition` first.\n2.  **Execute**: If True, the code inside the braces runs.\n3.  **Repeat**: C goes back to step 1.\n4.  **Exit**: If False, the loop terminates immediately.\n\n> [!NOTE]\n> **Pre-Test Loop**: Because the condition is checked *before* the body runs, it is possible for a `while` loop to run **zero times** if the condition is false from the start.\n\n---\n\n## 2. While vs For\n\n| Feature | `for` Loop | `while` Loop |\n| :--- | :--- | :--- |\n| **Best For** | Known number of iterations (e.g., \"Run 10 times\") | Unknown iterations (e.g., \"Run until file ends\") |\n| **Structure** | Compact (Init, Condition, Update in one line) | Loose (Update is inside the body) |\n| **Readability** | High for counting | High for logic states |\n\n---\n\n## 3. Common Pitfalls\n\n### ❌ The Infinite Loop\nSince the \"Update\" step isn't forced into the syntax like in a `for` loop, it is VERY common to forget it.\n\n```c\nint i = 0;\nwhile (i < 5) {\n    printf(\"%d\", i);\n    // Forgot i++!\n    // Result: Prints \"00000...\" forever.\n}\n```\n\n### ❌ Off-By-One\nBe careful with your condition.\n*   `while (i < 10)` runs until `i` is 10 (stops at 10).\n*   `while (i <= 10)` runs UNTIL `i` is 11 (runs FOR 10).\n\n---\n\n## 4. Code Lab: Digit Counter\n\nLet's write a program that counts how many digits are in a number (e.g., `12345` has 5 digits). We do this by repeatedly dividing the number by 10 until it becomes 0.\n\n```c\n#include <stdio.h>\n\nint main() {\n    long long n = 12345;\n    int count = 0;\n\n    printf(\"Number: %lld\\n\", n);\n\n    // Handle 0 case explicity if needed, though loop works for n > 0\n    if (n == 0) count = 1;\n\n    // The Logic: Chop off last digit, count it, repeat.\n    while (n != 0) {\n        n = n / 10; // Removes the last digit (integer division)\n        count++;    // Count satisfied\n    }\n\n    printf(\"Digit Count: %d\", count);\n    return 0;\n}\n```\n\n### Expected Output\n```text\nNumber: 12345\nDigit Count: 5\n```\n\n### Code Explanation\n1.  **Start**: `n` is 12345. `count` is 0.\n2.  **Pass 1**: `12345 != 0`. Divide by 10 -> `1234`. Increment count -> `1`.\n3.  **Pass 2**: `1234 != 0`. Divide by 10 -> `123`. Increment count -> `2`.\n4.  **...**: This continues until `n` becomes `0` (after 5 divisions).\n5.  **Stop**: `0 != 0` is False. Loop ends. We print the count.\n",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "What is the minimum number of times a 'while' loop can execute?",
+                        "text": "What is the minimum number of times a `while` loop can execute?",
                         "options": [
                             "One time",
                             "Infinity",
@@ -589,6 +709,54 @@
                         ],
                         "correctAnswer": 2,
                         "explanation": "If the condition is false initially, the while loop will skip the body entirely and run 0 times."
+                    },
+                    {
+                        "id": 2,
+                        "text": "What is the most common cause of an infinite `while` loop?",
+                        "options": [
+                            "Using a negative number",
+                            "Forgetting to update the loop variable",
+                            "Using too many brackets",
+                            "Variable overflow"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "If the variable used in the condition never changes (e.g., you forget `i++`), the condition remains true forever."
+                    },
+                    {
+                        "id": 3,
+                        "text": "When is the condition checked in a `while` loop?",
+                        "options": [
+                            "After the body runs",
+                            "Before the body runs",
+                            "In the middle of the body",
+                            "Never"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "`while` is a pre-test loop. It evaluates the condition BEFORE entering the code block."
+                    },
+                    {
+                        "id": 4,
+                        "text": "What happens if you run `while(0) { printf(\"Hi\"); }`?",
+                        "options": [
+                            "It prints 'Hi' once",
+                            "It prints 'Hi' forever",
+                            "It prints nothing",
+                            "Compiler error"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "In C, 0 means False. The condition is false from the start, so the body is skipped entirely."
+                    },
+                    {
+                        "id": 5,
+                        "text": "Which loop is better when you DO NOT know how many iterations you need?",
+                        "options": [
+                            "for loop",
+                            "while loop",
+                            "if statement",
+                            "switch statement"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "`while` loops are semantically designed for state-based or unknown-count iteration (e.g., reading a file until EOF)."
                     }
                 ]
             },
@@ -596,7 +764,7 @@
                 "id": "c11",
                 "title": "11. do-while Loop",
                 "duration": "25 mins",
-                "content": "# C do-while Loop\n\nThe `do-while` loop is an **exit-controlled** loop. The body is executed **at least once**, even if the condition is false.\n\n---\n\n## Syntax\n\n```c\ndo {\n    // code to repeat\n} while (condition);\n```\n\n> [!IMPORTANT]\n> Always remember the semicolon `;` after the `while(condition)`! It is required in `do-while` but NOT in standard `while` loops.\n",
+                "content": "# C do-while Loop\n\nThe `do-while` loop is the final member of the C loop trio. It is unique because it is an **exit-controlled loop**. While the `for` and `while` loops check their conditions *before* running anything, the `do-while` loop executes its body first and checks the condition *after*.\n\n---\n\n## 1. Syntax Breakdown\n\nThe syntax is slightly different from other loops, most notably because it **requires a semicolon** at the very end.\n\n```c\ndo {\n    // Body of the loop (Runs at least once!)\n    // Update step usually happens here\n} while (condition); // CRITICAL: Semicolon required here!\n```\n\n### The Flow:\n1.  **Execute**: C runs the code inside the `do` block immediately.\n2.  **Check**: After the body runs, C evaluates the `condition`.\n3.  **Repeat**: If True, it goes back to step 1.\n4.  **Exit**: If False, the loop ends.\n\n> [!IMPORTANT]\n> **The One-Time Guarantee**: Because the body runs *before* the check, a `do-while` loop will ALWAYS execute its code at least **once**, even if the condition is false from the start.\n\n---\n\n## 2. While vs Do-While\n\n| Feature | `while` Loop | `do-while` Loop |\n| :--- | :--- | :--- |\n| **Check Time** | Pre-test (Before body) | Post-test (After body) |\n| **Min. Iterations** | 0 times | 1 time |\n| **Semicolon** | Not at the end | **Required** at the end |\n| **Best For** | Counting or general logic | Menus or Input Validation |\n\n---\n\n## 3. Common Pitfalls\n\n### ❌ The Missing Semicolon\nThis is the only loop structure in C that ends with a semicolon. Forgetting it is a common syntax error.\n\n```c\ndo {\n    printf(\"Hi\");\n} while (x < 5) // <-- BUG! Missing ;\n```\n\n### ❌ Infinite Entry\nBe careful if your condition depends on something that only happens *after* the first pass.\n\n---\n\n## 4. Code Lab: Positive Number Validator\n\nA perfect use for `do-while` is asking a user for data and forcing them to retry if they enter something invalid. Since you have to ask *at least once*, the logic fits `do-while` perfectly.\n\n```c\n#include <stdio.h>\n\nint main() {\n    int number;\n\n    // We want a positive number from the user\n    do {\n        printf(\"Enter a positive number: \");\n        // Imagine user enters -5, then 0, then 10\n        number = 10; // For demo purposes, hardcoding valid input\n        \n        if (number <= 0) {\n            printf(\"Invalid! Try again.\\n\");\n        }\n    } while (number <= 0);\n\n    printf(\"Thank you! You entered %d\", number);\n    return 0;\n}\n```\n\n### Expected Output\n```text\nEnter a positive number: 10\nThank you! You entered 10\n```\n\n### Code Explanation\n1.  **The Goal**: We need a number greater than 0.\n2.  **The First Pass**: C enters the loop automatically and asks for the number.\n3.  **The Check**: If the user entered something `<= 0`, the condition `while(number <= 0)` is True, so it loops back to ask again.\n4.  **The Exit**: Once a positive number is entered, the condition becomes False, and the loop releases the user.\n",
                 "quizQuestions": [
                     {
                         "id": 1,
@@ -604,11 +772,59 @@
                         "options": [
                             "while runs at least once",
                             "do-while runs at least once",
-                            "do-while is faster",
-                            "No difference"
+                            "There is no difference",
+                            "while is only for integers"
                         ],
                         "correctAnswer": 1,
-                        "explanation": "A do-while loop is 'exit-controlled', meaning it executes the body first and then checks the condition."
+                        "explanation": "A do-while loop is an exit-controlled loop, meaning it executes the body first and then checks the condition, guaranteeing at least one run."
+                    },
+                    {
+                        "id": 2,
+                        "text": "What character is mandatory after the condition in a `do-while` loop?",
+                        "options": [
+                            "A bracket }",
+                            "A colon :",
+                            "A semicolon ;",
+                            "Nothing"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Standard C requires a semicolon after the `while(condition)` in a `do-while` statement."
+                    },
+                    {
+                        "id": 3,
+                        "text": "When is the condition in a `do-while` loop evaluated?",
+                        "options": [
+                            "Before the body starts",
+                            "After each execution of the body",
+                            "Only at the very end of the program",
+                            "In every other iteration"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "It is a post-test loop, so the condition is checked AFTER the code inside the braces has finished executing."
+                    },
+                    {
+                        "id": 4,
+                        "text": "What is the output of `int i=5; do { printf(\"Hi\"); } while(i<5);`?",
+                        "options": [
+                            "No output",
+                            "Hi",
+                            "Hi Hi",
+                            "Infinite HIs"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "The loop runs once first, prints 'Hi', then checks if 5 < 5. Since 5 < 5 is false, it stops. 'Hi' is printed exactly once."
+                    },
+                    {
+                        "id": 5,
+                        "text": "Which scenario is a `do-while` loop best suited for?",
+                        "options": [
+                            "Reading a file from start to finish",
+                            "Iterating over an array of fixed size",
+                            "Displaying a menu and getting user choice",
+                            "Infinite background task"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Menus and input validation are classic use cases because you always want to show the menu or ask for input at least once before checking the user's response."
                     }
                 ]
             },
@@ -616,19 +832,67 @@
                 "id": "c12",
                 "title": "12. break and continue",
                 "duration": "25 mins",
-                "content": "# break and continue Statements\n\nC provides two powerful keywords for precise loop control: `break` and `continue`.\n\n---\n\n## 1. The break Statement\nImmediately **ends** the loop or switch-case. It jumps completely out of the block.\n\n## 2. The continue Statement\nSkips the **current iteration** and jumps to the next condition check. It \"skips a turn\" but stays in the loop.\n\n| Feature | break | continue |\n| :--- | :--- | :--- |\n| **Action** | Terminates loop | Skips current turn |\n| **Usage** | Switch, While, For | While, For |\n",
+                "content": "# C break and continue Statements\n\nWhile loops usually run until their condition becomes false, sometimes you need more surgical control. C provides two powerful keywords to disrupt the normal flow of a loop: `break` and `continue`.\n\n---\n\n## 1. The `break` Statement: The Emergency Exit\n\nThe `break` statement immediately **terminates** the loop it is inside. It doesn't matter if the loop condition is still true; `break` forces the program to jump completely out of the loop block.\n\n### ➤ Analogy: The Ejection Seat\nImagine a pilot flying a mission (the loop). If the engine fails (a specific condition), they pull the eject lever (`break`). They don't finish the mission; they leave the plane immediately.\n\n### ⚡ Example\n```c\nfor (int i = 1; i <= 10; i++) {\n    if (i == 5) break; \n    printf(\"%d \", i);\n}\n// Output: 1 2 3 4\n// (When i becomes 5, it breaks and stops everything)\n```\n\n---\n\n## 2. The `continue` Statement: The Skip Button\n\nThe `continue` statement skips the **rest of the current iteration** and jumps directly to the next condition check (or the increment in a `for` loop). It doesn't end the loop; it just \"skips a turn\".\n\n### ➤ Analogy: The Skip Turn Card\nIn a game of Uno, a \"Skip\" card doesn't end the game. It just means the current player doesn't get to play their turn, and the game moves to the next person.\n\n### ⚡ Example\n```c\nfor (int i = 1; i <= 5; i++) {\n    if (i == 3) continue; \n    printf(\"%d \", i);\n}\n// Output: 1 2 4 5\n// (When i is 3, printf is skipped, but it continues with 4)\n```\n\n---\n\n## 3. Scope and Nesting\n\nA critical rule to remember: `break` and `continue` only affect the **innermost** loop they are in. If you have a loop inside a loop, breaking the inner one will **not** stop the outer one.\n\n---\n\n## 4. Code Lab: Prime Number Checker\n\nA prime number is only divisible by 1 and itself. We can check if a number is prime by trying to divide it by every number from 2 up to its half. If we find even **one** divisor, we know it's not prime, and we can `break` early!\n\n```c\n#include <stdio.h>\n\nint main() {\n    int n = 29; // Number to check\n    int isPrime = 1; // Assume it's prime initially\n\n    for (int i = 2; i <= n / 2; i++) {\n        if (n % i == 0) {\n            isPrime = 0; // Found a factor!\n            break;       // No need to keep checking!\n        }\n    }\n\n    if (isPrime) printf(\"%d is Prime\", n);\n    else printf(\"%d is not Prime\", n);\n\n    return 0;\n}\n```\n\n### Expected Output\n```text\n29 is Prime\n```\n\n### Code Explanation\n1.  **The Strategy**: We check numbers from 2 to `n/2`.\n2.  **The Test**: `if (n % i == 0)` checks if the number is divisible.\n3.  **The Break**: As soon as we find a factor (like 2 dividing 10), we set `isPrime = 0`. There is no reason to check 3, 4, or 5, so we pull the `break` lever to save time.\n4.  **The Result**: If the loop finished without ever hitting `break`, `isPrime` stays 1.\n",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "What does 'break' do inside a loop?",
+                        "text": "What is the primary difference between `break` and `continue`?",
                         "options": [
-                            "Restarts iteration",
-                            "Skips next iteration",
-                            "Terminates the loop",
-                            "Pauses code"
+                            "break skips one turn, continue ends loop",
+                            "break ends the loop, continue skips only the current iteration",
+                            "There is no difference in loops",
+                            "break is for 'if', continue is for 'switch'"
                         ],
-                        "correctAnswer": 2,
-                        "explanation": "A break statement immediately exits the closest loop or switch block."
+                        "correctAnswer": 1,
+                        "explanation": "break exits the loop entirely, while continue only skips the remaining code in the current pass and moves to the next iteration."
+                    },
+                    {
+                        "id": 2,
+                        "text": "In a nested loop (loop inside a loop), what does a `break` statement affect?",
+                        "options": [
+                            "All loops in the program",
+                            "Only the innermost loop it is inside",
+                            "Only the outermost loop",
+                            "It causes a compiler error"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "In C, break and continue only apply to the immediate (innermost) loop structure containing them."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Where is `break` used outside of loops?",
+                        "options": [
+                            "In 'if' statements",
+                            "In 'switch' statements",
+                            "In 'printf' statements",
+                            "In variable declarations"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Break is mandatory in switch-case blocks to prevent 'fall-through' execution into the next cases."
+                    },
+                    {
+                        "id": 4,
+                        "text": "What happens in a `for` loop after a `continue` executes?",
+                        "options": [
+                            "The program crashes",
+                            "It jumps immediately to the increment statement (e.g., i++)",
+                            "It jumps back to initialization",
+                            "It skips the next 5 lines"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "In a for loop, continue jumps to the increment step, then checks the condition again."
+                    },
+                    {
+                        "id": 5,
+                        "text": "In the Prime Checker example, why do we use `break`?",
+                        "options": [
+                            "To make the code look better",
+                            "To avoid unnecessary calculations once a factor is found",
+                            "Because C requires it in for loops",
+                            "To print the result"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "Once we prove a number is NOT prime (by finding a divisor), there is no point in checking more numbers. Breaking saves processing power."
                     }
                 ]
             }
@@ -687,67 +951,67 @@
                 "id": "c13",
                 "title": "13. Functions in C",
                 "duration": "35 mins",
-                "content": "# Master the Three Pillars of C Functions\n\n## Definition of a Function\nA **Function** is a self-contained block of code that performs a specific task. Think of it as a small \"sub-program\" within your main program that can be used whenever you need to perform that specific job. Instead of writing the same logic multiple times, you group it into one named block. This approach, called **Modular Programming**, makes your code organized, easy to debug, and highly reusable. It helps you focus on one small task at a time without getting lost in a giant program.\n\n### Key Concept: The Recipe\nA function is like a **recipe**. You write it once, and anyone can use it to cook the same dish multiple times. In C, using a function requires three distinct steps: **Declaring** it, **Defining** it, and **Calling** it.\n\n---\n\n## Part 1: Function Declaration (The Pre-Announcement)\n\n### What is it?\nThe declaration (also called a **prototype**) tells the C compiler about the function's name and return type *before* you actually use it. It's like introducing a guest before they enter the party.\n\n### Syntax\n```c\nreturn_type function_name();\n```\n\n### Why is it needed?\nC reads codes from top to bottom. If you call a function in `main()` but haven't declared it yet, the compiler gets confused! Writing the declaration at the top (above `main`) ensures the compiler knows the function exists.\n\n---\n\n## Part 2: Function Definition (The Action)\n\n### What is it?\nThis is where the actual \"work\" happens. You write the code block `{ }` that contains the instructions for the task.\n\n### Syntax\n```c\nreturn_type function_name() {\n    // Write your code here\n}\n```\n\n### Why is it needed?\nWithout a definition, the function is just an empty name. The definition provides the logic needed to perform a specific task (like printing a message or calculating a value).\n\n---\n\n## Part 3: Function Call (The Trigger)\n\n### What is it?\nDeclaring and defining a function is not enough—it won't run by itself! You must \"call\" it to execute the code. Think of it as pushing a button to start a machine.\n\n### Syntax\n```c\nfunction_name();\n```\n\n### Why is it needed?\nFunctions only execute when they are explicitly called. You can call the same function 100 times if you need to repeat the task.\n\n---\n\n## Full Example: The Message Program\n\nHere is how these three pillars work together to display a message:\n\n```c\n#include <stdio.h>\n\n// Step 1: Declaration\nvoid showMsg(); \n\nint main() {\n    printf(\"Starting main...\\n\");\n\n    // Step 3: Function Call\n    showMsg(); \n\n    printf(\"Back in main!\");\n    return 0;\n}\n\n// Step 2: Function Definition\nvoid showMsg() {\n    printf(\"Hello! I am inside the function.\\n\");\n}\n```\n\n**Expected Output:**\n```text\nStarting main...\nHello! I am inside the function.\nBack in main!\n```\n\n---\n\n## Step-by-Step Logic Tracing\n\n> **Turn 1**: The program enters `main()` and prints \"Starting main...\".\n> **Turn 2**: It hits `showMsg();`. C pauses `main()` and jumps down to the **Function Definition**.\n> **Turn 3**: Inside the function, it prints \"Hello! I am inside the function.\".\n> **Turn 4**: The function ends. C jumps back to `main()` exactly where it left off.\n> **Turn 5**: It prints \"Back in main!\" and finally reaches the end of the program.\n\n---\n\n## Summary Table\n\n| Part | Role | Semicolon? |\n| :--- | :--- | :--- |\n| **Declaration** | Announces the function | **Yes** (Must end with `;`) |\n| **Definition** | Contains the actual code | **No** (Uses `{ }` instead) |\n| **Call** | Executes the function | **Yes** (Must end with `;`) |",
+                "content": "# Engineering C Functions\n\nFunctions are the building blocks of modular C programs. A function is a named sequence of instructions that performs a specific task, isolated by its own memory context called a **Stack Frame**.\n\n---\n\n## 1. Anatomy of a Function\n\nA function has two main parts: the **Header** and the **Body**.\n\n### The Function Header\nThe header defines the interface of the function:\n```c\nreturn_type function_name(parameter_list)\n```\n*   **Return Type**: The type of data sent back to the caller (e.g., `int`, `float`). Use `void` if nothing is returned.\n*   **Function Name**: A unique identifier for the function.\n*   **Parameter List**: Variables that receive input data from the caller.\n\n### The Function Body\nThe code inside the braces `{ }` that performs the actual work.\n\n---\n\n## 2. Memory Mechanics: The Call Stack\n\nWhen you call a function, C creates a **Stack Frame** in memory.\n\n### What is in a Stack Frame?\n*   **Local Variables**: Variables declared inside the function.\n*   **Parameters**: Copies of the values passed into the function.\n*   **Return Address**: The location to jump back to after the function finishes.\n\n### The Lifecycle\n1.  **Push**: When a function is called, its frame is \"pushed\" onto the stack.\n2.  **Execute**: The function runs using its own private memory.\n3.  **Pop**: When the function returns, its frame is \"popped\" (deleted), and memory is freed.\n\n---\n\n## 3. Data Flow: Pass-by-Value\n\nIn C, data is passed by **value**. This means the function receives a **copy** of the variable, not the original.\n\n*   **Isolation**: Changes made to a parameter inside a function do not affect the original variable in `main()`.\n*   **Scope**: Local variables only exist while the function is running.\n\n---\n\n## 4. Code Lab: Math Utility\n\nThis example shows how to declare, define, and call functions properly.\n\n```c\n#include <stdio.h>\n\n// 1. Declaration (Prototype)\nint calculateSum(int a, int b);\nint calculateSquare(int n);\n\nint main() {\n    int x = 10, y = 20;\n\n    // 2. Calling Functions\n    int total = calculateSum(x, y);\n    int sq = calculateSquare(x);\n\n    printf(\"Sum: %d | Square: %d\\n\", total, sq);\n    return 0;\n}\n\n// 3. Definition\nint calculateSum(int a, int b) {\n    return a + b;\n}\n\nint calculateSquare(int n) {\n    return n * n;\n}\n```\n\n### Execution Trace\n1.  **Start**: `main()` starts. Space for `x` and `y` is created.\n2.  **Call**: `calculateSum` is called. A new frame is created with copies of 10 and 20.\n3.  **Result**: The function calculates 30 and returns it.\n4.  **End**: The sum frame is destroyed. `main` receives 30 and continues.\n",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "Which part of a function provides the actual logic and code to perform a task?",
+                        "text": "What is contained in a function's Stack Frame?",
                         "options": [
-                            "Function Declaration",
-                            "Function Call",
-                            "Function Definition",
-                            "Function Header"
+                            "Global variables only",
+                            "Local variables, parameters, and return address",
+                            "The entire program source code",
+                            "Library headers"
                         ],
-                        "correctAnswer": 2,
-                        "explanation": "The function definition is the 'body' of the function where all the instructions are written."
+                        "correctAnswer": 1,
+                        "explanation": "The stack frame holds everything unique to a specific function call, including its private variables and where to return to."
                     },
                     {
                         "id": 2,
-                        "text": "What is the primary purpose of a 'Function Declaration'?",
+                        "text": "What does 'Pass-by-Value' mean in C?",
                         "options": [
-                            "To run the function",
-                            "To tell the compiler about the function's existence",
-                            "To write the code logic",
-                            "To include a library"
+                            "The function gets the original variable",
+                            "A copy of the value is sent to the function",
+                            "Variables are moved to the hard drive",
+                            "Function cannot use any variables"
                         ],
                         "correctAnswer": 1,
-                        "explanation": "A declaration (or prototype) serves as a pre-announcement to the compiler so it won't be confused when it sees the function call later."
+                        "explanation": "C copies the value of the argument into the function's parameter. The original variable remains unchanged."
                     },
                     {
                         "id": 3,
-                        "text": "What happens if you define a function but never 'Call' it in `main()`?",
+                        "text": "When is a function's memory (Stack Frame) destroyed?",
                         "options": [
-                            "The code inside will never run",
-                            "The program will crash",
-                            "It will run automatically at the start",
-                            "It will result in a compilation error"
+                            "As soon as the program starts",
+                            "When the function hits a 'return' statement",
+                            "Only when the computer restarts",
+                            "It is never destroyed"
                         ],
-                        "correctAnswer": 0,
-                        "explanation": "Functions are stagnant blocks of code; they only spring to life when they are explicitly 'called'."
+                        "correctAnswer": 1,
+                        "explanation": "Memory is reclaimed (the frame is 'popped') as soon as the function finishes its execution."
                     },
                     {
                         "id": 4,
-                        "text": "Identify the correct 'Function Call' syntax for a function named `play()`:",
+                        "text": "Where should a Function Prototype normally be placed?",
                         "options": [
-                            "void play();",
-                            "play();",
-                            "call play;",
-                            "play { };"
+                            "Inside the function body",
+                            "After the main function",
+                            "At the top of the file, before main",
+                            "In a separate text file"
                         ],
-                        "correctAnswer": 1,
-                        "explanation": "To call a function, you simply write its name followed by parentheses and a semicolon."
+                        "correctAnswer": 2,
+                        "explanation": "Prototypes are placed at the top so the compiler knows the function exists before it is called in main."
                     },
                     {
                         "id": 5,
-                        "text": "Which of these does NOT end with a semicolon in C?",
+                        "text": "What is the scope of a local variable?",
                         "options": [
-                            "The Function Declaration",
-                            "The Function Call",
-                            "The Function Definition header",
-                            "The return 0; statement"
+                            "The entire program",
+                            "Only the function where it is declared",
+                            "Only the main function",
+                            "Any file in the project"
                         ],
-                        "correctAnswer": 2,
-                        "explanation": "A function definition header (e.g., void fun()) is immediately followed by a code block { }, so it does not use a semicolon."
+                        "correctAnswer": 1,
+                        "explanation": "Local variables are only 'visible' and usable within the braces of the function where they were created."
                     }
                 ]
             },

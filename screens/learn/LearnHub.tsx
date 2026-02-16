@@ -160,7 +160,7 @@ const LearnHub: React.FC = () => {
     };
 
     const sections = useMemo((): CourseSection[] => {
-        let filtered = LANGUAGES.filter(lang =>
+        const filtered = LANGUAGES.filter(lang =>
             lang.name.toLowerCase().includes(searchQuery.toLowerCase())
         );
 
