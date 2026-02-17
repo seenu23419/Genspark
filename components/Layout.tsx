@@ -143,16 +143,16 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
                     <Outlet />
                 </main>
 
-                {/* Mobile Bottom Navigation - Material Design 56 dp, 4 tabs exact */}
-                <div className="md:hidden fixed bottom-0 left-0 right-0 z-50">
-                    <nav className="flex items-center justify-around bg-slate-100/95 dark:bg-black backdrop-blur-xl border-t border-slate-300 dark:border-white/10 shadow-[0_-2px_12px_rgba(0,0,0,0.05)] dark:shadow-[0_-2px_12px_rgba(0,0,0,0.4)] h-[56px] transition-colors duration-300">
+                {/* Mobile Bottom Navigation - Improved visibility and safe-area support */}
+                <div className="md:hidden fixed bottom-0 left-0 right-0 z-[100] bg-slate-100 dark:bg-slate-900 border-t border-slate-300 dark:border-white/10 pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_20px_rgba(0,0,0,0.1)] dark:shadow-[0_-4px_20px_rgba(0,0,0,0.4)]">
+                    <nav className="flex items-center justify-around h-[56px] px-2">
                         {navItems.map((item) => {
                             const isActive = currentScreen === item.id || (item.id === 'PROFILE' && (currentScreen === 'SETTINGS' || currentScreen === 'ANALYTICS' || window.location.pathname.startsWith('/profile')));
                             return (
                                 <button
                                     key={item.id}
                                     onClick={() => navigate(item.path)}
-                                    className={`flex-1 h-[56px] flex flex-col items-center justify-center gap-0.5 transition-all active:scale-95 touch-manipulation ${isActive ? 'scale-105' : 'scale-100'}`}
+                                    className={`flex-1 h-full flex flex-col items-center justify-center gap-0.5 transition-all active:scale-95 touch-manipulation ${isActive ? 'scale-105' : 'scale-100'}`}
                                     aria-label={item.label}
                                     aria-current={isActive ? 'page' : undefined}
                                 >
@@ -161,7 +161,7 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
                                         className={`transition-all ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500'}`}
                                         strokeWidth={isActive ? 2.5 : 2}
                                     />
-                                    <span className={`text-[12px] font-bold transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500'}`}>
+                                    <span className={`text-[11px] font-bold transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500'}`}>
                                         {item.label}
                                     </span>
                                 </button>

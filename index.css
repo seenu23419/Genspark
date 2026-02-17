@@ -111,6 +111,8 @@ body,
   padding: 0;
   width: 100%;
   max-width: 100%;
+  height: 100dvh !important;
+  /* Dynamic Viewport Height for mobile */
   overflow-x: hidden !important;
   position: relative;
   -webkit-text-size-adjust: 100%;
