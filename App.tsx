@@ -1,6 +1,9 @@
 import React, { Suspense, lazy } from 'react';
 import { createBrowserRouter, RouterProvider, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from './contexts/AuthContext';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { CurriculumProvider } from './contexts/CurriculumContext';
+import { PracticeProvider } from './contexts/PracticeContext';
 import Layout from './components/Layout';
 import Splash from './screens/auth/Splash';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -28,9 +31,9 @@ const CourseTrack = lazy(() => import('./screens/learn/CourseTrack'));
 const StreaksActivity = lazy(() => import('./screens/profile/StreaksActivity'));
 const LearningHistory = lazy(() => import('./screens/profile/LearningHistory'));
 const PracticeHistory = lazy(() => import('./screens/practice/PracticeHistory'));
-const CodingProblemWrapper = lazy(() => import('./screens/practice/CodingProblemWrapper'));
 
-
+// Query Client for React Query
+const queryClient = new QueryClient();
 
 // Loading Fallback
 // Minimal Loading Fallback
@@ -71,21 +74,6 @@ const ProtectedRoute = () => {
         </Suspense>
       </Layout>
     </>
-  );
-};
-
-// --- FULL SCREEN PROTECTED ROUTE (No Layout) ---
-const FullScreenProtectedRoute = () => {
-  const { user, loading } = useAuth();
-  const location = useLocation();
-
-  if (loading) return <Splash />;
-  if (!user) return <Navigate to="/login" state={{ from: location }} replace />;
-
-  return (
-    <Suspense fallback={<ScreenLoader />}>
-      <Outlet />
-    </Suspense>
   );
 };
 
@@ -130,7 +118,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "learn", element: <LearnHub /> },
       { path: "track/:langId", element: <CourseTrack /> },
-      { path: "practice", element: <PracticeHub /> },
+      { path: "practice/*", element: <PracticeHub /> },
       { path: "practice/history", element: <PracticeHistory /> },
       { path: "profile", element: <Profile /> },
       { path: "profile/streaks", element: <StreaksActivity /> },
@@ -150,13 +138,6 @@ const router = createBrowserRouter([
     element: <PublicRoute />,
     children: [
       { index: true, element: <LoginWrapper /> }
-    ]
-  },
-  {
-    path: "/practice/problem",
-    element: <FullScreenProtectedRoute />,
-    children: [
-      { path: ":problemId", element: <CodingProblemWrapper /> }
     ]
   },
   {
@@ -193,10 +174,17 @@ const router = createBrowserRouter([
   }
 ]);
 
-
 const App: React.FC = () => {
   return (
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <CurriculumProvider>
+          <PracticeProvider>
+            <RouterProvider router={router} />
+          </PracticeProvider>
+        </CurriculumProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 };
 

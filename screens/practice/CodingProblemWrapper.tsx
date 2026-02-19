@@ -121,6 +121,7 @@ const CodingProblemWrapper: React.FC = () => {
             status={currentStatus}
             onBack={() => navigate(-1)}
             onComplete={async () => {
+                console.log("[CodingProblemWrapper] Practice problem completed, refreshing data...");
                 // Refresh context so Practice Hub shows updated stats
                 await refreshProgress();
                 // Refresh user profile to show updated streak

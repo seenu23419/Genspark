@@ -179,7 +179,7 @@ class SupabaseService {
       if (!this.streakEnabled) {
         console.log("[SupabaseService] Fast-forwarding to fallback fetch (streakEnabled is false)");
         const fallbackBuilder = this.supabase.from('users')
-          .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id') as any;
+          .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, completed_lesson_ids, unlocked_lesson_ids, activity_log, activity_history, created_at, last_language_id, last_lesson_id') as any;
 
         if (queryBuilder.id) fallbackBuilder.eq('id', queryBuilder.id);
         else if (queryBuilder.email) fallbackBuilder.eq('email', queryBuilder.email);
@@ -234,7 +234,7 @@ class SupabaseService {
     if (query._id) {
       const profileBuilder = this.supabase
         .from('users')
-        .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id')
+        .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, activity_history, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id')
         .eq('id', query._id);
 
       const progressPromise = this.supabase
@@ -254,7 +254,7 @@ class SupabaseService {
 
     // Fallback for Email query (Sequential)
     let builder = this.supabase.from('users')
-      .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id');
+      .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, activity_history, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id');
 
     if (query.email) builder = builder.eq('email', query.email);
     else return null;

@@ -30,10 +30,15 @@ export class StreakService {
         // We assume activityLog contains 'YYYY-MM-DD' strings which are timezone agnostic dates
         // OR ISO strings. We will normalize to 'YYYY-MM-DD' to represent "calendar days".
         const sortedUniqueDays = [...new Set(activityLog.map(date => {
+            // If it's already a normalized YYYY-MM-DD, keep it as is
+            if (/^\d{4}-\d{2}-\d{2}$/.test(date)) return date;
+
             const d = new Date(date);
             // Ensure we are working with local calendar dates for the user
             return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
         }))].sort((a, b) => b.localeCompare(a)); // Descending: Newest first
+
+        console.log(`[StreakService] Sorted Unique Days:`, sortedUniqueDays);
 
         if (sortedUniqueDays.length === 0) {
             return {
@@ -124,6 +129,14 @@ export class StreakService {
         // If they were active yesterday, the streak is "at risk" but alive (they can extend it today).
         // If they were active today, it is extended and safe.
         const isStreakAliveToday = latestActivityStr === todayStr || latestActivityStr === yesterdayStr;
+
+        console.log(`[StreakService] Final Stats:`, {
+            currentStreak,
+            longestStreak,
+            lastActiveDate,
+            isStreakAliveToday,
+            isActiveToday
+        });
 
         return {
             currentStreak,

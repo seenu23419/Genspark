@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <rect width="128" height="128" rx="16" fill="#f29111"/>
-  <rect x="28" y="36" width="72" height="56" rx="8" fill="#fff"/>
-  <text x="50%" y="68%" font-size="18" text-anchor="middle" fill="#333" font-family="Arial">SQL</text>
-</svg>

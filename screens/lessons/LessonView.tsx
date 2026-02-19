@@ -264,15 +264,12 @@ const LessonView: React.FC<LessonViewProps> = ({
                         ))}
                     </div>
 
-                    <h1 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
-                        {lesson.title}
-                    </h1>
                 </div>
 
                 <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
                 {/* Markdown Content - Optimized for mobile scanning with better spacing and bullet points */}
-                <article className="prose dark:prose-invert prose-sm max-w-none
+                <article className="lesson-content prose dark:prose-invert prose-sm max-w-none
           prose prose-slate dark:prose-invert max-w-none
           prose-headings:font-black prose-headings:tracking-tight prose-headings:text-slate-700 dark:prose-headings:text-white
           prose-p:text-slate-500 dark:prose-p:text-slate-300 prose-p:leading-relaxed prose-p:text-sm md:prose-p:text-base
@@ -347,9 +344,16 @@ const LessonView: React.FC<LessonViewProps> = ({
 
                                 // Standard code block rendering
                                 if (!inline && match) {
-                                    // Heuristic: If it contains placeholders like <...>, it's likely SYNTAX even if tagged
-                                    const isSyntax = content.includes('<') && content.includes('>') && content.includes(';');
-                                    const label = isSyntax ? 'SYNTAX' : `${match[1].toUpperCase()} EXAMPLE`;
+                                    // Heuristic: Better detection for SYNTAX vs EXAMPLE
+                                    const isSyntax =
+                                        (content.includes('<') && content.includes('>')) ||
+                                        content.includes('condition') ||
+                                        content.includes('statement') ||
+                                        content.includes('expression') ||
+                                        content.includes('variable_name') ||
+                                        (!content.includes(';') && !content.includes('#include') && !content.includes('main'));
+
+                                    const label = isSyntax ? 'SYNTAX' : 'EXAMPLE';
 
                                     return (
                                         <div className="lesson-example-program selection-none">
@@ -403,8 +407,20 @@ const LessonView: React.FC<LessonViewProps> = ({
                                 );
                             },
                             h1: ({ node, ...props }) => <h1 className="lesson-section" {...props}><div className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white mt-12 mb-6">{props.children}</div></h1>,
-                            h2: ({ node, ...props }) => <h2 className="lesson-section" {...props}><div className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-10 mb-5 pb-3 border-b border-indigo-500/20">{props.children}</div></h2>,
-                            h3: ({ node, ...props }) => <h3 className="lesson-header-h3" {...props}>{props.children}</h3>,
+                            h2: ({ node, ...props }) => (
+                                <h2 className="lesson-section" {...props}>
+                                    <div className="text-3xl sm:text-4xl font-black text-indigo-600 dark:text-indigo-400 mt-12 mb-6 pb-4 border-b-2 border-indigo-500/30 tracking-tight leading-tight">
+                                        {props.children}
+                                    </div>
+                                </h2>
+                            ),
+                            h3: ({ node, ...props }) => (
+                                <h3 className="lesson-header-h3" {...props}>
+                                    <div className="text-xl sm:text-2xl font-extrabold text-purple-600 dark:text-purple-300 mt-8 mb-4">
+                                        {props.children}
+                                    </div>
+                                </h3>
+                            ),
                             p: ({ node, ...props }) => <p className="lesson-paragraph" {...props} />,
                             ul: ({ node, ...props }) => <ul className="lesson-valid-list" {...props} />,
                             ol: ({ node, ...props }) => <ol className="lesson-ordered-list" {...props} />,
