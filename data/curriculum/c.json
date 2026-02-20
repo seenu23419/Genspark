@@ -1023,63 +1023,63 @@
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "How many total elements are in the array `int arr[3][4];`?",
+                        "text": "Which real-world analogy best describes a 3-Dimensional (3-D) array?",
                         "options": [
-                            "7",
-                            "12",
-                            "3",
-                            "4"
+                            "A single row of school lockers",
+                            "A seating chart in a single classroom",
+                            "An apartment building with Floors, Corridors, and Rooms",
+                            "A simple shopping list"
                         ],
-                        "correctAnswer": 1,
-                        "explanation": "Total elements = Rows × Columns. Here, 3 × 4 = 12."
+                        "correctAnswer": 2,
+                        "explanation": "A 3-D array adds a third dimension (depth), much like an apartment building where you need a Floor (Layer), Corridor (Row), and Room (Column) to find a specific location."
                     },
                     {
                         "id": 2,
-                        "text": "Which declaration represents a standard 2-D array with 2 Rows and 3 Columns?",
+                        "text": "In the 2-D addressing formula `Addr = Base + ((i * cols) + j) * size`, why is 'cols' part of the calculation?",
                         "options": [
-                            "int arr[2,3];",
-                            "int arr[3][2];",
-                            "int arr[2][3];",
-                            "int arr{2}{3};"
+                            "To find the start of the entire array",
+                            "To skip the correct number of elements to reach row 'i'",
+                            "To determine how many rows are in the array",
+                            "To calculate the size of a single integer"
                         ],
-                        "correctAnswer": 2,
-                        "explanation": "The syntax is `type name[rows][columns]`. So `[2][3]` is correct for 2 rows and 3 columns."
+                        "correctAnswer": 1,
+                        "explanation": "Because memory is linear, the computer must skip every element in all rows preceding row 'i'. Each row contains exactly 'cols' elements."
                     },
                     {
                         "id": 3,
-                        "text": "If `int grid[2][2] = {{1, 2}, {3, 4}};`, what value is at `grid[1][0]`?",
+                        "text": "What happens if you omit the column count in a 2-D array declaration like `int arr[2][];`?",
                         "options": [
-                            "1",
-                            "2",
-                            "3",
-                            "4"
+                            "The compiler automatically sets it to 1",
+                            "It creates a 1-D array instead",
+                            "A compilation error occurs because the compiler cannot calculate row sizes",
+                            "The program runs but accesses random memory"
                         ],
                         "correctAnswer": 2,
-                        "explanation": "`grid[1][0]` refers to the element at Row 1 (second row) and Column 0 (first column). That value is 3."
+                        "explanation": "In C, the compiler MUST know the size of all dimensions except the first one to calculate memory addresses correctly. Omitting the column count is an error."
                     },
                     {
                         "id": 4,
-                        "text": "Which dimension can be optional when initializing a 2-D array?",
+                        "text": "Why is it faster to access a large 2-D array row-by-row rather than column-by-column in C?",
                         "options": [
-                            "Both dimensions",
-                            "The second dimension (Columns)",
-                            "The first dimension (Rows)",
-                            "Neither, both are mandatory"
+                            "The CPU prefers to count rows",
+                            "C uses Row-Major Order, so row elements are physically next to each other in memory",
+                            "Column-wise access is actually faster",
+                            "Row-wise access uses less memory"
                         ],
-                        "correctAnswer": 2,
-                        "explanation": "In logical initialization (e.g., `int a[][3] = ...`), C can infer the number of rows based on the data, but it needs the column count to know where one row ends and the next begins."
+                        "correctAnswer": 1,
+                        "explanation": "Due to Row-Major Order, elements in the same row are stored contiguously. Accessing them in order (locality) allows the CPU cache to work efficiently, making it much faster."
                     },
                     {
                         "id": 5,
-                        "text": "How are 2-D arrays actually stored in memory in C?",
+                        "text": "If you have a 3-D array `int book[5][10][20]`, how many total elements are in the 'depth' (first) dimension?",
                         "options": [
-                            "Column-Major Order",
-                            "Row-Major Order (Row by Row)",
-                            "Randomly",
-                            "As a linked list"
+                            "10",
+                            "20",
+                            "5",
+                            "1000"
                         ],
-                        "correctAnswer": 1,
-                        "explanation": "C stores multi-dimensional arrays in continuous memory, strictly placing the first row, then the next row, and so on (Row-Major)."
+                        "correctAnswer": 2,
+                        "explanation": "In `book[5][10][20]`, the first index (5) represents the number of layers or pages (depth). The total elements in the array would be 5 * 10 * 20 = 1000."
                     }
                 ]
             },
