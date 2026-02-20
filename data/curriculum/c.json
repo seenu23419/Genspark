@@ -1155,67 +1155,67 @@
                 "id": "c16",
                 "title": "Lesson 16: Strings in C",
                 "duration": "45 mins",
-                "content": "Welcome to one of the most important topics in C! While other languages like Java or Python give you a \"String\" type automatically, C is more \"raw.\" To master strings in C, you have to understand how they are built from scratch.\n\n---\n\n## What is a String in C?\n\nAt its simplest level, a **String is just an Array of Characters**.\nIf you want to store the word \"HI\", you create an array that holds 'H', then 'i'. But there is one catch: C needs to know where the word *ends*.\n\n### The \"Train\" Analogy\n\nThink of a string as a **Train**:\n- **The Cargo Cars:** These are your characters (e.g., 'H', 'e', 'l', 'l', 'o').\n- **The Caboose (\\\\0):** This is the **Null Terminator**. It is a special character with the value of zero. It doesn't carry cargo, but it tells the \"Station Master\" (the C compiler) that the train has ended. \n\n**Critical Rule:** Every string in C MUST end with a `\\\\0`. Without it, C will keep reading your computer's memory forever, looking for the end!\n\n---\n\n## Memory Anatomy: The Invisible Byte\n\nWhen you see `\"Hello\"`, it looks like 5 letters. But in C memory, it actually occupies **6 bytes**.\n\n| Index | 0 | 1 | 2 | 3 | 4 | 5 |\n| :--- | :---: | :---: | :---: | :---: | :---: | :---: |\n| **Char** | 'H' | 'e' | 'l' | 'l' | 'o' | **'\\\\0'** |\n\n### Why does this matter?\nIf you create a `char` array to hold a 10-letter name, you MUST make the array size at least **11** to leave room for the Null Terminator.\n\n---\n\n## Creating Strings: Whiteboards vs. Stone\n\nThere are two ways to write strings in your code.\n\n### 1. The Whiteboard (Mutable Array)\n```c\nchar name[] = \"Alice\"; \n```\n- **Behavior:** This creates a copy of \"Alice\" on the **Stack**.\n- **Usage:** You can change it later (`name[0] = 'B'` makes it \"Blice\").\n- **Analogy:** Like writing on a whiteboard; you can erase and change letters.\n\n### 2. The Stone Engraving (String Literal)\n```c\nchar *name = \"Alice\";\n```\n- **Behavior:** This points directly to the **Read-Only Data Segment**.\n- **Usage:** You **CANNOT** change it. Trying to edit it will crash your program.\n- **Analogy:** Like a name carved in stone; it is permanent and solid.\n\n---\n\n## Safe Input: The Guard at the Gate\n\nReading text from a user is the #1 way hackers break into C programs.\n\n### The \"Forbidden\" Function: `gets()`\n**Never use `gets()`.** It doesn't check how much the user types. If your array has room for 10 letters and the user types 100, `gets()` will overwrite other parts of your computer's memory (**Buffer Overflow**).\n\n### The Safe Way: `fgets()`\n```c\nchar buffer[10];\nfgets(buffer, 10, stdin);\n```\n- **How it works:** You tell it exactly how much space you have (10). It will *never* read more than 9 characters, leaving 1 spot for the caboose (`\\\\0`). It is the \"Guard\" that protects your memory.\n\n---\n\n## Common Tools (`<string.h>`)\n\n| Tool | What it does | Difference |\n| :--- | :--- | :--- |\n| **`strlen(s)`** | Counts characters | Does NOT count the `\\\\0` |\n| **`sizeof(s)`** | Measure total bytes | DOES count the `\\\\0` |\n| **`strcpy(d, s)`** | Copies a string | Overwrites the destination |\n\n---\n\n## Summary for Beginners\n1. **Strings are Arrays:** Use `char str[]`.\n2. **Always add 1:** A 5-letter word needs a 6-byte array.\n3. **The Null Terminator:** Without `\\\\0`, your program is \"broken.\"\n4. **Use `fgets`:** Stay safe by always limiting your input size.",
+                "content": "Pointers are often considered the most difficult topic in C, but they are also the most powerful. Mastering pointers is what separates a C beginner from a C professional. A pointer is simply a variable that stores the **memory address** of another variable.\n\n---\n\n## The Mailbox Analogy\n\nTo understand pointers, think of your computer's RAM as a long street filled with **Mailboxes**:\n1.  **Variable:** This is the **content** inside the mailbox (like a letter or a package).\n2.  **Memory Address:** This is the **House Number** painted on the mailbox.\n3.  **Pointer:** This is a small slip of paper where you have written down the **House Number** of a specific mailbox. \n\nWith that slip of paper (the pointer), you can find exactly where the data is stored and even change what's inside that mailbox from anywhere else.\n\n---\n\n## Memory Addresses: The & Operator\n\nEvery variable you create in C is stored at a specific location in memory, known as its **Address**. You can see this address using the **Address-of Operator (`&`)**.\n\n```c\n#include <stdio.h>\n\nint main() {\n    int age = 25;\n    printf(\"Value: %d\\n\", age);\n    printf(\"Memory Address (Hex): %p\\n\", (void*)&age);\n    return 0;\n}\n```\n\n**Note on %p:** The `%p` format specifier is used to print addresses in **Hexadecimal** (base-16), which is how computers typically display memory locations (e.g., `0x7ffeefbff5c8`).\n\n---\n\n## Creating and Initializing Pointers\n\nTo create a pointer, you use the asterisk (`*`) in the declaration.\n\n```c\nint *ptr; // A pointer to an integer\n```\n\nTo make the pointer \"point\" to a variable, you assign it that variable's address:\n\n```c\nint x = 10;\nint *ptr = &x; // ptr now 'points' to x\n```\n\n**Deep Dive:** In memory, `ptr` is its own variable. It has its own address, but its **value** is the address of `x`.\n\n---\n\n## Dereferencing: The * Operator\n\nOnce a pointer holds an address, you can use it to access or change the value at that address. This is called **Dereferencing**. \n\nThink of it like a **Remote Control**: The pointer is the remote, and dereferencing is pressing a button to change the channel on the TV it's pointed at.\n\n```c\n#include <stdio.h>\n\nint main() {\n    int goal = 100;\n    int *p = &goal;\n\n    printf(\"Original: %d\\n\", goal);\n\n    *p = 200; // Dereference p to change the value of 'goal'\n\n    printf(\"Modified: %d\\n\", goal);\n    return 0;\n}\n```\n\n---\n\n## Pointer Safety: NULL and Wild Pointers\n\nPointers are powerful but dangerous because they allow you to touch memory directly. \n\n1.  **Wild Pointers:** If you create a pointer but don't initialize it (`int *p;`), it points to a random memory location. Changing its value could crash your program or the OS!\n2.  **NULL Pointers:** To be safe, always initialize unused pointers to `NULL`. A `NULL` pointer points to \"nothing\" and represents a safe state.\n\n```c\nint *p = NULL; // Safe starting state\nif (p != NULL) {\n    // Only use if it's pointed at something real\n}\n```\n\n---\n\n## Practical Use: Why Pointers?\n\nPointers are essential for several reasons you will learn soon:\n- **Dynamic Memory:** Allocating memory while the program is running.\n- **Pass by Reference:** Allowing a function to change a variable in `main`.\n- **Arrays & Strings:** In C, arrays and pointers are almost the same thing!\n- **Data Structures:** Creating complex structures like Linked Lists and Trees.\n\n---\n\n## Summary Comparison\n\n| Concept | Operator | Action | Analogy |\n| :--- | :---: | :--- | :--- |\n| **Address-of** | `&` | Get address of a variable | Look up house number |\n| **Declaration** | `*` | Create a pointer variable | Prepare the slip of paper |\n| **Dereference** | `*` | Access value at address | Use the remote control |",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "If a string contains 10 characters, how many bytes of memory does it actually use in C?",
+                        "text": "What is the primary difference between a normal variable and a pointer variable?",
                         "options": [
-                            "10 bytes",
-                            "11 bytes",
-                            "9 bytes",
-                            "20 bytes"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "You need 10 bytes for the characters plus 1 extra byte for the invisible null terminator (\\\\0)."
-                    },
-                    {
-                        "id": 2,
-                        "text": "What is the 'Caboose' of every C string called?",
-                        "options": [
-                            "The End Byte",
-                            "The Stop Sign",
-                            "The Null Terminator (\\\\0)",
-                            "The Newline (\\\\n)"
-                        ],
-                        "correctAnswer": 2,
-                        "explanation": "The null terminator (\\\\0) tells C exactly where a string ends."
-                    },
-                    {
-                        "id": 3,
-                        "text": "Why should you prefer `char name[] = \"Alice\";` over `char *name = \"Alice\";` if you want to change the letters later?",
-                        "options": [
-                            "Because arrays are faster",
-                            "Because pointer strings are stored in read-only memory and cannot be edited",
-                            "Because arrays automatically capitalize letters",
+                            "Normal variables store addresses; pointers store values",
+                            "Normal variables store data values; pointers store memory addresses",
+                            "Normal variables are faster than pointers",
                             "There is no difference"
                         ],
                         "correctAnswer": 1,
-                        "explanation": "Strings created as pointers point to read-only memory. If you try to change them, the program will crash."
+                        "explanation": "A normal variable (like `int x = 5`) holds data. A pointer (like `int *p = &x`) holds the memory location where that data is kept."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Which operator is used to find the memory address of an existing variable?",
+                        "options": [
+                            "The dereference operator (*)",
+                            "The address-of operator (&)",
+                            "The addition operator (+)",
+                            "The arrow operator (->)"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "The `&` (address-of) operator gives you the 'GPS coordinates' of where a variable is stored in RAM."
+                    },
+                    {
+                        "id": 3,
+                        "text": "In the 'Mailbox Analogy', what does the actual content (the letter) representing?",
+                        "options": [
+                            "The Pointer",
+                            "The Memory Address",
+                            "The Variable Value",
+                            "The Mailbox Size"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "The actual item inside the box is the variable's value. The box's number is the address, and a note with that number is the pointer."
                     },
                     {
                         "id": 4,
-                        "text": "Why is `fgets()` safer than `gets()` for taking user input?",
+                        "text": "What is 'Dereferencing' a pointer?",
                         "options": [
-                            "It reads faster",
-                            "It allows you to set a maximum limit so the user cannot overflow your memory",
-                            "It automatically corrects spelling",
-                            "It only accepts numbers"
+                            "Deleting the pointer from memory",
+                            "Changing where the pointer points to",
+                            "Accessing or modifying the value stored at the address the pointer holds",
+                            "Finding the address of the pointer itself"
                         ],
-                        "correctAnswer": 1,
-                        "explanation": "`fgets` prevents 'Buffer Overflows' by making sure the user doesn't enter more data than your variable can hold."
+                        "correctAnswer": 2,
+                        "explanation": "Dereferencing (using `*ptr`) is like following the address on your note to the actual mailbox and interacting with the data inside."
                     },
                     {
                         "id": 5,
-                        "text": "If you use `strlen(\"Hello\")`, what number will it return?",
+                        "text": "Why is it best practice to initialize a pointer to NULL if you don't have a variable for it yet?",
                         "options": [
-                            "5",
-                            "6",
-                            "4",
-                            "Unknown"
+                            "It makes the pointer use less RAM",
+                            "It prevents 'Wild Pointers' that could accidentally corrupt random memory",
+                            "NULL pointers are faster to access",
+                            "The compiler requires all pointers to be NULL"
                         ],
-                        "correctAnswer": 0,
-                        "explanation": "`strlen` counts only the visible characters. It does NOT count the null terminator."
+                        "correctAnswer": 1,
+                        "explanation": "An uninitialized pointer holds a random garbage address. Pointing it to NULL ensures it points to a known 'nothing' state, preventing dangerous accidental writes."
                     }
                 ]
             },
