@@ -21,7 +21,7 @@ interface LayoutProps {
     user?: UserType | null;
 }
 
-const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
+const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children }) => {
     const navigate = useNavigate();
     const { logout, user: authUser } = useAuth();
     const user = propUser || authUser;
@@ -32,11 +32,6 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
         { id: 'PRACTICE', path: '/practice', icon: Puzzle, label: 'Practice' },
         { id: 'PROFILE', path: '/profile', icon: User, label: 'Profile' },
     ];
-
-    const authScreens: Screen[] = ['SPLASH', 'WELCOME', 'LOGIN', 'SIGNUP', 'OTP', 'FORGOT_PASSWORD', 'RESET_PASSWORD'];
-    const isAuthScreen = authScreens.includes(currentScreen);
-
-    if (isAuthScreen) return <Outlet />;
 
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const handleLogout = async () => {
@@ -139,8 +134,8 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser }) => {
                 </header>
 
                 {/* Content Area with smooth fade transition - proper padding for mobile */}
-                <main className="flex-1 overflow-y-auto scroll-smooth relative no-scrollbar pb-20 animate-in fade-in duration-300 bg-slate-100 dark:bg-black transition-colors duration-300">
-                    <Outlet />
+                <main className="flex-1 overflow-y-auto scroll-smooth relative no-scrollbar pb-24 animate-in fade-in duration-300 bg-slate-100 dark:bg-black transition-colors duration-300">
+                    {children}
                 </main>
 
                 {/* Mobile Bottom Navigation - Improved visibility and safe-area support */}

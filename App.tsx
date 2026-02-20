@@ -59,11 +59,12 @@ const ProtectedRoute = () => {
   // Derive screen name for Layout highlights
   const path = location.pathname;
   let screen: Screen = 'HOME';
-  if (path === '/learn') screen = 'LEARN';
+  if (path === '/learn' || path.startsWith('/track')) screen = 'LEARN';
   else if (path.startsWith('/practice')) screen = 'PRACTICE';
   else if (path.startsWith('/profile') || path.startsWith('/settings') || path.startsWith('/progress')) screen = 'PROFILE';
   else if (path.startsWith('/lessons') || path.startsWith('/lesson') || path.startsWith('/quiz')) screen = 'LEARN';
   else if (path.startsWith('/challenge')) screen = 'PRACTICE';
+  else if (path === '/') screen = 'HOME';
 
   return (
     <>
