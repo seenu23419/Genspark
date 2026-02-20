@@ -1223,67 +1223,67 @@
                 "id": "c17",
                 "title": "Lesson 17: String Functions in C",
                 "duration": "50 mins",
-                "content": "To work with strings efficiently, C provides standard functions in the **`<string.h>`** library. These functions rely on one critical rule: **The string must end with a `\\0`**.\n\n```c\n#include <string.h>\n```\n\n---\n\n## strlen (String Length)\n\nCalculates the length of a string, **excluding** the null terminator.\n\n### Syntax\n```c\nsize_t strlen(const char *str);\n```\n\n### Example\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[] = \"Code\";\n    printf(\"Length: %d\\n\", strlen(s));\n    printf(\"Size: %d\\n\", sizeof(s));\n    return 0;\n}\n```\n\n**Expected Output:**\n```text\nLength: 4\nSize: 5\n```\n\n** How it Works:**\n- `strlen` counts 'C', 'o', 'd', 'e' (4).\n- `sizeof` counts all bytes including `\\0` (5).\n\n---\n\n## strcpy (String Copy)\n\nCopies a string from specific source to destination. **Unsafe** if destination is too small.\n\n### Syntax\n```c\nchar* strcpy(char *dest, const char *src);\n```\n\n### Example\n```c\nchar src[] = \"Hello\";\nchar dest[20]; // Ensure this is big enough!\n\nstrcpy(dest, src);\nprintf(\"Copied: %s\", dest);\n```\n\n**Expected Output:**\n```text\nCopied: Hello\n```\n\n** How it Works:**\n- Copies 'H', 'e', 'l', 'l', 'o', and the null byte `\\0` to `dest`.\n\n---\n\n## strncpy (Safe String Copy)\n\nCopies AT MOST `n` characters. Safer, but tricky with null termination.\n\n### Syntax\n```c\nchar* strncpy(char *dest, const char *src, size_t n);\n```\n\n### Example\n```c\nchar src[] = \"Hello World\";\nchar dest[6];\n\nstrncpy(dest, src, 5); // Copy only 5 chars\ndest[5] = '\\0';       // ️ Manual termination needed!\n\nprintf(\"Safe Copy: %s\", dest);\n```\n\n**Expected Output:**\n```text\nSafe Copy: Hello\n```\n\n** How it Works:**\n- Copies only first 5 chars.\n- Since `n` was reached before `\\0`, it stops **without** adding `\\0`.\n- We manually add `dest[5] = '\\0'` to make it a valid string.\n\n---\n\n## strcat (String Concatenation)\n\nAppends (joins) source to the end of destination.\n\n### Syntax\n```c\nchar* strcat(char *dest, const char *src);\n```\n\n### Example\n```c\nchar dest[20] = \"Hello \";\nchar src[] = \"World\";\n\nstrcat(dest, src);\nprintf(\"Joined: %s\", dest);\n```\n\n**Expected Output:**\n```text\nJoined: Hello World\n```\n\n** How it Works:**\n- Finds the `\\0` in \"Hello \".\n- Overwrites it with 'W' from \"World\".\n- Copies the rest and adds a new `\\0`.\n\n---\n\n## strncat (Safe Concatenation)\n\nAppends at most `n` characters. Automatically adds `\\0`.\n\n### Syntax\n```c\nchar* strncat(char *dest, const char *src, size_t n);\n```\n\n### Example\n```c\nchar dest[20] = \"Hello \";\nstrncat(dest, \"Beautiful World\", 9);\nprintf(\"%s\", dest);\n```\n\n**Expected Output:**\n```text\nHello Beautiful\n```\n\n** How it Works:**\n- Takes only first 9 characters from source.\n- ALWAYS adds a `\\0` at the end (unlike `strncpy`).\n\n---\n\n## strcmp (String Compare)\n\nCompares two strings character by character (ASCII).\n\n### Syntax\n```c\nint strcmp(const char *s1, const char *s2);\n```\n\n### Example\n```c\nif(strcmp(\"Apple\", \"Banana\") < 0) {\n    printf(\"Apple comes first\");\n}\n```\n\n**Expected Output:**\n```text\nApple comes first\n```\n\n** How it Works:**\n- 'A' (65) - 'B' (66) = -1 (Negative).\n- Negative means `s1` is alphabetically smaller.\n\n---\n\n## strncmp (Safe Compare)\n\nCompares only the first `n` characters.\n\n### Syntax\n```c\nint strncmp(const char *s1, const char *s2, size_t n);\n```\n\n### Example\n```c\nif(strncmp(\"ApplePie\", \"AppleSauce\", 5) == 0) {\n    printf(\"First 5 chars match\");\n}\n```\n\n**Expected Output:**\n```text\nFirst 5 chars match\n```\n\n** How it Works:**\n- Checks 'A', 'p', 'p', 'l', 'e'. All match.\n- Returns 0 (Equal).\n\n---\n\n## strchr (Find Character)\n\nFinds the **first** occurrence of a character.\n\n### Syntax\n```c\nchar* strchr(const char *str, int c);\n```\n\n### Example\n```c\nchar s[] = \"google.com\";\nchar *ptr = strchr(s, '.');\nprintf(\"Domain: %s\", ptr);\n```\n\n**Expected Output:**\n```text\nDomain: .com\n```\n\n** How it Works:**\n- Scans for '.'.\n- Returns pointer to that '.' in memory.\n- Printing `ptr` prints from '.' onwards.\n\n---\n\n## strrchr (Find Last Character)\n\nFinds the **last** occurrence of a character.\n\n### Syntax\n```c\nchar* strrchr(const char *str, int c);\n```\n\n### Example\n```c\nchar s[] = \"/home/user/docs/file.txt\";\nchar *file = strrchr(s, '/');\nprintf(\"Filename: %s\", file + 1); // +1 skip '/'\n```\n\n**Expected Output:**\n```text\nFilename: file.txt\n```\n\n** How it Works:**\n- Finds the *last* slash.\n- `file` points to `/file.txt`.\n- `file + 1` skips the slash.\n\n---\n\n## strstr (Find Substring)\n\nFinds the first occurrence of a substring.\n\n### Syntax\n```c\nchar* strstr(const char *haystack, const char *needle);\n```\n\n### Example\n```c\nchar s[] = \"C Programming is fun\";\nchar *ptr = strstr(s, \"gram\");\nprintf(\"Found: %s\", ptr);\n```\n\n**Expected Output:**\n```text\nFound: gramming is fun\n```\n\n** How it Works:**\n- Looks for sequence \"gram\".\n- Returns pointer to 'g'.\n\n---\n\n## strtok (String Tokenize)\n\nSplits a string into tokens. **Destructive** (modifies original string).\n\n### Syntax\n```c\nchar* strtok(char *str, const char *delim);\n```\n\n### Example\n```c\nchar s[] = \"HTML,CSS,JS\";\nchar *token = strtok(s, \",\");\n\nwhile (token != NULL) {\n    printf(\"Lang: %s\\n\", token);\n    token = strtok(NULL, \",\"); // Pass NULL to continue\n}\n```\n\n**Expected Output:**\n```text\nLang: HTML\nLang: CSS\nLang: JS\n```\n\n** How it Works:**\n- Finds first `,` and replaces it with `\\0`.\n- Returns pointer to \"HTML\".\n- `NULL` tells it to continue from where it left off (using static memory).\n\n---\n\n## Key Takeaways\n- **Safety**: Prefer `n` versions (`strncpy`, `strncat`) to avoid overflows.\n- **Termination**: `strncpy` might NOT add `\\0`; do it manually.\n- **Destruction**: `strtok` modifies your string; use a copy if needed.",
+                "content": "In C, a string is not a special data type like it is in Java or Python. Instead, a string is simply an **array of characters** that ends with a special marker called the **Null Terminator**.\n\n---\n\n## The String of Beads Analogy\n\nImagine a string is a necklace of **Alphabet Beads**:\n1.  **Characters:** Each bead represents a letter (like 'H', 'e', 'l', 'l', 'o').\n2.  **The Array:** The string itself is the physical wire holding the beads together.\n3.  **The Null Terminator (`\\0`):** This is a special, invisible \"End Bead\" at the very end of the wire. It tells the computer: *\"Stop here! This is the end of the word.\"*\n\nWithout that Null Terminator, the computer would keep reading memory past your string, potentially seeing \"garbage\" data or crashing.\n\n---\n\n## Memory Layout: The Ghost Character\n\nWhen you create a string like this:\n```c\nchar name[] = \"C-Dev\";\n```\n\nThe computer allocates **6 bytes** of memory, even though \"C-Dev\" only has 5 letters. \n- Byte 1: 'C'\n- Byte 2: '-'\n- Byte 3: 'D'\n- Byte 4: 'e'\n- Byte 5: 'v'\n- Byte 6: **`\\0`** (The Null Terminator)\n\n**Crucial Rule:** Always make sure your character arrays are large enough to hold the text **PLUS** one extra space for the `\\0`.\n\n---\n\n## Working with String Functions (`<string.h>`)\n\nC provides a standard library called `<string.h>` to help you manage strings easily.\n\n### 1. `strlen()` - Measuring the Necklace\nThis function counts the characters in a string **until** it hits the Null Terminator. It does NOT count the `\\0` itself.\n\n```c\nchar msg[] = \"Hello\";\nint len = strlen(msg); // len is 5\n```\n\n### 2. `strcpy()` - Copying the Necklace\nBecause strings are arrays, you cannot use `=` to copy them (`str2 = str1` will fail). You must use `strcpy(destination, source)`.\n\n```c\nchar source[] = \"Gold\";\nchar dest[10];\nstrcpy(dest, source); // dest now contains \"Gold\"\n```\n\n---\n\n## String Literals vs. Modification\n\nThere are two common ways to create strings:\n1.  **Array Notation:** `char str[] = \"Hello\";` (Stored on the stack, you **can** change letters: `str[0] = 'J';`).\n2.  **Pointer Notation:** `char *str = \"Hello\";` (Stored in read-only memory. Trying to change a letter here may crash the program!).\n\n**Safety Tip:** Use Array notation unless you strictly need a read-only pointer.\n\n---\n\n## The Safety Warning: Buffer Overflow\n\nA \"Buffer Overflow\" happens when you try to put a 20-letter word into a 10-letter array. \n\n```c\nchar small[5];\nstrcpy(small, \"ThisIsWayTooLong\"); // ⚠️ CRITICAL ERROR\n```\n\nC will not stop you from doing this, but it will corrupt other variables nearby in memory. Always use safe functions like `strncpy()` or ensure your arrays are large enough.\n\n---\n\n## Summary of String Operators\n\n| Function | Meaning | Real-world Analogy |\n| :--- | :--- | :--- |\n| **`strlen`** | String Length | Counting beads on the wire |\n| **`strcpy`** | String Copy | Making an identical necklace |\n| **`strcat`** | String Concatenate | Tying two necklaces together |\n| **`strcmp`** | String Compare | Checking if two words are identical |",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "What is the key difference between `strcpy` and `strncpy`?",
+                        "text": "What is the mandatory 'hidden' character at the end of every C string?",
                         "options": [
-                            "strcpy is faster",
-                            "strncpy copies a limited number of chars, preventing some overflows",
-                            "They are the same",
-                            "strcpy works on numbers"
+                            "The newline character (\\n)",
+                            "The space character ( )",
+                            "The Null Terminator (\\0)",
+                            "The exclamation mark (!)"
                         ],
-                        "correctAnswer": 1,
-                        "explanation": "`strncpy` takes a size limit `n`, which helps prevent writing past the destination buffer, although you must be careful with null termination."
+                        "correctAnswer": 2,
+                        "explanation": "Every valid string in C must end with `\\0`. Without it, functions like `printf` and `strlen` wouldn't know where the string ends."
                     },
                     {
                         "id": 2,
-                        "text": "Why must you manually add `\\0` after `strncpy` sometimes?",
+                        "text": "How many bytes of memory are needed to store the string \"C-Code\"?",
                         "options": [
-                            "Because C is annoying",
-                            "If the source length >= n, strncpy stops strictly at n without adding \\0",
-                            "strncpy never adds \\0",
-                            "It is a compiler bug"
+                            "6 bytes",
+                            "7 bytes",
+                            "5 bytes",
+                            "8 bytes"
                         ],
                         "correctAnswer": 1,
-                        "explanation": "If the source string length is equal to or greater than the limit `n`, `strncpy` will fill the buffer but won't append the null terminator."
+                        "explanation": "\"C-Code\" has 6 letters, but you need 7 bytes total to include the invisible Null Terminator at the end."
                     },
                     {
                         "id": 3,
-                        "text": "What does `strrchr` do differently from `strchr`?",
+                        "text": "Why can't you copy a string using the '=' operator (e.g., `str2 = str1`)?",
                         "options": [
-                            "Finds the first occurrence",
-                            "Finds the last occurrence",
-                            "Finds random occurrences",
-                            "Nothing, they are aliases"
+                            "Strings are arrays, and you cannot assign one array directly to another in C",
+                            "The compiler prevents it to save memory",
+                            "Strings are read-only by default",
+                            "The '=' operator is only for numbers"
                         ],
-                        "correctAnswer": 1,
-                        "explanation": "The extra 'r' stands for 'reverse' or 'right'. It searches for the **last** occurrence of the character."
+                        "correctAnswer": 0,
+                        "explanation": "In C, array names act as fixed pointers. You must use functions like `strcpy()` to copy the actual data byte-by-byte."
                     },
                     {
                         "id": 4,
-                        "text": "Which function modifies the original string by inserting null bytes?",
+                        "text": "What happens during a 'Buffer Overflow'?",
                         "options": [
-                            "strstr",
-                            "strcmp",
-                            "strtok",
-                            "strlen"
+                            "The computer adds more RAM automatically",
+                            "Data is written past the end of the array, potentially corrupting other variables",
+                            "The string is automatically shortened to fit",
+                            "The program runs faster"
                         ],
-                        "correctAnswer": 2,
-                        "explanation": "`strtok` breaks strings by replacing delimiters (e.g., comma) with `\\0` to isolate tokens."
+                        "correctAnswer": 1,
+                        "explanation": "Buffer overflows are dangerous because C doesn't check array bounds, allowing data to spill over and overwrite important memory nearby."
                     },
                     {
                         "id": 5,
-                        "text": "If `strcmp(A, B)` returns -5, what does it mean?",
+                        "text": "What does `strlen()` return for the string \"Hi\"?",
                         "options": [
-                            "A is equal to B",
-                            "A is greater than B",
-                            "A is smaller than B",
-                            "String A has 5 chars"
+                            "3 (includes \\0)",
+                            "2 (excludes \\0)",
+                            "1 (only the first letter)",
+                            "0 (until it reaches 'i')"
                         ],
-                        "correctAnswer": 2,
-                        "explanation": "Any negative value means the first string is lexicographically (alphabetically) smaller than the second."
+                        "correctAnswer": 1,
+                        "explanation": "`strlen()` counts only the actual characters you can see; it stops right before the Null Terminator."
                     }
                 ]
             }
