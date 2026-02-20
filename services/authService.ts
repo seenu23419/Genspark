@@ -230,35 +230,46 @@ class AuthService {
 
       const userId = session.user.id;
 
-      // Fetch profile once per event - ONLY if needed
-      console.log("authService: Auth event handler", { event, userId });
-
-      // If the event is INITIAL_SESSION and we might already have a user from a previous check (unlikely in this service but safe)
-      // or if it's a token refresh we might occasionally skip, but for now we prioritize data integrity.
-      // Optimization: findOne is already parallelized, so it's relatively fast.
-      const user = await supabaseDB.findOne({ _id: userId });
-
-      if (!user) {
-        console.log("authService: Profile not found for existing session. Creating one...");
-        try {
-          const newUser = await supabaseDB.insertOne({
-            _id: userId,
-            email: session.user.email!,
-            name: session.user.user_metadata.full_name || session.user.user_metadata.name || session.user.email?.split('@')[0] || 'User',
-            avatar: session.user.user_metadata.avatar_url || session.user.user_metadata.picture || `https://api.dicebear.com/7.x/avataaars/svg?seed=${userId}`,
-            onboardingCompleted: false
-          });
-          console.log("authService: Profile created", newUser);
-          callback(newUser);
-        } catch (e) {
-          console.error("authService: Failed to create profile:", e);
-          callback(null);
+      // FETCH PROFILE OPTIMIZATION:
+      // We check if we have a valid backup in localStorage for an INSTANT return
+      if (typeof localStorage !== 'undefined') {
+        const backup = localStorage.getItem('genspark_user_backup');
+        if (backup) {
+          try {
+            const parsed = JSON.parse(backup);
+            if (parsed._id === userId) {
+              console.log("authService: Fast-path cache hit for", userId);
+              callback(parsed); // Immediate unblock
+            }
+          } catch (e) { }
         }
-      } else {
-        console.log("authService: Returning existing profile", { userId, firstName: user.firstName });
-        // Streak updates are handled by AuthContext to avoid duplication
-        callback(user);
       }
+
+      // BACKGROUND SYNC: Fetch full profile without blocking initialization
+      // Note: We use findOne which is already parallelized
+      supabaseDB.findOne({ _id: userId }).then(async (user) => {
+        if (!user) {
+          console.log("authService: Profile not found for existing session. Creating one...");
+          try {
+            const profileData = {
+              _id: userId,
+              email: session.user.email!,
+              name: session.user.user_metadata.full_name || session.user.user_metadata.name || session.user.email?.split('@')[0] || 'User',
+              avatar: session.user.user_metadata.avatar_url || session.user.user_metadata.picture || `https://api.dicebear.com/7.x/avataaars/svg?seed=${userId}`,
+              onboardingCompleted: false
+            };
+            callback(profileData as User);
+            const newUser = await supabaseDB.insertOne(profileData);
+            callback(newUser);
+          } catch (e) {
+            console.error("authService: Failed to create profile", e);
+          }
+        } else {
+          callback(user);
+        }
+      }).catch(err => {
+        console.error("authService: Background profile sync failed", err);
+      });
     });
 
     return () => subscription.unsubscribe();

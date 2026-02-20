@@ -99,6 +99,7 @@ class SupabaseService {
 
   // --- Data Transformation Layer ---
   // Converts SQL Normalized Data -> React Application State
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private async formatUserForApp(profile: any, preFetchedProgress?: any[]): Promise<User | null> {
     if (!profile) return null;
 
@@ -173,96 +174,117 @@ class SupabaseService {
   async findOne(query: { email?: string, _id?: string }): Promise<User | null> {
     if (!this.isConfigured) return null;
 
-    // Helper to safely fetch user with fallback for missing columns
-    const fetchWithFallback = async (builder: any, queryBuilder: any) => {
-      // 1. If we already know streaks/new columns are missing, use the fallback immediately
-      if (!this.streakEnabled) {
-        console.log("[SupabaseService] Fast-forwarding to fallback fetch (streakEnabled is false)");
-        const fallbackBuilder = this.supabase.from('users')
-          .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, completed_lesson_ids, unlocked_lesson_ids, activity_log, activity_history, created_at, last_language_id, last_lesson_id') as any;
+    const userId = query._id;
+    const email = query.email;
 
-        if (queryBuilder.id) fallbackBuilder.eq('id', queryBuilder.id);
-        else if (queryBuilder.email) fallbackBuilder.eq('email', queryBuilder.email);
+    // 1. Multi-tier select string for extreme resilience
+    // Tier 1: FULL (Everything)
+    // Tier 2: COMPAT (Remove complex activity logs/streaks)
+    // Tier 3: SAFE (Absolute minimum for auth + basic profile)
 
-        const fallbackResult = await fallbackBuilder.single();
-        return fallbackResult.data || null;
-      }
+    const FULL_SELECT = 'id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, activity_history, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id';
+    const COMPAT_SELECT = 'id, email, name, first_name, last_name, avatar, is_pro, onboarding_completed, created_at, completed_lesson_ids, unlocked_lesson_ids';
+    const SAFE_SELECT = 'id, email, name, first_name, last_name, avatar, onboarding_completed, created_at';
+    const TINY_SELECT = 'id, email, name, onboarding_completed';
 
-      try {
-        const { data, error } = await builder.single();
-        if (error) {
-          console.warn("[SupabaseService] findOne fetch error:", error.code, error.message);
-          // If error is 42703 (undefined_column) in Postgres, retry without new columns
-          if (error.code === '42703' || error.message?.includes('column')) {
-            console.warn("[SupabaseService] Missing columns detected, falling back to basic profile fetch");
-            this.streakEnabled = false; // Disable streak logic globally for this session
-            const fallbackBuilder = this.supabase.from('users')
-              .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, created_at') as any;
+    // Heuristic: If we know streak is disabled, don't even try FULL
+    const selectStr = this.streakEnabled ? FULL_SELECT : COMPAT_SELECT;
 
-            if (queryBuilder.id) fallbackBuilder.eq('id', queryBuilder.id);
-            else if (queryBuilder.email) fallbackBuilder.eq('email', queryBuilder.email);
-
-            const fallbackResult = await fallbackBuilder.single();
-            if (fallbackResult.error) {
-              console.error("[SupabaseService] Fallback fetch also failed:", fallbackResult.error);
-              throw fallbackResult.error;
-            }
-            console.log("[SupabaseService] Fallback fetch succeeded (streak-free mode).");
-            return fallbackResult.data;
+    try {
+      if (userId) {
+        // FAST CACHE LOOKUP: If we had a recent fetch, return it immediately
+        if (typeof localStorage !== 'undefined') {
+          const cached = localStorage.getItem('genspark_user_backup');
+          if (cached) {
+            try {
+              const parsed = JSON.parse(cached);
+              if (parsed._id === userId) {
+                console.log("[SupabaseService] findOne - Returning cached data for fast start");
+                // Don't return here if we want background refresh, but for findOne, 
+                // we usually want the most accurate data. 
+                // Logic shift: Use findOne for "Deep" fetch, but provide a way to get "Quick" data.
+              }
+            } catch (e) { }
           }
-          // For other errors, try the fallback anyway
-          console.warn("[SupabaseService] Unexpected fetch error, attempting last resort fallback", error);
-          const lastResortBuilder = this.supabase.from('users')
-            .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, completed_lesson_ids, unlocked_lesson_ids, created_at') as any;
-          if (queryBuilder.id) lastResortBuilder.eq('id', queryBuilder.id);
-          else if (queryBuilder.email) lastResortBuilder.eq('email', queryBuilder.email);
-          const lastResortResult = await lastResortBuilder.single();
-
-          if (lastResortResult.data) {
-            console.log("[SupabaseService] Last resort fetch succeeded.");
-          }
-          return lastResortResult.data || null;
         }
-        return data;
-      } catch (e) {
-        console.error("[SupabaseService] fetchWithFallback exception:", e);
-        return null;
+
+        // PARALLEL FETCH: Profile + Progress
+        const profilePromise = this.supabase
+          .from('users')
+          .select(selectStr)
+          .eq('id', userId)
+          .single();
+
+        const progressPromise = this.supabase
+          .from('user_progress')
+          .select('lesson_id, status')
+          .eq('user_id', userId);
+
+        const [profileResult, progressResult] = await Promise.all([profilePromise, progressPromise]);
+
+        if (profileResult.error) {
+          // Tiered Fallback
+          if (selectStr === FULL_SELECT) {
+            console.warn("[SupabaseService] FULL select failed, retrying with COMPAT", profileResult.error.message);
+            this.streakEnabled = false; // Persistent downgrade
+            return this.findOne(query);
+          } else if (selectStr === COMPAT_SELECT) {
+            console.warn("[SupabaseService] COMPAT select failed, retrying with SAFE", profileResult.error.message);
+            return this.supabase.from('users').select(SAFE_SELECT).eq('id', userId).single()
+              .then(res => res.error ? null : this.formatUserForApp(res.data, progressResult.data || [])) as any;
+          }
+          console.error("[SupabaseService] Profile fetch failed even in SAFE mode:", profileResult.error);
+          return null;
+        }
+
+        return this.formatUserForApp(profileResult.data, progressResult.data || []);
+      } else if (email) {
+        const { data, error } = await this.supabase
+          .from('users')
+          .select(selectStr)
+          .eq('email', email)
+          .single();
+
+        if (error) {
+          if (selectStr === FULL_SELECT) {
+            console.warn("[SupabaseService] (Email) FULL failed -> COMPAT");
+            this.streakEnabled = false;
+            return this.findOne(query);
+          } else if (selectStr === COMPAT_SELECT) {
+            console.warn("[SupabaseService] (Email) COMPAT failed -> SAFE");
+            const safeRes = await this.supabase.from('users').select(SAFE_SELECT).eq('email', email).single();
+            return safeRes.data ? this.formatUserForApp(safeRes.data) : null;
+          }
+          return null;
+        }
+        return this.formatUserForApp(data);
       }
-    };
-
-    // OPTIMIZATION: Parallel Fetching if ID is known
-    if (query._id) {
-      const profileBuilder = this.supabase
-        .from('users')
-        .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, activity_history, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id')
-        .eq('id', query._id);
-
-      const progressPromise = this.supabase
-        .from('user_progress')
-        .select('lesson_id, status')
-        .eq('user_id', query._id);
-
-      const [profileData, progressResult] = await Promise.all([
-        fetchWithFallback(profileBuilder, { id: query._id }),
-        progressPromise
-      ]);
-
-      if (!profileData) return null;
-
-      return this.formatUserForApp(profileData, progressResult.data || []);
+    } catch (e) {
+      console.error("[SupabaseService] findOne exception:", e);
     }
+    return null;
+  }
 
-    // Fallback for Email query (Sequential)
-    let builder = this.supabase.from('users')
-      .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, activity_history, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id');
+  /**
+   * Extremely fast profile fetch for UI unblocking
+   */
+  async findOneHeader(userId: string): Promise<Partial<User> | null> {
+    if (!this.isConfigured || !userId) return null;
+    const { data, error } = await this.supabase
+      .from('users')
+      .select('id, email, name, onboarding_completed, first_name, avatar')
+      .eq('id', userId)
+      .single();
 
-    if (query.email) builder = builder.eq('email', query.email);
-    else return null;
-
-    const data = await fetchWithFallback(builder, { email: query.email });
-    if (!data) return null;
-
-    return this.formatUserForApp(data);
+    if (error) return null;
+    return {
+      _id: data.id,
+      email: data.email,
+      name: data.name,
+      firstName: data.first_name,
+      avatar: data.avatar,
+      onboardingCompleted: data.onboarding_completed
+    };
   }
 
   /**

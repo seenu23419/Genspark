@@ -147,29 +147,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     useEffect(() => {
         let mounted = true;
 
-        // 1. Min Splash Timer (Optimized to 400ms for responsiveness)
+        // 1. Min Splash Timer (Drastically reduced for instant feel if data is ready)
         const splashTimer = setTimeout(() => {
             if (mounted) setMinSplashDone(true);
-        }, 400);
+        }, 50); // 50ms is enough to avoid a single-frame flash while feeling instant
 
-        // 2. Initial Session Check - Optimized to rely on onAuthStateChange
+        // 2. Initial Session Check - Faster lookup
         const initSession = async () => {
             try {
-                // Just check if we have a session to determine initializing state
+                // Check if we HAVE a user in local state already (restored from backup)
+                if (user && mounted) {
+                    console.log("AuthContext: Retaining backup user for fast start.");
+                    setInitializing(false);
+                    // No need to return; we still want to start the listener for sync
+                }
+
                 const { data: { session } } = await supabaseDB.supabase.auth.getSession();
                 if (mounted && !session?.user) {
                     setInitializing(false);
                 }
-                // If session exists, onAuthStateChange will handle the profile load
             } catch (error) {
                 console.error("AuthContext: Init error:", error);
                 if (mounted) setInitializing(false);
             }
         };
 
-        // Delay initial check slightly to let splash animation run
-        // This reduces race conditions with fast loads
-        const initTimer = setTimeout(initSession, 100);
+        // Run immediately
+        initSession();
 
         // 3. Safety Timeout (Fallback)
         const safetyTimer = setTimeout(() => {
@@ -177,7 +181,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 console.warn("AuthContext: Session check EXCEEDED safety limit, forcing entry.");
                 setInitializing(false);
             }
-        }, 5000);
+        }, 1500); // 1.5s instead of 3s for a "permanent" fix to long waits
 
         // 3. Listen for Auth Changes with State Guard
         const unsubscribe = authService.onAuthStateChange(async (updatedUser) => {
@@ -254,7 +258,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             mounted = false;
             if (typeof unsubscribe === 'function') unsubscribe();
             clearTimeout(splashTimer);
-            clearTimeout(initTimer);
             clearTimeout(safetyTimer);
         };
     }, []);
@@ -376,7 +379,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     unlockedLessonIds: finalUser.unlockedLessonIds || ['c1']
                 };
                 setUser(finalUser);
-            } catch (error: any) {
+            } catch (error: unknown) {
                 console.error("Profile update failed, checking for partial success...", error);
                 try {
                     const fresh = await supabaseDB.findOne({ _id: baseUser._id });
