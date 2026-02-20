@@ -1155,67 +1155,67 @@
                 "id": "c16",
                 "title": "Lesson 16: Strings in C",
                 "duration": "45 mins",
-                "content": "The C language does not have a built-in string data type like C++ or Java.\nInstead, **strings in C are stored as arrays of characters**, terminated by a \"null byte\".\n\n---\n\n## Internal Representation\n\nA string is just a sequence of characters followed by a special `\\0` character.\n\n### Memory View\nIf we store `\"HELLO\"`:\n| Index | 0 | 1 | 2 | 3 | 4 | 5 |\n| :--- | :---: | :---: | :---: | :---: | :---: | :---: |\n| **Char** | 'H' | 'E' | 'L' | 'L' | 'O' | **'\\0'** |\n\n- **Valuable Payload:** 5 characters.\n- **Micro-Manager:** The `\\0` (Null Terminator) tells functions like `printf` where to stop.\n\n---\n\n## Declaration and Initialization\n\nYou can create strings in two main distinct ways.\n\n### Syntax\n```c\nchar str[] = \"Value\"; // Mutable Array\nchar *str = \"Value\";  // Read-Only Literal\n```\n\n### Method A: Character Array (Mutable)\nThis creates a copy of the string in memory that you can change.\n```c\nchar name[] = \"Alice\";\nname[0] = 'B'; //  OK: Becomes \"Blice\"\n```\n\n### Method B: String Literal (Read-Only)\nThis points to a fixed storage location.\n```c\nchar *name = \"Alice\";\n// name[0] = 'B'; //  ERROR: Crash (Undefined Behavior)\n```\n\n---\n\n## Reading Strings (Input)\n\nReading strings is trickier than numbers because of spaces.\n\n### Method A: `scanf` (The Simple Way)\nGood for single words. Stops at the first space.\n```c\nchar name[20];\nprintf(\"Enter name: \");\nscanf(\"%s\", name); // ️ No & needed for arrays\n```\n*Input: \"John Doe\"  Stored: \"John\"*\n\n### Method B: `fgets` (The Safe Way)\nBest for sentences. Reads spaces and prevents overflow.\n```c\nchar buffer[50];\nprintf(\"Enter full name: \");\nfgets(buffer, 50, stdin);\n```\n*Input: \"John Doe\"  Stored: \"John Doe\"*\n\n### Example: Safe String Input\n```c\n#include <stdio.h>\n\nint main() {\n    char name[20];\n    \n    printf(\"Who are you? \");\n    fgets(name, 20, stdin); // Safe reading\n    \n    printf(\"Hello, %s\", name);\n    return 0;\n}\n```\n\n**Expected Output:**\n```text\nWho are you? Gen Spark\nHello, Gen Spark\n```\n\n** How it Works:**\n- `fgets` reads up to 19 characters + 1 null terminator.\n- It includes the space in \"Gen Spark\".\n- It reads from simple standard input (`stdin`).\n\n---\n\n## Common Operations\n\n| Operation | Function | Example |\n| :--- | :--- | :--- |\n| **Length** | `strlen(s)` | Count chars (excludes `\\0`) |\n| **Copy** | `strcpy(dest, src)` | Copy `src` to `dest` |\n| **Compare** | `strcmp(s1, s2)` | Returns 0 if equal |\n| **Combine** | `strcat(dest, src)` | Append `src` into `dest` |\n\n---\n\n## Key Takeaways\n- **Null Terminator**: Strings MUST end with `\\0`.\n- **Space Allocation**: Always allocate `length + 1` for the null byte.\n- **Input**: Use `fgets` for text with spaces, `scanf` for single words.\n- **Mutability**: Arrays (`char[]`) are editable; Literals (`char*`) are not.",
+                "content": "Welcome to one of the most important topics in C! While other languages like Java or Python give you a \"String\" type automatically, C is more \"raw.\" To master strings in C, you have to understand how they are built from scratch.\n\n---\n\n## What is a String in C?\n\nAt its simplest level, a **String is just an Array of Characters**.\nIf you want to store the word \"HI\", you create an array that holds 'H', then 'i'. But there is one catch: C needs to know where the word *ends*.\n\n### The \"Train\" Analogy\n\nThink of a string as a **Train**:\n- **The Cargo Cars:** These are your characters (e.g., 'H', 'e', 'l', 'l', 'o').\n- **The Caboose (\\\\0):** This is the **Null Terminator**. It is a special character with the value of zero. It doesn't carry cargo, but it tells the \"Station Master\" (the C compiler) that the train has ended. \n\n**Critical Rule:** Every string in C MUST end with a `\\\\0`. Without it, C will keep reading your computer's memory forever, looking for the end!\n\n---\n\n## Memory Anatomy: The Invisible Byte\n\nWhen you see `\"Hello\"`, it looks like 5 letters. But in C memory, it actually occupies **6 bytes**.\n\n| Index | 0 | 1 | 2 | 3 | 4 | 5 |\n| :--- | :---: | :---: | :---: | :---: | :---: | :---: |\n| **Char** | 'H' | 'e' | 'l' | 'l' | 'o' | **'\\\\0'** |\n\n### Why does this matter?\nIf you create a `char` array to hold a 10-letter name, you MUST make the array size at least **11** to leave room for the Null Terminator.\n\n---\n\n## Creating Strings: Whiteboards vs. Stone\n\nThere are two ways to write strings in your code.\n\n### 1. The Whiteboard (Mutable Array)\n```c\nchar name[] = \"Alice\"; \n```\n- **Behavior:** This creates a copy of \"Alice\" on the **Stack**.\n- **Usage:** You can change it later (`name[0] = 'B'` makes it \"Blice\").\n- **Analogy:** Like writing on a whiteboard; you can erase and change letters.\n\n### 2. The Stone Engraving (String Literal)\n```c\nchar *name = \"Alice\";\n```\n- **Behavior:** This points directly to the **Read-Only Data Segment**.\n- **Usage:** You **CANNOT** change it. Trying to edit it will crash your program.\n- **Analogy:** Like a name carved in stone; it is permanent and solid.\n\n---\n\n## Safe Input: The Guard at the Gate\n\nReading text from a user is the #1 way hackers break into C programs.\n\n### The \"Forbidden\" Function: `gets()`\n**Never use `gets()`.** It doesn't check how much the user types. If your array has room for 10 letters and the user types 100, `gets()` will overwrite other parts of your computer's memory (**Buffer Overflow**).\n\n### The Safe Way: `fgets()`\n```c\nchar buffer[10];\nfgets(buffer, 10, stdin);\n```\n- **How it works:** You tell it exactly how much space you have (10). It will *never* read more than 9 characters, leaving 1 spot for the caboose (`\\\\0`). It is the \"Guard\" that protects your memory.\n\n---\n\n## Common Tools (`<string.h>`)\n\n| Tool | What it does | Difference |\n| :--- | :--- | :--- |\n| **`strlen(s)`** | Counts characters | Does NOT count the `\\\\0` |\n| **`sizeof(s)`** | Measure total bytes | DOES count the `\\\\0` |\n| **`strcpy(d, s)`** | Copies a string | Overwrites the destination |\n\n---\n\n## Summary for Beginners\n1. **Strings are Arrays:** Use `char str[]`.\n2. **Always add 1:** A 5-letter word needs a 6-byte array.\n3. **The Null Terminator:** Without `\\\\0`, your program is \"broken.\"\n4. **Use `fgets`:** Stay safe by always limiting your input size.",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "How many bytes of memory are required to store the string \"Cat\"?",
+                        "text": "If a string contains 10 characters, how many bytes of memory does it actually use in C?",
                         "options": [
-                            "3 bytes",
-                            "4 bytes",
-                            "8 bytes",
-                            "Unknown"
+                            "10 bytes",
+                            "11 bytes",
+                            "9 bytes",
+                            "20 bytes"
                         ],
                         "correctAnswer": 1,
-                        "explanation": "You need 3 bytes for 'C', 'a', 't' plus 1 byte for the null terminator '\\0'. Total = 4."
+                        "explanation": "You need 10 bytes for the characters plus 1 extra byte for the invisible null terminator (\\\\0)."
                     },
                     {
                         "id": 2,
-                        "text": "Which method should you use to read a sentence with spaces (e.g., \"Hello World\")?",
+                        "text": "What is the 'Caboose' of every C string called?",
                         "options": [
-                            "scanf(\"%s\", str);",
-                            "fgets(str, size, stdin);",
-                            "read(str);",
-                            "cin >> str;"
+                            "The End Byte",
+                            "The Stop Sign",
+                            "The Null Terminator (\\\\0)",
+                            "The Newline (\\\\n)"
                         ],
-                        "correctAnswer": 1,
-                        "explanation": "`scanf` stops reading at the first whitespace. `fgets` reads until the newline character, capturing the full sentence."
+                        "correctAnswer": 2,
+                        "explanation": "The null terminator (\\\\0) tells C exactly where a string ends."
                     },
                     {
                         "id": 3,
-                        "text": "What happens if you try: char *s = \"Hi\"; s[0] = 'B'; ?",
+                        "text": "Why should you prefer `char name[] = \"Alice\";` over `char *name = \"Alice\";` if you want to change the letters later?",
                         "options": [
-                            "The string becomes \"Bi\"",
-                            "Compiler Error",
-                            "Runtime Crash (Undefined Behavior)",
-                            "Nothing happens"
+                            "Because arrays are faster",
+                            "Because pointer strings are stored in read-only memory and cannot be edited",
+                            "Because arrays automatically capitalize letters",
+                            "There is no difference"
                         ],
-                        "correctAnswer": 2,
-                        "explanation": "String literals defined with `char *` are usually stored in read-only memory. Modifying them causes undefined behavior (often a crash)."
+                        "correctAnswer": 1,
+                        "explanation": "Strings created as pointers point to read-only memory. If you try to change them, the program will crash."
                     },
                     {
                         "id": 4,
-                        "text": "What is the index of the null terminator in `char s[] = \"CODE\"`?",
+                        "text": "Why is `fgets()` safer than `gets()` for taking user input?",
                         "options": [
-                            "3",
-                            "4",
-                            "5",
-                            "0"
+                            "It reads faster",
+                            "It allows you to set a maximum limit so the user cannot overflow your memory",
+                            "It automatically corrects spelling",
+                            "It only accepts numbers"
                         ],
                         "correctAnswer": 1,
-                        "explanation": "C=0, O=1, D=2, E=3, \\0=4."
+                        "explanation": "`fgets` prevents 'Buffer Overflows' by making sure the user doesn't enter more data than your variable can hold."
                     },
                     {
                         "id": 5,
-                        "text": "Why do we use `strcpy` instead of `str1 = str2` for arrays?",
+                        "text": "If you use `strlen(\"Hello\")`, what number will it return?",
                         "options": [
-                            "Because arrays cannot be assigned directly in C",
-                            "Because strcpy is faster",
-                            "Because = is for numbers only",
-                            "Because it looks cooler"
+                            "5",
+                            "6",
+                            "4",
+                            "Unknown"
                         ],
                         "correctAnswer": 0,
-                        "explanation": "Arrays in C are not first-class objects that support direct assignment. You must copy them element-by-element or use `strcpy`."
+                        "explanation": "`strlen` counts only the visible characters. It does NOT count the null terminator."
                     }
                 ]
             },
