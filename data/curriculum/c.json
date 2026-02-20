@@ -1091,63 +1091,63 @@
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "What does the 'House Key' analogy represent in the context of passing arrays to functions?",
+                        "text": "What does the 'House Key' analogy specifically illustrate about passing arrays in C?",
                         "options": [
-                            "The function creates an exact copy of the array",
-                            "The function receives only the address (pointer) of the original array",
-                            "The function locks the array and prevents any access",
-                            "The array is moved completely to a new memory location"
+                            "The function creates a copy of the key, but not the house",
+                            "Passing an address gives shared access to the original memory, avoiding expensive copying",
+                            "Arrays are automatically locked when passed to functions",
+                            "The recipient 'owns' the house and the sender can no longer access it"
                         ],
                         "correctAnswer": 1,
-                        "explanation": "Passing an array gives the function the 'key' (address/pointer) to the original data, rather than making a 'copy' (the whole house)."
+                        "explanation": "Giving a 'Key' (address) allows the function to work inside the 'Original House' (original memory), making it efficient since you don't have to copy the entire dataset."
                     },
                     {
                         "id": 2,
-                        "text": "Inside a function receiving `int myArr[]`, why does `sizeof(myArr)` typically return 8 instead of the actual array size?",
+                        "text": "If you define a function as `void process(int arr[100])`, what size does the compiler actually enforce for the array?",
                         "options": [
-                            "The array is compressed to save space",
-                            "Memory is limited inside functions",
-                            "Inside the function, the array has 'decayed' to a simple pointer",
-                            "C doesn't support the sizeof operator inside functions"
+                            "Exactly 100 elements",
+                            "At most 100 elements",
+                            "None; the number '100' is completely ignored and treated as a pointer",
+                            "Initializes the first 100 elements to zero"
                         ],
                         "correctAnswer": 2,
-                        "explanation": "When an array is passed, it decays into a pointer. On most modern systems, a pointer is 8 bytes wide, regardless of the array's actual size."
+                        "explanation": "In array parameters, any number inside the brackets is purely for the human reader; the compiler converts it to a simple pointer and ignores the size during compilation."
                     },
                     {
                         "id": 3,
-                        "text": "When passing a 2-D array to a function, which dimension is strictly mandatory in the parameter declaration?",
+                        "text": "Why is 'Array Decay' a potential source of errors when using `sizeof` inside a function?",
                         "options": [
-                            "The first dimension (Rows)",
-                            "The second dimension (Columns)",
-                            "Neither, both are optional",
-                            "Both are strictly mandatory"
+                            "The array values decrease in size automatically",
+                            "The array name is converted to a pointer, so `sizeof` measures the 8-byte address instead of the data",
+                            "The pointer address 'decays' and becomes invalid over time",
+                            "The compiler deletes the array after the first access"
                         ],
                         "correctAnswer": 1,
-                        "explanation": "The compiler needs the column count to calculate where one row ends and the next begins in memory (Row-Major math)."
+                        "explanation": "Once an array 'decays' to a pointer at a function boundary, `sizeof` will only return the size of that pointer (typically 8 bytes), losing information about the total array size."
                     },
                     {
                         "id": 4,
-                        "text": "What is the primary purpose of using the 'const' keyword in a function parameter like `void show(const int arr[])`?",
+                        "text": "Which of these syntax styles is technically accurate regarding how the compiler views an array parameter?",
                         "options": [
-                            "To make the function run faster",
-                            "To explicitly tell the compiler the array is read-only and cannot be modified",
-                            "To ensure the array is stored in permanent memory",
-                            "To allow the function to return the array"
+                            "void func(int arr[])",
+                            "void func(int *arr)",
+                            "Both are functionally identical to the compiler",
+                            "void func(int array_ref)"
                         ],
-                        "correctAnswer": 1,
-                        "explanation": "The `const` keyword is a safeguard that tells the compiler to block any attempts to change the original array's data."
+                        "correctAnswer": 2,
+                        "explanation": "While `int arr[]` is more readable, C automatically treats all array parameters as pointers (`int *arr`). Both syntaxes result in the exact same machine code."
                     },
                     {
                         "id": 5,
-                        "text": "Why is it dangerous to return a local (non-static) array from a function?",
+                        "text": "How does the `const` keyword protect your data when passing by pointer?",
                         "options": [
-                            "It uses too much CPU",
-                            "The array data is copied too many times",
-                            "The local memory is destroyed (deallocated) when the function exits",
-                            "C doesn't allow functions to have return statements"
+                            "It creates a local copy that can be modified safely",
+                            "It moves the array to a read-only hardware chip",
+                            "It tells the compiler to trigger an error if the function attempts to modify the shared memory",
+                            "It prevents the function from returning any values"
                         ],
                         "correctAnswer": 2,
-                        "explanation": "Local variables exist only while the function is running. Returning a pointer to a local array leads to a 'Dangling Pointer' pointing to dead memory."
+                        "explanation": "Since passing an array provides a direct 'Key' to your original data, `const` acts as a 'Read-Only' restriction enforced by the compiler to prevent accidental changes."
                     }
                 ]
             },
