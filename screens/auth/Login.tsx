@@ -7,7 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { Loader2, AlertCircle, Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { authService } from '../../services/authService';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 const Login: React.FC = () => {
