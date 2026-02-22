@@ -291,8 +291,8 @@ const CourseTrack: React.FC = () => {
                   onClick={() => toggleLevel(levelIndex)}
                   style={{ touchAction: 'manipulation' }}
                   className={`w-full group flex items-start justify-between gap-4 p-5 rounded-xl transition-all ${isCurrentLevel
-                    ? 'bg-indigo-600/15 border-2 border-indigo-500/70'
-                    : 'bg-slate-50 dark:bg-slate-900/40 border-2 border-slate-400 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-900/60 hover:border-slate-500 dark:hover:border-slate-600 shadow-sm'
+                    ? 'bg-indigo-600/15 border-2 border-indigo-500 shadow-[0_0_20px_rgba(79,70,229,0.15)]'
+                    : 'bg-slate-50 dark:bg-slate-900/40 border-2 border-slate-200 dark:border-white/10 hover:bg-slate-200 dark:hover:bg-slate-900/60 hover:border-indigo-500 dark:hover:border-indigo-500/80 shadow-sm hover:shadow-xl hover:ring-1 hover:ring-indigo-500/30'
                     }`}
                 >
                   <div className="flex items-start gap-4 flex-1 min-w-0 text-left">

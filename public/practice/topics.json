@@ -1,7 +1,9 @@
 [
   {
-    "id": "basics",
-    "title": "Introduction & Basics"
+    "id": "math",
+    "title": "Math & Number Theory",
+    "icon": "Calculator",
+    "color": "from-yellow-500 to-orange-600"
   },
   {
     "id": "conditionals",
@@ -13,7 +15,9 @@
   },
   {
     "id": "arrays",
-    "title": "Arrays & Collections"
+    "title": "Arrays and Pointers",
+    "icon": "Layers",
+    "color": "from-rose-500 to-orange-500"
   },
   {
     "id": "functions",
@@ -28,7 +32,21 @@
     "title": "Strings & Text"
   },
   {
-    "id": "math",
-    "title": "Math & Number Theory"
+    "id": "recursion",
+    "name": "Recursion",
+    "icon": "Repeat",
+    "color": "from-teal-500 to-green-500"
+  },
+  {
+    "id": "bitwise",
+    "name": "Bitwise Logic",
+    "icon": "Cpu",
+    "color": "from-indigo-500 to-purple-500"
+  },
+  {
+    "id": "logic",
+    "name": "Logic Puzzles",
+    "icon": "Lightbulb",
+    "color": "from-yellow-400 to-orange-500"
   }
 ]

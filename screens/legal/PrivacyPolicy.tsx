@@ -1,124 +1,75 @@
 import React from 'react';
-import { ChevronLeft, Shield, Lock, Eye, FileText, UserCheck, MessageSquare, Trash2, Mail } from 'lucide-react';
+import { ArrowLeft, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const PrivacyPolicy: React.FC = () => {
     const navigate = useNavigate();
 
-    const sections = [
-        {
-            id: 'intro',
-            title: '1. Introduction',
-            icon: <Shield className="text-indigo-400" size={24} />,
-            content: "Welcome to GenSpark! We're committed to protecting your privacy while helping you learn programming. This Privacy Policy explains what information we collect, how we use it, and your rights regarding your data. By using GenSpark, you agree to the practices described in this policy."
-        },
-        {
-            id: 'collect',
-            title: '2. Information We Collect',
-            icon: <Eye className="text-indigo-400" size={24} />,
-            content: "We collect basic account info (Name, Email), learning progress (lessons completed, time spent), and practice results (code submissions, performance scores). We do NOT collect passwords, payment details, or biometric data."
-        },
-        {
-            id: 'use',
-            title: '3. How We Use Information',
-            icon: <UserCheck className="text-indigo-400" size={24} />,
-            content: "Your data is used to personalize your learning journey, track progress, generate verifiable certificates, and improve the app experience. We never sell your personal data to third parties."
-        },
-        {
-            id: 'storage',
-            title: '4. Data Storage and Security',
-            icon: <Lock className="text-indigo-400" size={24} />,
-            content: "All user information is stored securely using encrypted cloud services (Supabase/Google). We use industry-standard SSL/TLS encryption for data transmission to ensure your information remains private."
-        },
-        {
-            id: 'third-party',
-            title: '5. Third-Party Services',
-            icon: <FileText className="text-indigo-400" size={24} />,
-            content: "We use Google Sign-In for secure authentication and trusted cloud providers for hosting. These partners follow strict data protection standards."
-        },
-        {
-            id: 'rights',
-            title: '6. Your Rights',
-            icon: <Trash2 className="text-indigo-400" size={24} />,
-            content: "You have the right to access your data, request updates, or delete your account at any time. Account deletion results in permanent removal of all personal progress and certificates within 30 days."
-        },
-        {
-            id: 'changes',
-            title: '7. Policy Changes',
-            icon: <MessageSquare className="text-indigo-400" size={24} />,
-            content: "We may update this policy as GeSpark evolves. Significant changes will be announced via email or in-app notifications."
-        }
-    ];
-
     return (
-        <div className="fixed inset-0 bg-slate-950 overflow-y-auto">
-            {/* Header */}
-            <header className="sticky top-0 z-30 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 px-4 py-4 flex items-center justify-between">
-                <button
-                    onClick={() => navigate(-1)}
-                    className="p-2 hover:bg-slate-800 rounded-lg transition-colors"
-                >
-                    <ChevronLeft size={20} className="text-slate-400" />
-                </button>
-                <h1 className="text-lg font-bold text-white">Privacy Policy</h1>
-                <div className="w-9" /> {/* Spacer */}
-            </header>
-
-            <main className="max-w-2xl mx-auto px-6 py-10 space-y-12">
-                {/* Hero Section */}
-                <div className="text-center space-y-4">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-indigo-500/10 rounded-2xl mb-2">
-                        <Shield className="text-indigo-500" size={32} />
-                    </div>
-                    <h2 className="text-3xl font-bold text-white tracking-tight">Your Privacy Matters</h2>
-                    <p className="text-slate-400 text-sm max-w-sm mx-auto">
-                        We collect only what's necessary to make your learning journey successful. No fluff, no selling data.
-                    </p>
-                    <div className="text-xs text-slate-500 font-medium uppercase tracking-widest pt-2">
-                        Last Updated: Jan 18, 2026
-                    </div>
-                </div>
-
-                {/* Content Sections */}
-                <div className="grid gap-8">
-                    {sections.map((section) => (
-                        <div key={section.id} className="group p-6 bg-slate-900/50 border border-slate-800 rounded-2xl hover:border-indigo-500/30 transition-all">
-                            <div className="flex items-start gap-4">
-                                <div className="mt-1">{section.icon}</div>
-                                <div className="space-y-2">
-                                    <h3 className="text-lg font-semibold text-white group-hover:text-indigo-400 transition-colors">
-                                        {section.title}
-                                    </h3>
-                                    <p className="text-slate-400 text-sm leading-relaxed">
-                                        {section.content}
-                                    </p>
-                                </div>
-                            </div>
+        <div className="min-h-screen bg-[#0a0b14] text-slate-300 py-12 px-6">
+            <div className="max-w-3xl mx-auto space-y-8">
+                {/* Header */}
+                <div className="flex items-center justify-between border-b border-slate-800 pb-6">
+                    <div className="flex items-center gap-4">
+                        <div className="p-3 bg-indigo-500/10 rounded-xl">
+                            <Shield className="text-indigo-400" size={24} />
                         </div>
-                    ))}
-                </div>
-
-                {/* Contact Section */}
-                <div className="p-8 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 border border-indigo-500/20 rounded-3xl text-center space-y-4">
-                    <h3 className="text-xl font-bold text-white">Have Questions?</h3>
-                    <p className="text-slate-300 text-sm">
-                        Our support team is here to help with any data or privacy concerns.
-                    </p>
-                    <a
-                        href="mailto:support@genspark.app"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-semibold transition-all"
+                        <div>
+                            <h1 className="text-2xl font-black text-white tracking-tight">Privacy Policy</h1>
+                            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Last updated: February 22, 2026</p>
+                        </div>
+                    </div>
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="p-2 hover:bg-white/5 rounded-full transition-colors"
                     >
-                        <Mail size={18} />
-                        support@genspark.app
-                    </a>
+                        <ArrowLeft size={20} />
+                    </button>
                 </div>
 
-                <footer className="text-center pb-10">
-                    <p className="text-slate-600 text-[10px] uppercase tracking-widest">
-                        GenSpark Learning Platform • Student-First Education
-                    </p>
-                </footer>
-            </main>
+                {/* Content */}
+                <div className="space-y-6 text-sm leading-relaxed">
+                    <section className="space-y-3">
+                        <h2 className="text-lg font-bold text-white">Introduction</h2>
+                        <p>
+                            Welcome to GenSpark. This Privacy Policy explains how we collect, use, and protect your information when you use our services,
+                            including our AI-powered coding platform.
+                        </p>
+                    </section>
+
+                    <section className="space-y-3">
+                        <h2 className="text-lg font-bold text-white">Information We Collect</h2>
+                        <p>
+                            When you sign up using Google, we receive your name and email address from Google as part of the authentication process.
+                            We also collect your progress and code snippets you save within the application to provide a personalized experience.
+                        </p>
+                    </section>
+
+                    <section className="space-y-3">
+                        <h2 className="text-lg font-bold text-white">How We Use Your Data</h2>
+                        <ul className="list-disc pl-5 space-y-2">
+                            <li>To provide and maintain our service.</li>
+                            <li>To personalize your learning path.</li>
+                            <li>To communicate with you regarding your account.</li>
+                            <li>To provide customer support.</li>
+                        </ul>
+                    </section>
+
+                    <section className="space-y-3">
+                        <h2 className="text-lg font-bold text-white">Data Protection</h2>
+                        <p>
+                            Your data is stored securely using industry-standard encryption practices through Supabase. We do not sell your personal data to third parties.
+                        </p>
+                    </section>
+
+                    <section className="space-y-3">
+                        <h2 className="text-lg font-bold text-white">Contact Us</h2>
+                        <p>
+                            If you have any questions about this Privacy Policy, please contact us at support@genspark.app.
+                        </p>
+                    </section>
+                </div>
+            </div>
         </div>
     );
 };

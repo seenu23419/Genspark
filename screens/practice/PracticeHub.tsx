@@ -1,19 +1,23 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { usePractice } from '../../contexts/PracticeContext';
 
 const PracticeHub: React.FC = () => {
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const { topics, loading, getProblemStatus, progress, refreshProgress } = usePractice();
-    const [activeTopicId, setActiveTopicId] = useState<string | null>(null);
+    const [activeTopicId, setActiveTopicId] = useState<string | null>(searchParams.get('topic'));
 
 
-    // Initial Topic Selection
+    // Initial Topic Selection from URL or default to first
     useEffect(() => {
-        if (topics.length > 0 && !activeTopicId) {
+        const topicFromUrl = searchParams.get('topic');
+        if (topicFromUrl) {
+            setActiveTopicId(topicFromUrl);
+        } else if (topics.length > 0 && !activeTopicId) {
             setActiveTopicId(topics[0].id);
         }
-    }, [topics]);
+    }, [topics, searchParams]);
 
     const activeTopic = useMemo(() => {
         if (!topics || topics.length === 0) return null;
@@ -79,11 +83,11 @@ const PracticeHub: React.FC = () => {
     return (
         <div className="min-h-screen bg-slate-100 dark:bg-black text-slate-900 dark:text-white pb-24 font-sans selection:bg-indigo-500/30 transition-colors duration-300">
             {/* 1. Header (Static) */}
-            <div className="shrink-0 bg-transparent px-6 pt-10 pb-4 border-b border-slate-200 dark:border-white/5">
+            <div className="shrink-0 bg-transparent px-6 pt-10 pb-4 border-b border-slate-200 dark:border-white/10">
                 <div className="max-w-5xl mx-auto flex flex-col gap-3">
                     <div className="flex items-end justify-between">
                         <div>
-                            <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">PRACTICE HUB</h1>
+                            <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic whitespace-nowrap">PRACTICE HUB</h1>
                         </div>
                         <div className="text-right pb-1">
                             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest shrink-0">
@@ -102,7 +106,7 @@ const PracticeHub: React.FC = () => {
             </div>
 
             {/* 2. Topic Selector (Sticky) */}
-            <div className="shrink-0 bg-slate-100/80 dark:bg-black/80 backdrop-blur-xl sticky top-0 z-30 border-b border-slate-200 dark:border-white/10">
+            <div className="shrink-0 bg-slate-50 dark:bg-black sticky top-0 z-30 border-b border-slate-200 dark:border-white/10 shadow-lg">
                 <div className="px-6 py-2 max-w-5xl mx-auto">
                     <div className="flex items-center gap-6 overflow-x-auto no-scrollbar py-2">
                         {topics.map((topic) => {
@@ -125,8 +129,8 @@ const PracticeHub: React.FC = () => {
                 </div>
             </div>
 
-            {/* 2. Problem List (Only Scrollable Area) */}
-            <div className="flex-1 overflow-y-auto no-scrollbar bg-transparent pb-32">
+            {/* 2. Problem List */}
+            <div className="bg-transparent pb-32">
                 <div className="px-6 py-8 max-w-5xl mx-auto">
                     {filteredProblems.length > 0 ? (
                         <div className="grid grid-cols-1 gap-4">
@@ -144,60 +148,30 @@ const PracticeHub: React.FC = () => {
                                     <div
                                         key={problem.id}
                                         onClick={() => navigate(`/practice/problem/${problem.id}`)}
-                                        className="bg-white dark:bg-slate-900/30 border border-slate-200 dark:border-white/5 rounded-2xl p-6 relative transition-all active:scale-[0.98] cursor-pointer group hover:bg-slate-100 dark:hover:bg-slate-900/50 shadow-sm hover:shadow-lg"
+                                        className="bg-white/80 dark:bg-slate-900/40 border border-slate-200 dark:border-white/10 rounded-2xl p-6 relative transition-all active:scale-[0.98] cursor-pointer group hover:bg-white dark:hover:bg-slate-900/60 shadow-sm hover:shadow-xl hover:border-indigo-500 dark:hover:border-indigo-500/80 ring-0 hover:ring-1 hover:ring-indigo-500/50"
                                     >
-                                        {/* Status Dot (Top-Right) */}
-                                        <div className="absolute top-6 right-6 flex flex-col items-end gap-1">
-                                            <div className={`w-2.5 h-2.5 rounded-full shadow-inner ${isCompleted
-                                                ? 'bg-emerald-500'
-                                                : isInProgress
-                                                    ? 'bg-blue-500'
-                                                    : 'bg-slate-700'
-                                                }`} />
-                                        </div>
-
-                                        <div className="space-y-3">
-                                            {/* Meta Row */}
-                                            <div className="flex items-center gap-2">
-                                                <span className={`text-[8px] font-black uppercase tracking-widest ${problem.difficulty === 'easy' ? 'text-emerald-500' : problem.difficulty === 'medium' ? 'text-amber-500' : 'text-rose-500'}`}>
-                                                    {problem.difficulty}
-                                                </span>
-                                                <div className="w-1 h-1 rounded-full bg-slate-800" />
-                                                <span className="text-[8px] font-black text-slate-600 uppercase tracking-widest">
-                                                    {problem.concept || 'C LANGUAGE'}
-                                                </span>
-                                            </div>
-
-                                            {/* Title */}
-                                            <div>
-                                                <h3 className={`text-lg font-bold group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors tracking-tight ${isCompleted ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-white'}`}>
+                                        {/* Card content: left info + right button */}
+                                        <div className="flex items-center justify-between gap-4">
+                                            {/* Left: meta + title */}
+                                            <div className="space-y-2 min-w-0">
+                                                {/* Meta Row */}
+                                                <div className="flex items-center gap-2">
+                                                    <span className={`text-[8px] font-black uppercase tracking-widest ${problem.difficulty === 'easy' ? 'text-emerald-500' : problem.difficulty === 'medium' ? 'text-amber-500' : 'text-rose-500'}`}>
+                                                        {problem.difficulty}
+                                                    </span>
+                                                    <div className="w-1 h-1 rounded-full bg-slate-400 dark:bg-slate-600" />
+                                                    <span className="text-[8px] font-black text-slate-500 dark:text-slate-500 uppercase tracking-widest">
+                                                        {problem.concept || 'C LANGUAGE'}
+                                                    </span>
+                                                </div>
+                                                {/* Title */}
+                                                <h3 className={`text-lg font-bold group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors tracking-tight leading-tight ${isCompleted ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-white'}`}>
                                                     {problem.title}
                                                 </h3>
                                             </div>
 
-                                            {/* Short Description & Microcopy */}
-                                            <div className="space-y-2">
-                                                <p className="text-slate-500 text-[11px] font-medium line-clamp-1 italic">
-                                                    {problem.description}
-                                                </p>
-                                                <div className="flex items-center gap-3 text-[9px] text-slate-500 flex-wrap">
-                                                    {problem.estimatedTime && (
-                                                        <span className="flex items-center gap-1">
-                                                            <span>⏱</span>
-                                                            <span className="font-medium">{problem.estimatedTime}–{problem.estimatedTime + 1} min</span>
-                                                        </span>
-                                                    )}
-                                                    {problem.relatedLesson && (
-                                                        <span className="flex items-center gap-1">
-                                                            <span>📖</span>
-                                                            <span className="font-medium line-clamp-1">{problem.relatedLesson}</span>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </div>
-
-                                            {/* CTA Button */}
-                                            <div className="pt-3">
+                                            {/* Right: CTA Button */}
+                                            <div className="shrink-0">
                                                 <button
                                                     onClick={(e) => {
                                                         e.stopPropagation();
@@ -205,10 +179,10 @@ const PracticeHub: React.FC = () => {
                                                     }}
                                                     className={`px-6 py-2.5 rounded-xl font-black text-[9px] uppercase tracking-widest transition-all ${isCompleted
                                                         ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.1)]'
-                                                        : 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 active:bg-indigo-700'
+                                                        : 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 active:bg-indigo-700'
                                                         }`}
                                                 >
-                                                    {isCompleted ? 'SOLVED ✓' : 'CODE TASK'}
+                                                    {isCompleted ? 'SOLVED ✓' : 'SOLVE CHALLENGE'}
                                                 </button>
                                             </div>
                                         </div>

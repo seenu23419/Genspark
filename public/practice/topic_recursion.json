@@ -1,0 +1,312 @@
+{
+  "id": "recursion",
+  "title": "Recursion",
+  "color": "from-teal-500 to-emerald-600",
+  "problems": [
+    {
+      "id": "recursion-1",
+      "topicId": "recursion",
+      "title": "Recursive Number Reversal",
+      "description": "Reverse a given number using recursion. Output the reversed number without leading zeros.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nreversed_N\n```\n\nConstraints\n• 0 ≤ N ≤ 2 * 10^9\n\nSample Input 1\n```\n1234\n```\n\nSample Output 1\n```\n4321\n```\n\nExplanation\nReverse of 1234 is 4321.",
+      "difficulty": "medium",
+      "estimatedTime": 10,
+      "concept": "Recursion",
+      "hint": "Pass the current reversed value as a parameter to your recursive function: `rev(n, current_rev) = rev(n/10, current_rev*10 + n%10)`.",
+      "explanation": "Reversing a number recursively involves carrying over the state of the reversal.\n\nRecursion Relation:\n`reverse(n, r) = reverse(n / 10, r * 10 + n % 10)`\nBase Case:\nIf `n == 0`, return `r`.\n\nStep-by-step (123):\n1. rev(123, 0)\n2. rev(12, 3)\n3. rev(1, 32)\n4. rev(0, 321) -> Return 321",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "1234",
+          "expected_output": "4321"
+        },
+        {
+          "stdin": "100",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "7",
+          "expected_output": "7",
+          "isHidden": true
+        },
+        {
+          "stdin": "120",
+          "expected_output": "21",
+          "isHidden": true
+        },
+        {
+          "stdin": "987654321",
+          "expected_output": "123456789",
+          "isHidden": true
+        },
+        {
+          "stdin": "10101",
+          "expected_output": "10101",
+          "isHidden": true
+        },
+        {
+          "stdin": "4444",
+          "expected_output": "4444",
+          "isHidden": true
+        },
+        {
+          "stdin": "123",
+          "expected_output": "321",
+          "isHidden": true
+        },
+        {
+          "stdin": "4000",
+          "expected_output": "4",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "recursion-2",
+      "topicId": "recursion",
+      "title": "Recursive Fibonacci Number",
+      "description": "Find the Nth Fibonacci number using recursion. (0th indexing: 0, 1, 1, 2, 3...).\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nnth_fibonacci\n```\n\nConstraints\n• 0 ≤ N ≤ 25\n\nSample Input 1\n```\n6\n```\n\nSample Output 1\n```\n8\n```\n\nExplanation\nFib(0)=0, Fib(1)=1, Fib(2)=1, Fib(3)=2, Fib(4)=3, Fib(5)=5, Fib(6)=8.",
+      "difficulty": "easy",
+      "estimatedTime": 10,
+      "concept": "Recursion",
+      "hint": "The recursive formula is `fib(n) = fib(n-1) + fib(n-2)`. Use base cases `fib(0) = 0` and `fib(1) = 1`.",
+      "explanation": "Calculates Fibonacci values via recursive calls.\n\nRecursion Tree (Fib(4)):\n- fib(4) -> fib(3) + fib(2)\n- fib(3) -> fib(2) + fib(1)\n- fib(2) -> fib(1) + fib(0)\n\nNote: For N > 40, simple recursion is very slow (exponential complexity).",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "6",
+          "expected_output": "8"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "55",
+          "isHidden": true
+        },
+        {
+          "stdin": "20",
+          "expected_output": "6765",
+          "isHidden": true
+        },
+        {
+          "stdin": "5",
+          "expected_output": "5",
+          "isHidden": true
+        },
+        {
+          "stdin": "2",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "3",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "25",
+          "expected_output": "75025",
+          "isHidden": true
+        },
+        {
+          "stdin": "15",
+          "expected_output": "610",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "recursion-3",
+      "topicId": "recursion",
+      "title": "Recursive Sum of Digits",
+      "description": "Calculate the sum of digits of a given number N using recursion.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nsum_of_digits\n```\n\nConstraints\n• 0 ≤ N ≤ 2 * 10^9\n\nSample Input 1\n```\n1234\n```\n\nSample Output 1\n```\n10\n```\n\nExplanation\n1+2+3+4 = 10.",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Recursion",
+      "hint": "The sum of digits of n is `n % 10 + sumDigits(n / 10)`. Base case: `n == 0`.",
+      "explanation": "Calculates digit sum via recursive decomposition.\n\nRecurrence:\n`sum(n) = n % 10 + sum(n / 10)`\nBase case: `n == 0` returns 0.\n\nTrace (123):\nsum(123) = 3 + sum(12)\nsum(12) = 2 + sum(1)\nsum(1) = 1 + sum(0)\nsum(0) = 0\nResult: 3+2+1+0 = 6.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "1234",
+          "expected_output": "10"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "7",
+          "expected_output": "7",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "987654321",
+          "expected_output": "45",
+          "isHidden": true
+        },
+        {
+          "stdin": "10101",
+          "expected_output": "3",
+          "isHidden": true
+        },
+        {
+          "stdin": "4444",
+          "expected_output": "16",
+          "isHidden": true
+        },
+        {
+          "stdin": "123",
+          "expected_output": "6",
+          "isHidden": true
+        },
+        {
+          "stdin": "2000000000",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "19",
+          "expected_output": "10",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "recursion-4",
+      "topicId": "recursion",
+      "title": "Recursive Power Calculation",
+      "description": "Calculate A squared to the power of B (A^B) using recursion.\n\nInput Format\n```\nA B\n```\n\nOutput Format\n```\npower_value\n```\n\nConstraints\n• 1 ≤ A ≤ 20, 0 ≤ B ≤ 12\n\nSample Input 1\n```\n2 5\n```\n\nSample Output 1\n```\n32\n```\n\nExplanation\n2^5 = 32.",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Recursion",
+      "hint": "The recurrence is `pow(a, b) = a * pow(a, b-1)`. Base case: `b == 0` returns 1.",
+      "explanation": "Calculates exponentiation via repeated recursive multiplication.\n\nRecurrence:\n`pow(a, b) = a * pow(a, b-1)`\n\nStep-by-step (2^3):\n1. 2 * pow(2, 2)\n2. 2 * (2 * pow(2, 1))\n3. 2 * (2 * (2 * pow(2, 0)))\n4. 2 * 2 * 2 * 1 = 8.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "2 5",
+          "expected_output": "32"
+        },
+        {
+          "stdin": "5 3",
+          "expected_output": "125"
+        },
+        {
+          "stdin": "10 0",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 10",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "3 4",
+          "expected_output": "81",
+          "isHidden": true
+        },
+        {
+          "stdin": "2 10",
+          "expected_output": "1024",
+          "isHidden": true
+        },
+        {
+          "stdin": "20 5",
+          "expected_output": "3200000",
+          "isHidden": true
+        },
+        {
+          "stdin": "7 2",
+          "expected_output": "49",
+          "isHidden": true
+        },
+        {
+          "stdin": "10 6",
+          "expected_output": "1000000",
+          "isHidden": true
+        },
+        {
+          "stdin": "2 12",
+          "expected_output": "4096",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "recursion-5",
+      "topicId": "recursion",
+      "title": "Tower of Hanoi",
+      "description": "Output the sequence of moves to solve the Tower of Hanoi puzzle for N disks from source rod 'A' to destination rod 'C' using an auxiliary rod 'B'.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nMove N from S to D\n...\n```\n\nConstraints\n• 1 ≤ N ≤ 4\n\nSample Input 1\n```\n2\n```\n\nSample Output 1\n```\nMove 1 from A to B\nMove 2 from A to C\nMove 1 from B to C\n```",
+      "difficulty": "hard",
+      "estimatedTime": 15,
+      "concept": "Recursion",
+      "hint": "To move n disks from S to D: 1. Move n-1 from S to Aux. 2. Move disk n from S to D. 3. Move n-1 from Aux to D.",
+      "explanation": "Classical recursive puzzle.\n\nRecursion Strategy:\n`hanoi(n, s, d, a)`:\n1. base case: `n == 1`: print move from s to d.\n2. `hanoi(n-1, s, a, d)`\n3. print move n from s to d.\n4. `hanoi(n-1, a, d, s)`\n\nTrace (2, A, C, B):\n- hanoi(1, A, B, C) -> Move 1 from A to B\n- disk 2 A to C -> Move 2 from A to C\n- hanoi(1, B, C, A) -> Move 1 from B to C",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "2",
+          "expected_output": "Move 1 from A to B\nMove 2 from A to C\nMove 1 from B to C"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "Move 1 from A to C"
+        },
+        {
+          "stdin": "3",
+          "expected_output": "Move 1 from A to C\nMove 2 from A to B\nMove 1 from C to B\nMove 3 from A to C\nMove 1 from B to A\nMove 2 from B to C\nMove 1 from A to C",
+          "isHidden": true
+        }
+      ]
+    }
+  ]
+}

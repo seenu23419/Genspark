@@ -8,25 +8,27 @@ import React, { useState, useEffect } from 'react';
  * - Developer-focused design
  * - 3-second display with immediate skip if app loads
  */
-const Splash: React.FC = () => {
+interface SplashProps {
+    closing?: boolean;
+}
+
+const Splash: React.FC<SplashProps> = ({ closing }) => {
     return (
-        <div className="fixed inset-0 w-full h-full flex flex-col items-center justify-center bg-black z-[9999] touch-none select-none overflow-hidden">
+        <div className={`fixed inset-0 w-full h-full flex flex-col items-center justify-center bg-black z-[9999] touch-none select-none overflow-hidden transition-all duration-700 ease-in-out ${closing ? 'opacity-0 scale-105 pointer-events-none' : 'opacity-100'}`}>
             {/* Main Content */}
             <div className="flex-1 flex flex-col items-center justify-center relative z-10 w-full px-6">
-                <div className="flex items-center justify-center w-48 h-48 bg-black/20 rounded-full mb-8">
-                    <img
-                        src="/icons/logo.png"
-                        alt="GenSpark"
-                        className="w-36 h-36 object-contain"
-                        draggable={false}
-                    />
-                </div>
+                <img
+                    src="/icons/logo.png"
+                    alt="GenSpark"
+                    className="w-[90vw] h-[90vw] md:w-[800px] md:h-[800px] object-contain"
+                    draggable={false}
+                />
             </div>
 
-            {/* Tagline */}
-            <div className="absolute bottom-20 w-full px-6 z-10">
-                <p className="text-center text-[10px] md:text-sm font-bold tracking-[0.4em] text-white/90 uppercase">
-                    IGNITE YOUR CODING JOURNEY
+            {/* Tagline / Footer */}
+            <div className="absolute bottom-16 w-full px-6 z-10 overflow-hidden">
+                <p className="text-center text-[10px] md:text-base font-black tracking-[0.4em] text-white uppercase whitespace-nowrap">
+                    Ignite Your Coding Journey
                 </p>
             </div>
         </div>

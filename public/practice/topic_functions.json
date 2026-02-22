@@ -7,19 +7,77 @@
       "id": "functions-1",
       "topicId": "functions",
       "title": "Square of a Number",
-      "description": "Write a function `multiply(int n)` that returns the square of n.\n\nInput: 5\nOutput: 25",
+      "description": "Write a function square(n) that returns n squared, then print the result.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nN*N\n```\n\nConstraints\n• −1000 ≤ N ≤ 1000\n\nSample Input 1\n```\n5\n```\n\nSample Output 1\n```\n25\n```\n\nSample Input 2\n```\n10\n```\n\nSample Output 2\n```\n100\n```",
       "difficulty": "easy",
       "estimatedTime": 3,
       "concept": "Functions",
-      "explanation": "Define a function that takes an integer parameter and returns its value multiplied by itself.",
+      "hint": "Return n * n.",
+      "explanation": "To square a number, multiply it by itself: n × n.\n\nStep-by-step:\n1. Define a function square(n).\n2. Inside, return n * n.\n3. Call the function with the input and print the result.\n\nExample: square(5) → 5 × 5 = 25\nExample: square(-3) → -3 × -3 = 9 (squaring removes the negative sign)",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint square(int n) {\n    // Return square\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", square(n));\n    return 0;\n}",
-        "python": "def square(n):\n    return n * n\n\nprint(square(int(input())))"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
           "stdin": "5",
           "expected_output": "25"
+        },
+        {
+          "stdin": "10",
+          "expected_output": "100"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "-3",
+          "expected_output": "9",
+          "isHidden": true
+        },
+        {
+          "stdin": "7",
+          "expected_output": "49",
+          "isHidden": true
+        },
+        {
+          "stdin": "12",
+          "expected_output": "144",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "20",
+          "expected_output": "400",
+          "isHidden": true
+        },
+        {
+          "stdin": "-10",
+          "expected_output": "100",
+          "isHidden": true
+        },
+        {
+          "stdin": "15",
+          "expected_output": "225",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "10000",
+          "isHidden": true
+        },
+        {
+          "stdin": "-7",
+          "expected_output": "49",
+          "isHidden": true
         }
       ]
     },
@@ -27,19 +85,77 @@
       "id": "functions-2",
       "topicId": "functions",
       "title": "Max of Two",
-      "description": "Create a function `getMax(int a, int b)` that returns the larger of two numbers.",
+      "description": "Write getMax(a, b) that returns the larger of two integers.\n\nInput Format\n```\na b\n```\n\nOutput Format\n```\nmax\n```\n\nConstraints\n• −10^9 ≤ a, b ≤ 10^9\n\nSample Input 1\n```\n10 20\n```\n\nSample Output 1\n```\n20\n```\n\nSample Input 2\n```\n50 5\n```\n\nSample Output 2\n```\n50\n```",
       "difficulty": "easy",
       "estimatedTime": 3,
       "concept": "Functions",
-      "explanation": "Use a simple if-else condition inside the function to compare the two arguments.",
+      "hint": "Compare a and b with if-else.",
+      "explanation": "To find the maximum of two numbers, compare them using an if-else statement.\n\nStep-by-step:\n1. If a > b, return a.\n2. Otherwise, return b (handles equal case too, since either can be returned).\n\nShorthand using ternary operator:\nreturn (a > b) ? a : b;\n\nExample: getMax(10, 20) → 10 > 20 is false → return 20\nExample: getMax(5, 5) → 5 > 5 is false → return 5 (either is correct)",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint getMax(int a, int b) {\n    // Return max\n}\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d\", getMax(a, b));\n    return 0;\n}",
-        "python": "def get_max(a, b):\n    return a if a > b else b\n\na, b = map(int, input().split())\nprint(get_max(a, b))"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
           "stdin": "10 20",
           "expected_output": "20"
+        },
+        {
+          "stdin": "50 5",
+          "expected_output": "50"
+        },
+        {
+          "stdin": "5 5",
+          "expected_output": "5",
+          "isHidden": true
+        },
+        {
+          "stdin": "-10 -3",
+          "expected_output": "-3",
+          "isHidden": true
+        },
+        {
+          "stdin": "0 1",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "999 1000",
+          "expected_output": "1000",
+          "isHidden": true
+        },
+        {
+          "stdin": "-5 5",
+          "expected_output": "5",
+          "isHidden": true
+        },
+        {
+          "stdin": "100 99",
+          "expected_output": "100",
+          "isHidden": true
+        },
+        {
+          "stdin": "0 0",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "-1000 -999",
+          "expected_output": "-999",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 2",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "777 666",
+          "expected_output": "777",
+          "isHidden": true
         }
       ]
     },
@@ -47,13 +163,18 @@
       "id": "functions-302",
       "topicId": "functions",
       "title": "Factorial Function",
-      "description": "Write a function `factorial(n)` to return the factorial of n.",
+      "description": "Write factorial(n) returning n!. 0!=1.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nfactorial\n```\n\nConstraints\n• 0 ≤ N ≤ 20\n\nSample Input 1\n```\n5\n```\n\nSample Output 1\n```\n120\n```\n\nSample Input 2\n```\n0\n```\n\nSample Output 2\n```\n1\n```",
       "difficulty": "medium",
       "estimatedTime": 4,
       "concept": "Functions",
+      "hint": "Base: factorial(0)=1. Recursive: n*factorial(n-1).",
+      "explanation": "Factorial is the product of all positive integers from 1 up to n.\n\nIterative approach:\n1. Start with result = 1.\n2. Multiply result by each integer i from 1 to n.\n3. Return result.\n\nRecursive approach:\n- Base case: factorial(0) = 1 (stop here)\n- Recursive case: factorial(n) = n × factorial(n-1)\n\nExample: factorial(5)\n= 5 × factorial(4)\n= 5 × 4 × factorial(3)\n= 5 × 4 × 3 × 2 × 1 × 1 = 120\n\nNote: 0! = 1 by definition (empty product).",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nlong long factorial(int n) {\n    // Write your code here\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%lld\", factorial(n));\n    return 0;\n}",
-        "python": "def factorial(n):\n    # Write your code here\n    pass\n\nprint(factorial(int(input())))"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
@@ -66,7 +187,53 @@
         },
         {
           "stdin": "6",
-          "expected_output": "720"
+          "expected_output": "720",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "3628800",
+          "isHidden": true
+        },
+        {
+          "stdin": "3",
+          "expected_output": "6",
+          "isHidden": true
+        },
+        {
+          "stdin": "2",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "7",
+          "expected_output": "5040",
+          "isHidden": true
+        },
+        {
+          "stdin": "4",
+          "expected_output": "24",
+          "isHidden": true
+        },
+        {
+          "stdin": "8",
+          "expected_output": "40320",
+          "isHidden": true
+        },
+        {
+          "stdin": "9",
+          "expected_output": "362880",
+          "isHidden": true
+        },
+        {
+          "stdin": "12",
+          "expected_output": "479001600",
+          "isHidden": true
         }
       ]
     },
@@ -74,13 +241,18 @@
       "id": "functions-303",
       "topicId": "functions",
       "title": "Prime Function",
-      "description": "Write a function `isPrime(n)` that returns 1 if n is prime, 0 otherwise.",
+      "description": "Write isPrime(n): return 1 if prime, 0 otherwise. 1 is NOT prime.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\n1\n```\nor\n```\n0\n```\n\nConstraints\n• 1 ≤ N ≤ 10^6\n\nSample Input 1\n```\n7\n```\n\nSample Output 1\n```\n1\n```\n\nSample Input 2\n```\n10\n```\n\nSample Output 2\n```\n0\n```",
       "difficulty": "medium",
       "estimatedTime": 5,
       "concept": "Functions",
+      "hint": "Loop 2 to sqrt(n). If any divides n evenly, return 0.",
+      "explanation": "A prime number has exactly two factors: 1 and itself.\n\nAlgorithm (Trial Division):\n1. If n < 2, return 0 (not prime — 1 is not prime).\n2. Loop i from 2 to √n (square root of n).\n3. If n % i == 0, a divisor was found → return 0 (not prime).\n4. If the loop finishes with no divisor found → return 1 (prime).\n\nWhy check only up to √n?\nIf n has a factor greater than √n, it must have a paired factor smaller than √n. So checking up to √n is enough.\n\nExample: n=7, √7≈2.6 → check i=2 only. 7%2≠0 → prime → return 1\nExample: n=10 → check i=2: 10%2=0 → not prime → return 0",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint isPrime(int n) {\n    // Write your code here\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", isPrime(n));\n    return 0;\n}",
-        "python": "def is_prime(n):\n    # Write your code here\n    pass\n\nprint(1 if is_prime(int(input())) else 0)"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
@@ -93,7 +265,53 @@
         },
         {
           "stdin": "2",
-          "expected_output": "1"
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "13",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "3",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "4",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "97",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "25",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "17",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "49",
+          "expected_output": "0",
+          "isHidden": true
         }
       ]
     },
@@ -101,13 +319,18 @@
       "id": "functions-304",
       "topicId": "functions",
       "title": "Add Two Function",
-      "description": "Write a function `add(a, b)` that returns the sum of two integers.",
+      "description": "Write add(a, b) returning a+b.\n\nInput Format\n```\na b\n```\n\nOutput Format\n```\nsum\n```\n\nConstraints\n• −10^9 ≤ a, b ≤ 10^9\n\nSample Input 1\n```\n10 20\n```\n\nSample Output 1\n```\n30\n```\n\nSample Input 2\n```\n-5 5\n```\n\nSample Output 2\n```\n0\n```",
       "difficulty": "easy",
       "estimatedTime": 2,
       "concept": "Functions",
+      "hint": "Return a + b.",
+      "explanation": "Addition is the most basic arithmetic operation.\n\nStep-by-step:\n1. Define a function add(a, b).\n2. Inside, return a + b.\n3. Read both integers from input, call the function, and print the result.\n\nThis problem demonstrates how functions encapsulate even simple operations, making code more readable and reusable.\n\nExample: add(10, 20) → 10 + 20 = 30\nExample: add(-5, 5) → -5 + 5 = 0",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint add(int a, int b) {\n    return a + b;\n}\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d\", add(a, b));\n    return 0;\n}",
-        "python": "def add(a, b):\n    return a + b\n\na, b = map(int, input().split())\nprint(add(a, b))"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
@@ -120,21 +343,72 @@
         },
         {
           "stdin": "100 200",
-          "expected_output": "300"
+          "expected_output": "300",
+          "isHidden": true
+        },
+        {
+          "stdin": "0 0",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "-100 -50",
+          "expected_output": "-150",
+          "isHidden": true
+        },
+        {
+          "stdin": "999 1",
+          "expected_output": "1000",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 1",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "-1 -1",
+          "expected_output": "-2",
+          "isHidden": true
+        },
+        {
+          "stdin": "500 500",
+          "expected_output": "1000",
+          "isHidden": true
+        },
+        {
+          "stdin": "0 100",
+          "expected_output": "100",
+          "isHidden": true
+        },
+        {
+          "stdin": "123 456",
+          "expected_output": "579",
+          "isHidden": true
+        },
+        {
+          "stdin": "-999 1000",
+          "expected_output": "1",
+          "isHidden": true
         }
       ]
     },
     {
       "id": "functions-305",
       "topicId": "functions",
-      "title": "Reverse Function",
-      "description": "Write a function `reverse(n)` that returns the reverse of integer n.",
+      "title": "Reverse of Integer",
+      "description": "Write reverse(n) returning digits of n reversed. Leading zeros dropped.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nreversed\n```\n\nConstraints\n• 1 ≤ N ≤ 10^9\n\nSample Input 1\n```\n123\n```\n\nSample Output 1\n```\n321\n```\n\nSample Input 2\n```\n100\n```\n\nSample Output 2\n```\n1\n```",
       "difficulty": "medium",
       "estimatedTime": 5,
       "concept": "Functions",
+      "hint": "Take n%10, build reversed=reversed*10+digit, divide n/10.",
+      "explanation": "To reverse an integer, extract its digits from right to left and rebuild the number.\n\nStep-by-step:\n1. Initialize rev = 0.\n2. While n != 0:\n   a. Extract last digit: digit = n % 10\n   b. Append to reversed: rev = rev * 10 + digit\n   c. Remove last digit: n = n / 10\n3. Return rev.\n\nTrace for n=123:\n- digit=3, rev=0*10+3=3, n=12\n- digit=2, rev=3*10+2=32, n=1\n- digit=1, rev=32*10+1=321, n=0\nResult: 321\n\nLeading zeros vanish automatically:\nn=100 → digit=0 (rev=0), digit=0 (rev=0), digit=1 (rev=1) → result: 1",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint reverse(int n) {\n    // Write  your code here\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", reverse(n));\n    return 0;\n}",
-        "python": "def reverse(n):\n    # Write your code here\n    pass\n\nprint(reverse(int(input())))"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
@@ -147,7 +421,53 @@
         },
         {
           "stdin": "5",
-          "expected_output": "5"
+          "expected_output": "5",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "9876",
+          "expected_output": "6789",
+          "isHidden": true
+        },
+        {
+          "stdin": "12",
+          "expected_output": "21",
+          "isHidden": true
+        },
+        {
+          "stdin": "999",
+          "expected_output": "999",
+          "isHidden": true
+        },
+        {
+          "stdin": "1230",
+          "expected_output": "321",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "4567",
+          "expected_output": "7654",
+          "isHidden": true
+        },
+        {
+          "stdin": "1001",
+          "expected_output": "1001",
+          "isHidden": true
+        },
+        {
+          "stdin": "500",
+          "expected_output": "5",
+          "isHidden": true
         }
       ]
     },
@@ -155,13 +475,18 @@
       "id": "functions-306",
       "topicId": "functions",
       "title": "Power Function",
-      "description": "Write a function `power(base, exp)` that returns base raised to exp.",
+      "description": "Write power(base, exp) returning base^exp.\n\nInput Format\n```\nbase exp\n```\n\nOutput Format\n```\nresult\n```\n\nConstraints\n• 0 ≤ base ≤ 100, 0 ≤ exp ≤ 10\n• base^0 = 1\n\nSample Input 1\n```\n2 3\n```\n\nSample Output 1\n```\n8\n```\n\nSample Input 2\n```\n10 0\n```\n\nSample Output 2\n```\n1\n```",
       "difficulty": "medium",
       "estimatedTime": 4,
       "concept": "Functions",
+      "hint": "result=1, multiply by base exp times.",
+      "explanation": "Exponentiation (base^exp) means multiplying base by itself exp times.\n\nStep-by-step:\n1. Initialize result = 1.\n2. Loop exp times:\n   - Multiply result by base each iteration.\n3. Return result.\n\nSpecial cases:\n- base^0 = 1 (the loop runs 0 times, result stays 1 — correct!)\n- 0^exp = 0 for any exp > 0\n\nTrace for power(2, 3):\n- result = 1\n- i=1: result = 1 × 2 = 2\n- i=2: result = 2 × 2 = 4\n- i=3: result = 4 × 2 = 8\nReturn 8.",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nlong long power(int base, int exp) {\n    // Write your code here\n}\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%lld\", power(a, b));\n    return 0;\n}",
-        "python": "def power(base, exp):\n    return base ** exp\n\na, b = map(int, input().split())\nprint(power(a, b))"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
@@ -169,12 +494,58 @@
           "expected_output": "8"
         },
         {
-          "stdin": "5 2",
-          "expected_output": "25"
-        },
-        {
           "stdin": "10 0",
           "expected_output": "1"
+        },
+        {
+          "stdin": "5 2",
+          "expected_output": "25",
+          "isHidden": true
+        },
+        {
+          "stdin": "3 4",
+          "expected_output": "81",
+          "isHidden": true
+        },
+        {
+          "stdin": "0 5",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "7 1",
+          "expected_output": "7",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 10",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "2 10",
+          "expected_output": "1024",
+          "isHidden": true
+        },
+        {
+          "stdin": "10 3",
+          "expected_output": "1000",
+          "isHidden": true
+        },
+        {
+          "stdin": "4 3",
+          "expected_output": "64",
+          "isHidden": true
+        },
+        {
+          "stdin": "6 2",
+          "expected_output": "36",
+          "isHidden": true
+        },
+        {
+          "stdin": "9 2",
+          "expected_output": "81",
+          "isHidden": true
         }
       ]
     },
@@ -182,13 +553,18 @@
       "id": "functions-307",
       "topicId": "functions",
       "title": "Count Digits Function",
-      "description": "Write a function `countDigits(n)` that returns the number of digits in n.",
+      "description": "Write countDigits(n) returning digit count. 0 has 1 digit.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\ncount\n```\n\nConstraints\n• 0 ≤ N ≤ 10^9\n\nSample Input 1\n```\n12345\n```\n\nSample Output 1\n```\n5\n```\n\nSample Input 2\n```\n0\n```\n\nSample Output 2\n```\n1\n```",
       "difficulty": "easy",
       "estimatedTime": 3,
       "concept": "Functions",
+      "hint": "Divide n by 10 until 0, counting. Edge: n=0 return 1.",
+      "explanation": "The number of digits equals how many times you can divide n by 10 before it becomes 0.\n\nStep-by-step:\n1. Special case: if n == 0, return 1 (zero has exactly 1 digit).\n2. Initialize count = 0.\n3. While n != 0:\n   - Integer divide n by 10 (removes last digit)\n   - Increment count\n4. Return count.\n\nAlternative: convert n to string and return its length.\n\nTrace for n=12345:\n12345 → 1234 → 123 → 12 → 1 → 0\n(5 divisions = 5 digits)",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint countDigits(int n) {\n    // Write your code here\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", countDigits(n));\n    return 0;\n}",
-        "python": "def count_digits(n):\n    return len(str(abs(n)))\n\nprint(count_digits(int(input())))"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
@@ -200,1153 +576,366 @@
           "expected_output": "1"
         },
         {
+          "stdin": "9",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "3",
+          "isHidden": true
+        },
+        {
+          "stdin": "999",
+          "expected_output": "3",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000000",
+          "expected_output": "7",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000",
+          "expected_output": "4",
+          "isHidden": true
+        },
+        {
           "stdin": "99",
-          "expected_output": "2"
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "123456789",
+          "expected_output": "9",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "10000000",
+          "expected_output": "8",
+          "isHidden": true
         }
       ]
     },
     {
       "id": "functions-308",
       "topicId": "functions",
-      "title": "GCD Function",
-      "description": "Write a function `gcd(a, b)` that returns the Greatest Common Divisor.",
-      "difficulty": "medium",
-      "estimatedTime": 5,
+      "title": "Absolute Value Function",
+      "description": "Write absVal(n) returning |n| without built-in abs.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nabs\n```\n\nConstraints\n• −10^9 ≤ N ≤ 10^9\n\nSample Input 1\n```\n-7\n```\n\nSample Output 1\n```\n7\n```\n\nSample Input 2\n```\n5\n```\n\nSample Output 2\n```\n5\n```",
+      "difficulty": "easy",
+      "estimatedTime": 2,
       "concept": "Functions",
+      "hint": "If n<0, return -n, else n.",
+      "explanation": "The absolute value of a number is its distance from zero — always non-negative.\n\nStep-by-step:\n1. Check if n is negative (n < 0).\n2. If yes, return -n (negating a negative gives positive).\n3. If no (n >= 0), return n unchanged.\n\nDo NOT use abs() or Math.abs() — implement the logic manually using if-else.\n\nExample: absVal(-7) → -7 < 0 is true → return -(-7) = 7\nExample: absVal(5) → 5 < 0 is false → return 5\nExample: absVal(0) → 0 < 0 is false → return 0",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint gcd(int a, int b) {\n    // Write your code here\n}\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d\", gcd(a, b));\n    return 0;\n}",
-        "python": "import math\ndef gcd(a, b):\n    return math.gcd(a, b)\n\na, b = map(int, input().split())\nprint(gcd(a, b))"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
-          "stdin": "12 18",
-          "expected_output": "6"
+          "stdin": "-7",
+          "expected_output": "7"
         },
         {
-          "stdin": "10 5",
+          "stdin": "5",
           "expected_output": "5"
         },
         {
-          "stdin": "7 13",
-          "expected_output": "1"
+          "stdin": "0",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "-100",
+          "expected_output": "100",
+          "isHidden": true
+        },
+        {
+          "stdin": "-1",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "999",
+          "expected_output": "999",
+          "isHidden": true
+        },
+        {
+          "stdin": "-999",
+          "expected_output": "999",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "-50",
+          "expected_output": "50",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000000",
+          "expected_output": "1000000",
+          "isHidden": true
+        },
+        {
+          "stdin": "-1000000",
+          "expected_output": "1000000",
+          "isHidden": true
+        },
+        {
+          "stdin": "42",
+          "expected_output": "42",
+          "isHidden": true
         }
       ]
     },
     {
       "id": "functions-309",
       "topicId": "functions",
-      "title": "LCM Function",
-      "description": "Write a function `lcm(a, b)` that returns Least Common Multiple.",
-      "difficulty": "medium",
-      "estimatedTime": 5,
+      "title": "Is Even Function",
+      "description": "Write isEven(n): return 1 if even, 0 if odd.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\n1\n```\nor\n```\n0\n```\n\nConstraints\n• −10^9 ≤ N ≤ 10^9\n\nSample Input 1\n```\n4\n```\n\nSample Output 1\n```\n1\n```\n\nSample Input 2\n```\n7\n```\n\nSample Output 2\n```\n0\n```",
+      "difficulty": "easy",
+      "estimatedTime": 2,
       "concept": "Functions",
+      "hint": "Return n%2==0?1:0.",
+      "explanation": "A number is even if dividing it by 2 leaves no remainder.\n\nStep-by-step:\n1. Compute n % 2 (the remainder when n is divided by 2).\n2. If remainder == 0 → even → return 1.\n3. Otherwise → odd → return 0.\n\nThis rule works for negative numbers too:\n- (-4) % 2 = 0 → even\n- (-3) % 2 ≠ 0 → odd\n\nExample: isEven(4) → 4 % 2 = 0 → return 1\nExample: isEven(7) → 7 % 2 = 1 → return 0\nExample: isEven(0) → 0 % 2 = 0 → return 1 (0 is even)",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint gcd(int a, int b) {\n    if (b == 0) return a;\n    return gcd(b, a % b);\n}\n\nint lcm(int a, int b) {\n    return (a * b) / gcd(a, b);\n}\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d\", lcm(a, b));\n    return 0;\n}",
-        "python": "import math\ndef lcm(a, b):\n    return (a * b) // math.gcd(a, b)\n\na, b = map(int, input().split())\nprint(lcm(a, b))"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
-          "stdin": "4 6",
-          "expected_output": "12"
+          "stdin": "4",
+          "expected_output": "1"
         },
         {
-          "stdin": "5 7",
-          "expected_output": "35"
+          "stdin": "7",
+          "expected_output": "0"
         },
         {
-          "stdin": "10 20",
-          "expected_output": "20"
+          "stdin": "0",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "-2",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "-3",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000000",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "2",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "999",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "-5",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000001",
+          "expected_output": "0",
+          "isHidden": true
         }
       ]
     },
     {
       "id": "functions-310",
       "topicId": "functions",
-      "title": "Palindrome Function",
-      "description": "Write `isPalindrome(n)` returning 1 if n is palindrome, 0 otherwise.",
-      "difficulty": "medium",
-      "estimatedTime": 4,
+      "title": "Sum of Array Function",
+      "description": "Write sumArray(arr, n) returning sum of all elements.\n\nInput Format\n```\nN\na1 a2 ... aN\n```\n\nOutput Format\n```\nsum\n```\n\nConstraints\n• 1 ≤ N ≤ 1000, −10^6 ≤ a[i] ≤ 10^6\n\nSample Input 1\n```\n4\n1 2 3 4\n```\n\nSample Output 1\n```\n10\n```\n\nSample Input 2\n```\n3\n-1 0 1\n```\n\nSample Output 2\n```\n0\n```",
+      "difficulty": "easy",
+      "estimatedTime": 3,
       "concept": "Functions",
+      "hint": "Loop and accumulate.",
+      "explanation": "To find the sum of an array, add up all its elements using a running total (accumulator pattern).\n\nStep-by-step:\n1. Initialize sum = 0.\n2. Loop through each element in the array.\n3. Add the current element to sum.\n4. After all elements are processed, return sum.\n\nTrace for [1, 2, 3, 4]:\nsum=0 → 0+1=1 → 1+2=3 → 3+3=6 → 6+4=10\nResult: 10\n\nWorks with negative numbers too:\n[-1, 0, 1] → 0 + (-1) + 0 + 1 = 0",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint isPalindrome(int n) {\n    // Write your code here\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", isPalindrome(n));\n    return 0;\n}",
-        "python": "def is_palindrome(n):\n    s = str(n)\n    return 1 if s == s[::-1] else 0\n\nprint(is_palindrome(int(input())))"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
-          "stdin": "121",
-          "expected_output": "1"
+          "stdin": "4\n1 2 3 4",
+          "expected_output": "10"
         },
         {
-          "stdin": "123",
+          "stdin": "3\n-1 0 1",
           "expected_output": "0"
         },
         {
-          "stdin": "1",
-          "expected_output": "1"
+          "stdin": "1\n5",
+          "expected_output": "5",
+          "isHidden": true
+        },
+        {
+          "stdin": "5\n10 20 30 40 50",
+          "expected_output": "150",
+          "isHidden": true
+        },
+        {
+          "stdin": "4\n-5 -5 10 10",
+          "expected_output": "10",
+          "isHidden": true
+        },
+        {
+          "stdin": "3\n100 200 300",
+          "expected_output": "600",
+          "isHidden": true
+        },
+        {
+          "stdin": "5\n0 0 0 0 0",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "2\n1000000 1000000",
+          "expected_output": "2000000",
+          "isHidden": true
+        },
+        {
+          "stdin": "3\n-100 -200 -300",
+          "expected_output": "-600",
+          "isHidden": true
+        },
+        {
+          "stdin": "4\n1 1 1 1",
+          "expected_output": "4",
+          "isHidden": true
+        },
+        {
+          "stdin": "5\n-1 -2 -3 -4 -5",
+          "expected_output": "-15",
+          "isHidden": true
+        },
+        {
+          "stdin": "6\n5 10 15 20 25 30",
+          "expected_output": "105",
+          "isHidden": true
         }
       ]
     },
     {
       "id": "functions-311",
       "topicId": "functions",
-      "title": "Sum Digits Function",
-      "description": "Write `sumDigits(n)` returning the sum of digits of n.",
+      "title": "Min of Array Function",
+      "description": "Write minArray(arr, n) returning the minimum element.\n\nInput Format\n```\nN\na1 a2 ... aN\n```\n\nOutput Format\n```\nmin\n```\n\nConstraints\n• 1 ≤ N ≤ 1000, −10^6 ≤ a[i] ≤ 10^6\n\nSample Input 1\n```\n5\n3 1 4 1 5\n```\n\nSample Output 1\n```\n1\n```\n\nSample Input 2\n```\n3\n-5 0 -10\n```\n\nSample Output 2\n```\n-10\n```",
       "difficulty": "easy",
       "estimatedTime": 3,
       "concept": "Functions",
+      "hint": "Init min=arr[0], compare each next element.",
+      "explanation": "To find the minimum element, scan through the array keeping track of the smallest value seen.\n\nStep-by-step:\n1. Initialize min = arr[0] (assume the first element is the smallest).\n2. Loop from index 1 to end:\n   - If arr[i] < min, update min = arr[i].\n3. Return min after the loop.\n\nWhy start with arr[0]?\nYou need a valid starting value to compare against. Using arr[0] ensures the first comparison is meaningful.\n\nTrace for [3, 1, 4, 1, 5]:\nmin=3 → 1<3 → min=1 → 4>1 (skip) → 1=1 (skip) → 5>1 (skip)\nResult: 1",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint sumDigits(int n) {\n    // Write your code here\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", sumDigits(n));\n    return 0;\n}",
-        "python": "def sum_digits(n):\n    return sum(int(d) for d in str(abs(n)))\n\nprint(sum_digits(int(input())))"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
-          "stdin": "123",
-          "expected_output": "6"
-        },
-        {
-          "stdin": "111",
-          "expected_output": "3"
-        },
-        {
-          "stdin": "9",
-          "expected_output": "9"
-        }
-      ]
-    },
-    {
-      "id": "functions-312",
-      "topicId": "functions",
-      "title": "Count Factors Function",
-      "description": "Write `countFactors(n)` returning the number of factors of n.",
-      "difficulty": "medium",
-      "estimatedTime": 4,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint countFactors(int n) {\n    // Write your code here\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", countFactors(n));\n    return 0;\n}",
-        "python": "def count_factors(n):\n    count = 0\n    for i in range(1, n + 1):\n        if n % i == 0:\n            count += 1\n    return count\n\nprint(count_factors(int(input())))"
-      },
-      "test_cases": [
-        {
-          "stdin": "6",
-          "expected_output": "4"
-        },
-        {
-          "stdin": "10",
-          "expected_output": "4"
-        },
-        {
-          "stdin": "13",
-          "expected_output": "2"
-        }
-      ]
-    },
-    {
-      "id": "functions-313",
-      "topicId": "functions",
-      "title": "Print Range",
-      "description": "Write `printRange(a, b)` to print numbers from a to b inclusive, separated by space.",
-      "difficulty": "easy",
-      "estimatedTime": 2,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nvoid printRange(int a, int b) {\n    // Write your code here\n}\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printRange(a, b);\n    return 0;\n}",
-        "python": "def print_range(a, b):\n    print(*range(a, b + 1))\n\na, b = map(int, input().split())\nprint_range(a, b)"
-      },
-      "test_cases": [
-        {
-          "stdin": "1 5",
-          "expected_output": "1 2 3 4 5"
-        },
-        {
-          "stdin": "5 5",
-          "expected_output": "5"
-        },
-        {
-          "stdin": "10 12",
-          "expected_output": "10 11 12"
-        }
-      ]
-    },
-    {
-      "id": "functions-314",
-      "topicId": "functions",
-      "title": "Even or Odd Function",
-      "description": "Write `isEven(n)` returning 1 if even, 0 if odd.",
-      "difficulty": "easy",
-      "estimatedTime": 2,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint isEven(int n) {\n    return n % 2 == 0;\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", isEven(n));\n    return 0;\n}",
-        "python": "def is_even(n):\n    return 1 if n % 2 == 0 else 0\n\nprint(is_even(int(input())))"
-      },
-      "test_cases": [
-        {
-          "stdin": "2",
+          "stdin": "5\n3 1 4 1 5",
           "expected_output": "1"
         },
         {
-          "stdin": "3",
-          "expected_output": "0"
+          "stdin": "3\n-5 0 -10",
+          "expected_output": "-10"
         },
         {
-          "stdin": "0",
-          "expected_output": "1"
-        }
-      ]
-    },
-    {
-      "id": "functions-315",
-      "topicId": "functions",
-      "title": "Absolute Value Function",
-      "description": "Write `absVal(n)` returning the absolute value of n.",
-      "difficulty": "easy",
-      "estimatedTime": 1,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint absVal(int n) {\n    return n < 0 ? -n : n;\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", absVal(n));\n    return 0;\n}",
-        "python": "def abs_val(n):\n    return abs(n)\n\nprint(abs_val(int(input())))"
-      },
-      "test_cases": [
-        {
-          "stdin": "-5",
-          "expected_output": "5"
+          "stdin": "1\n7",
+          "expected_output": "7",
+          "isHidden": true
         },
         {
-          "stdin": "10",
-          "expected_output": "10"
+          "stdin": "4\n10 10 10 10",
+          "expected_output": "10",
+          "isHidden": true
         },
         {
-          "stdin": "0",
-          "expected_output": "0"
-        }
-      ]
-    },
-    {
-      "id": "functions-316",
-      "topicId": "functions",
-      "title": "Max of Three",
-      "description": "Write `max3(a, b, c)` returning the largest of three numbers.",
-      "difficulty": "easy",
-      "estimatedTime": 2,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint max3(int a, int b, int c) {\n    // Write your code here\n}\n\nint main() {\n    int a, b, c;\n    scanf(\"%d %d %d\", &a, &b, &c);\n    printf(\"%d\", max3(a, b, c));\n    return 0;\n}",
-        "python": "def max3(a, b, c):\n    return max(a, b, c)\n\na, b, c = map(int, input().split())\nprint(max3(a, b, c))"
-      },
-      "test_cases": [
-        {
-          "stdin": "1 2 3",
-          "expected_output": "3"
+          "stdin": "5\n100 200 300 50 400",
+          "expected_output": "50",
+          "isHidden": true
         },
         {
-          "stdin": "10 5 8",
-          "expected_output": "10"
+          "stdin": "3\n-1 -2 -3",
+          "expected_output": "-3",
+          "isHidden": true
         },
         {
-          "stdin": "5 5 5",
-          "expected_output": "5"
-        }
-      ]
-    },
-    {
-      "id": "functions-317",
-      "topicId": "functions",
-      "title": "Swap Function",
-      "description": "Write `swap(&a, &b)` to swap two numbers. (In Python, just print swapped values).",
-      "difficulty": "easy",
-      "estimatedTime": 3,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nvoid swap(int *a, int *b) {\n    int temp = *a;\n    *a = *b;\n    *b = temp;\n}\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    swap(&a, &b);\n    printf(\"%d %d\", a, b);\n    return 0;\n}",
-        "python": "def swap(a, b):\n    return b, a\n\na, b = map(int, input().split())\na, b = swap(a, b)\nprint(f\"{a} {b}\")"
-      },
-      "test_cases": [
-        {
-          "stdin": "10 20",
-          "expected_output": "20 10"
+          "stdin": "4\n0 0 0 -1",
+          "expected_output": "-1",
+          "isHidden": true
         },
         {
-          "stdin": "1 2",
-          "expected_output": "2 1"
+          "stdin": "2\n1000000 -1000000",
+          "expected_output": "-1000000",
+          "isHidden": true
         },
-        {
-          "stdin": "5 5",
-          "expected_output": "5 5"
-        }
-      ]
-    },
-    {
-      "id": "functions-318",
-      "topicId": "functions",
-      "title": "Circle Area Function",
-      "description": "Write `circleArea(r)` returning integer part of area (PI=3.14).",
-      "difficulty": "easy",
-      "estimatedTime": 2,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint circleArea(int r) {\n    return (int)(3.14 * r * r);\n}\n\nint main() {\n    int r;\n    scanf(\"%d\", &r);\n    printf(\"%d\", circleArea(r));\n    return 0;\n}",
-        "python": "def circle_area(r):\n    return int(3.14 * r * r)\n\nprint(circle_area(int(input())))"
-      },
-      "test_cases": [
-        {
-          "stdin": "5",
-          "expected_output": "78"
-        },
-        {
-          "stdin": "10",
-          "expected_output": "314"
-        },
-        {
-          "stdin": "2",
-          "expected_output": "12"
-        }
-      ]
-    },
-    {
-      "id": "functions-319",
-      "topicId": "functions",
-      "title": "Fahrenheit Function",
-      "description": "Write `toFahrenheit(c)` to convert Celsius to Fahrenheit (integer).",
-      "difficulty": "easy",
-      "estimatedTime": 2,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint toFahrenheit(int c) {\n    return (c * 9 / 5) + 32;\n}\n\nint main() {\n    int c;\n    scanf(\"%d\", &c);\n    printf(\"%d\", toFahrenheit(c));\n    return 0;\n}",
-        "python": "def to_fahrenheit(c):\n    return int((c * 9/5) + 32)\n\nprint(to_fahrenheit(int(input())))"
-      },
-      "test_cases": [
-        {
-          "stdin": "0",
-          "expected_output": "32"
-        },
-        {
-          "stdin": "100",
-          "expected_output": "212"
-        },
-        {
-          "stdin": "-40",
-          "expected_output": "-40"
-        }
-      ]
-    },
-    {
-      "id": "functions-320",
-      "topicId": "functions",
-      "title": "Simple Interest Function",
-      "description": "Write `simpleInterest(p, r, t)` returning integer interest.",
-      "difficulty": "easy",
-      "estimatedTime": 2,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint simpleInterest(int p, int r, int t) {\n    return (p * r * t) / 100;\n}\n\nint main() {\n    int p, r, t;\n    scanf(\"%d %d %d\", &p, &r, &t);\n    printf(\"%d\", simpleInterest(p, r, t));\n    return 0;\n}",
-        "python": "def simple_interest(p, r, t):\n    return int((p * r * t) / 100)\n\np, r, t = map(int, input().split())\nprint(simple_interest(p, r, t))"
-      },
-      "test_cases": [
-        {
-          "stdin": "1000 5 2",
-          "expected_output": "100"
-        },
-        {
-          "stdin": "500 10 1",
-          "expected_output": "50"
-        },
-        {
-          "stdin": "2000 2 5",
-          "expected_output": "200"
-        }
-      ]
-    },
-    {
-      "id": "functions-321",
-      "topicId": "functions",
-      "title": "Check Vowel Function",
-      "description": "Write `isVowel(char c)` returning 1 if vowel, 0 otherwise.",
-      "difficulty": "easy",
-      "estimatedTime": 3,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n#include <ctype.h>\n\nint isVowel(char c) {\n    c = tolower(c);\n    return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u');\n}\n\nint main() {\n    char c;\n    scanf(\" %c\", &c);\n    printf(\"%d\", isVowel(c));\n    return 0;\n}",
-        "python": "def is_vowel(c):\n    return 1 if c.lower() in \"aeiou\" else 0\n\nprint(is_vowel(input()[0]))"
-      },
-      "test_cases": [
-        {
-          "stdin": "a",
-          "expected_output": "1"
-        },
-        {
-          "stdin": "b",
-          "expected_output": "0"
-        },
-        {
-          "stdin": "E",
-          "expected_output": "1"
-        }
-      ]
-    },
-    {
-      "id": "functions-322",
-      "topicId": "functions",
-      "title": "Factorial Recursive",
-      "description": "Write `factorialRecursive(n)` using recursion.",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Recursion",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nlong long factorialRecursive(int n) {\n    // Write your code here\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%lld\", factorialRecursive(n));\n    return 0;\n}",
-        "python": "def factorial_recursive(n):\n    if n == 0:\n        return 1\n    return n * factorial_recursive(n - 1)\n\nprint(factorial_recursive(int(input())))"
-      },
-      "test_cases": [
-        {
-          "stdin": "5",
-          "expected_output": "120"
-        },
-        {
-          "stdin": "0",
-          "expected_output": "1"
-        },
-        {
-          "stdin": "4",
-          "expected_output": "24"
-        }
-      ]
-    },
-    {
-      "id": "functions-323",
-      "topicId": "functions",
-      "title": "Fibonacci Recursive",
-      "description": "Write `fibRecursive(n)` returning Nth Fibonacci number using recursion.",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Recursion",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint fibRecursive(int n) {\n    // Write your code here\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", fibRecursive(n));\n    return 0;\n}",
-        "python": "def fib_recursive(n):\n    if n <= 1:\n        return n\n    return fib_recursive(n - 1) + fib_recursive(n - 2)\n\nprint(fib_recursive(int(input())))"
-      },
-      "test_cases": [
-        {
-          "stdin": "0",
-          "expected_output": "0"
-        },
-        {
-          "stdin": "1",
-          "expected_output": "1"
-        },
-        {
-          "stdin": "5",
-          "expected_output": "5"
-        }
-      ]
-    },
-    {
-      "id": "functions-324",
-      "topicId": "functions",
-      "title": "Sum N Recursive",
-      "description": "Write `sumN(n)` recursively to sum numbers from 1 to n.",
-      "difficulty": "hard",
-      "estimatedTime": 4,
-      "concept": "Recursion",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint sumN(int n) {\n    if (n == 0) return 0;\n    return n + sumN(n - 1);\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", sumN(n));\n    return 0;\n}",
-        "python": "def sum_n(n):\n    if n == 0:\n        return 0\n    return n + sum_n(n - 1)\n\nprint(sum_n(int(input())))"
-      },
-      "test_cases": [
-        {
-          "stdin": "5",
-          "expected_output": "15"
-        },
-        {
-          "stdin": "10",
-          "expected_output": "55"
-        },
-        {
-          "stdin": "1",
-          "expected_output": "1"
-        }
-      ]
-    },
-    {
-      "id": "functions-325",
-      "topicId": "functions",
-      "title": "Power Recursive",
-      "description": "Write `powerRec(base, exp)` using recursion.",
-      "difficulty": "hard",
-      "estimatedTime": 4,
-      "concept": "Recursion",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nlong long powerRec(int b, int e) {\n    // Write your code here\n}\n\nint main() {\n    int b, e;\n    scanf(\"%d %d\", &b, &e);\n    printf(\"%lld\", powerRec(b, e));\n    return 0;\n}",
-        "python": "def power_rec(b, e):\n    if e == 0:\n        return 1\n    return b * power_rec(b, e - 1)\n\nb, e = map(int, input().split())\nprint(power_rec(b, e))"
-      },
-      "test_cases": [
-        {
-          "stdin": "2 3",
-          "expected_output": "8"
-        },
-        {
-          "stdin": "5 1",
-          "expected_output": "5"
-        },
-        {
-          "stdin": "3 3",
-          "expected_output": "27"
-        }
-      ]
-    },
-    {
-      "id": "functions-326",
-      "topicId": "functions",
-      "title": "Print N to 1 Recursive",
-      "description": "Write `printRev(n)` to print n to 1 using recursion. Space separated.",
-      "difficulty": "medium",
-      "estimatedTime": 4,
-      "concept": "Recursion",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nvoid printRev(int n) {\n    // Write your code here\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printRev(n);\n    return 0;\n}",
-        "python": "def print_rev(n):\n    if n < 1:\n        return\n    print(n, end=\" \")\n    print_rev(n - 1)\n\nprint_rev(int(input()))"
-      },
-      "test_cases": [
-        {
-          "stdin": "5",
-          "expected_output": "5 4 3 2 1"
-        },
-        {
-          "stdin": "3",
-          "expected_output": "3 2 1"
-        },
-        {
-          "stdin": "1",
-          "expected_output": "1"
-        }
-      ]
-    },
-    {
-      "id": "functions-327",
-      "topicId": "functions",
-      "title": "Sum Array Function",
-      "description": "Write `sumArray(arr, n)` to return sum of array elements.",
-      "difficulty": "medium",
-      "estimatedTime": 4,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint sumArray(int arr[], int n) {\n    // Write your code here\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    int arr[n];\n    for(int i=0; i<n; i++) scanf(\"%d\", &arr[i]);\n    printf(\"%d\", sumArray(arr, n));\n    return 0;\n}",
-        "python": "def sum_array(arr):\n    return sum(arr)\n\nn = int(input())\narr = list(map(int, input().split()))\nprint(sum_array(arr))"
-      },
-      "test_cases": [
-        {
-          "stdin": "5\n1 2 3 4 5",
-          "expected_output": "15"
-        },
-        {
-          "stdin": "3\n10 20 30",
-          "expected_output": "60"
-        },
-        {
-          "stdin": "1\n5",
-          "expected_output": "5"
-        }
-      ]
-    },
-    {
-      "id": "functions-328",
-      "topicId": "functions",
-      "title": "Max Array Function",
-      "description": "Write `maxArray(arr, n)` to return largest element.",
-      "difficulty": "medium",
-      "estimatedTime": 4,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint maxArray(int arr[], int n) {\n    // Write your code here\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    int arr[n];\n    for(int i=0; i<n; i++) scanf(\"%d\", &arr[i]);\n    printf(\"%d\", maxArray(arr, n));\n    return 0;\n}",
-        "python": "def max_array(arr):\n    return max(arr)\n\nn = int(input())\narr = list(map(int, input().split()))\nprint(max_array(arr))"
-      },
-      "test_cases": [
-        {
-          "stdin": "5\n1 5 3 2 4",
-          "expected_output": "5"
-        },
-        {
-          "stdin": "3\n100 200 50",
-          "expected_output": "200"
-        },
-        {
-          "stdin": "2\n-1 -5",
-          "expected_output": "-1"
-        }
-      ]
-    },
-    {
-      "id": "functions-329",
-      "topicId": "functions",
-      "title": "Count Even Function",
-      "description": "Write `countEven(arr, n)` to return count of even numbers in array.",
-      "difficulty": "medium",
-      "estimatedTime": 4,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint countEven(int arr[], int n) {\n    // Write your code here\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    int arr[n];\n    for(int i=0; i<n; i++) scanf(\"%d\", &arr[i]);\n    printf(\"%d\", countEven(arr, n));\n    return 0;\n}",
-        "python": "def count_even(arr):\n    c = 0\n    for x in arr:\n        if x % 2 == 0: c += 1\n    return c\n\nn = int(input())\narr = list(map(int, input().split()))\nprint(count_even(arr))"
-      },
-      "test_cases": [
-        {
-          "stdin": "5\n1 2 3 4 5",
-          "expected_output": "2"
-        },
-        {
-          "stdin": "3\n2 4 6",
-          "expected_output": "3"
-        },
-        {
-          "stdin": "3\n1 3 5",
-          "expected_output": "0"
-        }
-      ]
-    },
-    {
-      "id": "functions-330",
-      "topicId": "functions",
-      "title": "Reverse Array Function",
-      "description": "Write `printRevArr(arr, n)` to print array in reverse.",
-      "difficulty": "medium",
-      "estimatedTime": 4,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nvoid printRevArr(int arr[], int n) {\n    for(int i=n-1; i>=0; i--) printf(\"%d \", arr[i]);\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    int arr[n];\n    for(int i=0; i<n; i++) scanf(\"%d\", &arr[i]);\n    printRevArr(arr, n);\n    return 0;\n}",
-        "python": "def print_rev_arr(arr):\n    print(*arr[::-1])\n\nn = int(input())\narr = list(map(int, input().split()))\nprint_rev_arr(arr)"
-      },
-      "test_cases": [
-        {
-          "stdin": "3\n1 2 3",
-          "expected_output": "3 2 1"
-        },
-        {
-          "stdin": "1\n5",
-          "expected_output": "5"
-        },
-        {
-          "stdin": "4\n10 20 5 8",
-          "expected_output": "8 5 20 10"
-        }
-      ]
-    },
-    {
-      "id": "functions-331",
-      "topicId": "functions",
-      "title": "Search Function",
-      "description": "Write `search(arr, n, key)` returning index of key or -1.",
-      "difficulty": "medium",
-      "estimatedTime": 4,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint search(int arr[], int n, int key) {\n    for(int i=0; i<n; i++) {\n        if(arr[i] == key) return i;\n    }\n    return -1;\n}\n\nint main() {\n    int n, k;\n    scanf(\"%d %d\", &n, &k);\n    int arr[n];\n    for(int i=0; i<n; i++) scanf(\"%d\", &arr[i]);\n    printf(\"%d\", search(arr, n, k));\n    return 0;\n}",
-        "python": "def search(arr, key):\n    try:\n        return arr.index(key)\n    except:\n        return -1\n\nn, k = map(int, input().split())\narr = list(map(int, input().split()))\nprint(search(arr, k))"
-      },
-      "test_cases": [
-        {
-          "stdin": "5 3\n1 2 3 4 5",
-          "expected_output": "2"
-        },
-        {
-          "stdin": "3 10\n1 2 3",
-          "expected_output": "-1"
-        },
-        {
-          "stdin": "1 5\n5",
-          "expected_output": "0"
-        }
-      ]
-    },
-    {
-      "id": "functions-332",
-      "topicId": "functions",
-      "title": "Sort Array Function",
-      "description": "Write `sortArray(arr, n)` to sort array in ascending order.",
-      "difficulty": "hard",
-      "estimatedTime": 6,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nvoid sortArray(int arr[], int n) {\n    // Write your code here (Bubble/Selection sort)\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    int arr[n];\n    for(int i=0; i<n; i++) scanf(\"%d\", &arr[i]);\n    sortArray(arr, n);\n    for(int i=0; i<n; i++) printf(\"%d \", arr[i]);\n    return 0;\n}",
-        "python": "def sort_array(arr):\n    arr.sort()\n    print(*arr)\n\nn = int(input())\narr = list(map(int, input().split()))\nsort_array(arr)"
-      },
-      "test_cases": [
         {
           "stdin": "5\n5 4 3 2 1",
-          "expected_output": "1 2 3 4 5"
+          "expected_output": "1",
+          "isHidden": true
         },
         {
-          "stdin": "3\n10 5 15",
-          "expected_output": "5 10 15"
+          "stdin": "3\n99 100 98",
+          "expected_output": "98",
+          "isHidden": true
         },
         {
-          "stdin": "1\n10",
-          "expected_output": "10"
-        }
-      ]
-    },
-    {
-      "id": "functions-333",
-      "topicId": "functions",
-      "title": "String Length Function",
-      "description": "Write `strLen(s)` to find length of string without strlen().",
-      "difficulty": "medium",
-      "estimatedTime": 3,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint strLen(char s[]) {\n    int i = 0;\n    while(s[i] != '\\0') i++;\n    return i;\n}\n\nint main() {\n    char s[100];\n    scanf(\"%s\", s);\n    printf(\"%d\", strLen(s));\n    return 0;\n}",
-        "python": "def str_len(s):\n    return len(s)\n\nprint(str_len(input()))"
-      },
-      "test_cases": [
-        {
-          "stdin": "hello",
-          "expected_output": "5"
+          "stdin": "4\n-10 -20 -5 -15",
+          "expected_output": "-20",
+          "isHidden": true
         },
         {
-          "stdin": "a",
-          "expected_output": "1"
-        },
-        {
-          "stdin": "coding",
-          "expected_output": "6"
-        }
-      ]
-    },
-    {
-      "id": "functions-334",
-      "topicId": "functions",
-      "title": "Copy String Function",
-      "description": "Write `strCopy(dest, src)` to copy string src to dest.",
-      "difficulty": "medium",
-      "estimatedTime": 4,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nvoid strCopy(char dest[], char src[]) {\n    int i = 0;\n    while(src[i] != '\\0') {\n        dest[i] = src[i];\n        i++;\n    }\n    dest[i] = '\\0';\n}\n\nint main() {\n    char s[100], d[100];\n    scanf(\"%s\", s);\n    strCopy(d, s);\n    printf(\"%s\", d);\n    return 0;\n}",
-        "python": "def str_copy(s):\n    return s\n\nprint(str_copy(input()))"
-      },
-      "test_cases": [
-        {
-          "stdin": "hello",
-          "expected_output": "hello"
-        },
-        {
-          "stdin": "world",
-          "expected_output": "world"
-        },
-        {
-          "stdin": "copy",
-          "expected_output": "copy"
-        }
-      ]
-    },
-    {
-      "id": "functions-335",
-      "topicId": "functions",
-      "title": "Count Vowels in String",
-      "description": "Write `countVowels(s)` returning count of vowels.",
-      "difficulty": "medium",
-      "estimatedTime": 4,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n#include <ctype.h>\n\nint countVowels(char s[]) {\n    int count = 0, i = 0;\n    while(s[i] != '\\0') {\n        char c = tolower(s[i]);\n        if(c=='a'||c=='e'||c=='i'||c=='o'||c=='u') count++;\n        i++;\n    }\n    return count;\n}\n\nint main() {\n    char s[100];\n    scanf(\"%s\", s);\n    printf(\"%d\", countVowels(s));\n    return 0;\n}",
-        "python": "def count_vowels(s):\n    return sum(1 for c in s if c.lower() in \"aeiou\")\n\nprint(count_vowels(input()))"
-      },
-      "test_cases": [
-        {
-          "stdin": "hello",
-          "expected_output": "2"
-        },
-        {
-          "stdin": "xyz",
-          "expected_output": "0"
-        },
-        {
-          "stdin": "aeiou",
-          "expected_output": "5"
-        }
-      ]
-    },
-    {
-      "id": "functions-336",
-      "topicId": "functions",
-      "title": "Calculate Permutation (nPr)",
-      "description": "Write `nPr(n, r)` using factorial function.",
-      "difficulty": "medium",
-      "estimatedTime": 4,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nlong long fact(int n) {\n    if(n==0) return 1;\n    return n * fact(n-1);\n}\n\nlong long nPr(int n, int r) {\n    return fact(n) / fact(n-r);\n}\n\nint main() {\n    int n, r;\n    scanf(\"%d %d\", &n, &r);\n    printf(\"%lld\", nPr(n, r));\n    return 0;\n}",
-        "python": "import math\ndef nPr(n, r):\n    return math.factorial(n) // math.factorial(n - r)\n\nn, r = map(int, input().split())\nprint(nPr(n, r))"
-      },
-      "test_cases": [
-        {
-          "stdin": "5 2",
-          "expected_output": "20"
-        },
-        {
-          "stdin": "4 4",
-          "expected_output": "24"
-        },
-        {
-          "stdin": "5 0",
-          "expected_output": "1"
-        }
-      ]
-    },
-    {
-      "id": "functions-337",
-      "topicId": "functions",
-      "title": "Calculate Combination (nCr)",
-      "description": "Write `nCr(n, r)` using factorial function.",
-      "difficulty": "medium",
-      "estimatedTime": 4,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nlong long fact(int n) {\n    if(n==0) return 1;\n    return n * fact(n-1);\n}\n\nlong long nCr(int n, int r) {\n    return fact(n) / (fact(r) * fact(n-r));\n}\n\nint main() {\n    int n, r;\n    scanf(\"%d %d\", &n, &r);\n    printf(\"%lld\", nCr(n, r));\n    return 0;\n}",
-        "python": "import math\ndef nCr(n, r):\n    return math.factorial(n) // (math.factorial(r) * math.factorial(n - r))\n\nn, r = map(int, input().split())\nprint(nCr(n, r))"
-      },
-      "test_cases": [
-        {
-          "stdin": "5 2",
-          "expected_output": "10"
-        },
-        {
-          "stdin": "4 4",
-          "expected_output": "1"
-        },
-        {
-          "stdin": "5 3",
-          "expected_output": "10"
-        }
-      ]
-    },
-    {
-      "id": "functions-338",
-      "topicId": "functions",
-      "title": "Binary to Decimal Function",
-      "description": "Write `binToDec(n)` where n is binary number (as integer).",
-      "difficulty": "medium",
-      "estimatedTime": 5,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n#include <math.h>\n\nint binToDec(long long n) {\n    int dec = 0, i = 0, rem;\n    while (n != 0) {\n        rem = n % 10;\n        n /= 10;\n        dec += rem * pow(2, i);\n        ++i;\n    }\n    return dec;\n}\n\nint main() {\n    long long n;\n    scanf(\"%lld\", &n);\n    printf(\"%d\", binToDec(n));\n    return 0;\n}",
-        "python": "def bin_to_dec(n):\n    return int(str(n), 2)\n\nprint(bin_to_dec(int(input())))"
-      },
-      "test_cases": [
-        {
-          "stdin": "101",
-          "expected_output": "5"
-        },
-        {
-          "stdin": "111",
-          "expected_output": "7"
-        },
-        {
-          "stdin": "1010",
-          "expected_output": "10"
-        }
-      ]
-    },
-    {
-      "id": "functions-339",
-      "topicId": "functions",
-      "title": "Decimal to Binary Function",
-      "description": "Write `decToBin(n)` (print binary digits).",
-      "difficulty": "medium",
-      "estimatedTime": 5,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nvoid decToBin(int n) {\n    if (n > 1) decToBin(n / 2);\n    printf(\"%d\", n % 2);\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    decToBin(n);\n    return 0;\n}",
-        "python": "def dec_to_bin(n):\n    print(bin(n)[2:])\n\ndec_to_bin(int(input()))"
-      },
-      "test_cases": [
-        {
-          "stdin": "5",
-          "expected_output": "101"
-        },
-        {
-          "stdin": "10",
-          "expected_output": "1010"
-        },
-        {
-          "stdin": "7",
-          "expected_output": "111"
-        }
-      ]
-    },
-    {
-      "id": "functions-340",
-      "topicId": "functions",
-      "title": "Matrix Input/Output",
-      "description": "Write a function to read and print a 2x2 matrix.",
-      "difficulty": "medium",
-      "estimatedTime": 5,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nvoid printMatrix(int mat[2][2]) {\n    for(int i=0; i<2; i++) {\n        for(int j=0; j<2; j++) printf(\"%d \", mat[i][j]);\n        printf(\"\\n\");\n    }\n}\n\nint main() {\n    int mat[2][2];\n    for(int i=0; i<2; i++)\n        for(int j=0; j<2; j++) scanf(\"%d\", &mat[i][j]);\n    printMatrix(mat);\n    return 0;\n}",
-        "python": "def print_matrix(mat):\n    for row in mat:\n        print(*row)\n\nmat = []\nfor _ in range(2):\n    mat.append(list(map(int, input().split())))\nprint_matrix(mat)"
-      },
-      "test_cases": [
-        {
-          "stdin": "1 2\n3 4",
-          "expected_output": "1 2 \n3 4"
-        }
-      ]
-    },
-    {
-      "id": "functions-341",
-      "topicId": "functions",
-      "title": "Sum of Two Matrices",
-      "description": "Function to sum two 2x2 matrices.",
-      "difficulty": "hard",
-      "estimatedTime": 6,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nvoid addMatrix(int a[2][2], int b[2][2]) {\n    for(int i=0; i<2; i++) {\n        for(int j=0; j<2; j++) printf(\"%d \", a[i][j]+b[i][j]);\n        printf(\"\\n\");\n    }\n}\n\nint main() {\n    int a[2][2], b[2][2];\n    // Read A\n    for(int i=0; i<2; i++) for(int j=0; j<2; j++) scanf(\"%d\", &a[i][j]);\n    // Read B\n    for(int i=0; i<2; i++) for(int j=0; j<2; j++) scanf(\"%d\", &b[i][j]);\n    addMatrix(a, b);\n    return 0;\n}",
-        "python": "def add_matrix(a, b):\n    for i in range(2):\n        row = [x + y for x, y in zip(a[i], b[i])]\n        print(*row)\n\na = [list(map(int, input().split())) for _ in range(2)]\nb = [list(map(int, input().split())) for _ in range(2)]\nadd_matrix(a, b)"
-      },
-      "test_cases": [
-        {
-          "stdin": "1 2\n3 4\n5 6\n7 8",
-          "expected_output": "6 8 \n10 12"
-        }
-      ]
-    },
-    {
-      "id": "functions-342",
-      "topicId": "functions",
-      "title": "Factorial Tail Recursion",
-      "description": "Write `factTail(n, val)` using tail recursion.",
-      "difficulty": "hard",
-      "estimatedTime": 5,
-      "concept": "Recursion",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nlong long factTail(int n, long long val) {\n    // Write your code here\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%lld\", factTail(n, 1));\n    return 0;\n}",
-        "python": "def fact_tail(n, val=1):\n    if n == 0:\n        return val\n    return fact_tail(n - 1, n * val)\n\nprint(fact_tail(int(input())))"
-      },
-      "test_cases": [
-        {
-          "stdin": "5",
-          "expected_output": "120"
-        },
-        {
-          "stdin": "0",
-          "expected_output": "1"
-        },
-        {
-          "stdin": "6",
-          "expected_output": "720"
-        }
-      ]
-    },
-    {
-      "id": "functions-343",
-      "topicId": "functions",
-      "title": "Flatten Array",
-      "description": "Implement a function to flatten a 2D array (conceptually). Print elements in row-major order.",
-      "difficulty": "medium",
-      "estimatedTime": 4,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nvoid printFlatten(int mat[2][2]) {\n    // Write your code here\n}\n\nint main() {\n    int mat[2][2];\n    for(int i=0; i<2; i++)\n        for(int j=0; j<2; j++) scanf(\"%d\", &mat[i][j]);\n    printFlatten(mat);\n    return 0;\n}",
-        "python": "def print_flatten(mat):\n    for row in mat:\n        for x in row:\n            print(x, end=\" \")\n\nmat = [list(map(int, input().split())) for _ in range(2)]\nprint_flatten(mat)"
-      },
-      "test_cases": [
-        {
-          "stdin": "1 2\n3 4",
-          "expected_output": "1 2 3 4"
-        },
-        {
-          "stdin": "10 20\n30 40",
-          "expected_output": "10 20 30 40"
-        },
-        {
-          "stdin": "5 5\n5 5",
-          "expected_output": "5 5 5 5"
-        }
-      ]
-    },
-    {
-      "id": "functions-344",
-      "topicId": "functions",
-      "title": "Check Armstrong Function",
-      "description": "Write `isArmstrong(n)` returning 1 if armstrong, 0 otherwise.",
-      "difficulty": "medium",
-      "estimatedTime": 5,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n#include <math.h>\n\nint countDigits(int n) {\n    int c = 0;\n    while(n > 0) { n/=10; c++; }\n    return c;\n}\n\nint isArmstrong(int n) {\n    int temp = n, sum = 0, digits = countDigits(n);\n    while(temp > 0) {\n        sum += pow(temp % 10, digits);\n        temp /= 10;\n    }\n    return (sum == n);\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", isArmstrong(n));\n    return 0;\n}",
-        "python": "def is_armstrong(n):\n    s = str(n)\n    p = len(s)\n    return 1 if sum(int(d)**p for d in s) == n else 0\n\nprint(is_armstrong(int(input())))"
-      },
-      "test_cases": [
-        {
-          "stdin": "153",
-          "expected_output": "1"
-        },
-        {
-          "stdin": "123",
-          "expected_output": "0"
-        },
-        {
-          "stdin": "370",
-          "expected_output": "1"
-        }
-      ]
-    },
-    {
-      "id": "functions-345",
-      "topicId": "functions",
-      "title": "Perfect Number Function",
-      "description": "Write `isPerfect(n)` returning 1 if perfect, 0 otherwise.",
-      "difficulty": "medium",
-      "estimatedTime": 5,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint isPerfect(int n) {\n    int sum = 0;\n    for(int i=1; i<n; i++) {\n        if(n%i==0) sum+=i;\n    }\n    return (sum == n);\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", isPerfect(n));\n    return 0;\n}",
-        "python": "def is_perfect(n):\n    sum_val = 0\n    for i in range(1, n):\n        if n % i == 0:\n            sum_val += i\n    return 1 if sum_val == n else 0\n\nprint(is_perfect(int(input())))"
-      },
-      "test_cases": [
-        {
-          "stdin": "6",
-          "expected_output": "1"
-        },
-        {
-          "stdin": "28",
-          "expected_output": "1"
-        },
-        {
-          "stdin": "10",
-          "expected_output": "0"
-        }
-      ]
-    },
-    {
-      "id": "functions-346",
-      "topicId": "functions",
-      "title": "Collatz Sequence",
-      "description": "Write `printCollatz(n)`: if even n=n/2, if odd n=3n+1. Stop at 1.",
-      "difficulty": "medium",
-      "estimatedTime": 5,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nvoid printCollatz(int n) {\n    while(n != 1) {\n        printf(\"%d \", n);\n        if(n%2==0) n/=2;\n        else n=3*n+1;\n    }\n    printf(\"1\");\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printCollatz(n);\n    return 0;\n}",
-        "python": "def print_collatz(n):\n    while n != 1:\n        print(n, end=\" \")\n        if n % 2 == 0:\n            n //= 2\n        else:\n            n = 3 * n + 1\n    print(1)\n\nprint_collatz(int(input()))"
-      },
-      "test_cases": [
-        {
-          "stdin": "3",
-          "expected_output": "3 10 5 16 8 4 2 1"
-        },
-        {
-          "stdin": "6",
-          "expected_output": "6 3 10 5 16 8 4 2 1"
-        },
-        {
-          "stdin": "1",
-          "expected_output": "1"
-        }
-      ]
-    },
-    {
-      "id": "functions-347",
-      "topicId": "functions",
-      "title": "Sum Digits Recursive",
-      "description": "Write `sumDigitsRec(n)` using recursion.",
-      "difficulty": "easy",
-      "estimatedTime": 3,
-      "concept": "Recursion",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint sumDigitsRec(int n) {\n    if (n == 0) return 0;\n    return (n % 10) + sumDigitsRec(n / 10);\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", sumDigitsRec(n));\n    return 0;\n}",
-        "python": "def sum_digits_rec(n):\n    if n == 0:\n        return 0\n    return (n % 10) + sum_digits_rec(n // 10)\n\nprint(sum_digits_rec(int(input())))"
-      },
-      "test_cases": [
-        {
-          "stdin": "123",
-          "expected_output": "6"
-        },
-        {
-          "stdin": "5",
-          "expected_output": "5"
-        },
-        {
-          "stdin": "100",
-          "expected_output": "1"
-        }
-      ]
-    },
-    {
-      "id": "functions-348",
-      "topicId": "functions",
-      "title": "Count Digits Recursive",
-      "description": "Write `countDigitsRec(n)` using recursion.",
-      "difficulty": "easy",
-      "estimatedTime": 3,
-      "concept": "Recursion",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint countDigitsRec(int n) {\n    if (n < 10) return 1;\n    return 1 + countDigitsRec(n / 10);\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", countDigitsRec(n));\n    return 0;\n}",
-        "python": "def count_digits_rec(n):\n    if n < 10:\n        return 1\n    return 1 + count_digits_rec(n // 10)\n\nprint(count_digits_rec(int(input())))"
-      },
-      "test_cases": [
-        {
-          "stdin": "123",
-          "expected_output": "3"
-        },
-        {
-          "stdin": "5",
-          "expected_output": "1"
-        },
-        {
-          "stdin": "12345",
-          "expected_output": "5"
-        }
-      ]
-    },
-    {
-      "id": "functions-349",
-      "topicId": "functions",
-      "title": "GCD Recursive",
-      "description": "Write `gcdRec(a, b)` using Euclidean algorithm recursively.",
-      "difficulty": "medium",
-      "estimatedTime": 4,
-      "concept": "Recursion",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint gcdRec(int a, int b) {\n    if (b == 0) return a;\n    return gcdRec(b, a % b);\n}\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d\", gcdRec(a, b));\n    return 0;\n}",
-        "python": "def gcd_rec(a, b):\n    if b == 0:\n        return a\n    return gcd_rec(b, a % b)\n\na, b = map(int, input().split())\nprint(gcd_rec(a, b))"
-      },
-      "test_cases": [
-        {
-          "stdin": "10 5",
-          "expected_output": "5"
-        },
-        {
-          "stdin": "12 18",
-          "expected_output": "6"
-        },
-        {
-          "stdin": "7 13",
-          "expected_output": "1"
-        }
-      ]
-    },
-    {
-      "id": "functions-350",
-      "topicId": "functions",
-      "title": "Power of Two",
-      "description": "Write `isPowerOfTwo(n)` returning 1 if yes, 0 otherwise.",
-      "difficulty": "easy",
-      "estimatedTime": 3,
-      "concept": "Functions",
-      "starter_codes": {
-        "c": "#include <stdio.h>\n\nint isPowerOfTwo(int n) {\n    return (n > 0) && ((n & (n - 1)) == 0);\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\", isPowerOfTwo(n));\n    return 0;\n}",
-        "python": "def is_power_of_two(n):\n    return 1 if (n > 0) and ((n & (n - 1)) == 0) else 0\n\nprint(is_power_of_two(int(input())))"
-      },
-      "test_cases": [
-        {
-          "stdin": "8",
-          "expected_output": "1"
-        },
-        {
-          "stdin": "6",
-          "expected_output": "0"
-        },
-        {
-          "stdin": "1",
-          "expected_output": "1"
+          "stdin": "6\n6 5 4 3 2 1",
+          "expected_output": "1",
+          "isHidden": true
         }
       ]
     }

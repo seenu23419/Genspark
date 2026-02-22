@@ -36,6 +36,7 @@ interface AuthContextType {
     updateUser: (updates: Partial<User>) => Promise<void>;
     loadActivityHistory: () => Promise<void>;
     setInitializing: (val: boolean) => void;
+    minSplashDone: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -79,7 +80,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         initializingRef.current = initializing;
     }, [initializing]);
 
-    const loading = initializing || !minSplashDone;
+    const loading = initializing; // Route guards depend only on data initialization
 
     const refreshProfile = useCallback(async () => {
         const currentUserId = userStateRef.current.userId;
@@ -150,7 +151,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // 1. Min Splash Timer (Drastically reduced for instant feel if data is ready)
         const splashTimer = setTimeout(() => {
             if (mounted) setMinSplashDone(true);
-        }, 50); // 50ms is enough to avoid a single-frame flash while feeling instant
+        }, 2000); // 2s duration for a premium "logo page" experience
 
         // 2. Initial Session Check - Faster lookup
         const initSession = async () => {
@@ -395,7 +396,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             }
         }, [user]),
         updateUser: (updates: Partial<User>) => Promise.resolve(), // Placeholder
-        setInitializing
+        setInitializing,
+        minSplashDone
     };
 
     value.updateUser = value.updateProfile;

@@ -1,19 +1,24 @@
 {
   "id": "loops",
   "title": "Loops & Iterations",
-  "color": "from-purple-500 to-indigo-500",
+  "color": "from-green-500 to-teal-500",
   "problems": [
     {
       "id": "loops-1",
       "topicId": "loops",
       "title": "Sum of First N Numbers",
-      "description": "Write a program that takes an integer N as input and calculates the sum of all numbers from 1 to N.\n\nInput: 5\nOutput: 15 (1+2+3+4+5)",
+      "description": "Read an integer N and print the sum 1+2+...+N.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nsum\n```\n\nConstraints\n• 1 ≤ N ≤ 10^6\n\nSample Input 1\n```\n5\n```\n\nSample Output 1\n```\n15\n```\n\nSample Input 2\n```\n10\n```\n\nSample Output 2\n```\n55\n```\n\nExplanation\n1+2+3+4+5 = 15\n1+2+...+10 = 55",
       "difficulty": "easy",
       "estimatedTime": 5,
       "concept": "Iteration",
+      "hint": "Use a loop from 1 to N, accumulate the sum.",
+      "explanation": "Add all integers from 1 to N using a loop.\n\nStep-by-step:\n1. Initialize sum = 0.\n2. Loop i from 1 to N (inclusive).\n3. Add i to sum each iteration.\n4. Print sum.\n\nShorter alternative: Use the formula sum = N*(N+1)/2.\n\nTrace for N=5:\nsum = 0+1+2+3+4+5 = 15",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    int n, sum = 0;\n    // Read N\n    \n    // Use for or while loop\n    \n    return 0;\n}",
-        "python": "n = int(input())\nprint(sum(range(1, n + 1)))"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
@@ -26,7 +31,53 @@
         },
         {
           "stdin": "1",
-          "expected_output": "1"
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "3",
+          "expected_output": "6",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "5050",
+          "isHidden": true
+        },
+        {
+          "stdin": "7",
+          "expected_output": "28",
+          "isHidden": true
+        },
+        {
+          "stdin": "20",
+          "expected_output": "210",
+          "isHidden": true
+        },
+        {
+          "stdin": "0",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "50",
+          "expected_output": "1275",
+          "isHidden": true
+        },
+        {
+          "stdin": "15",
+          "expected_output": "120",
+          "isHidden": true
+        },
+        {
+          "stdin": "25",
+          "expected_output": "325",
+          "isHidden": true
+        },
+        {
+          "stdin": "200",
+          "expected_output": "20100",
+          "isHidden": true
         }
       ]
     },
@@ -34,13 +85,18 @@
       "id": "loops-2",
       "topicId": "loops",
       "title": "Factorial Calculation",
-      "description": "Calculate the factorial of a given number N.\n\nInput: 4\nOutput: 24 (4*3*2*1)",
+      "description": "Read N and print N! (N factorial).\n\nN! = N × (N-1) × ... × 1, with 0! = 1\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nfactorial\n```\n\nConstraints\n• 0 ≤ N ≤ 20\n\nSample Input 1\n```\n4\n```\n\nSample Output 1\n```\n24\n```\n\nSample Input 2\n```\n5\n```\n\nSample Output 2\n```\n120\n```\n\nExplanation\n4! = 4×3×2×1 = 24\n5! = 5×4×3×2×1 = 120",
       "difficulty": "easy",
       "estimatedTime": 5,
       "concept": "Iteration",
+      "hint": "Start result=1, multiply by each number from 1 to N.",
+      "explanation": "Factorial multiplies all integers from 1 to N together.\n\nStep-by-step:\n1. Initialize result = 1.\n2. Loop i from 1 to N:\n   - result = result * i\n3. Print result.\n\nSpecial case: 0! = 1 (loop runs 0 times, result stays 1).\n\nTrace for N=5:\nresult: 1→1→2→6→24→120\nOutput: 120",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    int n;\n    long long fact = 1;\n    // Read n\n    \n    // Calculate factorial\n    \n    return 0;\n}",
-        "python": "import math\nprint(math.factorial(int(input())))"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
@@ -53,7 +109,53 @@
         },
         {
           "stdin": "0",
-          "expected_output": "1"
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "6",
+          "expected_output": "720",
+          "isHidden": true
+        },
+        {
+          "stdin": "7",
+          "expected_output": "5040",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "3628800",
+          "isHidden": true
+        },
+        {
+          "stdin": "2",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "3",
+          "expected_output": "6",
+          "isHidden": true
+        },
+        {
+          "stdin": "8",
+          "expected_output": "40320",
+          "isHidden": true
+        },
+        {
+          "stdin": "9",
+          "expected_output": "362880",
+          "isHidden": true
+        },
+        {
+          "stdin": "12",
+          "expected_output": "479001600",
+          "isHidden": true
         }
       ]
     },
@@ -61,19 +163,77 @@
       "id": "loops-3",
       "topicId": "loops",
       "title": "Multiplication Table",
-      "description": "Print the multiplication table of a given number N up to 10.\n\nInput: 2\nOutput:\n2 * 1 = 2\n2 * 2 = 4\n...\n2 * 10 = 20",
+      "description": "Read N and print its multiplication table from 1 to 10.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nN * 1 = N\nN * 2 = 2N\n...\nN * 10 = 10N\n```\n\nConstraints\n• 1 ≤ N ≤ 100\n• Exact format: N * i = result\n\nSample Input 1\n```\n2\n```\n\nSample Output 1\n```\n2 * 1 = 2\n2 * 2 = 4\n2 * 3 = 6\n2 * 4 = 8\n2 * 5 = 10\n2 * 6 = 12\n2 * 7 = 14\n2 * 8 = 16\n2 * 9 = 18\n2 * 10 = 20\n```\n\nSample Input 2\n```\n5\n```\n\nSample Output 2\n```\n5 * 1 = 5\n5 * 2 = 10\n5 * 3 = 15\n5 * 4 = 20\n5 * 5 = 25\n5 * 6 = 30\n5 * 7 = 35\n5 * 8 = 40\n5 * 9 = 45\n5 * 10 = 50\n```",
       "difficulty": "easy",
       "estimatedTime": 6,
       "concept": "Iteration",
-      "explanation": "Use a for loop running from 1 to 10. In each iteration, print the formatted string `N * i = result`.",
+      "hint": "Print N * i for i from 1 to 10.",
+      "explanation": "A multiplication table shows products of N with numbers 1 through 10.\n\nStep-by-step:\n1. Loop i from 1 to 10.\n2. Each iteration print exactly: N * i = result\n\nPay close attention to the exact output format — spaces around * and = matter.\n\nTrace for N=3:\n3 * 1 = 3\n3 * 2 = 6\n...\n3 * 10 = 30",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    int n;\n    // Read n\n    // Print table items\n    return 0;\n}",
-        "python": "n = int(input())\nfor i in range(1, 11):\n    print(f\"{n} * {i} = {n*i}\")"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
           "stdin": "2",
           "expected_output": "2 * 1 = 2\n2 * 2 = 4\n2 * 3 = 6\n2 * 4 = 8\n2 * 5 = 10\n2 * 6 = 12\n2 * 7 = 14\n2 * 8 = 16\n2 * 9 = 18\n2 * 10 = 20"
+        },
+        {
+          "stdin": "5",
+          "expected_output": "5 * 1 = 5\n5 * 2 = 10\n5 * 3 = 15\n5 * 4 = 20\n5 * 5 = 25\n5 * 6 = 30\n5 * 7 = 35\n5 * 8 = 40\n5 * 9 = 45\n5 * 10 = 50"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1 * 1 = 1\n1 * 2 = 2\n1 * 3 = 3\n1 * 4 = 4\n1 * 5 = 5\n1 * 6 = 6\n1 * 7 = 7\n1 * 8 = 8\n1 * 9 = 9\n1 * 10 = 10",
+          "isHidden": true
+        },
+        {
+          "stdin": "3",
+          "expected_output": "3 * 1 = 3\n3 * 2 = 6\n3 * 3 = 9\n3 * 4 = 12\n3 * 5 = 15\n3 * 6 = 18\n3 * 7 = 21\n3 * 8 = 24\n3 * 9 = 27\n3 * 10 = 30",
+          "isHidden": true
+        },
+        {
+          "stdin": "7",
+          "expected_output": "7 * 1 = 7\n7 * 2 = 14\n7 * 3 = 21\n7 * 4 = 28\n7 * 5 = 35\n7 * 6 = 42\n7 * 7 = 49\n7 * 8 = 56\n7 * 9 = 63\n7 * 10 = 70",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "10 * 1 = 10\n10 * 2 = 20\n10 * 3 = 30\n10 * 4 = 40\n10 * 5 = 50\n10 * 6 = 60\n10 * 7 = 70\n10 * 8 = 80\n10 * 9 = 90\n10 * 10 = 100",
+          "isHidden": true
+        },
+        {
+          "stdin": "4",
+          "expected_output": "4 * 1 = 4\n4 * 2 = 8\n4 * 3 = 12\n4 * 4 = 16\n4 * 5 = 20\n4 * 6 = 24\n4 * 7 = 28\n4 * 8 = 32\n4 * 9 = 36\n4 * 10 = 40",
+          "isHidden": true
+        },
+        {
+          "stdin": "6",
+          "expected_output": "6 * 1 = 6\n6 * 2 = 12\n6 * 3 = 18\n6 * 4 = 24\n6 * 5 = 30\n6 * 6 = 36\n6 * 7 = 42\n6 * 8 = 48\n6 * 9 = 54\n6 * 10 = 60",
+          "isHidden": true
+        },
+        {
+          "stdin": "8",
+          "expected_output": "8 * 1 = 8\n8 * 2 = 16\n8 * 3 = 24\n8 * 4 = 32\n8 * 5 = 40\n8 * 6 = 48\n8 * 7 = 56\n8 * 8 = 64\n8 * 9 = 72\n8 * 10 = 80",
+          "isHidden": true
+        },
+        {
+          "stdin": "9",
+          "expected_output": "9 * 1 = 9\n9 * 2 = 18\n9 * 3 = 27\n9 * 4 = 36\n9 * 5 = 45\n9 * 6 = 54\n9 * 7 = 63\n9 * 8 = 72\n9 * 9 = 81\n9 * 10 = 90",
+          "isHidden": true
+        },
+        {
+          "stdin": "11",
+          "expected_output": "11 * 1 = 11\n11 * 2 = 22\n11 * 3 = 33\n11 * 4 = 44\n11 * 5 = 55\n11 * 6 = 66\n11 * 7 = 77\n11 * 8 = 88\n11 * 9 = 99\n11 * 10 = 110",
+          "isHidden": true
+        },
+        {
+          "stdin": "12",
+          "expected_output": "12 * 1 = 12\n12 * 2 = 24\n12 * 3 = 36\n12 * 4 = 48\n12 * 5 = 60\n12 * 6 = 72\n12 * 7 = 84\n12 * 8 = 96\n12 * 9 = 108\n12 * 10 = 120",
+          "isHidden": true
         }
       ]
     },
@@ -81,19 +241,77 @@
       "id": "loops-4",
       "topicId": "loops",
       "title": "Fibonacci Sequence",
-      "description": "Print the first N terms of the Fibonacci sequence (0, 1, 1, 2, 3, 5...).",
+      "description": "Read N and print the first N terms of the Fibonacci sequence, space-separated.\n\nSequence: 0 1 1 2 3 5 8 13 ...\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\n0 1 1 2 3 ...\n```\n\nConstraints\n• 1 ≤ N ≤ 30\n\nSample Input 1\n```\n5\n```\n\nSample Output 1\n```\n0 1 1 2 3\n```\n\nSample Input 2\n```\n3\n```\n\nSample Output 2\n```\n0 1 1\n```\n\nExplanation\nFor N=5: first 5 terms = 0, 1, 1, 2, 3",
       "difficulty": "medium",
       "estimatedTime": 8,
       "concept": "Iteration",
-      "explanation": "Start with two variables `a=0` and `b=1`. In a loop, print `a`, then update them: `next = a + b`, `a = b`, `b = next`.",
+      "hint": "Start with a=0 b=1. Print a, then update: next=a+b, a=b, b=next.",
+      "explanation": "The Fibonacci sequence starts with 0 and 1. Each subsequent term is the sum of the two before it.\n\nStep-by-step:\n1. Initialize a = 0, b = 1.\n2. Loop N times:\n   - Print a (with a space if not the first).\n   - Calculate next = a + b.\n   - Shift: a = b, b = next.\n\nTrace for N=5:\ni=1: print 0. next=0+1=1. a=1, b=1.\ni=2: print 1. next=1+1=2. a=1, b=2.\ni=3: print 1. next=1+2=3. a=2, b=3.\ni=4: print 2. next=2+3=5. a=3, b=5.\ni=5: print 3.\nOutput: 0 1 1 2 3",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    int n;\n    // Read n\n    // Print n fibonacci terms\n    return 0;\n}",
-        "python": "n = int(input())\na, b = 0, 1\nfor _ in range(n):\n    print(a, end=' ')\n    a, b = b, a + b"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
           "stdin": "5",
-          "expected_output": "0 1 1 2 3 "
+          "expected_output": "0 1 1 2 3"
+        },
+        {
+          "stdin": "3",
+          "expected_output": "0 1 1"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "2",
+          "expected_output": "0 1",
+          "isHidden": true
+        },
+        {
+          "stdin": "6",
+          "expected_output": "0 1 1 2 3 5",
+          "isHidden": true
+        },
+        {
+          "stdin": "7",
+          "expected_output": "0 1 1 2 3 5 8",
+          "isHidden": true
+        },
+        {
+          "stdin": "8",
+          "expected_output": "0 1 1 2 3 5 8 13",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "0 1 1 2 3 5 8 13 21 34",
+          "isHidden": true
+        },
+        {
+          "stdin": "4",
+          "expected_output": "0 1 1 2",
+          "isHidden": true
+        },
+        {
+          "stdin": "9",
+          "expected_output": "0 1 1 2 3 5 8 13 21",
+          "isHidden": true
+        },
+        {
+          "stdin": "11",
+          "expected_output": "0 1 1 2 3 5 8 13 21 34 55",
+          "isHidden": true
+        },
+        {
+          "stdin": "12",
+          "expected_output": "0 1 1 2 3 5 8 13 21 34 55 89",
+          "isHidden": true
         }
       ]
     },
@@ -101,14 +319,18 @@
       "id": "loops-5",
       "topicId": "loops",
       "title": "Prime Checker",
-      "description": "Input N and check if it's a prime number. Output 'Yes' or 'No'.",
+      "description": "Read N and print Yes if prime, No if not.\n\nA prime has exactly two divisors: 1 and itself. 1 is NOT prime.\n\nInput Format\n```\nN\n```\n\nOutput Format\nPrint exactly: Yes or No\n\nConstraints\n• 1 ≤ N ≤ 10^6\n\nSample Input 1\n```\n13\n```\n\nSample Output 1\n```\nYes\n```\n\nSample Input 2\n```\n4\n```\n\nSample Output 2\n```\nNo\n```\n\nExplanation\n13: no divisors → Yes\n4 = 2×2 → No",
       "difficulty": "hard",
       "estimatedTime": 10,
       "concept": "Nested Logic",
-      "explanation": "A number N is prime if it has no divisors other than 1 and itself. Use a loop from 2 to sqrt(N) to check for divisors.",
+      "hint": "Check divisibility from 2 to sqrt(N). Track if any divisor found.",
+      "explanation": "A prime number is divisible only by 1 and itself.\n\nAlgorithm:\n1. If N < 2 → Not Prime. Print No.\n2. Loop i from 2 to √N:\n   - If N % i == 0 → Not Prime. Print No and stop.\n3. If loop completes with no divisor found → Prime. Print Yes.\n\nWhy check only up to √N?\nIf N = a × b and a ≤ b, then a ≤ √N. Checking up to √N covers all factor pairs.\n\nTrace for N=13:\n√13 ≈ 3.6. Check i=2 (13%2≠0), i=3 (13%3≠0). No divisor → Yes.\n\nTrace for N=4:\n√4 = 2. Check i=2 (4%2=0) → Not Prime → No.",
       "starter_codes": {
-        "c": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    int n;\n    // Read n\n    // Check if prime\n    return 0;\n}",
-        "python": "n = int(input())\nif n < 2:\n    print(\"No\")\nelse:\n    is_prime = True\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            is_prime = False\n            break\n    print(\"Yes\" if is_prime else \"No\")"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
@@ -118,6 +340,56 @@
         {
           "stdin": "4",
           "expected_output": "No"
+        },
+        {
+          "stdin": "2",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "7",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "9",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "97",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "3",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "25",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "17",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "49",
+          "expected_output": "No",
+          "isHidden": true
         }
       ]
     }

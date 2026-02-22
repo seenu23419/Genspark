@@ -20,6 +20,7 @@ class AuthService {
     // 2. Convert to lowercase
     // 3. Normalize characters (handles homoglyphs/accents)
     // 4. Remove ALL non-printable characters and control characters
+    // eslint-disable-next-line no-control-regex
     return email
       .trim()
       .toLowerCase()
@@ -50,7 +51,11 @@ class AuthService {
         provider: provider,
         options: {
           redirectTo: redirectUrl,
-          skipBrowserRedirect: true
+          skipBrowserRedirect: true,
+          queryParams: {
+            prompt: 'select_account',
+            access_type: 'offline'
+          }
         }
       });
 
@@ -67,7 +72,11 @@ class AuthService {
         provider: provider,
         options: {
           redirectTo: redirectUrl,
-          skipBrowserRedirect: false
+          skipBrowserRedirect: false,
+          queryParams: {
+            prompt: 'select_account',
+            access_type: 'offline'
+          }
         }
       });
 
@@ -214,6 +223,7 @@ class AuthService {
 
       return await supabaseDB.findOne({ _id: session.user.id });
     } catch (e) {
+      console.warn("Auth check failed", e);
       return null;
     }
   }
@@ -241,7 +251,9 @@ class AuthService {
               console.log("authService: Fast-path cache hit for", userId);
               callback(parsed); // Immediate unblock
             }
-          } catch (e) { }
+          } catch (e) {
+            console.debug("authService: Cache parse failed", e);
+          }
         }
       }
 

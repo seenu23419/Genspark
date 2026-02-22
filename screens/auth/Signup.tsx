@@ -29,9 +29,22 @@ const Signup: React.FC = () => {
   const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const isNameValid = name.trim().length >= 2;
   const isEmailValid = email.length > 0 && isValidEmail(email);
-  const isPasswordValid = password.length >= 6;
+  const hasMinLength = password.length >= 8;
+  const hasUppercase = /[A-Z]/.test(password);
+  const hasLowercase = /[a-z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+  const isPasswordValid = hasMinLength && hasUppercase && hasLowercase && hasNumber && hasSpecial;
   const isPasswordMatch = password === confirmPassword && password.length > 0;
   const isFormValid = isNameValid && isEmailValid && isPasswordValid && isPasswordMatch;
+
+  const Requirement: React.FC<{ met: boolean, label: string }> = ({ met, label }) => (
+    <div className={`flex items-center gap-1.5 transition-colors duration-200 ${met ? 'text-green-400' : 'text-slate-500'}`}>
+      <CheckCircle2 size={12} className={met ? 'opacity-100' : 'opacity-20'} />
+      <span className="text-[10px] font-medium tracking-tight whitespace-nowrap">{label}</span>
+    </div>
+  );
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -57,7 +70,7 @@ const Signup: React.FC = () => {
     e.preventDefault();
 
     if (!isFormValid) {
-      setError('Please fill in all fields correctly');
+      setError('Join with a valid email and 8+ character complex password');
       return;
     }
 
@@ -197,10 +210,21 @@ const Signup: React.FC = () => {
                 onClick={() => setShowPassword(!showPassword)}
                 disabled={isLoading || isGoogleLoading}
                 className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
+            {/* Password Requirement Checklist - Only show if password exists but is invalid */}
+            {password && !isPasswordValid && (
+              <div className="mt-2 grid grid-cols-2 gap-y-1 ml-1 animate-in fade-in slide-in-from-top-1 duration-300">
+                <Requirement met={hasMinLength} label="8+ characters" />
+                <Requirement met={hasUppercase} label="Uppercase (A-Z)" />
+                <Requirement met={hasLowercase} label="Lowercase (a-z)" />
+                <Requirement met={hasNumber} label="Number (0-9)" />
+                <Requirement met={hasSpecial} label="Symbol (@#$!)" />
+              </div>
+            )}
           </div>
 
           {/* Confirm password field */}
@@ -212,22 +236,14 @@ const Signup: React.FC = () => {
               <Lock size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-400 transition-colors z-10" />
               <input
                 id="confirm"
-                type={showConfirm ? 'text' : 'password'}
+                type={showPassword ? 'text' : 'password'}
                 value={confirmPassword}
                 onChange={handleConfirmChange}
                 placeholder="••••••••"
                 autoComplete="new-password"
                 disabled={isLoading || isGoogleLoading}
-                className="w-full pl-11 pr-11 py-3 bg-white/5 border border-slate-800 rounded-xl text-white text-sm placeholder:text-slate-600 focus:ring-2 focus:ring-indigo-700/80 focus:border-indigo-600 focus:bg-black focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                className="w-full pl-11 pr-4 py-3 bg-white/5 border border-slate-800 rounded-xl text-white text-sm placeholder:text-slate-600 focus:ring-2 focus:ring-indigo-700/80 focus:border-indigo-600 focus:bg-black focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               />
-              <button
-                type="button"
-                onClick={() => setShowConfirm(!showConfirm)}
-                disabled={isLoading || isGoogleLoading}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors disabled:opacity-50"
-              >
-                {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
             </div>
             {password && confirmPassword && (
               <p className={`text-xs mt-1 flex items-center gap-1 ${isPasswordMatch ? 'text-green-400' : 'text-red-400'}`}>

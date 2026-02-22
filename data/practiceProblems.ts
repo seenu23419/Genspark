@@ -2,6 +2,7 @@
 export interface TestCase {
     stdin?: string;
     expected_output: string;
+    is_hidden?: boolean;
 }
 
 export interface PracticeProblem {
@@ -40,31 +41,33 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
         problems: [
             {
                 id: 'intro-1',
-                title: 'Hello World',
-                description: 'Write a program that prints "Hello World" to the standard output.',
+                title: 'Hello, World!',
+                description: 'Write a program that prints the message:\n\nHello, World!\n\nThe output must match exactly, including capitalization, punctuation, and spacing.\n\nInput Format\nThere is no input for this problem.\n\nOutput Format\nPrint exactly:\n```\nHello, World!\n```\n\nConstraints\n- No input will be provided.\n- Output must match exactly (case-sensitive).\n- Do not print extra spaces.\n- Do not print additional lines.\n\nCommon Reasons for Failure\n- Printing hello world instead of Hello, World!\n- Missing comma or exclamation mark\n- Extra space or extra blank line',
                 inputFormat: 'None',
-                outputFormat: 'Print "Hello World".',
-                constraints: 'None',
-                initialCode: '#include <stdio.h>\n\nint main() {\n    printf("Hello World");\n    return 0;\n}',
+                outputFormat: 'Print exactly: Hello, World!',
+                constraints: 'Output must match exactly (case-sensitive).',
+                initialCode: '#include <stdio.h>\n\nint main() {\n    printf("Hello, World!");\n    return 0;\n}',
                 starter_codes: {
-                    'c': '#include <stdio.h>\n\nint main() {\n\n    return 0;\n}',
-                    'cpp': '#include <iostream>\n\nint main() {\n\n    return 0;\n}',
-                    'java': 'public class Main {\n    public static void main(String[] args) {\n\n    }\n}',
-                    'python': 'print("")',
-                    'javascript': 'console.log("");'
+                    'c': '#include <stdio.h>\n\nint main() {\n    // Print Hello, World!\n    return 0;\n}',
+                    'cpp': '#include <iostream>\n\nint main() {\n    // Print Hello, World!\n    return 0;\n}',
+                    'java': 'public class Main {\n    public static void main(String[] args) {\n        // Print Hello, World!\n    }\n}',
+                    'python': '# Print Hello, World!\n',
+                    'javascript': '// Print Hello, World!\n'
                 },
-                hint: 'Use the printf() function to display text.',
-                solution: '#include <stdio.h>\n\nint main() {\n    printf("Hello World");\n    return 0;\n}',
+                hint: 'In C: printf("Hello, World!"); — note the comma and exclamation mark.',
+                solution: '#include <stdio.h>\n\nint main() {\n    printf("Hello, World!");\n    return 0;\n}',
                 difficulty: 'easy',
                 concept: 'Basic Output',
                 language: 'C',
                 test_cases: [
-                    { expected_output: 'Hello World' }
+                    { expected_output: 'Hello, World!' },
+                    { expected_output: 'Hello, World!' },
+                    { expected_output: 'Hello, World!' }
                 ],
-                explanation: 'The most basic program in any language is printing a hello message to verify the environment works.',
+                explanation: 'Since there is no input, the program simply prints the required message. The output must match exactly: capital H, comma after Hello, space, capital W, exclamation mark at the end.',
                 estimatedTime: 1,
                 relatedLesson: 'Introduction → printf()',
-                commonMistake: 'Forgetting to include <stdio.h> or missing the return 0; statement'
+                commonMistake: 'Missing comma, missing exclamation mark, or printing extra spaces'
             },
             {
                 id: 'intro-2',
@@ -87,6 +90,7 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 concept: 'Program Structure',
                 language: 'C',
                 test_cases: [
+                    { expected_output: 'Program executed successfully' },
                     { expected_output: 'Program executed successfully' }
                 ],
                 explanation: 'A standard program structure usually includes headers, a main entry point, and a return statement.',
@@ -115,6 +119,7 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 concept: 'Comments',
                 language: 'C',
                 test_cases: [
+                    { expected_output: 'Comments help explain code' },
                     { expected_output: 'Comments help explain code' }
                 ],
                 explanation: 'Comments are non-executable text that helps developers understand what the code does.',
@@ -143,6 +148,7 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 concept: 'Output Formatting',
                 language: 'C',
                 test_cases: [
+                    { expected_output: 'GenSpark\nCoding\nPlatform\n' },
                     { expected_output: 'GenSpark\nCoding\nPlatform\n' }
                 ],
                 explanation: 'The newline character (\\n) is used to move the cursor to the beginning of the next line.',
@@ -171,6 +177,7 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 concept: 'Basic Output',
                 language: 'C',
                 test_cases: [
+                    { expected_output: 'Hello   World' },
                     { expected_output: 'Hello   World' }
                 ],
                 explanation: 'Spaces within double quotes are literal characters and will be printed exactly as they appear.',
@@ -206,7 +213,17 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 language: 'C',
                 test_cases: [
                     { stdin: '7', expected_output: 'Odd' },
-                    { stdin: '10', expected_output: 'Even' }
+                    { stdin: '10', expected_output: 'Even' },
+                    { stdin: '0', expected_output: 'Even' },
+                    { stdin: '1', expected_output: 'Odd', is_hidden: true },
+                    { stdin: '2', expected_output: 'Even', is_hidden: true },
+                    { stdin: '99', expected_output: 'Odd', is_hidden: true },
+                    { stdin: '100', expected_output: 'Even', is_hidden: true },
+                    { stdin: '101', expected_output: 'Odd', is_hidden: true },
+                    { stdin: '1000', expected_output: 'Even', is_hidden: true },
+                    { stdin: '999', expected_output: 'Odd', is_hidden: true },
+                    { stdin: '55', expected_output: 'Odd', is_hidden: true },
+                    { stdin: '42', expected_output: 'Even', is_hidden: true }
                 ],
                 explanation: 'A number is even if (n % 2 == 0). This checks if the remainder after dividing by 2 is zero.',
                 estimatedTime: 2,
@@ -234,7 +251,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 language: 'C',
                 test_cases: [
                     { stdin: '15 8', expected_output: '15' },
-                    { stdin: '-10 20', expected_output: '20' }
+                    { stdin: '-10 20', expected_output: '20' },
+                    { stdin: '5 5', expected_output: '5' }
                 ],
                 explanation: 'A simple if(a > b) check allows you to pick the larger value. If a is not greater than b, then b must be the maximum (or they are equal).',
                 estimatedTime: 2,
@@ -261,7 +279,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 language: 'C',
                 test_cases: [
                     { stdin: '20 15', expected_output: '35' },
-                    { stdin: '-5 5', expected_output: '0' }
+                    { stdin: '-5 5', expected_output: '0' },
+                    { stdin: '100 -50', expected_output: '50' }
                 ],
                 explanation: 'The + operator is used to calculate the sum of two numerical values.',
                 estimatedTime: 1,
@@ -287,6 +306,7 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 concept: 'Loops',
                 language: 'C',
                 test_cases: [
+                    { expected_output: '1\n2\n3\n4\n5\n' },
                     { expected_output: '1\n2\n3\n4\n5\n' }
                 ],
                 explanation: 'A for loop executes a block of code repeatedly until a specified condition becomes false.',
@@ -314,7 +334,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 language: 'C',
                 test_cases: [
                     { stdin: '10', expected_output: '55' },
-                    { stdin: '5', expected_output: '15' }
+                    { stdin: '5', expected_output: '15' },
+                    { stdin: '1', expected_output: '1' }
                 ],
                 explanation: 'Initialize a sum variable to 0. Iterate from 1 to N, adding each value of the loop counter to the sum.',
                 estimatedTime: 4,
@@ -341,7 +362,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 language: 'C',
                 test_cases: [
                     { stdin: '5', expected_output: '120' },
-                    { stdin: '0', expected_output: '1' }
+                    { stdin: '0', expected_output: '1' },
+                    { stdin: '3', expected_output: '6' }
                 ],
                 explanation: 'Factorial of 0 is defined as 1. For other numbers, multiply the prefix cumulative product by the current iterator value.',
                 estimatedTime: 4,
@@ -403,7 +425,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 concept: 'Functions',
                 test_cases: [
                     { stdin: '5', expected_output: '25' },
-                    { stdin: '-3', expected_output: '9' }
+                    { stdin: '-3', expected_output: '9' },
+                    { stdin: '10', expected_output: '100' }
                 ],
                 explanation: 'A function encapsulate a logic that can be reused. The square of a number is simply the number multiplied by itself.',
                 estimatedTime: 3,
@@ -431,7 +454,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 concept: 'Functions',
                 test_cases: [
                     { stdin: '10 20', expected_output: '30' },
-                    { stdin: '-5 5', expected_output: '0' }
+                    { stdin: '-5 5', expected_output: '0' },
+                    { stdin: '100 200', expected_output: '300' }
                 ],
                 explanation: 'Functions allow you to move basic arithmetic logic into a modular piece of code.',
                 estimatedTime: 2,
@@ -459,7 +483,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 concept: 'Functions',
                 test_cases: [
                     { stdin: '5 6 3', expected_output: '90' },
-                    { stdin: '2 4 0', expected_output: '0' }
+                    { stdin: '2 4 0', expected_output: '0' },
+                    { stdin: '1 2 3', expected_output: '6' }
                 ],
                 explanation: 'You can pass multiple parameters to a function by separating them with commas in the declaration.',
                 estimatedTime: 3,
@@ -486,7 +511,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 concept: 'Functions + Loops',
                 test_cases: [
                     { stdin: '2 5', expected_output: '32' },
-                    { stdin: '5 0', expected_output: '1' }
+                    { stdin: '5 0', expected_output: '1' },
+                    { stdin: '3 2', expected_output: '9' }
                 ],
                 explanation: 'A loop inside a function allows complex repetitive calculations while keeping the main code clean.',
                 estimatedTime: 5,
@@ -519,7 +545,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 concept: 'Arrays + Loops',
                 test_cases: [
                     { stdin: '5\n1 2 3 4 5', expected_output: '15' },
-                    { stdin: '3\n10 10 10', expected_output: '30' }
+                    { stdin: '3\n10 10 10', expected_output: '30' },
+                    { stdin: '2\n5 5', expected_output: '10' }
                 ],
                 explanation: 'Arrays store multiple values of the same type. Iterating with a for loop is the standard way to process each element.',
                 estimatedTime: 3,
@@ -545,7 +572,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 concept: 'Arrays + Comparison',
                 test_cases: [
                     { stdin: '6\n5 2 8 1 9 3', expected_output: '9' },
-                    { stdin: '4\n-5 -2 -10 -1', expected_output: '-1' }
+                    { stdin: '4\n-5 -2 -10 -1', expected_output: '-1' },
+                    { stdin: '3\n1 2 3', expected_output: '3' }
                 ],
                 explanation: 'A common pattern is to assume the first element is the max, then update it as you find larger values.',
                 estimatedTime: 4,
@@ -570,7 +598,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 concept: 'Arrays',
                 language: 'C',
                 test_cases: [
-                    { stdin: '5\n15 7 12 3 9', expected_output: '3' }
+                    { stdin: '5\n15 7 12 3 9', expected_output: '3' },
+                    { stdin: '3\n10 20 30', expected_output: '10' }
                 ],
                 explanation: 'Initialize min with the first element and iterate through the rest, updating min if a smaller value is found.',
                 estimatedTime: 3,
@@ -595,7 +624,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 difficulty: 'medium',
                 concept: 'Arrays',
                 test_cases: [
-                    { stdin: '5\n1 2 3 4 5', expected_output: '5 4 3 2 1 ' }
+                    { stdin: '5\n1 2 3 4 5', expected_output: '5 4 3 2 1 ' },
+                    { stdin: '3\n10 20 30', expected_output: '30 20 10 ' }
                 ],
                 explanation: 'Reversing an output means iterating through the array from its final index (n-1) down to 0.',
                 estimatedTime: 3,
@@ -619,7 +649,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 difficulty: 'easy',
                 concept: 'Arrays + Logic',
                 test_cases: [
-                    { stdin: '6\n2 5 8 3 10 7', expected_output: '3' }
+                    { stdin: '6\n2 5 8 3 10 7', expected_output: '3' },
+                    { stdin: '4\n1 3 5 7', expected_output: '0' }
                 ],
                 explanation: 'Combine array iteration with a conditional if statement to filter elements based on a property.',
                 estimatedTime: 3,
@@ -650,7 +681,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 difficulty: 'hard',
                 concept: 'Pointers',
                 test_cases: [
-                    { stdin: '10 20', expected_output: 'x=20, y=10' }
+                    { stdin: '10 20', expected_output: 'x=20, y=10' },
+                    { stdin: '5 7', expected_output: 'x=7, y=5' }
                 ],
                 explanation: 'Pointers allow a function to modify variables in the caller\'s scope by passing their memory addresses.',
                 estimatedTime: 4,
@@ -673,7 +705,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 difficulty: 'hard',
                 concept: 'Pointers',
                 test_cases: [
-                    { stdin: '25', expected_output: '25' }
+                    { stdin: '25', expected_output: '25' },
+                    { stdin: '42', expected_output: '42' }
                 ],
                 explanation: 'A pointer stores the address of another variable. Dereferencing (*) retrieves the value stored at that address.',
                 estimatedTime: 3,
@@ -696,7 +729,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 difficulty: 'hard',
                 concept: 'Pointers',
                 test_cases: [
-                    { stdin: '100', expected_output: '0x...' }
+                    { stdin: '100', expected_output: '0x...' },
+                    { stdin: '200', expected_output: '0x...' }
                 ],
                 explanation: 'The address-of operator (&) returns the location in memory where a variable is stored.',
                 estimatedTime: 2,
@@ -729,7 +763,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 concept: 'Strings + Loops',
                 test_cases: [
                     { stdin: 'GenSpark', expected_output: '8' },
-                    { stdin: 'Coding', expected_output: '6' }
+                    { stdin: 'Coding', expected_output: '6' },
+                    { stdin: 'hello', expected_output: '5' }
                 ],
                 explanation: 'A string in C is a null-terminated character array. The length is the count of characters before the \'\\0\'.',
                 estimatedTime: 3,
@@ -755,7 +790,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 concept: 'Strings',
                 test_cases: [
                     { stdin: 'Hello', expected_output: 'olleH' },
-                    { stdin: 'C', expected_output: 'C' }
+                    { stdin: 'C', expected_output: 'C' },
+                    { stdin: 'ABC', expected_output: 'CBA' }
                 ],
                 explanation: 'First find the length, then iterate backwards from length-1 down to 0.',
                 estimatedTime: 4,
@@ -781,7 +817,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 concept: 'Strings + Logic',
                 test_cases: [
                     { stdin: 'Programming', expected_output: '3' },
-                    { stdin: 'AEIOU', expected_output: '5' }
+                    { stdin: 'AEIOU', expected_output: '5' },
+                    { stdin: 'hello', expected_output: '2' }
                 ],
                 explanation: 'Iterate through the string and use a conditional check to see if the current character is one of {a, e, i, o, u} in either case.',
                 estimatedTime: 5,
@@ -806,7 +843,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 difficulty: 'easy',
                 concept: 'Strings',
                 test_cases: [
-                    { stdin: 'Hello World', expected_output: 'HelloWorld' }
+                    { stdin: 'Hello World', expected_output: 'HelloWorld' },
+                    { stdin: 'Gen Spark', expected_output: 'GenSpark' }
                 ],
                 explanation: 'Concatenation simply means putting strings end-to-end.',
                 estimatedTime: 2,
@@ -837,6 +875,7 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 difficulty: 'medium',
                 concept: 'Structures',
                 test_cases: [
+                    { expected_output: '(10, 20)' },
                     { expected_output: '(10, 20)' }
                 ],
                 explanation: 'Structures (structs) allow you to bundle different variables together into a single custom data type.',
@@ -862,6 +901,7 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 difficulty: 'medium',
                 concept: 'Structures',
                 test_cases: [
+                    { expected_output: 'Alice: 85' },
                     { expected_output: 'Alice: 85' }
                 ],
                 explanation: 'Structs are ideal for representing real-world objects like Students, Cars, or Points which have multiple attributes.',
@@ -882,6 +922,7 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 difficulty: 'medium',
                 concept: 'Structures',
                 test_cases: [
+                    { expected_output: '50' },
                     { expected_output: '50' }
                 ],
                 explanation: 'You can perform calculations using the data stored inside struct members.',
@@ -970,7 +1011,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 difficulty: 'easy',
                 concept: 'Searching',
                 test_cases: [
-                    { stdin: '7\n1 7 3 9 2 7 5\n7', expected_output: 'Found at index 1' }
+                    { stdin: '7\n1 7 3 9 2 7 5\n7', expected_output: 'Found at index 1' },
+                    { stdin: '3\n1 2 3\n5', expected_output: 'Not found' }
                 ],
                 explanation: 'Linear search checks every element from the beginning to the end. It is simple but slow for very large arrays (O(n)).',
                 estimatedTime: 3,
@@ -995,7 +1037,8 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 difficulty: 'hard',
                 concept: 'Sorting',
                 test_cases: [
-                    { stdin: '5\n5 2 8 1 9', expected_output: '1 2 5 8 9 ' }
+                    { stdin: '5\n5 2 8 1 9', expected_output: '1 2 5 8 9 ' },
+                    { stdin: '3\n3 2 1', expected_output: '1 2 3 ' }
                 ],
                 explanation: 'Bubble sort repeatedly swaps adjacent elements if they are in the wrong order. The largest elements "bubble" to the end of the array.',
                 estimatedTime: 6,

@@ -1,0 +1,4079 @@
+{
+  "id": "math",
+  "title": "Math & Number Theory",
+  "color": "from-yellow-500 to-orange-600",
+  "problems": [
+    {
+      "id": "math-1",
+      "topicId": "math",
+      "title": "Factorial",
+      "description": "Calculate N! (N factorial). 0!=1.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nfactorial\n```\n\nConstraints\n• 0 ≤ N ≤ 20\n\nSample Input 1\n```\n5\n```\n\nSample Output 1\n```\n120\n```\n\nSample Input 2\n```\n0\n```\n\nSample Output 2\n```\n1\n```\n\nExplanation\n5!=5×4×3×2×1=120, 0!=1",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Mathematics",
+      "hint": "Loop from 1 to N multiplying. Handle 0 as special case.",
+      "explanation": "Factorial is the product of all positive integers up to n.\n\nStep-by-step (iterative):\n1. Start result = 1.\n2. Multiply result by each i from 1 to n.\n3. Return result.\n\nSpecial case: 0! = 1 (by definition — empty product).\n\nTrace: 5! = 1×2×3×4×5 = 120",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nlong long factorial(int n){\n    if(n==0) return 1;\n    return n*factorial(n-1);\n}\nint main(){\n    int n; scanf(\"%d\",&n);\n    printf(\"%lld\",factorial(n));\n    return 0;\n}",
+        "python": "n=int(input())\n# Print n factorial\n",
+        "java": "import java.util.Scanner;\npublic class Main{\n    public static void main(String[] args){\n        int n=new Scanner(System.in).nextInt();\n        long f=1; for(int i=1;i<=n;i++) f*=i;\n        System.out.println(f);\n    }\n}",
+        "javascript": "const n=parseInt(require('fs').readFileSync('/dev/stdin','utf8').trim());\nlet f=1; for(let i=1;i<=n;i++) f*=i;\nconsole.log(f);\n"
+      },
+      "test_cases": [
+        {
+          "stdin": "5",
+          "expected_output": "120"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "6",
+          "expected_output": "720",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "3628800",
+          "isHidden": true
+        },
+        {
+          "stdin": "3",
+          "expected_output": "6",
+          "isHidden": true
+        },
+        {
+          "stdin": "2",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "7",
+          "expected_output": "5040",
+          "isHidden": true
+        },
+        {
+          "stdin": "4",
+          "expected_output": "24",
+          "isHidden": true
+        },
+        {
+          "stdin": "8",
+          "expected_output": "40320",
+          "isHidden": true
+        },
+        {
+          "stdin": "9",
+          "expected_output": "362880",
+          "isHidden": true
+        },
+        {
+          "stdin": "12",
+          "expected_output": "479001600",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-2",
+      "topicId": "math",
+      "title": "GCD of Two Numbers",
+      "description": "Find the Greatest Common Divisor (GCD) of a and b.\n\nInput Format\n```\na b\n```\n\nOutput Format\n```\ngcd\n```\n\nConstraints\n• 1 ≤ a, b ≤ 10^9\n\nSample Input 1\n```\n48 18\n```\n\nSample Output 1\n```\n6\n```\n\nSample Input 2\n```\n101 10\n```\n\nSample Output 2\n```\n1\n```\n\nExplanation\nGCD(48,18)=6, GCD(101,10)=1\n\nHint: Use Euclidean algorithm: GCD(a,b)=GCD(b, a%b) until b=0.",
+      "difficulty": "hard",
+      "estimatedTime": 7,
+      "concept": "Algorithms",
+      "hint": "Euclidean: while b!=0, set a=b, b=a%b. Return a.",
+      "explanation": "The GCD (Greatest Common Divisor) is the largest number that divides both a and b evenly.\n\nEuclidean Algorithm:\n1. While b != 0:\n   - Store temp = b\n   - Set b = a % b\n   - Set a = temp\n2. Return a.\n\nWhy does this work? GCD(a, b) = GCD(b, a mod b).\n\nTrace: GCD(48, 18)\n→ GCD(18, 48%18=12)\n→ GCD(12, 18%12=6)\n→ GCD(6, 12%6=0)\n→ return 6",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint gcd(int a, int b){\n    while(b){ int t=b; b=a%b; a=t; }\n    return a;\n}\nint main(){\n    int a,b; scanf(\"%d %d\",&a,&b);\n    printf(\"%d\",gcd(a,b));\n    return 0;\n}",
+        "python": "a,b=map(int,input().split())\n# Print GCD using Euclidean algorithm\n",
+        "java": "import java.util.Scanner;\npublic class Main{\n    static int gcd(int a,int b){return b==0?a:gcd(b,a%b);}\n    public static void main(String[] args){\n        Scanner sc=new Scanner(System.in);\n        System.out.println(gcd(sc.nextInt(),sc.nextInt()));\n    }\n}",
+        "javascript": "const [a,b]=require('fs').readFileSync('/dev/stdin','utf8').trim().split(' ').map(Number);\nfunction gcd(a,b){return b===0?a:gcd(b,a%b);}\nconsole.log(gcd(a,b));\n"
+      },
+      "test_cases": [
+        {
+          "stdin": "48 18",
+          "expected_output": "6"
+        },
+        {
+          "stdin": "101 10",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "20 100",
+          "expected_output": "20",
+          "isHidden": true
+        },
+        {
+          "stdin": "7 7",
+          "expected_output": "7",
+          "isHidden": true
+        },
+        {
+          "stdin": "15 25",
+          "expected_output": "5",
+          "isHidden": true
+        },
+        {
+          "stdin": "36 48",
+          "expected_output": "12",
+          "isHidden": true
+        },
+        {
+          "stdin": "100 75",
+          "expected_output": "25",
+          "isHidden": true
+        },
+        {
+          "stdin": "13 7",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "8 4",
+          "expected_output": "4",
+          "isHidden": true
+        },
+        {
+          "stdin": "56 98",
+          "expected_output": "14",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 1000000000",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000000000 1000000000",
+          "expected_output": "1000000000",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-452",
+      "topicId": "math",
+      "title": "Prime Factorization",
+      "description": "Print all prime factors of N in increasing order, space-separated, with repetitions.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\np1 p2 p3 ...\n```\n\nConstraints\n• 2 ≤ N ≤ 10^6\n\nSample Input 1\n```\n12\n```\n\nSample Output 1\n```\n2 2 3\n```\n\nSample Input 2\n```\n17\n```\n\nSample Output 2\n```\n17\n```\n\nExplanation\n12=2×2×3, 17 is prime",
+      "difficulty": "hard",
+      "estimatedTime": 10,
+      "concept": "Number Theory",
+      "hint": "Divide by 2 while possible, then odd numbers from 3 to sqrt(N).",
+      "explanation": "Prime factorization breaks a number into its prime factor building blocks.\n\nStep-by-step:\n1. While n is divisible by 2: print 2, divide n by 2.\n2. Then try odd divisors i = 3, 5, 7... up to √n:\n   - While n % i == 0: print i, divide n by i.\n3. If n > 1 remains, n itself is a prime factor — print it.\n\nTrace: n=12\n- 12÷2=6 (print 2), 6÷2=3 (print 2), 3%2≠0\n- i=3: 3÷3=1 (print 3)\nOutput: 2 2 3",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nvoid primeFactors(int n){ /* Print prime factors */ }\nint main(){\n    int n; scanf(\"%d\",&n);\n    primeFactors(n);\n    return 0;\n}",
+        "python": "n=int(input())\n# Print prime factors space-separated\n",
+        "java": "import java.util.Scanner;\npublic class Main{\n    public static void main(String[] args){\n        int n=new Scanner(System.in).nextInt();\n        StringBuilder sb=new StringBuilder();\n        for(int i=2;i*i<=n;i++)\n            while(n%i==0){sb.append(i).append(' ');n/=i;}\n        if(n>1) sb.append(n);\n        System.out.println(sb.toString().trim());\n    }\n}",
+        "javascript": "let n=parseInt(require('fs').readFileSync('/dev/stdin','utf8').trim());\nconst f=[];\nfor(let i=2;i*i<=n;i++) while(n%i===0){f.push(i);n/=i;}\nif(n>1) f.push(n);\nconsole.log(f.join(' '));\n"
+      },
+      "test_cases": [
+        {
+          "stdin": "12",
+          "expected_output": "2 2 3"
+        },
+        {
+          "stdin": "17",
+          "expected_output": "17"
+        },
+        {
+          "stdin": "315",
+          "expected_output": "3 3 5 7",
+          "isHidden": true
+        },
+        {
+          "stdin": "8",
+          "expected_output": "2 2 2",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "2 2 5 5",
+          "isHidden": true
+        },
+        {
+          "stdin": "2",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "360",
+          "expected_output": "2 2 2 3 3 5",
+          "isHidden": true
+        },
+        {
+          "stdin": "13",
+          "expected_output": "13",
+          "isHidden": true
+        },
+        {
+          "stdin": "30",
+          "expected_output": "2 3 5",
+          "isHidden": true
+        },
+        {
+          "stdin": "49",
+          "expected_output": "7 7",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000",
+          "expected_output": "2 2 2 5 5 5",
+          "isHidden": true
+        },
+        {
+          "stdin": "4",
+          "expected_output": "2 2",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-453",
+      "topicId": "math",
+      "title": "LCM of Two Numbers",
+      "description": "Find the Least Common Multiple (LCM) of a and b.\n\nFormula: LCM(a,b) = (a×b)/GCD(a,b)\n\nInput Format\n```\na b\n```\n\nOutput Format\n```\nlcm\n```\n\nConstraints\n• 1 ≤ a, b ≤ 10^6\n\nSample Input 1\n```\n4 6\n```\n\nSample Output 1\n```\n12\n```\n\nSample Input 2\n```\n5 7\n```\n\nSample Output 2\n```\n35\n```\n\nExplanation\nLCM(4,6)=12, LCM(5,7)=35",
+      "difficulty": "medium",
+      "estimatedTime": 8,
+      "concept": "Algorithms",
+      "hint": "Compute GCD first, then LCM=(a*b)/GCD.",
+      "explanation": "LCM (Least Common Multiple) is the smallest number divisible by both a and b.\n\nFormula: LCM(a, b) = (a × b) / GCD(a, b)\n\nStep-by-step:\n1. Compute GCD using the Euclidean algorithm.\n2. Apply the formula: LCM = (a / GCD) × b (divide first to avoid overflow).\n\nTrace: LCM(4, 6)\n- GCD(4, 6) = 2\n- LCM = (4 × 6) / 2 = 24 / 2 = 12",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint gcd(int a,int b){return b==0?a:gcd(b,a%b);}\nint main(){\n    int a,b; scanf(\"%d %d\",&a,&b);\n    // Calculate and print LCM\n    return 0;\n}",
+        "python": "a,b=map(int,input().split())\n# Print LCM\n",
+        "java": "import java.util.Scanner;\npublic class Main{\n    static int gcd(int a,int b){return b==0?a:gcd(b,a%b);}\n    public static void main(String[] args){\n        Scanner sc=new Scanner(System.in);\n        int a=sc.nextInt(),b=sc.nextInt();\n        System.out.println((long)a/gcd(a,b)*b);\n    }\n}",
+        "javascript": "const [a,b]=require('fs').readFileSync('/dev/stdin','utf8').trim().split(' ').map(Number);\nfunction gcd(a,b){return b===0?a:gcd(b,a%b);}\nconsole.log(a/gcd(a,b)*b);\n"
+      },
+      "test_cases": [
+        {
+          "stdin": "4 6",
+          "expected_output": "12"
+        },
+        {
+          "stdin": "5 7",
+          "expected_output": "35"
+        },
+        {
+          "stdin": "21 6",
+          "expected_output": "42",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 10",
+          "expected_output": "10",
+          "isHidden": true
+        },
+        {
+          "stdin": "8 12",
+          "expected_output": "24",
+          "isHidden": true
+        },
+        {
+          "stdin": "100 75",
+          "expected_output": "300",
+          "isHidden": true
+        },
+        {
+          "stdin": "3 5",
+          "expected_output": "15",
+          "isHidden": true
+        },
+        {
+          "stdin": "6 9",
+          "expected_output": "18",
+          "isHidden": true
+        },
+        {
+          "stdin": "7 7",
+          "expected_output": "7",
+          "isHidden": true
+        },
+        {
+          "stdin": "12 15",
+          "expected_output": "60",
+          "isHidden": true
+        },
+        {
+          "stdin": "14 21",
+          "expected_output": "42",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 1",
+          "expected_output": "1",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-454",
+      "topicId": "math",
+      "title": "Power Function",
+      "description": "Calculate a^b without using built-in power.\n\nInput Format\n```\nbase exp\n```\n\nOutput Format\n```\nresult\n```\n\nConstraints\n• 0 ≤ base ≤ 100, 0 ≤ exp ≤ 10. base^0=1.\n\nSample Input 1\n```\n2 3\n```\n\nSample Output 1\n```\n8\n```\n\nSample Input 2\n```\n10 0\n```\n\nSample Output 2\n```\n1\n```\n\nExplanation\n2³=8, 10⁰=1",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Mathematics",
+      "hint": "result=1, multiply base exp times.",
+      "explanation": "Exponentiation is repeated multiplication.\n\nStep-by-step:\n1. Initialize result = 1.\n2. Loop exp times, multiplying result by base each time.\n3. Return result.\n\nSpecial cases:\n- base^0 = 1 (loop runs 0 times, result stays 1)\n- 0^n = 0 for n > 0\n\nTrace: 2^3 → result=1 → ×2=2 → ×2=4 → ×2=8",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main(){\n    int base,exp; scanf(\"%d %d\",&base,&exp);\n    long long result=1;\n    // Multiply base, exp times\n    printf(\"%lld\",result);\n    return 0;\n}",
+        "python": "a,b=map(int,input().split())\nprint(a**b)\n",
+        "java": "import java.util.Scanner;\npublic class Main{\n    public static void main(String[] args){\n        Scanner sc=new Scanner(System.in);\n        int b=sc.nextInt(),e=sc.nextInt();\n        long r=1; for(int i=0;i<e;i++) r*=b;\n        System.out.println(r);\n    }\n}",
+        "javascript": "const [b,e]=require('fs').readFileSync('/dev/stdin','utf8').trim().split(' ').map(Number);\nconsole.log(Math.pow(b,e));\n"
+      },
+      "test_cases": [
+        {
+          "stdin": "2 3",
+          "expected_output": "8"
+        },
+        {
+          "stdin": "10 0",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "5 2",
+          "expected_output": "25",
+          "isHidden": true
+        },
+        {
+          "stdin": "3 4",
+          "expected_output": "81",
+          "isHidden": true
+        },
+        {
+          "stdin": "0 5",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "7 1",
+          "expected_output": "7",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 10",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "2 10",
+          "expected_output": "1024",
+          "isHidden": true
+        },
+        {
+          "stdin": "10 3",
+          "expected_output": "1000",
+          "isHidden": true
+        },
+        {
+          "stdin": "4 3",
+          "expected_output": "64",
+          "isHidden": true
+        },
+        {
+          "stdin": "6 2",
+          "expected_output": "36",
+          "isHidden": true
+        },
+        {
+          "stdin": "9 2",
+          "expected_output": "81",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-455",
+      "topicId": "math",
+      "title": "Count Digits",
+      "description": "Count the digits in integer N. 0 has 1 digit.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\ncount\n```\n\nConstraints\n• 0 ≤ N ≤ 10^9\n\nSample Input 1\n```\n12345\n```\n\nSample Output 1\n```\n5\n```\n\nSample Input 2\n```\n0\n```\n\nSample Output 2\n```\n1\n```\n\nExplanation\n12345→5 digits, 0→1 digit",
+      "difficulty": "easy",
+      "estimatedTime": 3,
+      "concept": "Mathematics",
+      "hint": "Divide by 10 repeatedly, counting.",
+      "explanation": "The digit count equals how many times you can divide by 10 before reaching 0.\n\nStep-by-step:\n1. Edge case: if n == 0, return 1 (zero has 1 digit).\n2. Initialize count = 0.\n3. While n != 0:\n   - n = n / 10 (remove last digit)\n   - count++\n4. Return count.\n\nTrace: 12345 → 1234 → 123 → 12 → 1 → 0 (5 steps = 5 digits)",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main(){\n    long long n; scanf(\"%lld\",&n);\n    if(n==0){printf(\"1\");return 0;}\n    int count=0;\n    // Count digits\n    printf(\"%d\",count);\n    return 0;\n}",
+        "python": "n=int(input())\nprint(len(str(n)) if n>=0 else len(str(-n)))\n",
+        "java": "import java.util.Scanner;\npublic class Main{\n    public static void main(String[] args){\n        long n=new Scanner(System.in).nextLong();\n        System.out.println(String.valueOf(n).length());\n    }\n}",
+        "javascript": "const n=require('fs').readFileSync('/dev/stdin','utf8').trim();\nconsole.log(n.length);\n"
+      },
+      "test_cases": [
+        {
+          "stdin": "12345",
+          "expected_output": "5"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "9876543210",
+          "expected_output": "10",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "999",
+          "expected_output": "3",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000000",
+          "expected_output": "7",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "99",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "3",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000",
+          "expected_output": "4",
+          "isHidden": true
+        },
+        {
+          "stdin": "9",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "123456789",
+          "expected_output": "9",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-456",
+      "topicId": "math",
+      "title": "Reverse Number",
+      "description": "Reverse the digits of N (leading zeros dropped).\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nreversed\n```\n\nConstraints\n• 1 ≤ N ≤ 10^9\n\nSample Input 1\n```\n1234\n```\n\nSample Output 1\n```\n4321\n```\n\nSample Input 2\n```\n500\n```\n\nSample Output 2\n```\n5\n```\n\nExplanation\n1234→4321, 500→005→5",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Mathematics",
+      "hint": "Extract digits via %10, build reversed*10+digit.",
+      "explanation": "Reverse a number by extracting digits from the right and appending to a new number.\n\nStep-by-step:\n1. Initialize rev = 0.\n2. While n != 0:\n   - digit = n % 10 (last digit)\n   - rev = rev * 10 + digit\n   - n = n / 10\n3. Return rev.\n\nLeading zeros disappear naturally (e.g., 500 → 005 → 5).\n\nTrace: 1234 → rev=4 → rev=43 → rev=432 → rev=4321",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main(){\n    int n,reversed=0; scanf(\"%d\",&n);\n    while(n!=0){int d=n%10;reversed=reversed*10+d;n/=10;}\n    printf(\"%d\",reversed);\n    return 0;\n}",
+        "python": "n=int(input())\nprint(int(str(n)[::-1]))\n",
+        "java": "import java.util.Scanner;\npublic class Main{\n    public static void main(String[] args){\n        int n=new Scanner(System.in).nextInt(),rev=0;\n        while(n!=0){rev=rev*10+n%10;n/=10;}\n        System.out.println(rev);\n    }\n}",
+        "javascript": "const n=parseInt(require('fs').readFileSync('/dev/stdin','utf8').trim());\nconsole.log(parseInt(String(n).split('').reverse().join('')));\n"
+      },
+      "test_cases": [
+        {
+          "stdin": "1234",
+          "expected_output": "4321"
+        },
+        {
+          "stdin": "500",
+          "expected_output": "5"
+        },
+        {
+          "stdin": "101",
+          "expected_output": "101",
+          "isHidden": true
+        },
+        {
+          "stdin": "9",
+          "expected_output": "9",
+          "isHidden": true
+        },
+        {
+          "stdin": "12300",
+          "expected_output": "321",
+          "isHidden": true
+        },
+        {
+          "stdin": "9876",
+          "expected_output": "6789",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "12",
+          "expected_output": "21",
+          "isHidden": true
+        },
+        {
+          "stdin": "999",
+          "expected_output": "999",
+          "isHidden": true
+        },
+        {
+          "stdin": "4567",
+          "expected_output": "7654",
+          "isHidden": true
+        },
+        {
+          "stdin": "1001",
+          "expected_output": "1001",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-457",
+      "topicId": "math",
+      "title": "Check Prime",
+      "description": "Print Yes if N is prime, No otherwise. 1 is NOT prime.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nYes\n```\nor\n```\nNo\n```\n\nConstraints\n• 1 ≤ N ≤ 10^6\n\nSample Input 1\n```\n13\n```\n\nSample Output 1\n```\nYes\n```\n\nSample Input 2\n```\n15\n```\n\nSample Output 2\n```\nNo\n```\n\nExplanation\n13 is prime→Yes, 15=3×5→No",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Number Theory",
+      "hint": "Loop 2 to sqrt(N). Any divisor → not prime.",
+      "explanation": "A prime has no divisors other than 1 and itself.\n\nAlgorithm:\n1. If n < 2 → not prime (print No).\n2. Loop i from 2 to √n:\n   - If n % i == 0 → not prime (print No).\n3. If no divisor found → prime (print Yes).\n\nWhy √n? If n = a × b and a ≤ b, then a ≤ √n. So checking up to √n covers all factor pairs.\n\nExample: n=13, √13≈3.6 → check i=2,3. 13%2≠0, 13%3≠0 → Yes",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <math.h>\nint main(){\n    int n; scanf(\"%d\",&n);\n    // Print Yes if prime, No otherwise\n    return 0;\n}",
+        "python": "n=int(input())\n# Print Yes or No\n",
+        "java": "import java.util.Scanner;\npublic class Main{\n    public static void main(String[] args){\n        int n=new Scanner(System.in).nextInt();\n        if(n<2){System.out.println(\"No\");return;}\n        for(int i=2;i*i<=n;i++)\n            if(n%i==0){System.out.println(\"No\");return;}\n        System.out.println(\"Yes\");\n    }\n}",
+        "javascript": "const n=parseInt(require('fs').readFileSync('/dev/stdin','utf8').trim());\nif(n<2){console.log('No');process.exit();}\nfor(let i=2;i*i<=n;i++) if(n%i===0){console.log('No');process.exit();}\nconsole.log('Yes');\n"
+      },
+      "test_cases": [
+        {
+          "stdin": "13",
+          "expected_output": "Yes"
+        },
+        {
+          "stdin": "15",
+          "expected_output": "No"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "2",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "97",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "3",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "4",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "29",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "49",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "37",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "9",
+          "expected_output": "No",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-458",
+      "topicId": "math",
+      "title": "Sum of Digits",
+      "description": "Find the sum of all digits of N.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nsum\n```\n\nConstraints\n• 0 ≤ N ≤ 10^9\n\nSample Input 1\n```\n1234\n```\n\nSample Output 1\n```\n10\n```\n\nSample Input 2\n```\n9999\n```\n\nSample Output 2\n```\n36\n```\n\nExplanation\n1+2+3+4=10, 9+9+9+9=36",
+      "difficulty": "easy",
+      "estimatedTime": 4,
+      "concept": "Mathematics",
+      "hint": "Extract digit with n%10, add to sum, divide n by 10.",
+      "explanation": "Sum the digits by extracting each one using the modulo operator.\n\nStep-by-step:\n1. Initialize sum = 0.\n2. While n != 0:\n   - digit = n % 10 (extract last digit)\n   - sum += digit\n   - n = n / 10 (remove last digit)\n3. Return sum.\n\nTrace: 1234\n- digit=4, sum=4, n=123\n- digit=3, sum=7, n=12\n- digit=2, sum=9, n=1\n- digit=1, sum=10, n=0\nResult: 10",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main(){\n    int n,sum=0; scanf(\"%d\",&n);\n    // Sum the digits\n    printf(\"%d\",sum);\n    return 0;\n}",
+        "python": "n=input()\nprint(sum(int(d) for d in n))\n",
+        "java": "import java.util.Scanner;\npublic class Main{\n    public static void main(String[] args){\n        String s=new Scanner(System.in).next();\n        int sum=0; for(char c:s.toCharArray()) sum+=c-'0';\n        System.out.println(sum);\n    }\n}",
+        "javascript": "const n=require('fs').readFileSync('/dev/stdin','utf8').trim();\nconsole.log(n.split('').reduce((s,d)=>s+parseInt(d),0));\n"
+      },
+      "test_cases": [
+        {
+          "stdin": "1234",
+          "expected_output": "10"
+        },
+        {
+          "stdin": "9999",
+          "expected_output": "36"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "55555",
+          "expected_output": "25",
+          "isHidden": true
+        },
+        {
+          "stdin": "999999999",
+          "expected_output": "81",
+          "isHidden": true
+        },
+        {
+          "stdin": "123",
+          "expected_output": "6",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "999",
+          "expected_output": "27",
+          "isHidden": true
+        },
+        {
+          "stdin": "11111",
+          "expected_output": "5",
+          "isHidden": true
+        },
+        {
+          "stdin": "500",
+          "expected_output": "5",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000000000",
+          "expected_output": "1",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-459",
+      "topicId": "math",
+      "title": "Perfect Number",
+      "description": "A perfect number equals the sum of its proper divisors. Print Yes or No.\n\nExamples: 6=1+2+3, 28=1+2+4+7+14\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nYes\n```\nor\n```\nNo\n```\n\nConstraints\n• 1 ≤ N ≤ 10^6\n\nSample Input 1\n```\n28\n```\n\nSample Output 1\n```\nYes\n```\n\nSample Input 2\n```\n12\n```\n\nSample Output 2\n```\nNo\n```\n\nExplanation\n28: 1+2+4+7+14=28 → Yes\n12: 1+2+3+4+6=16≠12 → No",
+      "difficulty": "medium",
+      "estimatedTime": 7,
+      "concept": "Number Theory",
+      "hint": "Sum divisors from 1 to N-1, check if sum==N.",
+      "explanation": "A perfect number equals the sum of all its proper divisors (divisors excluding itself).\n\nStep-by-step:\n1. Handle n < 2 → not perfect (print No).\n2. Initialize sum = 0.\n3. Loop i from 1 to n-1:\n   - If n % i == 0, add i to sum.\n4. If sum == n → perfect (Yes), else No.\n\nExamples:\n6: divisors = {1,2,3}, sum = 6 = n → Yes\n28: divisors = {1,2,4,7,14}, sum = 28 = n → Yes\n12: divisors = {1,2,3,4,6}, sum = 16 ≠ 12 → No",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main(){\n    int n,sum=0; scanf(\"%d\",&n);\n    // Sum proper divisors and compare with n\n    return 0;\n}",
+        "python": "n=int(input())\nif n<2:\n    print('No')\nelse:\n    total=sum(i for i in range(1,n) if n%i==0)\n    print('Yes' if total==n else 'No')\n",
+        "java": "import java.util.Scanner;\npublic class Main{\n    public static void main(String[] args){\n        int n=new Scanner(System.in).nextInt();\n        if(n<2){System.out.println(\"No\");return;}\n        int sum=0;\n        for(int i=1;i<n;i++) if(n%i==0) sum+=i;\n        System.out.println(sum==n?\"Yes\":\"No\");\n    }\n}",
+        "javascript": "const n=parseInt(require('fs').readFileSync('/dev/stdin','utf8').trim());\nif(n<2){console.log('No');process.exit();}\nlet sum=0;\nfor(let i=1;i<n;i++) if(n%i===0) sum+=i;\nconsole.log(sum===n?'Yes':'No');\n"
+      },
+      "test_cases": [
+        {
+          "stdin": "28",
+          "expected_output": "Yes"
+        },
+        {
+          "stdin": "12",
+          "expected_output": "No"
+        },
+        {
+          "stdin": "6",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "496",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "2",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "3",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "8128",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "7",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "24",
+          "expected_output": "No",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-460",
+      "topicId": "math",
+      "title": "Armstrong Number",
+      "description": "An Armstrong number of d digits equals sum of each digit^d.\nExample: 153 = 1³+5³+3³\n\nPrint Yes or No.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nYes\n```\nor\n```\nNo\n```\n\nConstraints\n• 1 ≤ N ≤ 10^6\n\nSample Input 1\n```\n153\n```\n\nSample Output 1\n```\nYes\n```\n\nSample Input 2\n```\n100\n```\n\nSample Output 2\n```\nNo\n```\n\nExplanation\n153: 1³+5³+3³=153→Yes, 100: 1³+0+0=1≠100→No",
+      "difficulty": "medium",
+      "estimatedTime": 6,
+      "concept": "Number Theory",
+      "hint": "Count digits d, sum each digit^d, compare with N.",
+      "explanation": "An Armstrong number equals the sum of its own digits each raised to the power of the number of digits.\n\nStep-by-step:\n1. Count digits: d = number of digits in n.\n2. For each digit c in n: compute c^d.\n3. Sum all c^d values.\n4. If sum == n → Armstrong (Yes), else No.\n\nTrace: 153 → d=3\n- 1^3 + 5^3 + 3^3 = 1 + 125 + 27 = 153 = n → Yes\n\nTrace: 100 → d=3\n- 1^3 + 0^3 + 0^3 = 1 ≠ 100 → No",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <math.h>\nint main(){\n    int n; scanf(\"%d\",&n);\n    // Check Armstrong\n    return 0;\n}",
+        "python": "n=input()\nd=len(n)\nprint('Yes' if sum(int(c)**d for c in n)==int(n) else 'No')\n",
+        "java": "import java.util.Scanner;\npublic class Main{\n    public static void main(String[] args){\n        String s=new Scanner(System.in).next();\n        int d=s.length(),sum=0;\n        for(char c:s.toCharArray()) sum+=(int)Math.pow(c-'0',d);\n        System.out.println(sum==Integer.parseInt(s)?\"Yes\":\"No\");\n    }\n}",
+        "javascript": "const s=require('fs').readFileSync('/dev/stdin','utf8').trim();\nconst d=s.length;\nconst sum=s.split('').reduce((a,c)=>a+Math.pow(parseInt(c),d),0);\nconsole.log(sum===parseInt(s)?'Yes':'No');\n"
+      },
+      "test_cases": [
+        {
+          "stdin": "153",
+          "expected_output": "Yes"
+        },
+        {
+          "stdin": "100",
+          "expected_output": "No"
+        },
+        {
+          "stdin": "370",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "9",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "1634",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "123",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "371",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "407",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "200",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "5",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "8208",
+          "expected_output": "Yes",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-461",
+      "topicId": "math",
+      "title": "Palindrome Number",
+      "description": "Check if N reads same forwards and backwards. Print Yes or No.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nYes\n```\nor\n```\nNo\n```\n\nConstraints\n• 0 ≤ N ≤ 10^9\n\nSample Input 1\n```\n121\n```\n\nSample Output 1\n```\nYes\n```\n\nSample Input 2\n```\n123\n```\n\nSample Output 2\n```\nNo\n```\n\nExplanation\n121 reversed=121→Yes, 123 reversed=321≠123→No",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Mathematics",
+      "hint": "Reverse N and compare with original.",
+      "explanation": "A palindrome number reads the same forwards and backwards.\n\nStep-by-step:\n1. Save original = n.\n2. Reverse n using the digit-extraction method (rev = rev*10 + n%10).\n3. If rev == original → palindrome (Yes), else No.\n\nAlternative: Convert to string, compare with its reverse.\n\nExamples:\n121 reversed = 121 = original → Yes\n123 reversed = 321 ≠ 123 → No\n1221 reversed = 1221 = original → Yes",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main(){\n    int n; scanf(\"%d\",&n);\n    // Check palindrome\n    return 0;\n}",
+        "python": "n=input()\nprint('Yes' if n==n[::-1] else 'No')\n",
+        "java": "import java.util.Scanner;\npublic class Main{\n    public static void main(String[] args){\n        String s=new Scanner(System.in).next();\n        String rev=new StringBuilder(s).reverse().toString();\n        System.out.println(s.equals(rev)?\"Yes\":\"No\");\n    }\n}",
+        "javascript": "const s=require('fs').readFileSync('/dev/stdin','utf8').trim();\nconsole.log(s===s.split('').reverse().join('')?'Yes':'No');\n"
+      },
+      "test_cases": [
+        {
+          "stdin": "121",
+          "expected_output": "Yes"
+        },
+        {
+          "stdin": "123",
+          "expected_output": "No"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "1221",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "9",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "12321",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "1111",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "1234",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "999",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "12",
+          "expected_output": "No",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-61",
+      "topicId": "math",
+      "title": "Nth Sunny Number",
+      "description": "Find the Nth non-negative Sunny number (N+1 is a perfect square). 1st is 0 (0+1=1), 2nd is 3 (3+1=4), etc.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nnth_sunny\n```\n\nConstraints\n• 1 ≤ N ≤ 10^6\n\nSample Input 1\n```\n5\n```\n\nSample Output 1\n```\n24\n```\n\nExplanation\nSunny sequence: 0, 3, 8, 15, 24...",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Arithmetic",
+      "hint": "Since Sunny numbers are (k^2 - 1), the Nth Sunny number is simply N^2 - 1.",
+      "explanation": "Calculates the Nth number where N+1 is a perfect square.\n\nLogic (O(1)):\nPerfect squares sequence: 1, 4, 9, 16, 25...\nSunny numbers sequence (Subtract 1): 0, 3, 8, 15, 24...\nThe Nth Sunny number corresponds to the Nth positive perfect square minus 1.\nNth sunny = N^2 - 1.\n\nTrace (N=5):\n5^2 - 1 = 25 - 1 = 24. Match!",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    long long n; scanf(\"%lld\", &n);\n    printf(\"%lld\", n * n - 1);\n    return 0;\n}",
+        "python": "n = int(input())\nprint(n**2 - 1)",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        long n = new Scanner(System.in).nextLong();\n        System.out.println(n * n - 1);\n    }\n}",
+        "javascript": "const n = BigInt(require('fs').readFileSync(0, 'utf8').trim());\nconsole.log((n * n - 1n).toString());"
+      },
+      "test_cases": [
+        {
+          "stdin": "5",
+          "expected_output": "24"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "2",
+          "expected_output": "3",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "99",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "9999",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000",
+          "expected_output": "999999",
+          "isHidden": true
+        },
+        {
+          "stdin": "3",
+          "expected_output": "8",
+          "isHidden": true
+        },
+        {
+          "stdin": "4",
+          "expected_output": "15",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000000",
+          "expected_output": "999999999999",
+          "isHidden": true
+        },
+        {
+          "stdin": "50",
+          "expected_output": "2499",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-62",
+      "topicId": "math",
+      "title": "Nth Disarium Number",
+      "description": "Find the Nth positive Disarium number (sum of digits raised to their position equals the number).\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nnth_disarium\n```\n\nConstraints\n• 1 ≤ N ≤ 15\n\nSample Input 1\n```\n10\n```\n\nSample Output 1\n```\n89\n```\n\nExplanation\nSequence: 1, 2, 3, 4, 5, 6, 7, 8, 9, 89...",
+      "difficulty": "hard",
+      "estimatedTime": 15,
+      "concept": "Mathematics",
+      "hint": "Check numbers from 1 upwards. Use digit-extraction or string conversion to find positions.",
+      "explanation": "Finds the Nth value where `sum(digit_i ^ i) == N`.\n\nTrace (to N=10):\n1-9 (1st-9th), 89 (10th).\nResult: 89",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <math.h>\n#include <string.h>\nint isDisarium(int n) {\n    char s[20]; sprintf(s, \"%d\", n);\n    long long sum = 0; int len = strlen(s);\n    for(int i=0; i<len; i++) sum += pow(s[i]-'0', i+1);\n    return sum == n;\n}\nint main() {\n    int n, count = 0, i = 1;\n    scanf(\"%d\", &n);\n    while(1) {\n        if(isDisarium(i)) count++;\n        if(count == n) { printf(\"%d\", i); break; }\n        i++;\n    }\n    return 0;\n}",
+        "python": "def is_disarium(n):\n    s = str(n)\n    return sum(int(s[i])**(i+1) for i in range(len(s))) == n\nn = int(input())\ncount, i = 0, 1\nwhile True:\n    if is_disarium(i):\n        count += 1\n        if count == n: \n            print(i)\n            break\n    i += 1",
+        "java": "import java.util.Scanner;\npublic class Main {\n    static boolean isDisarium(int n) {\n        String s = String.valueOf(n); long sum = 0;\n        for(int i=0; i<s.length(); i++) sum += Math.pow(s.charAt(i)-'0', i+1);\n        return sum == n;\n    }\n    public static void main(String[] args) {\n        int n = new Scanner(System.in).nextInt();\n        int count = 0, i = 1;\n        while(true) {\n            if(isDisarium(i)) count++;\n            if(count == n) { System.out.println(i); break; }\n            i++;\n        }\n    }\n}",
+        "javascript": "function isDisarium(n) {\n    const s = String(n);\n    return s.split('').reduce((a, d, i) => a + Math.pow(parseInt(d), i + 1), 0) === n;\n}\nconst n = parseInt(require('fs').readFileSync(0, 'utf8').trim());\nlet count = 0, i = 1;\nwhile(true) {\n    if(isDisarium(i)) count++;\n    if(count === n) { console.log(i); break; }\n    i++;\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "10",
+          "expected_output": "89"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "11",
+          "expected_output": "135",
+          "isHidden": true
+        },
+        {
+          "stdin": "12",
+          "expected_output": "175",
+          "isHidden": true
+        },
+        {
+          "stdin": "13",
+          "expected_output": "518",
+          "isHidden": true
+        },
+        {
+          "stdin": "2",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "5",
+          "expected_output": "5",
+          "isHidden": true
+        },
+        {
+          "stdin": "14",
+          "expected_output": "598",
+          "isHidden": true
+        },
+        {
+          "stdin": "15",
+          "expected_output": "1306",
+          "isHidden": true
+        },
+        {
+          "stdin": "9",
+          "expected_output": "9",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-63",
+      "topicId": "math",
+      "title": "Nth Pronic Number",
+      "description": "Find the Nth non-negative Pronic number (k * (k+1)). 1st is 0 (0*1), 2nd is 2 (1*2), etc.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nnth_pronic\n```\n\nConstraints\n• 1 ≤ N ≤ 10^6\n\nSample Input 1\n```\n5\n```\n\nSample Output 1\n```\n20\n```\n\nExplanation\nPronic sequence: 0, 2, 6, 12, 20...",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Arithmetic",
+      "hint": "The Nth Pronic number is simply (N-1) * N.",
+      "explanation": "Calculates the Nth product of two consecutive integers.\n\nLogic (O(1)):\n1st (k=0): 0 * 1 = 0\n2nd (k=1): 1 * 2 = 2\n3rd (k=2): 2 * 3 = 6\nNth (k=N-1): (N-1) * N.\n\nTrace (N=5):\n(5-1) * 5 = 4 * 5 = 20. Match!",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    long long n; scanf(\"%lld\", &n);\n    printf(\"%lld\", (n - 1) * n);\n    return 0;\n}",
+        "python": "n = int(input())\nprint((n - 1) * n)",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        long n = new Scanner(System.in).nextLong();\n        System.out.println((n - 1) * n);\n    }\n}",
+        "javascript": "const n = BigInt(require('fs').readFileSync(0, 'utf8').trim());\nconsole.log(((n - 1n) * n).toString());"
+      },
+      "test_cases": [
+        {
+          "stdin": "5",
+          "expected_output": "20"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "2",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "90",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "9900",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000",
+          "expected_output": "999000",
+          "isHidden": true
+        },
+        {
+          "stdin": "3",
+          "expected_output": "6",
+          "isHidden": true
+        },
+        {
+          "stdin": "4",
+          "expected_output": "12",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000000",
+          "expected_output": "999999000000",
+          "isHidden": true
+        },
+        {
+          "stdin": "50",
+          "expected_output": "2450",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-64",
+      "topicId": "math",
+      "title": "Nth Trimorphic Number",
+      "description": "Find the Nth positive Trimorphic number (Cube ends with original number).\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nnth_trimorphic\n```\n\nConstraints\n• 1 ≤ N ≤ 25\n\nSample Input 1\n```\n5\n```\n\nSample Output 1\n```\n9\n```\n\nExplanation\nTrimorphic sequence: 1, 4, 5, 6, 9...",
+      "difficulty": "medium",
+      "estimatedTime": 10,
+      "concept": "Arithmetic",
+      "hint": "Search from 1 upwards, checking if the cube ends with the number.",
+      "explanation": "Identifies the Nth number where `N^3` ends with `N`.\n\nTrace (to N=10):\n1, 4, 5, 6, 9 (1st-5th), 11 (6th), 24, 25 (7th-8th), 49, 51 (9th-10th).\nResult for N=10: 51.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint isTri(int n) {\n    long long cube = (long long)n * n * n;\n    int temp = n, div = 1;\n    while(temp > 0) { div *= 10; temp /= 10; }\n    return cube % div == n;\n}\nint main() {\n    int n, count = 0, i = 1;\n    scanf(\"%d\", &n);\n    while(1) {\n        if(isTri(i)) count++;\n        if(count == n) { printf(\"%d\", i); break; }\n        i++;\n    }\n    return 0;\n}",
+        "python": "def is_tri(n):\n    return str(n**3).endswith(str(n))\nn = int(input())\ncount, i = 0, 1\nwhile True:\n    if is_tri(i):\n        count += 1\n        if count == n: \n            print(i)\n            break\n    i += 1",
+        "java": "import java.util.Scanner;\npublic class Main {\n    static boolean isTri(int n) {\n        String s = String.valueOf(n), c = String.valueOf((long)n * n * n);\n        return c.endsWith(s);\n    }\n    public static void main(String[] args) {\n        int n = new Scanner(System.in).nextInt();\n        int count = 0, i = 1;\n        while(true) {\n            if(isTri(i)) count++;\n            if(count == n) { System.out.println(i); break; }\n            i++;\n        }\n    }\n}",
+        "javascript": "function isTri(n) {\n    return String(BigInt(n) ** 3n).endsWith(String(n));\n}\nconst n = parseInt(require('fs').readFileSync(0, 'utf8').trim());\nlet count = 0, i = 1;\nwhile(true) {\n    if(isTri(i)) count++;\n    if(count === n) { console.log(i); break; }\n    i++;\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "5",
+          "expected_output": "9"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "10",
+          "expected_output": "51",
+          "isHidden": true
+        },
+        {
+          "stdin": "15",
+          "expected_output": "101",
+          "isHidden": true
+        },
+        {
+          "stdin": "20",
+          "expected_output": "175",
+          "isHidden": true
+        },
+        {
+          "stdin": "2",
+          "expected_output": "4",
+          "isHidden": true
+        },
+        {
+          "stdin": "3",
+          "expected_output": "5",
+          "isHidden": true
+        },
+        {
+          "stdin": "4",
+          "expected_output": "6",
+          "isHidden": true
+        },
+        {
+          "stdin": "25",
+          "expected_output": "251",
+          "isHidden": true
+        },
+        {
+          "stdin": "8",
+          "expected_output": "25",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-65",
+      "topicId": "math",
+      "title": "Nth Evil Number",
+      "description": "Find the Nth non-negative Evil number (Binary has even number of 1s). 1st is 0 (00), 2nd is 3 (11), etc.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nnth_evil\n```\n\nConstraints\n• 1 ≤ N ≤ 200\n\nSample Input 1\n```\n5\n```\n\nSample Output 1\n```\n9\n```\n\nExplanation\nEvil sequence: 0, 3, 5, 6, 9...",
+      "difficulty": "medium",
+      "estimatedTime": 10,
+      "concept": "Bitwise Logic",
+      "hint": "Search from 0 upwards and count set bits to find the Nth number with even bit parity.",
+      "explanation": "Identifies the Nth value with an even bit-count.\n\nTrace (to N=5):\n- 0 (0): 0 bits (1st)\n- 1 (1): 1 bit\n- 2 (10): 1 bit\n- 3 (11): 2 bits (2nd)\n- 4 (100): 1 bit\n- 5 (101): 2 bits (3rd)\n- 6 (110): 2 bits (4th)\n- 7 (111): 3 bits\n- 8 (1000): 1 bit\n- 9 (1001): 2 bits (5th)\nResult: 9",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint isEvil(int n) {\n    int count = 0; while(n > 0) { if(n & 1) count++; n >>= 1; }\n    return count % 2 == 0;\n}\nint main() {\n    int n, count = 0, i = 0;\n    scanf(\"%d\", &n);\n    while(1) {\n        if(isEvil(i)) count++;\n        if(count == n) { printf(\"%d\", i); break; }\n        i++;\n    }\n    return 0;\n}",
+        "python": "def is_evil(n):\n    return bin(n).count('1') % 2 == 0\nn = int(input())\ncount, i = 0, 0\nwhile True:\n    if is_evil(i):\n        count += 1\n        if count == n: \n            print(i)\n            break\n    i += 1",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        int n = new Scanner(System.in).nextInt();\n        int count = 0, i = 0;\n        while(true) {\n            if(Integer.bitCount(i) % 2 == 0) count++;\n            if(count == n) { System.out.println(i); break; }\n            i++;\n        }\n    }\n}",
+        "javascript": "function isEvil(n) {\n    let count = 0, temp = n; while(temp > 0) { if(temp & 1) count++; temp >>>= 1; }\n    return count % 2 === 0;\n}\nconst n = parseInt(require('fs').readFileSync(0, 'utf8').trim());\nlet count = 0, i = 0;\nwhile(true) {\n    if(isEvil(i)) count++;\n    if(count === n) { console.log(i); break; }\n    i++;\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "5",
+          "expected_output": "9"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "10",
+          "expected_output": "18",
+          "isHidden": true
+        },
+        {
+          "stdin": "20",
+          "expected_output": "39",
+          "isHidden": true
+        },
+        {
+          "stdin": "50",
+          "expected_output": "100",
+          "isHidden": true
+        },
+        {
+          "stdin": "2",
+          "expected_output": "3",
+          "isHidden": true
+        },
+        {
+          "stdin": "3",
+          "expected_output": "5",
+          "isHidden": true
+        },
+        {
+          "stdin": "4",
+          "expected_output": "6",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "199",
+          "isHidden": true
+        },
+        {
+          "stdin": "15",
+          "expected_output": "29",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-66",
+      "topicId": "math",
+      "title": "Generic Root of a Number",
+      "description": "Find the generic root (also known as the Digital Root) of a number. This is obtained by repeatedly summing the digits of the number until a single-digit number is reached.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\ndigital_root\n```\n\nConstraints\n• 0 ≤ N ≤ 2 * 10^9\n\nSample Input 1\n```\n1729\n```\n\nSample Output 1\n```\n1\n```\n\nExplanation\n1+7+2+9 = 19 -> 1+9 = 10 -> 1+0 = 1.",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Mathematics",
+      "hint": "The digital root of n is 1 + ((n-1) % 9) for n > 0.",
+      "explanation": "Digital root is the remainder of a number when divided by 9 (with 9 mapped to 9 instead of 0).\n\nFormula (O(1)):\nDigital Root = (N - 1) % 9 + 1 (for N > 0).\n\nTrace (1729):\n(1729 - 1) % 9 + 1 = 1728 % 9 + 1 = 0 + 1 = 1.\nResult: 1",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    int n; scanf(\"%d\", &n);\n    if (n == 0) printf(\"0\");\n    else printf(\"%d\", (n - 1) % 9 + 1);\n    return 0;\n}",
+        "python": "n = int(input())\nprint(0 if n == 0 else (n - 1) % 9 + 1)",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        int n = new Scanner(System.in).nextInt();\n        System.out.println(n == 0 ? 0 : (n - 1) % 9 + 1);\n    }\n}",
+        "javascript": "const n = parseInt(require('fs').readFileSync(0, 'utf8').trim());\nconsole.log(n === 0 ? 0 : (n - 1) % 9 + 1);"
+      },
+      "test_cases": [
+        {
+          "stdin": "1729",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "55",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "9",
+          "expected_output": "9",
+          "isHidden": true
+        },
+        {
+          "stdin": "18",
+          "expected_output": "9",
+          "isHidden": true
+        },
+        {
+          "stdin": "12345",
+          "expected_output": "6",
+          "isHidden": true
+        },
+        {
+          "stdin": "999",
+          "expected_output": "9",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "44",
+          "expected_output": "8",
+          "isHidden": true
+        },
+        {
+          "stdin": "20",
+          "expected_output": "2",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-67",
+      "topicId": "math",
+      "title": "Count Zeros and Ones",
+      "description": "Given a positive integer N, count how many occurrences of the digit '1' and '0' it has.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nones_count zeros_count\n```\n\nConstraints\n• 1 ≤ N ≤ 2 * 10^9\n\nSample Input 1\n```\n101201\n```\n\nSample Output 1\n```\n3 2\n```\n\nExplanation\n'1' appears 3 times, '0' appears 2 times.",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Arithmetic",
+      "hint": "Process the digits of N using modulo. Check if each digit is 1 or 0 and increment counters.",
+      "explanation": "Simply count occurrences of specific digits during extraction.\n\nStep-by-step:\n1. Initialize `count0 = 0`, `count1 = 0`.\n2. Extract digits one by one.\n3. If `digit == 0`, `count0++`.\n4. If `digit == 1`, `count1++`.\n5. Print `count1` and `count0` separated by a space.\n\nTrace (101201):\n- digits: 1, 0, 2, 1, 0, 1.\n- 1s: 3\n- 0s: 2\nResult: 3 2",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    int n, c0=0, c1=0; scanf(\"%d\", &n);\n    while(n > 0) {\n        int d = n % 10;\n        if(d == 0) c0++; else if(d == 1) c1++;\n        n /= 10;\n    }\n    printf(\"%d %d\", c1, c0);\n    return 0;\n}",
+        "python": "s = input().strip()\nprint(s.count('1'), s.count('0'))",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        String s = new Scanner(System.in).next();\n        int c1 = 0, c0 = 0;\n        for(char c : s.toCharArray()) {\n            if(c == '1') c1++; else if(c == '0') c0++;\n        }\n        System.out.println(c1 + \" \" + c0);\n    }\n}",
+        "javascript": "const s = require('fs').readFileSync(0, 'utf8').trim();\nconst c1 = (s.match(/1/g) || []).length;\nconst c0 = (s.match(/0/g) || []).length;\nconsole.log(c1 + \" \" + c0);"
+      },
+      "test_cases": [
+        {
+          "stdin": "101201",
+          "expected_output": "3 2"
+        },
+        {
+          "stdin": "111",
+          "expected_output": "3 0"
+        },
+        {
+          "stdin": "2000",
+          "expected_output": "0 3",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "1 1",
+          "isHidden": true
+        },
+        {
+          "stdin": "555",
+          "expected_output": "0 0",
+          "isHidden": true
+        },
+        {
+          "stdin": "1234567890",
+          "expected_output": "1 1",
+          "isHidden": true
+        },
+        {
+          "stdin": "110011",
+          "expected_output": "4 2",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000000000",
+          "expected_output": "1 9",
+          "isHidden": true
+        },
+        {
+          "stdin": "1020301",
+          "expected_output": "2 3",
+          "isHidden": true
+        },
+        {
+          "stdin": "401",
+          "expected_output": "1 1",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-68",
+      "topicId": "math",
+      "title": "Largest Digit in a Number",
+      "description": "Find the largest digit present in a given number N.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nlargest_digit\n```\n\nConstraints\n• 0 ≤ N ≤ 2 * 10^9\n\nSample Input 1\n```\n7294\n```\n\nSample Output 1\n```\n9\n```\n\nExplanation\nDigits are 7, 2, 9, 4. The largest is 9.",
+      "difficulty": "easy",
+      "estimatedTime": 4,
+      "concept": "Arithmetic",
+      "hint": "Extract each digit using modulo and keep track of the maximum value found so far.",
+      "explanation": "A simple linear scan of the digits.\n\nStep-by-step:\n1. Initialize `maxDigit = 0` (or the first digit).\n2. Loop through all digits using %10.\n3. If `currentDigit > maxDigit`, update `maxDigit`.\n4. Print `maxDigit`.\n\nTrace (7294):\n- d=4: max=4\n- d=9: max=9\n- d=2: max=9\n- d=7: max=9\nResult: 9",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    int n, max=0; scanf(\"%d\", &n);\n    if(n == 0) { printf(\"0\"); return 0; }\n    while(n > 0) { int d = n % 10; if(d > max) max = d; n /= 10; }\n    printf(\"%d\", max);\n    return 0;\n}",
+        "python": "s = input().strip()\nprint(max(int(d) for d in s))",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        String s = new Scanner(System.in).next();\n        int max = 0;\n        for(char c : s.toCharArray()) if(c-'0' > max) max = c-'0';\n        System.out.println(max);\n    }\n}",
+        "javascript": "const s = require('fs').readFileSync(0, 'utf8').trim();\nconsole.log(Math.max(...s.split('').map(Number)));"
+      },
+      "test_cases": [
+        {
+          "stdin": "7294",
+          "expected_output": "9"
+        },
+        {
+          "stdin": "111",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "123",
+          "expected_output": "3",
+          "isHidden": true
+        },
+        {
+          "stdin": "987",
+          "expected_output": "9",
+          "isHidden": true
+        },
+        {
+          "stdin": "505",
+          "expected_output": "5",
+          "isHidden": true
+        },
+        {
+          "stdin": "102030405",
+          "expected_output": "5",
+          "isHidden": true
+        },
+        {
+          "stdin": "2048",
+          "expected_output": "8",
+          "isHidden": true
+        },
+        {
+          "stdin": "1999",
+          "expected_output": "9",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-69",
+      "topicId": "math",
+      "title": "Smallest Digit in a Number",
+      "description": "Find the smallest digit present in a given number N.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nsmallest_digit\n```\n\nConstraints\n• 0 ≤ N ≤ 2 * 10^9\n\nSample Input 1\n```\n7294\n```\n\nSample Output 1\n```\n2\n```\n\nExplanation\nDigits are 7, 2, 9, 4. The smallest is 2.",
+      "difficulty": "easy",
+      "estimatedTime": 4,
+      "concept": "Arithmetic",
+      "hint": "Extract each digit using modulo and keep track of the minimum value found so far.",
+      "explanation": "A simple linear scan of the digits.\n\nStep-by-step:\n1. If N is 0, the smallest digit is 0.\n2. Initialize `minDigit = 9`.\n3. Loop through all digits using %10.\n4. If `currentDigit < minDigit`, update `minDigit`.\n5. Print `minDigit`.\n\nTrace (7294):\n- d=4: min=4\n- d=9: min=4\n- d=2: min=2\n- d=7: min=2\nResult: 2",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    int n, min=9; scanf(\"%d\", &n);\n    if(n == 0) { printf(\"0\"); return 0; }\n    while(n > 0) { int d = n % 10; if(d < min) min = d; n /= 10; }\n    printf(\"%d\", min);\n    return 0;\n}",
+        "python": "s = input().strip()\nprint(min(int(d) for d in s))",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        String s = new Scanner(System.in).next();\n        int min = 9;\n        for(char c : s.toCharArray()) if(c-'0' < min) min = c-'0';\n        System.out.println(min);\n    }\n}",
+        "javascript": "const s = require('fs').readFileSync(0, 'utf8').trim();\nconsole.log(Math.min(...s.split('').map(Number)));"
+      },
+      "test_cases": [
+        {
+          "stdin": "7294",
+          "expected_output": "2"
+        },
+        {
+          "stdin": "555",
+          "expected_output": "5"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "123",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "987",
+          "expected_output": "7",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "123456789",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "2048",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "1999",
+          "expected_output": "1",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-70",
+      "topicId": "math",
+      "title": "Amicable Pairs Check",
+      "description": "Two numbers are an Amicable Pair if the sum of proper divisors of one number is equal to the other number, and vice versa. Print \"Yes\" or \"No\".\n\nExample: 220 and 284.\nProper divisors of 220: 1, 2, 4, 5, 10, 11, 20, 22, 44, 55, 110. Sum = 284.\nProper divisors of 284: 1, 2, 4, 71, 142. Sum = 220.\n\nInput Format\n```\nn1 n2\n```\n\nOutput Format\n```\nYes/No\n```\n\nConstraints\n• 1 ≤ n1, n2 ≤ 10^5\n\nSample Input 1\n```\n220 284\n```\n\nSample Output 1\n```\nYes\n```\n\nExplanation\nSum of divisors of 220 is 284. Sum of divisors of 284 is 220.",
+      "difficulty": "medium",
+      "estimatedTime": 10,
+      "concept": "Number Theory",
+      "hint": "Calculate the sum of proper divisors (divisors excluding the number itself) for both and check for the swap equality.",
+      "explanation": "Amicable pairs are pairs where each number 'creates' the other through its divisors.\n\nStep-by-step:\n1. Create a function `sumProperDivisors(n)`.\n2. If `sumProperDivisors(n1) == n2` AND `sumProperDivisors(n2) == n1`, then it's an Amicable pair (Yes).\n3. Else No.\n\nTrace (220, 284):\n- sum_proper(220) = 284.\n- sum_proper(284) = 220.\nBoth conditions match. Yes.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint sumPDiv(int n) {\n    int s = 0;\n    for(int i=1; i<=n/2; i++) if(n % i == 0) s += i;\n    return s;\n}\nint main() {\n    int n1, n2; scanf(\"%d %d\", &n1, &n2);\n    if(sumPDiv(n1) == n2 && sumPDiv(n2) == n1) printf(\"Yes\"); else printf(\"No\");\n    return 0;\n}",
+        "python": "def sumPDiv(n):\n    return sum(i for i in range(1, n) if n % i == 0)\nn1, n2 = map(int, input().split())\nprint(\"Yes\" if sumPDiv(n1) == n2 and sumPDiv(n2) == n1 else \"No\")",
+        "java": "import java.util.Scanner;\npublic class Main {\n    static int sumPDiv(int n) {\n        int s = 0; for(int i=1; i<=n/2; i++) if(n % i == 0) s += i; return s;\n    }\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n1 = sc.nextInt(), n2 = sc.nextInt();\n        if(sumPDiv(n1) == n2 && sumPDiv(n2) == n1) System.out.println(\"Yes\");\n        else System.out.println(\"No\");\n    }\n}",
+        "javascript": "function sumPDiv(n) {\n    let s = 0; for(let i=1; i<n; i++) if(n % i === 0) s += i; return s;\n}\nconst [n1, n2] = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/).map(Number);\nconsole.log(sumPDiv(n1) === n2 && sumPDiv(n2) === n1 ? \"Yes\" : \"No\");"
+      },
+      "test_cases": [
+        {
+          "stdin": "220 284",
+          "expected_output": "Yes"
+        },
+        {
+          "stdin": "1184 1210",
+          "expected_output": "Yes"
+        },
+        {
+          "stdin": "10 20",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "2620 2924",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "5020 5564",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "6232 6368",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "10744 10856",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "12285 14595",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "6 6",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "28 28",
+          "expected_output": "Yes",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-71",
+      "topicId": "math",
+      "title": "Second Largest Digit",
+      "description": "Find the second largest digit in a given number N. If all digits are same or only one distinct digit exists, output -1.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nsecond_largest_digit\n```\n\nConstraints\n• 0 ≤ N ≤ 2 * 10^9\n\nSample Input 1\n```\n7294\n```\n\nSample Output 1\n```\n7\n```\n\nExplanation\nDigits: 9 (max), 7 (2nd max), 4, 2.",
+      "difficulty": "medium",
+      "estimatedTime": 8,
+      "concept": "Arithmetic",
+      "hint": "Maintain two variables, max1 and max2. As you process digits, update them carefully.",
+      "explanation": "Requires tracking the two highest unique digits.\n\nStep-by-step:\n1. Initialize `max1 = -1`, `max2 = -1`.\n2. Extract digits using %10.\n3. For each digit `d`:\n   - If `d > max1`:\n     - `max2 = max1`\n     - `max1 = d`\n   - Else if `d < max1` AND `d > max2`:\n     - `max2 = d`\n4. If `max2` is still -1, print -1, else print `max2`.\n\nTrace (7294):\n- d=4: max1=4, max2=-1\n- d=9: max1=9, max2=4\n- d=2: (2 < 9, but 2 < 4). No change.\n- d=7: (7 < 9 and 7 > 4). max1=9, max2=7.\nResult: 7",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    int n, m1=-1, m2=-1; scanf(\"%d\", &n);\n    if(n == 0) { printf(\"-1\"); return 0; }\n    while(n > 0) {\n        int d = n % 10;\n        if(d > m1) { m2 = m1; m1 = d; }\n        else if(d < m1 && d > m2) { m2 = d; }\n        n /= 10;\n    }\n    printf(\"%d\", m2);\n    return 0;\n}",
+        "python": "s = set(input().strip())\ndigits = sorted([int(d) for d in s], reverse=True)\nprint(digits[1] if len(digits) > 1 else -1)",
+        "java": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        String s = new Scanner(System.in).next();\n        TreeSet<Integer> set = new TreeSet<>();\n        for(char c : s.toCharArray()) set.add(c - '0');\n        if(set.size() < 2) System.out.println(\"-1\");\n        else {\n            set.pollLast();\n            System.out.println(set.last());\n        }\n    }\n}",
+        "javascript": "const s = require('fs').readFileSync(0, 'utf8').trim();\nconst digits = [...new Set(s.split('').map(Number))].sort((a,b)=>b-a);\nconsole.log(digits.length > 1 ? digits[1] : -1);"
+      },
+      "test_cases": [
+        {
+          "stdin": "7294",
+          "expected_output": "7"
+        },
+        {
+          "stdin": "555",
+          "expected_output": "-1"
+        },
+        {
+          "stdin": "100",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "10",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "9",
+          "expected_output": "-1",
+          "isHidden": true
+        },
+        {
+          "stdin": "12345",
+          "expected_output": "4",
+          "isHidden": true
+        },
+        {
+          "stdin": "9812",
+          "expected_output": "8",
+          "isHidden": true
+        },
+        {
+          "stdin": "1001",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "2048",
+          "expected_output": "4",
+          "isHidden": true
+        },
+        {
+          "stdin": "1999",
+          "expected_output": "1",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-72",
+      "topicId": "math",
+      "title": "Second Smallest Digit",
+      "description": "Find the second smallest digit in a given number N. If all digits are same or only one distinct digit exists, output -1.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nsecond_smallest_digit\n```\n\nConstraints\n• 0 ≤ N ≤ 2 * 10^9\n\nSample Input 1\n```\n7294\n```\n\nSample Output 1\n```\n4\n```\n\nExplanation\nDigits: 2 (min), 4 (2nd min), 7, 9.",
+      "difficulty": "medium",
+      "estimatedTime": 8,
+      "concept": "Arithmetic",
+      "hint": "Maintain two variables, min1 and min2. Iterate through digits and update them based on uniqueness.",
+      "explanation": "Mirror logic of second largest digit.\n\nStep-by-step:\n1. Initialize `min1 = 10`, `min2 = 10`.\n2. Extract digits.\n3. For each digit `d`:\n   - If `d < min1`:\n     - `min2 = min1`\n     - `min1 = d`\n   - Else if `d > min1` AND `d < min2`:\n     - `min2 = d`\n4. If `min2` is 10, print -1, else print `min2`.\n\nTrace (7294):\n- d=4: min1=4, min2=10\n- d=9: min1=4, min2=9\n- d=2: min1=2, min2=4\n- d=7: (7 > 2 and 7 < 4 is false). No change.\nResult: 4",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    int n, m1=10, m2=10; scanf(\"%d\", &n);\n    if(n == 0) { printf(\"-1\"); return 0; }\n    while(n > 0) {\n        int d = n % 10;\n        if(d < m1) { m2 = m1; m1 = d; }\n        else if(d > m1 && d < m2) { m2 = d; }\n        n /= 10;\n    }\n    if(m2 == 10) printf(\"-1\"); else printf(\"%d\", m2);\n    return 0;\n}",
+        "python": "s = set(input().strip())\ndigits = sorted([int(d) for d in s])\nprint(digits[1] if len(digits) > 1 else -1)",
+        "java": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        String s = new Scanner(System.in).next();\n        TreeSet<Integer> set = new TreeSet<>();\n        for(char c : s.toCharArray()) set.add(c - '0');\n        if(set.size() < 2) System.out.println(\"-1\");\n        else {\n            set.pollFirst();\n            System.out.println(set.first());\n        }\n    }\n}",
+        "javascript": "const s = require('fs').readFileSync(0, 'utf8').trim();\nconst digits = [...new Set(s.split('').map(Number))].sort((a,b)=>a-b);\nconsole.log(digits.length > 1 ? digits[1] : -1);"
+      },
+      "test_cases": [
+        {
+          "stdin": "7294",
+          "expected_output": "4"
+        },
+        {
+          "stdin": "555",
+          "expected_output": "-1"
+        },
+        {
+          "stdin": "100",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "10",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "9",
+          "expected_output": "-1",
+          "isHidden": true
+        },
+        {
+          "stdin": "12345",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "9812",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "1110",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "2048",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "1999",
+          "expected_output": "9",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-73",
+      "topicId": "math",
+      "title": "Count Odd and Even Digits",
+      "description": "Given a positive integer N, count how many odd digits and how many even digits it contains.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nodd_count even_count\n```\n\nConstraints\n• 1 ≤ N ≤ 2 * 10^9\n\nSample Input 1\n```\n1234\n```\n\nSample Output 1\n```\n2 2\n```\n\nExplanation\nOdd digits: 1, 3. Even digits: 2, 4.",
+      "difficulty": "easy",
+      "estimatedTime": 4,
+      "concept": "Arithmetic",
+      "hint": "Process digits using % 10. Check if `digit % 2` is 0 or 1.",
+      "explanation": "Iterates through digits and checks parity.\n\nTrace (1234):\n- 4: Even\n- 3: Odd\n- 2: Even\n- 1: Odd\nResult: 2 2",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    int n, o=0, e=0; scanf(\"%d\", &n);\n    while(n > 0) {\n        if((n % 10) % 2 == 0) e++; else o++;\n        n /= 10;\n    }\n    printf(\"%d %d\", o, e);\n    return 0;\n}",
+        "python": "s = input().strip()\nodds = sum(1 for d in s if int(d) % 2 != 0)\nprint(odds, len(s) - odds)",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        String s = new Scanner(System.in).next();\n        int o = 0, e = 0;\n        for(char c : s.toCharArray()) {\n            if((c - '0') % 2 == 0) e++; else o++;\n        }\n        System.out.println(o + \" \" + e);\n    }\n}",
+        "javascript": "const s = require('fs').readFileSync(0, 'utf8').trim();\nconst odds = s.split('').filter(d => parseInt(d) % 2 !== 0).length;\nconsole.log(`${odds} ${s.length - odds}`);"
+      },
+      "test_cases": [
+        {
+          "stdin": "1234",
+          "expected_output": "2 2"
+        },
+        {
+          "stdin": "1357",
+          "expected_output": "4 0"
+        },
+        {
+          "stdin": "2468",
+          "expected_output": "0 4",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "1 2",
+          "isHidden": true
+        },
+        {
+          "stdin": "9",
+          "expected_output": "1 0",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "1 1",
+          "isHidden": true
+        },
+        {
+          "stdin": "123456789",
+          "expected_output": "5 4",
+          "isHidden": true
+        },
+        {
+          "stdin": "10101",
+          "expected_output": "3 2",
+          "isHidden": true
+        },
+        {
+          "stdin": "4444",
+          "expected_output": "0 4",
+          "isHidden": true
+        },
+        {
+          "stdin": "77",
+          "expected_output": "2 0",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-74",
+      "topicId": "math",
+      "title": "Ugly Number Check",
+      "description": "Check if a given positive number is an Ugly Number. Ugly numbers are positive numbers whose only prime factors are 2, 3, or 5. By convention, 1 is included.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nYes/No\n```\n\nConstraints\n• 1 ≤ N ≤ 2 * 10^9\n\nSample Input 1\n```\n6\n```\n\nSample Output 1\n```\nYes\n```\n\nExplanation\n6 = 2 * 3. Its factors are only 2 and 3.",
+      "difficulty": "medium",
+      "estimatedTime": 6,
+      "concept": "Number Theory",
+      "hint": "Repeatedly divide the number by 2, then by 3, then by 5. If the remaining number is 1, it's an Ugly number.",
+      "explanation": "A number is ugly if it can be reduced to 1 by dividing only by 2, 3, and 5.\n\nStep-by-step:\n1. While N is divisible by 2, divide it by 2.\n2. While N is divisible by 3, divide it by 3.\n3. While N is divisible by 5, divide it by 5.\n4. If N is now 1, print Yes. Else print No.\n\nTrace (14):\n- 14 / 2 = 7.\n- 7 is not div by 2, 3, or 5.\n- N is 7. Not 1. No.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    int n; scanf(\"%d\", &n);\n    if(n <= 0) { printf(\"No\"); return 0; }\n    while(n % 2 == 0) n /= 2;\n    while(n % 3 == 0) n /= 3;\n    while(n % 5 == 0) n /= 5;\n    if(n == 1) printf(\"Yes\"); else printf(\"No\");\n    return 0;\n}",
+        "python": "n = int(input())\nif n <= 0:\n    print(\"No\")\nelse:\n    for p in [2, 3, 5]:\n        while n % p == 0: n //= p\n    print(\"Yes\" if n == 1 else \"No\")",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        long n = new Scanner(System.in).nextLong();\n        if(n <= 0) { System.out.println(\"No\"); return; }\n        while(n % 2 == 0) n /= 2;\n        while(n % 3 == 0) n /= 3;\n        while(n % 5 == 0) n /= 5;\n        System.out.println(n == 1 ? \"Yes\" : \"No\");\n    }\n}",
+        "javascript": "let n = parseInt(require('fs').readFileSync(0, 'utf8').trim());\nif(n <= 0) console.log(\"No\");\nelse {\n    [2,3,5].forEach(p => { while(n % p === 0) n /= p; });\n    console.log(n === 1 ? \"Yes\" : \"No\");\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "6",
+          "expected_output": "Yes"
+        },
+        {
+          "stdin": "8",
+          "expected_output": "Yes"
+        },
+        {
+          "stdin": "14",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "30",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "11",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "21",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "25",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "1024",
+          "expected_output": "Yes",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-75",
+      "topicId": "math",
+      "title": "Number Type Classification Range",
+      "description": "Classify numbers from 1 to 10,000 and count how many are Deficient, Perfect, and Abundant.\nOutput must match the specified format.\n\nInput Format\n```\n(No Input required, range is fixed 1..10000)\n```\n\nOutput Format\n```\nDeficient: [count]\nPerfect: [count]\nAbundant: [count]\n```\n\nConstraints\n• Range is fixed 1 to 10000.",
+      "difficulty": "hard",
+      "estimatedTime": 15,
+      "concept": "Algorithms",
+      "hint": "A number is Deficient if Sum_Proper_Divisors < N, Perfect if == N, and Abundant if > N.",
+      "explanation": "Summarizes basic number theory properties over a large range.\n\nStep-by-step:\n1. Initialize counts for each type.\n2. Loop `i` from 1 to 10000.\n3. For each `i`, calculate `sumP` (Sum of Proper Divisors).\n4. Switch/Case or If-Else to increment the correct counter.\n5. Print results.\n\nExpected counts for 1-10000:\nDeficient: 7508\nPerfect: 4\nAbundant: 2488",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint sumPDiv(int n) {\n    int s = 0;\n    for(int i=1; i<=n/2; i++) if(n % i == 0) s += i;\n    return s;\n}\nint main() {\n    int d=0, p=0, a=0;\n    for(int i=1; i<=10000; i++) {\n        int s = sumPDiv(i);\n        if(s < i) d++;\n        else if(s == i) p++;\n        else a++;\n    }\n    printf(\"Deficient: %d\\nPerfect: %d\\nAbundant: %d\", d, p, a);\n    return 0;\n}",
+        "python": "def sumPDiv(n):\n    s = 0\n    for i in range(1, n//2 + 1):\n        if n % i == 0: s += i\n    return s\n\nd, p, a = 0, 0, 0\nfor i in range(1, 10001):\n    s = sumPDiv(i)\n    if s < i: d += 1\n    elif s == i: p += 1\n    else: a += 1\nprint(f\"Deficient: {d}\\nPerfect: {p}\\nAbundant: {a}\")",
+        "java": "public class Main {\n    static int sumPDiv(int n) {\n        int s = 0; for(int i=1; i<=n/2; i++) if(n % i == 0) s += i; return s;\n    }\n    public static void main(String[] args) {\n        int d=0, p=0, a=0;\n        for(int i=1; i<=10000; i++) {\n            int s = sumPDiv(i);\n            if(s < i) d++;\n            else if(s == i) p++;\n            else a++;\n        }\n        System.out.println(\"Deficient: \" + d);\n        System.out.println(\"Perfect: \" + p);\n        System.out.println(\"Abundant: \" + a);\n    }\n}",
+        "javascript": "function sumPDiv(n) {\n    let s = 0; for(let i=1; i<=Math.floor(n/2); i++) if(n % i === 0) s += i; return s;\n}\nlet d=0, p=0, a=0;\nfor(let i=1; i<=10000; i++) {\n    const s = sumPDiv(i);\n    if(s < i) d++; else if(s === i) p++; else a++;\n}\nconsole.log(`Deficient: ${d}\\nPerfect: ${p}\\nAbundant: ${a}`);"
+      },
+      "test_cases": [
+        {
+          "stdin": "",
+          "expected_output": "Deficient: 7508\nPerfect: 4\nAbundant: 2488"
+        }
+      ]
+    },
+    {
+      "id": "math-76",
+      "topicId": "math",
+      "title": "Seeded Random Integer Generation",
+      "description": "Generate the first K random integers between L and R (inclusive) using a specific Seed S. For testing consistency, use the linear congruential generator (LCG) formula: `next = (a * current + c) % m`, where m = 2^31, a = 1103515245, c = 12345. Let the seed S be the initial 'current'. The random number in range [L, R] is `L + (current % (R - L + 1))`.\n\nInput Format\n```\nS L R K\n```\n\nOutput Format\n```\nn1 n2 ... nK\n```\n\nConstraints\n• 1 ≤ K ≤ 100\n\nSample Input 1\n```\n42 1 10 3\n```\n\nSample Output 1\n```\n4 2 2\n```",
+      "difficulty": "hard",
+      "estimatedTime": 15,
+      "concept": "Mathematics",
+      "hint": "Carefully implement the LCG formula. Use unsigned 64-bit integers for the intermediate product if needed.",
+      "explanation": "Deterministic random number generation using LCG.\n\nStep-by-step:\n1. Initialize `curr = S`.\n2. For `K` steps:\n   - `curr = (1103515245 * curr + 12345) & 0x7FFFFFFF` (Simulate 2^31 modulo).\n   - `output = L + (curr % (R - L + 1))`.\n   - Print `output` with a space.\n\nNote: The `& 0x7FFFFFFF` ensures we stay within the semi-positive 31-bit integer range.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    long long s, l, r, k;\n    scanf(\"%lld %lld %lld %lld\", &s, &l, &r, &k);\n    long long curr = s;\n    for(int i=0; i<k; i++) {\n        curr = (1103515245 * curr + 12345) & 0x7FFFFFFF;\n        long long res = l + (curr % (r - l + 1));\n        printf(\"%lld \", res);\n    }\n    return 0;\n}",
+        "python": "s, l, r, k = map(int, input().split())\ncurr = s\nres = []\nfor _ in range(k):\n    curr = (1103515245 * curr + 12345) & 0x7FFFFFFF\n    val = l + (curr % (r - l + 1))\n    res.append(str(val))\nprint(\" \".join(res))",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        long curr = sc.nextLong();\n        long l = sc.nextLong(), r = sc.nextLong(), k = sc.nextLong();\n        for(int i=0; i<k; i++) {\n            curr = (1103515245 * curr + 12345) & 0x7FFFFFFF;\n            long val = l + (curr % (r - l + 1));\n            System.out.print(val + \" \");\n        }\n    }\n}",
+        "javascript": "const [s, l, r, k] = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/).map(BigInt);\nlet curr = s;\nlet res = [];\nfor(let i=0; i<Number(k); i++) {\n    curr = (1103515245n * curr + 12345n) & 0x7FFFFFFFn;\n    let val = l + (curr % (r - l + 1n));\n    res.push(val.toString());\n}\nconsole.log(res.join(' '));"
+      },
+      "test_cases": [
+        {
+          "stdin": "42 1 10 3",
+          "expected_output": "4 2 2"
+        },
+        {
+          "stdin": "0 0 100 5",
+          "expected_output": "13 14 36 99 9"
+        },
+        {
+          "stdin": "7 10 20 2",
+          "expected_output": "20 18",
+          "isHidden": true
+        },
+        {
+          "stdin": "123 50 100 4",
+          "expected_output": "97 99 98 100",
+          "isHidden": true
+        },
+        {
+          "stdin": "999 0 9 10",
+          "expected_output": "1 6 5 2 7 8 8 2 0 7",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 1 1 5",
+          "expected_output": "1 1 1 1 1",
+          "isHidden": true
+        },
+        {
+          "stdin": "100 200 300 1",
+          "expected_output": "226",
+          "isHidden": true
+        },
+        {
+          "stdin": "42 10 10 2",
+          "expected_output": "10 10",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000000 1 100 3",
+          "expected_output": "39 10 59",
+          "isHidden": true
+        },
+        {
+          "stdin": "1234567 10 20 2",
+          "expected_output": "20 19",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-77",
+      "topicId": "math",
+      "title": "Kaprekar Numbers in a Range",
+      "description": "Find all Kaprekar numbers less than R. A number N is a Kaprekar number if the notation of its square in that base can be split into two parts that add up to N.\n\nExample:\n45. 45^2 = 2025. 20 + 25 = 45.\n\nInput Format\n```\nR\n```\n\nOutput Format\n```\nn1 n2 ...\n```\n\nConstraints\n• 1 ≤ R ≤ 2000\n\nSample Input 1\n```\n100\n```\n\nSample Output 1\n```\n1 9 45 55 99\n```\n\nExplanation\nSquare of 9 is 81. 8+1 = 9.",
+      "difficulty": "hard",
+      "estimatedTime": 15,
+      "concept": "Number Theory",
+      "hint": "Read N as string or use math to split N^2 at every possible position.",
+      "explanation": "To check if N is Kaprekar:\n1. Calculate `sq = N * N`.\n2. Convert `sq` to a string or number.\n3. Split it into two parts (left and right) such that `right` has the same number of digits as `N` (or more, but standard definition uses the scale of N).\n4. If `left + right == N` and `right > 0` (normally), then it's Kaprekar.\n\nActually, the standard definition splits at *one* position to exactly divide the digits.\n\nExample (297):\n297^2 = 88209.\nSplit at digit 2: 88 + 209 = 297. Yes.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <math.h>\nint isKaprekar(int n) {\n    if (n == 1) return 1;\n    long long sq = (long long)n * n;\n    long long div = 1;\n    while(div <= sq) {\n        div *= 10;\n        long long left = sq / div;\n        long long right = sq % div;\n        if (right > 0 && left + right == n) return 1;\n    }\n    return 0;\n}\nint main() {\n    int r; scanf(\"%d\", &r);\n    for(int i=1; i<r; i++) if(isKaprekar(i)) printf(\"%d \", i);\n    return 0;\n}",
+        "python": "def is_kaprekar(n):\n    if n == 1: return True\n    sq = str(n * n)\n    for i in range(1, len(sq)):\n        l, r = sq[:i], sq[i:]\n        if int(r) > 0 and int(l) + int(r) == n: return True\n    return False\nr = int(input())\nprint(\" \".join(str(i) for i in range(1, r) if is_kaprekar(i)))",
+        "java": "import java.util.Scanner;\npublic class Main {\n    static boolean isKap(int n) {\n        if(n == 1) return true;\n        long sq = (long)n * n;\n        String s = String.valueOf(sq);\n        for(int i=1; i<s.length(); i++) {\n            long l = Long.parseLong(s.substring(0, i));\n            long r = Long.parseLong(s.substring(i));\n            if(r > 0 && l + r == n) return true;\n        }\n        return false;\n    }\n    public static void main(String[] args) {\n        int r = new Scanner(System.in).nextInt();\n        for(int i=1; i<r; i++) if(isKap(i)) System.out.print(i + \" \");\n    }\n}",
+        "javascript": "function isKap(n) {\n    if(n === 1) return true;\n    const sq = String(n * n);\n    for(let i=1; i<sq.length; i++) {\n        const l = parseInt(sq.slice(0, i));\n        const r = parseInt(sq.slice(i));\n        if(r > 0 && l + r === n) return true;\n    }\n    return false;\n}\nconst r = parseInt(require('fs').readFileSync(0, 'utf8').trim());\nlet res = [];\nfor(let i=1; i<r; i++) if(isKap(i)) res.push(i);\nconsole.log(res.join(' '));"
+      },
+      "test_cases": [
+        {
+          "stdin": "100",
+          "expected_output": "1 9 45 55 99"
+        },
+        {
+          "stdin": "1000",
+          "expected_output": "1 9 45 55 99 297 703 999"
+        },
+        {
+          "stdin": "10",
+          "expected_output": "1 9",
+          "isHidden": true
+        },
+        {
+          "stdin": "50",
+          "expected_output": "1 9 45",
+          "isHidden": true
+        },
+        {
+          "stdin": "300",
+          "expected_output": "1 9 45 55 99 297",
+          "isHidden": true
+        },
+        {
+          "stdin": "800",
+          "expected_output": "1 9 45 55 99 297 703",
+          "isHidden": true
+        },
+        {
+          "stdin": "1500",
+          "expected_output": "1 9 45 55 99 297 703 999",
+          "isHidden": true
+        },
+        {
+          "stdin": "2000",
+          "expected_output": "1 9 45 55 99 297 703 999",
+          "isHidden": true
+        },
+        {
+          "stdin": "5",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-78",
+      "topicId": "math",
+      "title": "Lychrel Number Candidate",
+      "description": "Check if a number is a Lychrel Candidate. A Lychrel number is a natural number that cannot form a palindrome through the iterative process of repeatedly reversing its digits and adding. Use a limit of 500 iterations. If it doesn't become a palindrome within 500 steps, output \"Yes\" (Lychrel candidate), otherwise \"No\".\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nYes/No\n```\n\nConstraints\n• 1 ≤ N ≤ 2000\n\nSample Input 1\n```\n196\n```\n\nSample Output 1\n```\nYes\n```\n\nExplanation\n196 is the smallest suspected Lychrel number.",
+      "difficulty": "hard",
+      "estimatedTime": 20,
+      "concept": "Algorithms",
+      "hint": "In each step: reverse the current number, add it to the current number, and check if the result is a palindrome. Use BigIntegers to avoid overflow.",
+      "explanation": "Iterative process: N = N + reverse(N).\n\nStep-by-step:\n1. Initialize `curr = N`.\n2. For step 1 to 500:\n   - `rev = reverseDigits(curr)`.\n   - `curr = curr + rev`.\n   - If `isPalindrome(curr)`, print No and stop.\n3. If loop finishes without finding a palindrome, print Yes.\n\nImportant: Numbers grow very fast. 196 reaches millions of digits, so use string-based addition or BigInt.",
+      "starter_codes": {
+        "c": "// C implementation with string addition for large numbers\n#include <stdio.h>\n#include <string.h>\n#include <stdlib.h>\nvoid rev(char *s) {\n    int n = strlen(s);\n    for(int i=0; i<n/2; i++) { char t=s[i]; s[i]=s[n-1-i]; s[n-1-i]=t; }\n}\nvoid add(char *a, char *b, char *res) {\n    int i = strlen(a)-1, j = strlen(b)-1, k=0, c=0;\n    while(i>=0 || j>=0 || c) {\n        int sum = c + (i>=0?a[i]-'0':0) + (j>=0?b[j]-'0':0);\n        res[k++] = (sum % 10) + '0';\n        c = sum / 10; i--; j--;\n    }\n    res[k] = '\\0'; rev(res);\n}\nint isPal(char *s) {\n    int n = strlen(s);\n    for(int i=0; i<n/2; i++) if(s[i] != s[n-1-i]) return 0;\n    return 1;\n}\nint main() {\n    char curr[2000] = {0}, tmp[2000] = {0}, sum[2000] = {0};\n    scanf(\"%s\", curr);\n    for(int i=0; i<500; i++) {\n        strcpy(tmp, curr); rev(tmp);\n        add(curr, tmp, sum);\n        if(isPal(sum)) { printf(\"No\"); return 0; }\n        strcpy(curr, sum);\n    }\n    printf(\"Yes\");\n    return 0;\n}",
+        "python": "def is_pal(n):\n    s = str(n)\n    return s == s[::-1]\nn = int(input())\ncurr = n\nfor _ in range(500):\n    curr += int(str(curr)[::-1])\n    if is_pal(curr):\n        print(\"No\"); break\nelse: print(\"Yes\")",
+        "java": "import java.math.BigInteger;\nimport java.util.Scanner;\npublic class Main {\n    static boolean isPal(String s) {\n        return s.equals(new StringBuilder(s).reverse().toString());\n    }\n    public static void main(String[] args) {\n        BigInteger curr = new BigInteger(new Scanner(System.in).next());\n        for(int i=0; i<500; i++) {\n            BigInteger rev = new BigInteger(new StringBuilder(curr.toString()).reverse().toString());\n            curr = curr.add(rev);\n            if(isPal(curr.toString())) {\n                System.out.println(\"No\"); return;\n            }\n        }\n        System.out.println(\"Yes\");\n    }\n}",
+        "javascript": "const n_in = require('fs').readFileSync(0, 'utf8').trim();\nlet curr = BigInt(n_in);\nlet found = false;\nfor(let i=0; i<500; i++) {\n    const s = curr.toString();\n    const rev = BigInt(s.split('').reverse().join(''));\n    curr = curr + rev;\n    if(curr.toString() === curr.toString().split('').reverse().join('')) {\n        found = true; break;\n    }\n}\nconsole.log(found ? \"No\" : \"Yes\");"
+      },
+      "test_cases": [
+        {
+          "stdin": "196",
+          "expected_output": "Yes"
+        },
+        {
+          "stdin": "47",
+          "expected_output": "No"
+        },
+        {
+          "stdin": "89",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "495",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "879",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "295",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "395",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "795",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "195",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "1997",
+          "expected_output": "No",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-79",
+      "topicId": "math",
+      "title": "Sieve of Eratosthenes",
+      "description": "Find all prime numbers up to N using the Sieve of Eratosthenes algorithm.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\np1 p2 p3 ...\n```\n\nConstraints\n• 2 ≤ N ≤ 10^5\n\nSample Input 1\n```\n20\n```\n\nSample Output 1\n```\n2 3 5 7 11 13 17 19\n```\n\nExplanation\nPrimes up to 20.",
+      "difficulty": "medium",
+      "estimatedTime": 10,
+      "concept": "Algorithms",
+      "hint": "Create a boolean array from 0 to N. Mark 0 and 1 as not prime. Then for each prime p, mark all multiples of p (2p, 3p...) as not prime.",
+      "explanation": "Classical algorithm for finding all primes up to a limit.\n\nStep-by-step:\n1. Create a boolean array `isPrime` of size `N+1`, initialized to true.\n2. Mark `isPrime[0]` and `isPrime[1]` as false.\n3. For `p` from 2 up to `sqrt(N)`:\n   - If `isPrime[p]` is true:\n     - For `i` from `p*p` to `N` with step `p`, set `isPrime[i]` to false.\n4. Print all indices where `isPrime[index]` is true.\n\nEfficiency: O(N log log N).",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    int n; scanf(\"%d\", &n);\n    int prime[100001]; memset(prime, 1, sizeof(prime));\n    prime[0] = prime[1] = 0;\n    for(int p=2; p*p<=n; p++) {\n        if(prime[p]) {\n            for(int i=p*p; i<=n; i+=p) prime[i] = 0;\n        }\n    }\n    for(int p=2; p<=n; p++) if(prime[p]) printf(\"%d \", p);\n    return 0;\n}",
+        "python": "n = int(input())\nprime = [True] * (n + 1)\np = 2\nwhile (p * p <= n):\n    if prime[p]:\n        for i in range(p * p, n + 1, p): prime[i] = False\n    p += 1\nprint(\" \".join(str(p) for p in range(2, n + 1) if prime[p]))",
+        "java": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int n = new Scanner(System.in).nextInt();\n        boolean[] prime = new boolean[n + 1];\n        Arrays.fill(prime, true);\n        for(int p=2; p*p<=n; p++) {\n            if(prime[p]) {\n                for(int i=p*p; i<=n; i+=p) prime[i] = false;\n            }\n        }\n        for(int p=2; p<=n; p++) if(p >= 2 && prime[p]) System.out.print(p + \" \");\n    }\n}",
+        "javascript": "const n = parseInt(require('fs').readFileSync(0, 'utf8').trim());\nconst prime = new Array(n + 1).fill(true);\nprime[0] = prime[1] = false;\nfor(let p=2; p*p<=n; p++) {\n    if(prime[p]) {\n        for(let i=p*p; i<=n; i+=p) prime[i] = false;\n    }\n}\nlet res = [];\nfor(let p=2; p<=n; p++) if(prime[p]) res.push(p);\nconsole.log(res.join(' '));"
+      },
+      "test_cases": [
+        {
+          "stdin": "20",
+          "expected_output": "2 3 5 7 11 13 17 19"
+        },
+        {
+          "stdin": "10",
+          "expected_output": "2 3 5 7"
+        },
+        {
+          "stdin": "2",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "50",
+          "expected_output": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97",
+          "isHidden": true
+        },
+        {
+          "stdin": "5",
+          "expected_output": "2 3 5",
+          "isHidden": true
+        },
+        {
+          "stdin": "3",
+          "expected_output": "2 3",
+          "isHidden": true
+        },
+        {
+          "stdin": "30",
+          "expected_output": "2 3 5 7 11 13 17 19 23 29",
+          "isHidden": true
+        },
+        {
+          "stdin": "15",
+          "expected_output": "2 3 5 7 11 13",
+          "isHidden": true
+        },
+        {
+          "stdin": "80",
+          "expected_output": "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-80",
+      "topicId": "math",
+      "title": "Babylonian Square Root Method",
+      "description": "Find the square root of a positive integer N using the Babylonian method. Start with an initial guess `x = N`. In each iteration, update `x = (x + N/x) / 2`. Stop when the difference between consecutive guesses is less than 0.00001 (1e-5). Print the result with 3 decimal places.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nroot (formatted to 3 decimal places)\n```\n\nConstraints\n• 1 ≤ N ≤ 10^6\n\nSample Input 1\n```\n25\n```\n\nSample Output 1\n```\n5.000\n```\n\nExplanation\nStandard iterative root discovery.",
+      "difficulty": "hard",
+      "estimatedTime": 12,
+      "concept": "Numerical Methods",
+      "hint": "Use a while loop until `fabs(next_x - x) < 0.00001`.",
+      "explanation": "Iterative approximation formula: `x_{n+1} = 0.5 * (x_n + S / x_n)`.\n\nStep-by-step:\n1. Initialize `x = N`.\n2. In a loop:\n   - `old_x = x`.\n   - `x = (x + N / x) / 2`.\n   - If `abs(x - old_x) < 1e-7`, break.\n3. Print `x` formatted to `.3f`.\n\nTrace (9):\n- x = 9.0\n- x = (9 + 9/9)/2 = 5.0\n- x = (5 + 9/5)/2 = 3.4\n- x = (3.4 + 9/3.4)/2 = 3.023...\n- Eventually 3.000.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <math.h>\nint main() {\n    double n; scanf(\"%lf\", &n);\n    double x = n, prev = 0;\n    while(fabs(x - prev) > 1e-6) {\n        prev = x;\n        x = (x + n / x) / 2.0;\n    }\n    printf(\"%.3f\", x);\n    return 0;\n}",
+        "python": "n = float(input())\nx = n\nprev = 0.0\nwhile abs(x - prev) > 1e-7:\n    prev = x\n    x = (x + n / x) / 2.0\nprint(\"{:.3f}\".format(x))",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        double n = new Scanner(System.in).nextDouble();\n        double x = n, prev = 0;\n        while(Math.abs(x - prev) > 1e-7) {\n            prev = x;\n            x = (x + n / x) / 2.0;\n        }\n        System.out.printf(\"%.3f\\n\", x);\n    }\n}",
+        "javascript": "const n = parseFloat(require('fs').readFileSync(0, 'utf8').trim());\nlet x = n, prev = 0;\nwhile(Math.abs(x - prev) > 1e-7) {\n    prev = x;\n    x = (x + n / x) / 2;\n}\nconsole.log(x.toFixed(3));"
+      },
+      "test_cases": [
+        {
+          "stdin": "25",
+          "expected_output": "5.000"
+        },
+        {
+          "stdin": "2",
+          "expected_output": "1.414"
+        },
+        {
+          "stdin": "100",
+          "expected_output": "10.000",
+          "isHidden": true
+        },
+        {
+          "stdin": "50",
+          "expected_output": "7.071",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "3.162",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1.000",
+          "isHidden": true
+        },
+        {
+          "stdin": "123",
+          "expected_output": "11.091",
+          "isHidden": true
+        },
+        {
+          "stdin": "999",
+          "expected_output": "31.607",
+          "isHidden": true
+        },
+        {
+          "stdin": "4",
+          "expected_output": "2.000",
+          "isHidden": true
+        },
+        {
+          "stdin": "10000",
+          "expected_output": "100.000",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-81",
+      "topicId": "math",
+      "title": "Russian Peasant Multiplication",
+      "description": "Calculate the product of two integers A and B using the Russian Peasant (Ancient Egyptian) multiplication algorithm.\nAlgorithm Steps:\n1. If A is odd, add B to the result.\n2. Halve A (integer division) and double B.\n3. Repeat until A is 0.\n\nInput Format\n```\nA B\n```\n\nOutput Format\n```\nproduct\n```\n\nConstraints\n• 0 ≤ A, B ≤ 10^6\n\nSample Input 1\n```\n18 25\n```\n\nSample Output 1\n```\n450\n```\n\nExplanation\n18 25 (Even)\n9 50 (Odd, add 50)\n4 100 (Even)\n2 200 (Even)\n1 400 (Odd, add 400)\nResult: 50 + 400 = 450.",
+      "difficulty": "medium",
+      "estimatedTime": 10,
+      "concept": "Algorithms",
+      "hint": "Use a while loop. Check if A is odd using `A % 2 != 0`. Use integer division for halving.",
+      "explanation": "Multiplication algorithm based on powers of 2 (binary).\n\nStep-by-step:\n1. Initialize `res = 0`.\n2. While `A > 0`:\n   - If `A % 2 != 0`, `res += B`.\n   - `A /= 2`.\n   - `B *= 2`.\n3. Return `res`.\n\nNote: This is how binary multiplication works: `A * B = bits(A) * B`.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    long long a, b, res = 0;\n    scanf(\"%lld %lld\", &a, &b);\n    while(a > 0) {\n        if(a % 2 != 0) res += b;\n        a /= 2; b *= 2;\n    }\n    printf(\"%lld\", res);\n    return 0;\n}",
+        "python": "a, b = map(int, input().split())\nres = 0\nwhile a > 0:\n    if a % 2 != 0: res += b\n    a //= 2\n    b *= 2\nprint(res)",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        long a = sc.nextLong(), b = sc.nextLong(), res = 0;\n        while(a > 0) {\n            if(a % 2 != 0) res += b;\n            a /= 2; b *= 2;\n        }\n        System.out.println(res);\n    }\n}",
+        "javascript": "let [a, b] = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/).map(BigInt);\nlet res = 0n;\nwhile(a > 0n) {\n    if(a % 2n !== 0n) res += b;\n    a /= 2n; b *= 2n;\n}\nconsole.log(res.toString());"
+      },
+      "test_cases": [
+        {
+          "stdin": "18 25",
+          "expected_output": "450"
+        },
+        {
+          "stdin": "5 7",
+          "expected_output": "35"
+        },
+        {
+          "stdin": "0 10",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "100 200",
+          "expected_output": "20000",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 1",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "123 456",
+          "expected_output": "56088",
+          "isHidden": true
+        },
+        {
+          "stdin": "1024 1024",
+          "expected_output": "1048576",
+          "isHidden": true
+        },
+        {
+          "stdin": "99 1",
+          "expected_output": "99",
+          "isHidden": true
+        },
+        {
+          "stdin": "25 25",
+          "expected_output": "625",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000 1000",
+          "expected_output": "1000000",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-82",
+      "topicId": "math",
+      "title": "Nth Catalan Number",
+      "description": "Find the Nth Catalan number. Catalan numbers form a sequence used in counting various combinatorial structures.\nFormula: `C_n = (2n)! / ((n+1)! n!)`.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nnth_catalan\n```\n\nConstraints\n• 0 ≤ N ≤ 20\n\nSample Input 1\n```\n3\n```\n\nSample Output 1\n```\n5\n```\n\nExplanation\nC_0=1, C_1=1, C_2=2, C_3=5, C_4=14.",
+      "difficulty": "hard",
+      "estimatedTime": 15,
+      "concept": "Combinatorics",
+      "hint": "Use the recursive formula `C_{n+1} = sum(C_i * C_{n-i})` or the binomial formula. Be careful with overflow; use long long.",
+      "explanation": "Calculates the Nth value in the Catalan sequence.\n\nLogic:\n`C_0 = 1`\n`C_n = (2(2n-1) / (n+1)) * C_{n-1}` is also useful.\nOr iterative DP logic: `dp[i] = dp[i] + (dp[j] * dp[i-j-1])`.\n\nTrace (to N=3):\n- C0 = 1\n- C1 = C0*C0 = 1\n- C2 = C0*C1 + C1*C0 = 1+1 = 2\n- C3 = C0*C2 + C1*C1 + C2*C0 = 2+1+2 = 5\nResult: 5",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nlong long catalan(int n) {\n    long long dp[21] = {0};\n    dp[0] = 1;\n    for (int i = 1; i <= n; i++) {\n        for (int j = 0; j < i; j++) {\n            dp[i] += dp[j] * dp[i - j - 1];\n        }\n    }\n    return dp[n];\n}\nint main() {\n    int n; scanf(\"%d\", &n);\n    printf(\"%lld\", catalan(n));\n    return 0;\n}",
+        "python": "def catalan(n):\n    dp = [0] * (n + 1)\n    dp[0] = 1\n    for i in range(1, n + 1):\n        for j in range(i):\n            dp[i] += dp[j] * dp[i - j - 1]\n    return dp[n]\nn = int(input())\nprint(catalan(n))",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        int n = new Scanner(System.in).nextInt();\n        long[] dp = new long[n + 1];\n        dp[0] = 1;\n        for (int i = 1; i <= n; i++) {\n            for (int j = 0; j < i; j++) {\n                dp[i] += dp[j] * dp[i - j - 1];\n            }\n        }\n        System.out.println(dp[n]);\n    }\n}",
+        "javascript": "function catalan(n) {\n    const dp = new BigInt64Array(n + 1);\n    dp[0] = 1n;\n    for (let i = 1; i <= n; i++) {\n        for (let j = 0; j < i; j++) {\n            dp[i] += dp[j] * dp[i - j - 1];\n        }\n    }\n    return dp[n];\n}\nconst n = parseInt(require('fs').readFileSync(0, 'utf8').trim());\nconsole.log(catalan(n).toString());"
+      },
+      "test_cases": [
+        {
+          "stdin": "3",
+          "expected_output": "5"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "5",
+          "expected_output": "42",
+          "isHidden": true
+        },
+        {
+          "stdin": "10",
+          "expected_output": "16796",
+          "isHidden": true
+        },
+        {
+          "stdin": "15",
+          "expected_output": "9694845",
+          "isHidden": true
+        },
+        {
+          "stdin": "2",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "4",
+          "expected_output": "14",
+          "isHidden": true
+        },
+        {
+          "stdin": "6",
+          "expected_output": "132",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "20",
+          "expected_output": "6564120420",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-83",
+      "topicId": "math",
+      "title": "Nth Fermat Number",
+      "description": "Find the Nth Fermat number. A Fermat number is defined as `F_n = 2^(2^n) + 1`.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nnth_fermat\n```\n\nConstraints\n• 0 ≤ N ≤ 5\n\nSample Input 1\n```\n2\n```\n\nSample Output 1\n```\n17\n```\n\nExplanation\nF_2 = 2^(2^2) + 1 = 2^4 + 1 = 17.",
+      "difficulty": "medium",
+      "estimatedTime": 5,
+      "concept": "Mathematics",
+      "hint": "Use the power function or left shifts for base 2. F_5 is quite large, use BigIntegers.",
+      "explanation": "Calculates `2^{2^N} + 1`.\n\nTrace:\n- F0 = 2^1 + 1 = 3\n- F1 = 2^2 + 1 = 5\n- F2 = 2^4 + 1 = 17\n- F3 = 2^8 + 1 = 257\n- F4 = 2^16 + 1 = 65537\n- F5 = 2^32 + 1 = 4294967297",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <math.h>\nint main() {\n    int n; scanf(\"%d\", &n);\n    if(n == 5) printf(\"4294967297\");\n    else printf(\"%lld\", (long long)pow(2, pow(2, n)) + 1);\n    return 0;\n}",
+        "python": "n = int(input())\nprint(2**(2**n) + 1)",
+        "java": "import java.math.BigInteger;\nimport java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        int n = new Scanner(System.in).nextInt();\n        BigInteger base = BigInteger.valueOf(2);\n        int exp = (int)Math.pow(2, n);\n        System.out.println(base.pow(exp).add(BigInteger.ONE));\n    }\n}",
+        "javascript": "const n = parseInt(require('fs').readFileSync(0, 'utf8').trim());\nconsole.log((2n ** (2n ** BigInt(n)) + 1n).toString());"
+      },
+      "test_cases": [
+        {
+          "stdin": "2",
+          "expected_output": "17"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "3"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "5",
+          "isHidden": true
+        },
+        {
+          "stdin": "3",
+          "expected_output": "257",
+          "isHidden": true
+        },
+        {
+          "stdin": "4",
+          "expected_output": "65537",
+          "isHidden": true
+        },
+        {
+          "stdin": "5",
+          "expected_output": "4294967297",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-84",
+      "topicId": "math",
+      "title": "Nth Mersenne Number",
+      "description": "Find the Nth Mersenne number. A Mersenne number is defined as `M_n = 2^n - 1`.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nnth_mersenne\n```\n\nConstraints\n• 1 ≤ N ≤ 60\n\nSample Input 1\n```\n5\n```\n\nSample Output 1\n```\n31\n```\n\nExplanation\nM_5 = 2^5 - 1 = 31.",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Mathematics",
+      "hint": "Use `(1LL << n) - 1` for small n, or BigIntegers for large n.",
+      "explanation": "Simply calculates `2^N - 1`.\n\nTrace (N=5):\n2^5 = 32. 32-1 = 31.\nResult: 31",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    int n; scanf(\"%d\", &n);\n    unsigned long long res = (1ULL << n) - 1;\n    printf(\"%llu\", res);\n    return 0;\n}",
+        "python": "n = int(input())\nprint(2**n - 1)",
+        "java": "import java.math.BigInteger;\nimport java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        int n = new Scanner(System.in).nextInt();\n        System.out.println(BigInteger.valueOf(2).pow(n).subtract(BigInteger.ONE));\n    }\n}",
+        "javascript": "const n = parseInt(require('fs').readFileSync(0, 'utf8').trim());\nconsole.log((2n ** BigInt(n) - 1n).toString());"
+      },
+      "test_cases": [
+        {
+          "stdin": "5",
+          "expected_output": "31"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "10",
+          "expected_output": "1023",
+          "isHidden": true
+        },
+        {
+          "stdin": "20",
+          "expected_output": "1048575",
+          "isHidden": true
+        },
+        {
+          "stdin": "60",
+          "expected_output": "1152921504606846975",
+          "isHidden": true
+        },
+        {
+          "stdin": "3",
+          "expected_output": "7",
+          "isHidden": true
+        },
+        {
+          "stdin": "2",
+          "expected_output": "3",
+          "isHidden": true
+        },
+        {
+          "stdin": "4",
+          "expected_output": "15",
+          "isHidden": true
+        },
+        {
+          "stdin": "31",
+          "expected_output": "2147483647",
+          "isHidden": true
+        },
+        {
+          "stdin": "15",
+          "expected_output": "32767",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-85",
+      "topicId": "math",
+      "title": "Nth Hardy-Ramanujan Number",
+      "description": "Hardy-Ramanujan numbers are numbers that can be expressed as the sum of two cubes in at least two different ways. Find the Nth such number.\nExample: 1729 = 1^3 + 12^3 = 9^3 + 10^3.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nnth_taxicab\n```\n\nConstraints\n• 1 ≤ N ≤ 5\n\nSample Input 1\n```\n1\n```\n\nSample Output 1\n```\n1729\n```\n\nExplanation\n1729 is the smallest taxicab number.",
+      "difficulty": "hard",
+      "estimatedTime": 20,
+      "concept": "Number Theory",
+      "hint": "Search through numbers. For each number, count how many pairs (a, b) satisfy a^3 + b^3 = n.",
+      "explanation": "Finds numbers where `a^3 + b^3 = n` has multiple solutions.\n\nTrace:\n1. 1729 (1^3+12^3, 9^3+10^3)\n2. 4104 (2^3+16^3, 9^3+15^3)\n3. 13832 (2^3+24^3, 18^3+20^3)\n4. 20683 (10^3+27^3, 19^3+24^3)\n5. 32832 (4^3+32^3, 18^3+30^3)\n\nNote: O(n^2) search is slow, so we pre-index cubes or use a faster lookup.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint check(int n) {\n    int count = 0;\n    for (int i = 1; i * i * i < n; i++) {\n        for (int j = i + 1; i * i * i + j * j * j <= n; j++) {\n            if (i * i * i + j * j * j == n) count++;\n        }\n    }\n    return count >= 2;\n}\nint main() {\n    int n, count = 0, i = 1729;\n    scanf(\"%d\", &n);\n    while(1) {\n        if(check(i)) count++;\n        if(count == n) { printf(\"%d\", i); break; }\n        i++;\n    }\n    return 0;\n}",
+        "python": "def check(n):\n    count = 0\n    i = 1\n    while i**3 < n:\n        j = i + 1\n        while i**3 + j**3 <= n:\n            if i**3 + j**3 == n: count += 1\n            j += 1\n        i += 1\n    return count >= 2\nn = int(input())\ncount, i = 0, 1729\nwhile True:\n    if check(i):\n        count += 1\n        if count == n: \n            print(i); break\n    i += 1",
+        "java": "import java.util.Scanner;\npublic class Main {\n    static boolean check(int n) {\n        int count = 0;\n        for (int i = 1; i * i * i < n; i++) {\n            for (int j = i + 1; i * i * i + j * j * j <= n; j++) {\n                if (i * i * i + j * j * j == n) count++;\n            }\n        }\n        return count >= 2;\n    }\n    public static void main(String[] args) {\n        int n = new Scanner(System.in).nextInt();\n        int count = 0, i = 1729;\n        while(true) {\n            if(check(i)) count++;\n            if(count == n) { System.out.println(i); break; }\n            i++;\n        }\n    }\n}",
+        "javascript": "function check(n) {\n    let count = 0;\n    for (let i = 1; i * i * i < n; i++) {\n        for (let j = i + 1; i * i * i + j * j * j <= n; j++) {\n            if (i * i * i + j * j * j === n) count++;\n        }\n    }\n    return count >= 2;\n}\nconst n = parseInt(require('fs').readFileSync(0, 'utf8').trim());\nlet count = 0, i = 1729;\nwhile(true) {\n    if(check(i)) count++;\n    if(count === n) { console.log(i); break; }\n    i++;\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "1",
+          "expected_output": "1729"
+        },
+        {
+          "stdin": "2",
+          "expected_output": "4104"
+        },
+        {
+          "stdin": "3",
+          "expected_output": "13832",
+          "isHidden": true
+        },
+        {
+          "stdin": "4",
+          "expected_output": "20683",
+          "isHidden": true
+        },
+        {
+          "stdin": "5",
+          "expected_output": "32832",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-86",
+      "topicId": "math",
+      "title": "Kaprekar Constant Process",
+      "description": "Given a 4-digit number (not all digits same), perform the Kaprekar's routine: Arrange digits in descending and ascending order, subtract the smaller from the larger. Repeat until you reach 6174. Print the sequence of numbers obtained.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nn1 n2 ... 6174\n```\n\nConstraints\n• N is a 4-digit number, at least two digits must be different.\n\nSample Input 1\n```\n3524\n```\n\nSample Output 1\n```\n3524 3087 8352 6174\n```",
+      "difficulty": "hard",
+      "estimatedTime": 15,
+      "concept": "Algorithms",
+      "hint": "In each step: Sort digits to get max and min versions. Compute difference. If diff is 6174 or 0 (if digits same), stop.",
+      "explanation": "Iterative process leading to the fixed point 6174.\n\nStep-by-step (3524):\n1. 3524: Desc=5432, Asc=2345. Diff = 3087.\n2. 3087: Desc=8730, Asc=0378. Diff = 8352.\n3. 8352: Desc=8532, Asc=2358. Diff = 6174.\nResult: 3524 3087 8352 6174",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nint compare(const void* a, const void* b) { return (*(char*)a - *(char*)b); }\nint main() {\n    int n; scanf(\"%d\", &n);\n    printf(\"%d \", n);\n    while(n != 6174 && n != 0) {\n        char s[5]; sprintf(s, \"%04d\", n);\n        qsort(s, 4, 1, compare);\n        int asc = atoi(s);\n        for(int i=0; i<2; i++) { char t=s[i]; s[i]=s[3-i]; s[3-i]=t; }\n        int desc = atoi(s);\n        n = desc - asc;\n        printf(\"%d \", n);\n    }\n    return 0;\n}",
+        "python": "n = int(input())\nres = [n]\nwhile n != 6174 and n != 0:\n    s = f\"{n:04d}\"\n    asc = int(\"\".join(sorted(s)))\n    desc = int(\"\".join(sorted(s, reverse=True)))\n    n = desc - asc\n    res.append(n)\nprint(\" \".join(map(str, res)))",
+        "java": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int n = new Scanner(System.in).nextInt();\n        System.out.print(n + \" \");\n        while(n != 6174 && n != 0) {\n            char[] s = String.format(\"%04d\", n).toCharArray();\n            Arrays.sort(s);\n            int asc = Integer.parseInt(new String(s));\n            StringBuilder sb = new StringBuilder(new String(s)).reverse();\n            int desc = Integer.parseInt(sb.toString());\n            n = desc - asc;\n            System.out.print(n + \" \");\n        }\n    }\n}",
+        "javascript": "let n = parseInt(require('fs').readFileSync(0, 'utf8').trim());\nlet res = [n];\nwhile(n !== 6174 && n !== 0) {\n    let s = String(n).padStart(4, '0').split('');\n    let asc = parseInt(s.sort().join(''));\n    let desc = parseInt(s.reverse().join(''));\n    n = desc - asc;\n    res.push(n);\n}\nconsole.log(res.join(' '));"
+      },
+      "test_cases": [
+        {
+          "stdin": "3524",
+          "expected_output": "3524 3087 8352 6174"
+        },
+        {
+          "stdin": "1234",
+          "expected_output": "1234 3087 8352 6174"
+        },
+        {
+          "stdin": "1112",
+          "expected_output": "1112 999 8991 1089 8910 7992 7173 6354 3087 8352 6174",
+          "isHidden": true
+        },
+        {
+          "stdin": "8352",
+          "expected_output": "8352 6174",
+          "isHidden": true
+        },
+        {
+          "stdin": "6174",
+          "expected_output": "6174",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000",
+          "expected_output": "1000 999 8991 1089 8910 7992 7173 6354 3087 8352 6174",
+          "isHidden": true
+        },
+        {
+          "stdin": "2111",
+          "expected_output": "2111 999 8991 1089 8910 7992 7173 6354 3087 8352 6174",
+          "isHidden": true
+        },
+        {
+          "stdin": "4321",
+          "expected_output": "4321 3087 8352 6174",
+          "isHidden": true
+        },
+        {
+          "stdin": "1011",
+          "expected_output": "1011 999 8991 1089 8910 7992 7173 6354 3087 8352 6174",
+          "isHidden": true
+        },
+        {
+          "stdin": "2345",
+          "expected_output": "2345 3087 8352 6174",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-87",
+      "topicId": "math",
+      "title": "ASCII Value of a Character",
+      "description": "Find the ASCII value of the given character.\n\nInput Format\n```\nchar\n```\n\nOutput Format\n```\nascii_value\n```\n\nConstraints\n• Any printable character.\n\nSample Input 1\n```\nA\n```\n\nSample Output 1\n```\n65\n```\n\nExplanation\nThe ASCII value of 'A' is 65.",
+      "difficulty": "easy",
+      "estimatedTime": 2,
+      "concept": "Character Processing",
+      "hint": "In C/Java, simply cast the char to an int. In Python, use `ord()`. In JS, use `charCodeAt(0)`.",
+      "explanation": "Every character is stored numerically as an ASCII code.\n\nTrace (A):\nA is mapped to 65.\nResult: 65",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    char c; scanf(\" %c\", &c);\n    printf(\"%d\", c);\n    return 0;\n}",
+        "python": "c = input().strip()\nprint(ord(c[0]))",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        char c = new Scanner(System.in).next().charAt(0);\n        System.out.println((int)c);\n    }\n}",
+        "javascript": "const c = require('fs').readFileSync(0, 'utf8').trim();\nconsole.log(c.charCodeAt(0));"
+      },
+      "test_cases": [
+        {
+          "stdin": "A",
+          "expected_output": "65"
+        },
+        {
+          "stdin": "a",
+          "expected_output": "97"
+        },
+        {
+          "stdin": "z",
+          "expected_output": "122",
+          "isHidden": true
+        },
+        {
+          "stdin": "Z",
+          "expected_output": "90",
+          "isHidden": true
+        },
+        {
+          "stdin": "0",
+          "expected_output": "48",
+          "isHidden": true
+        },
+        {
+          "stdin": "9",
+          "expected_output": "57",
+          "isHidden": true
+        },
+        {
+          "stdin": "@",
+          "expected_output": "64",
+          "isHidden": true
+        },
+        {
+          "stdin": "#",
+          "expected_output": "35",
+          "isHidden": true
+        },
+        {
+          "stdin": " ",
+          "expected_output": "32",
+          "isHidden": true
+        },
+        {
+          "stdin": "!",
+          "expected_output": "33",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-88",
+      "topicId": "math",
+      "title": "Vowel or Consonant Check",
+      "description": "Check whether the given alphabet is a Vowel or a Consonant. Case-insensitive.\n\nInput Format\n```\nchar\n```\n\nOutput Format\n```\nVowel/Consonant\n```\n\nConstraints\n• Only alphabetic characters (a-z, A-Z).\n\nSample Input 1\n```\ne\n```\n\nSample Output 1\n```\nVowel\n```\n\nExplanation\n'e' is a vowel.",
+      "difficulty": "easy",
+      "estimatedTime": 3,
+      "concept": "Character Processing",
+      "hint": "Check if the character (in lowercase) is one of 'a', 'e', 'i', 'o', 'u'.",
+      "explanation": "Simple logic to categorize alphabets.\n\nTrace (E):\n- lowerCase(E) = e\n- e is in {a, e, i, o, u}\nResult: Vowel",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <ctype.h>\nint main() {\n    char c; scanf(\" %c\", &c); c = tolower(c);\n    if(c=='a' || c=='e' || c=='i' || c=='o' || c=='u') printf(\"Vowel\");\n    else printf(\"Consonant\");\n    return 0;\n}",
+        "python": "c = input().strip().lower()\nprint(\"Vowel\" if c in 'aeiou' else \"Consonant\")",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        char c = Character.toLowerCase(new Scanner(System.in).next().charAt(0));\n        if(\"aeiou\".indexOf(c) != -1) System.out.println(\"Vowel\");\n        else System.out.println(\"Consonant\");\n    }\n}",
+        "javascript": "const c = require('fs').readFileSync(0, 'utf8').trim().toLowerCase();\nconsole.log('aeiou'.includes(c) ? \"Vowel\" : \"Consonant\");"
+      },
+      "test_cases": [
+        {
+          "stdin": "e",
+          "expected_output": "Vowel"
+        },
+        {
+          "stdin": "A",
+          "expected_output": "Vowel"
+        },
+        {
+          "stdin": "b",
+          "expected_output": "Consonant",
+          "isHidden": true
+        },
+        {
+          "stdin": "z",
+          "expected_output": "Consonant",
+          "isHidden": true
+        },
+        {
+          "stdin": "I",
+          "expected_output": "Vowel",
+          "isHidden": true
+        },
+        {
+          "stdin": "o",
+          "expected_output": "Vowel",
+          "isHidden": true
+        },
+        {
+          "stdin": "u",
+          "expected_output": "Vowel",
+          "isHidden": true
+        },
+        {
+          "stdin": "X",
+          "expected_output": "Consonant",
+          "isHidden": true
+        },
+        {
+          "stdin": "d",
+          "expected_output": "Consonant",
+          "isHidden": true
+        },
+        {
+          "stdin": "K",
+          "expected_output": "Consonant",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-89",
+      "topicId": "math",
+      "title": "Character Case Conversion",
+      "description": "Convert an uppercase character to lowercase, and a lowercase character to uppercase. If the character is not an alphabet, print it as is.\n\nInput Format\n```\nchar\n```\n\nOutput Format\n```\nconverted_char\n```\n\nConstraints\n• Any character.\n\nSample Input 1\n```\nG\n```\n\nSample Output 1\n```\ng\n```\n\nExplanation\n'G' is uppercase, so converted to lowercase 'g'.",
+      "difficulty": "easy",
+      "estimatedTime": 4,
+      "concept": "Character Processing",
+      "hint": "Check if char is between 'A'-'Z' or 'a'-'z'. Add or subtract 32 (the distance between cases in ASCII).",
+      "explanation": "Changes the bit/ASCII value to switch cases.\n\nLogic:\n- If 'A' <= c <= 'Z': result = c + 32.\n- If 'a' <= c <= 'z': result = c - 32.\n- Else: result = c.\n\nTrace (A):\nASCII(A)=65. 65+32 = 97. ASCII(97) = 'a'.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <ctype.h>\nint main() {\n    char c; scanf(\" %c\", &c);\n    if(isupper(c)) printf(\"%c\", tolower(c));\n    else if(islower(c)) printf(\"%c\", toupper(c));\n    else printf(\"%c\", c);\n    return 0;\n}",
+        "python": "c = input().strip()\nif c.isupper(): print(c.lower())\nelif c.islower(): print(c.upper())\nelse: print(c)",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        char c = new Scanner(System.in).next().charAt(0);\n        if(Character.isUpperCase(c)) System.out.println(Character.toLowerCase(c));\n        else if(Character.isLowerCase(c)) System.out.println(Character.toUpperCase(c));\n        else System.out.println(c);\n    }\n}",
+        "javascript": "const c = require('fs').readFileSync(0, 'utf8').trim();\nif(c === c.toUpperCase() && c !== c.toLowerCase()) console.log(c.toLowerCase());\nelse if(c === c.toLowerCase() && c !== c.toUpperCase()) console.log(c.toUpperCase());\nelse console.log(c);"
+      },
+      "test_cases": [
+        {
+          "stdin": "G",
+          "expected_output": "g"
+        },
+        {
+          "stdin": "x",
+          "expected_output": "X"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "@",
+          "expected_output": "@",
+          "isHidden": true
+        },
+        {
+          "stdin": "M",
+          "expected_output": "m",
+          "isHidden": true
+        },
+        {
+          "stdin": "q",
+          "expected_output": "Q",
+          "isHidden": true
+        },
+        {
+          "stdin": "B",
+          "expected_output": "b",
+          "isHidden": true
+        },
+        {
+          "stdin": "y",
+          "expected_output": "Y",
+          "isHidden": true
+        },
+        {
+          "stdin": "H",
+          "expected_output": "h",
+          "isHidden": true
+        },
+        {
+          "stdin": "z",
+          "expected_output": "Z",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-90",
+      "topicId": "math",
+      "title": "Decimal to Octal Conversion",
+      "description": "Convert a positive decimal integer N to its octal representation.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\noctal_string\n```\n\nConstraints\n• 0 ≤ N ≤ 2 * 10^9\n\nSample Input 1\n```\n100\n```\n\nSample Output 1\n```\n144\n```\n\nExplanation\n100 in decimal is 144 in octal (1*64 + 4*8 + 4*1).",
+      "difficulty": "medium",
+      "estimatedTime": 6,
+      "concept": "Number Systems",
+      "hint": "Repeatedly divide by 8 and collect remainders.",
+      "explanation": "Basic conversion using division algorithm.\n\nStep-by-step (100):\n1. 100 / 8 = 12, rem 4\n2. 12 / 8 = 1, rem 4\n3. 1 / 8 = 0, rem 1\nOctal: 144 (reverse).",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    int n; scanf(\"%d\", &n);\n    printf(\"%o\", n);\n    return 0;\n}",
+        "python": "n = int(input())\nprint(oct(n)[2:])",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        int n = new Scanner(System.in).nextInt();\n        System.out.println(Integer.toOctalString(n));\n    }\n}",
+        "javascript": "const n = parseInt(require('fs').readFileSync(0, 'utf8').trim());\nconsole.log(n.toString(8));"
+      },
+      "test_cases": [
+        {
+          "stdin": "100",
+          "expected_output": "144"
+        },
+        {
+          "stdin": "8",
+          "expected_output": "10"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "511",
+          "expected_output": "777",
+          "isHidden": true
+        },
+        {
+          "stdin": "64",
+          "expected_output": "100",
+          "isHidden": true
+        },
+        {
+          "stdin": "42",
+          "expected_output": "52",
+          "isHidden": true
+        },
+        {
+          "stdin": "123",
+          "expected_output": "173",
+          "isHidden": true
+        },
+        {
+          "stdin": "999",
+          "expected_output": "1747",
+          "isHidden": true
+        },
+        {
+          "stdin": "1024",
+          "expected_output": "2000",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-91",
+      "topicId": "math",
+      "title": "Decimal to Hexadecimal Conversion",
+      "description": "Convert a positive decimal integer N to its hexadecimal (Base 16) representation. Use uppercase letters for digits A-F.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nhex_string\n```\n\nConstraints\n• 0 ≤ N ≤ 2 * 10^9\n\nSample Input 1\n```\n255\n```\n\nSample Output 1\n```\nFF\n```\n\nExplanation\n255 in decimal is 255 = 15*16 + 15, which is FF.",
+      "difficulty": "medium",
+      "estimatedTime": 6,
+      "concept": "Number Systems",
+      "hint": "Repeatedly divide by 16 and map remainders 10-15 to A-F.",
+      "explanation": "Conversion using division by 16.\n\nStep-by-step (100):\n1. 100 / 16 = 6, rem 4\n2. 6 / 16 = 0, rem 6\nHex: 64.\n(255):\n1. 255 / 16 = 15, rem 15 (F)\n2. 15 / 16 = 0, rem 15 (F)\nHex: FF.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    int n; scanf(\"%d\", &n);\n    printf(\"%X\", n);\n    return 0;\n}",
+        "python": "n = int(input())\nprint(hex(n)[2:].upper())",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        int n = new Scanner(System.in).nextInt();\n        System.out.println(Integer.toHexString(n).toUpperCase());\n    }\n}",
+        "javascript": "const n = parseInt(require('fs').readFileSync(0, 'utf8').trim());\nconsole.log(n.toString(16).toUpperCase());"
+      },
+      "test_cases": [
+        {
+          "stdin": "255",
+          "expected_output": "FF"
+        },
+        {
+          "stdin": "10",
+          "expected_output": "A"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "16",
+          "expected_output": "10",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "64",
+          "isHidden": true
+        },
+        {
+          "stdin": "4095",
+          "expected_output": "FFF",
+          "isHidden": true
+        },
+        {
+          "stdin": "65535",
+          "expected_output": "FFFF",
+          "isHidden": true
+        },
+        {
+          "stdin": "42",
+          "expected_output": "2A",
+          "isHidden": true
+        },
+        {
+          "stdin": "123",
+          "expected_output": "7B",
+          "isHidden": true
+        },
+        {
+          "stdin": "30",
+          "expected_output": "1E",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-93",
+      "topicId": "math",
+      "title": "Total Handshakes Problem",
+      "description": "In a room with N people, if every person shakes hands with every other person exactly once, find the total number of handshakes.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\ntotal_handshakes\n```\n\nConstraints\n• 0 ≤ N ≤ 10^5\n\nSample Input 1\n```\n10\n```\n\nSample Output 1\n```\n45\n```\n\nExplanation\nCombination nC2 = n(n-1)/2. For n=10, 10*9/2 = 45.",
+      "difficulty": "easy",
+      "estimatedTime": 2,
+      "concept": "Combinatorics",
+      "hint": "Use the formula `n*(n-1)/2`.",
+      "explanation": "Calculation of total unique pairings in a set of N elements.\n\nFormula:\n`Total = N * (N - 1) / 2`\n\nTrace (N=10):\n10 * 9 / 2 = 90 / 2 = 45.\nResult: 45",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    long long n; scanf(\"%lld\", &n);\n    if(n < 2) printf(\"0\");\n    else printf(\"%lld\", n * (n - 1) / 2);\n    return 0;\n}",
+        "python": "n = int(input())\nprint(n * (n - 1) // 2 if n >= 2 else 0)",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        long n = new Scanner(System.in).nextLong();\n        System.out.println(n < 2 ? 0 : n * (n - 1) / 2);\n    }\n}",
+        "javascript": "const n = BigInt(require('fs').readFileSync(0, 'utf8').trim());\nconsole.log(n < 2n ? \"0\" : (n * (n - 1n) / 2n).toString());"
+      },
+      "test_cases": [
+        {
+          "stdin": "10",
+          "expected_output": "45"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "0"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "2",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "3",
+          "expected_output": "3",
+          "isHidden": true
+        },
+        {
+          "stdin": "4",
+          "expected_output": "6",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "4950",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000",
+          "expected_output": "499500",
+          "isHidden": true
+        },
+        {
+          "stdin": "5",
+          "expected_output": "10",
+          "isHidden": true
+        },
+        {
+          "stdin": "100000",
+          "expected_output": "4999950000",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-94",
+      "topicId": "math",
+      "title": "Sum of Arithmetic Progression",
+      "description": "Find the sum of the first N terms of an Arithmetic Progression (AP) with first term A and common difference D.\n\nInput Format\n```\nA D N\n```\n\nOutput Format\n```\nsum_of_AP\n```\n\nConstraints\n• -1000 ≤ A, D ≤ 1000\n• 1 ≤ N ≤ 10^5\n\nSample Input 1\n```\n1 2 5\n```\n\nSample Output 1\n```\n25\n```\n\nExplanation\nSeries: 1, 3, 5, 7, 9. Sum = 25.",
+      "difficulty": "easy",
+      "estimatedTime": 4,
+      "concept": "Sequences",
+      "hint": "Formula: `S_n = (n/2) * [2*A + (n-1)*D]`.",
+      "explanation": "Standard AP summation formula application.\n\nStep-by-step:\n1. S = (N/2) * (2*A + (N-1)*D)\n\nTrace (1 2 5):\n- A=1, D=2, N=5\n- S = (5/2) * (2*1 + (5-1)*2)\n- S = 2.5 * (2 + 8) = 2.5 * 10 = 25.\nResult: 25",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    long long a, d, n;\n    scanf(\"%lld %lld %lld\", &a, &d, &n);\n    long long res = n * (2 * a + (n - 1) * d) / 2;\n    printf(\"%lld\", res);\n    return 0;\n}",
+        "python": "a, d, n = map(int, input().split())\nprint(n * (2 * a + (n - 1) * d) // 2)",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        long a = sc.nextLong(), d = sc.nextLong(), n = sc.nextLong();\n        System.out.println(n * (2 * a + (n - 1) * d) / 2);\n    }\n}",
+        "javascript": "const [a, d, n] = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/).map(BigInt);\nconsole.log((n * (2n * a + (n - 1n) * d) / 2n).toString());"
+      },
+      "test_cases": [
+        {
+          "stdin": "1 2 5",
+          "expected_output": "25"
+        },
+        {
+          "stdin": "10 5 10",
+          "expected_output": "325"
+        },
+        {
+          "stdin": "0 1 100",
+          "expected_output": "4950",
+          "isHidden": true
+        },
+        {
+          "stdin": "5 -2 10",
+          "expected_output": "-40",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 0 1000",
+          "expected_output": "1000",
+          "isHidden": true
+        },
+        {
+          "stdin": "100 10 1",
+          "expected_output": "100",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 1 10",
+          "expected_output": "55",
+          "isHidden": true
+        },
+        {
+          "stdin": "-10 5 5",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "100 0 5",
+          "expected_output": "500",
+          "isHidden": true
+        },
+        {
+          "stdin": "100 -10 10",
+          "expected_output": "550",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-95",
+      "topicId": "math",
+      "title": "Sum of Geometric Progression",
+      "description": "Find the sum of the first N terms of a Geometric Progression (GP) with first term A and common ratio R. Round result to 2 decimal places.\n\nInput Format\n```\nA R N\n```\n\nOutput Format\n```\nsum_of_GP\n```\n\nConstraints\n• 1 ≤ A ≤ 100, 1 ≤ R ≤ 10, 1 ≤ N ≤ 20\n\nSample Input 1\n```\n1 2 5\n```\n\nSample Output 1\n```\n31.00\n```\n\nExplanation\nSeries: 1, 2, 4, 8, 16. Sum = 31.",
+      "difficulty": "medium",
+      "estimatedTime": 6,
+      "concept": "Sequences",
+      "hint": "Formula: `S_n = A * (R^N - 1) / (R - 1)`. If R=1, `S_n = A * N`.",
+      "explanation": "Standard GP summation formula.\n\nStep-by-step:\n1. If R == 1, S = A * N.\n2. Else, S = A * (R^N - 1) / (R - 1).\n\nTrace (1 2 5):\n- S = 1 * (2^5 - 1) / (2 - 1) = (32 - 1) / 1 = 31.\nResult: 31.00",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <math.h>\nint main() {\n    double a, r, n;\n    scanf(\"%lf %lf %lf\", &a, &r, &n);\n    double res;\n    if (r == 1) res = a * n;\n    else res = a * (pow(r, n) - 1) / (r - 1);\n    printf(\"%.2f\", res);\n    return 0;\n}",
+        "python": "a, r, n = map(float, input().split())\nif r == 1:\n    res = a * n\nelse:\n    res = a * (r**n - 1) / (r - 1)\nprint(\"{:.2f}\".format(res))",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        double a = sc.nextDouble(), r = sc.nextDouble(), n = sc.nextDouble();\n        double res = (r == 1) ? a * n : a * (Math.pow(r, n) - 1) / (r - 1);\n        System.out.printf(\"%.2f\\n\", res);\n    }\n}",
+        "javascript": "const [a, r, n] = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/).map(Number);\nconst res = (r === 1) ? a * n : a * (Math.pow(r, n) - 1) / (r - 1);\nconsole.log(res.toFixed(2));"
+      },
+      "test_cases": [
+        {
+          "stdin": "1 2 5",
+          "expected_output": "31.00"
+        },
+        {
+          "stdin": "2 3 4",
+          "expected_output": "80.00"
+        },
+        {
+          "stdin": "10 1 5",
+          "expected_output": "50.00",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 0.5 3",
+          "expected_output": "1.75",
+          "isHidden": true
+        },
+        {
+          "stdin": "5 2 10",
+          "expected_output": "5115.00",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 1.1 5",
+          "expected_output": "6.11",
+          "isHidden": true
+        },
+        {
+          "stdin": "100 2 1",
+          "expected_output": "100.00",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 2 10",
+          "expected_output": "1023.00",
+          "isHidden": true
+        },
+        {
+          "stdin": "2 0.1 2",
+          "expected_output": "2.20",
+          "isHidden": true
+        },
+        {
+          "stdin": "5 5 5",
+          "expected_output": "3905.00",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-96",
+      "topicId": "math",
+      "title": "Roots of Quadratic Equation",
+      "description": "Find the roots of a quadratic equation `Ax^2 + Bx + C = 0`. Output the roots (real or imaginary) in specific format.\n\nInput Format\n```\nA B C\n```\n\nOutput Format\n```\nReal and Distinct: r1 r2\nReal and Equal: r1\nImaginary\n```\n\nConstraints\n• A, B, C are integers. A ≠ 0.\n• Roots rounded to 2 decimal places.",
+      "difficulty": "hard",
+      "estimatedTime": 15,
+      "concept": "Arithmetic",
+      "hint": "Calculate the discriminant D = B^2 - 4AC. If D > 0, roots are real and distinct. If D = 0, real and equal. If D < 0, imaginary.",
+      "explanation": "Calculates roots using the quadratic formula: `x = (-B ± sqrt(B^2 - 4AC)) / 2A`.\n\nStep-by-step:\n1. Compute `D = B*B - 4*A*C`.\n2. If `D > 0`:\n   - `r1 = (-B + sqrt(D)) / 2A`\n   - `r2 = (-B - sqrt(D)) / 2A`\n   - (Print in descending order).\n3. If `D == 0`:\n   - `r = -B / 2A`\n4. If `D < 0`:\n   - Print 'Imaginary'.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <math.h>\nint main() {\n    double a, b, c; scanf(\"%lf %lf %lf\", &a, &b, &c);\n    double d = b*b - 4*a*c;\n    if(d > 0) {\n        double r1 = (-b + sqrt(d)) / (2*a), r2 = (-b - sqrt(d)) / (2*a);\n        if(r1 < r2) { double t=r1; r1=r2; r2=t; }\n        printf(\"Real and Distinct: %.2f %.2f\", r1, r2);\n    } else if(d == 0) {\n        printf(\"Real and Equal: %.2f\", -b / (2*a));\n    } else {\n        printf(\"Imaginary\");\n    }\n    return 0;\n}",
+        "python": "import math\na, b, c = map(float, input().split())\nd = b*b - 4*a*c\nif d > 0:\n    r1 = (-b + math.sqrt(d)) / (2*a)\n    r2 = (-b - math.sqrt(d)) / (2*a)\n    print(\"Real and Distinct: {:.2f} {:.2f}\".format(max(r1,r2), min(r1,r2)))\nelif d == 0:\n    print(\"Real and Equal: {:.2f}\".format(-b / (2*a)))\nelse:\n    print(\"Imaginary\")",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        double a = sc.nextDouble(), b = sc.nextDouble(), c = sc.nextDouble();\n        double d = b*b - 4*a*c;\n        if(d > 0) {\n            double r1 = (-b + Math.sqrt(d)) / (2*a), r2 = (-b - Math.sqrt(d)) / (2*a);\n            System.out.printf(\"Real and Distinct: %.2f %.2f\\n\", Math.max(r1,r2), Math.min(r1,r2));\n        } else if(d == 0) {\n            System.out.printf(\"Real and Equal: %.2f\\n\", -b / (2*a));\n        } else {\n            System.out.println(\"Imaginary\");\n        }\n    }\n}",
+        "javascript": "const [a, b, c] = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/).map(Number);\nconst d = b*b - 4*a*c;\nif(d > 0) {\n    const r1 = (-b + Math.sqrt(d)) / (2*a), r2 = (-b - Math.sqrt(d)) / (2*a);\n    console.log(`Real and Distinct: ${Math.max(r1,r2).toFixed(2)} ${Math.min(r1,r2).toFixed(2)}`);\n} else if(d === 0) {\n    console.log(`Real and Equal: ${(-b / (2*a)).toFixed(2)}`);\n} else {\n    console.log(\"Imaginary\");\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "1 -5 6",
+          "expected_output": "Real and Distinct: 3.00 2.00"
+        },
+        {
+          "stdin": "1 4 4",
+          "expected_output": "Real and Equal: -2.00"
+        },
+        {
+          "stdin": "1 2 5",
+          "expected_output": "Imaginary",
+          "isHidden": true
+        },
+        {
+          "stdin": "2 -7 3",
+          "expected_output": "Real and Distinct: 3.00 0.50",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 -6 9",
+          "expected_output": "Real and Equal: 3.00",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 0 -1",
+          "expected_output": "Real and Distinct: 1.00 -1.00",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 1 1",
+          "expected_output": "Imaginary",
+          "isHidden": true
+        },
+        {
+          "stdin": "4 -12 9",
+          "expected_output": "Real and Equal: 1.50",
+          "isHidden": true
+        },
+        {
+          "stdin": "-1 5 -6",
+          "expected_output": "Real and Distinct: 3.00 2.00",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 10 25",
+          "expected_output": "Real and Equal: -5.00",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-97",
+      "topicId": "math",
+      "title": "Leap Year Check",
+      "description": "Determine if a given year is a Leap Year.\nConditions:\n1. Divisible by 400.\n2. Divisible by 4 but NOT by 100.\n\nInput Format\n```\nyear\n```\n\nOutput Format\n```\nYes/No\n```\n\nConstraints\n• 1 ≤ year ≤ 9999",
+      "difficulty": "easy",
+      "estimatedTime": 2,
+      "concept": "Logic",
+      "hint": "Use the modulo operator. `(year % 400 == 0) || (year % 4 == 0 && year % 100 != 0)`.",
+      "explanation": "Standard calendar logic.\n\nTrace:\n2000: Div by 400. Yes.\n1900: Div by 4, but also div by 100. (Condition 1 fails, Condition 2 fails). No.\n2024: Div by 4, not div by 100. Yes.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    int y; scanf(\"%d\", &y);\n    if((y % 400 == 0) || (y % 4 == 0 && y % 100 != 0)) printf(\"Yes\");\n    else printf(\"No\");\n    return 0;\n}",
+        "python": "y = int(input())\nif (y % 400 == 0) or (y % 4 == 0 and y % 100 != 0): print(\"Yes\")\nelse: print(\"No\")",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        int y = new Scanner(System.in).nextInt();\n        if((y % 400 == 0) || (y % 4 == 0 && y % 100 != 0)) System.out.println(\"Yes\");\n        else System.out.println(\"No\");\n    }\n}",
+        "javascript": "const y = parseInt(require('fs').readFileSync(0, 'utf8').trim());\nconsole.log((y % 400 === 0) || (y % 4 === 0 && y % 100 !== 0) ? \"Yes\" : \"No\");"
+      },
+      "test_cases": [
+        {
+          "stdin": "2000",
+          "expected_output": "Yes"
+        },
+        {
+          "stdin": "1900",
+          "expected_output": "No"
+        },
+        {
+          "stdin": "2024",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "2023",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "2100",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "2400",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "2016",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "2018",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "1600",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "1700",
+          "expected_output": "No",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-98",
+      "topicId": "math",
+      "title": "Distance Between Two Points",
+      "description": "Calculate the Euclidean distance between two points (x1, y1) and (x2, y2). Round to 2 decimal places.\n\nInput Format\n```\nx1 y1 x2 y2\n```\n\nOutput Format\n```\ndistance\n```\n\nConstraints\n• -1000 ≤ x, y ≤ 1000",
+      "difficulty": "easy",
+      "estimatedTime": 4,
+      "concept": "Geometry",
+      "hint": "Formula: `sqrt((x2-x1)^2 + (y2-y1)^2)`.",
+      "explanation": "Applies the distance formula derived from Pythagorean theorem.\n\nTrace (0 0 3 4):\n- dx = 3-0=3, dy = 4-0=4\n- dist = sqrt(3^2 + 4^2) = sqrt(9+16) = sqrt(25) = 5.00.\nResult: 5.00",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <math.h>\nint main() {\n    double x1, y1, x2, y2;\n    scanf(\"%lf %lf %lf %lf\", &x1, &y1, &x2, &y2);\n    printf(\"%.2f\", sqrt(pow(x2-x1, 2) + pow(y2-y1, 2)));\n    return 0;\n}",
+        "python": "import math\nx1, y1, x2, y2 = map(float, input().split())\nprint(\"{:.2f}\".format(math.sqrt((x2-x1)**2 + (y2-y1)**2)))",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        double x1 = sc.nextDouble(), y1 = sc.nextDouble();\n        double x2 = sc.nextDouble(), y2 = sc.nextDouble();\n        System.out.printf(\"%.2f\\n\", Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2)));\n    }\n}",
+        "javascript": "const [x1, y1, x2, y2] = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/).map(Number);\nconsole.log(Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2)).toFixed(2));"
+      },
+      "test_cases": [
+        {
+          "stdin": "0 0 3 4",
+          "expected_output": "5.00"
+        },
+        {
+          "stdin": "1 1 4 5",
+          "expected_output": "5.00"
+        },
+        {
+          "stdin": "-1 -1 2 2",
+          "expected_output": "4.24",
+          "isHidden": true
+        },
+        {
+          "stdin": "0 0 0 0",
+          "expected_output": "0.00",
+          "isHidden": true
+        },
+        {
+          "stdin": "10 20 30 40",
+          "expected_output": "28.28",
+          "isHidden": true
+        },
+        {
+          "stdin": "5 5 5 10",
+          "expected_output": "5.00",
+          "isHidden": true
+        },
+        {
+          "stdin": "-5 0 5 0",
+          "expected_output": "10.00",
+          "isHidden": true
+        },
+        {
+          "stdin": "1.5 2.5 4.5 6.5",
+          "expected_output": "5.00",
+          "isHidden": true
+        },
+        {
+          "stdin": "100 100 200 200",
+          "expected_output": "141.42",
+          "isHidden": true
+        },
+        {
+          "stdin": "0 5 5 0",
+          "expected_output": "7.07",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-99",
+      "topicId": "math",
+      "title": "Area of Triangle (Heron's Formula)",
+      "description": "Calculate the area of a triangle given its three sides a, b, and c using Heron's formula. Round to 2 decimal places.\n\nInput Format\n```\na b c\n```\n\nOutput Format\n```\narea\n```\n\nConstraints\n• sides form a valid triangle.\n• 1 ≤ a, b, c ≤ 1000",
+      "difficulty": "easy",
+      "estimatedTime": 5,
+      "concept": "Geometry",
+      "hint": "Semiperimeter `s = (a+b+c)/2`. Area = `sqrt(s * (s-a) * (s-b) * (s-c))`.",
+      "explanation": "Geometry utility.\n\nTrace (3 4 5):\n- s = (3+4+5)/2 = 6\n- area = sqrt(6 * (6-3) * (6-4) * (6-5)) = sqrt(6 * 3 * 2 * 1) = sqrt(36) = 6.00.\nResult: 6.00",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n#include <math.h>\nint main() {\n    double a, b, c;\n    scanf(\"%lf %lf %lf\", &a, &b, &c);\n    double s = (a + b + c) / 2.0;\n    printf(\"%.2f\", sqrt(s * (s - a) * (s - b) * (s - c)));\n    return 0;\n}",
+        "python": "import math\na, b, c = map(float, input().split())\ns = (a + b + c) / 2\nprint(\"{:.2f}\".format(math.sqrt(s * (s-a) * (s-b) * (s-c))))",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        double a = sc.nextDouble(), b = sc.nextDouble(), c = sc.nextDouble();\n        double s = (a + b + c) / 2.0;\n        System.out.printf(\"%.2f\\n\", Math.sqrt(s * (s-a) * (s-b) * (s-c)));\n    }\n}",
+        "javascript": "const [a, b, c] = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/).map(Number);\nconst s = (a + b + c) / 2;\nconsole.log(Math.sqrt(s * (s-a) * (s-b) * (s-c)).toFixed(2));"
+      },
+      "test_cases": [
+        {
+          "stdin": "3 4 5",
+          "expected_output": "6.00"
+        },
+        {
+          "stdin": "5 12 13",
+          "expected_output": "30.00"
+        },
+        {
+          "stdin": "10 10 10",
+          "expected_output": "43.30",
+          "isHidden": true
+        },
+        {
+          "stdin": "7 24 25",
+          "expected_output": "84.00",
+          "isHidden": true
+        },
+        {
+          "stdin": "10 15 20",
+          "expected_output": "72.62",
+          "isHidden": true
+        },
+        {
+          "stdin": "5 5 8",
+          "expected_output": "12.00",
+          "isHidden": true
+        },
+        {
+          "stdin": "8 15 17",
+          "expected_output": "60.00",
+          "isHidden": true
+        },
+        {
+          "stdin": "9 40 41",
+          "expected_output": "180.00",
+          "isHidden": true
+        },
+        {
+          "stdin": "3 3 3",
+          "expected_output": "3.90",
+          "isHidden": true
+        },
+        {
+          "stdin": "13 14 15",
+          "expected_output": "84.00",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-100",
+      "topicId": "math",
+      "title": "Largest of Three without IF",
+      "description": "Find the largest of three numbers wrapping the logic in a single expression (ternary operator) or built-in functions, without using standard `if-else` blocks.\n\nInput Format\n```\nA B C\n```\n\nOutput Format\n```\nlargest\n```\n\nConstraints\n• -10^9 ≤ A, B, C ≤ 10^9",
+      "difficulty": "easy",
+      "estimatedTime": 2,
+      "concept": "Logic",
+      "hint": "Use the ternary operator `(a > b) ? (a > c ? a : c) : (b > c ? b : c)` or `max(a, max(b, c))`.",
+      "explanation": "Demonstrates conditional expressions or library functions.\n\nTrace (10 20 15):\n- max(10, 20) = 20\n- max(20, 15) = 20\nResult: 20",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    int a, b, c; scanf(\"%d %d %d\", &a, &b, &c);\n    int res = (a > b) ? (a > c ? a : c) : (b > c ? b : c);\n    printf(\"%d\", res);\n    return 0;\n}",
+        "python": "a, b, c = map(int, input().split())\nprint(max(a, b, c))",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int a = sc.nextInt(), b = sc.nextInt(), c = sc.nextInt();\n        System.out.println(Math.max(a, Math.max(b, c)));\n    }\n}",
+        "javascript": "const [a, b, c] = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/).map(Number);\nconsole.log(Math.max(a, b, c));"
+      },
+      "test_cases": [
+        {
+          "stdin": "10 20 15",
+          "expected_output": "20"
+        },
+        {
+          "stdin": "5 5 5",
+          "expected_output": "5"
+        },
+        {
+          "stdin": "100 0 0",
+          "expected_output": "100",
+          "isHidden": true
+        },
+        {
+          "stdin": "0 0 100",
+          "expected_output": "100",
+          "isHidden": true
+        },
+        {
+          "stdin": "-1 -2 -3",
+          "expected_output": "-1",
+          "isHidden": true
+        },
+        {
+          "stdin": "10 5 8",
+          "expected_output": "10",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 2 3",
+          "expected_output": "3",
+          "isHidden": true
+        },
+        {
+          "stdin": "3 2 1",
+          "expected_output": "3",
+          "isHidden": true
+        },
+        {
+          "stdin": "10 20 30",
+          "expected_output": "30",
+          "isHidden": true
+        },
+        {
+          "stdin": "42 42 0",
+          "expected_output": "42",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-101",
+      "topicId": "math",
+      "title": "Middle of Three numbers",
+      "description": "Find the middle (second largest) of three distinct integers.\n\nInput Format\n```\nA B C\n```\n\nOutput Format\n```\nmiddle\n```\n\nConstraints\n• -10^9 ≤ A, B, C ≤ 10^9",
+      "difficulty": "easy",
+      "estimatedTime": 2,
+      "concept": "Logic",
+      "hint": "The middle value is the one that is NOT the max and NOT the min. Formula: `(a+b+c) - max(a,b,c) - min(a,b,c)`.",
+      "explanation": "Arithmetic trick to find the median of three.\n\nTrace (10 20 15):\nSum = 45. Max=20, Min=10.\nMiddle = 45 - 20 - 10 = 15.\nResult: 15",
+      "starter_codes": {
+        "c": "#include <stdio.h>\nint main() {\n    long long a, b, c;\n    scanf(\"%lld %lld %lld\", &a, &b, &c);\n    long long max = (a > b) ? (a > c ? a : c) : (b > c ? b : c);\n    long long min = (a < b) ? (a < c ? a : c) : (b < c ? b : c);\n    printf(\"%lld\", a + b + c - max - min);\n    return 0;\n}",
+        "python": "nums = sorted(list(map(int, input().split())))\nprint(nums[1])",
+        "java": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int[] a = new int[]{sc.nextInt(), sc.nextInt(), sc.nextInt()};\n        Arrays.sort(a);\n        System.out.println(a[1]);\n    }\n}",
+        "javascript": "const a = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/).map(Number).sort((x,y)=>x-y);\nconsole.log(a[1]);"
+      },
+      "test_cases": [
+        {
+          "stdin": "10 20 15",
+          "expected_output": "15"
+        },
+        {
+          "stdin": "1 2 3",
+          "expected_output": "2"
+        },
+        {
+          "stdin": "100 0 50",
+          "expected_output": "50",
+          "isHidden": true
+        },
+        {
+          "stdin": "-1 -2 -3",
+          "expected_output": "-2",
+          "isHidden": true
+        },
+        {
+          "stdin": "42 43 41",
+          "expected_output": "42",
+          "isHidden": true
+        },
+        {
+          "stdin": "5 10 7",
+          "expected_output": "7",
+          "isHidden": true
+        },
+        {
+          "stdin": "11 12 13",
+          "expected_output": "12",
+          "isHidden": true
+        },
+        {
+          "stdin": "0 10 -10",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "9 3 6",
+          "expected_output": "6",
+          "isHidden": true
+        },
+        {
+          "stdin": "1024 2048 512",
+          "expected_output": "1024",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "math-11",
+      "topicId": "math",
+      "title": "Harshad Number",
+      "description": "N divisible by sum of digits.",
+      "difficulty": "easy",
+      "test_cases": [
+        {
+          "stdin": "18",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-12",
+      "topicId": "math",
+      "title": "Abundant Number",
+      "description": "Sum of proper divisors > N.",
+      "difficulty": "medium",
+      "test_cases": [
+        {
+          "stdin": "12",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-13",
+      "topicId": "math",
+      "title": "Automorphic Number",
+      "description": "Square ends with N.",
+      "difficulty": "medium",
+      "test_cases": [
+        {
+          "stdin": "76",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-14",
+      "topicId": "math",
+      "title": "Magic Number",
+      "description": "Digital root is 1.",
+      "difficulty": "medium",
+      "test_cases": [
+        {
+          "stdin": "19",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-15",
+      "topicId": "math",
+      "title": "Friendly Pair",
+      "description": "Sum of divisors of N / N == Sum of divisors of M / M.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "6 28",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-16",
+      "topicId": "math",
+      "title": "Armstrong Number (Check)",
+      "description": "N equals sum of digits raised to power d.",
+      "difficulty": "medium",
+      "test_cases": [
+        {
+          "stdin": "153",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-17",
+      "topicId": "math",
+      "title": "Neon Number",
+      "description": "Sum of digits of N^2 equals N. Example: 9 (81, 8+1=9).",
+      "difficulty": "easy",
+      "test_cases": [
+        {
+          "stdin": "9",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-21",
+      "topicId": "math",
+      "title": "Spy Number",
+      "description": "Sum of digits == Product of digits.",
+      "difficulty": "medium",
+      "test_cases": [
+        {
+          "stdin": "1124",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-22",
+      "topicId": "math",
+      "title": "Happy Number",
+      "description": "Sum of squares of digits eventually reaches 1.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "19",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-23",
+      "topicId": "math",
+      "title": "Sunny Number",
+      "description": "N+1 is a perfect square.",
+      "difficulty": "easy",
+      "test_cases": [
+        {
+          "stdin": "8",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-24",
+      "topicId": "math",
+      "title": "Disarium Number",
+      "description": "Sum of digits raised to their power levels equals N.",
+      "difficulty": "medium",
+      "test_cases": [
+        {
+          "stdin": "135",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-25",
+      "topicId": "math",
+      "title": "Pronic Number",
+      "description": "N is product of two consecutive integers (n * (n+1)).",
+      "difficulty": "easy",
+      "test_cases": [
+        {
+          "stdin": "12",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-26",
+      "topicId": "math",
+      "title": "Trimorphic Number",
+      "description": "N^3 ends with N.",
+      "difficulty": "medium",
+      "test_cases": [
+        {
+          "stdin": "24",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-27",
+      "topicId": "math",
+      "title": "Evil Number",
+      "description": "N has even number of 1s in binary.",
+      "difficulty": "medium",
+      "test_cases": [
+        {
+          "stdin": "9",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-31",
+      "topicId": "math",
+      "title": "Primes in Range",
+      "description": "Find all primes between L and R.",
+      "difficulty": "medium",
+      "test_cases": [
+        {
+          "stdin": "10 20",
+          "expected_output": "11 13 17 19"
+        }
+      ]
+    },
+    {
+      "id": "math-32",
+      "topicId": "math",
+      "title": "Palindromes in Range",
+      "description": "Find palindromes between L and R.",
+      "difficulty": "medium",
+      "test_cases": [
+        {
+          "stdin": "100 150",
+          "expected_output": "101 111 121 131 141"
+        }
+      ]
+    },
+    {
+      "id": "math-33",
+      "topicId": "math",
+      "title": "Armstrongs in Range",
+      "description": "Find Armstrong numbers between L and R.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "100 500",
+          "expected_output": "153 370 371 407"
+        }
+      ]
+    },
+    {
+      "id": "math-34",
+      "topicId": "math",
+      "title": "Perfects in Range",
+      "description": "Find perfect numbers between L and R.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "1 100",
+          "expected_output": "6 28"
+        }
+      ]
+    },
+    {
+      "id": "math-35",
+      "topicId": "math",
+      "title": "Strong Numbers in Range",
+      "description": "Sum of factorials of digits equals N. Find in range.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "1 200",
+          "expected_output": "1 2 145"
+        }
+      ]
+    },
+    {
+      "id": "math-41",
+      "topicId": "math",
+      "title": "Nth Prime",
+      "description": "Find the Nth prime number.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "5",
+          "expected_output": "11"
+        }
+      ]
+    },
+    {
+      "id": "math-42",
+      "topicId": "math",
+      "title": "Nth Palindrome",
+      "description": "Find the Nth palindrome number.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "15",
+          "expected_output": "55"
+        }
+      ]
+    },
+    {
+      "id": "math-43",
+      "topicId": "math",
+      "title": "Nth Armstrong",
+      "description": "Find the Nth Armstrong number.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "5",
+          "expected_output": "5"
+        }
+      ]
+    },
+    {
+      "id": "math-51",
+      "topicId": "math",
+      "title": "Nth Perfect Number",
+      "description": "Find the Nth perfect number.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "2",
+          "expected_output": "28"
+        }
+      ]
+    },
+    {
+      "id": "math-52",
+      "topicId": "math",
+      "title": "Nth Happy Number",
+      "description": "Find the Nth happy number.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "5",
+          "expected_output": "19"
+        }
+      ]
+    },
+    {
+      "id": "math-53",
+      "topicId": "math",
+      "title": "Nth Harshad Number",
+      "description": "Find the Nth Harshad number.",
+      "difficulty": "medium",
+      "test_cases": [
+        {
+          "stdin": "10",
+          "expected_output": "18"
+        }
+      ]
+    },
+    {
+      "id": "math-54",
+      "topicId": "math",
+      "title": "Nth Abundant Number",
+      "description": "Find the Nth abundant number.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "5",
+          "expected_output": "36"
+        }
+      ]
+    },
+    {
+      "id": "math-55",
+      "topicId": "math",
+      "title": "Nth Automorphic Number",
+      "description": "Find the Nth automorphic number.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "5",
+          "expected_output": "76"
+        }
+      ]
+    },
+    {
+      "id": "math-56",
+      "topicId": "math",
+      "title": "Nth Magic Number",
+      "description": "Find the Nth magic number.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "5",
+          "expected_output": "46"
+        }
+      ]
+    },
+    {
+      "id": "math-57",
+      "topicId": "math",
+      "title": "Nth Strong Number",
+      "description": "Find the Nth strong number.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "3",
+          "expected_output": "145"
+        }
+      ]
+    },
+    {
+      "id": "math-58",
+      "topicId": "math",
+      "title": "Nth Neon Number",
+      "description": "Find the Nth neon number.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "3",
+          "expected_output": "81"
+        }
+      ]
+    },
+    {
+      "id": "math-59",
+      "topicId": "math",
+      "title": "Nth Spy Number",
+      "description": "Find the Nth spy number.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "10",
+          "expected_output": "1124"
+        }
+      ]
+    },
+    {
+      "id": "math-60",
+      "topicId": "math",
+      "title": "Nth Sunny Number",
+      "description": "Find the Nth sunny number.",
+      "difficulty": "medium",
+      "test_cases": [
+        {
+          "stdin": "3",
+          "expected_output": "15"
+        }
+      ]
+    },
+    {
+      "id": "math-18",
+      "topicId": "math",
+      "title": "Cube Number",
+      "description": "Check if N is perfect cube.",
+      "difficulty": "easy",
+      "test_cases": [
+        {
+          "stdin": "27",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-19",
+      "topicId": "math",
+      "title": "Circular Prime",
+      "description": "All rotations are prime.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "113",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-20",
+      "topicId": "math",
+      "title": "Coprime Numbers",
+      "description": "GCD is 1.",
+      "difficulty": "easy",
+      "test_cases": [
+        {
+          "stdin": "8 15",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-28",
+      "topicId": "math",
+      "title": "Sastry Number",
+      "description": "Concatenation of N and N+1 is perfect square.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "183",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-29",
+      "topicId": "math",
+      "title": "Sphenic Number",
+      "description": "Product of exactly 3 distinct primes.",
+      "difficulty": "hard",
+      "test_cases": [
+        {
+          "stdin": "30",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-30",
+      "topicId": "math",
+      "title": "Armstrong Number (3-digit)",
+      "description": "Special case for 3-digit Armstrongs.",
+      "difficulty": "easy",
+      "test_cases": [
+        {
+          "stdin": "153",
+          "expected_output": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "math-36",
+      "topicId": "math",
+      "title": "Nth Fibonacci (Iterative)",
+      "description": "Non-recursive Fibonacci.",
+      "difficulty": "easy",
+      "test_cases": [
+        {
+          "stdin": "5",
+          "expected_output": "5"
+        }
+      ]
+    },
+    {
+      "id": "math-37",
+      "topicId": "math",
+      "title": "Factorial (Iterative)",
+      "description": "Non-recursive factorial.",
+      "difficulty": "easy",
+      "test_cases": [
+        {
+          "stdin": "4",
+          "expected_output": "24"
+        }
+      ]
+    },
+    {
+      "id": "math-38",
+      "topicId": "math",
+      "title": "Sum of First N Numbers",
+      "description": "1+2...+N.",
+      "difficulty": "easy",
+      "test_cases": [
+        {
+          "stdin": "10",
+          "expected_output": "55"
+        }
+      ]
+    },
+    {
+      "id": "math-39",
+      "topicId": "math",
+      "title": "Sum of Odd Numbers",
+      "description": "1+3...+2N-1.",
+      "difficulty": "easy",
+      "test_cases": [
+        {
+          "stdin": "5",
+          "expected_output": "25"
+        }
+      ]
+    },
+    {
+      "id": "math-40",
+      "topicId": "math",
+      "title": "Sum of Even Numbers",
+      "description": "2+4...+2N.",
+      "difficulty": "easy",
+      "test_cases": [
+        {
+          "stdin": "5",
+          "expected_output": "30"
+        }
+      ]
+    }
+  ]
+}

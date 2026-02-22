@@ -1,6 +1,12 @@
+import { PRACTICE_TOPICS } from '../data/practiceProblems';
+
 export interface TestCase {
-    stdin: string;
-    expected_output: string;
+    input?: string;
+    stdin?: string; // Keep for backward compatibility
+    expectedOutput: string;
+    expected_output?: string; // Keep for backward compatibility
+    isHidden?: boolean;
+    is_hidden?: boolean; // Keep for backward compatibility
 }
 
 export interface PracticeProblem {
@@ -10,7 +16,9 @@ export interface PracticeProblem {
     concept: string;
     description: string;
     starter_codes: Record<string, string>;
-    test_cases: TestCase[];
+    testCases: TestCase[];
+    test_cases?: TestCase[]; // Keep for backward compatibility
+    hiddenTestCases?: TestCase[];
     inputFormat?: string;
     outputFormat?: string;
     constraints?: string;
@@ -85,9 +93,13 @@ class PracticeService {
             this.cache = content;
             return content;
         } catch (error) {
-            console.error("Critical: Practice content fetch failed", error);
-            if (this.cache) return this.cache;
-            return { topics: [] };
+            console.error("Critical: Practice content fetch failed, using local fallback", error);
+            const content: PracticeContent = {
+                version: 'local-' + Date.now(),
+                topics: PRACTICE_TOPICS as any[]
+            };
+            this.cache = content;
+            return content;
         }
     }
 

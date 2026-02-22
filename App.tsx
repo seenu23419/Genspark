@@ -16,6 +16,7 @@ import Signup from './screens/auth/Signup';
 import Home from './screens/home/Home';
 import LearnHub from './screens/learn/LearnHub';
 import PracticeHub from './screens/practice/PracticeHub';
+import CodingProblemWrapper from './screens/practice/CodingProblemWrapper';
 import Profile from './screens/profile/Profile';
 const ForgotPassword = lazy(() => import('./screens/auth/ForgotPassword'));
 const OTP = lazy(() => import('./screens/auth/OTP'));
@@ -31,6 +32,8 @@ const CourseTrack = lazy(() => import('./screens/learn/CourseTrack'));
 const StreaksActivity = lazy(() => import('./screens/profile/StreaksActivity'));
 const LearningHistory = lazy(() => import('./screens/profile/LearningHistory'));
 const PracticeHistory = lazy(() => import('./screens/practice/PracticeHistory'));
+const PrivacyPolicy = lazy(() => import('./screens/legal/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./screens/legal/TermsOfService'));
 
 // Query Client for React Query
 const queryClient = new QueryClient();
@@ -53,7 +56,7 @@ const ProtectedRoute = () => {
   const { user, loading } = useAuth();
   const location = useLocation();
 
-  if (loading) return <Splash />;
+  if (loading) return null;
   if (!user) return <Navigate to="/login" state={{ from: location }} replace />;
 
   // Derive screen name for Layout highlights
@@ -66,10 +69,12 @@ const ProtectedRoute = () => {
   else if (path.startsWith('/challenge')) screen = 'PRACTICE';
   else if (path === '/') screen = 'HOME';
 
+  const isFullScreen = path.startsWith('/practice/problem/');
+
   return (
     <>
       <OfflineBanner />
-      <Layout currentScreen={screen} setScreen={() => { }} user={user}>
+      <Layout currentScreen={screen} setScreen={() => { }} user={user} hideSidebar={isFullScreen} hideBottomNav={isFullScreen}>
         <Suspense fallback={<ScreenLoader />}>
           <Outlet />
         </Suspense>
@@ -81,7 +86,7 @@ const ProtectedRoute = () => {
 // --- PUBLIC ROUTE WRAPPER (Redirect if logged in) ---
 const PublicRoute = () => {
   const { user, loading } = useAuth();
-  if (loading) return <Splash />;
+  if (loading) return null;
   if (user) return <Navigate to="/" replace />;
 
   return (
@@ -119,6 +124,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "learn", element: <LearnHub /> },
       { path: "track/:langId", element: <CourseTrack /> },
+      { path: "practice/problem/:problemId", element: <CodingProblemWrapper /> },
       { path: "practice/*", element: <PracticeHub /> },
       { path: "practice/history", element: <PracticeHistory /> },
       { path: "profile", element: <Profile /> },
@@ -170,10 +176,32 @@ const router = createBrowserRouter([
     ]
   },
   {
+    path: "/privacy",
+    element: <PrivacyPolicy />
+  },
+  {
+    path: "/terms",
+    element: <TermsOfService />
+  },
+  {
     path: "*",
     element: <Navigate to="/" replace />
   }
 ]);
+
+const AppContents: React.FC = () => {
+  const { minSplashDone, initializing } = useAuth();
+
+  // Keep splash visible until BOTH initializing and the 2s timer are done
+  const splashVisible = initializing || !minSplashDone;
+
+  return (
+    <>
+      <RouterProvider router={router} />
+      <Splash closing={!splashVisible} />
+    </>
+  );
+};
 
 const App: React.FC = () => {
   return (
@@ -181,7 +209,7 @@ const App: React.FC = () => {
       <AuthProvider>
         <CurriculumProvider>
           <PracticeProvider>
-            <RouterProvider router={router} />
+            <AppContents />
           </PracticeProvider>
         </CurriculumProvider>
       </AuthProvider>

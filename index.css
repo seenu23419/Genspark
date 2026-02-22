@@ -234,3 +234,9 @@ textarea,
   -webkit-user-select: text;
   user-select: text;
 }
+
+/* Disable browser-native password reveal/clear buttons (Edge/Chrome/Windows) */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none !important;
+}

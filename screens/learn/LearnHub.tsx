@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Search, ChevronRight, GraduationCap, ChevronDown, CheckCircle2, BookOpen } from 'lucide-react';
+import { Search, ChevronRight, GraduationCap, ChevronDown, CheckCircle2, BookOpen, Code2, Star, Zap } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { LANGUAGES, CURRICULUM } from '../../constants';
 import { Language } from '../../types';
@@ -268,9 +268,7 @@ const LearnHub: React.FC = () => {
         // C is only special if nothing else is started/selected
         const isCProgramming = lang.id === 'c' && userState.state === 'no_path_selected';
 
-        const isBeginnerCompleted = userState.completedBeginnerPaths.length > 0;
-        const isAdvancedSection = sectionIndex >= 2;
-        const isAdvancedLocked = false; // isAdvancedSection && !isBeginnerCompleted && userState.state !== 'no_path_selected';
+        const isAdvancedLocked = false;
 
         const handleClick = () => {
             if (!isAdvancedLocked) {
@@ -283,27 +281,20 @@ const LearnHub: React.FC = () => {
             }
         };
 
-        const borderClass = isPathMastered
-            ? 'border-emerald-500 shadow-lg'
-            : 'border-indigo-500 shadow-lg';
-
         return (
             <div
                 key={lang.id}
                 onClick={handleClick}
-                className={`group relative rounded-2xl cursor-pointer overflow-hidden transition-all active:scale-[0.98] ${isAdvancedLocked ? 'opacity-50 cursor-not-allowed' : ''
-                    } ${isFeaturedCard
-                        ? `col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2 bg-white dark:bg-slate-900 border-[3px] p-6 md:p-8 transition-all ${borderClass}`
-                        : 'bg-white dark:bg-slate-900/80 border-[3px] border-slate-400 dark:border-slate-600 p-5 md:p-6 shadow-md hover:border-slate-500 dark:hover:border-slate-500 hover:bg-slate-50 dark:hover:bg-slate-900'
-                    }`}
+                className={`group relative rounded-xl cursor-pointer overflow-hidden transition-all active:scale-[0.98] ${isAdvancedLocked ? 'opacity-50 cursor-not-allowed' : ''
+                    } bg-white dark:bg-slate-900/80 border-2 border-slate-200 dark:border-white/10 p-5 shadow-sm hover:border-indigo-500/50 dark:hover:border-indigo-500/50 hover:bg-slate-50 dark:hover:bg-slate-900/50 hover:shadow-xl hover:shadow-indigo-500/5`}
             >
 
                 <div className="flex items-start justify-between mb-4">
-                    <div className={`${isFeaturedCard ? 'w-16 h-16 md:w-20 md:h-20' : 'w-14 h-14 md:w-16 md:h-16'} bg-white/5 rounded-xl flex items-center justify-center p-2 shadow-inner group-hover:bg-white/10 transition-all`}>
+                    <div className="w-12 h-12 md:w-14 md:h-14 bg-slate-100 dark:bg-white/5 rounded-lg flex items-center justify-center p-2.5 transition-all group-hover:bg-indigo-500/10">
                         <img
                             src={lang.icon}
                             alt={lang.name}
-                            className="w-full h-full object-contain filter group-hover:drop-shadow-[0_0_8px_rgba(99,102,241,0.5)] transition-all"
+                            className="w-full h-full object-contain filter group-hover:brightness-110 transition-all"
                         />
                     </div>
                     {showBadge && (
@@ -316,13 +307,11 @@ const LearnHub: React.FC = () => {
                     )}
                 </div>
 
-                <h3 className={`font-black text-slate-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors ${isFeaturedCard ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl'
-                    }`}>
+                <h3 className="font-bold text-lg md:text-xl text-slate-900 dark:text-white mb-1.5 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors">
                     {lang.name}
                 </h3>
 
-                <p className={`font-medium mb-6 leading-relaxed ${isFeaturedCard ? 'text-slate-600 dark:text-slate-300 text-base md:text-lg' : 'text-slate-600 dark:text-slate-300 text-sm md:text-base'
-                    }`}>
+                <p className="text-slate-500 dark:text-slate-400 text-xs md:text-sm leading-relaxed mb-6 line-clamp-2">
                     {LANGUAGE_OUTCOMES[lang.id] || `Learn ${lang.name}`}
                 </p>
 
@@ -332,59 +321,83 @@ const LearnHub: React.FC = () => {
                     </p>
                 )}
 
+                {/* Action Section */}
                 {isPathMastered ? (
-                    <div className="space-y-3">
-                        <div className="flex flex-col sm:flex-row gap-3">
-                            <button className="flex-1 py-3.5 md:py-4 rounded-xl font-bold uppercase tracking-widest text-sm md:text-base transition-all flex items-center justify-center gap-2 px-4 bg-emerald-600/20 text-emerald-400 border-2 border-emerald-500/80">
-                                <CheckCircle2 size={20} />
-                                <span>Mastered</span>
-                            </button>
-                            {isFeaturedCard && (
-                                <button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        // Scroll to More for Beginners
-                                        const moreSection = document.getElementById('more-beginner-paths');
-                                        if (moreSection) {
-                                            moreSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                        } else {
-                                            document.querySelector('input')?.focus();
-                                        }
-                                    }}
-                                    className="flex-[1.5] py-3.5 md:py-4 rounded-xl font-bold uppercase tracking-widest text-sm md:text-base transition-all flex items-center justify-center gap-2 px-4 bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 active:scale-95"
-                                >
-                                    <span>Select Another Language</span>
-                                    <ChevronRight size={18} />
-                                </button>
-                            )}
+                    <div className="mt-4 pt-4 border-t border-slate-200 dark:border-white/5 space-y-5">
+                        {/* Achievement State */}
+                        <div className="flex flex-col items-center gap-1">
+                            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                                <CheckCircle2 size={12} className="shrink-0" />
+                                <span className="text-[10px] font-black uppercase tracking-widest">Mastered</span>
+                            </div>
+                            <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400 italic">Course successfully completed</p>
                         </div>
-                        <p className="text-slate-500 text-xs md:text-sm font-medium text-center italic">
-                            {isFeaturedCard ? "Congratulations! Ready for your next challenge?" : "You've successfully finished this track."}
-                        </p>
-                    </div>
-                ) : isCProgramming ? (
-                    <div className="space-y-3">
-                        <button className="w-full py-3.5 md:py-4 rounded-xl font-bold uppercase tracking-widest text-sm md:text-base transition-all flex items-center justify-center gap-2 px-4 group/btn bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 active:scale-95">
-                            <span>Start C Programming</span>
+
+                        {/* Focused Next Step */}
+                        {(() => {
+                            const unmastered = LANGUAGES.filter(l => {
+                                const stats = getLangStats(l.id);
+                                return stats.progressPercent < 100 && l.id !== lang.id;
+                            });
+
+                            if (unmastered.length === 0) return (
+                                <div className="py-2 text-center">
+                                    <p className="text-[10px] font-bold text-slate-500 italic">
+                                        Amazing! You've mastered everything! 🎉
+                                    </p>
+                                </div>
+                            );
+
+                            // Simple Path Logic for Primary recommendation
+                            let next: Language | undefined;
+                            if (lang.id === 'c') next = unmastered.find(l => l.id === 'dsa');
+                            else if (lang.id === 'dsa') next = unmastered.find(l => l.id === 'cpp') || unmastered.find(l => l.id === 'java');
+                            if (!next) next = unmastered[0];
+
+                            // Don't show recommendation if it's already the active path
+                            const isAlreadyActive = user?.lastLanguageId === next?.id;
+                            if (isAlreadyActive) return null;
+
+                            return (
+                                <div className="space-y-3">
+                                    <div className="text-center">
+                                        <span className="text-[9px] font-black text-indigo-500/80 uppercase tracking-[0.15em]">Recommended Next</span>
+                                    </div>
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            updateUser({ lastLanguageId: next!.id }).catch(console.error);
+                                            navigate(`/track/${next!.id}`);
+                                        }}
+                                        className="w-full py-3 rounded-xl font-bold uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2 px-4 bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 active:scale-95 group/next"
+                                    >
+                                        <Zap size={14} className="fill-current group-hover:animate-pulse" />
+                                        <span>Start {next.name}</span>
+                                        <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+                                    </button>
+                                </div>
+                            );
+                        })()}
+
+                        {/* Minimal Browse Link */}
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                const moreSection = document.getElementById('more-beginner-paths');
+                                if (moreSection) {
+                                    moreSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                }
+                            }}
+                            className="w-full text-[9px] font-black text-slate-500 hover:text-indigo-500 transition-colors py-1 text-center uppercase tracking-widest"
+                        >
+                            Or Browse All Available Tracks
                         </button>
-                        <p className="text-slate-500 text-xs md:text-sm font-medium text-center italic">
-                            Best choice if you're new to coding
-                        </p>
-                    </div>
-                ) : stats.hasProgress ? (
-                    <div className="space-y-3">
-                        <button className="w-full py-3.5 md:py-4 rounded-xl font-bold uppercase tracking-widest text-sm md:text-base transition-all flex items-center justify-center gap-2 px-4 group/btn bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 active:scale-95">
-                            <span>Continue {lang.name}</span>
-                        </button>
-                        <p className="text-slate-500 text-xs md:text-sm font-medium text-center italic">
-                            You're {stats.progressPercent}% complete
-                        </p>
                     </div>
                 ) : (
-                    <div className="space-y-3">
-                        <button className="w-full py-3.5 md:py-4 rounded-xl font-bold uppercase tracking-widest text-sm md:text-base transition-all flex items-center justify-center gap-2 px-4 group/btn bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 active:scale-95">
+                    <div className="mt-auto pt-4">
+                        <div className="w-full py-2.5 rounded-lg font-bold uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2 px-4 group/btn bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/20 active:scale-95">
                             <span>Start {lang.name}</span>
-                        </button>
+                        </div>
                     </div>
                 )}
             </div>
@@ -397,11 +410,11 @@ const LearnHub: React.FC = () => {
             <header className="space-y-4 md:space-y-6 px-1">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div>
-                        <h1 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2 md:gap-3">
-                            <GraduationCap className="text-indigo-500 w-8 h-8 md:w-9 md:h-9" />
+                        <h1 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2 md:gap-3 uppercase italic">
+                            <GraduationCap className="text-indigo-500 w-7 h-7 md:w-8 md:h-8" />
                             Learn Hub
                         </h1>
-                        <p className="text-slate-400 font-medium text-base md:text-lg max-w-2xl mt-1">Master coding with curated learning paths.</p>
+                        <p className="text-slate-500 font-medium text-sm md:text-base max-w-2xl">Master coding with curated learning paths.</p>
                     </div>
 
                     {/* Tab Navigation */}
@@ -470,12 +483,7 @@ const LearnHub: React.FC = () => {
                                         )}
                                     </div>
 
-                                    {sectionIndex > 0 && (
-                                        <div className="h-px bg-gradient-to-r from-slate-700/0 via-slate-700/20 to-slate-700/0 my-6"></div>
-                                    )}
-
-                                    <div className={`${sectionIndex === 0 ? 'grid grid-cols-1' : 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3'
-                                        } gap-4 md:gap-6`}>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
                                         {section.courses.map((course, courseIndex) =>
                                             renderCourseCard(course, sectionIndex === 0 && courseIndex === 0, section.showBadge, sectionIndex)
                                         )}
@@ -495,15 +503,15 @@ const LearnHub: React.FC = () => {
                 </>
             ) : (
                 /* Completed Lessons View */
-                <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
-                    <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-white/5 rounded-[2.5rem] p-8 flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden relative shadow-sm">
+                <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/5 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden relative shadow-sm">
                         <div>
-                            <h2 className="text-2xl md:text-3xl font-black text-white mb-2 uppercase italic tracking-tight">Your Achievements</h2>
-                            <p className="text-slate-400 font-medium">You have mastered {completedLessons.length} lessons so far. Revisit them anytime to reinforce your knowledge.</p>
+                            <h2 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white mb-1 uppercase italic tracking-tight">Your Achievements</h2>
+                            <p className="text-slate-500 text-sm font-medium">You have mastered {completedLessons.length} lessons so far.</p>
                         </div>
-                        <div className="px-8 py-4 bg-emerald-500/10 rounded-3xl border border-emerald-500/20 text-center">
-                            <div className="text-4xl font-black text-emerald-400">{completedLessons.length}</div>
-                            <div className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mt-1">Lessons Done</div>
+                        <div className="px-6 py-3 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-center min-w-[120px]">
+                            <div className="text-3xl font-black text-emerald-500">{completedLessons.length}</div>
+                            <div className="text-[9px] font-black text-emerald-600 dark:text-emerald-500 uppercase tracking-widest mt-0.5">Lessons Done</div>
                         </div>
                     </div>
 

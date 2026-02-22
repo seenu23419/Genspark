@@ -231,7 +231,7 @@ class SupabaseService {
           } else if (selectStr === COMPAT_SELECT) {
             console.warn("[SupabaseService] COMPAT select failed, retrying with SAFE", profileResult.error.message);
             return this.supabase.from('users').select(SAFE_SELECT).eq('id', userId).single()
-              .then(res => res.error ? null : this.formatUserForApp(res.data, progressResult.data || [])) as any;
+              .then(res => res.error ? null : this.formatUserForApp(res.data, (progressResult.data || []) as { lesson_id: string; status: string }[])) as unknown as Promise<User | null>;
           }
           console.error("[SupabaseService] Profile fetch failed even in SAFE mode:", profileResult.error);
           return null;
@@ -875,7 +875,7 @@ class SupabaseService {
       console.error('Error adding practice discussion:', error);
       return null;
     }
-    return data as any;
+    return data as { id: string; author?: string; text: string; created_at: string } | null;
   }
 
 

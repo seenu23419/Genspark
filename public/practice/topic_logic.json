@@ -1,0 +1,74 @@
+{
+  "topicId": "logic",
+  "topicName": "Logic Puzzles",
+  "problems": [
+    {
+      "id": "logic-1",
+      "topicId": "logic",
+      "title": "8-Puzzle Solvability",
+      "description": "Given a 1D representation of an 8-puzzle board (0 represents empty space), determine if it is solvable. A 3x3 puzzle is solvable if the number of inversions is even.\nInversion: A pair (a, b) such that a > b and a, b are non-zero.\n\nInput Format\n```\n9 integers (a1 a2 ... a9)\n```\n\nOutput Format\n```\nYes/No\n```\n\nConstraints\n• Digits 0 to 8 appear exactly once.\n\nSample Input 1\n```\n1 8 2 0 4 3 7 6 5\n```\n\nSample Output 1\n```\nYes\n```",
+      "difficulty": "hard",
+      "estimatedTime": 15,
+      "concept": "Logic",
+      "hint": "Count pairs (arr[i], arr[j]) where i < j and arr[i] > arr[j] and neither is 0.",
+      "explanation": "Uses the inversion count theorem for parity in sliding puzzles.\n\nStep-by-step:\n1. Count `inv = 0`.\n2. For each `i` from 0 to 7:\n   - For each `j` from `i+1` to 8:\n     - If `arr[i] > arr[j]` and `arr[i] != 0` and `arr[j] != 0`, `inv++`.\n3. If `inv % 2 == 0`, Solvable (Yes). Else No.\n\nTrace (1 8 2 0 4 3 7 6 5):\nInversions: (8,2), (8,4), (8,3), (8,7), (8,6), (8,5), (2,0 is ignored), (4,3), (7,6), (7,5), (6,5).\nTotal = 12 (even). Yes.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "1 8 2 0 4 3 7 6 5",
+          "expected_output": "Yes"
+        },
+        {
+          "stdin": "8 1 2 0 4 3 7 6 5",
+          "expected_output": "No"
+        },
+        {
+          "stdin": "1 2 3 4 5 6 7 8 0",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 2 3 4 5 6 8 7 0",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "0 1 2 3 4 5 6 7 8",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 0 2 3 4 5 6 7 8",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "2 1 3 4 5 6 7 8 0",
+          "expected_output": "No",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 2 3 4 0 5 6 7 8",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "3 1 2 0 4 5 6 7 8",
+          "expected_output": "Yes",
+          "isHidden": true
+        },
+        {
+          "stdin": "4 3 2 1 0 5 6 7 8",
+          "expected_output": "Yes",
+          "isHidden": true
+        }
+      ]
+    }
+  ]
+}

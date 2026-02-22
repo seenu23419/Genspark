@@ -103,21 +103,6 @@ const Home: React.FC = () => {
     return (
         <div className="min-h-screen bg-slate-100 dark:bg-black text-slate-900 dark:text-white pb-24 font-sans selection:bg-indigo-500/30 transition-colors duration-300">
             {/* Minimal background glow */}
-            {/* DEBUG OVERLAY - Only visible in development if enabled or for specific users */}
-            {user?.email === 'seenu@gmail.com' && (
-                <div className="fixed top-20 right-4 z-[9999] bg-black/90 text-emerald-400 p-4 rounded-2xl border border-emerald-500/30 text-[10px] font-mono shadow-2xl backdrop-blur-md max-w-[200px]">
-                    <div className="flex items-center gap-2 mb-2 border-b border-emerald-500/20 pb-1">
-                        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                        <span className="font-bold uppercase">System Debug</span>
-                    </div>
-                    <div className="space-y-1">
-                        <p><span className="text-slate-500 text-[8px]">PATH:</span> {selectedPathId}</p>
-                        <p><span className="text-slate-500 text-[8px]">LESSON:</span> {currentLesson?.id || 'NULL'}</p>
-                        <p><span className="text-slate-500 text-[8px]">DONE:</span> {completedCount}/{totalLessons} ({Math.round(isPathCompleted ? 100 : (completedCount / totalLessons) * 100)}%)</p>
-                        <p><span className="text-slate-500 text-[8px]">TARGET:</span> {isPathCompleted ? '/profile' : `/lesson/${currentLesson?.id || 'c1'}`}</p>
-                    </div>
-                </div>
-            )}
 
             <div className="relative z-10 max-w-6xl mx-auto px-6 pt-6">
 
@@ -131,11 +116,8 @@ const Home: React.FC = () => {
                     <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mb-2">
                         Welcome back, {user.firstName || 'Developer'}
                     </h2>
-                    <p className="text-slate-500 text-base mb-1">
+                    <p className="text-slate-500 text-base">
                         {isPathCompleted ? 'Congratulations! You have mastered this path.' : 'Your learning journey continues today.'}
-                    </p>
-                    <p className="text-indigo-400 text-sm font-medium">
-                        {isPathCompleted ? 'Claim your rewards in the Profile section.' : 'Your next task is ready.'}
                     </p>
                 </div>
 

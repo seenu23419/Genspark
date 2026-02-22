@@ -4,7 +4,7 @@ import { genSparkCompilerService } from '../../services/compilerService';
 
 export interface CompilerRef {
     runCode: () => Promise<void>;
-    runTests: (tests: { stdin?: string; expected_output: string }[]) => Promise<void>;
+    runTests: (tests: any[]) => Promise<void>;
     getCode: () => string;
     insertText: (text: string) => void;
     deleteLastChar: () => void;
@@ -25,7 +25,6 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
     readOnly = false,
     language = 'python'
 }, ref) => {
-    const [currentInitialCode, setCurrentInitialCode] = useState(initialCode);
     const editorRef = useRef<any>(null);
     const monacoRef = useRef<Monaco | null>(null);
     const [isDarkMode, setIsDarkMode] = useState(() => document.documentElement.classList.contains('dark'));
@@ -55,61 +54,10 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
             const normalizedCurrent = currentVal.replace(/\r\n/g, '\n');
 
             if (normalizedInitial !== normalizedCurrent) {
-                // Only set value if they are truly different
-                // This allows parent to reset code (e.g. changing problem)
-                // But prevents loop when parent updates state from onChange
                 editorRef.current.setValue(initialCode);
             }
         }
     }, [initialCode]);
-
-    // Expose methods to parent
-    useImperativeHandle(ref, () => ({
-        runCode,
-        getCode: () => editorRef.current?.getValue() || '',
-        insertText: (text: string) => {
-            if (editorRef.current) {
-                editorRef.current.focus();
-                editorRef.current.trigger('keyboard', 'type', { text });
-            }
-        },
-        deleteLastChar: () => {
-            if (editorRef.current) {
-                editorRef.current.focus();
-                editorRef.current.trigger('keyboard', 'deleteLeft', {});
-            }
-        },
-        runTests: async (tests: { stdin?: string; expected_output: string }[]) => {
-            try {
-                const currentCode = editorRef.current?.getValue() || '';
-                const testSpecs = tests.map(t => ({ stdin: t.stdin, expectedOutput: t.expected_output }));
-                const results = await genSparkCompilerService.runTests(language, currentCode, testSpecs);
-
-                const allPassed = results.every(r => r.passed);
-                const firstFail = results.find(r => !r.passed);
-
-                // For the result UI, we show the first failing case or the last successful one
-                const displayResult = firstFail || results[results.length - 1];
-
-                onRun({
-                    stdout: displayResult.stdout,
-                    stderr: displayResult.stderr,
-                    accepted: allPassed,
-                    status: { id: allPassed ? 3 : 4, description: allPassed ? 'Accepted' : 'Tests Failed' },
-                    code: currentCode,
-                    language,
-                    testResults: results // Pack for potential UI use
-                });
-            } catch (error: any) {
-                onRun({
-                    stdout: null,
-                    stderr: error.message || 'Test system error',
-                    accepted: false,
-                    status: { id: 13, description: 'Internal Error' }
-                });
-            }
-        }
-    }));
 
     const runCode = async () => {
         try {
@@ -131,6 +79,49 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
         }
     };
 
+    // Expose methods to parent
+    useImperativeHandle(ref, () => ({
+        runCode,
+        getCode: () => editorRef.current?.getValue() || '',
+        insertText: (text: string) => {
+            if (editorRef.current) {
+                editorRef.current.focus();
+                editorRef.current.trigger('keyboard', 'type', { text });
+            }
+        },
+        deleteLastChar: () => {
+            if (editorRef.current) {
+                editorRef.current.focus();
+                editorRef.current.trigger('keyboard', 'deleteLeft', {});
+            }
+        },
+        runTests: async (tests: any[]) => {
+            try {
+                const currentCode = editorRef.current?.getValue() || '';
+                const resultSummary = await genSparkCompilerService.runTests(language, currentCode, tests);
+
+                onRun({
+                    ...resultSummary,
+                    code: currentCode,
+                    language,
+                    accepted: resultSummary.status === "PASSED",
+                    status: {
+                        id: resultSummary.status === "PASSED" ? 3 : 4,
+                        description: resultSummary.status === "PASSED" ? 'Accepted' : 'Tests Failed'
+                    },
+                    testResults: resultSummary.results
+                });
+            } catch (error: any) {
+                onRun({
+                    stdout: null,
+                    stderr: error.message || 'Test system error',
+                    accepted: false,
+                    status: { id: 13, description: 'Internal Error' }
+                });
+            }
+        }
+    }));
+
     const handleEditorDidMount = (editor: any, monaco: Monaco) => {
         editorRef.current = editor;
         monacoRef.current = monaco;
@@ -146,7 +137,7 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
         // Initial theme set
         monaco.editor.setTheme(isDarkMode ? 'genspark-dark' : 'vs');
 
-        // BLOCK COPY/PASTE - Nuclear enforcement across all layers
+        // BLOCK COPY/PASTE
         const blockPaste = (e: any) => {
             e.preventDefault();
             e.stopPropagation();
@@ -154,90 +145,87 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
             return false;
         };
 
-        // Layer 1: Keyboard Shortcuts
         editor.onKeyDown((e: any) => {
-            const isPaste = (e.ctrlKey || e.metaKey) && e.keyCode === 52; // KeyV is 52 in Monaco KeyCode
-            const isShiftInsert = e.shiftKey && e.keyCode === 45; // Insert is 45
+            const isPaste = (e.ctrlKey || e.metaKey) && e.keyCode === 52;
+            const isShiftInsert = e.shiftKey && e.keyCode === 45;
             if (isPaste || isShiftInsert) {
                 e.preventDefault();
                 e.stopPropagation();
             }
         });
 
-        // Layer 2: DOM Events (Directly on editor and its internal input area)
         const editorDomNode = editor.getDomNode();
         if (editorDomNode) {
             editorDomNode.addEventListener('paste', blockPaste, true);
             editorDomNode.addEventListener('drop', blockPaste, true);
-
-            // Monaco uses a hidden textarea for input - target it specifically
             const textArea = editorDomNode.querySelector('textarea');
             if (textArea) {
                 textArea.addEventListener('paste', blockPaste, true);
             }
         }
 
-        /*
-        // REGISTER CUSTOM SNIPPETS FOR C (Aesthetics and utility like VS Code)
-        */
-        monaco.languages.registerCompletionItemProvider('cpp', {
-            provideCompletionItems: () => {
-                const suggestions: any[] = [
-                    {
-                        label: 'printf',
-                        kind: monaco.languages.CompletionItemKind.Function,
-                        insertText: 'printf("${1:message}\\n");$0',
-                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-                        detail: 'Standard C Output'
-                    },
-                    {
-                        label: 'scanf',
-                        kind: monaco.languages.CompletionItemKind.Function,
-                        insertText: 'scanf("%${1:d}", &${2:var});$0',
-                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-                        detail: 'Standard C Input'
-                    },
-                    {
-                        label: 'int_main',
-                        kind: monaco.languages.CompletionItemKind.Snippet,
-                        insertText: 'int main() {\n\t${1:// TODO}\n\treturn 0;\n}$0',
-                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-                        detail: 'Main Function Structure'
-                    },
-                    {
-                        label: 'include',
-                        kind: monaco.languages.CompletionItemKind.Snippet,
-                        insertText: '#include <stdio.h>\n$0',
-                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-                        detail: 'Standard IO Header'
-                    }
-                ];
-                return { suggestions };
-            }
-        });
+        // Snippets
+        if (language === 'c' || language === 'cpp') {
+            monaco.languages.registerCompletionItemProvider('cpp', {
+                provideCompletionItems: () => {
+                    const suggestions: any[] = [
+                        {
+                            label: 'printf',
+                            kind: monaco.languages.CompletionItemKind.Function,
+                            insertText: 'printf("${1:message}\\n");$0',
+                            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                            detail: 'Standard C Output'
+                        },
+                        {
+                            label: 'scanf',
+                            kind: monaco.languages.CompletionItemKind.Function,
+                            insertText: 'scanf("%${1:d}", &${2:var});$0',
+                            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                            detail: 'Standard C Input'
+                        },
+                        {
+                            label: 'int_main',
+                            kind: monaco.languages.CompletionItemKind.Snippet,
+                            insertText: 'int main() {\n\t${1:// TODO}\n\treturn 0;\n}$0',
+                            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                            detail: 'Main Function Structure'
+                        },
+                        {
+                            label: 'include',
+                            kind: monaco.languages.CompletionItemKind.Snippet,
+                            insertText: '#include <stdio.h>\n$0',
+                            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                            detail: 'Standard IO Header'
+                        }
+                    ];
+                    return { suggestions };
+                }
+            });
+        }
 
-        // Add Python snippets too
-        monaco.languages.registerCompletionItemProvider('python', {
-            provideCompletionItems: () => {
-                const suggestions: any[] = [
-                    {
-                        label: 'print',
-                        kind: monaco.languages.CompletionItemKind.Function,
-                        insertText: 'print("${1:hello}")$0',
-                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-                        detail: 'Python Print'
-                    },
-                    {
-                        label: 'def',
-                        kind: monaco.languages.CompletionItemKind.Keyword,
-                        insertText: 'def ${1:function_name}(${2:params}):\n\t${0:pass}',
-                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-                        detail: 'Function Definition'
-                    }
-                ];
-                return { suggestions };
-            }
-        });
+        if (language === 'python') {
+            monaco.languages.registerCompletionItemProvider('python', {
+                provideCompletionItems: () => {
+                    const suggestions: any[] = [
+                        {
+                            label: 'print',
+                            kind: monaco.languages.CompletionItemKind.Function,
+                            insertText: 'print("${1:hello}")$0',
+                            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                            detail: 'Python Print'
+                        },
+                        {
+                            label: 'def',
+                            kind: monaco.languages.CompletionItemKind.Keyword,
+                            insertText: 'def ${1:function_name}(${2:params}):\n\t${0:pass}',
+                            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                            detail: 'Function Definition'
+                        }
+                    ];
+                    return { suggestions };
+                }
+            });
+        }
     };
 
     return (
@@ -260,7 +248,6 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
                     roundedSelection: false,
                     cursorStyle: 'line',
                     automaticLayout: true,
-                    // Use standard safe fonts to prevent cursor misalignment
                     fontFamily: "'Consolas', 'Courier New', monospace",
                     fontLigatures: false,
                     letterSpacing: 0,
@@ -268,8 +255,6 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
                     lineHeight: 1.6,
                     glyphMargin: false,
                     folding: false,
-
-                    // INTELLISENSE: High-productivity features enabled
                     quickSuggestions: {
                         other: true,
                         comments: false,
@@ -281,8 +266,6 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
                     tabCompletion: 'on',
                     wordBasedSuggestions: 'all',
                     contextmenu: true,
-
-                    // Styling
                     scrollbar: {
                         vertical: 'visible',
                         horizontal: 'visible',

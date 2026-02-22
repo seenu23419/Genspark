@@ -24,7 +24,11 @@ const Login: React.FC = () => {
   // Validation
   const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const isEmailValid = email.length > 0 && isValidEmail(email);
-  const isPasswordValid = password.length >= 6;
+  const isPasswordValid = password.length >= 8 &&
+    /[A-Z]/.test(password) &&
+    /[a-z]/.test(password) &&
+    /[0-9]/.test(password) &&
+    /[!@#$%^&*(),.?":{}|<>]/.test(password);
   const isFormValid = isEmailValid && isPasswordValid;
 
   useEffect(() => {
@@ -47,7 +51,7 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     if (!isFormValid) {
-      setError('Please enter a valid email and password');
+      setError('Join with a valid email and 8+ character complex password');
       return;
     }
 
@@ -55,12 +59,12 @@ const Login: React.FC = () => {
     setError(null);
 
     try {
+      // Reduced timeout to 15s - if it takes longer, something is wrong with the network.
       const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Connection timeout. Please try again.')), 30000)
+        setTimeout(() => reject(new Error('Login is taking longer than usual. Please check your connection.')), 15000)
       );
 
-      const loginPromise = authService.signIn(email, password);
-      await Promise.race([loginPromise, timeoutPromise]);
+      await Promise.race([authService.signIn(email, password), timeoutPromise]);
     } catch (err: any) {
       const errorMsg = err.message || 'Invalid email or password';
       setError(errorMsg);
@@ -148,10 +152,10 @@ const Login: React.FC = () => {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={handlePasswordChange}
-                  placeholder="Password"
+                  placeholder="••••••••"
                   autoComplete="current-password"
                   disabled={isLoading || isGoogleLoading}
-                  className="w-full pl-11 pr-4 py-3 bg-white/5 border border-slate-800 rounded-xl text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-600/40 focus:border-indigo-500 focus:bg-black focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                  className="w-full pl-11 pr-11 py-3 bg-white/5 border border-slate-800 rounded-xl text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-600/40 focus:border-indigo-500 focus:bg-black focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
                 />
                 <button
                   type="button"
@@ -239,6 +243,31 @@ const Login: React.FC = () => {
               Sign up
             </button>
           </p>
+
+          {/* About Section - Minimal for Google Verification */}
+          <div className="pt-8 border-t border-slate-800/50 mt-4">
+            <h2 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3 text-center">About GenSpark</h2>
+            <p className="text-[11px] text-slate-500 leading-relaxed text-center px-2">
+              GenSpark is an AI-powered coding intelligence platform designed to ignite your programming journey with interactive lessons,
+              real-time IDE execution, and smart personalized challenges.
+            </p>
+          </div>
+
+          {/* Legal Footer - Required by Google */}
+          <div className="flex items-center justify-center gap-6 pt-6">
+            <button
+              onClick={() => navigate('/privacy')}
+              className="text-[10px] text-slate-600 hover:text-slate-400 font-bold uppercase tracking-widest transition-colors"
+            >
+              Privacy
+            </button>
+            <button
+              onClick={() => navigate('/terms')}
+              className="text-[10px] text-slate-600 hover:text-slate-400 font-bold uppercase tracking-widest transition-colors"
+            >
+              Terms
+            </button>
+          </div>
         </div>
       </div>
     </div>

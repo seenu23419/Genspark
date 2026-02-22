@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Play, RotateCcw, Check, Loader2, AlertCircle, BookOpen, Code2, Zap, X, Terminal, Bot, ChevronDown, ChevronUp, Clock } from 'lucide-react';
 import Compiler, { CompilerRef } from '../../screens/compiler/Compiler';
 import { PracticeProblem } from '../../services/practiceService';
@@ -18,6 +19,8 @@ interface CodingWorkspaceProps {
   onNext?: () => void;
   hasNextProblem?: boolean;
   nextProblemTitle?: string;
+  topicTitle?: string;
+  topicId?: string;
 }
 
 interface ExecutionResult {
@@ -31,6 +34,7 @@ interface ExecutionResult {
   compile_output?: string;
   status: { id: number; description: string };
   input?: string;
+  testResults?: any[];
 }
 
 interface AISectionProps {
@@ -56,8 +60,11 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   onComplete,
   onNext,
   hasNextProblem,
-  nextProblemTitle
+  nextProblemTitle,
+  topicTitle = 'C Language',
+  topicId
 }) => {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<TabType>('PROBLEM');
   // Code state management
@@ -83,6 +90,19 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   /* Removed sidebarTab state */
   const [isEditingCompleted, setIsEditingCompleted] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1024);
+  const [selectedTestCaseIndex, setSelectedTestCaseIndex] = useState<number>(0);
+
+  // centralized test case aggregation
+  const allTests = useMemo(() => [
+    ...(problem.testCases || []),
+    ...(problem.test_cases || []),
+    ...(problem.hiddenTestCases || [])
+  ], [problem]);
+
+  const visibleTests = useMemo(() =>
+    allTests.filter(tc => !tc.isHidden && !tc.is_hidden),
+    [allTests]
+  );
 
   useEffect(() => {
     const handleResize = () => setIsLargeScreen(window.innerWidth >= 1024);
@@ -113,6 +133,8 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
           if (progress.code_snapshot) {
             setUserCode(progress.code_snapshot);
             setEditorSyncCode(progress.code_snapshot);
+            // If we loaded progress, consider it "typed" to prevent language switches from wiping it
+            setUserHasTyped(true);
           }
           if (progress.language_used) setSelectedLanguage(progress.language_used);
         }
@@ -120,6 +142,16 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
     };
     fetchProgress();
   }, [problem.id]);
+
+  // Synchronize code when language changes, but ONLY if user hasn't typed anything yet
+  useEffect(() => {
+    if (!userHasTyped) {
+      const starterCodes = (problem as any).starter_codes || {};
+      const newStarter = starterCodes[selectedLanguage] || problem.initialCode || '';
+      setUserCode(newStarter);
+      setEditorSyncCode(newStarter);
+    }
+  }, [selectedLanguage, problem.id, userHasTyped]);
 
   const [isSubmission, setIsSubmission] = useState(false);
 
@@ -136,7 +168,12 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
     console.log("[CodingWorkspace] Calling Code Execution...");
     try {
       if (compilerRef.current) {
-        await compilerRef.current?.runCode();
+        if (visibleTests.length > 0) {
+          console.log(`[CodingWorkspace] Running against ${visibleTests.length} sample tests...`);
+          await compilerRef.current?.runTests(visibleTests);
+        } else {
+          await compilerRef.current?.runCode();
+        }
         console.log("[CodingWorkspace] Code Execution Completed");
       } else {
         console.error("[CodingWorkspace] Compiler Ref is NULL");
@@ -153,11 +190,10 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
     setExecutionResult(null);
     setAiExplanation(null);
     try {
-      if (problem.test_cases && problem.test_cases.length > 0) {
-        await compilerRef.current?.runTests(problem.test_cases);
+      if (allTests.length > 0) {
+        await compilerRef.current?.runTests(allTests);
       } else {
         // Fallback for problems without test cases: regular run counts as submission check
-        // Ideally all validation problems should have test cases.
         await compilerRef.current?.runCode();
       }
     } catch (e) { console.error(e); }
@@ -246,6 +282,10 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
     setExecutionResult(result);
     setActiveTab('RESULT');
 
+    // Auto-select first failing test case
+    const firstFail = result.testResults?.findIndex((r: any) => !r.passed);
+    setSelectedTestCaseIndex(firstFail !== undefined && firstFail !== -1 ? firstFail : 0);
+
     // Only save attempt if it's a submission
     if (user?._id && isSubmissionRef.current) {
       console.log('[SAVE] Saving practice attempt...', { problemId: problem.id, accepted: result.accepted });
@@ -311,79 +351,50 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
       {/* 2. Problem Statement */}
       <div className="space-y-3">
         <h3 className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Problem Statement</h3>
-        <p className="text-slate-700 dark:text-slate-200 text-sm leading-relaxed whitespace-pre-wrap font-medium">
-          {problem.description}
-        </p>
+        <div className="text-slate-700 dark:text-slate-200 text-sm leading-relaxed font-medium space-y-2">
+          {problem.description.split(/```[\w]*\n?([\s\S]*?)```/g).map((part: string, i: number) => {
+            if (i % 2 === 1) {
+              // Code block → styled box with indigo tint
+              return (
+                <pre key={i} className="bg-indigo-950/60 dark:bg-indigo-950/80 border border-indigo-500/30 rounded-xl px-4 py-3 font-mono text-xs text-cyan-300 overflow-x-auto whitespace-pre-wrap">
+                  {part.trim()}
+                </pre>
+              );
+            }
+            // Plain text — detect heading lines
+            if (!part) return null;
+            const lines = part.split('\n');
+            return (
+              <span key={i} className="block space-y-1">
+                {lines.map((line, j) => {
+                  const trimmed = line.trim();
+                  if (!trimmed) return <br key={j} />;
+                  // Heading: short line, no leading dash/bullet, no lowercase-only start
+                  const isHeading = trimmed.length > 0 &&
+                    trimmed.length < 50 &&
+                    !trimmed.startsWith('-') &&
+                    !trimmed.startsWith('•') &&
+                    /^[A-Z]/.test(trimmed) &&
+                    !trimmed.includes('. ') &&
+                    j > 0 && lines[j - 1].trim() === '';
+                  return isHeading ? (
+                    <span key={j} className="block text-amber-400 dark:text-amber-300 font-black text-[15px] pt-2">
+                      {trimmed}
+                    </span>
+                  ) : (
+                    <span key={j} className="block text-slate-300 dark:text-slate-300 text-[13px]">
+                      {line}
+                    </span>
+                  );
+                })}
+              </span>
+            );
+          })}
+        </div>
       </div>
 
-      {/* 3. Input & Output Format */}
-      {(problem.inputFormat || problem.outputFormat) && (
-        <div className="grid grid-cols-1 gap-6 pt-4 border-t border-slate-100 dark:border-white/5">
-          {problem.inputFormat && (
-            <div className="space-y-2">
-              <h4 className="text-[10px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest">Input Format</h4>
-              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed italic">{problem.inputFormat}</p>
-            </div>
-          )}
-          {problem.outputFormat && (
-            <div className="space-y-2">
-              <h4 className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Output Format</h4>
-              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed italic">{problem.outputFormat}</p>
-            </div>
-          )}
-        </div>
-      )}
 
-      {/* 4. Constraints */}
-      {problem.constraints && (
-        <div className="space-y-3 pt-4 border-t border-slate-100 dark:border-white/5">
-          <h3 className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Constraints</h3>
-          <div className="bg-slate-50 dark:bg-slate-950/50 rounded-xl p-4 font-mono text-xs text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-white/5">
-            {problem.constraints}
-          </div>
-        </div>
-      )}
 
-      {/* 5. Examples SECTION */}
-      {problem.test_cases && problem.test_cases.length > 0 && (
-        <div className="space-y-6 pt-6 border-t border-slate-100 dark:border-white/5">
-          <div className="flex items-center justify-between">
-            <h3 className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Example Samples</h3>
-          </div>
-
-          <div className="space-y-8">
-            {problem.test_cases.slice(0, 2).map((tc, i) => (
-              <div key={i} className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <div className="px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-500 text-[10px] font-black">SAMPLE {i + 1}</div>
-                </div>
-                <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-white/5 rounded-xl overflow-hidden font-mono text-xs shadow-sm">
-                  {tc.stdin && (
-                    <div className="p-4 border-b border-slate-200 dark:border-white/5 bg-white/30 dark:bg-white/[0.02]">
-                      <div className="text-amber-600 dark:text-amber-500 mb-2 opacity-70 text-[9px] font-black uppercase tracking-widest">Sample Input</div>
-                      <div className="text-slate-800 dark:text-amber-200 leading-relaxed">{tc.stdin}</div>
-                    </div>
-                  )}
-                  <div className="p-4 bg-emerald-500/[0.02]">
-                    <div className="text-emerald-600 dark:text-emerald-500 mb-2 opacity-70 text-[9px] font-black uppercase tracking-widest">Sample Output</div>
-                    <div className="text-slate-800 dark:text-emerald-400 leading-relaxed">{tc.expected_output}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* 6. Explanation */}
-      {problem.explanation && (
-        <div className="space-y-3 pt-6 border-t border-slate-100 dark:border-white/5 pb-10">
-          <h3 className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Explanation</h3>
-          <div className="p-4 bg-indigo-500/5 dark:bg-indigo-500/[0.03] border border-indigo-500/10 rounded-2xl text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-            {problem.explanation}
-          </div>
-        </div>
-      )}
     </div>
   );
 
@@ -420,6 +431,28 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
           )}
         </div>
 
+        {/* ── COMPILER / RUNTIME ERROR ── shown immediately after status */}
+        {hasError && (
+          <div className="rounded-xl overflow-hidden border border-rose-500/40 shadow-lg shadow-rose-500/5">
+            {/* Terminal header bar */}
+            <div className="flex items-center gap-2 px-4 py-2 bg-rose-950/60 border-b border-rose-500/20">
+              <div className="flex gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
+                <div className="w-2.5 h-2.5 rounded-full bg-amber-500/40" />
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/20" />
+              </div>
+              <Terminal size={12} className="text-rose-400 ml-1" />
+              <span className="text-[10px] font-black text-rose-400 uppercase tracking-widest">
+                {executionResult.compile_output && !executionResult.stderr ? 'Compilation Error' : 'Runtime Error'}
+              </span>
+            </div>
+            {/* Error output */}
+            <pre className="bg-[#0d0302] p-4 text-xs text-rose-300 font-mono overflow-auto whitespace-pre-wrap leading-relaxed max-h-60">
+              {(executionResult.stderr || executionResult.compile_output || '').trim()}
+            </pre>
+          </div>
+        )}
+
         {(aiExplanation || isGeneratingExplanation) && (
           <div className="space-y-4 animate-in fade-in zoom-in duration-500">
             <div className="flex items-center gap-2">
@@ -454,33 +487,131 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
           </div>
         )}
 
-        {(executionResult as any).testResults && (
-          <div className="space-y-3">
-            <h4 className="text-[10px] font-black text-slate-600 uppercase">Test Case Breakdown</h4>
-            <div className="grid grid-cols-2 gap-2">
-              {(() => {
-                const testResults = (executionResult as any).testResults;
-                console.log('[Test Results]', testResults);
-                return testResults.map((tr: any, i: number) => (
-                  <div key={i} className={`p-3 rounded-lg border flex items-center justify-between ${tr.passed ? 'bg-emerald-500/5 border-emerald-500/10' : 'bg-rose-500/5 border-rose-500/10'}`}>
-                    <span className="text-[10px] font-bold text-slate-400">Case {i + 1}</span>
-                    {tr.passed ? <Check size={12} className="text-emerald-500" /> : <X size={12} className="text-rose-500" />}
-                  </div>
-                ));
-              })()}
+        {executionResult.testResults && (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h4 className="text-[10px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest">
+                {isSubmission ? 'Submission Results' : 'Test Case Breakdown'}
+              </h4>
+              <span className="text-[10px] font-black text-indigo-400">
+                {executionResult.testResults.filter((r: any) => r.passed).length} / {executionResult.testResults.length} PASSED
+              </span>
             </div>
-          </div>
-        )}
 
-        <div className="space-y-2">
-          <h4 className="text-[10px] font-black text-slate-600 uppercase">Standard Output</h4>
-          <pre className="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-white/5 text-xs text-slate-600 dark:text-slate-300 font-mono overflow-auto max-h-40">{executionResult.stdout || '(Empty)'}</pre>
-        </div>
+            {isSubmission ? (
+              /* Simplified Submission View */
+              <div className="space-y-6 animate-in fade-in zoom-in duration-500">
+                <div className="p-8 bg-slate-900/40 rounded-3xl border border-white/5 flex flex-col items-center justify-center gap-4 text-center">
+                  <div className={`w-16 h-16 rounded-full flex items-center justify-center border-4 ${executionResult.accepted ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500' : 'bg-rose-500/10 border-rose-500/20 text-rose-500'}`}>
+                    {executionResult.accepted ? <Check size={32} /> : <X size={32} />}
+                  </div>
+                  <div>
+                    <h3 className={`text-xl font-black uppercase tracking-tight ${executionResult.accepted ? 'text-emerald-500' : 'text-rose-500'}`}>
+                      {executionResult.accepted ? 'Success!' : 'Try Again'}
+                    </h3>
+                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">
+                      {executionResult.testResults.filter((r: any) => r.passed).length} of {executionResult.testResults.length} test cases passed
+                    </p>
+                  </div>
+                </div>
 
-        {hasError && (
-          <div className="space-y-2">
-            <h4 className="text-[10px] font-black text-rose-500 uppercase opacity-50">Compiler Registry</h4>
-            <pre className="bg-rose-500/[0.03] p-4 rounded-xl border border-rose-500/10 text-xs text-rose-400/80 font-mono overflow-auto">{executionResult.stderr || executionResult.compile_output}</pre>
+                <div className="grid grid-cols-5 sm:grid-cols-8 gap-2">
+                  {executionResult.testResults.map((tr: any, i: number) => (
+                    <div key={i} className={`h-10 rounded-xl flex flex-col items-center justify-center border transition-all ${tr.passed ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500' : 'bg-rose-500/10 border-rose-500/20 text-rose-500'}`} title={`Test Case ${i + 1}: ${tr.passed ? 'Passed' : 'Failed'}`}>
+                      <span className="text-[8px] font-black opacity-50 mb-0.5">{i + 1}</span>
+                      {tr.passed ? <Check size={12} /> : <X size={12} />}
+                    </div>
+                  ))}
+                </div>
+
+                {!executionResult.accepted && (
+                  <p className="text-[10px] text-slate-500 dark:text-slate-600 text-center font-medium italic">
+                    Tip: Use 'Run Code' to see detailed input/output for sample cases.
+                  </p>
+                )}
+              </div>
+            ) : (
+              /* Detailed Run Results View */
+              <div className="space-y-8">
+                {/* Visible Sample Results */}
+                {executionResult.testResults.map((tr: any, i: number) => {
+                  const currentTest = allTests[i];
+                  const isHidden = tr.isHidden || currentTest?.isHidden || currentTest?.is_hidden;
+                  if (isHidden) return null;
+
+                  return (
+                    <div key={i} className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-6 h-6 rounded-full flex items-center justify-center border ${tr.passed ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-rose-500/10 border-rose-500/20'}`}>
+                          {tr.passed ? <Check size={12} className="text-emerald-500" /> : <X size={12} className="text-rose-500" />}
+                        </div>
+                        <h5 className={`text-xs font-bold uppercase tracking-widest ${tr.passed ? 'text-emerald-500' : 'text-rose-500'}`}>Sample Case {i + 1}</h5>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {/* Input */}
+                        {(tr.stdin || allTests[i]?.input || allTests[i]?.stdin) && (
+                          <div className="space-y-2 col-span-full">
+                            <div className="flex items-center gap-2">
+                              <Terminal size={12} className="text-slate-500" />
+                              <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Input</span>
+                            </div>
+                            <div className="p-3 bg-slate-900/50 border border-white/5 rounded-lg font-mono text-xs text-slate-300">
+                              {tr.stdin || allTests[i]?.input || allTests[i]?.stdin}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Expected */}
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <Check size={12} className="text-emerald-500/50" />
+                            <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Expected Output</span>
+                          </div>
+                          <div className="p-3 bg-slate-900/50 border border-emerald-500/10 rounded-lg font-mono text-xs text-emerald-400/80">
+                            {tr.expected || allTests[i]?.expectedOutput || allTests[i]?.expected_output}
+                          </div>
+                        </div>
+
+                        {/* Actual */}
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <Play size={12} className={tr.passed ? "text-emerald-500/50" : "text-rose-500/50"} />
+                            <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Your Output</span>
+                          </div>
+                          <div className={`p-3 bg-slate-900/50 border rounded-lg font-mono text-xs ${tr.passed
+                            ? 'border-emerald-500/10 text-emerald-400'
+                            : 'border-rose-500/10 text-rose-400'
+                            }`}>
+                            {tr.actual || '(Empty)'}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {/* Hidden Cases Summary */}
+                {executionResult.testResults.some((tr: any) => tr.isHidden) && (
+                  <div className="p-4 bg-slate-900/40 rounded-xl border border-white/5 space-y-3">
+                    <div className="flex items-center gap-2">
+                      <Zap size={14} className="text-amber-500" />
+                      <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">Hidden Test Cases</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {executionResult.testResults.map((tr: any, i: number) => {
+                        if (!tr.isHidden) return null;
+                        return (
+                          <div key={i} className={`w-6 h-6 rounded flex items-center justify-center border ${tr.passed ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-rose-500/10 border-rose-500/20'}`}>
+                            {tr.passed ? <Check size={8} className="text-emerald-500" /> : <X size={8} className="text-rose-500" />}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -488,17 +619,22 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-screen bg-slate-50 dark:bg-black overflow-hidden font-sans practice-ui-root transition-colors duration-300">
+    <div className="flex flex-col h-screen bg-slate-100 dark:bg-black overflow-hidden font-sans practice-ui-root transition-colors duration-300">
       {/* HEADER */}
-      <header className="h-14 shrink-0 bg-[#0a0b14] border-b border-white/10 flex items-center px-4 z-50 justify-between">
-        <div className="flex items-center gap-4">
-          <button onClick={onBack} className="p-2 -ml-2 text-slate-400 hover:text-white transition"><ChevronLeft size={20} /></button>
-          <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
-            <span className="hover:text-white cursor-pointer transition-colors" onClick={onBack}>Home</span>
-            <ChevronRight size={10} />
-            <span className="hover:text-white cursor-pointer transition-colors">C Language</span>
-            <ChevronRight size={10} />
-            <span className="text-white">{problem.title}</span>
+      <header className="h-14 shrink-0 bg-white dark:bg-black border-b border-slate-200 dark:border-white/10 flex items-center px-4 z-50 justify-between">
+        <div className="flex items-center gap-1 sm:gap-4 overflow-hidden">
+          <button onClick={onBack} className="p-2 -ml-2 text-slate-400 hover:text-white transition shrink-0"><ChevronLeft size={20} /></button>
+          <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500 overflow-hidden">
+            <span className="hidden xl:inline hover:text-white cursor-pointer transition-colors shrink-0" onClick={() => navigate('/practice')}>Practice Hub</span>
+            <ChevronRight size={10} className="hidden xl:block shrink-0" />
+            <span
+              className="hidden xl:inline hover:text-white cursor-pointer transition-colors shrink-0"
+              onClick={() => navigate(topicId ? `/practice?topic=${topicId}` : '/practice')}
+            >
+              {topicTitle}
+            </span>
+            <ChevronRight size={10} className="hidden xl:block shrink-0" />
+            <span className="text-white truncate max-w-[100px] sm:max-w-none">{problem.title}</span>
           </div>
         </div>
 
@@ -511,33 +647,47 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
 
         {/* LEFT: INFORMATION */}
-        <div className="hidden lg:flex flex-col w-[340px] bg-white dark:bg-black border-r border-slate-200 dark:border-white/5">
-          <div className="pro-panel-header border-b border-slate-100 dark:border-white/5">
+        <div className="hidden lg:flex flex-col w-[340px] bg-white dark:bg-black border-r border-slate-200 dark:border-white/10">
+          <div className="pro-panel-header border-b border-slate-100 dark:border-white/10">
             <div className="pro-tab-btn active text-indigo-600 dark:text-indigo-400"><BookOpen size={14} />Description</div>
           </div>
           <div className="flex-1 overflow-y-auto no-scrollbar">{renderDescription()}</div>
         </div>
 
         {/* CENTER: IDE */}
-        <div className="flex-1 flex flex-col min-w-0 bg-white dark:bg-[#0d0e1a] z-10 transition-colors duration-300">
-          <div className="editor-toolbar border-b border-white/5 bg-[#1a1b2e] px-4 h-14 flex items-center justify-between">
+        <div className="flex-1 flex flex-col min-w-0 bg-slate-100 dark:bg-black z-10 transition-colors duration-300">
+          <div className="editor-toolbar border-b border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0d0e1a] px-3 h-9 flex items-center justify-between">
             {/* Language Selector & Reset */}
-            <div className="flex items-center gap-4">
-              <select value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)} className="bg-transparent border-none text-indigo-400 text-[10px] font-black uppercase tracking-widest focus:ring-0 cursor-pointer">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <select value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)} className="bg-transparent border-none text-indigo-400 text-[9px] font-bold uppercase tracking-wider focus:ring-0 cursor-pointer p-0 max-w-[70px] sm:max-w-none truncate">
                 {Object.keys((problem as any).starter_codes || {}).map(l => <option key={l} value={l} className="bg-[#0f111a] text-white">{l.toUpperCase()}</option>)}
               </select>
-              <div className="w-px h-4 bg-white/10" />
-              <button onClick={handleReset} className="text-slate-500 hover:text-white transition" title="Reset Code"><RotateCcw size={14} /></button>
+              <div className="w-px h-3 bg-white/10" />
+              <button onClick={handleReset} className="text-slate-500 hover:text-white transition" title="Reset Code"><RotateCcw size={12} /></button>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center gap-3">
-              <button onClick={handleRunCode} disabled={isSubmitting} className="h-8 px-4 bg-[#2e3142] hover:bg-[#3e4155] text-white rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-2 transition-all active:scale-95">
-                {isSubmitting ? <Loader2 size={12} className="animate-spin" /> : <Play size={10} fill="currentColor" />}
-                Run Code
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <button
+                onClick={handleRunCode}
+                disabled={isSubmitting}
+                title="Run Code"
+                className="h-6 px-2 sm:px-3 bg-[#2e3142] hover:bg-[#3e4155] text-white rounded text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 transition-all active:scale-95"
+              >
+                {isSubmitting ? <Loader2 size={10} className="animate-spin" /> : <Play size={8} fill="currentColor" />}
+                <span>Run Code</span>
               </button>
-              <button onClick={handleSubmit} disabled={isSubmitting} className="h-8 px-6 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-[10px] font-black uppercase tracking-widest transition-all shadow-lg shadow-indigo-600/20 active:scale-95">
-                Submit
+              <button
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                title="Submit Solution"
+                className="h-6 px-3 sm:px-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded text-[9px] font-black uppercase tracking-widest transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
+              >
+                <div className="flex items-center gap-1.5">
+                  <Check size={10} className="xs:hidden" />
+                  <span className="hidden xs:inline">Submit</span>
+                  <span className="xs:hidden font-black">SUBMIT</span>
+                </div>
               </button>
             </div>
           </div>
@@ -555,7 +705,12 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
                     key={problem.id}
                     language={selectedLanguage.toLowerCase()}
                     initialCode={editorSyncCode}
-                    onCodeChange={setUserCode}
+                    onCodeChange={(code) => {
+                      setUserCode(code);
+                      if (!userHasTyped && code.trim() !== editorSyncCode.trim()) {
+                        setUserHasTyped(true);
+                      }
+                    }}
                     onRun={handleRunResult}
                     ref={compilerRef}
                     readOnly={isSubmitting}
@@ -590,34 +745,15 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
         </div>
 
         {/* RIGHT: RESULTS & AI */}
-        <div className="hidden lg:flex flex-col w-[380px] bg-white dark:bg-black border-l border-slate-200 dark:border-white/5 shrink-0 overflow-hidden transition-colors duration-300">
-          <div className="pro-panel-header px-4 border-b border-slate-100 dark:border-white/5">
+        <div className="hidden lg:flex flex-col w-[380px] bg-white dark:bg-black border-l border-slate-200 dark:border-white/10 shrink-0 overflow-hidden transition-colors duration-300">
+          <div className="pro-panel-header px-4 border-b border-slate-100 dark:border-white/10">
             <span className="text-[10px] font-black text-slate-500 dark:text-slate-500 uppercase tracking-widest flex items-center gap-2"><Zap size={14} className="text-amber-500" />Execution Results</span>
           </div>
           <div className="flex-1 overflow-y-auto no-scrollbar">{renderResults()}</div>
         </div>
       </div>
 
-      {/* SUCCESS MODAL */}
-      {showSuccess && (
-        <div className="fixed inset-0 z-[100] bg-slate-900/40 dark:bg-[#000000]/95 backdrop-blur-xl flex items-center justify-center p-6 animate-in fade-in duration-700">
-          <div className="w-full max-w-sm bg-white dark:bg-[#0d0e1a] border border-emerald-500/20 dark:border-emerald-500/20 rounded-[3rem] p-10 flex flex-col items-center text-center gap-8 shadow-2xl transition-colors duration-300">
-            <div className="w-24 h-24 bg-emerald-500 text-white rounded-full flex items-center justify-center shadow-2xl shadow-emerald-500/30 scale-110"><Check size={56} strokeWidth={4} /></div>
-            <div className="space-y-3">
-              <h2 className="text-3xl font-black text-slate-900 dark:text-white italic uppercase tracking-tighter">Mission Accomplished!</h2>
-              <p className="text-slate-500 dark:text-slate-500 font-medium italic text-sm">Your solution is accurate and optimized.</p>
-            </div>
-            <div className="w-full space-y-4">
-              {hasNextProblem ? (
-                <button onClick={() => { setShowSuccess(false); onNext?.(); }} className="w-full h-14 bg-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-indigo-500 transition shadow-xl shadow-indigo-600/20">Next Challenge</button>
-              ) : (
-                <button onClick={onBack} className="w-full h-14 bg-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs">Return to Home</button>
-              )}
-              <button onClick={() => setShowSuccess(false)} className="w-full h-14 bg-slate-800 text-slate-500 rounded-2xl font-black uppercase tracking-widest text-xs hover:text-white transition">Review Syntax</button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* SUCCESS MODAL REMOVED PER USER REQUEST */}
     </div>
   );
 };

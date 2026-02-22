@@ -1,0 +1,279 @@
+{
+  "id": "bitwise",
+  "title": "Bitwise Logic",
+  "color": "from-purple-500 to-indigo-600",
+  "problems": [
+    {
+      "id": "bitwise-1",
+      "topicId": "bitwise",
+      "title": "Add without Arithmetic Operators",
+      "description": "Add two integers A and B without using '+' or '-' operators.\n\nInput Format\n```\nA B\n```\n\nOutput Format\n```\nsum\n```\n\nConstraints\n• 0 ≤ A, B ≤ 10^9\n\nSample Input 1\n```\n5 7\n```\n\nSample Output 1\n```\n12\n```\n\nExplanation\nBinary logic: Use XOR for addition and AND followed by SHIFT for the carry.",
+      "difficulty": "hard",
+      "estimatedTime": 15,
+      "concept": "Bitwise Logic",
+      "hint": "Use the bitwise property: `a ^ b` calculates the sum without carry, and `(a & b) << 1` calculates the carry. Repeat until carry is 0.",
+      "explanation": "Simulates a binary half-adder in a loop.\n\nAlgorithm:\n1. While `B != 0`:\n   - `carry = A & B` (find common set bits)\n   - `A = A ^ B` (sum without carry)\n   - `B = carry << 1` (shift carry to add in the next position)\n2. Return `A`.\n\nTrace (5 + 7):\n- 5(0101), 7(0111)\n- Step 1: carry = 0101 & 0111 = 0101. A = 0101 ^ 0111 = 0010(2). B = 1010(10).\n- Step 2: carry = 0010 & 1010 = 0010. A = 0010 ^ 1010 = 1000(8). B = 0100(4).\n- Step 3: carry = 1000 & 0100 = 0000. A = 1000 ^ 0100 = 1100(12). B = 0000.\nResult: 12",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "5 7",
+          "expected_output": "12"
+        },
+        {
+          "stdin": "10 20",
+          "expected_output": "30"
+        },
+        {
+          "stdin": "0 0",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 1",
+          "expected_output": "2",
+          "isHidden": true
+        },
+        {
+          "stdin": "100 200",
+          "expected_output": "300",
+          "isHidden": true
+        },
+        {
+          "stdin": "42 58",
+          "expected_output": "100",
+          "isHidden": true
+        },
+        {
+          "stdin": "15 15",
+          "expected_output": "30",
+          "isHidden": true
+        },
+        {
+          "stdin": "1024 1024",
+          "expected_output": "2048",
+          "isHidden": true
+        },
+        {
+          "stdin": "99 1",
+          "expected_output": "100",
+          "isHidden": true
+        },
+        {
+          "stdin": "123 456",
+          "expected_output": "579",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "bitwise-2",
+      "topicId": "bitwise",
+      "title": "Decimal to Binary Conversion",
+      "description": "Convert a positive decimal integer N to its binary representation.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nbinary_string\n```\n\nConstraints\n• 0 ≤ N ≤ 2 * 10^9\n\nSample Input 1\n```\n10\n```\n\nSample Output 1\n```\n1010\n```\n\nExplanation\n10 in decimal is 1010 in binary (8 + 2).",
+      "difficulty": "medium",
+      "estimatedTime": 6,
+      "concept": "Number Systems",
+      "hint": "Repeatedly divide the number by 2 and collect the remainders in reverse order. Or use recursion: `printBinary(n/2); print(n%2)`.",
+      "explanation": "Conversion using the division-by-2 method.\n\nStep-by-step (10):\n1. 10 / 2 = 5, rem 0\n2. 5 / 2 = 2, rem 1\n3. 2 / 2 = 1, rem 0\n4. 1 / 2 = 0, rem 1\nBinary: 1010 (reverse collect).",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "10",
+          "expected_output": "1010"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "255",
+          "expected_output": "11111111",
+          "isHidden": true
+        },
+        {
+          "stdin": "1024",
+          "expected_output": "10000000000",
+          "isHidden": true
+        },
+        {
+          "stdin": "42",
+          "expected_output": "101010",
+          "isHidden": true
+        },
+        {
+          "stdin": "7",
+          "expected_output": "111",
+          "isHidden": true
+        },
+        {
+          "stdin": "127",
+          "expected_output": "1111111",
+          "isHidden": true
+        },
+        {
+          "stdin": "64",
+          "expected_output": "1000000",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "1100100",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "bitwise-3",
+      "topicId": "bitwise",
+      "title": "Binary to Decimal Conversion",
+      "description": "Convert a binary string representation of a number to its decimal integer value.\n\nInput Format\n```\nbinary_string\n```\n\nOutput Format\n```\ndecimal_value\n```\n\nConstraints\n• 1 to 31 bits binary string.\n\nSample Input 1\n```\n1010\n```\n\nSample Output 1\n```\n10\n```\n\nExplanation\n1*2^3 + 0*2^2 + 1*2^1 + 0*2^0 = 8 + 0 + 2 + 0 = 10.",
+      "difficulty": "medium",
+      "estimatedTime": 6,
+      "concept": "Number Systems",
+      "hint": "Iterate through the string from right to left, multiplying each bit by 2^position and adding to the sum.",
+      "explanation": "Calculates value based on powers of 2.\n\nStep-by-step (1011):\n- index 0 (val 1): 1 * 2^0 = 1\n- index 1 (val 1): 1 * 2^1 = 2\n- index 2 (val 0): 0 * 2^2 = 0\n- index 3 (val 1): 1 * 2^3 = 8\nTotal: 1+2+0+8 = 11.",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "1010",
+          "expected_output": "10"
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "11111111",
+          "expected_output": "255",
+          "isHidden": true
+        },
+        {
+          "stdin": "10000000000",
+          "expected_output": "1024",
+          "isHidden": true
+        },
+        {
+          "stdin": "111",
+          "expected_output": "7",
+          "isHidden": true
+        },
+        {
+          "stdin": "1100100",
+          "expected_output": "100",
+          "isHidden": true
+        },
+        {
+          "stdin": "101010",
+          "expected_output": "42",
+          "isHidden": true
+        },
+        {
+          "stdin": "101",
+          "expected_output": "5",
+          "isHidden": true
+        },
+        {
+          "stdin": "1001",
+          "expected_output": "9",
+          "isHidden": true
+        }
+      ]
+    },
+    {
+      "id": "bitwise-4",
+      "topicId": "bitwise",
+      "title": "Count Set Bits (Kernighan)",
+      "description": "Count the number of set bits (1s) in the binary representation of a positive integer N using Brian Kernighan's Algorithm.\nAlgorithm: Repeatedly perform `N = N & (N - 1)` until N becomes 0. The number of iterations equals the set bit count.\n\nInput Format\n```\nN\n```\n\nOutput Format\n```\nset_bits_count\n```\n\nConstraints\n• 0 ≤ N ≤ 2 * 10^9\n\nSample Input 1\n```\n13\n```\n\nSample Output 1\n```\n3\n```\n\nExplanation\n13 is 1101 in binary, which has 3 set bits.",
+      "difficulty": "hard",
+      "estimatedTime": 10,
+      "concept": "Bitwise Logic",
+      "hint": "N & (N - 1) clears the least significant set bit of N.",
+      "explanation": "Optimized way to count 1s by skipping 0s.\n\nStep-by-step (13): 1101\n1. 13 & 12 = 1101 & 1100 = 1100 (12). Count=1.\n2. 12 & 11 = 1100 & 1011 = 1000 (8). Count=2.\n3. 8 & 7 = 1000 & 0111 = 0000. Count=3.\nResult: 3",
+      "starter_codes": {
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+      },
+      "test_cases": [
+        {
+          "stdin": "13",
+          "expected_output": "3"
+        },
+        {
+          "stdin": "7",
+          "expected_output": "3"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "1024",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "255",
+          "expected_output": "8",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "3",
+          "isHidden": true
+        },
+        {
+          "stdin": "12345",
+          "expected_output": "6",
+          "isHidden": true
+        },
+        {
+          "stdin": "10101",
+          "expected_output": "7",
+          "isHidden": true
+        },
+        {
+          "stdin": "2000000000",
+          "expected_output": "13",
+          "isHidden": true
+        }
+      ]
+    }
+  ]
+}

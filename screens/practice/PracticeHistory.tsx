@@ -85,11 +85,11 @@ const PracticeHistory: React.FC = () => {
 
                 {/* Performance Overview (Subtle) */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-md border border-slate-200 dark:border-white/5 p-4 rounded-2xl shadow-sm">
+                    <div className="bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200 dark:border-white/10 p-4 rounded-2xl shadow-sm">
                         <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1">Solved</div>
                         <div className="text-2xl font-black text-amber-400">{solvedProblems.length}</div>
                     </div>
-                    <div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-md border border-slate-200 dark:border-white/5 p-4 rounded-2xl shadow-sm">
+                    <div className="bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200 dark:border-white/10 p-4 rounded-2xl shadow-sm">
                         <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1">Languages</div>
                         <div className="text-2xl font-black text-slate-900 dark:text-white">{new Set(solvedProblems.map(p => p.language_used)).size}</div>
                     </div>
@@ -104,7 +104,7 @@ const PracticeHistory: React.FC = () => {
                                 <div
                                     key={item.challenge_id}
                                     onClick={() => navigate(`/practice/problem/${item.challenge_id}`)}
-                                    className="group relative bg-white/80 dark:bg-slate-900/40 backdrop-blur-md border border-slate-200 dark:border-white/5 rounded-2xl p-6 flex flex-col md:flex-row md:items-center justify-between hover:bg-slate-100/90 dark:hover:bg-slate-800/40 hover:border-slate-300 dark:hover:border-white/10 transition-all duration-300 animate-in slide-in-from-bottom-4 cursor-pointer shadow-sm hover:shadow-lg"
+                                    className="group relative bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl p-6 flex flex-col md:flex-row md:items-center justify-between hover:bg-white dark:hover:bg-slate-800/60 hover:border-indigo-500 dark:hover:border-indigo-500/80 transition-all duration-300 animate-in slide-in-from-bottom-4 cursor-pointer shadow-sm hover:shadow-xl ring-0 hover:ring-1 hover:ring-indigo-500/30"
                                     style={{ animationDelay: `${index * 50}ms` }}
                                 >
                                     <div className="flex-1 space-y-3">

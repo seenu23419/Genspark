@@ -14,11 +14,10 @@
       "hint": "Use strlen() in C, len() in Python.",
       "explanation": "The length of a string is the number of characters in it.\n\nStep-by-step:\n1. Read the string.\n2. Use the appropriate built-in function:\n   - C: strlen(s)\n   - Python: len(s)\n   - Java: s.length()\n   - JS: s.length\n3. Print the count.\n\nExample: 'hello' has 5 characters (h-e-l-l-o).",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
-        "python": "# Your code here\n",
-        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
-        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
-        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[1001];\n    scanf(\"%s\", s);\n    // Print length\n    return 0;\n}",
+        "python": "s = input()\n# Print the length\n",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(new Scanner(System.in).next().length());\n    }\n}",
+        "javascript": "const s = require('fs').readFileSync('/dev/stdin','utf8').trim();\nconsole.log(s.length);\n"
       },
       "test_cases": [
         {
@@ -92,11 +91,10 @@
       "hint": "Loop through each character, check if it's in 'aeiouAEIOU'.",
       "explanation": "Count how many characters in the string are vowels (a/e/i/o/u, upper or lower case).\n\nStep-by-step:\n1. Initialize count = 0.\n2. Loop through each character c in the string.\n3. If c is in 'aeiouAEIOU', increment count.\n4. Print count.\n\nIn Python: use 'c in vowel_set' where vowel_set = 'aeiouAEIOU'\nIn C: check with strchr() or a series of comparisons.\n\nExample: 'hello' → e, o are vowels → count = 2",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
-        "python": "# Your code here\n",
-        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
-        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
-        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[1001]; scanf(\"%s\", s);\n    int count = 0;\n    // Count vowels\n    printf(\"%d\", count);\n    return 0;\n}",
+        "python": "s = input()\nprint(sum(1 for c in s if c in 'aeiouAEIOU'))\n",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        String s = new Scanner(System.in).next();\n        long count = s.chars().filter(c -> \"aeiouAEIOU\".indexOf(c) >= 0).count();\n        System.out.println(count);\n    }\n}",
+        "javascript": "const s = require('fs').readFileSync('/dev/stdin','utf8').trim();\nconsole.log([...s].filter(c => 'aeiouAEIOU'.includes(c)).length);\n"
       },
       "test_cases": [
         {
@@ -170,11 +168,10 @@
       "hint": "Compare str with its reverse, or compare chars from both ends.",
       "explanation": "A palindrome reads the same forwards and backwards.\n\nApproach 1 (reverse and compare):\n1. Reverse the string.\n2. If reversed == original, print Yes; else No.\n\nApproach 2 (two pointers):\n1. Set left = 0, right = len-1.\n2. While left < right:\n   - If s[left] != s[right] → Not palindrome.\n   - Move left++, right--.\n3. If loop completes → palindrome.\n\nNote: comparison is case-sensitive.\n\nExample: 'racecar' reversed = 'racecar' → Yes",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
-        "python": "# Your code here\n",
-        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
-        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
-        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[1001]; scanf(\"%s\", s);\n    // Print Yes or No\n    return 0;\n}",
+        "python": "s = input()\nprint('Yes' if s == s[::-1] else 'No')\n",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        String s = new Scanner(System.in).next();\n        String rev = new StringBuilder(s).reverse().toString();\n        System.out.println(s.equals(rev) ? \"Yes\" : \"No\");\n    }\n}",
+        "javascript": "const s = require('fs').readFileSync('/dev/stdin','utf8').trim();\nconsole.log(s === s.split('').reverse().join('') ? 'Yes' : 'No');\n"
       },
       "test_cases": [
         {
@@ -248,11 +245,10 @@
       "hint": "Print characters from end to start.",
       "explanation": "Reverse a string by reading from the last character to the first.\n\nApproaches:\n1. Python: s[::-1] (slice with step -1)\n2. C: swap characters at index 0↔n-1, 1↔n-2, etc.\n3. Java: new StringBuilder(s).reverse().toString()\n\nManual approach (C):\n1. i = 0, j = strlen(s) - 1.\n2. While i < j: swap s[i] and s[j], i++, j--.\n\nExample: 'hello' → 'olleh'",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
-        "python": "# Your code here\n",
-        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
-        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
-        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[1001]; scanf(\"%s\", s);\n    int len = strlen(s);\n    // Print in reverse\n    return 0;\n}",
+        "python": "print(input()[::-1])\n",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(new StringBuilder(new Scanner(System.in).next()).reverse());\n    }\n}",
+        "javascript": "const s = require('fs').readFileSync('/dev/stdin','utf8').trim();\nconsole.log(s.split('').reverse().join(''));\n"
       },
       "test_cases": [
         {
@@ -326,11 +322,10 @@
       "hint": "Count spaces+1, or split by space and count tokens.",
       "explanation": "Count the number of words in a sentence. Words are typically separated by spaces.\n\nStep-by-step:\n1. Read the sentence.\n2. Split the sentence by spaces into an array/list of words.\n3. Count the number of elements in the resulting array/list.\n\nEdge cases:\n- Empty string: 0 words.\n- String with only spaces: 0 words (after trimming).\n\nExample: 'hello world' → split by ' ' → ['hello', 'world'] → count = 2",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
-        "python": "# Your code here\n",
-        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
-        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
-        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[10001];\n    fgets(s, sizeof(s), stdin);\n    int count = 0; int inWord = 0;\n    for (int i = 0; s[i]; i++) {\n        if (s[i] != ' ' && s[i] != '\\n') { if (!inWord) { count++; inWord=1; } }\n        else inWord = 0;\n    }\n    printf(\"%d\", count);\n    return 0;\n}",
+        "python": "s = input()\nprint(len(s.split()))\n",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        String s = new Scanner(System.in).nextLine();\n        System.out.println(s.trim().split(\"\\\\s+\").length);\n    }\n}",
+        "javascript": "const s = require('fs').readFileSync('/dev/stdin','utf8').trim();\nconsole.log(s.split(' ').length);\n"
       },
       "test_cases": [
         {
@@ -404,11 +399,10 @@
       "hint": "Use toupper() per char in C, .upper() in Python.",
       "explanation": "Converting a string to uppercase means transforming all lowercase letters to their uppercase equivalents. Non-alphabetic characters remain unchanged.\n\nStep-by-step:\n1. Read the string S.\n2. Iterate through each character in S.\n3. If a character is a lowercase letter, convert it to uppercase.\n4. If it's already uppercase or not a letter, keep it as is.\n5. Print the modified string.\n\nBuilt-in functions:\n- C: toupper(c)\n- Python: s.upper()\n- Java: s.toUpperCase()\n- JavaScript: s.toUpperCase()\n\nExample: 'hello' → 'HELLO'",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
-        "python": "# Your code here\n",
-        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
-        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
-        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+        "c": "#include <stdio.h>\n#include <ctype.h>\nint main() {\n    char s[1001]; scanf(\"%s\", s);\n    for (int i = 0; s[i]; i++) putchar(toupper(s[i]));\n    return 0;\n}",
+        "python": "print(input().upper())\n",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(new Scanner(System.in).next().toUpperCase());\n    }\n}",
+        "javascript": "const s = require('fs').readFileSync('/dev/stdin','utf8').trim();\nconsole.log(s.toUpperCase());\n"
       },
       "test_cases": [
         {
@@ -482,11 +476,10 @@
       "hint": "Print s1 followed by s2 with no separator.",
       "explanation": "Concatenation means joining two or more strings end-to-end to form a new, longer string.\n\nStep-by-step:\n1. Read the first string S1.\n2. Read the second string S2.\n3. Combine S1 and S2 directly without any intervening characters.\n4. Print the resulting combined string.\n\nBuilt-in operators/functions:\n- C: strcat(dest, src) or printf(\"%s%s\", s1, s2)\n- Python: s1 + s2\n- Java: s1 + s2 or s1.concat(s2)\n- JavaScript: s1 + s2\n\nExample: S1='hello', S2='world' → 'helloworld'",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
-        "python": "# Your code here\n",
-        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
-        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
-        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+        "c": "#include <stdio.h>\nint main() {\n    char s1[501], s2[501];\n    scanf(\"%s %s\", s1, s2);\n    printf(\"%s%s\", s1, s2);\n    return 0;\n}",
+        "python": "s1 = input()\ns2 = input()\nprint(s1 + s2)\n",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        System.out.println(sc.next() + sc.next());\n    }\n}",
+        "javascript": "const [s1, s2] = require('fs').readFileSync('/dev/stdin','utf8').trim().split('\\n');\nconsole.log(s1 + s2);\n"
       },
       "test_cases": [
         {
@@ -560,11 +553,10 @@
       "hint": "Sort both strings and compare, or use character frequency counts.",
       "explanation": "Two strings are anagrams if they contain the exact same characters with the same frequencies, but potentially in a different order.\n\nApproach 1 (sort and compare):\n1. Sort both strings alphabetically.\n2. If sorted versions are equal → anagram (Yes).\n\nApproach 2 (frequency count):\n1. Create a 26-element frequency array.\n2. Increment for characters in string A.\n3. Decrement for characters in string B.\n4. If all counts are 0 → anagram.\n\nNote: comparison is case-sensitive.\n\nExample: 'listen' and 'silent' → both sort to 'eilnst' → Yes",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
-        "python": "# Your code here\n",
-        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
-        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
-        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+        "c": "#include <stdio.h>\n#include <string.h>\n#include <stdlib.h>\nint cmp(const void *a, const void *b){return *(char*)a-*(char*)b;}\nint main() {\n    char s1[1001], s2[1001];\n    scanf(\"%s %s\", s1, s2);\n    // Check anagram\n    return 0;\n}",
+        "python": "s1 = input()\ns2 = input()\nprint('Yes' if sorted(s1) == sorted(s2) else 'No')\n",
+        "java": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        char[] a = sc.next().toCharArray();\n        char[] b = sc.next().toCharArray();\n        Arrays.sort(a); Arrays.sort(b);\n        System.out.println(Arrays.equals(a,b)?\"Yes\":\"No\");\n    }\n}",
+        "javascript": "const [s1,s2] = require('fs').readFileSync('/dev/stdin','utf8').trim().split('\\n');\nconst sort = s => s.split('').sort().join('');\nconsole.log(sort(s1)===sort(s2)?'Yes':'No');\n"
       },
       "test_cases": [
         {
@@ -638,11 +630,10 @@
       "hint": "Loop through S and count matches with C.",
       "explanation": "Count occurrences of character C in string S.\n\nStep-by-step:\n1. Read string S and character C.\n2. Initialize count = 0.\n3. Loop through each character in S.\n4. If character == C, increment count.\n5. Print count.\n\nShorthand:\n- Python: S.count(C)\n- Java: (int) s.chars().filter(ch -> ch == C).count()\n\nExample: S='hello', C='l' → l appears at index 2 and 3 → 2",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
-        "python": "# Your code here\n",
-        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
-        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
-        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+        "c": "#include <stdio.h>\nint main() {\n    char s[1001], c[2];\n    scanf(\"%s %s\", s, c);\n    int count = 0;\n    for (int i = 0; s[i]; i++) if (s[i] == c[0]) count++;\n    printf(\"%d\", count);\n    return 0;\n}",
+        "python": "s = input()\nc = input()\nprint(s.count(c))\n",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        String s = sc.next(); char c = sc.next().charAt(0);\n        long count = s.chars().filter(x -> x == c).count();\n        System.out.println(count);\n    }\n}",
+        "javascript": "const lines = require('fs').readFileSync('/dev/stdin','utf8').trim().split('\\n');\nconst s = lines[0], c = lines[1];\nconsole.log([...s].filter(x => x === c).length);\n"
       },
       "test_cases": [
         {
@@ -716,11 +707,10 @@
       "hint": "Use strstr() in C, 'in' operator in Python.",
       "explanation": "Check whether a given word (substring) appears within the main string.\n\nStep-by-step:\n1. Read the main string S and the word W.\n2. Search for W within S.\n3. If found → print Yes; else → print No.\n\nApproaches:\n- Python: print('Yes' if W in S else 'No')\n- C: strstr(S, W) returns non-NULL if found\n- Java: S.contains(W)\n- JS: S.includes(W)\n\nExample: S='hello world', W='world' → found → Yes",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
-        "python": "# Your code here\n",
-        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
-        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
-        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[1001], t[1001];\n    scanf(\"%s %s\", s, t);\n    printf(\"%s\", strstr(s,t) ? \"Yes\" : \"No\");\n    return 0;\n}",
+        "python": "s = input()\nt = input()\nprint('Yes' if t in s else 'No')\n",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        String s = sc.next(), t = sc.next();\n        System.out.println(s.contains(t) ? \"Yes\" : \"No\");\n    }\n}",
+        "javascript": "const [s,t] = require('fs').readFileSync('/dev/stdin','utf8').trim().split('\\n');\nconsole.log(s.includes(t) ? 'Yes' : 'No');\n"
       },
       "test_cases": [
         {
@@ -794,11 +784,10 @@
       "hint": "Keep a char only if it differs from the previous one.",
       "explanation": "Remove consecutive duplicate characters from a string, keeping only one instance of each character in a sequence.\n\nStep-by-step:\n1. Initialize an empty result string/builder.\n2. Iterate through the input string S.\n3. For each character, check if it's different from the last character added to the result string.\n4. If it's different (or if the result string is empty), append the current character to the result.\n5. Print the result.\n\nExample: 'aaabbcdeeff' → 'abcdeff'",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
-        "python": "# Your code here\n",
-        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
-        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
-        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[1001]; scanf(\"%s\", s);\n    // Remove consecutive duplicates\n    return 0;\n}",
+        "python": "s = input()\nresult = s[0]\nfor c in s[1:]:\n    if c != result[-1]:\n        result += c\nprint(result)\n",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        String s = new Scanner(System.in).next();\n        StringBuilder sb = new StringBuilder();\n        for (char c : s.toCharArray())\n            if (sb.length()==0 || sb.charAt(sb.length()-1)!=c) sb.append(c);\n        System.out.println(sb);\n    }\n}",
+        "javascript": "const s = require('fs').readFileSync('/dev/stdin','utf8').trim();\nlet res = s[0];\nfor (let i=1;i<s.length;i++) if(s[i]!==s[i-1]) res+=s[i];\nconsole.log(res);\n"
       },
       "test_cases": [
         {
@@ -872,11 +861,10 @@
       "hint": "For each letter: new = ((c - 'a' + K) % 26) + 'a'. Handle uppercase separately.",
       "explanation": "Caesar cipher is a simple substitution cipher where each letter in the plaintext is replaced by a letter some fixed number of positions down the alphabet.\n\nStep-by-step:\n1. Read the string S and the shift value K.\n2. Iterate through each character in S.\n3. If the character is a lowercase letter (a-z):\n   - Convert it to its 0-25 index (e.g., 'a' is 0, 'b' is 1).\n   - Add K to the index.\n   - Apply modulo 26 to wrap around the alphabet: (index + K) % 26.\n   - Convert back to a character (e.g., 0 is 'a').\n4. If the character is an uppercase letter (A-Z), apply the same logic using 'A' as the base.\n5. If the character is not a letter, leave it unchanged.\n6. Print the resulting encrypted string.\n\nExample: S='hello', K=3\n'h' (7) + 3 = 10 → 'k'\n'e' (4) + 3 = 7 → 'h'\n'l' (11) + 3 = 14 → 'o'\n'l' (11) + 3 = 14 → 'o'\n'o' (14) + 3 = 17 → 'r'\nResult: 'khoor'",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
-        "python": "# Your code here\n",
-        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
-        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
-        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+        "c": "#include <stdio.h>\nint main() {\n    char s[1001]; int k;\n    scanf(\"%s %d\", s, &k);\n    for (int i = 0; s[i]; i++) {\n        if (s[i]>='a' && s[i]<='z') s[i]=(s[i]-'a'+k)%26+'a';\n        else if (s[i]>='A' && s[i]<='Z') s[i]=(s[i]-'A'+k)%26+'A';\n    }\n    printf(\"%s\", s);\n    return 0;\n}",
+        "python": "s = input()\nk = int(input())\nresult = ''\nfor c in s:\n    if c.isalpha():\n        base = ord('a') if c.islower() else ord('A')\n        result += chr((ord(c) - base + k) % 26 + base)\n    else:\n        result += c\nprint(result)\n",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        String s = sc.next(); int k = sc.nextInt();\n        StringBuilder sb = new StringBuilder();\n        for (char c : s.toCharArray()) {\n            if (Character.isLowerCase(c)) sb.append((char)('a'+(c-'a'+k)%26));\n            else if (Character.isUpperCase(c)) sb.append((char)('A'+(c-'A'+k)%26));\n            else sb.append(c);\n        }\n        System.out.println(sb);\n    }\n}",
+        "javascript": "const lines = require('fs').readFileSync('/dev/stdin','utf8').trim().split('\\n');\nconst s = lines[0]; const k = parseInt(lines[1]);\nconst res = [...s].map(c => {\n    if (c>='a'&&c<='z') return String.fromCharCode((c.charCodeAt(0)-97+k)%26+97);\n    if (c>='A'&&c<='Z') return String.fromCharCode((c.charCodeAt(0)-65+k)%26+65);\n    return c;\n}).join('');\nconsole.log(res);\n"
       },
       "test_cases": [
         {
@@ -950,11 +938,10 @@
       "hint": "Count consecutive same chars. Append char+count (skip count if 1). Compare lengths at end.",
       "explanation": "Compress a string by replacing consecutive repeating characters with the character followed by its count. If the compressed string is not shorter than the original, return the original string.\n\nStep-by-step:\n1. Initialize an empty result string/builder.\n2. Iterate through the input string S using a pointer `i`.\n3. For each character `s[i]`, count how many times it repeats consecutively starting from `i` (let this be `count`). Use another pointer `j` for this.\n4. Append `s[i]` to the result.\n5. If `count` is greater than 1, append `count` to the result.\n6. Move `i` to `j` to continue with the next distinct character sequence.\n7. After iterating through the entire string, compare the length of the `result` with the original string `S`.\n8. Print `result` if `len(result) < len(S)`, otherwise print `S`.\n\nExample: 'aabcccdddd'\n- 'aa': append 'a2'\n- 'b': append 'b'\n- 'ccc': append 'c3'\n- 'dddd': append 'd4'\nResult: 'a2bc3d4'. Length is 7, original is 10. Print 'a2bc3d4'.\n\nExample: 'abc'\n- 'a': append 'a'\n- 'b': append 'b'\n- 'c': append 'c'\nResult: 'abc'. Length is 3, original is 3. Print 'abc'.",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
-        "python": "# Your code here\n",
-        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
-        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
-        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[1001]; scanf(\"%s\", s);\n    // Compress and print\n    return 0;\n}",
+        "python": "s = input()\nresult = ''\ni = 0\nwhile i < len(s):\n    count = 1\n    while i + count < len(s) and s[i+count] == s[i]:\n        count += 1\n    result += s[i] + (str(count) if count > 1 else '')\n    i += count\nprint(result if len(result) < len(s) else s)\n",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        String s = new Scanner(System.in).next();\n        StringBuilder sb = new StringBuilder();\n        int i = 0;\n        while (i < s.length()) {\n            int j = i; char c = s.charAt(i);\n            while (j < s.length() && s.charAt(j) == c) j++;\n            sb.append(c); if(j-i>1) sb.append(j-i);\n            i = j;\n        }\n        System.out.println(sb.length() < s.length() ? sb.toString() : s);\n    }\n}",
+        "javascript": "const s = require('fs').readFileSync('/dev/stdin','utf8').trim();\nlet res = '', i = 0;\nwhile (i < s.length) {\n    let j = i;\n    while (j < s.length && s[j] === s[i]) j++;\n    res += s[i] + (j-i > 1 ? (j-i) : '');\n    i = j;\n}\nconsole.log(res.length < s.length ? res : s);\n"
       },
       "test_cases": [
         {
@@ -1028,11 +1015,10 @@
       "hint": "Loop through each char, check if uppercase or lowercase using isupper()/islower().",
       "explanation": "Count the number of uppercase and lowercase letters in a given string. Non-alphabetic characters are ignored.\n\nStep-by-step:\n1. Initialize `upper_count = 0` and `lower_count = 0`.\n2. Iterate through each character `c` in the string S.\n3. If `c` is an uppercase letter (e.g., 'A' through 'Z'), increment `upper_count`.\n4. Else if `c` is a lowercase letter (e.g., 'a' through 'z'), increment `lower_count`.\n5. After iterating through all characters, print `upper_count` and `lower_count`.\n\nBuilt-in functions:\n- C: isupper(c), islower(c)\n- Python: c.isupper(), c.islower()\n- Java: Character.isUpperCase(c), Character.isLowerCase(c)\n\nExample: 'HelloWorld'\n- 'H', 'W' are uppercase → upper_count = 2\n- 'e', 'l', 'l', 'o', 'o', 'r', 'l', 'd' are lowercase → lower_count = 8\nOutput: Upper: 2\\nLower: 8",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
-        "python": "# Your code here\n",
-        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
-        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
-        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+        "c": "#include <stdio.h>\n#include <ctype.h>\nint main() {\n    char s[1001]; scanf(\"%s\", s);\n    int upper=0, lower=0;\n    for (int i=0; s[i]; i++) {\n        if (isupper(s[i])) upper++;\n        else if (islower(s[i])) lower++;\n    }\n    printf(\"Upper: %d\\nLower: %d\", upper, lower);\n    return 0;\n}",
+        "python": "s = input()\nprint(f'Upper: {sum(1 for c in s if c.isupper())}')\nprint(f'Lower: {sum(1 for c in s if c.islower())}')\n",
+        "java": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        String s = new Scanner(System.in).next();\n        long u = s.chars().filter(Character::isUpperCase).count();\n        long l = s.chars().filter(Character::isLowerCase).count();\n        System.out.println(\"Upper: \" + u + \"\\nLower: \" + l);\n    }\n}",
+        "javascript": "const s = require('fs').readFileSync('/dev/stdin','utf8').trim();\nconst u = [...s].filter(c => c >= 'A' && c <= 'Z').length;\nconst l = [...s].filter(c => c >= 'a' && c <= 'z').length;\nconsole.log('Upper: ' + u + '\\nLower: ' + l);\n"
       },
       "test_cases": [
         {
@@ -1106,11 +1092,10 @@
       "hint": "Count frequency of each char, then find first with count=1.",
       "explanation": "Find the first character in the string that appears exactly once.\n\nStep-by-step:\n1. Build a frequency map: count how many times each character appears.\n2. Loop through the original string from left to right (to preserve order).\n3. Return the first character whose count in the map is exactly 1.\n4. If no such character exists, print -1 or _.\n\nData structures:\n- Python: collections.Counter or a dict\n- Java: HashMap<Character, Integer>\n- C: int freq[256] = {0}\n\nTrace: 'aabbcd'\nFrequency: {a:2, b:2, c:1, d:1}\nFirst pass: a(2), a(2), b(2), b(2), c(1) → print 'c'",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
-        "python": "# Your code here\n",
-        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
-        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
-        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n    char s[1001]; scanf(\"%s\", s);\n    int freq[26] = {0};\n    for (int i=0; s[i]; i++) freq[s[i]-'a']++;\n    for (int i=0; s[i]; i++) {\n        if (freq[s[i]-'a']==1) { printf(\"%c\", s[i]); return 0; }\n    }\n    printf(\"-1\");\n    return 0;\n}",
+        "python": "s = input()\nfor c in s:\n    if s.count(c) == 1:\n        print(c)\n        break\nelse:\n    print(-1)\n",
+        "java": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        String s = new Scanner(System.in).next();\n        Map<Character,Integer> freq = new LinkedHashMap<>();\n        for (char c : s.toCharArray()) freq.merge(c,1,Integer::sum);\n        for (char c : s.toCharArray()) if(freq.get(c)==1){System.out.println(c);return;}\n        System.out.println(-1);\n    }\n}",
+        "javascript": "const s = require('fs').readFileSync('/dev/stdin','utf8').trim();\nconst freq = {};\nfor (const c of s) freq[c] = (freq[c]||0)+1;\nfor (const c of s) if(freq[c]===1){console.log(c);process.exit();}\nconsole.log(-1);\n"
       },
       "test_cases": [
         {

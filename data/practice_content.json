@@ -15,17 +15,25 @@
           "problems": [
             {
               "id": "intro-1",
-              "title": "Hello World",
+              "title": "Hello, World!",
               "difficulty": "easy",
               "concept": "Basic Output",
-              "description": "Write a program to display Hello World.",
+              "description": "Write a program that prints the message:\n\nHello, World!\n\nThe output must match exactly, including capitalization, punctuation, and spacing.\n\nInput Format: There is no input for this problem.\nOutput Format: Print exactly:\n```\nHello, World!\n```\n\nConstraints:\n- Output must match exactly (case-sensitive).\n- Do not print extra spaces or lines.",
+              "hint": "In C: printf(\"Hello, World!\"); — note the comma and exclamation mark.",
               "starter_codes": {
-                "c": "#include <stdio.h>\n\nint main() {\n    // Write your code here\n    return 0;\n}"
+                "c": "#include <stdio.h>\n\nint main() {\n    // Print Hello, World!\n    return 0;\n}",
+                "python": "# Print Hello, World!\n",
+                "java": "public class Main {\n    public static void main(String[] args) {\n        // Print Hello, World!\n    }\n}",
+                "javascript": "// Print Hello, World!\n"
               },
               "test_cases": [
                 {
                   "stdin": "",
-                  "expected_output": "Hello World"
+                  "expected_output": "Hello, World!"
+                },
+                {
+                  "stdin": "",
+                  "expected_output": "Hello, World!"
                 }
               ]
             },

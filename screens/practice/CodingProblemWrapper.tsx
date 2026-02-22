@@ -53,6 +53,28 @@ const CodingProblemWrapper: React.FC = () => {
         return null;
     }, [problemId, topics, curriculumData]);
 
+    // Find the topic title and ID for breadcrumbs
+    const topicInfo = useMemo(() => {
+        if (!problemId) return { title: "Practice", id: null };
+
+        if (topics) {
+            for (const topic of topics) {
+                if (topic.problems.find(p => p.id === problemId)) return { title: topic.title, id: topic.id };
+            }
+        }
+
+        if (curriculumData) {
+            for (const langId in curriculumData) {
+                const modules = curriculumData[langId];
+                for (const module of modules) {
+                    if (module.problems?.find((p: any) => p.id === problemId)) return { title: module.title, id: module.id || module.title };
+                }
+            }
+        }
+
+        return { title: "C Language", id: "c-language" };
+    }, [problemId, topics, curriculumData]);
+
     // Find next problem for adaptive flow
     const getNextProblem = (currentId: string) => {
         // 1. Try Practice Topics
@@ -135,6 +157,8 @@ const CodingProblemWrapper: React.FC = () => {
             }}
             hasNextProblem={!!nextProblem}
             nextProblemTitle={nextProblem?.title}
+            topicTitle={topicInfo.title}
+            topicId={topicInfo.id}
         />
     );
 };

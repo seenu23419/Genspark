@@ -6,14 +6,18 @@
       "id": "cond-1",
       "topicId": "conditionals",
       "title": "Even or Odd",
-      "description": "Determine if a number N is even or odd.",
+      "description": "Write a program that reads an integer N and prints whether it is Even or Odd.\n\nInput Format\n```\nN\n```\n\nOutput Format\nPrint exactly: Even or Odd\n```\nEven\n```\n\nConstraints\n• −10^9 ≤ N ≤ 10^9\n• Capital first letter, exact spelling.\n\nSample Input 1\n```\n10\n```\n\nSample Output 1\n```\nEven\n```\n\nSample Input 2\n```\n7\n```\n\nSample Output 2\n```\nOdd\n```\n\nExplanation\n10 % 2 = 0 → Even\n7 % 2 = 1 → Odd",
       "difficulty": "easy",
       "estimatedTime": 2,
       "concept": "Selection",
-      "explanation": "A number is even if it is divisible by 2 (N % 2 == 0), otherwise it is odd.",
+      "hint": "Use modulo operator % to check remainder.",
+      "explanation": "A number is even if dividing it by 2 has no remainder; odd otherwise.\n\nStep-by-step:\n1. Read n.\n2. Compute n % 2 (remainder when divided by 2).\n3. If remainder is 0 → print Even.\n4. If remainder is not 0 → print Odd.\n\nThis works for both positive and negative integers.\n\nExample: n=4 → 4%2=0 → Even\nExample: n=7 → 7%2=1 → Odd",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    // Check if even or odd\n    return 0;\n}",
-        "python": "n = int(input())\nif n % 2 == 0:\n    print(\"Even\")\nelse:\n    print(\"Odd\")"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
@@ -23,6 +27,56 @@
         {
           "stdin": "7",
           "expected_output": "Odd"
+        },
+        {
+          "stdin": "0",
+          "expected_output": "Even",
+          "isHidden": true
+        },
+        {
+          "stdin": "-3",
+          "expected_output": "Odd",
+          "isHidden": true
+        },
+        {
+          "stdin": "-4",
+          "expected_output": "Even",
+          "isHidden": true
+        },
+        {
+          "stdin": "1000000000",
+          "expected_output": "Even",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "Odd",
+          "isHidden": true
+        },
+        {
+          "stdin": "2",
+          "expected_output": "Even",
+          "isHidden": true
+        },
+        {
+          "stdin": "999999999",
+          "expected_output": "Odd",
+          "isHidden": true
+        },
+        {
+          "stdin": "-100",
+          "expected_output": "Even",
+          "isHidden": true
+        },
+        {
+          "stdin": "13",
+          "expected_output": "Odd",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "Even",
+          "isHidden": true
         }
       ]
     },
@@ -30,19 +84,77 @@
       "id": "cond-2",
       "topicId": "conditionals",
       "title": "Largest of Three",
-      "description": "Take three space-separated integers and print the largest one.",
+      "description": "Write a program that reads three integers and prints the largest.\n\nInput Format\n```\na b c\n```\n\nOutput Format\nPrint the largest value.\n```\nmax\n```\n\nConstraints\n• −10^9 ≤ a, b, c ≤ 10^9\n\nSample Input 1\n```\n10 55 23\n```\n\nSample Output 1\n```\n55\n```\n\nSample Input 2\n```\n100 20 30\n```\n\nSample Output 2\n```\n100\n```\n\nExplanation\n55 > 23 > 10 → 55\n100 > 30 > 20 → 100",
       "difficulty": "easy",
       "estimatedTime": 4,
       "concept": "Comparison",
-      "explanation": "Compare the three numbers using nested if-statements or logical AND operators: `if (a >= b && a >= c)`. In Python, `max(a, b, c)` is a quick way.",
+      "hint": "Compare each pair. Max is the one greater than both others.",
+      "explanation": "To find the largest of three numbers, compare them in pairs.\n\nStep-by-step:\n1. Assume a is the largest (max = a).\n2. If b > max, update max = b.\n3. If c > max, update max = c.\n4. Print max.\n\nShorthand using nested ternary:\nmax = (a>=b && a>=c) ? a : (b>=c ? b : c)\n\nExample: a=5, b=9, c=3\nmax=5 → 9>5 → max=9 → 3<9 (skip) → print 9",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    int a, b, c;\n    // Read a, b, c\n    // Find and print max\n    return 0;\n}",
-        "python": "a, b, c = map(int, input().split())\nprint(max(a, b, c))"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
           "stdin": "10 55 23",
           "expected_output": "55"
+        },
+        {
+          "stdin": "100 20 30",
+          "expected_output": "100"
+        },
+        {
+          "stdin": "5 5 5",
+          "expected_output": "5",
+          "isHidden": true
+        },
+        {
+          "stdin": "-1 -2 -3",
+          "expected_output": "-1",
+          "isHidden": true
+        },
+        {
+          "stdin": "0 0 1",
+          "expected_output": "1",
+          "isHidden": true
+        },
+        {
+          "stdin": "999 1000 998",
+          "expected_output": "1000",
+          "isHidden": true
+        },
+        {
+          "stdin": "3 3 2",
+          "expected_output": "3",
+          "isHidden": true
+        },
+        {
+          "stdin": "1 2 3",
+          "expected_output": "3",
+          "isHidden": true
+        },
+        {
+          "stdin": "0 -1 -2",
+          "expected_output": "0",
+          "isHidden": true
+        },
+        {
+          "stdin": "100 100 99",
+          "expected_output": "100",
+          "isHidden": true
+        },
+        {
+          "stdin": "-10 -10 -10",
+          "expected_output": "-10",
+          "isHidden": true
+        },
+        {
+          "stdin": "500 500 600",
+          "expected_output": "600",
+          "isHidden": true
         }
       ]
     },
@@ -50,19 +162,77 @@
       "id": "cond-3",
       "topicId": "conditionals",
       "title": "Grading System",
-      "description": "Read marks M (0-100) and print grade: 90+ 'A', 80-89 'B', 70-79 'C', else 'F'.",
+      "description": "Write a program that reads marks M (0–100) and prints the grade.\n\nGrading Rules\n• 90 and above → A\n• 80 to 89 → B\n• 70 to 79 → C\n• Below 70 → F\n\nInput Format\n```\nM\n```\n\nOutput Format\n```\nA\n```\n\nConstraints\n• 0 ≤ M ≤ 100\n\nSample Input 1\n```\n85\n```\n\nSample Output 1\n```\nB\n```\n\nSample Input 2\n```\n95\n```\n\nSample Output 2\n```\nA\n```\n\nExplanation\n85 is between 80–89 → B\n95 is ≥ 90 → A",
       "difficulty": "medium",
       "estimatedTime": 5,
       "concept": "Nested If",
-      "explanation": "Use `if-else if-else` structure to check marks against different thresholds sequentially.",
+      "hint": "Use if-else if chain to check mark ranges.",
+      "explanation": "Map a numeric score to a letter grade using if-else if conditions.\n\nGrading ranges:\n- 90-100 → A\n- 80-89 → B\n- 70-79 → C\n- 60-69 → D\n- Below 60 → F\n\nStep-by-step:\n1. Read the marks.\n2. Check from highest to lowest range using if-else if.\n3. Print the corresponding grade.\n\nTip: Check in descending order (A first) to avoid overlap errors.",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    int m;\n    // Read m\n    // Print grade letter\n    return 0;\n}",
-        "python": "m = int(input())\nif m >= 90: print('A')\nelif m >= 80: print('B')\nelif m >= 70: print('C')\nelse: print('F')"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
           "stdin": "85",
           "expected_output": "B"
+        },
+        {
+          "stdin": "95",
+          "expected_output": "A"
+        },
+        {
+          "stdin": "70",
+          "expected_output": "C",
+          "isHidden": true
+        },
+        {
+          "stdin": "65",
+          "expected_output": "F",
+          "isHidden": true
+        },
+        {
+          "stdin": "90",
+          "expected_output": "A",
+          "isHidden": true
+        },
+        {
+          "stdin": "0",
+          "expected_output": "F",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "A",
+          "isHidden": true
+        },
+        {
+          "stdin": "80",
+          "expected_output": "B",
+          "isHidden": true
+        },
+        {
+          "stdin": "79",
+          "expected_output": "C",
+          "isHidden": true
+        },
+        {
+          "stdin": "89",
+          "expected_output": "B",
+          "isHidden": true
+        },
+        {
+          "stdin": "50",
+          "expected_output": "F",
+          "isHidden": true
+        },
+        {
+          "stdin": "69",
+          "expected_output": "F",
+          "isHidden": true
         }
       ]
     },
@@ -70,14 +240,18 @@
       "id": "cond-4",
       "topicId": "conditionals",
       "title": "Leap Year",
-      "description": "Check if a year Y is a leap year. Output 'Leap' or 'Not Leap'.",
+      "description": "Check if year Y is a leap year. Print Leap or Not Leap.\n\nLeap Year Rules\n• Divisible by 400 → Leap\n• Divisible by 4 AND NOT 100 → Leap\n• Otherwise → Not Leap\n\nInput Format\n```\nY\n```\n\nOutput Format\n```\nLeap\n```\nor\n```\nNot Leap\n```\n\nConstraints\n• 1 ≤ Y ≤ 9999\n\nSample Input 1\n```\n2000\n```\n\nSample Output 1\n```\nLeap\n```\n\nSample Input 2\n```\n1900\n```\n\nSample Output 2\n```\nNot Leap\n```\n\nExplanation\n2000: divisible by 400 → Leap\n1900: divisible by 100 but not 400 → Not Leap",
       "difficulty": "hard",
       "estimatedTime": 6,
       "concept": "Complex Logic",
-      "explanation": "A year is a leap year if it's divisible by 400 OR (divisible by 4 AND not divisible by 100).",
+      "hint": "Check: (y%400==0) || (y%4==0 && y%100!=0)",
+      "explanation": "A leap year occurs on a specific schedule to keep calendars aligned with Earth's orbit.\n\nRules (apply in this exact order):\n1. If divisible by 400 → Leap Year (e.g., 2000 is a leap year).\n2. Else if divisible by 100 → NOT a Leap Year (e.g., 1900 is not).\n3. Else if divisible by 4 → Leap Year (e.g., 2024 is a leap year).\n4. Else → NOT a Leap Year (e.g., 2023 is not).\n\nShorthand: (year%400==0) || (year%4==0 && year%100!=0)\n\nExamples:\n2000: 2000%400=0 → Yes\n1900: 1900%100=0 but 1900%400≠0 → No\n2024: 2024%4=0 and 2024%100≠0 → Yes\n2023: 2023%4≠0 → No",
       "starter_codes": {
-        "c": "#include <stdio.h>\n\nint main() {\n    int y;\n    // Read y\n    // Check leap year logic\n    return 0;\n}",
-        "python": "y = int(input())\nif (y % 400 == 0) or (y % 4 == 0 and y % 100 != 0):\n    print(\"Leap\")\nelse:\n    print(\"Not Leap\")"
+        "c": "#include <stdio.h>\n\nint main() {\n    // Your code here\n    return 0;\n}",
+        "python": "# Your code here\n",
+        "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Your code here\n    }\n}",
+        "javascript": "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// Your code here",
+        "cpp": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}"
       },
       "test_cases": [
         {
@@ -87,6 +261,56 @@
         {
           "stdin": "1900",
           "expected_output": "Not Leap"
+        },
+        {
+          "stdin": "2024",
+          "expected_output": "Leap",
+          "isHidden": true
+        },
+        {
+          "stdin": "2023",
+          "expected_output": "Not Leap",
+          "isHidden": true
+        },
+        {
+          "stdin": "100",
+          "expected_output": "Not Leap",
+          "isHidden": true
+        },
+        {
+          "stdin": "400",
+          "expected_output": "Leap",
+          "isHidden": true
+        },
+        {
+          "stdin": "1600",
+          "expected_output": "Leap",
+          "isHidden": true
+        },
+        {
+          "stdin": "1700",
+          "expected_output": "Not Leap",
+          "isHidden": true
+        },
+        {
+          "stdin": "4",
+          "expected_output": "Leap",
+          "isHidden": true
+        },
+        {
+          "stdin": "1",
+          "expected_output": "Not Leap",
+          "isHidden": true
+        },
+        {
+          "stdin": "800",
+          "expected_output": "Leap",
+          "isHidden": true
+        },
+        {
+          "stdin": "2100",
+          "expected_output": "Not Leap",
+          "isHidden": true
         }
       ]
     }

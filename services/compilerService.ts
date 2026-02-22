@@ -1,4 +1,5 @@
 import { supabaseDB } from './supabaseService';
+import { TestCase } from './practiceService';
 
 // Wandbox Language Mapping
 export const WANDBOX_COMPILERS: Record<string, string> = {
@@ -82,7 +83,7 @@ class GenSparkCompilerService {
                 memory: null,
                 status: {
                     id: isSuccess ? 3 : 4,
-                    description: isSuccess ? 'Accepted' : 'Runtime Error'
+                    description: isSuccess ? 'Executed' : 'Runtime Error'
                 }
             };
 
@@ -149,53 +150,86 @@ class GenSparkCompilerService {
         }
     }
 
-    async runTests(language: string, sourceCode: string, tests: { stdin?: string; expectedOutput: string }[], userId?: string): Promise<Array<{ passed: boolean; stdout?: string | null; stderr?: string | null; expected?: string; actual?: string }>> {
-        const results: Array<{ passed: boolean; stdout?: string | null; stderr?: string | null; expected?: string; actual?: string }> = [];
-        for (const t of tests) {
-            try {
-                const res = await this.executeCode(language, sourceCode, userId, t.stdin);
+    async runTests(
+        language: string,
+        sourceCode: string,
+        tests: TestCase[],
+        userId?: string
+    ): Promise<{
+        total: number;
+        passed: number;
+        failed: number;
+        failedCases: number[];
+        status: "PASSED" | "FAILED" | "PARTIAL";
+        results: Array<{
+            passed: boolean;
+            stdout?: string | null;
+            stderr?: string | null;
+            expected?: string;
+            actual?: string;
+            isHidden?: boolean;
+        }>
+    }> {
+        const results: any[] = [];
+        let passedCount = 0;
+        const failedIndices: number[] = [];
 
-                // Normalize outputs for comparison
-                const normalizeOutput = (str: string) => {
-                    return str
-                        .replace(/\r\n/g, '\n')  // Normalize line endings
-                        .replace(/\r/g, '\n')     // Handle old Mac line endings
-                        .trim()                   // Remove leading/trailing whitespace
-                        .replace(/\s+$/gm, '')    // Remove trailing whitespace from each line
-                        .replace(/\n+/g, '\n');   // Normalize multiple newlines
-                };
+        const normalizeOutput = (str: string) =>
+            (str || '').replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim();
 
+        // Run ALL test cases in parallel for speed
+        const settled = await Promise.allSettled(
+            tests.map((t) => {
+                const stdin = t.input || t.stdin || '';
+                return this.executeCode(language, sourceCode, userId, stdin);
+            })
+        );
+
+        settled.forEach((outcome, i) => {
+            const t = tests[i];
+            if (outcome.status === 'fulfilled') {
+                const res = outcome.value;
                 const actualOutput = normalizeOutput(res.stdout || '');
-                const expectedOutput = normalizeOutput(t.expectedOutput || '');
-                const passed = actualOutput === expectedOutput;
+                const expectedOutput = normalizeOutput(t.expectedOutput || t.expected_output || '');
+                const passed = actualOutput === expectedOutput && res.status.id === 3;
 
-                // Log for debugging
-                if (!passed) {
-                    console.log('[Test Failed]', {
-                        expected: expectedOutput,
-                        actual: actualOutput,
-                        stdin: t.stdin
-                    });
-                }
+                if (passed) passedCount++;
+                else failedIndices.push(i);
 
                 results.push({
                     passed,
-                    stdout: res.stdout,
+                    stdout: t.isHidden ? null : res.stdout,
                     stderr: res.stderr || res.compile_output,
-                    expected: expectedOutput,
-                    actual: actualOutput
+                    expected: t.isHidden ? null : expectedOutput,
+                    actual: t.isHidden ? null : actualOutput,
+                    isHidden: t.isHidden || t.is_hidden
                 });
-            } catch (e: any) {
+            } else {
+                failedIndices.push(i);
                 results.push({
                     passed: false,
                     stdout: null,
-                    stderr: e?.message || 'Execution error',
-                    expected: t.expectedOutput,
-                    actual: null
+                    stderr: outcome.reason?.message || 'Execution error',
+                    expected: t.isHidden ? null : (t.expectedOutput || t.expected_output),
+                    actual: null,
+                    isHidden: t.isHidden || t.is_hidden
                 });
             }
-        }
-        return results;
+        });
+
+        const total = tests.length;
+        let status: "PASSED" | "FAILED" | "PARTIAL" = "FAILED";
+        if (passedCount === total) status = "PASSED";
+        else if (passedCount > 0) status = "PARTIAL";
+
+        return {
+            total,
+            passed: passedCount,
+            failed: total - passedCount,
+            failedCases: failedIndices,
+            status,
+            results
+        };
     }
 
     getTemplate(lang: string): string {
