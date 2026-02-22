@@ -9,9 +9,16 @@ const TermsOfService: React.FC = () => {
         <div className="min-h-screen bg-[#0a0b14] text-slate-300 py-12 px-6">
             <div className="max-w-3xl mx-auto space-y-8">
                 {/* Header */}
-                <div className="flex items-center justify-between border-b border-slate-800 pb-6">
+                <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
+                    <Link
+                        to="/login"
+                        className="p-3 hover:bg-white/10 rounded-full transition-all bg-white/5 shrink-0 group"
+                        title="Go back to Login"
+                    >
+                        <ArrowLeft size={24} className="text-white group-hover:scale-110 transition-transform" />
+                    </Link>
                     <div className="flex items-center gap-4">
-                        <div className="p-3 bg-indigo-500/10 rounded-xl">
+                        <div className="p-3 bg-indigo-500/10 rounded-xl hidden sm:block">
                             <FileText className="text-indigo-400" size={24} />
                         </div>
                         <div>
@@ -19,12 +26,6 @@ const TermsOfService: React.FC = () => {
                             <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Last updated: February 22, 2026</p>
                         </div>
                     </div>
-                    <button
-                        onClick={() => navigate(-1)}
-                        className="p-2 hover:bg-white/5 rounded-full transition-colors"
-                    >
-                        <ArrowLeft size={20} />
-                    </button>
                 </div>
 
                 {/* Content */}
