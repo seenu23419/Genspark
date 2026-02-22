@@ -244,19 +244,20 @@ const Login: React.FC = () => {
             </button>
           </p>
 
-          {/* Footer - Standard Legal Links */}
-          <div className="pt-12 mt-4 space-y-4">
-            <p className="text-[10px] text-slate-500 text-center">
-              By continuing, you agree to GenSpark's{' '}
-              <Link to="/terms" className="text-slate-400 hover:text-white underline decoration-slate-700 underline-offset-4 transition-colors">Terms of Service</Link>
-              {' '}and{' '}
-              <Link to="/privacy" className="text-slate-400 hover:text-white underline decoration-slate-700 underline-offset-4 transition-colors">Privacy Policy</Link>.
-            </p>
-
-            {/* Subtle Platform Info for Google Verification (Extremely Muted) */}
-            <p className="text-[8px] text-slate-800/40 text-center leading-relaxed px-12 pt-4">
-              GenSpark is an AI-powered coding intelligence platform featuring interactive lessons, real-time IDE execution, and personalized coding challenges.
-            </p>
+          {/* Footer - Minimal Legal Links */}
+          <div className="pt-16 mt-4 flex items-center justify-center gap-6">
+            <Link
+              to="/privacy"
+              className="text-[10px] text-slate-600 hover:text-slate-400 font-bold uppercase tracking-widest transition-colors"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              to="/terms"
+              className="text-[10px] text-slate-600 hover:text-slate-400 font-bold uppercase tracking-widest transition-colors"
+            >
+              Terms of Service
+            </Link>
           </div>
         </div>
       </div>
