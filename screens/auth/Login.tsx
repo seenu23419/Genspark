@@ -245,7 +245,7 @@ const Login: React.FC = () => {
           </p>
 
           {/* Footer - Minimal Legal Links */}
-          <div className="pt-16 mt-4 flex items-center justify-center gap-6">
+          <div className="pt-6 mt-2 flex items-center justify-center gap-6">
             <Link
               to="/privacy"
               className="text-[10px] text-slate-600 hover:text-slate-400 font-bold uppercase tracking-widest transition-colors"
