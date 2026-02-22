@@ -244,19 +244,19 @@ const Login: React.FC = () => {
             </button>
           </p>
 
-          {/* Footer - Minimal Legal Links */}
-          <div className="pt-6 mt-2 flex items-center justify-center gap-6">
-            <Link
-              to="/privacy"
-              className="text-[10px] text-slate-600 hover:text-slate-400 font-bold uppercase tracking-widest transition-colors"
-            >
-              Privacy Policy
-            </Link>
+          {/* Footer - Minimal Bright Underlined Legal Links */}
+          <div className="pt-8 mt-2 flex items-center justify-center gap-10 px-6">
             <Link
               to="/terms"
-              className="text-[10px] text-slate-600 hover:text-slate-400 font-bold uppercase tracking-widest transition-colors"
+              className="text-[10px] text-slate-100 hover:text-white font-bold underline underline-offset-4 decoration-slate-600 transition-colors whitespace-nowrap uppercase tracking-wider"
             >
-              Terms of Service
+              Terms and Conditions
+            </Link>
+            <Link
+              to="/privacy"
+              className="text-[10px] text-slate-100 hover:text-white font-bold underline underline-offset-4 decoration-slate-600 transition-colors whitespace-nowrap uppercase tracking-wider"
+            >
+              Privacy and Policy
             </Link>
           </div>
         </div>
