@@ -20,7 +20,6 @@ const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
-  const [showInfo, setShowInfo] = useState(false);
 
   // Validation
   const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -245,28 +244,19 @@ const Login: React.FC = () => {
             </button>
           </p>
 
-          {/* Legal & About Toggle - Required by Google, hidden for aesthetics */}
-          <div className="pt-12 mt-4 text-center">
-            <button
-              type="button"
-              onClick={() => setShowInfo(!showInfo)}
-              className="text-[10px] text-slate-700 hover:text-slate-500 font-bold uppercase tracking-[0.2em] transition-colors"
-            >
-              Terms, Privacy & About
-            </button>
+          {/* Footer - Standard Legal Links */}
+          <div className="pt-12 mt-4 space-y-4">
+            <p className="text-[10px] text-slate-500 text-center">
+              By continuing, you agree to GenSpark's{' '}
+              <Link to="/terms" className="text-slate-400 hover:text-white underline decoration-slate-700 underline-offset-4 transition-colors">Terms of Service</Link>
+              {' '}and{' '}
+              <Link to="/privacy" className="text-slate-400 hover:text-white underline decoration-slate-700 underline-offset-4 transition-colors">Privacy Policy</Link>.
+            </p>
 
-            {showInfo && (
-              <div className="mt-4 space-y-4">
-                <p className="text-[9px] text-slate-600 leading-relaxed px-8">
-                  GenSpark is a comprehensive AI-powered coding intelligence platform. We provide interactive programming lessons,
-                  real-time IDE execution, and personalized coding challenges.
-                </p>
-                <div className="flex items-center justify-center gap-6">
-                  <Link to="/privacy" className="text-[9px] text-slate-700 hover:text-slate-400 font-bold uppercase tracking-widest transition-colors">Privacy Policy</Link>
-                  <Link to="/terms" className="text-[9px] text-slate-700 hover:text-slate-400 font-bold uppercase tracking-widest transition-colors">Terms of Service</Link>
-                </div>
-              </div>
-            )}
+            {/* Subtle Platform Info for Google Verification (Extremely Muted) */}
+            <p className="text-[8px] text-slate-800/40 text-center leading-relaxed px-12 pt-4">
+              GenSpark is an AI-powered coding intelligence platform featuring interactive lessons, real-time IDE execution, and personalized coding challenges.
+            </p>
           </div>
         </div>
       </div>
