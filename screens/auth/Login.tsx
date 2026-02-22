@@ -244,29 +244,29 @@ const Login: React.FC = () => {
             </button>
           </p>
 
-          {/* About Section - Minimal for Google Verification */}
+          {/* About Section - Descriptive for Google Verification */}
           <div className="pt-8 border-t border-slate-800/50 mt-4">
             <h2 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3 text-center">About GenSpark</h2>
             <p className="text-[11px] text-slate-500 leading-relaxed text-center px-2">
-              GenSpark is an AI-powered coding intelligence platform designed to ignite your programming journey with interactive lessons,
-              real-time IDE execution, and smart personalized challenges.
+              GenSpark is a comprehensive AI-powered coding intelligence platform. We provide interactive programming lessons,
+              a real-time integrated development environment (IDE), and personalized coding challenges to help users master software development.
             </p>
           </div>
 
-          {/* Legal Footer - Required by Google */}
+          {/* Legal Footer - Required by Google (Using Link for Crawler Visibility) */}
           <div className="flex items-center justify-center gap-6 pt-6">
-            <button
-              onClick={() => navigate('/privacy')}
+            <Link
+              to="/privacy"
               className="text-[10px] text-slate-600 hover:text-slate-400 font-bold uppercase tracking-widest transition-colors"
             >
-              Privacy
-            </button>
-            <button
-              onClick={() => navigate('/terms')}
+              Privacy Policy
+            </Link>
+            <Link
+              to="/terms"
               className="text-[10px] text-slate-600 hover:text-slate-400 font-bold uppercase tracking-widest transition-colors"
             >
-              Terms
-            </button>
+              Terms of Service
+            </Link>
           </div>
         </div>
       </div>
