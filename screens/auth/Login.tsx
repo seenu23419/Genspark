@@ -244,29 +244,29 @@ const Login: React.FC = () => {
             </button>
           </p>
 
-          {/* About Section - Descriptive for Google Verification */}
-          <div className="pt-8 border-t border-slate-800/50 mt-4">
-            <h2 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3 text-center">About GenSpark</h2>
-            <p className="text-[11px] text-slate-500 leading-relaxed text-center px-2">
-              GenSpark is a comprehensive AI-powered coding intelligence platform. We provide interactive programming lessons,
-              a real-time integrated development environment (IDE), and personalized coding challenges to help users master software development.
-            </p>
-          </div>
+          {/* About & Legal Footer - Minimized for Google Verification */}
+          <div className="pt-12 mt-4 space-y-4 opacity-30 group-hover:opacity-50 transition-opacity duration-500">
+            <div className="space-y-2">
+              <h2 className="text-[9px] font-bold text-slate-600 uppercase tracking-[0.2em] text-center">Platform Info</h2>
+              <p className="text-[9px] text-slate-700 leading-relaxed text-center px-8">
+                GenSpark is an AI-powered coding platform providing interactive lessons and real-time execution challenges.
+              </p>
+            </div>
 
-          {/* Legal Footer - Required by Google (Using Link for Crawler Visibility) */}
-          <div className="flex items-center justify-center gap-6 pt-6">
-            <Link
-              to="/privacy"
-              className="text-[10px] text-slate-600 hover:text-slate-400 font-bold uppercase tracking-widest transition-colors"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              to="/terms"
-              className="text-[10px] text-slate-600 hover:text-slate-400 font-bold uppercase tracking-widest transition-colors"
-            >
-              Terms of Service
-            </Link>
+            <div className="flex items-center justify-center gap-6">
+              <Link
+                to="/privacy"
+                className="text-[9px] text-slate-700 hover:text-slate-400 font-bold uppercase tracking-widest transition-colors"
+              >
+                Privacy
+              </Link>
+              <Link
+                to="/terms"
+                className="text-[9px] text-slate-700 hover:text-slate-400 font-bold uppercase tracking-widest transition-colors"
+              >
+                Terms
+              </Link>
+            </div>
           </div>
         </div>
       </div>
