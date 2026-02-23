@@ -181,7 +181,7 @@ const PracticeList: React.FC = () => {
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors leading-tight">
-                        {problem.title}
+                        {idx + 1}. {problem.title}
                       </h3>
                       {isCompleted && (
                         <CheckCircle2 size={18} className="text-green-500 flex-shrink-0" />

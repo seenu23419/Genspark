@@ -2,57 +2,46 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { User } from '../types';
 import { StreakService } from './streakService';
 
-const PROJECT_URL = 'https://aoiagnnkhaswpmhbobhd.supabase.co';
-const DEFAULT_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFvaWFnbm5raGFzd3BtaGJvYmhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY3ODU0MTUsImV4cCI6MjA4MjM2MTQxNX0.ZYGTcqoIp8SPMCMO_6VQa9pmj_dqoHv6qrsK8DXD3ls';
-
 // Helper to safely get env vars
 const getEnv = (key: string) => {
+  // @ts-ignore
+  const env = (typeof import.meta !== 'undefined' && import.meta.env) ? import.meta.env[key] : '';
+  if (env) return env;
+
   if (typeof process !== 'undefined' && process.env) {
     return process.env[key];
-  }
-  // @ts-ignore
-  if (typeof import.meta !== 'undefined' && import.meta.env) {
-    // @ts-ignore
-    return import.meta.env[key];
   }
   return '';
 };
 
 /**
  * Supabase Service Client - Scalable Architecture
- * 
- * DESIGN FOR SCALE:
- * 1. Uses 'users' table for profile data.
- * 2. Uses 'user_progress' table for normalized lesson tracking (better for millions of rows).
- * 3. Removes LocalStorage/Mock logic to enforce production-grade reliability.
  */
 class SupabaseService {
   public supabase: SupabaseClient;
   private isConfigured: boolean = false;
-  private streakEnabled: boolean = true; // Circuit breaker for streak updates
+  private streakEnabled: boolean = true;
   private supabaseUrl: string;
 
   constructor() {
-    const envUrl = getEnv('VITE_SUPABASE_URL') || getEnv('SUPABASE_URL');
-    const envKey = getEnv('VITE_SUPABASE_ANON_KEY') || getEnv('SUPABASE_KEY');
+    const envUrl = getEnv('VITE_SUPABASE_URL');
+    const envKey = getEnv('VITE_SUPABASE_ANON_KEY');
 
-    // Check LocalStorage for manually entered key (fallback for demos/web containers)
+    // Check LocalStorage for manual override (demos/internal testing only)
     const localKey = typeof localStorage !== 'undefined' ? localStorage.getItem('GENSPARK_SUPABASE_KEY') : null;
 
-    // Use environment variables if available, otherwise fall back to project URL
-    this.supabaseUrl = envUrl || PROJECT_URL;
+    this.supabaseUrl = envUrl;
+    const supabaseKey = envKey || localKey;
 
-    // Priority: Env Key > LocalStorage Key > Hardcoded Default > Placeholder
-    const supabaseKey = envKey || localKey || DEFAULT_ANON_KEY || 'missing-anon-key';
-
-    if (!envKey && !localKey && !DEFAULT_ANON_KEY) {
-      console.warn("⚠️ GenSpark: Supabase Anon Key is missing. Waiting for user input.");
+    if (!envUrl || !supabaseKey) {
+      console.error("❌ GenSpark: Supabase Configuration Missing! Please check your .env file.");
       this.isConfigured = false;
+      // Initialize with placeholders to prevent crash, but operations will fail
+      this.supabase = createClient('https://placeholder.supabase.co', 'placeholder');
     } else {
       this.isConfigured = true;
+      this.supabase = createClient(this.supabaseUrl, supabaseKey);
     }
-
-    this.supabase = createClient(this.supabaseUrl, supabaseKey);
   }
 
   /**
@@ -91,9 +80,8 @@ class SupabaseService {
       return { server: true, db: !error || error.code === '42P01', mode: 'SUPABASE' };
     } catch (e) {
       console.warn("Health check failed/timed out:", e);
-      // CHANGED: Return success anyway to not block the app
-      // The actual operations will fail gracefully if there's a real issue
-      return { server: true, db: true, mode: 'SUPABASE' };
+      // Reporting actual failure now for professional reliability
+      return { server: true, db: false, mode: 'SUPABASE' };
     }
   }
 

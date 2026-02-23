@@ -219,15 +219,12 @@ body {
   transform-origin: 0 0 !important;
 }
 
-/* Prevent any element from being scaled */
+/* Allow standard text interaction */
 * {
-  -webkit-user-select: none;
-  user-select: none;
-  -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Allow text selection only on specific elements */
+/* Allow text selection naturally */
 input,
 textarea,
 [contenteditable] {

@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { ChevronRight } from 'lucide-react';
 import { usePractice } from '../../contexts/PracticeContext';
 
 const PracticeHub: React.FC = () => {
@@ -134,7 +135,7 @@ const PracticeHub: React.FC = () => {
                 <div className="px-6 py-8 max-w-5xl mx-auto">
                     {filteredProblems.length > 0 ? (
                         <div className="grid grid-cols-1 gap-4">
-                            {filteredProblems.map((problem) => {
+                            {filteredProblems.map((problem, idx) => {
                                 if (!problem) return null; // Defensive check
                                 const status = getProblemStatus(problem.id);
                                 const isCompleted = status === 'COMPLETED';
@@ -148,12 +149,12 @@ const PracticeHub: React.FC = () => {
                                     <div
                                         key={problem.id}
                                         onClick={() => navigate(`/practice/problem/${problem.id}`)}
-                                        className="bg-white/80 dark:bg-slate-900/40 border border-slate-200 dark:border-white/10 rounded-2xl p-6 relative transition-all active:scale-[0.98] cursor-pointer group hover:bg-white dark:hover:bg-slate-900/60 shadow-sm hover:shadow-xl hover:border-indigo-500 dark:hover:border-indigo-500/80 ring-0 hover:ring-1 hover:ring-indigo-500/50"
+                                        className="bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-white/20 rounded-2xl p-6 relative transition-all active:scale-[0.98] cursor-pointer group hover:bg-slate-50 dark:hover:bg-slate-800/90 shadow-sm hover:shadow-xl hover:border-indigo-500 dark:hover:border-indigo-500/80 ring-0 hover:ring-1 hover:ring-indigo-500/50"
                                     >
-                                        {/* Card content: left info + right button */}
-                                        <div className="flex items-center justify-between gap-4">
+                                        {/* Card content: meta + title + button */}
+                                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                                             {/* Left: meta + title */}
-                                            <div className="space-y-2 min-w-0">
+                                            <div className="space-y-1.5 sm:space-y-2 min-w-0 flex-1">
                                                 {/* Meta Row */}
                                                 <div className="flex items-center gap-2">
                                                     <span className={`text-[8px] font-black uppercase tracking-widest ${problem.difficulty === 'easy' ? 'text-emerald-500' : problem.difficulty === 'medium' ? 'text-amber-500' : 'text-rose-500'}`}>
@@ -165,24 +166,25 @@ const PracticeHub: React.FC = () => {
                                                     </span>
                                                 </div>
                                                 {/* Title */}
-                                                <h3 className={`text-lg font-bold group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors tracking-tight leading-tight ${isCompleted ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-white'}`}>
-                                                    {problem.title}
+                                                <h3 className={`text-lg sm:text-xl font-bold group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors tracking-tight leading-tight ${isCompleted ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-white'}`}>
+                                                    {idx + 1}. {problem.title}
                                                 </h3>
                                             </div>
 
                                             {/* Right: CTA Button */}
-                                            <div className="shrink-0">
+                                            <div className="shrink-0 w-full sm:w-auto">
                                                 <button
                                                     onClick={(e) => {
                                                         e.stopPropagation();
                                                         navigate(`/practice/problem/${problem.id}`);
                                                     }}
-                                                    className={`px-6 py-2.5 rounded-xl font-black text-[9px] uppercase tracking-widest transition-all ${isCompleted
+                                                    className={`w-full sm:w-auto px-6 py-3 sm:py-2.5 rounded-xl font-black text-[10px] sm:text-[9px] uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${isCompleted
                                                         ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.1)]'
                                                         : 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 active:bg-indigo-700'
                                                         }`}
                                                 >
                                                     {isCompleted ? 'SOLVED ✓' : 'SOLVE CHALLENGE'}
+                                                    <ChevronRight size={14} className="sm:hidden" />
                                                 </button>
                                             </div>
                                         </div>

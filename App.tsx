@@ -17,7 +17,7 @@ import Home from './screens/home/Home';
 import LearnHub from './screens/learn/LearnHub';
 import PracticeHub from './screens/practice/PracticeHub';
 import CodingProblemWrapper from './screens/practice/CodingProblemWrapper';
-import Profile from './screens/profile/Profile';
+// Profile component removed in favor of direct Settings navigation
 const ForgotPassword = lazy(() => import('./screens/auth/ForgotPassword'));
 const OTP = lazy(() => import('./screens/auth/OTP'));
 const ChallengesList = lazy(() => import('./screens/challenges/ChallengesList'));
@@ -31,6 +31,7 @@ const DiagnosticTool = lazy(() => import('./screens/admin/DiagnosticTool'));
 const CourseTrack = lazy(() => import('./screens/learn/CourseTrack'));
 const StreaksActivity = lazy(() => import('./screens/profile/StreaksActivity'));
 const LearningHistory = lazy(() => import('./screens/profile/LearningHistory'));
+const LearningProfile = lazy(() => import('./screens/profile/LearningProfile'));
 const PracticeHistory = lazy(() => import('./screens/practice/PracticeHistory'));
 const PrivacyPolicy = lazy(() => import('./screens/legal/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./screens/legal/TermsOfService'));
@@ -127,7 +128,8 @@ const router = createBrowserRouter([
       { path: "practice/problem/:problemId", element: <CodingProblemWrapper /> },
       { path: "practice/*", element: <PracticeHub /> },
       { path: "practice/history", element: <PracticeHistory /> },
-      { path: "profile", element: <Profile /> },
+      { path: "profile", element: <Navigate to="/settings" replace /> },
+      { path: "profile-stats", element: <LearningProfile /> },
       { path: "profile/streaks", element: <StreaksActivity /> },
       { path: "profile/history", element: <LearningHistory /> },
       { path: "settings", element: <Settings /> },

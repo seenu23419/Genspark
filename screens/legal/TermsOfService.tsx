@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowLeft, FileText } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const TermsOfService: React.FC = () => {
     const navigate = useNavigate();
@@ -29,42 +29,64 @@ const TermsOfService: React.FC = () => {
                 </div>
 
                 {/* Content */}
-                <div className="space-y-6 text-sm leading-relaxed">
+                <div className="space-y-8 text-sm leading-relaxed text-slate-400">
                     <section className="space-y-3">
-                        <h2 className="text-lg font-bold text-white">Acceptance of Terms</h2>
+                        <h2 className="text-lg font-bold text-white border-l-2 border-indigo-500 pl-3">1. Acceptance of Terms</h2>
                         <p>
-                            By accessing or using GenSpark, you agree to be bound by these Terms of Service. If you do not agree to all of the terms,
-                            you may not use our services.
+                            By accessing or using GenSpark ("the Service"), you agree to be bound by these Terms of Service and all applicable laws.
+                            If you do not agree to these terms, you must immediately cease all use of the Service.
                         </p>
                     </section>
 
                     <section className="space-y-3">
-                        <h2 className="text-lg font-bold text-white">User Responsibility</h2>
+                        <h2 className="text-lg font-bold text-white border-l-2 border-indigo-500 pl-3">2. User Accounts & Security</h2>
                         <p>
-                            You are responsible for maintaining the confidentiality of your account and for all activities that occur under your account.
-                            Our services are intended for learning purposes.
+                            You are responsible for safeguarding the credentials used to access the Service. GenSpark cannot and will not be liable for any loss or damage
+                            arising from your failure to comply with the above. We reserve the right to refuse service, terminate accounts, or remove content at our sole discretion.
                         </p>
                     </section>
 
                     <section className="space-y-3">
-                        <h2 className="text-lg font-bold text-white">Intellectual Property</h2>
+                        <h2 className="text-lg font-bold text-white border-l-2 border-indigo-500 pl-3">3. Educational Use Only</h2>
                         <p>
-                            The application content, features, and functionality are and will remain the exclusive property of GenSpark.
-                            Our platform allows you to create and save code snippets for your personal educational use.
+                            The Service is provided for educational and informational purposes. While we strive for accuracy, the coding exercises, compiler results,
+                            and AI-generated explanations are provided "as-is" and "as-available." We do not guarantee that the Service will meet your specific educational requirements.
                         </p>
                     </section>
 
                     <section className="space-y-3">
-                        <h2 className="text-lg font-bold text-white">Termination</h2>
+                        <h2 className="text-lg font-bold text-white border-l-2 border-indigo-500 pl-3">4. Intellectual Property</h2>
                         <p>
-                            We may terminate or suspend your account at any time, without prior notice or liability, for any reason, including if you breach the Terms.
+                            GenSpark and its original content, features, and functionality are owned by GenSpark. Users retain ownership of the code snippets they produce
+                            using the Service but grant GenSpark a worldwide, non-exclusive, royalty-free license to store, execute, and display such snippets for Service operation.
                         </p>
                     </section>
 
-                    <section className="space-y-3">
-                        <h2 className="text-lg font-bold text-white">Changes to Terms</h2>
-                        <p>
-                            We reserve the right to modify or replace these Terms at any time. We will notify you of any significant changes by posting the new Terms on our platform.
+                    <section className="space-y-3 p-4 bg-indigo-500/5 rounded-xl border border-indigo-500/10">
+                        <h2 className="text-lg font-extrabold text-white flex items-center gap-2">
+                            Disclaimer of Warranties
+                        </h2>
+                        <p className="font-medium text-slate-300">
+                            THE SERVICE IS PROVIDED WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,
+                            IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT. GENSPARK DOES NOT WARRANT
+                            THAT THE SERVICE WILL BE UNINTERRUPTED, SECURE, OR ERROR-FREE.
+                        </p>
+                    </section>
+
+                    <section className="space-y-3 p-4 bg-rose-500/5 rounded-xl border border-rose-500/10">
+                        <h2 className="text-lg font-extrabold text-white flex items-center gap-2">
+                            Limitation of Liability
+                        </h2>
+                        <p className="font-medium text-slate-300">
+                            IN NO EVENT SHALL GENSPARK BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR PUNITIVE DAMAGES,
+                            INCLUDING WITHOUT LIMITATION, LOSS OF PROFITS, DATA, USE, OR OTHER INTANGIBLE LOSSES, ARISING OUT OF YOUR ACCESS TO
+                            OR USE OF THE SERVICE.
+                        </p>
+                    </section>
+
+                    <section className="space-y-3 pt-6 border-t border-slate-800">
+                        <p className="text-xs text-slate-500 font-bold italic">
+                            GenSpark operates in compliance with standard industry regulations. For inquiries regarding these terms, please contact legal@genspark.app.
                         </p>
                     </section>
                 </div>

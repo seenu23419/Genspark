@@ -102,7 +102,7 @@ const PracticeList: React.FC<PracticeListProps> = ({
                     {completed} / {total} completed
                   </span>
                 </div>
-                
+
                 {/* Progress Bar */}
                 <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
                   <div
@@ -128,7 +128,7 @@ const PracticeList: React.FC<PracticeListProps> = ({
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex-1 min-w-0">
                           <h3 className="text-sm sm:text-base font-semibold text-white group-hover:text-indigo-300 transition-colors line-clamp-2">
-                            {problem.title}
+                            {idx + 1}. {problem.title}
                           </h3>
                         </div>
                         <div

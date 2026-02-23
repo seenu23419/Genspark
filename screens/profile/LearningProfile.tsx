@@ -158,42 +158,42 @@ const LearningProfile: React.FC = () => {
     const isCCertified = (user.lessonsCompleted || 0) >= cReqs.lessons && solvedProblemsCount >= cReqs.problems;
 
     return (
-        <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-8 pb-32 animate-in fade-in duration-500 bg-[#000000] min-h-screen">
+        <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-6 md:space-y-8 pb-32 animate-in fade-in duration-500 bg-slate-100 dark:bg-black min-h-screen transition-colors duration-300">
 
             {/* Header with Back Button */}
-            <header className="flex items-center gap-4 mb-4">
+            <header className="flex items-center gap-4 mb-2">
                 <button
                     onClick={() => navigate(-1)}
-                    className="p-2 rounded-xl bg-slate-900 border border-white/5 text-slate-400 hover:text-white transition-colors"
+                    className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-indigo-500 transition-colors shadow-sm"
                 >
                     <ArrowLeft size={20} />
                 </button>
                 <div>
-                    <h1 className="text-2xl font-black text-white tracking-tight">Learning Profile</h1>
-                    <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Your progress & achievements</p>
+                    <h1 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white tracking-tight uppercase italic">Learning Profile</h1>
+                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Your progress & achievements</p>
                 </div>
             </header>
 
             {/* 1. Progress Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {[
-                    { label: 'Lessons Started', value: lessonsStarted, icon: BookOpen, color: 'text-blue-400', bg: 'bg-blue-400/5' },
-                    { label: 'Problems Solved', value: solvedProblemsCount, icon: Target, color: 'text-indigo-400', bg: 'bg-indigo-500/10', important: true },
-                    { label: 'Time Invested', value: `${totalTimeHours.toFixed(1)}h`, icon: Clock, color: 'text-emerald-400', bg: 'bg-emerald-400/5' },
+                    { label: 'Lessons Started', value: lessonsStarted, icon: BookOpen, color: 'text-blue-500', bg: 'bg-blue-500/10', important: false },
+                    { label: 'Problems Solved', value: solvedProblemsCount, icon: Target, color: 'text-indigo-500', bg: 'bg-indigo-500/10', important: true },
+                    { label: 'Time Invested', value: `${totalTimeHours.toFixed(1)}h`, icon: Clock, color: 'text-emerald-500', bg: 'bg-emerald-500/10', important: false },
                 ].map((stat, idx) => (
-                    <div key={idx} className={`relative p-8 rounded-[2rem] border transition-all flex flex-col items-center justify-center text-center gap-4 overflow-hidden ${stat.important
-                        ? 'bg-slate-900 border-indigo-500/30 shadow-2xl shadow-indigo-500/10'
-                        : 'bg-slate-900/50 border-white/5'
+                    <div key={idx} className={`relative p-5 md:p-6 rounded-2xl border transition-all flex flex-col items-center justify-center text-center gap-3 overflow-hidden ${stat.important
+                        ? 'bg-white dark:bg-slate-900 border-indigo-500/30 shadow-xl shadow-indigo-500/10'
+                        : 'bg-white dark:bg-slate-900/50 border-slate-200 dark:border-white/5 shadow-sm'
                         }`}>
                         {stat.important && (
-                            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent pointer-events-none" />
+                            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.03] to-transparent pointer-events-none" />
                         )}
-                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${stat.bg} ${stat.color} ${stat.important ? 'shadow-xl shadow-indigo-500/10' : ''}`}>
-                            <stat.icon size={24} />
+                        <div className={`w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center ${stat.bg} ${stat.color} ${stat.important ? 'shadow-lg shadow-indigo-500/10' : ''}`}>
+                            <stat.icon size={22} />
                         </div>
                         <div>
-                            <div className="text-3xl font-black text-white tracking-tight">{stat.value}</div>
-                            <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">{stat.label}</div>
+                            <div className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">{stat.value}</div>
+                            <div className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">{stat.label}</div>
                         </div>
                     </div>
                 ))}
@@ -201,17 +201,17 @@ const LearningProfile: React.FC = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* 2. Learning Activity */}
-                <div className="lg:col-span-2 bg-slate-900/40 border border-white/5 rounded-[2.5rem] p-8 shadow-2xl">
-                    <div className="flex items-center justify-between mb-8">
+                <div className="lg:col-span-2 bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-white/5 rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-xl">
+                    <div className="flex items-center justify-between mb-6 md:mb-8">
                         <div>
-                            <h3 className="text-lg font-black text-white flex items-center gap-2 uppercase tracking-tight italic">
+                            <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2 uppercase tracking-tight italic">
                                 Learning Activity
                             </h3>
-                            <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest mt-1">Last 7 days</p>
+                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Last 7 days</p>
                         </div>
-                        <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 rounded-xl border border-white/5">
+                        <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-white/5">
                             <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                            <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none">Today</span>
+                            <span className="text-[9px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest leading-none">Today</span>
                         </div>
                     </div>
 
@@ -256,17 +256,17 @@ const LearningProfile: React.FC = () => {
 
                 {/* 3. Weekly Focus */}
                 <div className="lg:col-span-1 space-y-6">
-                    <div className="bg-slate-900/40 border border-white/5 rounded-[2.5rem] p-8 shadow-2xl h-full flex flex-col">
+                    <div className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-white/5 rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-xl h-full flex flex-col">
                         <div className="mb-6">
-                            <h4 className="text-sm font-black text-white uppercase tracking-tight italic flex items-center gap-2">
+                            <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight italic flex items-center gap-2">
                                 Weekly Focus
                             </h4>
-                            <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest mt-1">Consistency Tracker</p>
+                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Consistency Tracker</p>
                         </div>
 
                         <div className="flex-1 flex flex-col justify-center gap-8">
                             <div className="space-y-1">
-                                <div className="text-4xl font-black text-white tracking-tight">
+                                <div className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
                                     {Math.floor(totalTimeHours)}h {Math.round((totalTimeHours % 1) * 60)}m
                                 </div>
                                 <div className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Total time spent learning</div>
@@ -277,8 +277,8 @@ const LearningProfile: React.FC = () => {
                                     <Trophy size={20} />
                                 </div>
                                 <div>
-                                    <div className="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-0.5">Best Day</div>
-                                    <div className="text-xs font-bold text-white uppercase">Most active: {user.streak}-day streak</div>
+                                    <div className="text-[10px] font-black text-indigo-500 uppercase tracking-widest mb-0.5">Best Day</div>
+                                    <div className="text-xs font-bold text-slate-900 dark:text-white uppercase transition-colors">Most active: {user.streak}-day streak</div>
                                 </div>
                             </div>
                         </div>
@@ -321,38 +321,38 @@ const LearningProfile: React.FC = () => {
 
                             return isCompleted ? (
                                 // Completed State
-                                <div key={courseId} className="bg-gradient-to-br from-emerald-900/40 to-slate-900 border border-emerald-500/20 rounded-[2.5rem] p-8 flex flex-col justify-between shadow-2xl shadow-emerald-500/5">
-                                    <div className="space-y-6">
-                                        <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 border border-emerald-500/20">
-                                            <CheckCircle2 size={28} />
+                                <div key={courseId} className="bg-gradient-to-br from-emerald-50 to-white dark:from-emerald-900/20 dark:to-slate-900 border border-emerald-500/20 rounded-2xl p-6 flex flex-col justify-between shadow-xl shadow-emerald-500/5">
+                                    <div className="space-y-4">
+                                        <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center text-emerald-500 border border-emerald-500/20">
+                                            <CheckCircle2 size={24} />
                                         </div>
                                         <div className="space-y-1">
-                                            <h4 className="text-xl font-black text-white tracking-tight uppercase">{courseName}</h4>
+                                            <h4 className="text-lg font-black text-slate-900 dark:text-white tracking-tight uppercase italic">{courseName}</h4>
                                             <div className="px-2 py-1 bg-emerald-500/10 rounded-lg border border-emerald-500/20 inline-block">
-                                                <p className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Completed</p>
+                                                <p className="text-[9px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Completed</p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="mt-8 pt-6 border-t border-white/5">
-                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
+                                    <div className="mt-6 pt-4 border-t border-slate-200 dark:border-white/5">
+                                        <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
                                             GenSpark Status Unlocked! You've mastered the basics.
                                         </p>
                                     </div>
                                 </div>
                             ) : (
                                 // Locked State
-                                <div key={courseId} className="bg-slate-900/40 border border-dashed border-white/10 rounded-[2.5rem] p-8 flex flex-col justify-between">
-                                    <div className="space-y-6">
-                                        <div className="w-14 h-14 bg-slate-800 rounded-2xl flex items-center justify-center text-slate-400">
-                                            <ShieldCheck size={28} />
+                                <div key={courseId} className="bg-white dark:bg-slate-900/40 border border-dashed border-slate-300 dark:border-white/10 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
+                                    <div className="space-y-4">
+                                        <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 border border-slate-200 dark:border-white/5">
+                                            <ShieldCheck size={24} />
                                         </div>
                                         <div className="space-y-1">
-                                            <h4 className="text-xl font-black text-slate-300 tracking-tight italic uppercase">{courseName}</h4>
-                                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Status Locked</p>
+                                            <h4 className="text-lg font-black text-slate-400 dark:text-slate-300 tracking-tight italic uppercase">{courseName}</h4>
+                                            <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Status Locked</p>
                                         </div>
                                     </div>
-                                    <div className="mt-8 pt-6 border-t border-white/5">
-                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
+                                    <div className="mt-6 pt-4 border-t border-slate-200 dark:border-white/5">
+                                        <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
                                             Complete {Math.max(0, requirements.lessons - courseLessons)} more lessons to unlock status.
                                         </p>
                                     </div>
@@ -360,43 +360,43 @@ const LearningProfile: React.FC = () => {
                             );
                         })}
 
-                    <div className="bg-slate-900/40 border border-dashed border-white/10 rounded-[2.5rem] p-8 flex flex-col justify-between">
-                        <div className="space-y-6">
-                            <div className="w-14 h-14 bg-slate-800 rounded-2xl flex items-center justify-center text-slate-400">
-                                <Trophy size={28} />
+                    <div className="bg-white dark:bg-slate-900/40 border border-dashed border-slate-300 dark:border-white/10 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
+                        <div className="space-y-4">
+                            <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 border border-slate-200 dark:border-white/5">
+                                <Trophy size={24} />
                             </div>
                             <div className="space-y-1">
-                                <h4 className="text-xl font-black text-slate-300 tracking-tight italic uppercase">Streak Starter</h4>
-                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Login 3 days in a row</p>
+                                <h4 className="text-lg font-black text-slate-400 dark:text-slate-300 tracking-tight italic uppercase">Streak Starter</h4>
+                                <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Login 3 days in a row</p>
                             </div>
                         </div>
                         <div className="mt-6 space-y-2">
-                            <div className="flex justify-between text-[10px] font-bold text-slate-400 uppercase">
+                            <div className="flex justify-between text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase">
                                 <span>Current Streak</span>
                                 <span>{user.streak}/3 Days</span>
                             </div>
-                            <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                            <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                                 <div className="h-full bg-indigo-500 rounded-full transition-all" style={{ width: `${Math.min(100, (user.streak / 3) * 100)}%` }} />
                             </div>
                         </div>
                     </div>
 
-                    <div className="bg-slate-900/40 border border-dashed border-white/10 rounded-[2.5rem] p-8 flex flex-col justify-between">
-                        <div className="space-y-6">
-                            <div className="w-14 h-14 bg-slate-800 rounded-2xl flex items-center justify-center text-slate-400">
-                                <Target size={28} />
+                    <div className="bg-white dark:bg-slate-900/40 border border-dashed border-slate-300 dark:border-white/10 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
+                        <div className="space-y-4">
+                            <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 border border-slate-200 dark:border-white/5">
+                                <Target size={24} />
                             </div>
                             <div className="space-y-1">
-                                <h4 className="text-xl font-black text-slate-300 tracking-tight italic uppercase">Problem Solver</h4>
-                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Solve 10 Problems</p>
+                                <h4 className="text-lg font-black text-slate-400 dark:text-slate-300 tracking-tight italic uppercase">Problem Solver</h4>
+                                <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Solve 10 Problems</p>
                             </div>
                         </div>
                         <div className="mt-6 space-y-2">
-                            <div className="flex justify-between text-[10px] font-bold text-slate-400 uppercase">
+                            <div className="flex justify-between text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase">
                                 <span>Progress</span>
                                 <span>{solvedProblemsCount}/10</span>
                             </div>
-                            <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                            <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                                 <div className="h-full bg-emerald-500 rounded-full transition-all" style={{ width: `${Math.min(100, (solvedProblemsCount / 10) * 100)}%` }} />
                             </div>
                         </div>

@@ -69,6 +69,8 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   const [activeTab, setActiveTab] = useState<TabType>('PROBLEM');
   // Code state management
   const [userCode, setUserCode] = useState(() => {
+    const localSaved = localStorage.getItem(`practice_code_${problem.id}`);
+    if (localSaved) return localSaved;
     const starterCodes = (problem as any).starter_codes || {};
     const defaultLang = Object.keys(starterCodes)[0] || 'c';
     return starterCodes[defaultLang] || problem.initialCode || '';
@@ -84,7 +86,9 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   const [aiExplanation, setAiExplanation] = useState<string | null>(null);
   const [isGeneratingExplanation, setIsGeneratingExplanation] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState(() => {
+    const localLang = localStorage.getItem(`practice_lang_${problem.id}`);
     const starterCodes = (problem as any).starter_codes || {};
+    if (localLang && starterCodes[localLang]) return localLang;
     return Object.keys(starterCodes)[0] || 'c';
   });
   /* Removed sidebarTab state */
@@ -142,6 +146,16 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
     };
     fetchProgress();
   }, [problem.id]);
+
+  // Debounced Autosave to LocalStorage
+  useEffect(() => {
+    if (!userCode.trim()) return;
+    const timer = setTimeout(() => {
+      localStorage.setItem(`practice_code_${problem.id}`, userCode);
+      localStorage.setItem(`practice_lang_${problem.id}`, selectedLanguage);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [userCode, selectedLanguage, problem.id]);
 
   // Synchronize code when language changes, but ONLY if user hasn't typed anything yet
   useEffect(() => {
@@ -722,19 +736,19 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
 
               {/* MOBILE KEYBOARD ACCESSORY & DEL BUTTON (Now Flex-Static at Bottom) */}
               {activeTab === 'CODE' && (
-                <div className="lg:hidden shrink-0 h-12 bg-white dark:bg-[#0d0e1a] border-t border-slate-200 dark:border-white/5 flex items-center gap-1.5 px-3 overflow-x-auto no-scrollbar z-20">
+                <div className="lg:hidden shrink-0 h-14 bg-white dark:bg-[#0d0e1a] border-t border-slate-200 dark:border-white/5 flex items-center gap-2 px-3 overflow-x-auto no-scrollbar z-20">
                   {['{', '}', '(', ')', ';', '"', "'", '<', '>', '/', '*', '=', '+', ':'].map(char => (
                     <button
                       key={char}
                       onClick={() => compilerRef.current?.insertText(char)}
-                      className="h-8 min-w-[36px] bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-white/5 rounded-lg text-slate-600 dark:text-slate-300 font-mono text-sm active:bg-indigo-600 dark:active:bg-indigo-600 active:text-white transition"
+                      className="h-10 min-w-[40px] bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-white/5 rounded-lg text-slate-700 dark:text-slate-200 font-mono text-lg font-bold active:bg-indigo-600 dark:active:bg-indigo-600 active:text-white transition"
                     >
                       {char}
                     </button>
                   ))}
                   <button
                     onClick={() => compilerRef.current?.deleteLastChar()}
-                    className="h-8 px-4 bg-rose-500/10 dark:bg-rose-500/10 border border-rose-500/20 rounded-lg text-rose-600 dark:text-rose-400 font-black text-[9px] uppercase active:scale-95 transition"
+                    className="h-10 px-4 bg-rose-500/10 dark:bg-rose-500/10 border border-rose-500/20 rounded-lg text-rose-600 dark:text-rose-400 font-black text-[10px] uppercase active:scale-95 transition"
                   >
                     DEL
                   </button>
