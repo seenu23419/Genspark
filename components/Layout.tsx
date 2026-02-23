@@ -159,35 +159,37 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children
                 )}
 
                 {/* Content Area with smooth fade transition - proper padding for mobile */}
-                <main className={`flex-1 overflow-y-auto scroll-smooth relative no-scrollbar animate-in fade-in duration-300 bg-black transition-colors duration-300 ${!hideBottomNav ? 'pb-[72px] md:pb-0' : ''}`}>
+                <main className={`flex-1 overflow-y-auto scroll-smooth relative no-scrollbar animate-in fade-in duration-300 bg-black transition-colors duration-300 ${!hideBottomNav ? 'pb-[80px] md:pb-0' : ''}`}>
                     {children}
                 </main>
 
-                {/* Mobile Bottom Navigation - Static at bottom & Hides when keyboard active */}
+                {/* Mobile Bottom Navigation - Modern Native App Style */}
                 {!hideBottomNav && !isKeyboardVisible && (
-                    <div className="md:hidden fixed bottom-0 left-0 right-0 z-[999] bg-black/95 backdrop-blur-3xl border-t border-white/10 pb-[env(safe-area-inset-bottom)] shadow-[0_-15px_50px_rgba(0,0,0,1)]">
-                        <nav className="flex items-center justify-around h-[64px] px-2">
+                    <div className="md:hidden fixed bottom-0 left-0 right-0 z-[1000] bg-black/95 backdrop-blur-2xl border-t border-white/10 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_30px_rgba(0,0,0,0.8)]">
+                        <nav className="flex items-center justify-between h-[72px] px-4">
                             {navItems.map((item) => {
                                 const isActive = currentScreen === item.id || (item.id === 'PROFILE' && (currentScreen === 'SETTINGS' || currentScreen === 'ANALYTICS' || window.location.pathname.startsWith('/profile')));
                                 return (
                                     <button
                                         key={item.id}
                                         onClick={() => navigate(item.path)}
-                                        className={`flex-1 h-full flex flex-col items-center justify-center gap-1 transition-all active:scale-90 touch-manipulation relative ${isActive ? 'scale-110' : 'scale-100'}`}
+                                        className={`flex-1 flex flex-col items-center justify-center gap-1.5 transition-all duration-300 active:scale-90 touch-manipulation relative`}
                                         aria-label={item.label}
                                         aria-current={isActive ? 'page' : undefined}
                                     >
-                                        <div className={`p-1.5 rounded-xl transition-all ${isActive ? 'bg-indigo-600/20 shadow-lg shadow-indigo-500/10' : ''}`}>
+                                        <div className={`transition-all duration-300 flex items-center justify-center ${isActive ? 'scale-110 -translate-y-0.5' : 'scale-100'}`}>
                                             <item.icon
-                                                size={22}
-                                                className={`transition-all ${isActive ? 'text-indigo-400' : 'text-slate-500'}`}
+                                                size={24}
+                                                className={`transition-all duration-300 ${isActive ? 'text-indigo-500' : 'text-slate-400'}`}
                                                 strokeWidth={isActive ? 2.5 : 2}
                                             />
                                         </div>
-                                        <span className={`text-[10px] font-black uppercase tracking-wider transition-colors ${isActive ? 'text-white italic' : 'text-slate-500'}`}>
+                                        <span className={`text-[11px] font-bold uppercase tracking-wider transition-all duration-300 ${isActive ? 'text-indigo-400 font-black' : 'text-slate-400'}`}>
                                             {item.label}
                                         </span>
-                                        {isActive && <div className="absolute -bottom-1 w-12 h-1 bg-indigo-500 rounded-full shadow-[0_0_15px_rgba(99,102,241,1)]" />}
+                                        {isActive && (
+                                            <div className="absolute -bottom-2 w-8 h-1 bg-indigo-500 rounded-full shadow-[0_0_12px_rgba(99,102,241,0.8)] animate-in fade-in zoom-in duration-300" />
+                                        )}
                                     </button>
                                 );
                             })}
