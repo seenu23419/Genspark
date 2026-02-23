@@ -149,10 +149,10 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children
                                         src="/icons/logo.png"
                                         alt="GenSpark"
                                         className="h-7 w-7 relative z-10 object-contain"
-                                        style={{ filter: 'saturate(1.4) contrast(1.1)' }}
+                                        style={{ filter: 'saturate(1.5) contrast(1.2)' }}
                                     />
                                 </div>
-                                <span className="text-2xl font-black text-white tracking-widest uppercase italic">GenSpark</span>
+                                <span className="text-2xl font-black text-white tracking-widest uppercase italic leading-none">GenSpark</span>
                             </div>
                         </div>
                     </header>
@@ -184,10 +184,10 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children
                                                 strokeWidth={isActive ? 2.5 : 2}
                                             />
                                         </div>
-                                        <span className={`text-[9px] font-black uppercase tracking-widest transition-colors ${isActive ? 'text-white italic' : 'text-slate-500'}`}>
+                                        <span className={`text-[10px] font-black uppercase tracking-wider transition-colors ${isActive ? 'text-white italic' : 'text-slate-500'}`}>
                                             {item.label}
                                         </span>
-                                        {isActive && <div className="absolute bottom-1.5 w-6 h-1 bg-indigo-500 rounded-full shadow-[0_0_12px_rgba(99,102,241,0.8)] animate-in fade-in zoom-in duration-300" />}
+                                        {isActive && <div className="absolute -bottom-1 w-12 h-1 bg-indigo-500 rounded-full shadow-[0_0_15px_rgba(99,102,241,1)]" />}
                                     </button>
                                 );
                             })}
