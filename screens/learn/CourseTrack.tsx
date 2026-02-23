@@ -152,7 +152,7 @@ const CourseTrack: React.FC = () => {
       const problems = module?.problems || [];
 
       const hasIncompleteLesson = lessons.some((l: Lesson) => l && !completedLessonIds.includes(l.id));
-      const hasIncompleteProblem = langId === 'c' && problems.some((p: any) => getProblemStatus(p.id) !== 'COMPLETED');
+      const hasIncompleteProblem = ['c', 'dsa'].includes(langId || '') && problems.some((p: any) => getProblemStatus(p.id) !== 'COMPLETED');
 
       if (hasIncompleteLesson || hasIncompleteProblem) return mIdx;
     }
