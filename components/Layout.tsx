@@ -38,24 +38,28 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
-    // Keyboard detection for mobile
+    // Keyboard detection for mobile - Use VisualViewport for better accuracy
     React.useEffect(() => {
-        const handleFocus = (e: FocusEvent) => {
-            const tagName = (e.target as HTMLElement).tagName;
-            if (tagName === 'INPUT' || tagName === 'TEXTAREA') {
-                setIsKeyboardVisible(true);
-            }
-        };
-        const handleBlur = (e: FocusEvent) => {
-            setIsKeyboardVisible(false);
-        };
-
-        window.addEventListener('focusin', handleFocus);
-        window.addEventListener('focusout', handleBlur);
-        return () => {
-            window.removeEventListener('focusin', handleFocus);
-            window.removeEventListener('focusout', handleBlur);
-        };
+        if (window.visualViewport) {
+            const handleResize = () => {
+                const isKeyboard = window.visualViewport!.height < window.innerHeight * 0.85;
+                setIsKeyboardVisible(isKeyboard);
+            };
+            window.visualViewport.addEventListener('resize', handleResize);
+            return () => window.visualViewport?.removeEventListener('resize', handleResize);
+        } else {
+            const handleFocus = (e: FocusEvent) => {
+                const tagName = (e.target as HTMLElement).tagName;
+                if (tagName === 'INPUT' || tagName === 'TEXTAREA') setIsKeyboardVisible(true);
+            };
+            const handleBlur = () => setIsKeyboardVisible(false);
+            window.addEventListener('focusin', handleFocus);
+            window.addEventListener('focusout', handleBlur);
+            return () => {
+                window.removeEventListener('focusin', handleFocus);
+                window.removeEventListener('focusout', handleBlur);
+            };
+        }
     }, []);
 
     const handleLogout = async () => {
@@ -169,7 +173,7 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children
                                     <button
                                         key={item.id}
                                         onClick={() => navigate(item.path)}
-                                        className={`flex-1 h-full flex flex-col items-center justify-center gap-1 transition-all active:scale-90 touch-manipulation ${isActive ? 'scale-110' : 'scale-100'}`}
+                                        className={`flex-1 h-full flex flex-col items-center justify-center gap-1 transition-all active:scale-90 touch-manipulation relative ${isActive ? 'scale-110' : 'scale-100'}`}
                                         aria-label={item.label}
                                         aria-current={isActive ? 'page' : undefined}
                                     >
