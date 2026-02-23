@@ -633,7 +633,7 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-screen bg-slate-100 dark:bg-black overflow-hidden font-sans practice-ui-root transition-colors duration-300">
+    <div className="flex flex-col h-full bg-slate-100 dark:bg-black overflow-hidden font-sans practice-ui-root transition-colors duration-300">
       {/* HEADER */}
       <header className="h-14 shrink-0 bg-white dark:bg-black border-b border-slate-200 dark:border-white/10 flex items-center px-4 z-50 justify-between">
         <div className="flex items-center gap-1 sm:gap-4 overflow-hidden">
