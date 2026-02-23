@@ -67,6 +67,8 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   const navigate = useNavigate();
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<TabType>('PROBLEM');
+  const [viewportHeight, setViewportHeight] = useState(window.visualViewport?.height || window.innerHeight);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   // Code state management
   const [userCode, setUserCode] = useState(() => {
     const localSaved = localStorage.getItem(`practice_code_${problem.id}`);
@@ -412,6 +414,61 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
     </div>
   );
 
+  // Track visual viewport for mobile keyboard positioning
+  useEffect(() => {
+    if (!window.visualViewport) return;
+
+    const handleViewportChange = () => {
+      const vh = window.visualViewport?.height || window.innerHeight;
+      const fullHeight = window.innerHeight;
+      setViewportHeight(vh);
+      setIsKeyboardVisible(vh < fullHeight * 0.85);
+    };
+
+    window.visualViewport.addEventListener('resize', handleViewportChange);
+    window.visualViewport.addEventListener('scroll', handleViewportChange);
+    handleViewportChange();
+
+    return () => {
+      window.visualViewport?.removeEventListener('resize', handleViewportChange);
+      window.visualViewport?.removeEventListener('scroll', handleViewportChange);
+    };
+  }, []);
+
+  const symbols = ['{', '}', '(', ')', '[', ']', ';', ':', '"', "'", '<', '>', '=', '+', '-', '*', '/', '&', '|', '!', ',', '.'];
+
+  const renderMobileAccessory = () => {
+    if (activeTab !== 'CODE' || !isKeyboardVisible) return null;
+
+    return (
+      <div
+        className="fixed left-0 right-0 z-[1000] bg-slate-900/95 backdrop-blur-xl border-t border-white/10 flex items-center gap-1.5 px-3 h-12 transition-all duration-300 ease-out animate-in slide-in-from-bottom flex-nowrap overflow-x-auto no-scrollbar"
+        style={{
+          top: `${window.visualViewport?.height || window.innerHeight}px`,
+          transform: `translateY(-100%)`, // Position exactly above the bottom of the visible area (keyboard top)
+        }}
+      >
+        <div className="flex items-center gap-1.5 py-1">
+          {symbols.map(char => (
+            <button
+              key={char}
+              onMouseDown={(e) => { e.preventDefault(); compilerRef.current?.insertText(char); }}
+              className="h-9 min-w-[36px] bg-white/10 border border-white/10 rounded-lg text-white font-mono text-lg font-bold flex items-center justify-center active:bg-indigo-600 active:scale-95 transition-all touch-manipulation"
+            >
+              {char}
+            </button>
+          ))}
+          <button
+            onMouseDown={(e) => { e.preventDefault(); compilerRef.current?.deleteLastChar(); }}
+            className="h-9 px-3 bg-rose-500/20 border border-rose-500/30 rounded-lg text-rose-400 font-black text-[10px] uppercase active:scale-95 transition-all touch-manipulation"
+          >
+            DEL
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   const renderResults = () => {
     if (!executionResult) return (
       <div className="h-full flex flex-col items-center justify-center p-12 text-center opacity-30 group">
@@ -734,26 +791,7 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
                 {(activeTab === 'RESULT' && !isLargeScreen) && <div className="absolute inset-0 h-full overflow-y-auto no-scrollbar bg-white dark:bg-slate-950">{renderResults()}</div>}
               </div>
 
-              {/* MOBILE KEYBOARD ACCESSORY & DEL BUTTON (Now Flex-Static at Bottom) */}
-              {activeTab === 'CODE' && (
-                <div className="lg:hidden shrink-0 h-14 bg-white dark:bg-[#0d0e1a] border-t border-slate-200 dark:border-white/5 flex items-center gap-2 px-3 overflow-x-auto no-scrollbar z-20">
-                  {['{', '}', '(', ')', ';', '"', "'", '<', '>', '/', '*', '=', '+', ':'].map(char => (
-                    <button
-                      key={char}
-                      onClick={() => compilerRef.current?.insertText(char)}
-                      className="h-10 min-w-[40px] bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-white/5 rounded-lg text-slate-700 dark:text-slate-200 font-mono text-lg font-bold active:bg-indigo-600 dark:active:bg-indigo-600 active:text-white transition"
-                    >
-                      {char}
-                    </button>
-                  ))}
-                  <button
-                    onClick={() => compilerRef.current?.deleteLastChar()}
-                    className="h-10 px-4 bg-rose-500/10 dark:bg-rose-500/10 border border-rose-500/20 rounded-lg text-rose-600 dark:text-rose-400 font-black text-[10px] uppercase active:scale-95 transition"
-                  >
-                    DEL
-                  </button>
-                </div>
-              )}
+              {renderMobileAccessory()}
             </div>
           </div>
         </div>
