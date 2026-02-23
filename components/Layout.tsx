@@ -42,7 +42,7 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children
     React.useEffect(() => {
         if (window.visualViewport) {
             const handleResize = () => {
-                const isKeyboard = window.visualViewport!.height < window.innerHeight * 0.85;
+                const isKeyboard = window.visualViewport!.height < window.innerHeight * 0.75;
                 setIsKeyboardVisible(isKeyboard);
             };
             window.visualViewport.addEventListener('resize', handleResize);
@@ -148,11 +148,11 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children
                                     <img
                                         src="/icons/logo.png"
                                         alt="GenSpark"
-                                        className="h-6 w-6 relative z-10 object-contain"
+                                        className="h-7 w-7 relative z-10 object-contain"
                                         style={{ filter: 'saturate(1.4) contrast(1.1)' }}
                                     />
                                 </div>
-                                <span className="text-2xl font-black text-white tracking-tighter uppercase italic">GenSpark</span>
+                                <span className="text-2xl font-black text-white tracking-widest uppercase italic">GenSpark</span>
                             </div>
                         </div>
                     </header>
@@ -187,7 +187,7 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children
                                         <span className={`text-[9px] font-black uppercase tracking-widest transition-colors ${isActive ? 'text-white italic' : 'text-slate-500'}`}>
                                             {item.label}
                                         </span>
-                                        {isActive && <div className="absolute bottom-0 w-8 h-0.5 bg-indigo-500 rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)]" />}
+                                        {isActive && <div className="absolute bottom-1 w-8 h-1 bg-indigo-500 rounded-full shadow-[0_0_12px_rgba(99,102,241,0.6)] animate-in fade-in zoom-in duration-300" />}
                                     </button>
                                 );
                             })}
