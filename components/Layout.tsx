@@ -159,9 +159,8 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children
                     {children}
                 </main>
 
-                {/* Mobile Bottom Navigation - Static position at the bottom */}
                 {!hideBottomNav && (
-                    <div className="md:hidden fixed bottom-0 left-0 right-0 z-[999] bg-black/95 backdrop-blur-3xl border-t border-white/10 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_40px_rgba(0,0,0,0.9)] h-[64px] min-h-[64px]">
+                    <div className="md:hidden fixed bottom-0 left-0 right-0 z-[999] bg-black/95 backdrop-blur-3xl border-t border-white/10 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_40px_rgba(0,0,0,0.9)]">
                         <nav className="flex items-center justify-around h-[64px] px-2">
                             {navItems.map((item) => {
                                 const isActive = currentScreen === item.id || (item.id === 'PROFILE' && (currentScreen === 'SETTINGS' || currentScreen === 'ANALYTICS' || window.location.pathname.startsWith('/profile')));
