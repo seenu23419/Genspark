@@ -8,19 +8,19 @@
                 "id": "d1",
                 "title": "1. Introduction to DSA",
                 "duration": "15 mins",
-                "content": "### What is DSA?\r\nData Structures and Algorithms (DSA) are the building blocks of efficient software. A **Data Structure** is a way of organizing and storing data so it can be accessed and modified efficiently. An **Algorithm** is a step-by-step procedure to solve a problem.\r\n\r\n### Why Study DSA?\r\n- **Efficiency:** Solve complex problems with minimal time and memory.\r\n- **Problem Solving:** Develop a logical mindset for engineering.\r\n- **Interviews:** Core topic for top-tier tech companies like Google and Meta.\r\n\r\n--- \r\n### Example: Searching for a Number\r\nImagine you have a phone book. A simple algorithm would be to check every page (**Linear Search**). A more efficient one would be to open the middle and eliminate half the pages (**Binary Search**).",
+                "content": "### What is DSA?\r\nData Structures and Algorithms (DSA) are the essential building blocks of efficient software development. \r\n- A **Data Structure** is not just a bunch of data; it is a specialized format for organizing, processing, retrieving, and storing data so that it can be accessed and modified in the most efficient way possible.\r\n- An **Algorithm** is a finite, step-by-step procedure or a set of rules used to solve a specific problem or perform a computation efficiently.\r\n\r\n### Why Study DSA?\r\nStudying DSA is crucial for any serious software engineer because it shifts the focus from just making things work to making them work optimally.\r\n- **Efficiency:** In high-performance systems, choosing the right data structure can reduce the execution time of an operation from minutes to milliseconds.\r\n- **Problem Solving:** DSA training helps you break down complex real-world problems into manageable, logical steps that can be automated.\r\n- **Scalability:** Code that works for 10 users might crash for 10 million. DSA teaches you how to write code that scales with the amount of data.\r\n- **Interviews:** Most top-tier tech companies use DSA as a benchmark to measure a candidate's logical reasoning and technical depth.\r\n\r\n--- \r\n### Example: Searching for a Number\r\nTo understand the power of algorithms, imagine you are looking for a name in a physical phone book containing 1,000 pages.\r\n- **Linear Search:** You start from page 1 and check Every. Single. Page. If the name is on page 999, it takes you 999 steps. This is inefficient for large datasets.\r\n- **Binary Search:** You open the book exactly in the middle. If the name is alphabetically further, you throw away the first half and open the middle of the remaining half. You repeat this until you find the name. For 1,000 pages, this takes at most **10 steps**. This is the power of a good algorithm!",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "What is a Data Structure?",
+                        "text": "What is the primary difference between a Data Structure and an Algorithm?",
                         "options": [
-                            "A way to organize and store data",
-                            "A programming language",
-                            "A hardware component",
-                            "An operating system"
+                            "Data Structures store data, while Algorithms process it.",
+                            "Algorithms store data, while Data Structures process it.",
+                            "There is no difference.",
+                            "Data Structures are for hardware, Algorithms are for software."
                         ],
                         "correctAnswer": 0,
-                        "explanation": "Data structures are specialized formats for organizing, processing, retrieving and storing data."
+                        "explanation": "Data structures provide a way to organize and store data, while algorithms provide the logic and steps to manipulate that data."
                     }
                 ]
             },
@@ -28,18 +28,19 @@
                 "id": "d2",
                 "title": "2. Big O Notation",
                 "duration": "25 mins",
-                "content": "### Understanding Efficiency\r\nIn DSA, we don't measure time in seconds (as different hardware varies). Instead, we use **Big O Notation** to describe how the runtime grows as the input size (n) grows.\r\n\r\n### Common Time Complexities\r\n- **O(1):** Constant time (fastest)\r\n- **O(log n):** Logarithmic time (very efficient)\r\n- **O(n):** Linear time (proportional to input)\r\n- **O(n^2):** Quadratic time (nested loops, slow for large n)",
+                "content": "### Understanding Efficiency and Complexity\r\nWhen we talk about 'fast' code, we don't use seconds or milliseconds as a metric. Why? Because the same code will run at different speeds on a supercomputer versus an old smartphone. \r\nInstead, we use **Asymptotic Analysis** and **Big O Notation**. This allows us to describe how the runtime (or memory usage) of an algorithm grows as the size of the input (n) increases, regardless of the hardware.\r\n\r\n### Common Time Complexities\r\nIn the world of DSA, we categorize algorithms based on their efficiency curves:\r\n- **O(1) - Constant Time:** The algorithm takes the same amount of time regardless of input size. Example: Accessing a specific index in an array.\r\n- **O(log n) - Logarithmic Time:** The time grows slowly as input increases. Example: Binary Search in a sorted list.\r\n- **O(n) - Linear Time:** The time grows exactly in proportion to the input size. Example: Iterating through a simple list once.\r\n- **O(n^2) - Quadratic Time:** The time grows dramatically as input increases. This usually happens with 'nested loops' (a loop inside a loop). While okay for small data, it becomes very slow for large datasets.\r\n\r\n### Best, Average, and Worst Case\r\nMost algorithms behave differently depending on the input they receive. \r\n- **Worst Case (Big O):** This is the maximum time an algorithm could possibly take. Engineers focus on this to ensure their systems never fail under heavy load.\r\n- **Average Case (Theta):** What you can typically expect on a normal run.\r\n- **Best Case (Omega):** The absolute fastest time possible (e.g., finding the item on the first try).",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "Which notation is used to describe the worst-case time complexity?",
+                        "text": "Why do we use Big O notation instead of measuring time in seconds?",
                         "options": [
-                            "Big Omega",
-                            "Big O",
-                            "Big Theta"
+                            "Because seconds are too hard to count.",
+                            "To provide a hardware-independent measure of how an algorithm scales.",
+                            "Because Big O is more accurate than a stopwatch.",
+                            "Only to pass technical interviews."
                         ],
                         "correctAnswer": 1,
-                        "explanation": "Big O notation specifically describes the upper bound or worst-case scenario of an algorithm."
+                        "explanation": "Big O measures how the number of operations grows relative to input size, making it a reliable metric across different devices and environments."
                     }
                 ]
             }
@@ -55,25 +56,46 @@
     },
     {
         "id": "dsa-l2",
-        "title": "LEVEL 2: Linear Data Structures",
-        "subtitle": "Arrays, Stacks, and Queues.",
+        "title": "LEVEL 2: Linear Data Structures (Part 1)",
+        "subtitle": "Arrays and Linked Lists.",
         "lessons": [
             {
                 "id": "d3",
                 "title": "3. Array Operations",
                 "duration": "20 mins",
-                "content": "### Arrays in Memory\r\nArrays are contiguous blocks of memory. Accessing an element by index is **O(1)**.\r\n\r\n### Common Operations\r\n- **Insertion:** O(n) (may require shifting)\r\n- **Deletion:** O(n)\r\n- **Search:** O(n) for unsorted, O(log n) for sorted.",
+                "content": "### Arrays in Memory: The Foundation\r\nArrays are the most basic and widely used data structure. Internally, an array is a **contiguous block of memory**. When you create an array, the computer sets aside a specific sequence of memory addresses to hold your data. \r\nBecause the items are right next to each other, the computer can jump to any element instantly using a simple calculation: `Address = Start + (Index * Size)`. This makes indexing an **O(1)** operation.\r\n\r\n### Common Operations and Their Trade-offs\r\n- **Accessing by Index:** O(1). As mentioned, it's a direct jump to memory.\r\n- **Insertion at End:** O(1) if there is space. \r\n- **Insertion at Start/Middle:** O(n). To make room for a new item at the start, every other item in the array must be 'shifted' one position to the right.\r\n- **Deletion:** O(n). Similar to insertion, removing an item from the middle requires shifting all subsequent items to fill the gap.\r\n- **Searching:** O(n) for an unsorted array (you might have to check every item), but can be improved to **O(log n)** using Binary Search if the array is already sorted.",
                 "quizQuestions": [
                     {
                         "id": 1,
-                        "text": "What is the time complexity of accessing an element in an array by its index?",
+                        "text": "Why is inserting an element at the beginning of an array considered O(n)?",
                         "options": [
-                            "O(1)",
-                            "O(n)",
-                            "O(log n)"
+                            "Because you have to allocate more memory.",
+                            "Because you have to shift every existing element to the right.",
+                            "Because arrays are stored in random memory locations.",
+                            "It is actually O(1)."
                         ],
-                        "correctAnswer": 0,
-                        "explanation": "Because arrays are contiguous, the memory address can be calculated instantly."
+                        "correctAnswer": 1,
+                        "explanation": "In a contiguous memory block, you must move all existing elements to the next available slot to create a free space at index 0."
+                    }
+                ]
+            },
+            {
+                "id": "d4",
+                "title": "4. Linked Lists",
+                "duration": "25 mins",
+                "content": "### Limitations of Arrays\r\nWhile arrays are fast for access, they have a fixed size and are expensive to resize or modify (lots of shifting). This is where **Linked Lists** come in.\r\n\r\n### What is a Linked List?\r\nA Linked List is a linear data structure where elements are not stored in contiguous memory. Instead, each element is a **Node** that contains:\r\n1. The **Data** it stores.\r\n2. A **Pointer** (link) to the next node in the sequence.\r\n\r\n### Types of Linked Lists\r\n- **Singly Linked List:** Each node points only to the next one.\r\n- **Doubly Linked List:** Each node points to both the next and the previous node, allowing backwards traversal.\r\n- **Circular Linked List:** The last node points back to the first node, forming a loop.\r\n\r\n### Operational Complexity\r\n- **Insertion/Deletion:** O(1) if you already have a pointer to the location (no shifting required!).\r\n- **Access/Search:** O(n). Since nodes are scattered in memory, you must start at the 'Head' and follow the links one by one.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "What is the primary advantage of a Linked List over an Array?",
+                        "options": [
+                            "Faster access to elements by index.",
+                            "Lower memory usage.",
+                            "Efficient insertion and deletion without shifting elements.",
+                            "Better compatibility with hardware."
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "Adding or removing a node only requires changing pointers, whereas arrays require shifting half the elements on average."
                     }
                 ]
             }
@@ -83,6 +105,67 @@
                 "id": "dsa_p2",
                 "title": "Array Reversal",
                 "description": "Reverse an array in-place with O(1) space.",
+                "difficulty": "medium"
+            },
+            {
+                "id": "dsa_p3",
+                "title": "Middle of Linked List",
+                "description": "Find the middle node of a singly linked list in one pass.",
+                "difficulty": "medium"
+            }
+        ]
+    },
+    {
+        "id": "dsa-l3",
+        "title": "LEVEL 3: Linear Data Structures (Part 2)",
+        "subtitle": "Stacks and Queues.",
+        "lessons": [
+            {
+                "id": "d5",
+                "title": "5. Stacks (LIFO)",
+                "duration": "20 mins",
+                "content": "### What is a Stack?\r\nA **Stack** is a linear data structure that follows the **Last-In, First-Out (LIFO)** principle. Think of a stack of plates: the last plate you put on top is the first one you take off.\r\n\r\n### Core Operations\r\n- **Push:** Adding an element to the top of the stack (O(1)).\r\n- **Pop:** Removing the top element from the stack (O(1)).\r\n- **Peek:** Looking at the top element without removing it (O(1)).\r\n\r\n### Real-World Applications\r\n- **Undo Functionality:** Your text editor uses a stack to keep track of changes.\r\n- **Function Calls:** Languages like C and Python use a 'Call Stack' to manage function executions.\r\n- **Backtracking:** Stacks are used in algorithms to explore paths and return to previous states.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which principle does a Stack follow?",
+                        "options": [
+                            "First-In, First-Out (FIFO)",
+                            "Last-In, Last-Out (LILO)",
+                            "Last-In, First-Out (LIFO)",
+                            "Random Access"
+                        ],
+                        "correctAnswer": 2,
+                        "explanation": "LIFO (Last-In, First-Out) means the most recently added element is the first one to be removed."
+                    }
+                ]
+            },
+            {
+                "id": "d6",
+                "title": "6. Queues (FIFO)",
+                "duration": "20 mins",
+                "content": "### What is a Queue?\r\nA **Queue** is a linear data structure that follows the **First-In, First-Out (FIFO)** principle. Think of a line of people waiting for a movie ticket: the first person who joins the line is the first one to be served.\r\n\r\n### Core Operations\r\n- **Enqueue:** Adding an element to the back (rear) of the queue (O(1)).\r\n- **Dequeue:** Removing an element from the front of the queue (O(1)).\r\n- **Front:** Looking at the first element in the queue (O(1)).\r\n\r\n### Real-World Applications\r\n- **Task Scheduling:** Operating systems use queues to manage processes waiting for the CPU.\r\n- **Data Buffering:** Used in streaming and communication to handle data flow.",
+                "quizQuestions": [
+                    {
+                        "id": 1,
+                        "text": "Which principle does a Queue follow?",
+                        "options": [
+                            "LIFO",
+                            "FIFO",
+                            "Random Search",
+                            "Stacking"
+                        ],
+                        "correctAnswer": 1,
+                        "explanation": "FIFO (First-In, First-Out) ensures that the oldest element is processed first."
+                    }
+                ]
+            }
+        ],
+        "problems": [
+            {
+                "id": "dsa_p4",
+                "title": "Valid Parentheses",
+                "description": "Use a stack to check if brackets are correctly closed.",
                 "difficulty": "medium"
             }
         ]
