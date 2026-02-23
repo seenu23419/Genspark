@@ -151,8 +151,17 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
 
           const timeSpent = Math.floor((Date.now() - startTimeRef.current) / 1000);
           console.log("[Quiz] Syncing progress for:", quizId, { finalScore, timeSpent });
-          const updates: any = {
-            completedLessonIds: [quizId]
+          interface ProfileUpdates {
+            completedLessonIds: string[];
+            unlockedLessonIds?: string[];
+            lastLanguageId: string | null;
+            lastLessonId: string | undefined;
+          }
+
+          const updates: ProfileUpdates = {
+            completedLessonIds: [quizId],
+            lastLanguageId: langId,
+            lastLessonId: nextId
           };
 
           if (nextId && !user.unlockedLessonIds.includes(nextId)) {
@@ -160,11 +169,7 @@ const Quiz: React.FC<QuizProps> = ({ questions: propQuestions, onComplete: propO
           }
 
           // Await to ensure persistence before navigation
-          await updateProfile({
-            ...updates,
-            lastLanguageId: langId,
-            lastLessonId: nextId
-          }, {
+          await updateProfile(updates, {
             type: 'challenge',
             title: `Passed Quiz: ${lessonData.lesson?.title || 'Knowledge Check'}`,
             xp: 100,

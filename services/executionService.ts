@@ -334,15 +334,6 @@ class ExecutionService {
   }
 
   /**
-   * Check if user has execution attempts remaining (daily limit for free users)
-   */
-  private async checkDailyLimit(userId: string): Promise<boolean> {
-    // TODO: Implement Supabase query to check daily execution count
-    // For now, return true (no limit enforced)
-    return true;
-  }
-
-  /**
    * Get file extension for a given language
    */
   private getFileExtension(language: string): string {

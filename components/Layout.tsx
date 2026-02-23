@@ -70,10 +70,10 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children
     };
 
     return (
-        <div className="flex h-full bg-slate-50 dark:bg-black text-slate-900 dark:text-slate-200 overflow-hidden font-sans selection:bg-indigo-500/30 transition-colors duration-300">
+        <div className="flex h-screen bg-slate-50 dark:bg-black text-slate-900 dark:text-slate-200 overflow-hidden font-sans selection:bg-indigo-500/30 transition-colors duration-300">
             {/* Desktop Left Sidebar */}
             {!hideSidebar && (
-                <nav className="hidden md:flex flex-col w-72 h-full sticky top-0 bg-white/50 dark:bg-black/95 backdrop-blur-2xl border-r border-slate-200 dark:border-white/5 p-6 shrink-0 z-50">
+                <nav className="hidden md:flex flex-col w-72 h-screen sticky top-0 bg-white/50 dark:bg-black/95 backdrop-blur-2xl border-r border-slate-200 dark:border-white/5 p-6 shrink-0 z-50">
                     <div className="flex items-center gap-4 mb-10 px-2 cursor-pointer group" onClick={() => navigate('/')}>
                         <div className="relative w-8 h-8 flex items-center justify-center bg-slate-900 rounded-lg border border-slate-700 dark:border-indigo-500/20 transition-all duration-300 group-hover:scale-105 group-hover:border-indigo-500/50">
                             <img
@@ -155,13 +155,13 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children
                 )}
 
                 {/* Content Area with smooth fade transition - proper padding for mobile */}
-                <main className={`flex-1 overflow-y-auto scroll-smooth relative no-scrollbar animate-in fade-in duration-300 bg-black transition-colors duration-300 ${!hideBottomNav ? 'pb-[80px] md:pb-0' : ''}`}>
+                <main className={`flex-1 overflow-y-auto scroll-smooth relative no-scrollbar animate-in fade-in duration-300 bg-black transition-colors duration-300 ${!hideBottomNav ? 'pb-[72px] md:pb-0' : ''}`}>
                     {children}
                 </main>
 
-                {/* Mobile Bottom Navigation - Improved visibility and safe-area support */}
+                {/* Mobile Bottom Navigation - Static position at the bottom */}
                 {!hideBottomNav && (
-                    <div className="md:hidden fixed bottom-0 left-0 right-0 z-[999] bg-black/95 backdrop-blur-3xl border-t border-white/10 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_40px_rgba(0,0,0,0.9)]">
+                    <div className="md:hidden fixed bottom-0 left-0 right-0 z-[999] bg-black/95 backdrop-blur-3xl border-t border-white/10 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_40px_rgba(0,0,0,0.9)] h-[64px] min-h-[64px]">
                         <nav className="flex items-center justify-around h-[64px] px-2">
                             {navItems.map((item) => {
                                 const isActive = currentScreen === item.id || (item.id === 'PROFILE' && (currentScreen === 'SETTINGS' || currentScreen === 'ANALYTICS' || window.location.pathname.startsWith('/profile')));
