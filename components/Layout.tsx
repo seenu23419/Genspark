@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import {
-    LayoutDashboard,
+    LayoutGrid,
     GraduationCap,
     Code2,
     Settings,
@@ -29,7 +29,7 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children
     const user = propUser || authUser;
 
     const navItems = [
-        { id: 'HOME', path: '/', icon: LayoutDashboard, label: 'Home' },
+        { id: 'HOME', path: '/', icon: LayoutGrid, label: 'Home' },
         { id: 'LEARN', path: '/learn', icon: GraduationCap, label: 'Learn' },
         { id: 'PRACTICE', path: '/practice', icon: Code2, label: 'Practice' },
         { id: 'PROFILE', path: '/settings', icon: User, label: 'Profile' },
@@ -159,8 +159,9 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children
                     {children}
                 </main>
 
-                {!hideBottomNav && (
-                    <div className="md:hidden fixed bottom-0 left-0 right-0 z-[999] bg-black/95 backdrop-blur-3xl border-t border-white/10 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_40px_rgba(0,0,0,0.9)]">
+                {/* Mobile Bottom Navigation - Static at bottom & Hides when keyboard active */}
+                {!hideBottomNav && !isKeyboardVisible && (
+                    <div className="md:hidden fixed bottom-0 left-0 right-0 z-[999] bg-black/95 backdrop-blur-3xl border-t border-white/10 pb-[env(safe-area-inset-bottom)] shadow-[0_-15px_50px_rgba(0,0,0,1)]">
                         <nav className="flex items-center justify-around h-[64px] px-2">
                             {navItems.map((item) => {
                                 const isActive = currentScreen === item.id || (item.id === 'PROFILE' && (currentScreen === 'SETTINGS' || currentScreen === 'ANALYTICS' || window.location.pathname.startsWith('/profile')));
@@ -182,6 +183,7 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children
                                         <span className={`text-[9px] font-black uppercase tracking-widest transition-colors ${isActive ? 'text-white italic' : 'text-slate-500'}`}>
                                             {item.label}
                                         </span>
+                                        {isActive && <div className="absolute bottom-0 w-8 h-0.5 bg-indigo-500 rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)]" />}
                                     </button>
                                 );
                             })}
