@@ -187,7 +187,7 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children
                                         <span className={`text-[9px] font-black uppercase tracking-widest transition-colors ${isActive ? 'text-white italic' : 'text-slate-500'}`}>
                                             {item.label}
                                         </span>
-                                        {isActive && <div className="absolute bottom-1 w-8 h-1 bg-indigo-500 rounded-full shadow-[0_0_12px_rgba(99,102,241,0.6)] animate-in fade-in zoom-in duration-300" />}
+                                        {isActive && <div className="absolute bottom-1.5 w-6 h-1 bg-indigo-500 rounded-full shadow-[0_0_12px_rgba(99,102,241,0.8)] animate-in fade-in zoom-in duration-300" />}
                                     </button>
                                 );
                             })}

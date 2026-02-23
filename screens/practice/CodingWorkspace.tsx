@@ -421,8 +421,9 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
     const handleViewportChange = () => {
       const vh = window.visualViewport?.height || window.innerHeight;
       const fullHeight = window.innerHeight;
+      const isKeyboard = vh < fullHeight * 0.75;
       setViewportHeight(vh);
-      setIsKeyboardVisible(vh < fullHeight * 0.85);
+      setIsKeyboardVisible(isKeyboard);
     };
 
     window.visualViewport.addEventListener('resize', handleViewportChange);
