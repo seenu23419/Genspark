@@ -1,16 +1,6 @@
 import { supabaseDB } from './supabaseService';
 import { TestCase } from './practiceService';
-
-// Wandbox Language Mapping
-export const WANDBOX_COMPILERS: Record<string, string> = {
-    'c': 'gcc-head',
-    'cpp': 'gcc-head',
-    'c++': 'gcc-head',
-    'java': 'openjdk-head',
-    'python': 'cpython-head',
-    'javascript': 'nodejs-head',
-    'sql': 'sqlite-head' // Valid check needed, but keeping placeholder
-};
+import { executionService } from './executionService';
 
 export interface ExecutionResult {
     stdout: string | null;
@@ -23,88 +13,19 @@ export interface ExecutionResult {
 }
 
 class GenSparkCompilerService {
-    private wandboxUrl = 'https://wandbox.org/api/compile.json';
-
     async executeCode(language: string, sourceCode: string, userId?: string, stdin: string = ""): Promise<ExecutionResult> {
-        const langKey = language.toLowerCase();
-        const compiler = WANDBOX_COMPILERS[langKey];
-
-        if (!compiler) {
-            return {
-                stdout: null,
-                stderr: `Language "${language}" is not supported by the Wandbox compiler.`,
-                compile_output: null,
-                message: 'Unsupported Language',
-                time: null,
-                memory: null,
-                status: { id: 13, description: 'Internal Error' }
-            };
-        }
-
         try {
-            console.log(`[Compiler] Using Wandbox API for ${language} (${compiler})`);
-
-            // Compiler options for C/C++ to output as expected
-            let options = "";
-            if (langKey === 'c') options = "-std=c11";
-            if (langKey === 'cpp' || langKey === 'c++') options = "-std=c++17";
-
-            const response = await fetch(this.wandboxUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    code: sourceCode,
-                    compiler: compiler,
-                    options: options,
-                    stdin: stdin,
-                    save: false
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`Wandbox API returned error: ${response.statusText}`);
-            }
-
-            const data = await response.json();
-
-            // Map Wandbox response to ExecutionResult
-            // status: "0" is success in Wandbox
-            const isSuccess = data.status === '0';
-
-            // Combine program output and error
-            // Wandbox separates compiler messages (compile_message) from runtime (program_message, program_error)
-
-            const result: ExecutionResult = {
-                stdout: data.program_output || null,
-                stderr: data.program_error || null,
-                compile_output: data.compiler_output || data.compiler_error || null,
-                message: data.signal || null,
-                time: null,
-                memory: null,
-                status: {
-                    id: isSuccess ? 3 : 4,
-                    description: isSuccess ? 'Executed' : 'Runtime Error'
-                }
-            };
-
-            // Handle Compile Errors specifically
-            if (data.compiler_error) {
-                result.status = { id: 6, description: 'Compilation Error' };
-            }
+            console.log(`[Compiler] Using ExecutionService for ${language}`);
+            const result = await executionService.executeCode(language, sourceCode, userId, stdin);
 
             // Silent Error Logging
             if (result.stderr || result.compile_output) {
                 this.logError(language, sourceCode, result).catch(() => { });
             }
 
-            // Log execution for tracking
-            if (userId) {
-                await this.logExecution(userId);
-            }
-
             return result;
         } catch (e: any) {
-            console.error(`[Compiler] Wandbox execution failed:`, e.message);
+            console.error(`[Compiler] Execution failed:`, e.message);
             return {
                 stdout: null,
                 stderr: 'Compiler is currently busy or unreachable. Please try again later.',
@@ -114,19 +35,6 @@ class GenSparkCompilerService {
                 memory: null,
                 status: { id: 13, description: 'Internal Error' }
             };
-        }
-    }
-
-    private async logExecution(userId: string): Promise<void> {
-        try {
-            await supabaseDB.supabase
-                .from('compiler_executions')
-                .insert({
-                    user_id: userId,
-                    created_at: new Date().toISOString()
-                });
-        } catch (error) {
-            console.error('Error logging execution:', error);
         }
     }
 
@@ -161,6 +69,8 @@ class GenSparkCompilerService {
         failed: number;
         failedCases: number[];
         status: "PASSED" | "FAILED" | "PARTIAL";
+        stderr?: string | null;
+        compile_output?: string | null;
         results: Array<{
             passed: boolean;
             stdout?: string | null;
@@ -170,52 +80,65 @@ class GenSparkCompilerService {
             isHidden?: boolean;
         }>
     }> {
-        const results: any[] = [];
+        const results: any[] = new Array(tests.length);
         let passedCount = 0;
         const failedIndices: number[] = [];
+        let aggregateStderr: string | null = null;
+        let aggregateCompileOutput: string | null = null;
 
         const normalizeOutput = (str: string) =>
             (str || '').replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim();
 
-        // Run ALL test cases in parallel for speed
-        const settled = await Promise.allSettled(
-            tests.map((t) => {
+        // CONCURRENCY CONTROL: Limit to 3 parallel requests
+        const limit = 3;
+        const queue = [...tests.entries()];
+
+        const runWorker = async () => {
+            while (queue.length > 0) {
+                const item = queue.shift();
+                if (!item) break;
+                const [i, t] = item;
                 const stdin = t.input || t.stdin || '';
-                return this.executeCode(language, sourceCode, userId, stdin);
-            })
-        );
 
-        settled.forEach((outcome, i) => {
-            const t = tests[i];
-            if (outcome.status === 'fulfilled') {
-                const res = outcome.value;
-                const actualOutput = normalizeOutput(res.stdout || '');
-                const expectedOutput = normalizeOutput(t.expectedOutput || t.expected_output || '');
-                const passed = actualOutput === expectedOutput && res.status.id === 3;
+                try {
+                    const res = await this.executeCode(language, sourceCode, userId, stdin);
+                    const actualOutput = normalizeOutput(res.stdout || '');
+                    const expectedOutput = normalizeOutput(t.expectedOutput || t.expected_output || '');
+                    const passed = actualOutput === expectedOutput && res.status.id === 3;
 
-                if (passed) passedCount++;
-                else failedIndices.push(i);
+                    if (passed) passedCount++;
+                    else {
+                        failedIndices.push(i);
+                        if (!aggregateStderr && res.stderr) aggregateStderr = res.stderr;
+                        if (!aggregateCompileOutput && res.compile_output) aggregateCompileOutput = res.compile_output;
+                    }
 
-                results.push({
-                    passed,
-                    stdout: t.isHidden ? null : res.stdout,
-                    stderr: res.stderr || res.compile_output,
-                    expected: t.isHidden ? null : expectedOutput,
-                    actual: t.isHidden ? null : actualOutput,
-                    isHidden: t.isHidden || t.is_hidden
-                });
-            } else {
-                failedIndices.push(i);
-                results.push({
-                    passed: false,
-                    stdout: null,
-                    stderr: outcome.reason?.message || 'Execution error',
-                    expected: t.isHidden ? null : (t.expectedOutput || t.expected_output),
-                    actual: null,
-                    isHidden: t.isHidden || t.is_hidden
-                });
+                    results[i] = {
+                        passed,
+                        stdout: t.isHidden ? null : res.stdout,
+                        stderr: res.stderr || res.compile_output,
+                        expected: t.isHidden ? null : expectedOutput,
+                        actual: t.isHidden ? null : actualOutput,
+                        isHidden: t.isHidden || t.is_hidden
+                    };
+                } catch (error: any) {
+                    failedIndices.push(i);
+                    const errorMsg = error.message || 'Execution error';
+                    if (!aggregateStderr) aggregateStderr = errorMsg;
+                    results[i] = {
+                        passed: false,
+                        stdout: null,
+                        stderr: errorMsg,
+                        expected: t.isHidden ? null : (t.expectedOutput || t.expected_output),
+                        actual: null,
+                        isHidden: t.isHidden || t.is_hidden
+                    };
+                }
             }
-        });
+        };
+
+        // Start workers
+        await Promise.all(Array.from({ length: Math.min(limit, tests.length) }).map(runWorker));
 
         const total = tests.length;
         let status: "PASSED" | "FAILED" | "PARTIAL" = "FAILED";
@@ -228,6 +151,8 @@ class GenSparkCompilerService {
             failed: total - passedCount,
             failedCases: failedIndices,
             status,
+            stderr: aggregateStderr,
+            compile_output: aggregateCompileOutput,
             results
         };
     }

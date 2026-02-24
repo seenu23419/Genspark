@@ -107,7 +107,7 @@ const Home: React.FC = () => {
             <div className="relative z-10 max-w-6xl mx-auto px-6 pt-6">
 
                 {/* Date */}
-                <p className="text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase tracking-wider mb-6">
+                <p className="text-slate-700 dark:text-slate-400 text-xs font-semibold uppercase tracking-wider mb-6">
                     {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
                 </p>
 
@@ -115,7 +115,7 @@ const Home: React.FC = () => {
                     <h2 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight uppercase italic">
                         Welcome back, {user?.name?.split(' ')[0] || 'Explorer'}
                     </h2>
-                    <p className="text-slate-600 dark:text-slate-400 text-base font-medium">
+                    <p className="text-slate-700 dark:text-slate-400 text-base font-medium">
                         {isPathCompleted ? 'Congratulations! You have mastered this path.' : 'Your learning journey continues today.'}
                     </p>
                 </div>
@@ -137,7 +137,7 @@ const Home: React.FC = () => {
                                 }}
                                 className={`flex-shrink-0 px-6 py-3 rounded-xl text-sm font-black transition-all duration-300 border-[3px] ${selectedPathId === lang.id
                                     ? 'bg-indigo-600 border-indigo-400 text-white'
-                                    : 'bg-slate-50 dark:bg-slate-900/80 border-slate-400 dark:border-slate-600 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 hover:border-slate-500 dark:hover:border-slate-500'
+                                    : 'bg-slate-50 dark:bg-slate-900/80 border-slate-400 dark:border-slate-600 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 hover:border-slate-500 dark:hover:border-slate-500'
                                     }`}
                             >
                                 {lang.name}
@@ -170,7 +170,7 @@ const Home: React.FC = () => {
                                     <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-1">
                                         {isPathCompleted ? `${currentPath?.name} Mastered!` : (currentLesson?.title || 'Introduction to C')}
                                     </h3>
-                                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                                    <p className="text-sm text-slate-700 dark:text-slate-400">
                                         {currentPath?.name} • {isPathCompleted ? `All ${totalLessons} Lessons Completed` : `Lesson ${completedCount + 1} of ${totalLessons}`}
                                     </p>
                                 </div>
@@ -218,11 +218,11 @@ const Home: React.FC = () => {
 
                                     {/* Percentage Center */}
                                     <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                        <span className="text-2xl md:text-3xl font-black text-slate-800 dark:text-white tracking-tighter">
+                                        <span className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tighter">
                                             {Math.round((completedCount / totalLessons) * 100) || 0}
-                                            <span className="text-xs ml-0.5 text-indigo-500 font-bold">%</span>
+                                            <span className="text-xs ml-0.5 text-indigo-600 dark:text-indigo-500 font-bold">%</span>
                                         </span>
-                                        <span className="text-[8px] md:text-[10px] font-black uppercase tracking-tighter text-slate-600 dark:text-slate-400 group-hover:text-indigo-400 transition-colors">Progress</span>
+                                        <span className="text-[8px] md:text-[10px] font-black uppercase tracking-tighter text-slate-700 dark:text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Progress</span>
                                     </div>
 
                                     {/* Active Pulse (Only if in progress) */}
@@ -250,21 +250,20 @@ const Home: React.FC = () => {
                     </div>
                 </section>
 
-                {/* 5. PROGRESS SNAPSHOT - Interactive */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                     <button
                         onClick={() => navigate('/profile/streaks')}
-                        className="relative p-5 bg-slate-900/60 backdrop-blur-sm border border-white/20 rounded-2xl hover:border-indigo-500/50 transition-all duration-500 group overflow-hidden text-left"
+                        className="relative p-5 bg-white dark:bg-slate-900/60 backdrop-blur-sm border border-slate-200 dark:border-white/20 rounded-2xl hover:border-indigo-500/50 transition-all duration-500 group overflow-hidden text-left shadow-sm"
                     >
                         <div className="absolute inset-0 bg-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-500 rounded-full shadow-[0_0_15px_rgba(99,102,241,0.5)]"></div>
                         <div className="flex items-center justify-between relative z-10">
                             <div className="ml-3">
-                                <div className="text-sm text-slate-300 font-bold mb-2 flex items-center gap-2 group-hover:text-indigo-200 transition-colors">
-                                    <Activity size={16} className="text-indigo-400" />
+                                <div className="text-sm text-slate-500 dark:text-slate-300 font-bold mb-2 flex items-center gap-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-200 transition-colors">
+                                    <Activity size={16} className="text-indigo-600 dark:text-indigo-400" />
                                     Current Streak
                                 </div>
-                                <div className="text-3xl font-black text-white transition-colors duration-300">{user?.streak || 0} days</div>
+                                <div className="text-3xl font-black text-slate-900 dark:text-white transition-colors duration-300">{user?.streak || 0} days</div>
                             </div>
                             <ChevronRight size={20} className="text-slate-400 group-hover:text-white transition-colors" />
                         </div>
@@ -272,17 +271,17 @@ const Home: React.FC = () => {
 
                     <button
                         onClick={() => navigate('/profile/history')}
-                        className="relative p-5 bg-slate-900/60 backdrop-blur-sm border border-white/20 rounded-2xl hover:border-rose-500/50 transition-all duration-500 group overflow-hidden text-left"
+                        className="relative p-5 bg-white dark:bg-slate-900/60 backdrop-blur-sm border border-slate-200 dark:border-white/20 rounded-2xl hover:border-rose-500/50 transition-all duration-500 group overflow-hidden text-left shadow-sm"
                     >
                         <div className="absolute inset-0 bg-rose-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-rose-500 rounded-full shadow-[0_0_15px_rgba(244,63,94,0.5)]"></div>
                         <div className="flex items-center justify-between relative z-10">
                             <div className="ml-3 flex-1">
-                                <div className="text-sm text-slate-300 font-bold mb-2 flex items-center gap-2 group-hover:text-rose-200 transition-colors">
-                                    <Award size={16} className="text-rose-400" />
+                                <div className="text-sm text-slate-500 dark:text-slate-300 font-bold mb-2 flex items-center gap-2 group-hover:text-rose-600 dark:group-hover:text-rose-200 transition-colors">
+                                    <Award size={16} className="text-rose-600 dark:text-rose-400" />
                                     Lessons Completed
                                 </div>
-                                <div className="text-3xl font-black text-white mb-2 transition-colors duration-300">{completedCount} / {totalLessons}</div>
+                                <div className="text-3xl font-black text-slate-900 dark:text-white mb-2 transition-colors duration-300">{completedCount} / {totalLessons}</div>
                                 <div className="w-full bg-slate-800/80 rounded-full h-1.5 overflow-hidden">
                                     <div className="bg-rose-500 h-1.5 rounded-full transition-all duration-500" style={{ width: `${totalLessons > 0 ? (completedCount / totalLessons) * 100 : 0}%` }}></div>
                                 </div>
@@ -293,17 +292,17 @@ const Home: React.FC = () => {
 
                     <button
                         onClick={() => navigate('/practice/history')}
-                        className="relative p-5 bg-slate-900/60 backdrop-blur-sm border border-white/20 rounded-2xl hover:border-amber-500/50 transition-all duration-500 group overflow-hidden text-left"
+                        className="relative p-5 bg-white dark:bg-slate-900/60 backdrop-blur-sm border border-slate-200 dark:border-white/20 rounded-2xl hover:border-amber-500/50 transition-all duration-500 group overflow-hidden text-left shadow-sm"
                     >
                         <div className="absolute inset-0 bg-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500 rounded-full shadow-[0_0_15px_rgba(245,158,11,0.5)]"></div>
                         <div className="flex items-center justify-between relative z-10">
                             <div className="ml-3 flex-1">
-                                <div className="text-sm text-slate-300 font-bold mb-2 flex items-center gap-2 group-hover:text-amber-200 transition-colors">
-                                    <Terminal size={16} className="text-amber-400" />
+                                <div className="text-sm text-slate-500 dark:text-slate-300 font-bold mb-2 flex items-center gap-2 group-hover:text-amber-600 dark:group-hover:text-amber-200 transition-colors">
+                                    <Terminal size={16} className="text-amber-600 dark:text-amber-400" />
                                     Practice Solved
                                 </div>
-                                <div className="text-3xl font-black text-white mb-2 transition-colors duration-300">
+                                <div className="text-3xl font-black text-slate-900 dark:text-white mb-2 transition-colors duration-300">
                                     {Math.max(
                                         Object.values(progress || {}).filter(p => p && (p.status === 'completed' || p.status === 'COMPLETED')).length,
                                         (() => {

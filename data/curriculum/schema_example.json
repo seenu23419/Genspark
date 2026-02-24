@@ -1,37 +1,37 @@
 [
-    {
-        "id": "c-l1",
-        "title": "LEVEL 1: Foundations",
-        "lessons": [
-            {
-                "id": "c1.1",
-                "title": "1.1 Introduction to C",
-                "duration": "15 mins",
-                "difficultyLevel": "Beginner",
-                "topics": [
-                    "History",
-                    "Environment Setup",
-                    "First Program"
-                ],
-                "content": "# Welcome to C Programming\n\nC is a powerful general-purpose programming language...",
-                "syntax": "printf(\"Hello World\");",
-                "fullProgram": "#include <stdio.h>\n\nint main() {\n    printf(\"Hello GenSpark!\");\n    return 0;\n}",
-                "expectedOutput": "Hello GenSpark!",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which tag is used to include files in C?",
-                        "options": [
-                            "#include",
-                            "import",
-                            "using",
-                            "require"
-                        ],
-                        "correctAnswer": 0,
-                        "explanation": "#include is used for preprocessor directives."
-                    }
-                ]
-            }
+  {
+    "id": "c-l1",
+    "title": "LEVEL 1: Foundations",
+    "lessons": [
+      {
+        "id": "c1.1",
+        "title": "1.1 Introduction to C",
+        "duration": "15 mins",
+        "difficultyLevel": "Beginner",
+        "topics": [
+          "History",
+          "Environment Setup",
+          "First Program"
+        ],
+        "content": "# Welcome to C Programming\n\nC is a powerful general-purpose programming language...",
+        "syntax": "printf(\"Hello World\");",
+        "fullProgram": "#include <stdio.h>\n\nint main() {\n    printf(\"Hello GenSpark!\");\n    return 0;\n}",
+        "expectedOutput": "Hello GenSpark!",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which tag is used to include files in C?",
+            "options": [
+              "#include",
+              "import",
+              "using",
+              "require"
+            ],
+            "correctAnswer": 0,
+            "explanation": "#include is used for preprocessor directives."
+          }
         ]
-    }
+      }
+    ]
+  }
 ]

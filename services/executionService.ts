@@ -89,7 +89,7 @@ class ExecutionService {
    * 2. Piston (free, public API)
    * 3. Judge0 RapidAPI (requires key, per-call cost)
    */
-  async executeCode(language: string, sourceCode: string, userId?: string): Promise<ExecutionResult> {
+  async executeCode(language: string, sourceCode: string, userId?: string, stdin: string = ''): Promise<ExecutionResult> {
     let result: ExecutionResult;
 
     // All users now have unlimited access, no limit check needed
@@ -98,7 +98,7 @@ class ExecutionService {
     try {
       // 1. Try self-hosted Judge0 first (free, if running locally)
       console.log(`[Execution] Attempting self-hosted Judge0 for ${language}`);
-      result = await this.executeWithJudge0SelfHosted(language, sourceCode);
+      result = await this.executeWithJudge0SelfHosted(language, sourceCode, stdin);
       console.log(`[Execution] Self-hosted Judge0 successful for ${language}`);
       return result;
     } catch (e: any) {
@@ -109,7 +109,7 @@ class ExecutionService {
       // 2. Try Piston (free public API)
       if (PISTON_LANGUAGE_MAPPING[language.toLowerCase()]) {
         console.log(`[Execution] Falling back to Piston for ${language}`);
-        result = await this.executeWithPiston(language, sourceCode);
+        result = await this.executeWithPiston(language, sourceCode, stdin);
         console.log(`[Execution] Piston execution successful for ${language}`);
         return result;
       }
@@ -121,7 +121,7 @@ class ExecutionService {
       // 3. Try Judge0 RapidAPI (requires key, last resort)
       if (this.rapidApiKey && this.rapidApiKey !== 'PLACEHOLDER_RAPIDAPI_KEY' && LANGUAGE_MAPPING[language.toLowerCase()]) {
         console.log(`[Execution] Falling back to Judge0 RapidAPI for ${language}`);
-        result = await this.executeWithJudge0RapidApi(language, sourceCode);
+        result = await this.executeWithJudge0RapidApi(language, sourceCode, stdin);
         console.log(`[Execution] Judge0 RapidAPI execution successful for ${language}`);
         return result;
       }
@@ -144,7 +144,7 @@ class ExecutionService {
   /**
    * Execute code on self-hosted Judge0 (no authentication required)
    */
-  private async executeWithJudge0SelfHosted(language: string, sourceCode: string): Promise<ExecutionResult> {
+  private async executeWithJudge0SelfHosted(language: string, sourceCode: string, stdin: string): Promise<ExecutionResult> {
     const languageId = LANGUAGE_MAPPING[language.toLowerCase()];
     if (!languageId) {
       throw new Error(`Language ${language} not supported by Judge0`);
@@ -157,7 +157,7 @@ class ExecutionService {
       body: JSON.stringify({
         language_id: languageId,
         source_code: sourceCode,
-        stdin: '',
+        stdin: stdin,
         memory_limit: 256000, // 256 MB
         time_limit: 5, // 5 seconds
         cpu_time_limit: 10
@@ -211,7 +211,7 @@ class ExecutionService {
   /**
    * Execute code on Piston (free public API, no auth)
    */
-  private async executeWithPiston(language: string, sourceCode: string): Promise<ExecutionResult> {
+  private async executeWithPiston(language: string, sourceCode: string, stdin: string): Promise<ExecutionResult> {
     const pistonLang = PISTON_LANGUAGE_MAPPING[language.toLowerCase()];
     if (!pistonLang) {
       throw new Error(`Language ${language} not supported by Piston`);
@@ -236,7 +236,7 @@ class ExecutionService {
         language: pistonLang,
         version: runtime.version,
         files: [{ name: `main.${this.getFileExtension(language)}`, content: sourceCode }],
-        stdin: ''
+        stdin: stdin
       })
     });
 
@@ -263,7 +263,7 @@ class ExecutionService {
   /**
    * Execute code on Judge0 via RapidAPI (requires key, per-call cost)
    */
-  private async executeWithJudge0RapidApi(language: string, sourceCode: string): Promise<ExecutionResult> {
+  private async executeWithJudge0RapidApi(language: string, sourceCode: string, stdin: string): Promise<ExecutionResult> {
     const languageId = LANGUAGE_MAPPING[language.toLowerCase()];
     if (!languageId) {
       throw new Error(`Language ${language} not supported by Judge0`);
@@ -280,7 +280,7 @@ class ExecutionService {
       body: JSON.stringify({
         language_id: languageId,
         source_code: sourceCode,
-        stdin: ''
+        stdin: stdin
       })
     });
 

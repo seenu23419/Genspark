@@ -170,7 +170,7 @@ const LearningProfile: React.FC = () => {
                 </button>
                 <div>
                     <h1 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white tracking-tight uppercase italic">Learning Profile</h1>
-                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Your progress & achievements</p>
+                    <p className="text-[10px] font-bold text-slate-600 dark:text-slate-500 uppercase tracking-widest">Your progress & achievements</p>
                 </div>
             </header>
 
@@ -193,7 +193,7 @@ const LearningProfile: React.FC = () => {
                         </div>
                         <div>
                             <div className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">{stat.value}</div>
-                            <div className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">{stat.label}</div>
+                            <div className="text-[9px] font-bold text-slate-600 dark:text-slate-500 uppercase tracking-widest mt-0.5">{stat.label}</div>
                         </div>
                     </div>
                 ))}
@@ -207,11 +207,11 @@ const LearningProfile: React.FC = () => {
                             <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2 uppercase tracking-tight italic">
                                 Learning Activity
                             </h3>
-                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Last 7 days</p>
+                            <p className="text-[10px] font-bold text-slate-600 dark:text-slate-500 uppercase tracking-widest mt-1">Last 7 days</p>
                         </div>
                         <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-white/5">
                             <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                            <span className="text-[9px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest leading-none">Today</span>
+                            <span className="text-[9px] font-black text-slate-700 dark:text-slate-400 uppercase tracking-widest leading-none">Today</span>
                         </div>
                     </div>
 
@@ -250,7 +250,7 @@ const LearningProfile: React.FC = () => {
                         </ResponsiveContainer>
                     </div>
                     <div className="mt-4 flex justify-center">
-                        <span className="text-[8px] font-black text-slate-700 uppercase tracking-[0.3em]">Minutes Practiced</span>
+                        <span className="text-[8px] font-black text-slate-800 dark:text-slate-700 uppercase tracking-[0.3em]">Minutes Practiced</span>
                     </div>
                 </div>
 
@@ -269,7 +269,7 @@ const LearningProfile: React.FC = () => {
                                 <div className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
                                     {Math.floor(totalTimeHours)}h {Math.round((totalTimeHours % 1) * 60)}m
                                 </div>
-                                <div className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Total time spent learning</div>
+                                <div className="text-[9px] font-black text-slate-600 dark:text-slate-500 uppercase tracking-widest">Total time spent learning</div>
                             </div>
 
                             <div className="flex items-center gap-4 p-4 bg-indigo-500/5 border border-indigo-500/10 rounded-2xl">
@@ -298,7 +298,7 @@ const LearningProfile: React.FC = () => {
             {/* 5. Achievements (Secondary) */}
             <section className="space-y-6 pb-20">
                 <div className="px-2">
-                    <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
                         Achievements
                     </h3>
                 </div>
@@ -367,7 +367,7 @@ const LearningProfile: React.FC = () => {
                             </div>
                             <div className="space-y-1">
                                 <h4 className="text-lg font-black text-slate-400 dark:text-slate-300 tracking-tight italic uppercase">Streak Starter</h4>
-                                <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Login 3 days in a row</p>
+                                <p className="text-[9px] font-bold text-slate-500 dark:text-slate-500 uppercase tracking-widest">Login 3 days in a row</p>
                             </div>
                         </div>
                         <div className="mt-6 space-y-2">
@@ -388,7 +388,7 @@ const LearningProfile: React.FC = () => {
                             </div>
                             <div className="space-y-1">
                                 <h4 className="text-lg font-black text-slate-400 dark:text-slate-300 tracking-tight italic uppercase">Problem Solver</h4>
-                                <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Solve 10 Problems</p>
+                                <p className="text-[9px] font-bold text-slate-500 dark:text-slate-500 uppercase tracking-widest">Solve 10 Problems</p>
                             </div>
                         </div>
                         <div className="mt-6 space-y-2">

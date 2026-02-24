@@ -1,367 +1,367 @@
 [
-    {
-        "id": "fullstack-level-1",
-        "title": "LEVEL 1: Modern Frontend (React)",
-        "description": "Build dynamic user interfaces with components",
-        "lessons": [
-            {
-                "id": "fs1.1",
-                "title": "1.1 Introduction to React",
-                "duration": "45 mins",
-                "difficultyLevel": "Beginner",
-                "topics": [
-                    "JSX",
-                    "Components",
-                    "State",
-                    "Props"
-                ],
-                "content": "React is a declarative, component-based library for building user interfaces. It uses a **Virtual DOM** to efficiently update the UI.\n\n## 1. Components\nComponents are the building blocks of a React app. They are JavaScript functions that return JSX.\n\n## 2. State & Props\n- **State**: Data local to a component that can change over time (`useState`).\n- **Props**: Data passed from a parent component to a child.",
-                "fullProgram": "import React, { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  \n  return (\n    <div>\n      <p>Count: {count}</p>\n      <button onClick={() => setCount(count + 1)}>Increment</button>\n    </div>\n  );\n}\n\nexport default Counter;",
-                "expectedOutput": "A button that increments a counter on click.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "What hook is used to manage state in a functional component?",
-                        "options": [
-                            "useEffect",
-                            "useState",
-                            "useContext",
-                            "useReducer"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "useState is the primary hook for adding local state to components."
-                    }
-                ]
-            }
+  {
+    "id": "fullstack-level-1",
+    "title": "LEVEL 1: Modern Frontend (React)",
+    "description": "Build dynamic user interfaces with components",
+    "lessons": [
+      {
+        "id": "fs1.1",
+        "title": "1.1 Introduction to React",
+        "duration": "45 mins",
+        "difficultyLevel": "Beginner",
+        "topics": [
+          "JSX",
+          "Components",
+          "State",
+          "Props"
+        ],
+        "content": "React is a declarative, component-based library for building user interfaces. It uses a **Virtual DOM** to efficiently update the UI.\n\n## 1. Components\nComponents are the building blocks of a React app. They are JavaScript functions that return JSX.\n\n## 2. State & Props\n- **State**: Data local to a component that can change over time (`useState`).\n- **Props**: Data passed from a parent component to a child.",
+        "fullProgram": "import React, { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  \n  return (\n    <div>\n      <p>Count: {count}</p>\n      <button onClick={() => setCount(count + 1)}>Increment</button>\n    </div>\n  );\n}\n\nexport default Counter;",
+        "expectedOutput": "A button that increments a counter on click.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What hook is used to manage state in a functional component?",
+            "options": [
+              "useEffect",
+              "useState",
+              "useContext",
+              "useReducer"
+            ],
+            "correctAnswer": 1,
+            "explanation": "useState is the primary hook for adding local state to components."
+          }
         ]
-    },
-    {
-        "id": "fullstack-level-2",
-        "title": "LEVEL 2: Backend Foundations (Node.js)",
-        "description": "Build high-performance servers and APIs",
-        "lessons": [
-            {
-                "id": "fs2.1",
-                "title": "2.1 Express.js Basics",
-                "duration": "50 mins",
-                "difficultyLevel": "Intermediate",
-                "topics": [
-                    "Express",
-                    "Routing",
-                    "Middlewares"
-                ],
-                "content": "Node.js allows us to run JavaScript on the server. Express is the most popular framework for building web servers.\n\n## 1. Basic Server\n```javascript\nconst express = require('express');\nconst app = express();\n\napp.get('/', (req, res) => {\n  res.send('Hello GenSpark!');\n});\n\napp.listen(3000);\n```\n\n## 2. Middlewares\nFunctions that have access to the request and response objects. Used for logging, authentication, and parsing data.",
-                "fullProgram": "const express = require('express');\nconst app = express();\n\napp.get('/api/greet', (req, res) => {\n    res.json({ message: 'Welcome to the Fullstack Lab!' });\n});\n\nconsole.log('Server running on port 3000');",
-                "expectedOutput": "A JSON response when visiting the /api/greet endpoint.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which method is used to send a JSON response in Express?",
-                        "options": [
-                            "res.send()",
-                            "res.json()",
-                            "res.write()",
-                            "res.append()"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "res.json() automatically sets the Content-Type header to application/json."
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "id": "fullstack-level-2",
+    "title": "LEVEL 2: Backend Foundations (Node.js)",
+    "description": "Build high-performance servers and APIs",
+    "lessons": [
+      {
+        "id": "fs2.1",
+        "title": "2.1 Express.js Basics",
+        "duration": "50 mins",
+        "difficultyLevel": "Intermediate",
+        "topics": [
+          "Express",
+          "Routing",
+          "Middlewares"
+        ],
+        "content": "Node.js allows us to run JavaScript on the server. Express is the most popular framework for building web servers.\n\n## 1. Basic Server\n```javascript\nconst express = require('express');\nconst app = express();\n\napp.get('/', (req, res) => {\n  res.send('Hello GenSpark!');\n});\n\napp.listen(3000);\n```\n\n## 2. Middlewares\nFunctions that have access to the request and response objects. Used for logging, authentication, and parsing data.",
+        "fullProgram": "const express = require('express');\nconst app = express();\n\napp.get('/api/greet', (req, res) => {\n    res.json({ message: 'Welcome to the Fullstack Lab!' });\n});\n\nconsole.log('Server running on port 3000');",
+        "expectedOutput": "A JSON response when visiting the /api/greet endpoint.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which method is used to send a JSON response in Express?",
+            "options": [
+              "res.send()",
+              "res.json()",
+              "res.write()",
+              "res.append()"
+            ],
+            "correctAnswer": 1,
+            "explanation": "res.json() automatically sets the Content-Type header to application/json."
+          }
         ]
-    },
-    {
-        "id": "fullstack-level-3",
-        "title": "LEVEL 3: NoSQL Databases (MongoDB)",
-        "description": "Store and manage data with flexibility",
-        "lessons": [
-            {
-                "id": "fs3.1",
-                "title": "3.1 MongoDB & Mongoose",
-                "duration": "45 mins",
-                "difficultyLevel": "Intermediate",
-                "topics": [
-                    "MongoDB",
-                    "Schemas",
-                    "Models",
-                    "CRUD"
-                ],
-                "content": "MongoDB is a NoSQL database that stores data in JSON-like documents. Mongoose is an ODM (Object Data Modeling) library for Node.js.\n\n## 1. Defining a Schema\n```javascript\nconst userSchema = new mongoose.Schema({\n  name: String,\n  email: { type: String, unique: true },\n  age: Number\n});\n```\n\n## 2. CRUD Operations\n- **Create**: `User.create({ ... })`\n- **Read**: `User.find({ ... })`\n- **Update**: `User.updateOne({ ... })`\n- **Delete**: `User.deleteOne({ ... })`",
-                "fullProgram": "const mongoose = require('mongoose');\n\nconst Product = mongoose.model('Product', { name: String, price: Number });\n\nasync function addProduct() {\n    const p = new Product({ name: 'Laptop', price: 999 });\n    await p.save();\n    console.log('Product Saved!');\n}",
-                "expectedOutput": "Confirmation that data has been saved to the database.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "What is Mongoose?",
-                        "options": [
-                            "A database engine",
-                            "An ODM for MongoDB",
-                            "A frontend library",
-                            "A CSS framework"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "Mongoose provides a schema-based solution to model your application data."
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "id": "fullstack-level-3",
+    "title": "LEVEL 3: NoSQL Databases (MongoDB)",
+    "description": "Store and manage data with flexibility",
+    "lessons": [
+      {
+        "id": "fs3.1",
+        "title": "3.1 MongoDB & Mongoose",
+        "duration": "45 mins",
+        "difficultyLevel": "Intermediate",
+        "topics": [
+          "MongoDB",
+          "Schemas",
+          "Models",
+          "CRUD"
+        ],
+        "content": "MongoDB is a NoSQL database that stores data in JSON-like documents. Mongoose is an ODM (Object Data Modeling) library for Node.js.\n\n## 1. Defining a Schema\n```javascript\nconst userSchema = new mongoose.Schema({\n  name: String,\n  email: { type: String, unique: true },\n  age: Number\n});\n```\n\n## 2. CRUD Operations\n- **Create**: `User.create({ ... })`\n- **Read**: `User.find({ ... })`\n- **Update**: `User.updateOne({ ... })`\n- **Delete**: `User.deleteOne({ ... })`",
+        "fullProgram": "const mongoose = require('mongoose');\n\nconst Product = mongoose.model('Product', { name: String, price: Number });\n\nasync function addProduct() {\n    const p = new Product({ name: 'Laptop', price: 999 });\n    await p.save();\n    console.log('Product Saved!');\n}",
+        "expectedOutput": "Confirmation that data has been saved to the database.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is Mongoose?",
+            "options": [
+              "A database engine",
+              "An ODM for MongoDB",
+              "A frontend library",
+              "A CSS framework"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Mongoose provides a schema-based solution to model your application data."
+          }
         ]
-    },
-    {
-        "id": "fullstack-level-4",
-        "title": "LEVEL 4: Authentication & Security",
-        "description": "Protect your users and their data",
-        "lessons": [
-            {
-                "id": "fs4.1",
-                "title": "4.1 JWT & Bcrypt",
-                "duration": "60 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "Encryption",
-                    "Salting",
-                    "JWT",
-                    "Authorization"
-                ],
-                "content": "## 1. Password Hashing\nNEVER store passwords as plain text. Use `bcrypt` to salt and hash them.\n\n## 2. JWT (JSON Web Tokens)\nA compact way to securely transmit information between parties as a JSON object. Used for maintaining user sessions without storing state on the server.\n\n```javascript\nconst token = jwt.sign({ userId: user._id }, 'secret_key');\n```",
-                "fullProgram": "const bcrypt = require('bcrypt');\nconst jwt = require('jsonwebtoken');\n\nasync function register(password) {\n    const hash = await bcrypt.hash(password, 10);\n    console.log('Secure Hash:', hash);\n    \n    const token = jwt.sign({ id: 123 }, 'top_secret', { expiresIn: '1h' });\n    console.log('Access Token:', token);\n}",
-                "expectedOutput": "A hashed password and a signed JWT.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Why do we use 'salting' in cryptography?",
-                        "options": [
-                            "To make the hash shorter",
-                            "To prevent rainbow table attacks",
-                            "To encrypt the database",
-                            "To verify the email"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "Salting adds random data to the input before hashing, ensuring that the same password results in a different hash every time."
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "id": "fullstack-level-4",
+    "title": "LEVEL 4: Authentication & Security",
+    "description": "Protect your users and their data",
+    "lessons": [
+      {
+        "id": "fs4.1",
+        "title": "4.1 JWT & Bcrypt",
+        "duration": "60 mins",
+        "difficultyLevel": "Advanced",
+        "topics": [
+          "Encryption",
+          "Salting",
+          "JWT",
+          "Authorization"
+        ],
+        "content": "## 1. Password Hashing\nNEVER store passwords as plain text. Use `bcrypt` to salt and hash them.\n\n## 2. JWT (JSON Web Tokens)\nA compact way to securely transmit information between parties as a JSON object. Used for maintaining user sessions without storing state on the server.\n\n```javascript\nconst token = jwt.sign({ userId: user._id }, 'secret_key');\n```",
+        "fullProgram": "const bcrypt = require('bcrypt');\nconst jwt = require('jsonwebtoken');\n\nasync function register(password) {\n    const hash = await bcrypt.hash(password, 10);\n    console.log('Secure Hash:', hash);\n    \n    const token = jwt.sign({ id: 123 }, 'top_secret', { expiresIn: '1h' });\n    console.log('Access Token:', token);\n}",
+        "expectedOutput": "A hashed password and a signed JWT.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Why do we use 'salting' in cryptography?",
+            "options": [
+              "To make the hash shorter",
+              "To prevent rainbow table attacks",
+              "To encrypt the database",
+              "To verify the email"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Salting adds random data to the input before hashing, ensuring that the same password results in a different hash every time."
+          }
         ]
-    },
-    {
-        "id": "fullstack-level-5",
-        "title": "LEVEL 5: RESTful API Architecture",
-        "description": "Design industry-standard communication layers",
-        "lessons": [
-            {
-                "id": "fs5.1",
-                "title": "5.1 Controllers & Services",
-                "duration": "55 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "Architecture",
-                    "MVC",
-                    "Error Handling"
-                ],
-                "content": "Don't put all your logic in the route file! Use the **MVC (Model-View-Controller)** pattern.\n\n## 1. Controller\nHandles the request, calls the service, and sends a response.\n\n## 2. Service\nContains the business logic (accessing DB, external APIs).\n\n## 3. Global Error Handler\nOne place to handle all your API errors consistently.",
-                "fullProgram": "// Example Controller\nexports.getUser = async (req, res, next) => {\n    try {\n        const user = await UserService.findById(req.params.id);\n        if (!user) throw new Error('Not found');\n        res.status(200).json(user);\n    } catch (err) {\n        next(err); // Send to error middleware\n    }\n};",
-                "expectedOutput": "A clean, modular API structure.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "What is the primary role of a 'Controller' in a REST API?",
-                        "options": [
-                            "To store data",
-                            "To handle HTTP requests/responses",
-                            "To style the UI",
-                            "To manage the server hardware"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "Controllers act as the entry point for requests, delegating logic to services and returning responses to the client."
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "id": "fullstack-level-5",
+    "title": "LEVEL 5: RESTful API Architecture",
+    "description": "Design industry-standard communication layers",
+    "lessons": [
+      {
+        "id": "fs5.1",
+        "title": "5.1 Controllers & Services",
+        "duration": "55 mins",
+        "difficultyLevel": "Advanced",
+        "topics": [
+          "Architecture",
+          "MVC",
+          "Error Handling"
+        ],
+        "content": "Don't put all your logic in the route file! Use the **MVC (Model-View-Controller)** pattern.\n\n## 1. Controller\nHandles the request, calls the service, and sends a response.\n\n## 2. Service\nContains the business logic (accessing DB, external APIs).\n\n## 3. Global Error Handler\nOne place to handle all your API errors consistently.",
+        "fullProgram": "// Example Controller\nexports.getUser = async (req, res, next) => {\n    try {\n        const user = await UserService.findById(req.params.id);\n        if (!user) throw new Error('Not found');\n        res.status(200).json(user);\n    } catch (err) {\n        next(err); // Send to error middleware\n    }\n};",
+        "expectedOutput": "A clean, modular API structure.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the primary role of a 'Controller' in a REST API?",
+            "options": [
+              "To store data",
+              "To handle HTTP requests/responses",
+              "To style the UI",
+              "To manage the server hardware"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Controllers act as the entry point for requests, delegating logic to services and returning responses to the client."
+          }
         ]
-    },
-    {
-        "id": "fullstack-level-6",
-        "title": "LEVEL 6: Advanced React & State",
-        "description": "Manage global state and optimize performance",
-        "lessons": [
-            {
-                "id": "fs6.1",
-                "title": "6.1 Redux Toolkit & Context API",
-                "duration": "60 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "Global State",
-                    "Slices",
-                    "Actions",
-                    "Reducers"
-                ],
-                "content": "Passing data through 10 layers of components (prop drilling) is bad practice. Use a global state manager.\n\n## 1. Context API\nBuilt-in React feature for simple global data like themes or user profiles.\n\n## 2. Redux Toolkit (RTK)\nThe industry standard for complex applications. It uses a **Single Source of Truth** (The Store).",
-                "fullProgram": "// RTK Slice Example\nimport { createSlice } from '@reduxjs/toolkit';\n\nconst cartSlice = createSlice({\n  name: 'cart',\n  initialState: { items: [], total: 0 },\n  reducers: {\n    addItem: (state, action) => {\n      state.items.push(action.payload);\n    }\n  }\n});",
-                "expectedOutput": "A centralized way to manage application-wide data.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "What is 'Prop Drilling'?",
-                        "options": [
-                            "A tool for SEO",
-                            "Passing data through many components that don't need it",
-                            "A React hook",
-                            "A way to connect to MongoDB"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "Prop drilling occurs when you have to pass data through intermediate components just to reach a distant child."
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "id": "fullstack-level-6",
+    "title": "LEVEL 6: Advanced React & State",
+    "description": "Manage global state and optimize performance",
+    "lessons": [
+      {
+        "id": "fs6.1",
+        "title": "6.1 Redux Toolkit & Context API",
+        "duration": "60 mins",
+        "difficultyLevel": "Advanced",
+        "topics": [
+          "Global State",
+          "Slices",
+          "Actions",
+          "Reducers"
+        ],
+        "content": "Passing data through 10 layers of components (prop drilling) is bad practice. Use a global state manager.\n\n## 1. Context API\nBuilt-in React feature for simple global data like themes or user profiles.\n\n## 2. Redux Toolkit (RTK)\nThe industry standard for complex applications. It uses a **Single Source of Truth** (The Store).",
+        "fullProgram": "// RTK Slice Example\nimport { createSlice } from '@reduxjs/toolkit';\n\nconst cartSlice = createSlice({\n  name: 'cart',\n  initialState: { items: [], total: 0 },\n  reducers: {\n    addItem: (state, action) => {\n      state.items.push(action.payload);\n    }\n  }\n});",
+        "expectedOutput": "A centralized way to manage application-wide data.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is 'Prop Drilling'?",
+            "options": [
+              "A tool for SEO",
+              "Passing data through many components that don't need it",
+              "A React hook",
+              "A way to connect to MongoDB"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Prop drilling occurs when you have to pass data through intermediate components just to reach a distant child."
+          }
         ]
-    },
-    {
-        "id": "fullstack-level-7",
-        "title": "LEVEL 7: Deployment & SaaS Patterns",
-        "description": "Ship your app to production and scale it",
-        "lessons": [
-            {
-                "id": "fs7.1",
-                "title": "7.1 Vercel, Render & CI/CD",
-                "duration": "45 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "Deployment",
-                    "CI/CD",
-                    "Env Variables"
-                ],
-                "content": "## 1. Hosting Options\n- **Frontend**: Vercel or Netlify (best for React).\n- **Backend**: Render, Railway, or Heroku.\n- **Database**: MongoDB Atlas or Supabase.\n\n## 2. Environment Variables (.env)\nNEVER commit API keys or database strings to GitHub. Use `.env` files and configure them in your hosting dashboard.\n\n## 3. CI/CD\nContinuous Integration and Continuous Deployment. When you `git push`, the app builds and deploys automatically.",
-                "fullProgram": "// .env file example (LOCAL ONLY)\nPORT=5000\nMONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net\nSECRET=your_jwt_secret",
-                "expectedOutput": "A live website accessible to the world.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Where should you store sensitive API keys in a production app?",
-                        "options": [
-                            "In a public JavaScript file",
-                            "In a .env file / Hosting platform secrets",
-                            "In the README",
-                            "In the browser console"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "Environment variables are the secure way to manage configuration without exposing secrets in the codebase."
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "id": "fullstack-level-7",
+    "title": "LEVEL 7: Deployment & SaaS Patterns",
+    "description": "Ship your app to production and scale it",
+    "lessons": [
+      {
+        "id": "fs7.1",
+        "title": "7.1 Vercel, Render & CI/CD",
+        "duration": "45 mins",
+        "difficultyLevel": "Advanced",
+        "topics": [
+          "Deployment",
+          "CI/CD",
+          "Env Variables"
+        ],
+        "content": "## 1. Hosting Options\n- **Frontend**: Vercel or Netlify (best for React).\n- **Backend**: Render, Railway, or Heroku.\n- **Database**: MongoDB Atlas or Supabase.\n\n## 2. Environment Variables (.env)\nNEVER commit API keys or database strings to GitHub. Use `.env` files and configure them in your hosting dashboard.\n\n## 3. CI/CD\nContinuous Integration and Continuous Deployment. When you `git push`, the app builds and deploys automatically.",
+        "fullProgram": "// .env file example (LOCAL ONLY)\nPORT=5000\nMONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net\nSECRET=your_jwt_secret",
+        "expectedOutput": "A live website accessible to the world.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Where should you store sensitive API keys in a production app?",
+            "options": [
+              "In a public JavaScript file",
+              "In a .env file / Hosting platform secrets",
+              "In the README",
+              "In the browser console"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Environment variables are the secure way to manage configuration without exposing secrets in the codebase."
+          }
         ]
-    },
-    {
-        "id": "fullstack-level-8",
-        "title": "LEVEL 8: WebSockets & Testing",
-        "description": "Real-time communication and software quality",
-        "lessons": [
-            {
-                "id": "fs8.1",
-                "title": "8.1 Socket.io & Jest",
-                "duration": "55 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "WebSockets",
-                    "Real-time",
-                    "Unit Testing"
-                ],
-                "content": "## 1. WebSockets (Socket.io)\nAllows for bi-directional communication. Perfect for chat apps, notifications, and live dashboards.\n`io.on('connection', (socket) => { ... });`\n\n## 2. Testing with Jest\nAutomated tests ensure your code doesn't break when you make changes.\n- **Unit Tests**: Test single functions.\n- **Integration Tests**: Test how components work together.",
-                "fullProgram": "// Simple Jest Test\nconst sum = (a, b) => a + b;\n\ntest('adds 1 + 2 to equal 3', () => {\n  expect(sum(1, 2)).toBe(3);\n});",
-                "expectedOutput": "A passing test report indicating code safety.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Difference between HTTP and WebSockets?",
-                        "options": [
-                            "HTTP is faster",
-                            "WebSockets are bi-directional and always open",
-                            "HTTP is for games only",
-                            "They are exactly the same"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "HTTP is request-response based, while WebSockets allow the server to send data to the client at any time."
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "id": "fullstack-level-8",
+    "title": "LEVEL 8: WebSockets & Testing",
+    "description": "Real-time communication and software quality",
+    "lessons": [
+      {
+        "id": "fs8.1",
+        "title": "8.1 Socket.io & Jest",
+        "duration": "55 mins",
+        "difficultyLevel": "Advanced",
+        "topics": [
+          "WebSockets",
+          "Real-time",
+          "Unit Testing"
+        ],
+        "content": "## 1. WebSockets (Socket.io)\nAllows for bi-directional communication. Perfect for chat apps, notifications, and live dashboards.\n`io.on('connection', (socket) => { ... });`\n\n## 2. Testing with Jest\nAutomated tests ensure your code doesn't break when you make changes.\n- **Unit Tests**: Test single functions.\n- **Integration Tests**: Test how components work together.",
+        "fullProgram": "// Simple Jest Test\nconst sum = (a, b) => a + b;\n\ntest('adds 1 + 2 to equal 3', () => {\n  expect(sum(1, 2)).toBe(3);\n});",
+        "expectedOutput": "A passing test report indicating code safety.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Difference between HTTP and WebSockets?",
+            "options": [
+              "HTTP is faster",
+              "WebSockets are bi-directional and always open",
+              "HTTP is for games only",
+              "They are exactly the same"
+            ],
+            "correctAnswer": 1,
+            "explanation": "HTTP is request-response based, while WebSockets allow the server to send data to the client at any time."
+          }
         ]
-    },
-    {
-        "id": "fullstack-level-9",
-        "title": "LEVEL 9: Final Fullstack Graduation",
-        "description": "Prove your ability to build complete products",
-        "lessons": [
-            {
-                "id": "fs9.1",
-                "title": "9.1 The SaaS Architect Exam",
-                "duration": "120 mins",
-                "difficultyLevel": "Master",
-                "topics": [
-                    "Final Exam",
-                    "App Architecture",
-                    "Graduation"
-                ],
-                "content": "**Congratulations, Fullstack Developer!** You have mastered the entire stack, from database schemas to frontend animations.\n\n## Final Evaluation:\n- **Fullstack Logic**: Data flow between client and server.\n- **Performance**: State management and API optimization.\n- **Security**: Auth patterns and data protection.\n- **DevOps**: Deployment strategies and observability.\n\n## The Grand Prize:\n- Complete this final module to unlock the **GenSpark Fullstack Hero Status** and showcase your portfolio piece to the world.",
-                "fullProgram": "/**\n * Final Graduation Script: App Health Dashboard\n * Demonstrates: React Hooks + API Fetching + Clean UI\n */\nimport React, { useEffect, useState } from 'react';\n\nconst Dashboard = () => {\n    const [status, setStatus] = useState('Checking...');\n\n    useEffect(() => {\n        fetch('/api/health')\n            .then(res => res.json())\n            .then(data => setStatus(data.status))\n            .catch(() => setStatus('Offline'));\n    }, []);\n\n    return (\n        <div className=\"dashboard\">\n            <h1>System Status: {status}</h1>\n            <p>Congratulations on your journey!</p>\n        </div>\n    );\n};",
-                "expectedOutput": "A complete, functional dashboard connected to a live backend.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which part of the MERN stack is used for the backend framework?",
-                        "options": [
-                            "MongoDB",
-                            "Express",
-                            "React",
-                            "Node"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "In MERN (MongoDB, Express, React, Node), Express is the framework that runs on Node."
-                    },
-                    {
-                        "id": 2,
-                        "text": "What is the purpose of 'middleware' in a backend application?",
-                        "options": [
-                            "To build the UI",
-                            "To run code between request and response",
-                            "To store passwords",
-                            "To define the database schema"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "Middleware functions run during the request-response cycle, allowing for logging, auth, and data parsing."
-                    },
-                    {
-                        "id": 3,
-                        "text": "What does 'React Query' (TanStack Query) primarily solve?",
-                        "options": [
-                            "CSS styling",
-                            "Server state and data fetching",
-                            "User input validation",
-                            "File system access"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "React Query is used for fetching, caching, and synchronizing server state in React apps."
-                    },
-                    {
-                        "id": 4,
-                        "text": "True or False: MongoDB is a Relational Database.",
-                        "options": [
-                            "True",
-                            "False"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "MongoDB is a NoSQL (Document-based) database, not relational (SQL)."
-                    },
-                    {
-                        "id": 5,
-                        "text": "Which command starts the local development environment in most React/Node projects?",
-                        "options": [
-                            "npm finish",
-                            "npm run dev",
-                            "npm install",
-                            "git start"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "npm run dev (or npm start) is the standard command defined in package.json for starting development servers."
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "id": "fullstack-level-9",
+    "title": "LEVEL 9: Final Fullstack Graduation",
+    "description": "Prove your ability to build complete products",
+    "lessons": [
+      {
+        "id": "fs9.1",
+        "title": "9.1 The SaaS Architect Exam",
+        "duration": "120 mins",
+        "difficultyLevel": "Master",
+        "topics": [
+          "Final Exam",
+          "App Architecture",
+          "Graduation"
+        ],
+        "content": "**Congratulations, Fullstack Developer!** You have mastered the entire stack, from database schemas to frontend animations.\n\n## Final Evaluation:\n- **Fullstack Logic**: Data flow between client and server.\n- **Performance**: State management and API optimization.\n- **Security**: Auth patterns and data protection.\n- **DevOps**: Deployment strategies and observability.\n\n## The Grand Prize:\n- Complete this final module to unlock the **GenSpark Fullstack Hero Status** and showcase your portfolio piece to the world.",
+        "fullProgram": "/**\n * Final Graduation Script: App Health Dashboard\n * Demonstrates: React Hooks + API Fetching + Clean UI\n */\nimport React, { useEffect, useState } from 'react';\n\nconst Dashboard = () => {\n    const [status, setStatus] = useState('Checking...');\n\n    useEffect(() => {\n        fetch('/api/health')\n            .then(res => res.json())\n            .then(data => setStatus(data.status))\n            .catch(() => setStatus('Offline'));\n    }, []);\n\n    return (\n        <div className=\"dashboard\">\n            <h1>System Status: {status}</h1>\n            <p>Congratulations on your journey!</p>\n        </div>\n    );\n};",
+        "expectedOutput": "A complete, functional dashboard connected to a live backend.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which part of the MERN stack is used for the backend framework?",
+            "options": [
+              "MongoDB",
+              "Express",
+              "React",
+              "Node"
+            ],
+            "correctAnswer": 1,
+            "explanation": "In MERN (MongoDB, Express, React, Node), Express is the framework that runs on Node."
+          },
+          {
+            "id": 2,
+            "text": "What is the purpose of 'middleware' in a backend application?",
+            "options": [
+              "To build the UI",
+              "To run code between request and response",
+              "To store passwords",
+              "To define the database schema"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Middleware functions run during the request-response cycle, allowing for logging, auth, and data parsing."
+          },
+          {
+            "id": 3,
+            "text": "What does 'React Query' (TanStack Query) primarily solve?",
+            "options": [
+              "CSS styling",
+              "Server state and data fetching",
+              "User input validation",
+              "File system access"
+            ],
+            "correctAnswer": 1,
+            "explanation": "React Query is used for fetching, caching, and synchronizing server state in React apps."
+          },
+          {
+            "id": 4,
+            "text": "True or False: MongoDB is a Relational Database.",
+            "options": [
+              "True",
+              "False"
+            ],
+            "correctAnswer": 1,
+            "explanation": "MongoDB is a NoSQL (Document-based) database, not relational (SQL)."
+          },
+          {
+            "id": 5,
+            "text": "Which command starts the local development environment in most React/Node projects?",
+            "options": [
+              "npm finish",
+              "npm run dev",
+              "npm install",
+              "git start"
+            ],
+            "correctAnswer": 1,
+            "explanation": "npm run dev (or npm start) is the standard command defined in package.json for starting development servers."
+          }
         ]
-    }
+      }
+    ]
+  }
 ]

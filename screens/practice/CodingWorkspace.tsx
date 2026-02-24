@@ -71,8 +71,11 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   // Code state management
   const [userCode, setUserCode] = useState(() => {
-    const localSaved = localStorage.getItem(`practice_code_${problem.id}`);
-    if (localSaved) return localSaved;
+    // 1. Try unified snapshot system first (Sync)
+    const snapshot = (supabaseDB.constructor as any).getPracticeProgressSync(problem.id);
+    if (snapshot && snapshot.code_snapshot) return snapshot.code_snapshot;
+
+    // 2. Fallback to starter codes
     const starterCodes = (problem as any).starter_codes || {};
     const defaultLang = Object.keys(starterCodes)[0] || 'c';
     return starterCodes[defaultLang] || problem.initialCode || '';
@@ -84,13 +87,22 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   const [showSuccess, setShowSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [executionResult, setExecutionResult] = useState<ExecutionResult | null>(null);
-  const [userHasTyped, setUserHasTyped] = useState(false);
+  const [userHasTyped, setUserHasTyped] = useState(() => {
+    const snapshot = (supabaseDB.constructor as any).getPracticeProgressSync(problem.id);
+    return !!(snapshot && snapshot.code_snapshot);
+  });
   const [aiExplanation, setAiExplanation] = useState<string | null>(null);
   const [isGeneratingExplanation, setIsGeneratingExplanation] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState(() => {
-    const localLang = localStorage.getItem(`practice_lang_${problem.id}`);
+    // 1. Try unified snapshot system first (Sync)
+    const snapshot = (supabaseDB.constructor as any).getPracticeProgressSync(problem.id);
     const starterCodes = (problem as any).starter_codes || {};
-    if (localLang && starterCodes[localLang]) return localLang;
+
+    if (snapshot && snapshot.language_used && starterCodes[snapshot.language_used]) {
+      return snapshot.language_used;
+    }
+
+    // 2. Fallback to first available language
     return Object.keys(starterCodes)[0] || 'c';
   });
   /* Removed sidebarTab state */
@@ -137,10 +149,16 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
         if (progress) {
           setCurrentStatus(progress.status === 'completed' ? 'COMPLETED' : 'IN_PROGRESS');
           if (progress.code_snapshot) {
-            setUserCode(progress.code_snapshot);
-            setEditorSyncCode(progress.code_snapshot);
-            // If we loaded progress, consider it "typed" to prevent language switches from wiping it
-            setUserHasTyped(true);
+            // ONLY overwrite if user hasn't typed anything yet
+            // This prevents the DB from "resetting" local changes if the DB fetch is slow
+            setUserCode(prev => {
+              if (userHasTyped || prev.trim().length > 50) return prev;
+              return progress.code_snapshot;
+            });
+            setEditorSyncCode(prev => {
+              if (userHasTyped || prev.trim().length > 50) return prev;
+              return progress.code_snapshot;
+            });
           }
           if (progress.language_used) setSelectedLanguage(progress.language_used);
         }
@@ -149,17 +167,25 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
     fetchProgress();
   }, [problem.id]);
 
-  // Debounced Autosave to LocalStorage
+  // Debounced Autosave to Snapshot System (Local + Cloud Background)
   useEffect(() => {
-    if (!userCode.trim()) return;
+    if (!userCode.trim() || !userHasTyped) return;
     const timer = setTimeout(() => {
-      localStorage.setItem(`practice_code_${problem.id}`, userCode);
-      localStorage.setItem(`practice_lang_${problem.id}`, selectedLanguage);
-    }, 1000);
+      console.log("[CodingWorkspace] Debounced Snapshot Syncing...");
+      supabaseDB.savePracticeSnapshot(problem.id, userCode, selectedLanguage).catch(console.error);
+    }, 2000);
     return () => clearTimeout(timer);
-  }, [userCode, selectedLanguage, problem.id]);
+  }, [userCode, selectedLanguage, problem.id, userHasTyped]);
 
-  // Synchronize code when language changes, but ONLY if user hasn't typed anything yet
+  // Cloud sync heartbeat (Every 60s as backup)
+  useEffect(() => {
+    if (!userCode.trim() || !userHasTyped) return;
+    const interval = setInterval(() => {
+      console.log("[CodingWorkspace] Cloud Heartbeat Syncing...");
+      supabaseDB.savePracticeSnapshot(problem.id, userCode, selectedLanguage).catch(console.error);
+    }, 60000);
+    return () => clearInterval(interval);
+  }, [userCode, selectedLanguage, problem.id, userHasTyped]);
   useEffect(() => {
     if (!userHasTyped) {
       const starterCodes = (problem as any).starter_codes || {};
@@ -170,6 +196,30 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
   }, [selectedLanguage, problem.id, userHasTyped]);
 
   const [isSubmission, setIsSubmission] = useState(false);
+
+  // SYNC CODE ON TAB CHANGE (Mobile Fix)
+  // When switching tabs, the Compiler component might unmount/remount.
+  // We MUST ensure it gets the latest userCode.
+  useEffect(() => {
+    if (activeTab === 'CODE') {
+      setEditorSyncCode(userCode);
+    }
+  }, [activeTab]);
+
+  // IMMEDIATE SAVE UTILITY
+  const forceSave = useCallback(() => {
+    if (!userCode.trim() || !userHasTyped) return;
+    supabaseDB.savePracticeSnapshot(problem.id, userCode, selectedLanguage).catch(console.error);
+    console.log("[CodingWorkspace] Forced Snapshot Save");
+  }, [userCode, selectedLanguage, problem.id, userHasTyped]);
+
+  // Save when navigating back
+  const handleBack = async () => {
+    forceSave();
+    // Immediate cloud sync on back
+    await supabaseDB.savePracticeSnapshot(problem.id, userCode, selectedLanguage).catch(console.error);
+    onBack();
+  };
 
   const handleRunCode = async () => {
     console.log("[CodingWorkspace] Run Code Clicked");
@@ -366,7 +416,7 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
 
       {/* 2. Problem Statement */}
       <div className="space-y-3">
-        <h3 className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Problem Statement</h3>
+        <h3 className="text-[11px] font-black text-slate-600 dark:text-slate-500 uppercase tracking-[0.2em]">Problem Statement</h3>
         <div className="text-slate-700 dark:text-slate-200 text-sm leading-relaxed font-medium space-y-2">
           {problem.description.split(/```[\w]*\n?([\s\S]*?)```/g).map((part: string, i: number) => {
             if (i % 2 === 1) {
@@ -394,11 +444,11 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
                     !trimmed.includes('. ') &&
                     j > 0 && lines[j - 1].trim() === '';
                   return isHeading ? (
-                    <span key={j} className="block text-amber-400 dark:text-amber-300 font-black text-[15px] pt-2">
+                    <span key={j} className="block text-amber-600 dark:text-amber-300 font-black text-[15px] pt-2">
                       {trimmed}
                     </span>
                   ) : (
-                    <span key={j} className="block text-slate-300 dark:text-slate-300 text-[13px]">
+                    <span key={j} className="block text-slate-700 dark:text-slate-300 text-[13px] font-medium leading-relaxed">
                       {line}
                     </span>
                   );
@@ -472,9 +522,9 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
 
   const renderResults = () => {
     if (!executionResult) return (
-      <div className="h-full flex flex-col items-center justify-center p-12 text-center opacity-30 group">
-        <Terminal size={48} className="text-slate-700 mb-4 group-hover:scale-110 transition-transform" />
-        <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Execute code to see output</p>
+      <div className="h-full flex flex-col items-center justify-center p-12 text-center opacity-40 group">
+        <Terminal size={48} className="text-slate-400 dark:text-slate-700 mb-4 group-hover:scale-110 transition-transform" />
+        <p className="text-[10px] font-black text-slate-700 dark:text-slate-600 uppercase tracking-widest">Execute code to see output</p>
       </div>
     );
 
@@ -562,7 +612,7 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
         {executionResult.testResults && (
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <h4 className="text-[10px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest">
+              <h4 className="text-[10px] font-black text-slate-700 dark:text-slate-400 uppercase tracking-widest">
                 {isSubmission ? 'Submission Results' : 'Test Case Breakdown'}
               </h4>
               <span className="text-[10px] font-black text-indigo-400">
@@ -695,7 +745,7 @@ const CodingWorkspace: React.FC<CodingWorkspaceProps> = ({
       {/* HEADER */}
       <header className="h-14 shrink-0 bg-white dark:bg-black border-b border-slate-200 dark:border-white/10 flex items-center px-4 z-50 justify-between">
         <div className="flex items-center gap-1 sm:gap-4 overflow-hidden">
-          <button onClick={onBack} className="p-2 -ml-2 text-slate-400 hover:text-white transition shrink-0"><ChevronLeft size={20} /></button>
+          <button onClick={handleBack} className="p-2 -ml-2 text-slate-400 hover:text-white transition shrink-0"><ChevronLeft size={20} /></button>
           <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500 overflow-hidden">
             <span className="hidden xl:inline hover:text-white cursor-pointer transition-colors shrink-0" onClick={() => navigate('/practice')}>Practice Hub</span>
             <ChevronRight size={10} className="hidden xl:block shrink-0" />

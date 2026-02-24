@@ -263,7 +263,7 @@ const LearnHub: React.FC = () => {
             >
                 <div className="flex-1">
                     <div className="flex items-start justify-between mb-4">
-                        <div className="w-12 h-12 md:w-14 md:h-14 bg-slate-100 dark:bg-white/5 rounded-lg flex items-center justify-center p-2.5 transition-all group-hover:bg-indigo-500/10">
+                        <div className="w-12 h-12 md:w-14 md:h-14 bg-slate-50 dark:bg-white/5 rounded-lg flex items-center justify-center p-2.5 transition-all group-hover:bg-indigo-500/10">
                             <img src={lang.icon} alt={lang.name} className="w-full h-full object-contain filter group-hover:brightness-110 transition-all" />
                         </div>
                         {(showBadge || isPathMastered) && (
@@ -272,8 +272,8 @@ const LearnHub: React.FC = () => {
                             </span>
                         )}
                     </div>
-                    <h3 className="font-bold text-lg md:text-xl text-white mb-1.5 group-hover:text-indigo-300 transition-colors uppercase italic">{lang.name}</h3>
-                    <p className="text-slate-300 text-sm leading-relaxed mb-6 line-clamp-2 md:line-clamp-3">{LANGUAGE_OUTCOMES[lang.id] || `Learn ${lang.name}`}</p>
+                    <h3 className="font-bold text-lg md:text-xl text-slate-900 dark:text-white mb-1.5 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors uppercase italic">{lang.name}</h3>
+                    <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-6 line-clamp-2 md:line-clamp-3">{LANGUAGE_OUTCOMES[lang.id] || `Learn ${lang.name}`}</p>
                 </div>
                 <div className="mt-auto pt-4">
                     {isPathMastered ? (
@@ -292,15 +292,15 @@ const LearnHub: React.FC = () => {
     };
 
     return (
-        <div className="p-5 md:p-10 max-w-6xl mx-auto space-y-8 md:space-y-12 pb-24 text-white">
+        <div className="p-5 md:p-10 max-w-6xl mx-auto space-y-8 md:space-y-12 pb-24 text-slate-900 dark:text-white">
             <header className="space-y-4 md:space-y-6 px-1">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div>
-                        <h1 className="text-2xl md:text-4xl font-black text-white tracking-tighter flex items-center gap-2 md:gap-3 uppercase italic">
-                            <GraduationCap className="text-indigo-400 w-8 h-8 md:w-10 md:h-10" />
+                        <h1 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tighter flex items-center gap-2 md:gap-3 uppercase italic">
+                            <GraduationCap className="text-indigo-600 dark:text-indigo-400 w-8 h-8 md:w-10 md:h-10" />
                             Learn Hub
                         </h1>
-                        <p className="text-slate-300 font-bold text-sm md:text-base max-w-2xl mt-2">Master coding with curated learning paths.</p>
+                        <p className="text-slate-600 dark:text-slate-300 font-bold text-sm md:text-base max-w-2xl mt-2">Master coding with curated learning paths.</p>
                     </div>
                 </div>
             </header>
@@ -309,13 +309,13 @@ const LearnHub: React.FC = () => {
                 {/* Search Bar - Always Visible */}
                 <div className="flex flex-col md:flex-row gap-4 px-1">
                     <div className="relative flex-1">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" size={20} />
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-300" size={20} />
                         <input
                             type="text"
                             placeholder="Find a language or skill..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-12 pr-4 py-4 bg-slate-900/80 backdrop-blur-sm border border-white/10 rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-white placeholder:text-slate-500 transition-all shadow-xl text-sm md:text-base"
+                            className="w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-900/80 backdrop-blur-sm border border-slate-200 dark:border-white/10 rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-all shadow-xl text-sm md:text-base"
                         />
                     </div>
                 </div>
@@ -324,12 +324,12 @@ const LearnHub: React.FC = () => {
                     {sections.map((section) => (
                         <div key={section.title} className="space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
                             <div className="px-1 space-y-1 md:space-y-2">
-                                <h2 className="text-lg md:text-xl font-black text-white uppercase tracking-tight italic flex items-center gap-2">
+                                <h2 className="text-lg md:text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight italic flex items-center gap-2">
                                     <div className="w-1 md:w-1.5 h-5 md:h-6 bg-indigo-500 rounded-full" />
                                     {section.title}
                                 </h2>
                                 {section.description && (
-                                    <p className="text-slate-300 font-bold text-xs md:text-sm">{section.description}</p>
+                                    <p className="text-slate-500 dark:text-slate-300 font-bold text-xs md:text-sm">{section.description}</p>
                                 )}
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">

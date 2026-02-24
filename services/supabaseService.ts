@@ -711,6 +711,64 @@ class SupabaseService {
   }
 
   /**
+   * Synchronous snapshot fetch for UI initializers.
+   * This bridges the gap between LocalStorage and the Cloud.
+   */
+  static getPracticeProgressSync(challengeId: string): any {
+    try {
+      const localData = JSON.parse(localStorage.getItem('practice_progress_local') || '{}');
+      return localData[challengeId] || null;
+    } catch { return null; }
+  }
+
+  /**
+   * Save a background snapshot of the code WITHOUT incrementing attempt count.
+   * This is used for "Permanent Autosave" to the cloud.
+   */
+  async savePracticeSnapshot(challengeId: string, code: string, language: string): Promise<void> {
+    // 1. Local storage fallback first
+    try {
+      const localKey = 'practice_progress_local';
+      const existing = JSON.parse(localStorage.getItem(localKey) || '{}');
+      existing[challengeId] = {
+        ...existing[challengeId],
+        status: existing[challengeId]?.status || 'attempted',
+        code_snapshot: code,
+        language_used: language,
+        last_attempt_at: new Date().toISOString()
+      };
+      localStorage.setItem(localKey, JSON.stringify(existing));
+    } catch (e) {
+      console.error('LocalStorage snapshot failed:', e);
+    }
+
+    if (!this.isConfigured) return;
+    const { data: { user } } = await this.supabase.auth.getUser();
+    if (!user) return;
+
+    try {
+      // 2. Upsert to DB
+      const { error } = await this.supabase.from('practice_progress').upsert({
+        user_id: user.id,
+        challenge_id: challengeId,
+        code_snapshot: code,
+        language_used: language,
+        last_attempt_at: new Date(),
+        last_opened_at: new Date(),
+        // We do NOT touch status or attempts_count here if they exist
+      }, { onConflict: 'user_id, challenge_id' });
+
+      if (error) {
+        console.error("Practice Snapshot Failed (DB):", error);
+      } else {
+        console.log("☁️ Cloud Snapshot Saved:", challengeId);
+      }
+    } catch (e) {
+      console.error("Practice Snapshot Error:", e);
+    }
+  }
+
+  /**
    * Fetch specific practice progress
    */
   async getPracticeProgress(challengeId: string): Promise<any> {

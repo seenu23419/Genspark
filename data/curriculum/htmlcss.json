@@ -1,366 +1,366 @@
 [
-    {
-        "id": "htmlcss-level-1",
-        "title": "LEVEL 1: Semantic HTML5",
-        "description": "Build the skeleton of the web with modern standards",
-        "lessons": [
-            {
-                "id": "hc1.1",
-                "title": "1.1 The Structure of a Page",
-                "duration": "15 mins",
-                "difficultyLevel": "Beginner",
-                "topics": [
-                    "DOCTYPE",
-                    "Head",
-                    "Body",
-                    "Tags"
-                ],
-                "content": "Every web page starts with a specific blueprint. HTML (HyperText Markup Language) defines the **structure** of your content.\n\n## 1. The Core Setup\n```html\n<!DOCTYPE html> <!-- Tells browser this is HTML5 -->\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>My Website</title>\n</head>\n<body>\n  <!-- Content goes here -->\n</body>\n</html>\n```\n\n## 2. Key Tags\n- `<h1>` to `<h6>`: Headings (SEO important!)\n- `<p>`: Paragraphs\n- `<a>`: Links (Anchor tags)\n- `<img>`: Images (Requires `src` and `alt` attributes)",
-                "fullProgram": "<!DOCTYPE html>\n<html>\n<head>\n    <title>GenSpark Portfolio</title>\n</head>\n<body>\n    <h1>Arjun's Portfolio</h1>\n    <p>Welcome to my professional web journey.</p>\n    <a href=\"#\">View My Projects</a>\n</body>\n</html>",
-                "expectedOutput": "A page with a large heading, a paragraph, and a link.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which tag is best for the primary title of a page for SEO purposes?",
-                        "options": [
-                            "<title>",
-                            "<h1>",
-                            "<h6>",
-                            "<header>"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "While <title> appears in the tab, <h1> is the main semantic heading on the page itself."
-                    }
-                ]
-            }
+  {
+    "id": "htmlcss-level-1",
+    "title": "LEVEL 1: Semantic HTML5",
+    "description": "Build the skeleton of the web with modern standards",
+    "lessons": [
+      {
+        "id": "hc1.1",
+        "title": "1.1 The Structure of a Page",
+        "duration": "15 mins",
+        "difficultyLevel": "Beginner",
+        "topics": [
+          "DOCTYPE",
+          "Head",
+          "Body",
+          "Tags"
+        ],
+        "content": "Every web page starts with a specific blueprint. HTML (HyperText Markup Language) defines the **structure** of your content.\n\n## 1. The Core Setup\n```html\n<!DOCTYPE html> <!-- Tells browser this is HTML5 -->\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>My Website</title>\n</head>\n<body>\n  <!-- Content goes here -->\n</body>\n</html>\n```\n\n## 2. Key Tags\n- `<h1>` to `<h6>`: Headings (SEO important!)\n- `<p>`: Paragraphs\n- `<a>`: Links (Anchor tags)\n- `<img>`: Images (Requires `src` and `alt` attributes)",
+        "fullProgram": "<!DOCTYPE html>\n<html>\n<head>\n    <title>GenSpark Portfolio</title>\n</head>\n<body>\n    <h1>Arjun's Portfolio</h1>\n    <p>Welcome to my professional web journey.</p>\n    <a href=\"#\">View My Projects</a>\n</body>\n</html>",
+        "expectedOutput": "A page with a large heading, a paragraph, and a link.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which tag is best for the primary title of a page for SEO purposes?",
+            "options": [
+              "<title>",
+              "<h1>",
+              "<h6>",
+              "<header>"
+            ],
+            "correctAnswer": 1,
+            "explanation": "While <title> appears in the tab, <h1> is the main semantic heading on the page itself."
+          }
         ]
-    },
-    {
-        "id": "htmlcss-level-2",
-        "title": "LEVEL 2: CSS Foundations",
-        "description": "Style your content with the Box Model and Selectors",
-        "lessons": [
-            {
-                "id": "hc2.1",
-                "title": "2.1 The Box Model",
-                "duration": "20 mins",
-                "difficultyLevel": "Beginner",
-                "topics": [
-                    "Margin",
-                    "Border",
-                    "Padding",
-                    "Content"
-                ],
-                "content": "# Everything is a Box\n\nIn CSS, every element is considered a rectangular box. Understanding the **Box Model** is critical for spacing components.\n\n## 1. The Layers\n- **Content**: The actual text or image.\n- **Padding**: Transparent space inside the border (pushes content away from edge).\n- **Border**: A line surrounding the padding and content.\n- **Margin**: Space outside the border (pushes other elements away).\n\n## 2. Box Sizing\nBy default, adding padding makes a box bigger. Use `box-sizing: border-box;` to include padding/border within the total width.",
-                "fullProgram": "/* CSS Styles */\n.card {\n    width: 200px;\n    padding: 20px;\n    border: 5px solid black;\n    margin: 10px;\n    box-sizing: border-box;\n    background-color: lightblue;\n}",
-                "expectedOutput": "A light blue box with spacing inside and outside.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which property adds space INSIDE the border?",
-                        "options": [
-                            "Margin",
-                            "Padding",
-                            "Outline",
-                            "Gap"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "Padding is the space between the content and its border."
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "id": "htmlcss-level-2",
+    "title": "LEVEL 2: CSS Foundations",
+    "description": "Style your content with the Box Model and Selectors",
+    "lessons": [
+      {
+        "id": "hc2.1",
+        "title": "2.1 The Box Model",
+        "duration": "20 mins",
+        "difficultyLevel": "Beginner",
+        "topics": [
+          "Margin",
+          "Border",
+          "Padding",
+          "Content"
+        ],
+        "content": "# Everything is a Box\n\nIn CSS, every element is considered a rectangular box. Understanding the **Box Model** is critical for spacing components.\n\n## 1. The Layers\n- **Content**: The actual text or image.\n- **Padding**: Transparent space inside the border (pushes content away from edge).\n- **Border**: A line surrounding the padding and content.\n- **Margin**: Space outside the border (pushes other elements away).\n\n## 2. Box Sizing\nBy default, adding padding makes a box bigger. Use `box-sizing: border-box;` to include padding/border within the total width.",
+        "fullProgram": "/* CSS Styles */\n.card {\n    width: 200px;\n    padding: 20px;\n    border: 5px solid black;\n    margin: 10px;\n    box-sizing: border-box;\n    background-color: lightblue;\n}",
+        "expectedOutput": "A light blue box with spacing inside and outside.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which property adds space INSIDE the border?",
+            "options": [
+              "Margin",
+              "Padding",
+              "Outline",
+              "Gap"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Padding is the space between the content and its border."
+          }
         ]
-    },
-    {
-        "id": "htmlcss-level-3",
-        "title": "LEVEL 3: Layout Power (Flexbox)",
-        "description": "Create flexible, alignment-aware layouts",
-        "lessons": [
-            {
-                "id": "hc3.1",
-                "title": "3.1 Display Flex",
-                "duration": "30 mins",
-                "difficultyLevel": "Intermediate",
-                "topics": [
-                    "Justify Content",
-                    "Align Items",
-                    "Flex-Direction"
-                ],
-                "content": "# Flexbox Basics\n\nFlexbox is a 1-dimensional layout method for arranging items in rows or columns.\n\n## 1. Activation\n`display: flex;` on the parent container.\n\n## 2. Main Axis (Horizontal by default)\n- `justify-content: center`: Center items horizontally.\n- `justify-content: space-between`: Push items to the edges.\n\n## 3. Cross Axis (Vertical by default)\n- `align-items: center`: Center items vertically.",
-                "fullProgram": "/* Navbar Layout using Flex */\n.nav {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    padding: 1rem;\n    background: #333;\n    color: white;\n}\n\n.links {\n    display: flex;\n    gap: 20px;\n}",
-                "expectedOutput": "A professional dark navbar with a logo on the left and spaced-out links on the right.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which property centers items horizontally in a standard row flexbox?",
-                        "options": [
-                            "align-items",
-                            "justify-content",
-                            "text-align",
-                            "flex-wrap"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "justify-content handles alignment along the main axis (horizontal in a row)."
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "id": "htmlcss-level-3",
+    "title": "LEVEL 3: Layout Power (Flexbox)",
+    "description": "Create flexible, alignment-aware layouts",
+    "lessons": [
+      {
+        "id": "hc3.1",
+        "title": "3.1 Display Flex",
+        "duration": "30 mins",
+        "difficultyLevel": "Intermediate",
+        "topics": [
+          "Justify Content",
+          "Align Items",
+          "Flex-Direction"
+        ],
+        "content": "# Flexbox Basics\n\nFlexbox is a 1-dimensional layout method for arranging items in rows or columns.\n\n## 1. Activation\n`display: flex;` on the parent container.\n\n## 2. Main Axis (Horizontal by default)\n- `justify-content: center`: Center items horizontally.\n- `justify-content: space-between`: Push items to the edges.\n\n## 3. Cross Axis (Vertical by default)\n- `align-items: center`: Center items vertically.",
+        "fullProgram": "/* Navbar Layout using Flex */\n.nav {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    padding: 1rem;\n    background: #333;\n    color: white;\n}\n\n.links {\n    display: flex;\n    gap: 20px;\n}",
+        "expectedOutput": "A professional dark navbar with a logo on the left and spaced-out links on the right.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which property centers items horizontally in a standard row flexbox?",
+            "options": [
+              "align-items",
+              "justify-content",
+              "text-align",
+              "flex-wrap"
+            ],
+            "correctAnswer": 1,
+            "explanation": "justify-content handles alignment along the main axis (horizontal in a row)."
+          }
         ]
-    },
-    {
-        "id": "htmlcss-level-4",
-        "title": "LEVEL 4: Modern Grid Layouts",
-        "description": "Design complex 2D grids with ease",
-        "lessons": [
-            {
-                "id": "hc4.1",
-                "title": "4.1 CSS Grid Basics",
-                "duration": "35 mins",
-                "difficultyLevel": "Intermediate",
-                "topics": [
-                    "Grid Template",
-                    "fr units",
-                    "Gap"
-                ],
-                "content": "# CSS Grid\n\nUnlike Flexbox, Grid is 2-dimensional (Rows AND Columns simultaneously).\n\n## 1. Setup\n```css\n.container {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr; /* 3 equal columns */\n  gap: 10px;\n}\n```\n\n## 2. The 'fr' Unit\nThe 'fractional' unit represents a fraction of the available space in the grid container.",
-                "fullProgram": "/* Photo Gallery Grid */\n.gallery {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));\n    gap: 15px;\n}\n\n.item {\n    background: #eee;\n    height: 150px;\n}",
-                "expectedOutput": "A responsive grid where items adjust their size based on screen width.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "What does 1fr mean?",
-                        "options": [
-                            "1 Fixed Row",
-                            "100 Pixels",
-                            "1 Fraction of free space",
-                            "1 First Row"
-                        ],
-                        "correctAnswer": 2,
-                        "explanation": "fr stands for fraction, specifically of the available space in the container."
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "id": "htmlcss-level-4",
+    "title": "LEVEL 4: Modern Grid Layouts",
+    "description": "Design complex 2D grids with ease",
+    "lessons": [
+      {
+        "id": "hc4.1",
+        "title": "4.1 CSS Grid Basics",
+        "duration": "35 mins",
+        "difficultyLevel": "Intermediate",
+        "topics": [
+          "Grid Template",
+          "fr units",
+          "Gap"
+        ],
+        "content": "# CSS Grid\n\nUnlike Flexbox, Grid is 2-dimensional (Rows AND Columns simultaneously).\n\n## 1. Setup\n```css\n.container {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr; /* 3 equal columns */\n  gap: 10px;\n}\n```\n\n## 2. The 'fr' Unit\nThe 'fractional' unit represents a fraction of the available space in the grid container.",
+        "fullProgram": "/* Photo Gallery Grid */\n.gallery {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));\n    gap: 15px;\n}\n\n.item {\n    background: #eee;\n    height: 150px;\n}",
+        "expectedOutput": "A responsive grid where items adjust their size based on screen width.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What does 1fr mean?",
+            "options": [
+              "1 Fixed Row",
+              "100 Pixels",
+              "1 Fraction of free space",
+              "1 First Row"
+            ],
+            "correctAnswer": 2,
+            "explanation": "fr stands for fraction, specifically of the available space in the container."
+          }
         ]
-    },
-    {
-        "id": "htmlcss-level-5",
-        "title": "LEVEL 5: Responsive Web Design",
-        "description": "Make your websites look great on any device",
-        "lessons": [
-            {
-                "id": "hc5.1",
-                "title": "5.1 Media Queries",
-                "duration": "30 mins",
-                "difficultyLevel": "Intermediate",
-                "topics": [
-                    "Breakpoints",
-                    "Mobile First",
-                    "Viewport"
-                ],
-                "content": "# Responsive Design\n\nResponsive design ensures your site adapts to mobile, tablet, and desktop screens.\n\n## 1. The Meta Viewport\nYou MUST include this in your `<head>`:\n`<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">`\n\n## 2. Media Queries\nAllow you to apply CSS only when certain conditions are met.\n```css\n@media (max-width: 768px) {\n  .sidebar { \n    display: none; /* Hide on mobile */\n  }\n}\n```",
-                "fullProgram": "/* Responsive Layout Example */\n.main-content {\n    width: 80%;\n    margin: auto;\n}\n\n@media (max-width: 600px) {\n    .main-content {\n        width: 100%;\n        padding: 10px;\n    }\n    h1 { font-size: 20px; }\n}",
-                "expectedOutput": "A layout that spans 80% on desktop but expands to full width on small screens.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "What is 'Mobile-First' design?",
-                        "options": [
-                            "Building desktop first then shrinking",
-                            "Building for mobile first then adding media queries for larger screens",
-                            "Only building for mobile",
-                            "Using only mobile-friendly fonts"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "Mobile-first means writing base styles for small screens and using media queries to add complexity as the screen gets wider."
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "id": "htmlcss-level-5",
+    "title": "LEVEL 5: Responsive Web Design",
+    "description": "Make your websites look great on any device",
+    "lessons": [
+      {
+        "id": "hc5.1",
+        "title": "5.1 Media Queries",
+        "duration": "30 mins",
+        "difficultyLevel": "Intermediate",
+        "topics": [
+          "Breakpoints",
+          "Mobile First",
+          "Viewport"
+        ],
+        "content": "# Responsive Design\n\nResponsive design ensures your site adapts to mobile, tablet, and desktop screens.\n\n## 1. The Meta Viewport\nYou MUST include this in your `<head>`:\n`<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">`\n\n## 2. Media Queries\nAllow you to apply CSS only when certain conditions are met.\n```css\n@media (max-width: 768px) {\n  .sidebar { \n    display: none; /* Hide on mobile */\n  }\n}\n```",
+        "fullProgram": "/* Responsive Layout Example */\n.main-content {\n    width: 80%;\n    margin: auto;\n}\n\n@media (max-width: 600px) {\n    .main-content {\n        width: 100%;\n        padding: 10px;\n    }\n    h1 { font-size: 20px; }\n}",
+        "expectedOutput": "A layout that spans 80% on desktop but expands to full width on small screens.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is 'Mobile-First' design?",
+            "options": [
+              "Building desktop first then shrinking",
+              "Building for mobile first then adding media queries for larger screens",
+              "Only building for mobile",
+              "Using only mobile-friendly fonts"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Mobile-first means writing base styles for small screens and using media queries to add complexity as the screen gets wider."
+          }
         ]
-    },
-    {
-        "id": "htmlcss-level-6",
-        "title": "LEVEL 6: CSS Variables & Preprocessors",
-        "description": "Write clean, maintainable, and reusable styles",
-        "lessons": [
-            {
-                "id": "hc6.1",
-                "title": "6.1 CSS Variables (Custom Properties)",
-                "duration": "25 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "Variables",
-                    "Theming",
-                    "Maintainability"
-                ],
-                "content": "# CSS Variables\n\nVariables allow you to store values (like colors or sizes) and reuse them throughout your stylesheet.\n\n## 1. Declaration\nUsually declared in the `:root` selector.\n```css\n:root {\n  --primary-color: #ff5733;\n  --spacing: 20px;\n}\n```\n\n## 2. Usage\n```css\n.btn {\n  background-color: var(--primary-color);\n  padding: var(--spacing);\n}\n```",
-                "fullProgram": ":root {\n    --bg: #121212;\n    --text: #ffffff;\n    --accent: #bb86fc;\n}\n\nbody {\n    background-color: var(--bg);\n    color: var(--text);\n}\n\n.highlight {\n    color: var(--accent);\n}",
-                "expectedOutput": "A dark-themed page with white text and purple accents using variables.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "What is the correct syntax for using a CSS variable?",
-                        "options": [
-                            "$var(name)",
-                            "var(--name)",
-                            "--name",
-                            "variable(--name)"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "CSS variables start with -- and are retrieved using the var() function."
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "id": "htmlcss-level-6",
+    "title": "LEVEL 6: CSS Variables & Preprocessors",
+    "description": "Write clean, maintainable, and reusable styles",
+    "lessons": [
+      {
+        "id": "hc6.1",
+        "title": "6.1 CSS Variables (Custom Properties)",
+        "duration": "25 mins",
+        "difficultyLevel": "Advanced",
+        "topics": [
+          "Variables",
+          "Theming",
+          "Maintainability"
+        ],
+        "content": "# CSS Variables\n\nVariables allow you to store values (like colors or sizes) and reuse them throughout your stylesheet.\n\n## 1. Declaration\nUsually declared in the `:root` selector.\n```css\n:root {\n  --primary-color: #ff5733;\n  --spacing: 20px;\n}\n```\n\n## 2. Usage\n```css\n.btn {\n  background-color: var(--primary-color);\n  padding: var(--spacing);\n}\n```",
+        "fullProgram": ":root {\n    --bg: #121212;\n    --text: #ffffff;\n    --accent: #bb86fc;\n}\n\nbody {\n    background-color: var(--bg);\n    color: var(--text);\n}\n\n.highlight {\n    color: var(--accent);\n}",
+        "expectedOutput": "A dark-themed page with white text and purple accents using variables.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the correct syntax for using a CSS variable?",
+            "options": [
+              "$var(name)",
+              "var(--name)",
+              "--name",
+              "variable(--name)"
+            ],
+            "correctAnswer": 1,
+            "explanation": "CSS variables start with -- and are retrieved using the var() function."
+          }
         ]
-    },
-    {
-        "id": "htmlcss-level-7",
-        "title": "LEVEL 7: Animations & Effects",
-        "description": "Bring your UI to life with transitions and keyframes",
-        "lessons": [
-            {
-                "id": "hc7.1",
-                "title": "7.1 CSS Transitions & Keyframes",
-                "duration": "35 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "Transitions",
-                    "Keyframes",
-                    "Transforms"
-                ],
-                "content": "# Smooth Interactions\n\n## 1. Transitions\nUsed for simple state changes (like hover).\n`transition: background 0.3s ease;`\n\n## 2. Keyframes\nUsed for complex, multi-stage animations.\n```css\n@keyframes slideIn {\n  from { transform: translateX(-100%); }\n  to { transform: translateX(0); }\n}\n\n.menu {\n  animation: slideIn 0.5s forwards;\n}\n```",
-                "fullProgram": "/* Pulsing Notification Dot */\n.dot {\n    width: 10px;\n    height: 10px;\n    background: red;\n    border-radius: 50%;\n    animation: pulse 1.5s infinite;\n}\n\n@keyframes pulse {\n    0% { transform: scale(1); opacity: 1; }\n    50% { transform: scale(1.5); opacity: 0.5; }\n    100% { transform: scale(1); opacity: 1; }\n}",
-                "expectedOutput": "A red dot that smoothly pulses in size and transparency.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which property is used to define the stages of a complex animation?",
-                        "options": [
-                            "@animation",
-                            "@stages",
-                            "@keyframes",
-                            "@timeline"
-                        ],
-                        "correctAnswer": 2,
-                        "explanation": "@keyframes allows you to specify the CSS styles at various points during an animation sequence."
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "id": "htmlcss-level-7",
+    "title": "LEVEL 7: Animations & Effects",
+    "description": "Bring your UI to life with transitions and keyframes",
+    "lessons": [
+      {
+        "id": "hc7.1",
+        "title": "7.1 CSS Transitions & Keyframes",
+        "duration": "35 mins",
+        "difficultyLevel": "Advanced",
+        "topics": [
+          "Transitions",
+          "Keyframes",
+          "Transforms"
+        ],
+        "content": "# Smooth Interactions\n\n## 1. Transitions\nUsed for simple state changes (like hover).\n`transition: background 0.3s ease;`\n\n## 2. Keyframes\nUsed for complex, multi-stage animations.\n```css\n@keyframes slideIn {\n  from { transform: translateX(-100%); }\n  to { transform: translateX(0); }\n}\n\n.menu {\n  animation: slideIn 0.5s forwards;\n}\n```",
+        "fullProgram": "/* Pulsing Notification Dot */\n.dot {\n    width: 10px;\n    height: 10px;\n    background: red;\n    border-radius: 50%;\n    animation: pulse 1.5s infinite;\n}\n\n@keyframes pulse {\n    0% { transform: scale(1); opacity: 1; }\n    50% { transform: scale(1.5); opacity: 0.5; }\n    100% { transform: scale(1); opacity: 1; }\n}",
+        "expectedOutput": "A red dot that smoothly pulses in size and transparency.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which property is used to define the stages of a complex animation?",
+            "options": [
+              "@animation",
+              "@stages",
+              "@keyframes",
+              "@timeline"
+            ],
+            "correctAnswer": 2,
+            "explanation": "@keyframes allows you to specify the CSS styles at various points during an animation sequence."
+          }
         ]
-    },
-    {
-        "id": "htmlcss-level-8",
-        "title": "LEVEL 8: Accessibility & Forms",
-        "description": "Create inclusive and functional web applications",
-        "lessons": [
-            {
-                "id": "hc8.1",
-                "title": "8.1 Semantic Forms & A11y",
-                "duration": "30 mins",
-                "difficultyLevel": "Advanced",
-                "topics": [
-                    "Forms",
-                    "Accessibility",
-                    "ARIA"
-                ],
-                "content": "# Accessible Forms\n\nForms are how users interact with your app. They must be usable by everyone, including screen reader users.\n\n## 1. Essential Form Tags\n- `<label>`: Always link to an input using the `for` attribute.\n- `<fieldset>` & `<legend>`: Group related inputs.\n- `required`: Built-in HTML validation.\n\n## 2. ARIA Roles\nAccessible Rich Internet Applications (ARIA) provide extra context.\n`aria-label=\"Close menu\"` on a button with only an icon.",
-                "fullProgram": "<!-- Accessible Signup Form -->\n<form>\n    <label for=\"email\">Email Address:</label>\n    <input type=\"email\" id=\"email\" name=\"email\" required>\n    \n    <label for=\"pass\">Password:</label>\n    <input type=\"password\" id=\"pass\" name=\"pass\" minlength=\"8\">\n    \n    <button type=\"submit\">Join GenSpark</button>\n</form>",
-                "expectedOutput": "A clean, functional form that works well with keyboards and screen readers.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Why should you use <label for='id'> instead of just text next to an input?",
-                        "options": [
-                            "It looks better",
-                            "It is required for CSS",
-                            "It makes the input clickable via the label and aids screen readers",
-                            "It saves memory"
-                        ],
-                        "correctAnswer": 2,
-                        "explanation": "Labels increase the clickable area and allow screen readers to correctly identify what the input is for."
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "id": "htmlcss-level-8",
+    "title": "LEVEL 8: Accessibility & Forms",
+    "description": "Create inclusive and functional web applications",
+    "lessons": [
+      {
+        "id": "hc8.1",
+        "title": "8.1 Semantic Forms & A11y",
+        "duration": "30 mins",
+        "difficultyLevel": "Advanced",
+        "topics": [
+          "Forms",
+          "Accessibility",
+          "ARIA"
+        ],
+        "content": "# Accessible Forms\n\nForms are how users interact with your app. They must be usable by everyone, including screen reader users.\n\n## 1. Essential Form Tags\n- `<label>`: Always link to an input using the `for` attribute.\n- `<fieldset>` & `<legend>`: Group related inputs.\n- `required`: Built-in HTML validation.\n\n## 2. ARIA Roles\nAccessible Rich Internet Applications (ARIA) provide extra context.\n`aria-label=\"Close menu\"` on a button with only an icon.",
+        "fullProgram": "<!-- Accessible Signup Form -->\n<form>\n    <label for=\"email\">Email Address:</label>\n    <input type=\"email\" id=\"email\" name=\"email\" required>\n    \n    <label for=\"pass\">Password:</label>\n    <input type=\"password\" id=\"pass\" name=\"pass\" minlength=\"8\">\n    \n    <button type=\"submit\">Join GenSpark</button>\n</form>",
+        "expectedOutput": "A clean, functional form that works well with keyboards and screen readers.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Why should you use <label for='id'> instead of just text next to an input?",
+            "options": [
+              "It looks better",
+              "It is required for CSS",
+              "It makes the input clickable via the label and aids screen readers",
+              "It saves memory"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Labels increase the clickable area and allow screen readers to correctly identify what the input is for."
+          }
         ]
-    },
-    {
-        "id": "htmlcss-level-9",
-        "title": "LEVEL 9: Final Web Mastery Exam",
-        "description": "Prove your frontend design and structural skills",
-        "lessons": [
-            {
-                "id": "hc9.1",
-                "title": "9.1 Web Design Master Assessment",
-                "duration": "45 mins",
-                "difficultyLevel": "Master",
-                "topics": [
-                    "Final Exam",
-                    "Final Assessment"
-                ],
-                "content": "# Final Web Assessment\n\n**Welcome, Designer!** You have mastered the pillars of the web: Structure (HTML) and Style (CSS). This final exam will verify your expertise.\n\n## Assessment Content:\n- **Structure**: Semantic tags, Forms, SEO best practices.\n- **Layout**: Flexbox, CSS Grid, and responsive strategies.\n- **Style**: Selectors, specificity, variables, and units (rem/em).\n- **User Experience**: Accessibility (ARIA), transitions, and animation logic.\n\n## Graduation Track:\n- Complete the quiz below with 100% accuracy to earn the **GenSpark Web Professional Status**.",
-                "fullProgram": "<!-- Final Project Mockup: Glassmorphism Hero Section -->\n<div class=\"hero\">\n    <div class=\"glass-card\">\n        <h1>Design the Future</h1>\n        <p>Web Development Masterclass.</p>\n        <button>Get Started</button>\n    </div>\n</div>\n\n<style>\n.hero {\n    height: 100vh;\n    background: linear-gradient(45deg, #4158D0, #C850C0);\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n.glass-card {\n    background: rgba(255, 255, 255, 0.1);\n    backdrop-filter: blur(10px);\n    padding: 3rem;\n    border-radius: 20px;\n    border: 1px solid rgba(255, 255, 255, 0.2);\n    color: white;\n    text-align: center;\n}\n</style>",
-                "expectedOutput": "A beautiful hero section with a frosted-glass card effect.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which CSS unit is relative to the root element's font-size?",
-                        "options": [
-                            "em",
-                            "rem",
-                            "px",
-                            "%"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "rem (Root EM) is relative to the <html> tag's font size, making it great for accessibility."
-                    },
-                    {
-                        "id": 2,
-                        "text": "How do you select all <p> elements inside a <div>?",
-                        "options": [
-                            "div p",
-                            "div + p",
-                            "div.p",
-                            "div > p"
-                        ],
-                        "correctAnswer": 0,
-                        "explanation": "The descendant selector (space) selects all matching elements at any nesting level inside the parent."
-                    },
-                    {
-                        "id": 3,
-                        "text": "What does 'z-index' do?",
-                        "options": [
-                            "Zooms in on an image",
-                            "Controls stack order of overlapping elements",
-                            "Sets the width of a box",
-                            "Changes the font weight"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "z-index controls which element appears on top when they occupy the same space."
-                    },
-                    {
-                        "id": 4,
-                        "text": "Which property is used to create space between grid cells?",
-                        "options": [
-                            "margin",
-                            "padding",
-                            "gap",
-                            "spacing"
-                        ],
-                        "correctAnswer": 2,
-                        "explanation": "The 'gap' (formerly grid-gap) property is the modern way to define gutters in Grid and Flexbox."
-                    },
-                    {
-                        "id": 5,
-                        "text": "Which HTML tag is used for the most important heading?",
-                        "options": [
-                            "<head>",
-                            "<header>",
-                            "<h1>",
-                            "<caption>"
-                        ],
-                        "correctAnswer": 2,
-                        "explanation": "<h1> indicates the main heading of a page."
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "id": "htmlcss-level-9",
+    "title": "LEVEL 9: Final Web Mastery Exam",
+    "description": "Prove your frontend design and structural skills",
+    "lessons": [
+      {
+        "id": "hc9.1",
+        "title": "9.1 Web Design Master Assessment",
+        "duration": "45 mins",
+        "difficultyLevel": "Master",
+        "topics": [
+          "Final Exam",
+          "Final Assessment"
+        ],
+        "content": "# Final Web Assessment\n\n**Welcome, Designer!** You have mastered the pillars of the web: Structure (HTML) and Style (CSS). This final exam will verify your expertise.\n\n## Assessment Content:\n- **Structure**: Semantic tags, Forms, SEO best practices.\n- **Layout**: Flexbox, CSS Grid, and responsive strategies.\n- **Style**: Selectors, specificity, variables, and units (rem/em).\n- **User Experience**: Accessibility (ARIA), transitions, and animation logic.\n\n## Graduation Track:\n- Complete the quiz below with 100% accuracy to earn the **GenSpark Web Professional Status**.",
+        "fullProgram": "<!-- Final Project Mockup: Glassmorphism Hero Section -->\n<div class=\"hero\">\n    <div class=\"glass-card\">\n        <h1>Design the Future</h1>\n        <p>Web Development Masterclass.</p>\n        <button>Get Started</button>\n    </div>\n</div>\n\n<style>\n.hero {\n    height: 100vh;\n    background: linear-gradient(45deg, #4158D0, #C850C0);\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n.glass-card {\n    background: rgba(255, 255, 255, 0.1);\n    backdrop-filter: blur(10px);\n    padding: 3rem;\n    border-radius: 20px;\n    border: 1px solid rgba(255, 255, 255, 0.2);\n    color: white;\n    text-align: center;\n}\n</style>",
+        "expectedOutput": "A beautiful hero section with a frosted-glass card effect.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which CSS unit is relative to the root element's font-size?",
+            "options": [
+              "em",
+              "rem",
+              "px",
+              "%"
+            ],
+            "correctAnswer": 1,
+            "explanation": "rem (Root EM) is relative to the <html> tag's font size, making it great for accessibility."
+          },
+          {
+            "id": 2,
+            "text": "How do you select all <p> elements inside a <div>?",
+            "options": [
+              "div p",
+              "div + p",
+              "div.p",
+              "div > p"
+            ],
+            "correctAnswer": 0,
+            "explanation": "The descendant selector (space) selects all matching elements at any nesting level inside the parent."
+          },
+          {
+            "id": 3,
+            "text": "What does 'z-index' do?",
+            "options": [
+              "Zooms in on an image",
+              "Controls stack order of overlapping elements",
+              "Sets the width of a box",
+              "Changes the font weight"
+            ],
+            "correctAnswer": 1,
+            "explanation": "z-index controls which element appears on top when they occupy the same space."
+          },
+          {
+            "id": 4,
+            "text": "Which property is used to create space between grid cells?",
+            "options": [
+              "margin",
+              "padding",
+              "gap",
+              "spacing"
+            ],
+            "correctAnswer": 2,
+            "explanation": "The 'gap' (formerly grid-gap) property is the modern way to define gutters in Grid and Flexbox."
+          },
+          {
+            "id": 5,
+            "text": "Which HTML tag is used for the most important heading?",
+            "options": [
+              "<head>",
+              "<header>",
+              "<h1>",
+              "<caption>"
+            ],
+            "correctAnswer": 2,
+            "explanation": "<h1> indicates the main heading of a page."
+          }
         ]
-    }
+      }
+    ]
+  }
 ]

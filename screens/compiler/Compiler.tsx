@@ -105,6 +105,8 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
                     code: currentCode,
                     language,
                     accepted: resultSummary.status === "PASSED",
+                    stderr: resultSummary.stderr,
+                    compile_output: resultSummary.compile_output,
                     status: {
                         id: resultSummary.status === "PASSED" ? 3 : 4,
                         description: resultSummary.status === "PASSED" ? 'Accepted' : 'Tests Failed'

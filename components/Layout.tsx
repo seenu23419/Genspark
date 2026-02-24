@@ -138,7 +138,7 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children
             <div className="flex-1 flex flex-col min-w-0 relative">
                 {/* Mobile Header - Material Design 56 dp */}
                 {!hideSidebar && (
-                    <header className="md:hidden flex items-center justify-between px-5 bg-black sticky top-0 z-40 h-[64px] min-h-[64px] border-b border-white/5 transition-all duration-300">
+                    <header className="md:hidden flex items-center justify-between px-5 bg-white dark:bg-black sticky top-0 z-40 h-[64px] min-h-[64px] border-b border-slate-200 dark:border-white/5 transition-all duration-300">
                         <div className="flex items-center gap-4">
                             <div
                                 className="flex items-center gap-3 active:scale-95 transition-all cursor-pointer group"
@@ -152,20 +152,20 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children
                                         style={{ filter: 'saturate(1.5) contrast(1.2)' }}
                                     />
                                 </div>
-                                <span className="text-2xl font-black text-white tracking-widest uppercase italic leading-none">GenSpark</span>
+                                <span className="text-2xl font-black text-slate-900 dark:text-white tracking-widest uppercase italic leading-none">GenSpark</span>
                             </div>
                         </div>
                     </header>
                 )}
 
                 {/* Content Area with smooth fade transition - proper padding for mobile */}
-                <main className={`flex-1 overflow-y-auto scroll-smooth relative no-scrollbar animate-in fade-in duration-300 bg-black transition-colors duration-300 ${!hideBottomNav ? 'pb-[80px] md:pb-0' : ''}`}>
+                <main className={`flex-1 overflow-y-auto scroll-smooth relative no-scrollbar animate-in fade-in duration-300 bg-slate-50 dark:bg-black transition-colors duration-300 ${!hideBottomNav ? 'pb-[80px] md:pb-0' : ''}`}>
                     {children}
                 </main>
 
                 {/* Mobile Bottom Navigation - Modern Native App Style */}
                 {!hideBottomNav && !isKeyboardVisible && (
-                    <div className="md:hidden fixed bottom-0 left-0 right-0 z-[1000] bg-black/95 backdrop-blur-2xl border-t border-white/10 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_30px_rgba(0,0,0,0.8)]">
+                    <div className="md:hidden fixed bottom-0 left-0 right-0 z-[1000] bg-white/80 dark:bg-black/95 backdrop-blur-2xl border-t border-slate-200 dark:border-white/10 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_-8px_30px_rgba(0,0,0,0.8)]">
                         <nav className="flex items-center justify-between h-[72px] px-4">
                             {navItems.map((item) => {
                                 const isActive = currentScreen === item.id || (item.id === 'PROFILE' && (currentScreen === 'SETTINGS' || currentScreen === 'ANALYTICS' || window.location.pathname.startsWith('/profile')));
@@ -184,7 +184,7 @@ const Layout: React.FC<LayoutProps> = ({ currentScreen, user: propUser, children
                                                 strokeWidth={isActive ? 2.5 : 2}
                                             />
                                         </div>
-                                        <span className={`text-[11px] font-bold uppercase tracking-wider transition-all duration-300 ${isActive ? 'text-indigo-400 font-black' : 'text-slate-400'}`}>
+                                        <span className={`text-[11px] font-bold uppercase tracking-wider transition-all duration-300 ${isActive ? 'text-indigo-400 font-black' : 'text-slate-500'}`}>
                                             {item.label}
                                         </span>
                                         {isActive && (

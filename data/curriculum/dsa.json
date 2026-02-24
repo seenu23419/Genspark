@@ -1,173 +1,1670 @@
 [
-    {
-        "id": "dsa-l1",
-        "title": "LEVEL 1: Foundations & Complexity",
-        "subtitle": "Master the fundamentals of efficiency.",
-        "lessons": [
-            {
-                "id": "d1",
-                "title": "1. Introduction to DSA",
-                "duration": "15 mins",
-                "content": "### What is DSA?\r\nData Structures and Algorithms (DSA) are the essential building blocks of efficient software development. \r\n- A **Data Structure** is not just a bunch of data; it is a specialized format for organizing, processing, retrieving, and storing data so that it can be accessed and modified in the most efficient way possible.\r\n- An **Algorithm** is a finite, step-by-step procedure or a set of rules used to solve a specific problem or perform a computation efficiently.\r\n\r\n### Why Study DSA?\r\nStudying DSA is crucial for any serious software engineer because it shifts the focus from just making things work to making them work optimally.\r\n- **Efficiency:** In high-performance systems, choosing the right data structure can reduce the execution time of an operation from minutes to milliseconds.\r\n- **Problem Solving:** DSA training helps you break down complex real-world problems into manageable, logical steps that can be automated.\r\n- **Scalability:** Code that works for 10 users might crash for 10 million. DSA teaches you how to write code that scales with the amount of data.\r\n- **Interviews:** Most top-tier tech companies use DSA as a benchmark to measure a candidate's logical reasoning and technical depth.\r\n\r\n--- \r\n### Example: Searching for a Number\r\nTo understand the power of algorithms, imagine you are looking for a name in a physical phone book containing 1,000 pages.\r\n- **Linear Search:** You start from page 1 and check Every. Single. Page. If the name is on page 999, it takes you 999 steps. This is inefficient for large datasets.\r\n- **Binary Search:** You open the book exactly in the middle. If the name is alphabetically further, you throw away the first half and open the middle of the remaining half. You repeat this until you find the name. For 1,000 pages, this takes at most **10 steps**. This is the power of a good algorithm!",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "What is the primary difference between a Data Structure and an Algorithm?",
-                        "options": [
-                            "Data Structures store data, while Algorithms process it.",
-                            "Algorithms store data, while Data Structures process it.",
-                            "There is no difference.",
-                            "Data Structures are for hardware, Algorithms are for software."
-                        ],
-                        "correctAnswer": 0,
-                        "explanation": "Data structures provide a way to organize and store data, while algorithms provide the logic and steps to manipulate that data."
-                    }
-                ]
-            },
-            {
-                "id": "d2",
-                "title": "2. Big O Notation",
-                "duration": "25 mins",
-                "content": "### Understanding Efficiency and Complexity\r\nWhen we talk about 'fast' code, we don't use seconds or milliseconds as a metric. Why? Because the same code will run at different speeds on a supercomputer versus an old smartphone. \r\nInstead, we use **Asymptotic Analysis** and **Big O Notation**. This allows us to describe how the runtime (or memory usage) of an algorithm grows as the size of the input (n) increases, regardless of the hardware.\r\n\r\n### Common Time Complexities\r\nIn the world of DSA, we categorize algorithms based on their efficiency curves:\r\n- **O(1) - Constant Time:** The algorithm takes the same amount of time regardless of input size. Example: Accessing a specific index in an array.\r\n- **O(log n) - Logarithmic Time:** The time grows slowly as input increases. Example: Binary Search in a sorted list.\r\n- **O(n) - Linear Time:** The time grows exactly in proportion to the input size. Example: Iterating through a simple list once.\r\n- **O(n^2) - Quadratic Time:** The time grows dramatically as input increases. This usually happens with 'nested loops' (a loop inside a loop). While okay for small data, it becomes very slow for large datasets.\r\n\r\n### Best, Average, and Worst Case\r\nMost algorithms behave differently depending on the input they receive. \r\n- **Worst Case (Big O):** This is the maximum time an algorithm could possibly take. Engineers focus on this to ensure their systems never fail under heavy load.\r\n- **Average Case (Theta):** What you can typically expect on a normal run.\r\n- **Best Case (Omega):** The absolute fastest time possible (e.g., finding the item on the first try).",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Why do we use Big O notation instead of measuring time in seconds?",
-                        "options": [
-                            "Because seconds are too hard to count.",
-                            "To provide a hardware-independent measure of how an algorithm scales.",
-                            "Because Big O is more accurate than a stopwatch.",
-                            "Only to pass technical interviews."
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "Big O measures how the number of operations grows relative to input size, making it a reliable metric across different devices and environments."
-                    }
-                ]
-            }
-        ],
-        "problems": [
-            {
-                "id": "dsa_p1",
-                "title": "Complexity Analysis Quiz",
-                "description": "Calculate the Big O of various code snippets.",
-                "difficulty": "easy"
-            }
+  {
+    "id": "dsa-l1",
+    "title": "LEVEL 1: Programming & DSA Foundations (Beginner)",
+    "subtitle": "Build logical thinking & coding base",
+    "lessons": [
+      {
+        "id": "d1",
+        "title": "1. What is DSA? Why DSA?",
+        "duration": "15 mins",
+        "content": "### What is DSA?\r\nData Structures and Algorithms (DSA) are the fundamental pillars of computer science. Think of a **Data Structure** as a container or an organizational system for data (like a shelf in a library), while an **Algorithm** is the specific procedure or set of rules used to manipulate that data (like the system for finding a book on that shelf).\r\n\r\nIn engineering terms, a Data Structure is not just about storage; it's about defining the relationship between data items and providing a set of operations to manage them. An Algorithm is a logic-based sequence of instructions that takes some input, processes it, and produces an output within a finite amount of time.\r\n\r\n### Why Study DSA?\r\nModern software systems handle astronomical amounts of information. Without DSA, even simple tasks become impossibly slow.\r\n- **Optimized Performance:** Choosing the right data structure can turn an operation that takes minutes into one that takes milliseconds.\r\n- **Scalability and Resilience:** Systems like Google Search or Amazon's recommendation engine rely on high-performance algorithms to manage billions of requests without crashing.\r\n- **Memory Management:** Efficient data structures minimize memory footprint, which is crucial for mobile devices and embedded systems.\r\n- **Algorithmic Thinking:** Learning DSA trains your brain to break down vague, complex problems into precise, logical steps that a computer can execute.\r\n\r\n### Hardware Context\r\nAlgorithms don't exist in a vacuum. They interact with hardware layers like the CPU cache and RAM. For instance, data structures that store elements consecutively (like arrays) are faster because they benefit from 'Spatial Locality' in the CPU cache. Understanding these lower-level details is what separates a good developer from a great one.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What does 'Algorithm' primarily refer to in software engineering?",
+            "options": [
+              "A step-by-step procedure for solving a problem",
+              "A physical hardware component",
+              "A way of storing data on a disk",
+              "A programming language"
+            ],
+            "correctAnswer": 0,
+            "explanation": "An algorithm is a logic-based sequence of steps to perform a computation or solve a problem."
+          }
         ]
-    },
-    {
-        "id": "dsa-l2",
-        "title": "LEVEL 2: Linear Data Structures (Part 1)",
-        "subtitle": "Arrays and Linked Lists.",
-        "lessons": [
-            {
-                "id": "d3",
-                "title": "3. Array Operations",
-                "duration": "20 mins",
-                "content": "### Arrays in Memory: The Foundation\r\nArrays are the most basic and widely used data structure. Internally, an array is a **contiguous block of memory**. When you create an array, the computer sets aside a specific sequence of memory addresses to hold your data. \r\nBecause the items are right next to each other, the computer can jump to any element instantly using a simple calculation: `Address = Start + (Index * Size)`. This makes indexing an **O(1)** operation.\r\n\r\n### Common Operations and Their Trade-offs\r\n- **Accessing by Index:** O(1). As mentioned, it's a direct jump to memory.\r\n- **Insertion at End:** O(1) if there is space. \r\n- **Insertion at Start/Middle:** O(n). To make room for a new item at the start, every other item in the array must be 'shifted' one position to the right.\r\n- **Deletion:** O(n). Similar to insertion, removing an item from the middle requires shifting all subsequent items to fill the gap.\r\n- **Searching:** O(n) for an unsorted array (you might have to check every item), but can be improved to **O(log n)** using Binary Search if the array is already sorted.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Why is inserting an element at the beginning of an array considered O(n)?",
-                        "options": [
-                            "Because you have to allocate more memory.",
-                            "Because you have to shift every existing element to the right.",
-                            "Because arrays are stored in random memory locations.",
-                            "It is actually O(1)."
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "In a contiguous memory block, you must move all existing elements to the next available slot to create a free space at index 0."
-                    }
-                ]
-            },
-            {
-                "id": "d4",
-                "title": "4. Linked Lists",
-                "duration": "25 mins",
-                "content": "### Limitations of Arrays\r\nWhile arrays are fast for access, they have a fixed size and are expensive to resize or modify (lots of shifting). This is where **Linked Lists** come in.\r\n\r\n### What is a Linked List?\r\nA Linked List is a linear data structure where elements are not stored in contiguous memory. Instead, each element is a **Node** that contains:\r\n1. The **Data** it stores.\r\n2. A **Pointer** (link) to the next node in the sequence.\r\n\r\n### Types of Linked Lists\r\n- **Singly Linked List:** Each node points only to the next one.\r\n- **Doubly Linked List:** Each node points to both the next and the previous node, allowing backwards traversal.\r\n- **Circular Linked List:** The last node points back to the first node, forming a loop.\r\n\r\n### Operational Complexity\r\n- **Insertion/Deletion:** O(1) if you already have a pointer to the location (no shifting required!).\r\n- **Access/Search:** O(n). Since nodes are scattered in memory, you must start at the 'Head' and follow the links one by one.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "What is the primary advantage of a Linked List over an Array?",
-                        "options": [
-                            "Faster access to elements by index.",
-                            "Lower memory usage.",
-                            "Efficient insertion and deletion without shifting elements.",
-                            "Better compatibility with hardware."
-                        ],
-                        "correctAnswer": 2,
-                        "explanation": "Adding or removing a node only requires changing pointers, whereas arrays require shifting half the elements on average."
-                    }
-                ]
-            }
-        ],
-        "problems": [
-            {
-                "id": "dsa_p2",
-                "title": "Array Reversal",
-                "description": "Reverse an array in-place with O(1) space.",
-                "difficulty": "medium"
-            },
-            {
-                "id": "dsa_p3",
-                "title": "Middle of Linked List",
-                "description": "Find the middle node of a singly linked list in one pass.",
-                "difficulty": "medium"
-            }
+      },
+      {
+        "id": "d2",
+        "title": "2. Time & Space Complexity",
+        "duration": "20 mins",
+        "content": "### Analyzing Performance\r\nWhen we ask 'How fast is this code?', we can't rely on a stopwatch. Why? Because the same code will run at different speeds on a supercomputer versus an old smartphone. To solve this, engineers use **Asymptotic Analysis**, which measures efficiency in terms of input size **n**.\r\n\r\n### Time Complexity\r\nThis doesn't measure seconds; it measures the **number of operations** an algorithm performs as **n** grows. For example, if you have a loop that runs from 1 to `n`, the time complexity is linear. If you have nested loops, it might be quadratic.\r\n\r\n### Space Complexity\r\nSpace complexity refers to the total memory an algorithm consumes relative to the input size. This includes:\r\n1. **Fixed Part:** Memory for simple variables and constants.\r\n2. **Variable Part:** Memory for dynamic structures like arrays, recursion stacks, or objects created during execution.\r\n\r\n### The Trade-off\r\nIn the real world, you often face a 'Space-Time Trade-off'. You can often make an algorithm faster by using more memory (like caching results), or you can save memory by performing more computations. Choosing the right balance is a core skill for any senior engineer.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Space Complexity measures what?",
+            "options": [
+              "Execution time",
+              "Memory usage relative to input size",
+              "The number of lines of code",
+              "The size of the hard drive"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Space complexity analyzes how memory requirements grow as the input size increases."
+          }
         ]
-    },
-    {
-        "id": "dsa-l3",
-        "title": "LEVEL 3: Linear Data Structures (Part 2)",
-        "subtitle": "Stacks and Queues.",
-        "lessons": [
-            {
-                "id": "d5",
-                "title": "5. Stacks (LIFO)",
-                "duration": "20 mins",
-                "content": "### What is a Stack?\r\nA **Stack** is a linear data structure that follows the **Last-In, First-Out (LIFO)** principle. Think of a stack of plates: the last plate you put on top is the first one you take off.\r\n\r\n### Core Operations\r\n- **Push:** Adding an element to the top of the stack (O(1)).\r\n- **Pop:** Removing the top element from the stack (O(1)).\r\n- **Peek:** Looking at the top element without removing it (O(1)).\r\n\r\n### Real-World Applications\r\n- **Undo Functionality:** Your text editor uses a stack to keep track of changes.\r\n- **Function Calls:** Languages like C and Python use a 'Call Stack' to manage function executions.\r\n- **Backtracking:** Stacks are used in algorithms to explore paths and return to previous states.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which principle does a Stack follow?",
-                        "options": [
-                            "First-In, First-Out (FIFO)",
-                            "Last-In, Last-Out (LILO)",
-                            "Last-In, First-Out (LIFO)",
-                            "Random Access"
-                        ],
-                        "correctAnswer": 2,
-                        "explanation": "LIFO (Last-In, First-Out) means the most recently added element is the first one to be removed."
-                    }
-                ]
-            },
-            {
-                "id": "d6",
-                "title": "6. Queues (FIFO)",
-                "duration": "20 mins",
-                "content": "### What is a Queue?\r\nA **Queue** is a linear data structure that follows the **First-In, First-Out (FIFO)** principle. Think of a line of people waiting for a movie ticket: the first person who joins the line is the first one to be served.\r\n\r\n### Core Operations\r\n- **Enqueue:** Adding an element to the back (rear) of the queue (O(1)).\r\n- **Dequeue:** Removing an element from the front of the queue (O(1)).\r\n- **Front:** Looking at the first element in the queue (O(1)).\r\n\r\n### Real-World Applications\r\n- **Task Scheduling:** Operating systems use queues to manage processes waiting for the CPU.\r\n- **Data Buffering:** Used in streaming and communication to handle data flow.",
-                "quizQuestions": [
-                    {
-                        "id": 1,
-                        "text": "Which principle does a Queue follow?",
-                        "options": [
-                            "LIFO",
-                            "FIFO",
-                            "Random Search",
-                            "Stacking"
-                        ],
-                        "correctAnswer": 1,
-                        "explanation": "FIFO (First-In, First-Out) ensures that the oldest element is processed first."
-                    }
-                ]
-            }
-        ],
-        "problems": [
-            {
-                "id": "dsa_p4",
-                "title": "Valid Parentheses",
-                "description": "Use a stack to check if brackets are correctly closed.",
-                "difficulty": "medium"
-            }
+      },
+      {
+        "id": "d3",
+        "title": "3. Big-O, Big-Ω, Big-Θ",
+        "duration": "20 mins",
+        "content": "### Asymptotic Notations\r\nAsymptotic notations provide a mathematical language to describe the growth rate of functions. In DSA, we use them to categorize algorithms into 'Complexity Classes'.\r\n\r\n- **Big-O (O):** The **Upper Bound**. It describes the worst-case scenario. If an algorithm is O(n), it means the algorithm will never perform worse than linear time for large inputs. This is the most crucial notation for engineers because it provides a 'performance guarantee'.\r\n- **Big-Omega (Ω):** The **Lower Bound**. It describes the absolute best-case scenario. For instance, if searching for an element in an array, the best case is finding it at the first index, which is Ω(1).\r\n- **Big-Theta (Θ):** The **Tight Bound**. It is used when the upper and lower bounds are the same, providing an exact description of the algorithm's behavior. \r\n\r\n### Why 'Asymptotic'?\r\nThe word 'asymptotic' means that we focus on what happens as the input size **n** approaches infinity. We ignore constant factors (like $2n$ becoming $n$) and lower-order terms (like $n^2 + n$ becoming $n^2$) because, as **n** grows large, these elements become insignificant.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which notation is most commonly used for worst-case analysis?",
+            "options": [
+              "Big-Omega (Ω)",
+              "Big-Theta (Θ)",
+              "Big-O (O)",
+              "Little-o"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Big-O is the standard for expressing the worst-case time complexity of an algorithm."
+          }
         ]
-    }
+      },
+      {
+        "id": "d4",
+        "title": "4. Best, Average & Worst Case",
+        "duration": "15 mins",
+        "content": "### Analyzing Input Variance\r\nNot all inputs of size **n** require the same amount of effort. Depending on the data's arrangement, an algorithm's performance can vary wildly.\r\n\r\n- **Worst Case Analysis:** This is our focus. It considers the 'worst possible' input configuration. For a sorted search, the worst case is if the element isn't there or is at the very end. Engineers rely on this to ensure systems can handle heavy loads.\r\n- **Average Case Analysis:** This considers the 'typical' input. While mathematically honest, it's often hard to define what a 'typical' input is in the real world. Many algorithms (like Quicksort) are O(n log n) on average but O(n^2) in the absolute worst case.\r\n- **Best Case Analysis:** Useful for understanding an algorithm's potential but rarely used for system design. If you find your result in the first step, that's your best case.\r\n\r\n### Pro-Tip: Amortized Analysis\r\nSometimes an operation is very slow once (like resizing an array) but O(1) most of the other times. **Amortized Analysis** averages the time of all operations over a long sequence, giving a more realistic picture of performance in long-running systems.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "When we analyze an algorithm for technical interviews, which case is most important?",
+            "options": [
+              "Best Case",
+              "Worst Case",
+              "Average Case",
+              "Edge Case"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Worst case analysis (Big-O) is the most critical as it provides a performance guarantee for any input."
+          }
+        ]
+      },
+      {
+        "id": "d5",
+        "title": "5. Recursion Basics",
+        "duration": "25 mins",
+        "content": "### The Power of Self-Reference\r\nRecursion is a method where the solution to a problem depends on solutions to smaller instances of the same problem. In programming, this means a function calls itself. It's often compared to Russian Matryoshka dolls—you open a doll, and inside is a smaller, identical doll.\r\n\r\n### The Two Pillars of Recursion\r\nFor recursion to work (and not crash your computer), you need two things:\r\n1. **The Base Case:** This is your 'stopping condition'. It handles the simplest possible input (e.g., `n=0` or `list is empty`) and returns a value without calling the function again.\r\n2. **The Recursive Step:** This is where the magic happens. You reduce the problem size (e.g., by calling the function with `n-1`) and combine the result with the current step.\r\n\r\n### Visualizing the Stack\r\nEvery time a function calls itself, the computer stores the current function's state (its variables and where it was in the code) in a 'stack frame' in memory. Once the base case is reached, the computer 'unwinds' the stack, finishing each function call from the last to the first. This is why deep recursion can lead to a **Stack Overflow Error**—you literally ran out of slots in that memory stack.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What happens if a recursive function lacks a base case?",
+            "options": [
+              "It returns 0",
+              "It results in an infinite loop / Stack Overflow",
+              "It executes faster",
+              "It converts to iterative automatically"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Without a base case, the function keeps calling itself indefinitely until the system's memory (stack) is exhausted."
+          }
+        ]
+      },
+      {
+        "id": "d6",
+        "title": "6. Iterative vs Recursive Approach",
+        "duration": "20 mins",
+        "content": "### Choosing Your Strategy\r\nAlmost any problem that can be solved recursively can also be solved iteratively (using loops), and vice versa. However, each has significant pros and cons.\r\n\r\n### Iterative Approach (Loops)\r\n- **Efficiency:** Loops (`for`, `while`) are generally faster and more memory-efficient because they don't create new stack frames.\r\n- **Simplicity for Linear Tasks:** For tasks like traversing an array or summing numbers, loops are the standard choice.\r\n- **Risk:** Can become hard to read if nested multi-level logic is required.\r\n\r\n### Recursive Approach\r\n- **Clarity and Elegance:** Recursion is beautiful for hierarchical or branching data structures like **Trees** or **Graphs**. Writing code to traverse a tree using loops usually requires an explicit stack, whereas recursion handles it implicitly.\r\n- **Memory Overhead:** Each call adds to the stack space (O(depth) space complexity). Highly recursive code can be slow and memory-intensive.\r\n\r\n### Final Verdict\r\nUse **Iteration** for most linear tasks to save memory. Use **Recursion** for tasks with a branching or self-similar nature, where the iterative alternative would be significantly more complex to write and maintain.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which approach is generally more memory-efficient for simple task execution?",
+            "options": [
+              "Iterative",
+              "Recursive",
+              "They are identical",
+              "Recursive with Memoization"
+            ],
+            "correctAnswer": 0,
+            "explanation": "Iterative approaches use constant space for loops, whereas recursion adds a new frame to the call stack for every call."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dsa-l2",
+    "title": "LEVEL 2: Arrays & Strings",
+    "subtitle": "Master linear data structures",
+    "lessons": [
+      {
+        "id": "d7",
+        "title": "7. Arrays (1D & 2D)",
+        "duration": "20 mins",
+        "content": "### Contiguous Memory\r\nArrays are the bedrock of data structures because they mirror how physical memory (RAM) is organized. When you declare an array of size 10, the computer reserves a single, unbroken block of memory addresses. \r\n- **1D Arrays:** Access is O(1) because the address of `arr[i]` is simply `base_address + (i * size_of_element)`.\r\n- **2D Arrays (Matrices):** These are 'flattened' into 1D memory. **Row-Major Order** (standard in C/Java) stores rows one after another, while **Column-Major Order** (Fortran) stores columns sequentially.\r\n\r\n### Engineering Trade-offs\r\nStatic arrays have a fixed size, making them extremely fast but inflexible. Dynamic arrays (like `ArrayList` or `vector`) handle resizing by allocating a new, larger block (usually double the size) and copying elements over. This 'copy' is O(n), but it happens rarely enough that the **amortized** cost of addition remains O(1).\r\n\r\n### Cache Friendliness\r\nModern CPUs use a cache to speed up data access. Because array elements are stored right next to each other, loading one element often loads its neighbors into the cache automatically (Spatial Locality). This makes arrays significantly faster than Linked Lists for sequential traversal.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the time complexity to access an element at a known index in a 1D array?",
+            "options": [
+              "O(n)",
+              "O(log n)",
+              "O(1)",
+              "O(n^2)"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Arrays provide direct access to memory addresses based on indices, resulting in constant time complexity."
+          }
+        ]
+      },
+      {
+        "id": "d8",
+        "title": "8. Array Operations",
+        "duration": "20 mins",
+        "content": "### The Cost of Shifting\r\nThe most important rule of arrays: **Inserting or deleting at the beginning is expensive (O(n))**. To put an element at index 0, every other element must move one slot to the right to make room.\r\n- **Traversal:** A simple linear scan (O(n)).\r\n- **Searching:** If unsorted, you must check everything (O(n)). If sorted, you can use Binary Search (O(log n)).\r\n- **In-place Operations:** Many array problems ask for 'in-place' solutions (O(1) extra space). This means you must reuse the input array for storage, often using swapping logic to avoid creating a second array.\r\n\r\n### Memory Fragmentation\r\nBecause arrays require a single contiguous block, they can fail to allocate even if there's enough total free memory, if that memory is split into many small pieces (fragmentation). This is a key reason why very large arrays are sometimes avoided in memory-constrained systems.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Why is deleting an element from the middle of an array O(n)?",
+            "options": [
+              "Because you have to find it first",
+              "Because elements after the deletion must be shifted left",
+              "Because arrays are read-only",
+              "Empty slots take more memory"
+            ],
+            "correctAnswer": 1,
+            "explanation": "To maintain the contiguous property of arrays, all elements following the deleted item must be moved to fill the gap."
+          }
+        ]
+      },
+      {
+        "id": "d9",
+        "title": "9. Sliding Window Technique",
+        "duration": "25 mins",
+        "content": "### Optimizing Nested Loops\r\nNearly every 'Subarray' problem involving a sum or count can be solved with a Sliding Window. This technique converts O(n^2) brute-force searches into linear O(n) passes.\r\n\r\n- **Fixed Window:** Used when the size `K` is constant. You 'slide' the window by adding the next element and subtracting the one that fell off the back.\r\n- **Dynamic Window:** Used when the window size changes based on a condition (e.g., 'shortest subarray with sum > X'). You expand the `right` pointer until the condition is met, then shrink the `left` pointer to find the minimum length.\r\n\r\n### Complexity Benefits\r\nBy reusing the results of the previous window (only updating the two edges), we avoid redundant calculations in the overlapping middle part. This is a fundamental optimization in data stream processing and network packet analysis.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the main advantage of the Sliding Window technique?",
+            "options": [
+              "It uses less memory than recursion",
+              "It reduces O(n^2) problems to O(n)",
+              "It works on unsorted graphs",
+              "It handles string matching faster than KMP"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Sliding window avoids recomputing overlaps between adjacent ranges, leading to a much more efficient linear complexity."
+          }
+        ]
+      },
+      {
+        "id": "d10",
+        "title": "10. Prefix Sum Technique",
+        "duration": "20 mins",
+        "content": "### Pre-computing for Speed\r\nPrefix sum is a classic 'Space-Time Trade-off'. By using O(n) extra space to store cumulative sums, you can answer any range sum query `Sum(mid, end)` in constant O(1) time.\r\n\r\n### The Math\r\nThe formula is `Sum(i, j) = Prefix[j] - Prefix[i-1]`. This works because the prefix `j` contains the sum of all elements up to `j`, and subtracting `Prefix[i-1]` removes the parts before your desired range.\r\n\r\n### Applications\r\n- **Range Queries:** Rapidly calculating sums in dynamic dashboards.\r\n- **Zero-Sum Subarrays:** Helping identify balanced portions of an array.\r\n- **2D Prefix Sums:** Used in computer vision to calculate the brightness of rectangular regions in an image almost instantly.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the time complexity to build a prefix sum array of size n?",
+            "options": [
+              "O(1)",
+              "O(n)",
+              "O(n log n)",
+              "O(n^2)"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Building the array requires a single pass over the original data, making it O(n)."
+          }
+        ]
+      },
+      {
+        "id": "d11",
+        "title": "11. Strings Basics",
+        "duration": "15 mins",
+        "content": "### Memory and Immutability\r\nIn languages like Java and Python, strings are **Immutable**. When you do `str = str + '!'`, the computer doesn't change the old string; it creates a brand-new string object in memory. This ensures safety in multi-threaded environments but can lead to high memory usage if not handled carefully.\r\n\r\n### Optimization: The String Pool\r\nTo save memory, some languages store only one copy of identical literal strings in a special 'pool'. If two variables are assigned the exact same string literal, they both point to the same memory address.\r\n\r\n### Performance Tip\r\nIf you need to perform many string concatenations (like building a long document), avoid using the `+` operator in a loop. Instead, use a `StringBuilder` (Java/C#) or a list of characters (Python/JS) to avoid massive O(n^2) memory churn.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What does 'Immutable' mean in the context of strings?",
+            "options": [
+              "The string cannot be read",
+              "The string cannot be modified after creation",
+              "The string is always stored in the stack",
+              "The string length is fixed"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Immutability means that any 'modification' to the string actually creates a new string object in memory."
+          }
+        ]
+      },
+      {
+        "id": "d12",
+        "title": "12. String Matching Basics",
+        "duration": "20 mins",
+        "content": "### The Search Problem\r\nFinding a pattern `P` in a text `T` is a core problem in database engines and editors. \r\n- **Naive Search:** Slides the pattern character by character. If a mismatch occurs, it resets. (O(N*M)).\r\n- **Hashing (Rabin-Karp):** Compares hash values of the text window to find potential matches faster than character comparison.\r\n- **KMP Algorithm:** Uses a pre-processed array to 'skip' comparisons that we know definitely won't match, achieving O(N) linear time.\r\n\r\n### Why it's hard\r\nString matching is deceptively simple but becomes complex when dealing with millions of characters. Efficient algorithms are the reason why 'Search' commands in text editors are instantaneous.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the worst-case complexity of the naive string searching algorithm?",
+            "options": [
+              "O(n + m)",
+              "O(n * m)",
+              "O(log n)",
+              "O(n^2)"
+            ],
+            "correctAnswer": 1,
+            "explanation": "In the naive approach, for every character in the text, you may end up checking every character in the pattern."
+          }
+        ]
+      },
+      {
+        "id": "d13",
+        "title": "13. Two Pointer Technique",
+        "duration": "25 mins",
+        "content": "### Symmetric & Asymmetric Traversal\r\n- **Opposite Directions:** Start one at `0` and one at `n-1`. This is perfect for checking Palindromes, reversing arrays, or finding a pair of numbers in a sorted array that sum to a specific value.\r\n- **Fast & Slow (Tortoise and Hare):** One pointer moves twice as fast as the other. This is used mostly in Linked Lists to find the middle or detect cycles (loops).\r\n- **Sliding Window overlap:** Two pointers also form the basis of the sliding window, moving in the same direction to define a dynamic range.\r\n\r\n### Why use pointers?\r\nPointers allow you to process an array in a single pass without extra memory ($O(1)$ space), which is essential for low-level performance optimization.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which pointer movement is common for checking if a string is a palindrome?",
+            "options": [
+              "Both pointers moving from left to right",
+              "One pointer at the start, one at the end, moving towards each other",
+              "One pointer moving twice as fast as the other",
+              "Both pointers at the start"
+            ],
+            "correctAnswer": 1,
+            "explanation": "To check for a palindrome, you compare characters from the beginning and end, moving towards the center."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dsa-l3",
+    "title": "LEVEL 3: Searching & Sorting",
+    "subtitle": "Fundamental algorithms",
+    "lessons": [
+      {
+        "id": "d14",
+        "title": "14. Linear Search",
+        "duration": "15 mins",
+        "content": "### The Sequential Scan\r\nLinear search is the simplest searching algorithm—you check every element one by one from left to right. \r\n- **Worst Case:** The item is at the end or not present at all ($O(n)$).\r\n- **Hardware Context:** Because arrays are contiguous, linear search is very 'Cache Friendly'. The CPU can pre-fetch the next elements into its super-fast cache before you even ask for them.\r\n\r\n### When to use?\r\nUse it for small arrays (under 50 elements) or when the data is completely unsorted and you only need to search once. If you need to search frequently, it's statistically better to sort the data once and use Binary Search going forward.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the time complexity of linear search for an element that is NOT in the array?",
+            "options": [
+              "O(1)",
+              "O(log n)",
+              "O(n)",
+              "O(n^2)"
+            ],
+            "correctAnswer": 2,
+            "explanation": "You have to check every single element before concluding it's not present."
+          }
+        ]
+      },
+      {
+        "id": "d15",
+        "title": "15. Binary Search",
+        "duration": "20 mins",
+        "content": "### The Half-Interval Search\r\nBinary search is the gold standard for efficiency, but it has one strict requirement: **The data must be sorted**. \r\n- **Efficiency:** Every comparison eliminates half of the remaining search space. This logarithmic growth ($O(log n)$) is incredibly powerful. To search 1 million items, Linear Search takes 1 million checks, but Binary Search takes only 20.\r\n\r\n### Implementation Pitfall\r\nA common bug in many textbooks is calculating the middle using `mid = (low + high) / 2`. In many languages, this can cause an integer overflow if `low` and `high` are very large numbers. The safer industry standard is `mid = low + (high - low) / 2`.\r\n\r\n### Iterative vs Recursive\r\nIterative binary search is usually preferred in production code because it uses $O(1)$ space, whereas recursion adds to the system call stack.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Why is Binary Search more efficient than Linear Search?",
+            "options": [
+              "It uses less memory",
+              "It works on unsorted lists",
+              "It reduces the search space by half in every step",
+              "It uses parallel processing"
+            ],
+            "correctAnswer": 2,
+            "explanation": "By eliminating half the elements each time, it achieves logarithmic time complexity."
+          }
+        ]
+      },
+      {
+        "id": "d16",
+        "title": "16. Search in Rotated Array",
+        "duration": "25 mins",
+        "content": "### Adapted Binary Search\r\nA 'rotated' sorted array (like `[4,5,6,0,1,2]`) breaks the simple 'higher vs lower' rule of binary search, but we can adapt it. \r\n- **The Key Insight:** In any rotated sorted array, if you split it down the middle, **at least one half will always be sorted**. \r\n- **The Strategy:** \r\n1. Find the middle element. \r\n2. Determine which side (left or right) is correctly sorted. \r\n3. Check if your target falls within the range of that sorted side. \r\n4. If yes, search there. If no, search the other half. \r\n\r\nThis maintains the $O(log n)$ efficiency while handling a common real-world data corruption/formatting scenario.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the optimal time complexity to search in a rotated sorted array?",
+            "options": [
+              "O(n)",
+              "O(n^2)",
+              "O(log n)",
+              "O(n log n)"
+            ],
+            "correctAnswer": 2,
+            "explanation": "By adapting binary search, we maintain O(log n) efficiency."
+          }
+        ]
+      },
+      {
+        "id": "d17",
+        "title": "17. Bubble Sort",
+        "duration": "20 mins",
+        "content": "### The Intuitive Sort\r\nBubble Sort is often the first algorithm students learn. Larger elements 'bubble up' to the end of the list through repeated swaps of adjacent elements.\r\n- **Stability:** It is a **Stable Sort**, meaning it won't swap elements that have the same value. This preserves their original relative order.\r\n- **Efficiency:** With $O(n^2)$ complexity, it is generally considered too slow for production use. However, it can be optimized with a 'swapped' flag—if a pass finishes without a swap, the array is sorted, allowing for $O(n)$ time in the absolute best case.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Why is Bubble Sort considered inefficient for large datasets?",
+            "options": [
+              "It uses too much memory",
+              "It is a stable sort",
+              "It has a quadratic (O(n^2)) time complexity",
+              "It only works on numbers"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Nested loops make the time grow exponentially relative to input size."
+          }
+        ]
+      },
+      {
+        "id": "d18",
+        "title": "18. Selection Sort",
+        "duration": "20 mins",
+        "content": "### Identifying the Minimum\r\nSelection sort divides the array into a sorted part (start) and an unsorted part (rest). It continually 'selects' the smallest element from the unsorted part and swaps it to its correct position.\r\n- **Consistency:** Unlike Bubble Sort, it always takes $O(n^2)$ time, regardless of the input order.\r\n- **The Swap Advantage:** While slow, it only performs at most $O(n)$ swaps. In specialized systems where writing to memory is extremely 'expensive' but comparing data is 'cheap', Selection Sort might actually be relevant.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Selection sort is best known for reducing what?",
+            "options": [
+              "Comparisons",
+              "Memory usage",
+              "Number of swaps",
+              "Time complexity"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Selection sort only performs at most O(n) swaps, even though it does O(n^2) comparisons."
+          }
+        ]
+      },
+      {
+        "id": "d19",
+        "title": "19. Insertion Sort",
+        "duration": "20 mins",
+        "content": "### Building the Hand\r\nImagine sorting a hand of playing cards. You take one card at a time and 'insert' it into its correct spot among the cards you've already sorted. \r\n- **Performance:** While $O(n^2)$ in the worst case, it is $O(n)$ for nearly-sorted data. It is extremely fast for very small arrays (under 20 elements).\r\n- **Real-World Use:** Because of its low overhead, many high-level sorting systems (like Java's Dual-Pivot Quicksort) use Insertion Sort internally whenever a sub-array becomes small enough.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "When is Insertion Sort faster than Merge Sort?",
+            "options": [
+              "For very large datasets",
+              "For random datasets",
+              "For small or nearly sorted datasets",
+              "Always"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Due to low overhead, insertion sort outperforms complex algorithms on small arrays."
+          }
+        ]
+      },
+      {
+        "id": "d20",
+        "title": "20. Merge Sort",
+        "duration": "25 mins",
+        "content": "### Divide and Conquer\r\nMerge Sort is a stable, reliable $O(n log n)$ algorithm that uses a 'Split then Merge' strategy.\r\n- **Split:** Keep dividing the array in half until you have single elements (which are sorted by definition).\r\n- **Merge:** Combine the small sorted arrays back together in order.\r\n- **Trade-off:** It is very fast and works well for External Sorting (data too big for RAM), but it requires **$O(n)$ extra space** for the merging process. This makes it less ideal for systems with very limited memory.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the primary trade-off of Merge Sort?",
+            "options": [
+              "Slow runtime",
+              "Extra O(n) space complexity",
+              "Unstable sorting",
+              "Hardware dependency"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Merge sort requires an auxiliary array to perform the merge step."
+          }
+        ]
+      },
+      {
+        "id": "d21",
+        "title": "21. Quick Sort",
+        "duration": "25 mins",
+        "content": "### The Partitioning King\r\nQuick Sort is the fastest general-purpose sort for most real-world data. It works by picking a 'Pivot' element and rearranging the array so that everything smaller is on the left and everything larger is on the right.\r\n- **In-place Speed:** Unlike Merge Sort, it doesn't need extra memory (averaging $O(log n)$ stack space).\r\n- **Worst Case Risk:** If you pick a poor pivot (like the smallest element in an already sorted array), it can degrade to $O(n^2)$. High-performance implementations avoid this by using 'Randomized' pivots or the 'Median-of-three' rule.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is a 'Pivot' in Quick Sort?",
+            "options": [
+              "The last element of the array",
+              "An element used to partition the data",
+              "The smallest element",
+              "A temporary variable"
+            ],
+            "correctAnswer": 1,
+            "explanation": "The pivot acts as a benchmark to divide the array into two sub-problems."
+          }
+        ]
+      },
+      {
+        "id": "d22",
+        "title": "22. Counting Sort",
+        "duration": "20 mins",
+        "content": "### Non-Comparison Sorting\r\nCounting Sort doesn't compare numbers. Instead, it counts how many times each number appears and uses those frequencies to map elements directly to their final sorted index.\r\n- **The Speed Limit:** It can achieve **$O(n + k)$** where k is the range of numbers. This is technically faster than the comparison-based limit ($O(n log n)$).\r\n- **Space-Time Trade-off:** You need extra memory for a 'Count Array'. If your numbers are between 1 and 1 million, you'll need one million spots in your count array, which can be wasteful for sparse data.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What makes Counting Sort faster than O(n log n)?",
+            "options": [
+              "Better hardware",
+              "It is not a comparison-based sort",
+              "It uses parallel loops",
+              "It ignores large values"
+            ],
+            "correctAnswer": 1,
+            "explanation": "By avoiding element comparisons, it bypasses the theoretical lower bound for comparison sorts."
+          }
+        ]
+      },
+      {
+        "id": "d23",
+        "title": "23. Radix Sort",
+        "duration": "20 mins",
+        "content": "### Digit-by-Digit Sorting\r\nRadix Sort sorts numbers by their individual digits (Least Significant to Most Significant), using Counting Sort as a stable helper for each digit position.\r\n- **Complexity:** $O(d * (n + b))$ where $d$ is the number of digits and $b$ is the base (usually 10).\r\n- **Stability:** It is absolutely critical that the helper sort is stable, otherwise the relative order from the previous digit's pass will be lost. This is a common exam trick question.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Radix sort processes numbers digit by digit. Where does it usually start?",
+            "options": [
+              "Left-most digit",
+              "Middle digit",
+              "Least Significant Digit (Right)",
+              "Random digit"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Starting from the right (LSD) ensures stability in the final sorted order."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dsa-l4",
+    "title": "LEVEL 4: Linked List",
+    "subtitle": "Dynamic memory structures",
+    "lessons": [
+      {
+        "id": "d24",
+        "title": "24. Singly Linked List",
+        "duration": "20 mins",
+        "content": "### Dynamic Memory Allocation\r\nA Linked List is a series of 'Nodes' scattered across your computer's memory. Unlike arrays, nodes don't have to be next to each other; they are connected by 'Pointers'. \r\n- **Structure:** Each node contains **Data** and a **Next Pointer**.\r\n- **Pros:** You never need to 'resize' like an array. Adding a new head is always $O(1)$ regardless of list size.\r\n- **Cons:** You lose $O(1)$ random access. To find the 100th element, you must walk through 99 previous nodes ($O(n)$). Also, pointers use extra memory ($O(n)$ overhead).",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is stored in a Singly Linked List node?",
+            "options": [
+              "Data and Previous pointer",
+              "Data only",
+              "Data and Next pointer",
+              "Next and Previous pointers"
+            ],
+            "correctAnswer": 2,
+            "explanation": "A singly linked list node only keeps track of its own data and where the next node is."
+          }
+        ]
+      },
+      {
+        "id": "d25",
+        "title": "25. Doubly Linked List",
+        "duration": "20 mins",
+        "content": "### Bi-Directional Traversal\r\nEach node in a Doubly Linked List has two pointers: `next` and `prev`. This allows you to walk the list backward as easily as forward.\r\n- **Improved Deletion:** If you already have a pointer to a specific node, you can delete it in $O(1)$ time because you can immediately find its neighbors. In a singly list, you'd still need to search the list to find the node 'before' it.\r\n- **Use Case:** Think of your browser's 'Back' and 'Forward' buttons—this is a classic real-world application of a Doubly Linked List.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the primary overhead of a Doubly Linked List?",
+            "options": [
+              "Slower access",
+              "Higher memory usage due to extra pointers",
+              "It is sorted",
+              "No head node"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Each node must store two pointers instead of one, doubling the pointer memory overhead."
+          }
+        ]
+      },
+      {
+        "id": "d26",
+        "title": "26. Circular Linked List",
+        "duration": "20 mins",
+        "content": "### The Tail points to Head\r\nA Circular Linked List connects the last node back to the first. There is no `null` termination.\r\n- **Traversing:** You must be careful to avoid infinite loops during code execution. Usually, you stop when you hit the 'head' node for the second time.\r\n- **Real-World Use:** Rounds of a game, CPU scheduling (Round Robin), or a repeating music playlist. It's the ideal structure for any system that needs to cycle through items indefinitely.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "In a Circular Linked List, what does the 'Next' pointer of the tail node point to?",
+            "options": [
+              "null",
+              "The head node",
+              "The previous node",
+              "The middle node"
+            ],
+            "correctAnswer": 1,
+            "explanation": "The cycle is formed by the tail pointing back to the head."
+          }
+        ]
+      },
+      {
+        "id": "d27",
+        "title": "27. Insertion & Deletion",
+        "duration": "25 mins",
+        "content": "### Reconnecting the Chains\r\nLinked list operations are all about 'breaking' and 'reconnecting' pointers safely to avoid losing part of the list in memory.\r\n- **Head vs Tail:** Inserting at the Head is always $O(1)$. Inserting at the Tail is $O(1)$ only if you maintain a separate 'tail' pointer; otherwise, it is $O(n)$ as you must traverse to find the end.\r\n- **Edge Cases:** Always consider the 'Empty List' and the 'Single Node List' when writing your deletion logic. Forgetting to update the `head` pointer during a head-node deletion is a very common bug.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Why is insertion into a linked list often considered more efficient than an array?",
+            "options": [
+              "It is faster to find the position",
+              "It uses less memory",
+              "It doesn't require shifting existing elements",
+              "It is always sorted"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Adding a node only requires updating 1-2 pointers, unlike arrays which require moving data."
+          }
+        ]
+      },
+      {
+        "id": "d28",
+        "title": "28. Reverse Linked List",
+        "duration": "20 mins",
+        "content": "### The Pointer Shuffle\r\nReversing a linked list is a core engineering task that tests your ability to manage state. You need three pointer variables: `prev`, `current`, and `next`.\r\n1. Temporarily save `current.next` to `next` so you don't lose the rest of the list.\r\n2. Reverse the link: set `current.next = prev`.\r\n3. Move `prev` and `current` one step forward.\r\n- **Complexity:** This is an $O(n)$ time and $O(1)$ space operation. It is performed 'in-place', meaning you don't create any new nodes—you just rearrange the existing pointers.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the time complexity to reverse a linked list of size n?",
+            "options": [
+              "O(log n)",
+              "O(1)",
+              "O(n)",
+              "O(n^2)"
+            ],
+            "correctAnswer": 2,
+            "explanation": "You must visit every node exactly once to update its pointer."
+          }
+        ]
+      },
+      {
+        "id": "d29",
+        "title": "29. Detect Cycle",
+        "duration": "25 mins",
+        "content": "### Floyd's Tortoise and Hare\r\nHow do you know if a list loops back on itself without getting stuck in an infinite loop? You use two pointers moving at different speeds. \r\n- **The Logic:** The 'Slow' pointer moves 1 step, while the 'Fast' pointer moves 2 steps. If there's a loop, the fast pointer will eventually 'lap' the slow pointer, and they will meet at the same node.\r\n- **Why it matters:** This technique uses $O(1)$ constant space, which is far better for performance than saving every visited node's address in a separate Hash Set ($O(n)$ space).",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "In cycle detection, if the fast pointer reaches null, what does it mean?",
+            "options": [
+              "There is a cycle",
+              "The list is empty",
+              "There is no cycle",
+              "The list is infinite"
+            ],
+            "correctAnswer": 2,
+            "explanation": "If a pointer reaches null, the tail of the list has been found, meaning there is no cycle."
+          }
+        ]
+      },
+      {
+        "id": "d30",
+        "title": "30. Merge Two Sorted Lists",
+        "duration": "20 mins",
+        "content": "### Zipper Logic\r\nMerging two sorted linked lists is like zipping up a jacket. You compare the heads of both lists, take the smaller node, and move that list's pointer forward.\r\n- **Efficiency:** The total time is $O(n + m)$ because you touch every node once. \r\n- **Recursive vs Iterative:** Recursion is very elegant here (`return smaller; smaller.next = merge(smaller.next, other)`), but you must be careful with stack limits. For production code, an iterative approach with a 'dummy' head node is often the safest and most efficient.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Merging two sorted lists of size N and M takes how much time?",
+            "options": [
+              "O(N * M)",
+              "O(N + M)",
+              "O(min(N, M))",
+              "O(log(N+M))"
+            ],
+            "correctAnswer": 1,
+            "explanation": "You process each node from both lists exactly once."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dsa-l5",
+    "title": "LEVEL 5: Stack & Queue",
+    "subtitle": "LIFO & FIFO structures",
+    "lessons": [
+      {
+        "id": "d31",
+        "title": "31. Stack Implementation",
+        "duration": "20 mins",
+        "content": "### The Stack Principle\r\nA stack is a linear collection where insertions and deletions happen only at one end, called the **Top**. It's exactly like a stack of cafeteria trays or books—the last one you place is the first one you'll grab (Last-In, First-Out).\r\n- **Core Operations:** `Push` (Add to top), `Pop` (Remove from top), and `Peek` (Look at top). All these are $O(1)$ constant time.\r\n- **Memory Options:** \r\n1. **Array-based:** Uses a fixed-size array and a 'top' index. It's extremely fast but can suffer from 'Stack Overflow' if you exceed the array size.\r\n2. **Linked List-based:** Uses nodes and a head pointer. It's flexible in size but consumes more memory per element due to the overhead of pointers.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which principle does a Stack follow?",
+            "options": [
+              "FIFO",
+              "LIFO",
+              "LILO",
+              "Random Order"
+            ],
+            "correctAnswer": 1,
+            "explanation": "LIFO means the last element added is the first one to be removed."
+          }
+        ]
+      },
+      {
+        "id": "d32",
+        "title": "32. Stack Applications",
+        "duration": "20 mins",
+        "content": "### The Engine of Execution\r\nStacks are vital for controlling the flow of modern software. \r\n- **The Call Stack:** When a function calls another, the computer 'pushes' the current state onto a stack. When the function finishes, it 'pops' back to where it was. This is the foundation of recursion.\r\n- **Backtracking:** Used in algorithms like Depth-First Search (DFS) to remember which path to take after hitting a dead end (e.g., solving a maze).\r\n- **Parsing:** Compilers use stacks to evaluate mathematical expressions (Postfix evaluation) and to check if your brackets and parentheses are correctly balanced in your source code.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which of the following uses a stack internally?",
+            "options": [
+              "Print queue",
+              "Undo/Redo buttons",
+              "Customer service line",
+              "Router buffer"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Undo/Redo mechanisms rely on a LIFO stack to manage action history."
+          }
+        ]
+      },
+      {
+        "id": "d33",
+        "title": "33. Queue Implementation",
+        "duration": "20 mins",
+        "content": "### The First-In, First-Out Rule\r\nA queue is a collection where items are added at the **Rear** and removed from the **Front**. It's just like a line at a movie theater—the first person in line is the first person served (FIFO).\r\n- **Operations:** `Enqueue` (Add to back) and `Dequeue` (Remove from front). Both are expected to be $O(1)$.\r\n- **Performance Note:** In a simple array, dequeuing requires shifting every other element left ($O(n)$). To make it $O(1)$ constant time, engineers use **Circular logic** or two pointers (`head` and `tail`) to track positions without ever moving the actual data in memory.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which operation adds an element to a queue?",
+            "options": [
+              "Push",
+              "Pop",
+              "Enqueue",
+              "Dequeue"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Enqueue is the standard term for adding an item to the back of a queue."
+          }
+        ]
+      },
+      {
+        "id": "d34",
+        "title": "34. Circular Queue",
+        "duration": "20 mins",
+        "content": "### Efficient Buffer Management\r\nIn a standard array-based queue, once the 'tail' reaches the end of the array, you can't add more items even if there are empty slots at the 'front' from previous dequeues.\r\n- **The solution:** A Circular Queue uses modulo arithmetic (`(rear + 1) % size`) to wrap the tail back to index 0 when it hits the limit. This reuses those empty slots, making it highly memory-efficient.\r\n- **Use Case:** Circular queues (Ring Buffers) are the industry standard for hardware peripherals, audio processing, and network packet handling.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the primary benefit of a Circular Queue over a simple Array Queue?",
+            "options": [
+              "Faster search",
+              "Better memory utilization",
+              "Unlimited size",
+              "Easier traversal"
+            ],
+            "correctAnswer": 1,
+            "explanation": "By wrapping around the indices, it reuses the spaces emptied by dequeued items."
+          }
+        ]
+      },
+      {
+        "id": "d35",
+        "title": "35. Deque",
+        "duration": "20 mins",
+        "content": "### Flexibility at Both Ends\r\nPronounced 'deck', a Deque (Double-Ended Queue) is a specialized linear structure where you can add or remove items from **both** the front and the rear. \r\n- **Versatility:** It can function as both a Stack and a Queue simultaneously. \r\n- **Implementation:** Usually built with a Doubly Linked List or a specialized dynamic array to maintain $O(1)$ performance for all operations.\r\n- **Interview Tip:** Deques are the secret weapon for solving complex sliding window problems, like finding the 'maximum element in every window of size K' in linear time.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "A Deque supports insertion/deletion at how many ends?",
+            "options": [
+              "Zero",
+              "One",
+              "Two",
+              "Unlimited"
+            ],
+            "correctAnswer": 2,
+            "explanation": "A Deque (Double-Ended Queue) allows entry and exit at both ends."
+          }
+        ]
+      },
+      {
+        "id": "d36",
+        "title": "36. Priority Queue",
+        "duration": "25 mins",
+        "content": "### Importance Over Order\r\nIn a Priority Queue, every element has a 'priority' value. Higher priority elements are dequeued before those with lower priorities, regardless of when they entered.\r\n- **Implementation:** While you could use a sorted list ($O(n)$ insertion), Priority Queues are most efficiently implemented using a **Binary Heap** ($O(log n)$ for adding and removing).\r\n- **Real World:** Think of an Airplane Boarding process—first-class passengers (high priority) board before economy, even if they arrive later at the gate.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "In a Priority Queue, which element is dequeued first?",
+            "options": [
+              "The first one added",
+              "The last one added",
+              "The one with highest priority",
+              "The one with smallest data"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Priority queues sort by importance or value, not just time of arrival."
+          }
+        ]
+      },
+      {
+        "id": "d37",
+        "title": "37. Stack using Queue & Vice Versa",
+        "duration": "25 mins",
+        "content": "### Logical Puzzles\r\nConverting one structure into another is a favorite interview problem that tests your understanding of data flow.\r\n- **Stack using Queues:** To make two FIFO queues act like a LIFO stack, you must manipulate the enqueue/dequeue order so that the last element added is always at the front of your primary queue.\r\n- **Queue using Stacks:** By using two stacks ('In' and 'Out'), you can flip the LIFO order back to FIFO. You push to 'InStack', and during dequeue, you pop from 'OutStack'. If 'OutStack' is empty, you transfer everything from 'InStack' once—reversing the order.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "To implement a Queue using two Stacks, when do we transfer elements from stack1 to stack2?",
+            "options": [
+              "On every enqueue",
+              "On every dequeue",
+              "When stack2 is empty during a dequeue",
+              "Never"
+            ],
+            "correctAnswer": 2,
+            "explanation": "To maintain FIFO order, we only move elements when we need to dequeue and our 'out' stack is dry."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dsa-l6",
+    "title": "LEVEL 6: Hashing",
+    "subtitle": "Fast lookup & storage",
+    "lessons": [
+      {
+        "id": "d38",
+        "title": "38. Hash Tables",
+        "duration": "20 mins",
+        "content": "### Lightning Fast Lookup\r\nHashing is often called the 'Master Data Structure' because it allows $O(1)$ constant time for search, insertion, and deletion.\r\n- **The Core Idea:** Take a key (like a word), run it through a 'Hash Function' to get an index, and store the data at that index in an array. Instead of searching linearly, you jump directly to the data.\r\n- **The Trade-off:** To get this speed, Hash Tables use more memory than a simple array and can degrade in performance if the table gets too full (collision). Finding the right balance between memory and speed is a key engineering decision.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the primary benefit of a Hash Table?",
+            "options": [
+              "Maintains sorted order",
+              "Uses minimal memory",
+              "Fast O(1) average lookup",
+              "Easier to implement than arrays"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Hashing allows direct access to data based on its key without searching through the entire set."
+          }
+        ]
+      },
+      {
+        "id": "d39",
+        "title": "39. Hash Functions",
+        "duration": "20 mins",
+        "content": "### Mapping to Indices\r\nA good hash function is the brain of the table. It must be:\r\n- **Fast:** Computing the index shouldn't be slower than a search.\r\n- **Deterministic:** The same key MUST always result in the same index.\r\n- **Uniform:** It should distribute keys evenly across the table to avoid 'Collision' hotspots where items get crowded.\r\n- **Safety:** In security contexts, cryptographic hash functions (like SHA-256) are used to ensure that you cannot guess the input data by looking at its hash output.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "A 'Deterministic' hash function means what?",
+            "options": [
+              "It is random",
+              "Same input gives same output every time",
+              "It only accepts numbers",
+              "It is used for encryption only"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Consistency is requirement; otherwise, you couldn't find the data you previously stored."
+          }
+        ]
+      },
+      {
+        "id": "d40",
+        "title": "40. Collision Handling",
+        "duration": "25 mins",
+        "content": "### When Keys Overlap\r\nA 'Collision' happens when two different keys result in the exact same hash index. Because of the **Pigeonhole Principle** (having infinitely many keys but finite table slots), collisions are mathematically inevitable.\r\n- **The Conflict:** If 'Alice' and 'Bob' both hash to index 5, you need a strategy to store both items without losing one.\r\n- **The Impact:** Collisions slow down your Hash Table. If too many occur, your $O(1)$ speed can degrade to $O(n)$ because you're spending all your time resolving conflicts instead of looking up data.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "When does a collision occur in a Hash Table?",
+            "options": [
+              "When the table is empty",
+              "When two different keys produce the same hash index",
+              "When the hash function is too slow",
+              "When the key is null"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Multiple keys 'colliding' at the same bucket requires a strategy to store both."
+          }
+        ]
+      },
+      {
+        "id": "d41",
+        "title": "41. Open Addressing",
+        "duration": "20 mins",
+        "content": "### Probing for Empty Slots\r\nOpen Addressing requires all items to stay within the hash table's main array. If a collision occurs at index `i`, the algorithm searches for the next available slot.\r\n- **Linear Probing:** Simply check `i+1, i+2, etc.` until you find an empty spot. It's simple but creates 'clusters' of data that slow down everything.\r\n- **Quadratic Probing:** Uses a squared jump ($i + 1^2, i + 2^2$) to spread data more effectively.\r\n- **Double Hashing:** Uses a second hash function to calculate the jump size, providing the best distribution and minimizing secondary collisions.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Linear Probing finds a new slot by checking which indices?",
+            "options": [
+              "Random ones",
+              "The next immediate sequential slots",
+              "The slots in reverse order",
+              "Only even slots"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Linear probing simply checks index+1, index+2, etc., until an empty bucket is found."
+          }
+        ]
+      },
+      {
+        "id": "d42",
+        "title": "42. Separate Chaining",
+        "duration": "20 mins",
+        "content": "### Linked List Buckets\r\nSeparate Chaining is the most common collision strategy. Instead of looking for a new slot in the main array, each index holds a **Linked List** (or 'Chain') of all elements that hash to that same index.\r\n- **Maintain Speed:** As long as the hash function is good and the table isn't too crowded, the chains stay very short, maintaining near $O(1)$ speed.\r\n- **Worst Case Fix:** In modern Java, if a chain grows too long (usually over 8 items), it automatically converts the list into a **Balanced Tree** to ensure performance never drops below $O(log n)$.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "In Separate Chaining, what data structure is traditionally used at each index?",
+            "options": [
+              "Another Hash Table",
+              "A Binary Tree",
+              "A Linked List",
+              "A Stack"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Linked lists are the standard way to 'chain' multiple items falling into the same bin."
+          }
+        ]
+      },
+      {
+        "id": "d43",
+        "title": "43. HashMap / Dictionary",
+        "duration": "20 mins",
+        "content": "### Key-Value Pairs\r\nThe Hash Map is the practical application of hashing. It's used in almost every modern application to store user data, configurations, and cache results for rapid access.\r\n- **Performance:** `get(key)`, `put(key, value)`, and `remove(key)` are all expected to be $O(1)$ constant time.\r\n- **Dynamic Resizing:** When the map gets too 'heavy' (usually over 75% full, called the Load Factor), it automatically creates a larger background array and 'Rehashes' all existing keys into the new slots. This maintains high speed as your data grows.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "In modern languages, what is the 'average' complexity for Map operations?",
+            "options": [
+              "O(log n)",
+              "O(n)",
+              "O(1)",
+              "O(n log n)"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Language-level dictionaries are highly optimized to provide constant time access on average."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dsa-l7",
+    "title": "LEVEL 7: Trees",
+    "subtitle": "Hierarchical data structures",
+    "lessons": [
+      {
+        "id": "d44",
+        "title": "44. Tree Terminologies",
+        "duration": "15 mins",
+        "content": "### Hierarchical Nature\r\nUnlike linear structures like arrays, Trees represent data in a hierarchy. Think of a family tree or the file system on your computer.\r\n- **The Core Parts:** At the top sits the **Root**. Every node beneath it is connected by **Edges**. Nodes at the bottom with no children are called **Leaves**.\r\n- **Measurements:**\r\n1. **Height:** The number of edges on the longest path from a node down to a leaf.\r\n2. **Depth:** The number of edges from the root down to a specific node.\r\n- **Relationships:** Nodes with the same parent are called **Siblings**. Nodes reachable by following edges from a node are its **Descendants**.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "In a tree, what is a 'leaf' node?",
+            "options": [
+              "The top-most node",
+              "A node with exactly two children",
+              "A node with no children",
+              "A node with only one child"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Leaf nodes are the 'end points' of branches in a tree structure."
+          }
+        ]
+      },
+      {
+        "id": "d45",
+        "title": "45. Binary Tree",
+        "duration": "20 mins",
+        "content": "### Power of Two\r\nA Binary Tree is a specialized tree where every node has **at most two children** (Left and Right). This constraint is what makes trees so powerful for sorting and searching.\r\n- **Types of Trees:** \r\n1. **Full:** Every node has either 0 or 2 children.\r\n2. **Complete:** Every level is perfectly filled except possibly the last, which is filled from left to right.\r\n3. **Perfect:** Every single level is completely full.\r\n- **Array Representation:** In a complete binary tree, you can store nodes in a simple array where `left_child = 2i + 1` and `right_child = 2i + 2`. This avoids the memory overhead of pointers and is extremely cache-friendly.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the maximum number of children any node in a Binary Tree can have?",
+            "options": [
+              "One",
+              "Two",
+              "Three",
+              "Unlimited"
+            ],
+            "correctAnswer": 1,
+            "explanation": "The term 'Binary' implies exactly two branches per node at most."
+          }
+        ]
+      },
+      {
+        "id": "d46",
+        "title": "46. Tree Traversals (DFS, BFS)",
+        "duration": "25 mins",
+        "content": "### Navigating the Forest\r\nHow do you visit every node in a tree? There are two main strategies:\r\n- **Depth-First Search (DFS):** Explores as deep as possible before backtracking.\r\n1. **In-order (L-Root-R):** Visits nodes in sorted order if the tree is a Binary Search Tree (BST).\r\n2. **Pre-order (Root-L-R):** Useful for cloning a tree or evaluating mathematical prefix expressions.\r\n3. **Post-order (L-R-Root):** Used for deleting a tree or evaluating postfix expressions safely.\r\n- **Breadth-First Search (BFS):** Also known as **Level-Order Traversal**. It visits nodes level by level using a **Queue**. This is the foundation for finding the shortest path in unweighted networks.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which traversal visits the root node LAST?",
+            "options": [
+              "In-order",
+              "Pre-order",
+              "Post-order",
+              "Level-order"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Post-order traversal (Left, Right, Root) processes the parent after its descendants."
+          }
+        ]
+      },
+      {
+        "id": "d47",
+        "title": "47. Binary Search Tree",
+        "duration": "25 mins",
+        "content": "### Organized Efficiency\r\nA BST is a binary tree with a strict rule: for every node, everything in the **Left** subtree is smaller, and everything in the **Right** subtree is larger.\r\n- **The Benefit:** This property allows for $O(log n)$ searches, insertions, and deletions—making it orders of magnitude faster than a linear list for large datasets.\r\n- **The Hazard:** If you insert nodes in sorted order (e.g., 1, 2, 3, 4, 5), the tree becomes a 'Skewed' line, and performance crashes to $O(n)$. This is why engineers use 'Self-Balancing' trees in production systems.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "In a BST, where is the smallest value located?",
+            "options": [
+              "Root",
+              "Right-most leaf",
+              "Left-most leaf",
+              "In the leaf closest to root"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Since left children are smaller, the smallest value is found by traversing left until you can't anymore."
+          }
+        ]
+      },
+      {
+        "id": "d48",
+        "title": "48. BST Operations",
+        "duration": "25 mins",
+        "content": "### Dynamic Maintenance\r\nModifying a BST requires careful pointer manipulation to preserve its core sorting rules.\r\n- **Search:** Compare values and move left or right ($O(log n)$).\r\n- **Insert:** Always happens at a leaf position after a failed search.\r\n- **Delete:** This is the most complex operation.\r\n1. **Leaf:** Just remove it.\r\n2. **One Child:** Bypass the node by connecting the parent directly to the child.\r\n3. **Two Children:** Find the **In-order Successor** (the smallest node in the right subtree), swap their values, and then delete the successor instead.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "When deleting a node with two children in a BST, which node typically replaces it?",
+            "options": [
+              "Its parent",
+              "Its left child",
+              "The In-order Successor",
+              "The Root node"
+            ],
+            "correctAnswer": 2,
+            "explanation": "The in-order successor (smallest in the right subtree) maintains the BST property perfectly."
+          }
+        ]
+      },
+      {
+        "id": "d49",
+        "title": "49. AVL Tree",
+        "duration": "30 mins",
+        "content": "### Self-Balancing Perfection\r\nNamed after inventors Adelson-Velsky and Landis, AVL trees were the first data structure to solve the 'skewed tree' problem where a BST degrades into a linked list.\r\n- **The Balance Rule:** The height difference (Balance Factor) of any node's subtrees can never exceed 1.\r\n- **Self-Fixing:** Whenever you insert or delete, the tree checks its balance. If it's tilted, it performs a 'Rotation' (Left or Right) to pull the tree back into a balanced shape, guaranteeing $O(log n)$ speed even in the worst cases.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the primary purpose of an AVL tree over a standard BST?",
+            "options": [
+              "Uses less memory",
+              "Faster search in all cases",
+              "Guarantees O(log n) performance by staying balanced",
+              "Sorting data automatically"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Self-balancing prevents the tree from degrading into a linear structure, ensuring logarithmic time."
+          }
+        ]
+      },
+      {
+        "id": "d50",
+        "title": "50. Red-Black Tree",
+        "duration": "30 mins",
+        "content": "### The Color of Balance\r\nRed-Black trees are another style of self-balancing BST, used in the internal source code of C++ (`std::map`) and Java (`TreeMap`).\r\n- **How it Works:** Every node is colored Red or Black. By following rules like 'A Red node cannot have a Red child', the tree ensures that no branch is ever more than twice as long as the shortest branch.\r\n- **The Trade-off:** They are slightly less balanced than AVL trees but require fewer 'Rotations' during updates. This makes them significantly faster for systems that do a lot of data writes.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Red-Black Trees are used in the implementation of which Java class?",
+            "options": [
+              "ArrayList",
+              "TreeMap",
+              "LinkedList",
+              "Stack"
+            ],
+            "correctAnswer": 1,
+            "explanation": "TreeMap and TreeSet in Java use Red-Black trees to manage sorted key-value pairs."
+          }
+        ]
+      },
+      {
+        "id": "d51",
+        "title": "51. Heap (Min & Max)",
+        "duration": "25 mins",
+        "content": "### The Priority Array\r\nA Heap is a complete binary tree that maintains the 'Heap Property'. In a **Max-Heap**, fathers are always greater than sons; in a **Min-Heap**, they are smaller.\r\n- **Efficiency:** Because heaps are always 'complete' trees, they are implemented using a simple **Array** rather than pointers. This is extremely fast because it exploits the CPU's cache locality.\r\n- **Complexity:** Adding a new element or extracting the top element both take $O(log n)$ time as the item 'bubbles' through the tree levels to find its correct spot.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Where is the largest element located in a Max-Heap?",
+            "options": [
+              "Random leaf",
+              "Left-most leaf",
+              "The Root",
+              "The Tail"
+            ],
+            "correctAnswer": 2,
+            "explanation": "In a Max-Heap, the parent is always >= its children, so the root must be the maximum."
+          }
+        ]
+      },
+      {
+        "id": "d52",
+        "title": "52. Priority Queue using Heap",
+        "duration": "25 mins",
+        "content": "### Managing Urgency\r\nA Priority Queue is a collection where elements are served based on priority, not just arrival time. A Binary Heap is the standard way to build one.\r\n- **Efficiency:** It keeps the high-priority item at the very top for $O(1)$ access, while insertions stay at $O(log n)$.\r\n- **Real World Uses:**\r\n1. **Operating Systems:** Deciding which critical task gets the CPU first.\r\n2. **Dijkstra's Algorithm:** Finding the quickest route on a map by always exploring the 'closest' path first in the priority queue.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the time complexity to extract the minimum element from a Min-Heap of size N?",
+            "options": [
+              "O(1)",
+              "O(log N)",
+              "O(N)",
+              "O(N log N)"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Extracting requires removing the root and shifting a leaf to the root, followed by a 'heapify' process taking O(log N)."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dsa-l8",
+    "title": "LEVEL 8: Graphs",
+    "subtitle": "Network & relationship problems",
+    "lessons": [
+      {
+        "id": "d53",
+        "title": "53. Graph Representation",
+        "duration": "20 mins",
+        "content": "### Nodes and Connections\r\nA Graph consists of **Vertices** (nodes) and **Edges** (connections). They are the ultimate tool for modeling networks like Facebook social graphs or Google Map roads.\r\n- **Storage Methods:**\r\n1. **Adjacency Matrix:** A 2D array where `[i][j] = 1` if a connection exists. It's very fast for lookups ($O(1)$) but uses a lot of memory ($O(V^2)$).\r\n2. **Adjacency List:** Each node has a list of its neighbors. This is much more memory-efficient ($O(V+E)$) and is the standard choice for most modern applications.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which representation is more space-efficient for a sparse graph with few edges?",
+            "options": [
+              "Adjacency Matrix",
+              "Adjacency List",
+              "Both are same",
+              "Linked List of Arrays"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Adjacency lists only store actual connections, saving huge amounts of memory in sparse networks."
+          }
+        ]
+      },
+      {
+        "id": "d54",
+        "title": "54. BFS & DFS",
+        "duration": "25 mins",
+        "content": "### Two Ways to Explore\r\n- **Breadth-First Search (BFS):** Explores a graph layer by layer, like a ripple in a pond. It uses a **Queue** and is the gold standard for finding the shortest path in an unweighted graph.\r\n- **Depth-First Search (DFS):** Dives as deep as possible into each branch before backtracking. It uses a **Stack** (or recursion) and is perfect for finding hidden paths or detecting cycles in a network.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which data structure is used to implement Breadth First Search (BFS)?",
+            "options": [
+              "Stack",
+              "Queue",
+              "Priority Queue",
+              "Hash Table"
+            ],
+            "correctAnswer": 1,
+            "explanation": "BFS uses a Queue to manage the frontier of nodes to visit in a First-In-First-Out manner."
+          }
+        ]
+      },
+      {
+        "id": "d55",
+        "title": "55. Connected Components",
+        "duration": "20 mins",
+        "content": "### Islands of Data\r\nA 'Connected Component' is a part of a graph where every node is reachable from every other node. \r\n- **Discovery:** You can find these 'islands' by running multiple BFS/DFS traversals. Every time you start a new search on a node you haven't visited before, you've found a new connected component.\r\n- **Real World:** In social media analysis, this helps identify isolated groups of people who don't interact with the rest of the network.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "How can we find the number of connected components in an undirected graph?",
+            "options": [
+              "Run Dijkstra",
+              "Count edges",
+              "Run BFS/DFS starting from unvisited nodes",
+              "Binary Search on nodes"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Every time you start a traversal on an unvisited node, you discover a new connected component."
+          }
+        ]
+      },
+      {
+        "id": "d56",
+        "title": "56. Cycle Detection",
+        "duration": "25 mins",
+        "content": "### Infinite Loops\r\nCycles occur when you can follow a path through high-priority nodes and end up back where you started. Detecting them is critical for preventing infinite loops in software systems.\r\n- **Detection Logic:**\r\n1. **Undirected:** If you visit a node that has already been seen (and isn't the one you just came from), you found a cycle.\r\n2. **Directed:** More complex. You must look for **Back Edges** that point to a node currently active in your recursion stack.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "In a Directed Graph, a back edge discovered during DFS signifies what?",
+            "options": [
+              "Disconnected graph",
+              "A cycle",
+              "A shortest path",
+              "A leaf node"
+            ],
+            "correctAnswer": 1,
+            "explanation": "A back edge points to an ancestor node in the current traversal path, creating a loop/cycle."
+          }
+        ]
+      },
+      {
+        "id": "d57",
+        "title": "57. Topological Sorting",
+        "duration": "25 mins",
+        "content": "### Planning Pre-requisites\r\nTopological sort takes a Directed Acyclic Graph (DAG) and puts the nodes in a line where every edge points 'forward'.\r\n- **Course Pre-requisites:** You must take 'Math 101' before 'Advanced Physics'. Topological sort creates the perfect sequence so you never take a class before its pre-requisite.\r\n- **Build Systems:** Compilers use this to decide which software components to build first based on their internal dependencies.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Topological sort is only possible in which type of graph?",
+            "options": [
+              "Undirected Graph",
+              "Graph with Cycles",
+              "Directed Acyclic Graph (DAG)",
+              "Complete Graph"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Cycles prevent reliable ordering; thus DAGs are required for topological sorting."
+          }
+        ]
+      },
+      {
+        "id": "d58",
+        "title": "58. Shortest Path (Dijkstra)",
+        "duration": "30 mins",
+        "content": "### The GPS Engine\r\nDijkstra's is the most famous algorithm for finding the quickest path between two points in a weighted graph (as long as weights are positive).\r\n- **Greedy Logic:** It always picks the 'unvisited' node with the smallest distance from the start, updates its neighbors' distances, and repeats until the destination is reached.\r\n- **Performance:** By using a **Priority Queue**, it runs efficiently. This is the logic inside your phone's GPS when you ask for the fastest route home through traffic.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the primary limitation of Dijkstra's algorithm?",
+            "options": [
+              "Slow on large graphs",
+              "Only works for Trees",
+              "Cannot handle negative edge weights",
+              "Requires too much memory"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Negative weights can break the greedy assumption that a path once finalized is the shortest."
+          }
+        ]
+      },
+      {
+        "id": "d59",
+        "title": "59. Bellman-Ford Algorithm",
+        "duration": "30 mins",
+        "content": "### Handling Negative Values\r\nDijkstra's fails if a graph has negative edge weights (like a path that gives you 'points' instead of costing them). \r\n- **The Solution:** Bellman-Ford can handle negative weights and even detect 'Negative Cycles' (loops that make a path infinitely short).\r\n- **Trade-off:** It is significantly slower than Dijkstra's ($O(V \times E)$) because it examines every edge in the graph multiple times to ensure the absolute minimum is found.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which algorithm can detect negative weight cycles in a graph?",
+            "options": [
+              "BFS",
+              "DFS",
+              "Dijkstra",
+              "Bellman-Ford"
+            ],
+            "correctAnswer": 3,
+            "explanation": "By relaxing edges V-1 times, Bellman-Ford can detect if paths keep getting shorter infinitely."
+          }
+        ]
+      },
+      {
+        "id": "d60",
+        "title": "60. Floyd-Warshall Algorithm",
+        "duration": "30 mins",
+        "content": "### The All-Pairs Map\r\nWhile Dijkstra finds the path from *one* node to all others, Floyd-Warshall finds the shortest path between **every single pair** of nodes in a graph simultaneously.\r\n- **Strategy:** It uses Dynamic Programming ($O(V^3)$ complexity).\r\n- **Best Use Case:** When the graph is small but you need to answer thousands of 'What's the distance from A to B?' questions instantly for many different start and end points.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the time complexity of the Floyd-Warshall algorithm?",
+            "options": [
+              "O(V + E)",
+              "O(V log V)",
+              "O(V^3)",
+              "O(E^2)"
+            ],
+            "correctAnswer": 2,
+            "explanation": "The algorithm uses three nested loops over the number of vertices."
+          }
+        ]
+      },
+      {
+        "id": "d61",
+        "title": "61. Minimum Spanning Tree (Kruskal, Prim)",
+        "duration": "30 mins",
+        "content": "### Connecting the World Cheaply\r\nAn MST is a subset of edges that connects all points with the absolute minimum total weight, without any cycles.\r\n- **Kruskal's:** Sorts every edge in the graph by weight and adds them if they don't create a loop. Perfect for sparse networks.\r\n- **Prim's:** Grows the tree from one node by always grabbing the cheapest connection to a new, unvisited node. Better for dense networks.\r\n- **Result:** Whether you're laying down water pipes or fiber-optic cables across a city, these algorithms ensure you use the minimum amount of material possible.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which MST algorithm is typically edge-oriented?",
+            "options": [
+              "Dijkstra",
+              "Kruskal's",
+              "Prim's",
+              "BFS"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Kruskal's works by sorting all edges first, making it edge-centric."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dsa-l9",
+    "title": "LEVEL 9: Advanced Algorithms",
+    "subtitle": "Interview & competitive programming mastery",
+    "lessons": [
+      {
+        "id": "d62",
+        "title": "62. Recursion Deep Dive",
+        "duration": "25 mins",
+        "content": "### Functional self-reference\r\nRecursion is when a function calls itself to solve a smaller version of the same problem. It's the engine behind most complex tree and graph algorithms.\r\n- **Base Case:** The 'Stop' condition. Without it, your function will run forever until the computer runs out of memory (**Stack Overflow**).\r\n- **Recursive Step:** Breaking the problem down. For example, to calculate 5! (factorial), you calculate 5 * 4! recursively.\r\n- **Think in Layers:** Every call is placed on the **System Call Stack**. This takes up memory, which is why iteration (loops) is often more memory-efficient even if recursion looks cleaner.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What happens if a recursive function lacks a base case?",
+            "options": [
+              "It runs faster",
+              "It returns zero",
+              "It leads to a Stack Overflow",
+              "It becomes a loop"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Without a base case, the function calls itself infinitely until the memory allocated for the call stack is exhausted."
+          }
+        ]
+      },
+      {
+        "id": "d63",
+        "title": "63. Backtracking Basics",
+        "duration": "25 mins",
+        "content": "### Trial and Error\r\nBacktracking is a systematic way to search for a solution by 'trying' a path and, if it leads to a dead end, 'undoing' that choice and trying another.\r\n- **Mechanism:** It deepens via Depth First Search (DFS).\r\n- **The Protocol:** \r\n1. **Choose:** Make a decision (e.g., place a piece on a board).\r\n2. **Explore:** Move to the next step recursively.\r\n3. **Un-choose:** If the path fails, remove the decision and return to the previous state.\r\n- **Use Case:** It is used for solving puzzles like Sudoku, mazes, and generating all possible permutations of a list.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Backtracking is essentially a refined version of what traversal strategy?",
+            "options": [
+              "BFS",
+              "DFS",
+              "Binary Search",
+              "Hash Lookup"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Backtracking explores paths deeply (DFS) and retreats when a dead end is reached."
+          }
+        ]
+      },
+      {
+        "id": "d64",
+        "title": "64. N-Queens Problem",
+        "duration": "30 mins",
+        "content": "### Strategic Constraint Satisfaction\r\nThe classic N-Queens problem asks: How can you place N queens on an N x N chessboard so that no two queens attack each other?\r\n- **The Backtracking Approach:** \r\n1. Place a queen in the first available column of Row 1.\r\n2. Move to Row 2 and find a safe spot.\r\n3. If Row 3 has no safe spots, 'backtrack' to Row 2 and move THAT queen to its next safe position.\r\n- **Logic:** This eliminates thousands of invalid board configurations early, making it much more efficient than 'Brute Force' checking every possible combination.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "In the N-Queens problem, why do we use backtracking?",
+            "options": [
+              "To find all possible valid configurations",
+              "Because it is faster than O(1)",
+              "To avoid using memory",
+              "To change the board size"
+            ],
+            "correctAnswer": 0,
+            "explanation": "Backtracking allows us to systematically explore and valid placements while discarding invalid ones early."
+          }
+        ]
+      },
+      {
+        "id": "d65",
+        "title": "65. Dynamic Programming (DP)",
+        "duration": "30 mins",
+        "content": "### Smart Caching\r\nDynamic Programming is simply 'Recursion with a Memory'. It is used to solve complex problems by breaking them into overlapping sub-problems and storing the answers so you never solve the same thing twice.\r\n- **Two Core Properties:**\r\n1. **Overlapping Sub-problems:** The same calculation is needed multiple times.\r\n2. **Optimal Substructure:** The best solution for the large problem can be built using the best solutions of its smaller parts.\r\n- **Impact:** DP can turn a slow 'Exponential' algorithm into a lightning-fast 'Polynomial' algorithm, which is often the difference between a program that takes years to run and one that takes seconds.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Dynamic Programming is primarily used to solve what?",
+            "options": [
+              "Linear problems",
+              "Problems with overlapping sub-problems",
+              "Only searching problems",
+              "Only sorting problems"
+            ],
+            "correctAnswer": 1,
+            "explanation": "By caching results of repeating sub-tasks, DP significantly reduces time complexity from exponential to polynomial."
+          }
+        ]
+      },
+      {
+        "id": "d66",
+        "title": "66. Memoization vs Tabulation",
+        "duration": "25 mins",
+        "content": "### Top-Down vs Bottom-Up\r\nThese are the two ways to implement Dynamic Programming.\r\n- **Memoization (Top-Down):** You start with the big problem and use recursion to break it down. You 'memoize' (save) results in an Array or Hash Map as you go. It's easier to write but can hit recursion stack limits.\r\n- **Tabulation (Bottom-Up):** You solve the smallest sub-problems first and fill up a table iteratively until you reach the target. It's generally faster and has no recursive overhead.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which DP approach is typically iterative?",
+            "options": [
+              "Memoization",
+              "Tabulation",
+              "Recursion",
+              "Brute Force"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Tabulation fills a table (array) using loops, starting from the smallest base cases."
+          }
+        ]
+      },
+      {
+        "id": "d67",
+        "title": "67. Knapsack Problem",
+        "duration": "30 mins",
+        "content": "### Optimized Packing\r\nImagine you have a backpack with a weight limit and a set of items, each with a 'Weight' and a 'Value'. Which items should you take to maximize your total value?\r\n- **DP Solution:** You build a table where rows are items and columns are weight capacities. Each cell calculates: 'Is it better to take this item or leave it?'\r\n- **Significance:** This is a classic 'NP-Hard' problem. While the basic version is solved with DP, it serves as the foundation for modern resource allocation and portfolio optimization in finance.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Which technique is best for the standard 0/1 Knapsack problem?",
+            "options": [
+              "Greedy",
+              "Binary Search",
+              "Dynamic Programming",
+              "Linear Search"
+            ],
+            "correctAnswer": 2,
+            "explanation": "The 0/1 choice requires checking combinations that have optimal substructure, making DP the correct choice."
+          }
+        ]
+      },
+      {
+        "id": "d68",
+        "title": "68. Bit Manipulation",
+        "duration": "25 mins",
+        "content": "### Binary Wizardry\r\nProcessing data at the level of individual bits (0s and 1s) is the most efficient way to perform certain calculations.\r\n- **The Operators:** AND (&), OR (|), XOR (^), and Shifts (<<, >>).\r\n- **Tricks of the Trade:**\r\n1. **Existence:** x & 1 checks if a number is odd.\r\n2. **Toggling:** x ^ (1 << i) flips the i-th bit.\r\n3. **Clearing:** x & (x - 1) removes the rightmost set bit (useful for counting 1s).\r\n- **Performance:** Bit tricks are executed directly by the CPU in a single cycle, making them ultra-fast compared to arithmetic operations.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What does the XOR operator (^) return when comparing two identical bits?",
+            "options": [
+              "1",
+              "0",
+              "Produces a carry",
+              "None of the above"
+            ],
+            "correctAnswer": 1,
+            "explanation": "XOR returns 1 only if the bits are different. For identical bits (0,0 or 1,1), it returns 0."
+          }
+        ]
+      },
+      {
+        "id": "d69",
+        "title": "69. Disjoint Set Union (DSU)",
+        "duration": "25 mins",
+        "content": "### Tracking Relationships\r\nDSU (or Union-Find) keeps track of elements partitioned into several non-overlapping sets. It's the heart of algorithms that need to manage grouped connections.\r\n- **Operations:**\r\n1. **Find:** Which set does this element belong to?\r\n2. **Union:** Merge two sets into one.\r\n- **Optimizations:** Using **Path Compression** and **Union by Rank**, these operations become 'nearly constant' time. This is the key component of Kruskal's MST algorithm for finding the cheapest network connections.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "DSU is a core component of which algorithm?",
+            "options": [
+              "Dijkstra",
+              "Kruskal's MST",
+              "Merge Sort",
+              "Binary Search"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Kruskal's uses DSU to efficiently detect if adding an edge will form a cycle in the tree."
+          }
+        ]
+      },
+      {
+        "id": "d70",
+        "title": "70. Segment Trees",
+        "duration": "30 mins",
+        "content": "### Range Efficiency\r\nWhat if you need to find the sum of elements in an array between index L and R very frequently, while the array elements are also frequently changing?\r\n- **The Solution:** A Segment Tree stores pre-calculated values of different ranges in a tree structure.\r\n- **Performance:** It allows both 'Update' and 'Range Query' to run in O(log n) time, which is significantly better than the O(n) of a simple array for large datasets.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the time complexity for a range sum query in a Segment Tree?",
+            "options": [
+              "O(1)",
+              "O(n)",
+              "O(log n)",
+              "O(n log n)"
+            ],
+            "correctAnswer": 2,
+            "explanation": "A Segment Tree reduces the O(n) scan to a logarithmic traversal of pre-calculated range nodes."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dsa-l10",
+    "title": "LEVEL 10: Advanced DSA & Interview Prep",
+    "subtitle": "Job-ready DSA mastery",
+    "lessons": [
+      {
+        "id": "d71",
+        "title": "71. Trie (Prefix Tree)",
+        "duration": "25 mins",
+        "content": "### The Autocomplete Engine\r\nA Trie is a specialized tree used for storing strings. Every edge represents a character, and every node represents a prefix.\r\n- **Speed:** Searching for a word 'APPLE' takes O(L) where L is the length of the word, totally independent of how many millions of words are in the dictionary.\r\n- **Real World:** Tries power the autocomplete in your search bar and the spell-checker in your word processor precisely because of this prefix efficiency.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "A Trie is most efficient for which type of lookup?",
+            "options": [
+              "Numeric sorting",
+              "Prefix-based string searching",
+              "Range queries",
+              "Graph traversal"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Tries allow you to find all words starting with a certain prefix by following a path in the tree."
+          }
+        ]
+      },
+      {
+        "id": "d72",
+        "title": "72. Fenwick Tree (BIT)",
+        "duration": "25 mins",
+        "content": "### Lightweight Range Search\r\nSimilar to a Segment Tree but much simpler to implement and uses less memory.\r\n- **The Logic:** It uses binary arithmetic on indices to store cumulative sums efficiently.\r\n- **Limitation:** While Segment Trees can store anything (Max, Min, GCD), Fenwick Trees are primarily optimized for 'Sum' based range queries where code simplicity is a priority.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Fenwick Trees are primarily used for which operation?",
+            "options": [
+              "Sorting",
+              "Finding Cycles",
+              "Prefix Sums and Updates",
+              "Balanced Trees"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Fenwick Trees provide a very efficient way to maintain and query cumulative frequency tables."
+          }
+        ]
+      },
+      {
+        "id": "d73",
+        "title": "73. Sliding Window Technique",
+        "duration": "25 mins",
+        "content": "### Moving Segments\r\nThe sliding window technique uses a range to process subarrays efficiently.\r\n- **The Logic:** Instead of recalculating the sum of a window from scratch, you subtract the element leaving and add the element entering as you slide the window.\r\n- **Efficiency:** This turns an O(n^2) double-loop into an O(n) single-pass algorithm. It's essential for problems involving contiguous sequences of data like 'Longest Substring'.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the main advantage of the Sliding Window technique?",
+            "options": [
+              "Uses less memory",
+              "Reduces O(n^2) problems to O(n)",
+              "Works on graphs",
+              "It is recursive"
+            ],
+            "correctAnswer": 1,
+            "explanation": "By 'sliding' the window and updating only the edge elements, we avoid redundant calculations."
+          }
+        ]
+      },
+      {
+        "id": "d74",
+        "title": "74. Two Pointers Technique",
+        "duration": "20 mins",
+        "content": "### Narrowing the Search\r\nAdvanced Two Pointers involve using markers that move towards each other, move at different speeds, or move in separate arrays.\r\n- **Classic Case:** Finding if a sorted array has a pair that sums to K. You put one pointer at the start and one at the end. If the sum is too low, move the start; if too high, move the end.\r\n- **Optimization:** This avoids the nested O(n^2) loop and finds the answer in a single O(n) pass by exploiting the sorted property of the list.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "To find if a sorted array has a pair that sums to X, where do you start the two pointers?",
+            "options": [
+              "Both at index 0",
+              "Both at the end",
+              "One at start, one at end",
+              "Both in the middle"
+            ],
+            "correctAnswer": 2,
+            "explanation": "By starting at both ends, you can move inward based on whether the current sum is too high or too low."
+          }
+        ]
+      },
+      {
+        "id": "d75",
+        "title": "75. Greedy Algorithms",
+        "duration": "25 mins",
+        "content": "### Short-term Best\r\nGreedy algorithms make the 'locally best' choice at each step without looking ahead, hoping that these choices lead to a globally perfect result.\r\n- **When Greedy Wins:** For problems like 'Activity Selection' (scheduling) or 'Huffman Coding' (compression), the local best choice is the global best choice.\r\n- **The Risk:** In many cases (like the 0/1 Knapsack problem), a greedy choice can lead to a dead end. Always verify if a problem has the 'Greedy Choice Property' before using this approach.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "A greedy algorithm always finds the global optimum. True or False?",
+            "options": [
+              "True",
+              "False"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Greedy algorithms are fast, but they don't always work for every problem (like the 0/1 Knapsack)."
+          }
+        ]
+      },
+      {
+        "id": "d76",
+        "title": "76. System Design Basics for Interviews",
+        "duration": "30 mins",
+        "content": "### Scaling Up\r\nIn senior-level interviews, you aren't just asked to code an algorithm; you're asked to design a system like YouTube or Netflix.\r\n- **Key Concepts:**\r\n1. **Load Balancing:** Distributing traffic across many servers.\r\n2. **Caching:** Storing hot data in RAM (like Redis) for instant access.\r\n3. **Database Sharding:** Splitting a massive database into smaller, manageable chunks across multiple machines to handle millions of users.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is 'Horizontal Scaling'?",
+            "options": [
+              "Adding more RAM to one server",
+              "Adding more servers to the network",
+              "Upgrading the CPU",
+              "Deleting old data"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Scaling horizontally means adding more machines into your pool of resources."
+          }
+        ]
+      },
+      {
+        "id": "d77",
+        "title": "77. Patterns in LeetCode Problems",
+        "duration": "30 mins",
+        "content": "### Recognizing the 'Ask'\r\nSuccess in coding interviews comes from recognizing patterns quickly.\r\n- **Pattern Matching:** \r\n1. **Sorted input?** Think Binary Search or Two Pointers.\r\n2. **Top K elements?** Think Heap.\r\n3. **Permutations/Subsets?** Think Backtracking.\r\n4. **Shortest path in unweighted graph?** Think Breadth First Search (BFS).\r\n- **Strategy:** Once you recognize the pattern, the implementation becomes a standard exercise.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "If a problem involves 'Top K' or 'Frequent' elements, which data structure is usually best?",
+            "options": [
+              "Linked List",
+              "Stack",
+              "Heap (Priority Queue)",
+              "Segment Tree"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Heaps are designed to efficiently keep track of the largest or smallest K elements."
+          }
+        ]
+      },
+      {
+        "id": "d78",
+        "title": "78. Space-Time Complexity Trade-offs",
+        "duration": "25 mins",
+        "content": "### The Engineering Balance\r\nGood engineering is about balance. Usually, you can make an algorithm faster by using more memory, or use less memory by taking more time.\r\n- **Big-O Mastery:** You must be able to justify why you chose a Hash Map (O(1) speed, O(n) space) over an Array (O(n) speed, O(1) space) based on specific memory constraints.\r\n- **Hardware Context:** In high-frequency trading, speed is king. In embedded systems, memory is life.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "Using a Hash Map to reduce a search from O(n) to O(1) is an example of what?",
+            "options": [
+              "Space Optimization",
+              "Time Complexity Trade-off (Time vs Space)",
+              "Code Refactoring",
+              "Hardware upgrade"
+            ],
+            "correctAnswer": 1,
+            "explanation": "You use O(n) extra space to gain O(1) speed."
+          }
+        ]
+      },
+      {
+        "id": "d79",
+        "title": "79. Mock Interview: Approach",
+        "duration": "30 mins",
+        "content": "### Step-by-Step Technique\r\nHow you solve is as important as what you solve in a professional interview.\r\n- **The Protocol:** \r\n1. **Clarify:** Ask questions about constraints (e.g., 'Can the input be null?').\r\n2. **Example:** Walk through a test case manually to show your logic.\r\n3. **Optimize:** State the brute-force approach, then explain how to improve the Big O using the techniques from this course.\r\n4. **Code:** Write clean, readable code with meaningful variable names.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What should you do FIRST when given a coding problem in an interview?",
+            "options": [
+              "Start coding immediately",
+              "Ask clarifying questions about the input and constraints",
+              "Ask for the answer",
+              "Write documentation"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Clarification prevents you from solving the wrong problem or missing critical constraints like 'array is sorted'."
+          }
+        ]
+      },
+      {
+        "id": "d80",
+        "title": "80. Final Review & Practice Path",
+        "duration": "30 mins",
+        "content": "### The Road to Mastery\r\nMastery of DSA is a marathon, not a sprint.\r\n- **Final Message:** Consistency is key. Solve one problem a day, participate in coding contests, and always seek the 'most optimal' solution rather than just the one that passes.\r\n- **Core Checklist:** Ensure you can explain Big-O, traverse trees/graphs with ease, and know when to apply DP vs Greedy strategies before heading into your next big coding challenge.\r\n- **Good Luck!** You've completed the 80-lesson curriculum and are well on your way to engineering excellence.",
+        "quizQuestions": [
+          {
+            "id": 1,
+            "text": "What is the most effective way to master Data Structures and Algorithms?",
+            "options": [
+              "Reading books only",
+              "Watching videos without coding",
+              "Consistent hands-on practice and problem solving",
+              "Memorizing code"
+            ],
+            "correctAnswer": 2,
+            "explanation": "DSA is a skill that requires muscle memory and logical intuition, built over time through active coding."
+          }
+        ]
+      }
+    ]
+  }
 ]
