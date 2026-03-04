@@ -1,5 +1,5 @@
 ---
-description: How to recreate Google Cloud OAuth credentials for GenSpark (Multi-Platform)
+description: How to recreate Google Cloud OAuth credentials for Glinto (Multi-Platform)
 ---
 
 To ensure a professional experience on Android, iOS, and Desktop, you need to configure your Google Cloud project for all platforms.
@@ -7,13 +7,13 @@ To ensure a professional experience on Android, iOS, and Desktop, you need to co
 ### 1. Create a New Google Cloud Project
 1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
 2. Click the project dropdown top-left and select **New Project**.
-3. Name it **"GenSpark"** and create.
+3. Name it **"Glinto"** and create.
 
 ### 2. Configure OAuth Consent Screen (Universal Branding)
 1. Go to **APIs & Services** > **OAuth consent screen**.
 2. Select **External** and click **Create**.
 3. **App Information**:
-   - App name: **GenSpark**
+   - App name: **Glinto**
    - User support email: (Your email)
    - App logo: (Upload your logo - this will show on all devices)
 4. **Developer contact info**: (Your email).
@@ -26,14 +26,16 @@ To ensure a professional experience on Android, iOS, and Desktop, you need to co
 3. Select **Web application**.
 4. **Name**: `Web Client (Supabase & Desktop)`
 5. **Authorized redirect URIs**:
-   - Add: `https://aoiagnnkhaswpmhbobhd.supabase.co/auth/v1/callback`
+   - Go to your **Supabase Dashboard** > **Authentication** > **Providers** > **Google**.
+   - Copy the **Callback URL** (it will look like `https://[your-project-ref].supabase.co/auth/v1/callback`).
+   - Paste it here in the Google Cloud console.
 6. Click **Create**. **Copy the Client ID and Client Secret.** (You will put these in Supabase).
 
 ### 4. Create Credentials for Android (Play Store)
 1. Click **Create Credentials** > **OAuth client ID**.
 2. Select **Android**.
 3. **Name**: `Android App`
-4. **Package name**: `com.genspark.app` (This must match your `capacitor.config.json` and AndroidManifest.xml).
+4. **Package name**: `com.Glinto.app` (This must match your `capacitor.config.json` and AndroidManifest.xml).
 5. **SHA-1 certificate fingerprint**: 
    - To get this, run this command in your terminal: `./gradlew signingReport` inside the `android` folder.
    - Look for the **SHA1** value under the `debug` or `release` variant.
@@ -43,7 +45,7 @@ To ensure a professional experience on Android, iOS, and Desktop, you need to co
 1. Click **Create Credentials** > **OAuth client ID**.
 2. Select **iOS**.
 3. **Name**: `iOS App`
-4. **Bundle ID**: `com.genspark.app` (This must match your Xcode project).
+4. **Bundle ID**: `com.Glinto.app` (This must match your Xcode project).
 5. Click **Create**.
 
 ### 6. Update Supabase

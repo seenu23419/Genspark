@@ -109,8 +109,8 @@ Common fixes:
               <button
                 onClick={() => setActiveTab('code')}
                 className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${activeTab === 'code'
-                    ? 'bg-indigo-600 text-white'
-                    : 'text-slate-400 hover:text-white'
+                  ? 'bg-indigo-600 text-white'
+                  : 'text-slate-400 hover:text-white'
                   }`}
               >
                 Code
@@ -118,8 +118,8 @@ Common fixes:
               <button
                 onClick={() => setActiveTab('output')}
                 className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${activeTab === 'output'
-                    ? 'bg-indigo-600 text-white'
-                    : 'text-slate-400 hover:text-white'
+                  ? 'bg-indigo-600 text-white'
+                  : 'text-slate-400 hover:text-white'
                   }`}
               >
                 Output
@@ -161,7 +161,7 @@ Common fixes:
           <button
             onClick={handleRun}
             disabled={isRunning}
-            className="flex-1 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl flex items-center justify-center gap-2 text-white font-bold shadow-lg hover:shadow-indigo-500/50 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl flex items-center justify-center gap-2 text-white font-bold transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isRunning ? (
               <>
@@ -178,7 +178,7 @@ Common fixes:
 
           <button
             onClick={handleExplainError}
-            className="py-4 px-6 bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl flex items-center justify-center gap-2 text-white font-bold shadow-lg hover:shadow-amber-500/50 transition-all active:scale-95"
+            className="py-4 px-6 bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl flex items-center justify-center gap-2 text-white font-bold transition-all active:scale-95"
           >
             <Bug className="w-5 h-5" />
             Explain Error
@@ -256,7 +256,7 @@ Common fixes:
 
         <button
           onClick={handleNext}
-          className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-xl shadow-lg hover:shadow-indigo-500/50 transition-all"
+          className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-xl transition-all"
         >
           Next
         </button>

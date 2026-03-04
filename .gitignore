@@ -42,3 +42,5 @@ lerna-debug.log*
 temp_archive
 backup_scripts
 docs_archive
+
+.vercel

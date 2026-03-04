@@ -78,7 +78,7 @@ export const generateCertificateSVG = (data: CertificateData): string => {
       <!-- Content -->
       <g text-anchor="middle">
         <!-- Authority -->
-        <text x="${width / 2}" y="100" class="academic-header">ISSUED BY GENSPARK LEARNING PLATFORM</text>
+        <text x="${width / 2}" y="100" class="academic-header">ISSUED BY Glinto LEARNING PLATFORM</text>
         
         <!-- Main Title -->
         <text x="${width / 2}" y="190" class="main-title">RECORD OF ACADEMIC ACHIEVEMENT</text>
@@ -124,7 +124,7 @@ export const generateCertificateSVG = (data: CertificateData): string => {
 
       <g transform="translate(${width - 60}, ${height - 60})" text-anchor="end">
         <text class="verification-label">Verify Authenticity At</text>
-        <text y="20" class="verification-url">genspark.ai/verify/${data.certificateId}</text>
+        <text y="20" class="verification-url">Glinto.ai/verify/${data.certificateId}</text>
       </g>
     </svg>
   `;
@@ -224,8 +224,8 @@ export const downloadCertificate = async (data: CertificateData, format: 'png' |
  * Share certificate on social media
  */
 export const shareCertificate = (data: CertificateData, platform: 'twitter' | 'linkedin' | 'facebook'): void => {
-  const text = `I just completed ${data.courseName} on GenSpark! 🎉\n\nCertificate ID: ${data.certificateId}`;
-  const url = `https://genspark-ai.vercel.app/verify/${data.certificateId}`;
+  const text = `I just completed ${data.courseName} on Glinto! 🎉\n\nCertificate ID: ${data.certificateId}`;
+  const url = `https://Glinto-ai.vercel.app/verify/${data.certificateId}`;
 
   const shareUrls = {
     twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
@@ -235,3 +235,4 @@ export const shareCertificate = (data: CertificateData, platform: 'twitter' | 'l
 
   window.open(shareUrls[platform], '_blank', 'width=600,height=400');
 };
+

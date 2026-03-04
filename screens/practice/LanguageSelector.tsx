@@ -105,8 +105,8 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
               key={lang.id}
               onClick={() => handleSelect(lang.id)}
               className={`relative rounded-lg border-2 p-4 cursor-pointer transition-all duration-300 ${selectedLanguage === lang.id
-                  ? 'border-indigo-500 bg-indigo-900/20 shadow-lg shadow-indigo-500/20'
-                  : 'border-slate-700 bg-slate-900/30 hover:border-indigo-500/50 hover:bg-slate-900/50'
+                ? 'border-indigo-500 bg-indigo-900/20'
+                : 'border-slate-700 bg-slate-900/30 hover:border-indigo-500/50 hover:bg-slate-900/50'
                 }`}
             >
               {/* Popular Badge */}
@@ -129,8 +129,8 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
               <div className="mb-3">
                 <span
                   className={`inline-block px-2 py-0.5 rounded-full text-xs font-bold ${lang.level === 'Beginner'
-                      ? 'bg-green-900/30 text-green-300'
-                      : 'bg-yellow-900/30 text-yellow-300'
+                    ? 'bg-green-900/30 text-green-300'
+                    : 'bg-yellow-900/30 text-yellow-300'
                     }`}
                 >
                   {lang.level}
@@ -171,8 +171,8 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
           disabled={!selectedLanguage}
           onClick={handleContinue}
           className={`flex-1 px-6 py-3 rounded-lg font-bold text-lg transition flex items-center justify-center gap-2 ${selectedLanguage
-              ? 'bg-indigo-600 hover:bg-indigo-700 text-white'
-              : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+            ? 'bg-indigo-600 hover:bg-indigo-700 text-white'
+            : 'bg-slate-800 text-slate-500 cursor-not-allowed'
             }`}
         >
           {selectedLanguage ? 'Continue' : 'Select a Language'}

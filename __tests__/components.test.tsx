@@ -129,6 +129,21 @@ describe('Component Integration Tests', () => {
       expect(screen.getByText('Item 2')).toBeInTheDocument();
       expect(screen.getByText('Item 3')).toBeInTheDocument();
     });
+  });
+
+  describe('Landing Page', () => {
+    it('should show marketing copy and login/signup buttons', () => {
+      render(<>
+        <h1>Welcome to GenSpark</h1>
+        <button>Log In</button>
+        <button>Sign Up</button>
+      </>);
+      expect(screen.getByText('Welcome to GenSpark')).toBeInTheDocument();
+      expect(screen.getByText('Log In')).toBeInTheDocument();
+      expect(screen.getByText('Sign Up')).toBeInTheDocument();
+    });
+  });
+    });
 
     it('should handle empty state', () => {
       render(

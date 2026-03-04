@@ -35,7 +35,7 @@ const getApiKey = (provider: 'gemini' | 'openai'): string => {
   }
 };
 
-export class GenSparkAIService {
+export class GlintoAIServiceImpl {
   private geminiKey: string = '';
   private openaiKey: string = '';
 
@@ -45,10 +45,10 @@ export class GenSparkAIService {
   }
 
   async *generateChatStream(message: string, isPro: boolean = false, history: any[] = [], attachment?: MediaPart) {
-    console.log('[GenSpark AI] generateChatStream called');
+    console.log('[Glinto AI] generateChatStream called');
     if (!this.geminiKey) this.geminiKey = getApiKey('gemini');
     if (!this.openaiKey) this.openaiKey = getApiKey('openai');
-    console.log('[GenSpark AI] Keys available - OpenAI:', !!this.openaiKey, 'Gemini:', !!this.geminiKey);
+    console.log('[Glinto AI] Keys available - OpenAI:', !!this.openaiKey, 'Gemini:', !!this.geminiKey);
 
     // OPTIMIZATION: Limit context to last 10 messages (5 turns) for performance and cost
     const recentHistory = history.slice(-10);
@@ -56,31 +56,31 @@ export class GenSparkAIService {
     // Strategy: Try OpenAI first (highest reasoning), then Gemini fallback
     if (this.openaiKey) {
       try {
-        console.log("GenSpark AI: Attempting with OpenAI...");
+        console.log("Glinto AI: Attempting with OpenAI...");
         yield* this.generateOpenAIStream(message, isPro, recentHistory, attachment);
         return;
       } catch (e: any) {
-        console.warn("GenSpark AI: OpenAI failed, falling back to Gemini.", e.message);
+        console.warn("Glinto AI: OpenAI failed, falling back to Gemini.", e.message);
       }
     }
 
     if (this.geminiKey) {
       try {
-        console.log("GenSpark AI: Attempting with Gemini...");
+        console.log("Glinto AI: Attempting with Gemini...");
         yield* this.generateGeminiStream(message, isPro, recentHistory, attachment);
         return;
       } catch (e: any) {
-        console.error("GenSpark AI: Gemini also failed.", e.message);
+        console.error("Glinto AI: Gemini also failed.", e.message);
         yield `⚠️ **System Note**: ${e.message || "I encountered an issue connecting to the AI brain. Please check your internet or try again."}`;
       }
     } else {
-      console.log('[GenSpark AI] No API keys available');
+      console.log('[Glinto AI] No API keys available');
       // Offline mode message
       const isDev = (import.meta as any).env.DEV;
       if (isDev) {
-        yield "🤖 **GenSpark AI (Setup Required)**: I'm currently in 'offline mode' because your AI keys are missing. \n\n**Quick Fix**: Please add your `VITE_GEMINI_API_KEY` to your `.env.local` file and restart the server! 🚀";
+        yield "🤖 **Glinto AI (Setup Required)**: I'm currently in 'offline mode' because your AI keys are missing. \n\n**Quick Fix**: Please add your `VITE_GEMINI_API_KEY` to your `.env.local` file and restart the server! 🚀";
       } else {
-        yield "🤖 **GenSpark AI (Offline)**: I'm currently in 'offline mode' because no valid API key was found in the environment variables.";
+        yield "🤖 **Glinto AI (Offline)**: I'm currently in 'offline mode' because no valid API key was found in the environment variables.";
       }
     }
   }
@@ -156,41 +156,23 @@ export class GenSparkAIService {
   }
 
   private async *generateGeminiStream(message: string, isPro: boolean, history: any[], attachment?: MediaPart) {
-    // Using v1beta API - updated for Gemini 2.0/2.5 support
-    const models = ['gemini-2.0-flash', 'gemini-2.5-flash', 'gemini-flash-latest'];
+    // Current valid Gemini model list - prioritized for speed and availability
+    const models = ['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-1.5-flash-8b', 'gemini-1.5-pro'];
+    const apis = ['v1beta', 'v1'];
     const systemPrompt = this.getSystemPrompt(isPro);
     let lastError = '';
 
-    for (const modelName of models) {
-      try {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:streamGenerateContent?alt=sse&key=${this.geminiKey}`;
-        console.log('[Gemini API] Querying URL:', url);
-        console.log('[Gemini API] Trying model:', modelName);
+    for (const apiVersion of apis) {
+      for (const modelName of models) {
+        try {
+          // Adjust payload for v1 vs v1beta (v1 often requires system_instruction in specific format)
+          const isV1 = apiVersion === 'v1';
+          const url = `https://generativelanguage.googleapis.com/${apiVersion}/models/${modelName}:streamGenerateContent?alt=sse&key=${this.geminiKey}`;
 
-        let contents = [];
-        if (history.length === 0) {
-          const parts: any[] = [{ text: `${systemPrompt}\n\nUser Message: ${message}` }];
-          if (attachment) {
-            parts.push({ inlineData: { mimeType: attachment.mimeType, data: attachment.data } });
-          }
-          contents.push({ role: 'user', parts });
-        } else {
-          contents = JSON.parse(JSON.stringify(history));
-          if (contents[0].role === 'user') {
-            contents[0].parts[0].text = `[Instruction: ${systemPrompt}]\n\n${contents[0].parts[0].text}`;
-          }
-          const currentParts: any[] = [{ text: message }];
-          if (attachment) {
-            currentParts.push({ inlineData: { mimeType: attachment.mimeType, data: attachment.data } });
-          }
-          contents.push({ role: 'user', parts: currentParts });
-        }
+          console.log(`[Gemini API] Querying: ${apiVersion}/${modelName}`);
 
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents,
+          const payload: any = {
+            contents: [],
             generationConfig: { temperature: 0.8, maxOutputTokens: 4096 },
             safetySettings: [
               { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
@@ -198,59 +180,92 @@ export class GenSparkAIService {
               { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
               { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" }
             ]
-          })
-        });
+          };
 
-        if (!response.ok) {
-          const err = await response.json().catch(() => ({}));
-          const errorMsg = err.error?.message || response.statusText;
-          console.error(`[Gemini API] Error with model ${modelName}:`, errorMsg);
-
-          // Short-circuit: If API key is invalid, don't keep trying other models
-          if (response.status === 400 && errorMsg.toLowerCase().includes('key')) {
-            throw new Error("Invalid API Key. Please verify your credentials in .env.local");
+          // Handle System Prompt (v1/v1beta differences)
+          if (isV1 || apiVersion === 'v1beta') {
+            payload.system_instruction = { parts: [{ text: systemPrompt }] };
           }
 
-          throw new Error(errorMsg);
-        }
+          if (history.length === 0) {
+            const parts: any[] = [{ text: message }];
+            if (attachment) {
+              parts.push({ inlineData: { mimeType: attachment.mimeType, data: attachment.data } });
+            }
+            payload.contents.push({ role: 'user', parts });
+          } else {
+            const contents = JSON.parse(JSON.stringify(history));
+            const currentParts: any[] = [{ text: message }];
+            if (attachment) {
+              currentParts.push({ inlineData: { mimeType: attachment.mimeType, data: attachment.data } });
+            }
+            contents.push({ role: 'user', parts: currentParts });
+            payload.contents = contents;
+          }
 
-        const reader = response.body?.getReader();
-        if (!reader) throw new Error("Failed to get response reader");
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
 
-        const decoder = new TextDecoder();
-        let buffer = '';
+          if (!response.ok) {
+            const err = await response.json().catch(() => ({}));
+            const errorMsg = err.error?.message || response.statusText;
+            console.error(`[Gemini API] Error with ${apiVersion}/${modelName}:`, errorMsg);
 
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
+            // Short-circuit: If API key is invalid, don't keep trying other models
+            if (response.status === 400 && errorMsg.toLowerCase().includes('key')) {
+              throw new Error("Invalid API Key. Please verify your credentials in .env.local");
+            }
 
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split('\n');
-          buffer = lines.pop() || '';
+            throw new Error(errorMsg);
+          }
 
-          for (const line of lines) {
-            const trimmed = line.trim();
-            if (!trimmed || !trimmed.startsWith('data: ')) continue;
+          const reader = response.body?.getReader();
+          if (!reader) throw new Error("Failed to get response reader");
 
-            const dataStr = trimmed.substring(6);
-            if (dataStr === '[DONE]') return;
+          const decoder = new TextDecoder();
+          let buffer = '';
 
-            try {
-              const json = JSON.parse(dataStr);
-              // Gemini SSE format can be slightly different depending on model/version
-              const text = json.candidates?.[0]?.content?.parts?.[0]?.text;
-              if (text) yield text;
-            } catch (e) {
-              // Ignore partial JSON chunks common in streaming
-              continue;
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || '';
+
+            for (const line of lines) {
+              const trimmed = line.trim();
+              if (!trimmed) continue;
+
+              // Handle both "data: " and raw JSON chunks (Gemini can be inconsistent)
+              let dataStr = trimmed;
+              if (trimmed.startsWith('data: ')) {
+                dataStr = trimmed.substring(6);
+              }
+
+              if (dataStr === '[DONE]') return;
+
+              try {
+                const json = JSON.parse(dataStr);
+                // Handle both streaming chunk formats
+                const text = json.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (text) yield text;
+              } catch (e) {
+                // Ignore partial JSON chunks
+                continue;
+              }
             }
           }
+          return;
+        } catch (err: any) {
+          lastError = err.message;
+          console.warn(`[Gemini API] ${apiVersion}/${modelName} failed.`, err.message);
+          // Only throw if we've tried everything
+          if (apiVersion === apis[apis.length - 1] && modelName === models[models.length - 1]) throw err;
         }
-        return;
-      } catch (err: any) {
-        lastError = err.message;
-        console.warn(`[Gemini API] Model ${modelName} failed.`, err.message);
-        if (modelName === models[models.length - 1]) throw err;
       }
     }
   }
@@ -300,6 +315,65 @@ export class GenSparkAIService {
     }
   }
 
+  async executeCodeSimulated(language: string, sourceCode: string, stdin: string = ""): Promise<{ stdout: string; stderr: string; status: { id: number; description: string } }> {
+    const prompt = `
+      You are a high-performance code execution engine for ${language}.
+      
+      INPUT CODE:
+      \`\`\`${language}
+      ${sourceCode}
+      \`\`\`
+      
+      STDIN (User Input):
+      "${stdin}"
+      
+      TASK: 
+      1. Mentally execute this code step-by-step.
+      2. If there are syntax errors, provide the EXACT compiler error message in 'stderr'.
+      3. If valid, provide the EXACT 'stdout' that would result from running this code.
+      4. Note: If the code uses recursion, infinite loops, or complex pointers, follow the logic accurately.
+      
+      RETURN ONLY a JSON object:
+      {
+        "stdout": "The standard output captured",
+        "stderr": "The standard error or compiler error (if any)",
+        "status": { "id": 3, "description": "Accepted" }
+      }
+      
+      Status IDs: 3 (Accepted), 6 (Compilation Error), 11 (Runtime Error).
+      Do NOT wrap in markdown.
+    `;
+
+    let fullResponse = '';
+    const stream = this.generateChatStream(prompt, false);
+
+    for await (const chunk of stream) {
+      fullResponse += chunk;
+    }
+
+    // Check if the response is an error message rather than JSON
+    if (fullResponse.includes('⚠️') || fullResponse.includes('System Note')) {
+      return {
+        stdout: "",
+        stderr: "The AI Mentor is currently overwhelmed or out of quota. " + fullResponse,
+        status: { id: 13, description: "AI Service Busy" }
+      };
+    }
+
+    fullResponse = fullResponse.replace(/```json/g, '').replace(/```/g, '').trim();
+
+    try {
+      return JSON.parse(fullResponse);
+    } catch (e) {
+      console.error("AI Simulator JSON Parse Error. Response:", fullResponse);
+      return {
+        stdout: "",
+        stderr: "AI Simulator failed to format the output correctly. Please try again.",
+        status: { id: 13, description: "Internal Error" }
+      };
+    }
+  }
+
   private getSystemPrompt(isPro: boolean): string {
     return `You are a patient, supportive coding mentor. Your role is to help learners understand and fix their code.
 
@@ -336,4 +410,6 @@ User Error: "undefined variable 'x'"
   }
 }
 
-export const genSparkAIService = new GenSparkAIService();
+const instance = new GlintoAIServiceImpl();
+export const GlintoAIService = instance;
+export const glintoAIService = instance;

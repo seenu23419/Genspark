@@ -116,9 +116,9 @@ const LearningHistory: React.FC = () => {
     if (!user) return null;
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-black text-slate-900 dark:text-white transition-colors duration-300">
+        <div className="min-h-screen bg-slate-50 dark:bg-[#0f172a] text-slate-900 dark:text-white transition-colors duration-300">
             {/* Header */}
-            <header className="sticky top-0 z-50 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-slate-200 dark:border-white/5 px-6 py-4">
+            <header className="sticky top-0 z-50 bg-white/80 dark:bg-[#0f172a]/80 backdrop-blur-xl border-b border-slate-200 dark:border-white/[0.08] px-6 py-4">
                 <div className="max-w-5xl mx-auto flex items-center justify-between">
                     <button
                         onClick={() => navigate(-1)}
@@ -134,7 +134,7 @@ const LearningHistory: React.FC = () => {
             <main className="max-w-5xl mx-auto px-6 py-8 pb-24">
                 {/* 1. Stats Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-                    <div className="bg-white dark:bg-white/5 p-4 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm">
+                    <div className="bg-white dark:bg-white/5 p-4 rounded-2xl border border-slate-200 dark:border-white/10">
                         <div className="flex items-center gap-2 text-indigo-500 mb-2">
                             <CheckCircle size={16} />
                             <span className="text-[10px] font-black uppercase tracking-wider">Completed</span>
@@ -142,7 +142,7 @@ const LearningHistory: React.FC = () => {
                         <div className="text-2xl font-black">{stats.completedCount}</div>
                         <div className="text-[10px] text-slate-500 font-bold uppercase">out of {stats.totalCount}</div>
                     </div>
-                    <div className="bg-white dark:bg-white/5 p-4 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm">
+                    <div className="bg-white dark:bg-white/5 p-4 rounded-2xl border border-slate-200 dark:border-white/10">
                         <div className="flex items-center gap-2 text-amber-500 mb-2">
                             <Star size={16} />
                             <span className="text-[10px] font-black uppercase tracking-wider">Avg Score</span>
@@ -150,7 +150,7 @@ const LearningHistory: React.FC = () => {
                         <div className="text-2xl font-black">{stats.avgScore}%</div>
                         <div className="text-[10px] text-slate-500 font-bold uppercase">Quiz Accuracy</div>
                     </div>
-                    <div className="bg-white dark:bg-white/5 p-4 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm">
+                    <div className="bg-white dark:bg-white/5 p-4 rounded-2xl border border-slate-200 dark:border-white/10">
                         <div className="flex items-center gap-2 text-emerald-500 mb-2">
                             <Clock size={16} />
                             <span className="text-[10px] font-black uppercase tracking-wider">Study Time</span>
@@ -158,7 +158,7 @@ const LearningHistory: React.FC = () => {
                         <div className="text-2xl font-black">{formatDuration(stats.totalTime)}</div>
                         <div className="text-[10px] text-slate-500 font-bold uppercase">Total spent</div>
                     </div>
-                    <div className="bg-white dark:bg-white/5 p-4 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm">
+                    <div className="bg-white dark:bg-white/5 p-4 rounded-2xl border border-slate-200 dark:border-white/10">
                         <div className="flex items-center gap-2 text-rose-500 mb-2">
                             <Activity size={16} />
                             <span className="text-[10px] font-black uppercase tracking-wider">Attempts</span>
@@ -172,13 +172,13 @@ const LearningHistory: React.FC = () => {
                 <div className="flex gap-2 mb-8 bg-slate-200/50 dark:bg-white/5 p-1 rounded-xl w-fit">
                     <button
                         onClick={() => setActiveTab('completed')}
-                        className={`px-6 py-2 rounded-lg text-sm font-black transition-all ${activeTab === 'completed' ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-white shadow-sm' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                        className={`px-6 py-2 rounded-lg text-sm font-black transition-all ${activeTab === 'completed' ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-white' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
                     >
                         Completed ({completedLessons.length})
                     </button>
                     <button
                         onClick={() => setActiveTab('pending')}
-                        className={`px-6 py-2 rounded-lg text-sm font-black transition-all ${activeTab === 'pending' ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-white shadow-sm' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                        className={`px-6 py-2 rounded-lg text-sm font-black transition-all ${activeTab === 'pending' ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-white' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
                     >
                         Pending ({pendingLessons.length})
                     </button>

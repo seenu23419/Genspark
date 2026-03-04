@@ -36,7 +36,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBack }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black overflow-y-auto">
+    <div className="fixed inset-0 bg-[#0f172a] overflow-y-auto">
       <div className="min-h-full flex flex-col items-center justify-center px-6 py-8">
         <div className="w-full max-w-[340px] space-y-6">
           <button
@@ -49,18 +49,19 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBack }) => {
           </button>
 
           {/* Logo - Consistent with branding */}
-          <div className="flex justify-center -mb-4 animate-in fade-in zoom-in duration-700 ease-out">
+          <div className="flex justify-center scale-90 md:scale-100">
             <img
-              src="/icons/logo.png"
-              alt="GenSpark"
-              className="h-32 w-32 object-contain drop-shadow-2xl"
+              src="/icons/logo_premium.png"
+              alt="Glinto"
+              className="w-auto object-contain"
+              style={{ height: '80px' }}
               draggable={false}
             />
           </div>
 
-          <div className="text-center space-y-1 pb-2">
-            <h1 className="text-2xl font-black text-white tracking-tight">Recover Account</h1>
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em]">Secure your workspace</p>
+          <div className="text-center mt-0 pb-2">
+            <h1 className="text-2xl font-black text-white tracking-tight leading-none">Recover Account</h1>
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] mt-1">Secure your workspace</p>
           </div>
 
           {isSent ? (
@@ -105,7 +106,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBack }) => {
                     placeholder="Enter your email"
                     autoComplete="email"
                     disabled={isLoading}
-                    className="w-full pl-11 pr-4 py-3 bg-white/5 border border-slate-800 rounded-xl text-white text-sm placeholder:text-slate-600 focus:ring-2 focus:ring-indigo-700/80 focus:border-indigo-600 focus:bg-black focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                    className="w-full pl-11 pr-4 py-3 bg-white/5 border border-slate-800 rounded-xl text-white text-sm placeholder:text-slate-600 focus:ring-2 focus:ring-blue-600/50 focus:border-blue-500 focus:bg-slate-900 focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
               </div>
@@ -113,7 +114,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBack }) => {
               <button
                 type="submit"
                 disabled={isLoading || !email}
-                className="w-full py-4 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-xl font-black text-base transition-all flex items-center justify-center gap-2 disabled:bg-slate-800 disabled:text-slate-600 disabled:cursor-not-allowed shadow-lg shadow-indigo-500/10"
+                className="w-full py-4 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-xl font-black text-base transition-all flex items-center justify-center gap-2 disabled:bg-slate-800 disabled:text-slate-600 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <Loader2 className="animate-spin" size={20} />

@@ -5,11 +5,10 @@ import {
     Clock,
     Target,
     CheckCircle2,
-    Lock,
-    Scroll,
     ArrowLeft,
-    ExternalLink,
-    ShieldCheck
+    ShieldCheck,
+    Zap,
+    Activity as ActivityIcon
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -17,7 +16,7 @@ import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, BarChart, Bar, Ca
 import { supabaseDB } from '../../services/supabaseService';
 import { LANGUAGES } from '../../constants';
 
-// Lesson ID prefix mapping for each course
+// Lesson ID prefix mapping
 const LESSON_PREFIXES: Record<string, string> = {
     'c': 'c',
     'cpp': 'cpp',
@@ -30,9 +29,8 @@ const LESSON_PREFIXES: Record<string, string> = {
     'fullstack': 'fs'
 };
 
-// Achievement requirements per course (lessons needed to unlock)
 const ACHIEVEMENT_REQUIREMENTS: Record<string, { lessons: number; problems: number }> = {
-    'c': { lessons: 41, problems: 15 }, // Updated to match actual content
+    'c': { lessons: 41, problems: 15 },
     'cpp': { lessons: 15, problems: 20 },
     'python': { lessons: 15, problems: 20 },
     'java': { lessons: 15, problems: 20 },
@@ -47,18 +45,14 @@ const LearningProfile: React.FC = () => {
     const { user, loadActivityHistory } = useAuth();
     const navigate = useNavigate();
     const [solvedProblemsCount, setSolvedProblemsCount] = useState(0);
+    const [activityData, setActivityData] = useState<{ name: string; score: number }[]>([]);
 
-    // Trigger lazy-loading of detailed history if empty
     useEffect(() => {
         if (user && (!user.activity_history || user.activity_history.length === 0)) {
             loadActivityHistory();
         }
     }, [user, loadActivityHistory]);
 
-    // Dynamic Activity Data Calculation
-    const [activityData, setActivityData] = useState<{ name: string; time: number }[]>([]);
-
-    // 1. Deduplicate Activity History (Same title/type on same day counts as one)
     const uniqueHistory = React.useMemo(() => {
         if (!user?.activity_history) return [];
         return (user.activity_history as any[]).filter((item, index, self) =>
@@ -73,17 +67,13 @@ const LearningProfile: React.FC = () => {
     useEffect(() => {
         const calculateStats = () => {
             if (!user) return;
-
-            // 1. Calculate Activity Chart Data (Last 7 days intensity)
-            // Now we count ACTUAL items done, not just "active/inactive"
             const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
             const last7Days = [];
             const today = new Date();
-
-            // Map for quick lookup: dateStr -> count
             const activityMap = new Map<string, number>();
+
             uniqueHistory.forEach(item => {
-                const dateStr = item.date.split('T')[0]; // ISO string YYYY-MM-DD
+                const dateStr = item.date.split('T')[0];
                 activityMap.set(dateStr, (activityMap.get(dateStr) || 0) + 1);
             });
 
@@ -91,321 +81,222 @@ const LearningProfile: React.FC = () => {
                 const d = new Date();
                 d.setDate(today.getDate() - i);
                 const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-
                 const count = activityMap.get(dateStr) || 0;
-                // Base 5 "points" for just being active (from activity_log), plus detailed count * 15
                 const logActive = (user.activity_log || []).includes(dateStr);
-                const intensity = (count * 15) + (logActive && count === 0 ? 5 : 0);
+                const score = (count * 15) + (logActive && count === 0 ? 5 : 0);
 
                 last7Days.push({
                     name: days[d.getDay()],
-                    time: intensity // This is now a relative "score" for the chart height
+                    score
                 });
             }
             setActivityData(last7Days);
         };
-
         calculateStats();
     }, [user, uniqueHistory]);
 
-    // Calculate Total Time (Memoized for render)
     const totalTimeHours = React.useMemo(() => {
-        if (!uniqueHistory.length) return ((user?.lessonsCompleted || 0) * 15) / 60; // Fallback
-
         let minutes = 0;
         uniqueHistory.forEach(item => {
-            if (item.type === 'lesson') minutes += 15; // 15m per lesson
-            else if (item.type === 'practice') minutes += 10; // 10m per practice
-            else if ((item.type as string) === 'quiz' || (item.type as string) === 'challenge') minutes += 5; // 5m per quiz
-            else minutes += 5; // Default
+            if (item.type === 'lesson') minutes += 15;
+            else if (item.type === 'practice') minutes += 10;
+            else minutes += 5;
         });
-
-        return minutes / 60;
+        return Math.max(minutes / 60, ((user?.lessonsCompleted || 0) * 15) / 60);
     }, [uniqueHistory, user?.lessonsCompleted]);
 
     useEffect(() => {
         const fetchPracticeStats = async () => {
             try {
                 const progress = await supabaseDB.getAllPracticeProgress();
-                const solved = progress.filter(p => p.status === 'completed').length;
-                setSolvedProblemsCount(solved);
-            } catch (err) {
-                console.error("Failed to fetch practice stats", err);
-            }
+                setSolvedProblemsCount(progress.filter(p => p.status === 'completed').length);
+            } catch (err) { console.error(err); }
         };
         if (user) fetchPracticeStats();
     }, [user]);
 
-
     if (!user) return null;
 
-    // Helper function to count completed lessons for a specific course
     const getCourseLessonsCompleted = (courseId: string): number => {
         const prefix = LESSON_PREFIXES[courseId];
         if (!prefix || !user.completedLessonIds) return 0;
-        // DEDUPLICATE: Use Set to count unique lesson IDs only
-        const uniqueIds = new Set(user.completedLessonIds);
-        return Array.from(uniqueIds).filter(id => id.startsWith(prefix)).length;
+        return Array.from(new Set(user.completedLessonIds)).filter(id => id.startsWith(prefix)).length;
     };
 
-    const lessonsStarted = user.lessonsCompleted || 0;
-    const activeDaysCount = user.activity_log?.length || 0;
-    const estimatedTime = (lessonsStarted * 15 + solvedProblemsCount * 10) / 60; // Est 15m/lesson, 10m/problem
-
-    const cReqs = ACHIEVEMENT_REQUIREMENTS['c'];
-    const totalCReqs = cReqs.lessons + cReqs.problems;
-    const currentCScore = (user.lessonsCompleted || 0) + solvedProblemsCount;
-    const isCCertified = (user.lessonsCompleted || 0) >= cReqs.lessons && solvedProblemsCount >= cReqs.problems;
-
     return (
-        <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-6 md:space-y-8 pb-32 animate-in fade-in duration-500 bg-slate-100 dark:bg-black min-h-screen transition-colors duration-300">
-
-            {/* Header with Back Button */}
-            <header className="flex items-center gap-4 mb-2">
-                <button
-                    onClick={() => navigate(-1)}
-                    className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-indigo-500 transition-colors shadow-sm"
-                >
-                    <ArrowLeft size={20} />
-                </button>
-                <div>
-                    <h1 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white tracking-tight uppercase italic">Learning Profile</h1>
-                    <p className="text-[10px] font-bold text-slate-600 dark:text-slate-500 uppercase tracking-widest">Your progress & achievements</p>
+        <div className="p-5 md:p-10 max-w-6xl mx-auto space-y-8 md:space-y-12 pb-24 min-h-screen bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-white transition-colors duration-300">
+            {/* Header */}
+            <header className="space-y-6 px-1">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div className="flex items-center gap-4">
+                        <button
+                            onClick={() => navigate(-1)}
+                            className="p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-2xl text-slate-400 hover:text-indigo-500 transition-all active:scale-95"
+                        >
+                            <ArrowLeft size={20} />
+                        </button>
+                        <div>
+                            <h1 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2 md:gap-3 uppercase italic">
+                                <ActivityIcon className="text-indigo-500 w-7 h-7 md:w-8 md:h-8" />
+                                Analytics
+                            </h1>
+                            <p className="text-slate-500 font-medium text-sm md:text-base max-w-2xl">Glinto performance intelligence.</p>
+                        </div>
+                    </div>
                 </div>
             </header>
 
-            {/* 1. Progress Summary Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Metrics */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                 {[
-                    { label: 'Lessons Started', value: lessonsStarted, icon: BookOpen, color: 'text-blue-500', bg: 'bg-blue-500/10', important: false },
-                    { label: 'Problems Solved', value: solvedProblemsCount, icon: Target, color: 'text-indigo-500', bg: 'bg-indigo-500/10', important: true },
-                    { label: 'Time Invested', value: `${totalTimeHours.toFixed(1)}h`, icon: Clock, color: 'text-emerald-500', bg: 'bg-emerald-500/10', important: false },
+                    { label: 'Blueprints Started', value: user.lessonsCompleted || 0, icon: BookOpen, color: 'text-indigo-500', bg: 'bg-indigo-500/10' },
+                    { label: 'Problems Solved', value: solvedProblemsCount, icon: Target, color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
+                    { label: 'Interface Time', value: `${totalTimeHours.toFixed(1)}h`, icon: Clock, color: 'text-amber-500', bg: 'bg-amber-500/10' },
                 ].map((stat, idx) => (
-                    <div key={idx} className={`relative p-5 md:p-6 rounded-2xl border transition-all flex flex-col items-center justify-center text-center gap-3 overflow-hidden ${stat.important
-                        ? 'bg-white dark:bg-slate-900 border-indigo-500/30 shadow-xl shadow-indigo-500/10'
-                        : 'bg-white dark:bg-slate-900/50 border-slate-200 dark:border-white/5 shadow-sm'
-                        }`}>
-                        {stat.important && (
-                            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.03] to-transparent pointer-events-none" />
-                        )}
-                        <div className={`w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center ${stat.bg} ${stat.color} ${stat.important ? 'shadow-lg shadow-indigo-500/10' : ''}`}>
-                            <stat.icon size={22} />
+                    <div key={idx} className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-white/5 rounded-2xl p-8 flex flex-col items-center text-center space-y-4">
+                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${stat.bg} ${stat.color}`}>
+                            <stat.icon size={24} />
                         </div>
                         <div>
-                            <div className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">{stat.value}</div>
-                            <div className="text-[9px] font-bold text-slate-600 dark:text-slate-500 uppercase tracking-widest mt-0.5">{stat.label}</div>
+                            <div className="text-3xl font-black text-slate-900 dark:text-white tracking-tight uppercase italic">{stat.value}</div>
+                            <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{stat.label}</div>
                         </div>
                     </div>
                 ))}
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* 2. Learning Activity */}
-                <div className="lg:col-span-2 bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-white/5 rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-xl">
-                    <div className="flex items-center justify-between mb-6 md:mb-8">
+                {/* Chart */}
+                <div className="lg:col-span-2 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-white/5 rounded-2xl p-8 md:p-10 relative overflow-hidden">
+                    <div className="flex items-center justify-between mb-8">
                         <div>
-                            <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2 uppercase tracking-tight italic">
-                                Learning Activity
-                            </h3>
-                            <p className="text-[10px] font-bold text-slate-600 dark:text-slate-500 uppercase tracking-widest mt-1">Last 7 days</p>
+                            <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase italic tracking-tight">Activity Log</h3>
+                            <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mt-1">Last 7 Days</p>
                         </div>
-                        <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-white/5">
-                            <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                            <span className="text-[9px] font-black text-slate-700 dark:text-slate-400 uppercase tracking-widest leading-none">Today</span>
+                        <div className="flex items-center gap-2 px-4 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-white/5">
+                            <Zap size={14} className="text-amber-500 fill-amber-500" />
+                            <span className="text-[10px] font-black text-slate-700 dark:text-slate-400 uppercase tracking-widest">{user.streak}D STREAK</span>
                         </div>
                     </div>
 
                     <div className="h-64 w-full">
                         <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={activityData.length > 0 ? activityData : [{ name: 'M', time: 0 }, { name: 'T', time: 0 }, { name: 'W', time: 0 }, { name: 'T', time: 0 }, { name: 'F', time: 0 }, { name: 'S', time: 0 }, { name: 'S', time: 0 }]}>
+                            <AreaChart data={activityData}>
                                 <defs>
-                                    <linearGradient id="colorTime" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#6366f1" stopOpacity={0.3} />
+                                    <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#6366f1" stopOpacity={0.15} />
                                         <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
                                     </linearGradient>
                                 </defs>
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.03)" vertical={false} />
                                 <XAxis
                                     dataKey="name"
                                     axisLine={false}
                                     tickLine={false}
-                                    tick={{ fill: '#475569', fontSize: 10, fontWeight: '900' }}
-                                    dy={10}
+                                    tick={{ fill: '#94a3b8', fontSize: 11, fontWeight: '700' }}
+                                    dy={15}
                                 />
                                 <Tooltip
-                                    contentStyle={{ backgroundColor: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', boxShadow: '0 10px 30px -5px rgba(0,0,0,0.5)' }}
-                                    itemStyle={{ color: '#fff', fontWeight: '900', fontSize: '10px', textTransform: 'uppercase' }}
-                                    cursor={{ stroke: '#6366f1', strokeWidth: 2, strokeDasharray: '5 5' }}
+                                    contentStyle={{ backgroundColor: '#fff', border: '1px solid rgba(0,0,0,0.05)', borderRadius: '16px', padding: '12px' }}
+                                    itemStyle={{ color: '#6366f1', fontWeight: '900', fontSize: '11px', textTransform: 'uppercase' }}
                                 />
                                 <Area
                                     type="monotone"
-                                    dataKey="time"
+                                    dataKey="score"
                                     stroke="#6366f1"
-                                    strokeWidth={4}
+                                    strokeWidth={3}
                                     fillOpacity={1}
-                                    fill="url(#colorTime)"
-                                    name="ACTIVITY"
+                                    fill="url(#chartGradient)"
+                                    name="INTENSITY"
                                 />
                             </AreaChart>
                         </ResponsiveContainer>
                     </div>
-                    <div className="mt-4 flex justify-center">
-                        <span className="text-[8px] font-black text-slate-800 dark:text-slate-700 uppercase tracking-[0.3em]">Minutes Practiced</span>
-                    </div>
                 </div>
 
-                {/* 3. Weekly Focus */}
-                <div className="lg:col-span-1 space-y-6">
-                    <div className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-white/5 rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-xl h-full flex flex-col">
-                        <div className="mb-6">
-                            <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight italic flex items-center gap-2">
-                                Weekly Focus
-                            </h4>
-                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Consistency Tracker</p>
+                {/* Insights */}
+                <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-white/5 rounded-2xl p-8 md:p-10 flex flex-col justify-between relative">
+                    <div className="space-y-1">
+                        <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase italic tracking-tight">Insights</h3>
+                        <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mt-1">Weekly Overview</p>
+                    </div>
+
+                    <div className="my-8 space-y-6">
+                        <div className="space-y-1">
+                            <div className="text-4xl font-black text-indigo-500 tracking-tighter uppercase italic leading-none">
+                                {Math.floor(totalTimeHours)}h
+                            </div>
+                            <div className="text-sm font-black text-slate-900 dark:text-white uppercase italic tracking-tight">Total Focus Time</div>
                         </div>
 
-                        <div className="flex-1 flex flex-col justify-center gap-8">
-                            <div className="space-y-1">
-                                <div className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-                                    {Math.floor(totalTimeHours)}h {Math.round((totalTimeHours % 1) * 60)}m
-                                </div>
-                                <div className="text-[9px] font-black text-slate-600 dark:text-slate-500 uppercase tracking-widest">Total time spent learning</div>
+                        <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-white/5 group hover:border-indigo-500/20 transition-all">
+                            <div className="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-500 group-hover:scale-110 transition-transform">
+                                <Trophy size={20} />
                             </div>
-
-                            <div className="flex items-center gap-4 p-4 bg-indigo-500/5 border border-indigo-500/10 rounded-2xl">
-                                <div className="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-400">
-                                    <Trophy size={20} />
-                                </div>
-                                <div>
-                                    <div className="text-[10px] font-black text-indigo-500 uppercase tracking-widest mb-0.5">Best Day</div>
-                                    <div className="text-xs font-bold text-slate-900 dark:text-white uppercase transition-colors">Most active: {user.streak}-day streak</div>
-                                </div>
+                            <div>
+                                <p className="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-0.5">Hall of Fame</p>
+                                <p className="text-xs font-black text-slate-900 dark:text-white uppercase italic tracking-tight">Alpha Rank Achieved</p>
                             </div>
                         </div>
+                    </div>
 
-                        <div className="mt-8 h-24">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={activityData.length > 0 ? activityData : [{ name: 'M', time: 0 }, { name: 'T', time: 0 }, { name: 'W', time: 0 }, { name: 'T', time: 0 }, { name: 'F', time: 0 }, { name: 'S', time: 0 }, { name: 'S', time: 0 }]}>
-                                    <Bar dataKey="time" fill="#6366f1" radius={[4, 4, 4, 4]} />
-                                </BarChart>
-                            </ResponsiveContainer>
-                        </div>
+                    <div className="h-20 w-full opacity-20">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <BarChart data={activityData}>
+                                <Bar dataKey="score" fill="#6366f1" radius={[4, 4, 4, 4]} />
+                            </BarChart>
+                        </ResponsiveContainer>
                     </div>
                 </div>
             </div>
 
-
-            {/* 5. Achievements (Secondary) */}
-            <section className="space-y-6 pb-20">
-                <div className="px-2">
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                        Achievements
-                    </h3>
+            {/* Hall of Mastery */}
+            <section className="space-y-6">
+                <div className="flex items-center gap-4 px-1">
+                    <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase italic tracking-tight">Hall of <span className="text-indigo-500">Mastery</span></h2>
+                    <div className="flex-1 h-[1px] bg-slate-200 dark:bg-white/5" />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+                    {LANGUAGES.map(lang => {
+                        const reqs = ACHIEVEMENT_REQUIREMENTS[lang.id];
+                        if (!reqs) return null;
+                        const progress = getCourseLessonsCompleted(lang.id);
+                        const isDone = progress >= reqs.lessons && solvedProblemsCount >= reqs.problems;
 
-                    {/* Dynamic Course Achievements */}
-                    {Array.from(new Set(LANGUAGES.map(l => l.id)))
-                        .map(id => LANGUAGES.find(l => l.id === id)!)
-                        .map((lang) => {
-                            const courseId = lang.id;
-                            const courseName = lang.name;
-                            const requirements = ACHIEVEMENT_REQUIREMENTS[courseId];
-
-                            // Skip if no requirements defined for this course
-                            if (!requirements) return null;
-
-                            const courseLessons = getCourseLessonsCompleted(courseId);
-                            const isCompleted = courseLessons >= requirements.lessons && solvedProblemsCount >= requirements.problems;
-
-                            return isCompleted ? (
-                                // Completed State
-                                <div key={courseId} className="bg-gradient-to-br from-emerald-50 to-white dark:from-emerald-900/20 dark:to-slate-900 border border-emerald-500/20 rounded-2xl p-6 flex flex-col justify-between shadow-xl shadow-emerald-500/5">
+                        return (
+                            <div key={lang.id} className={`p-6 rounded-2xl border transition-all duration-300 ${isDone ? 'bg-emerald-500/[0.03] border-emerald-500/20' : 'bg-white dark:bg-slate-900/40 border-slate-200 dark:border-white/5'
+                                }`}>
+                                <div className="flex flex-col h-full justify-between gap-6">
                                     <div className="space-y-4">
-                                        <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center text-emerald-500 border border-emerald-500/20">
-                                            <CheckCircle2 size={24} />
+                                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center border transition-all ${isDone ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-white/5 text-slate-400'
+                                            }`}>
+                                            {isDone ? <CheckCircle2 size={20} /> : <ShieldCheck size={20} />}
                                         </div>
                                         <div className="space-y-1">
-                                            <h4 className="text-lg font-black text-slate-900 dark:text-white tracking-tight uppercase italic">{courseName}</h4>
-                                            <div className="px-2 py-1 bg-emerald-500/10 rounded-lg border border-emerald-500/20 inline-block">
-                                                <p className="text-[9px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Completed</p>
-                                            </div>
+                                            <h4 className={`text-lg font-black uppercase italic tracking-tight ${isDone ? 'text-emerald-500' : 'text-slate-500'}`}>
+                                                {lang.name}
+                                            </h4>
+                                            <p className={`text-[8px] font-black uppercase tracking-widest ${isDone ? 'text-emerald-600/60' : 'text-slate-400'}`}>
+                                                {isDone ? 'Certified Status' : 'Status: Restricted'}
+                                            </p>
                                         </div>
                                     </div>
-                                    <div className="mt-6 pt-4 border-t border-slate-200 dark:border-white/5">
-                                        <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
-                                            GenSpark Status Unlocked! You've mastered the basics.
+
+                                    <div className="pt-4 border-t border-slate-100 dark:border-white/5">
+                                        <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest leading-relaxed">
+                                            {isDone ? 'Verified Glinto Master' : `Needs ${Math.max(0, reqs.lessons - progress)} modules.`}
                                         </p>
                                     </div>
                                 </div>
-                            ) : (
-                                // Locked State
-                                <div key={courseId} className="bg-white dark:bg-slate-900/40 border border-dashed border-slate-300 dark:border-white/10 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
-                                    <div className="space-y-4">
-                                        <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 border border-slate-200 dark:border-white/5">
-                                            <ShieldCheck size={24} />
-                                        </div>
-                                        <div className="space-y-1">
-                                            <h4 className="text-lg font-black text-slate-400 dark:text-slate-300 tracking-tight italic uppercase">{courseName}</h4>
-                                            <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Status Locked</p>
-                                        </div>
-                                    </div>
-                                    <div className="mt-6 pt-4 border-t border-slate-200 dark:border-white/5">
-                                        <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
-                                            Complete {Math.max(0, requirements.lessons - courseLessons)} more lessons to unlock status.
-                                        </p>
-                                    </div>
-                                </div>
-                            );
-                        })}
-
-                    <div className="bg-white dark:bg-slate-900/40 border border-dashed border-slate-300 dark:border-white/10 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
-                        <div className="space-y-4">
-                            <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 border border-slate-200 dark:border-white/5">
-                                <Trophy size={24} />
                             </div>
-                            <div className="space-y-1">
-                                <h4 className="text-lg font-black text-slate-400 dark:text-slate-300 tracking-tight italic uppercase">Streak Starter</h4>
-                                <p className="text-[9px] font-bold text-slate-500 dark:text-slate-500 uppercase tracking-widest">Login 3 days in a row</p>
-                            </div>
-                        </div>
-                        <div className="mt-6 space-y-2">
-                            <div className="flex justify-between text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase">
-                                <span>Current Streak</span>
-                                <span>{user.streak}/3 Days</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                                <div className="h-full bg-indigo-500 rounded-full transition-all" style={{ width: `${Math.min(100, (user.streak / 3) * 100)}%` }} />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="bg-white dark:bg-slate-900/40 border border-dashed border-slate-300 dark:border-white/10 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
-                        <div className="space-y-4">
-                            <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 border border-slate-200 dark:border-white/5">
-                                <Target size={24} />
-                            </div>
-                            <div className="space-y-1">
-                                <h4 className="text-lg font-black text-slate-400 dark:text-slate-300 tracking-tight italic uppercase">Problem Solver</h4>
-                                <p className="text-[9px] font-bold text-slate-500 dark:text-slate-500 uppercase tracking-widest">Solve 10 Problems</p>
-                            </div>
-                        </div>
-                        <div className="mt-6 space-y-2">
-                            <div className="flex justify-between text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase">
-                                <span>Progress</span>
-                                <span>{solvedProblemsCount}/10</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                                <div className="h-full bg-emerald-500 rounded-full transition-all" style={{ width: `${Math.min(100, (solvedProblemsCount / 10) * 100)}%` }} />
-                            </div>
-                        </div>
-                    </div>
+                        );
+                    })}
                 </div>
             </section>
-
         </div>
     );
 };
 
 export default LearningProfile;
+

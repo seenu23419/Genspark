@@ -1,9 +1,9 @@
-# GenSpark - Application Documentation
+# Glinto - Application Documentation
 
 ## 1. Problem Statement
 Traditional coding education fails to bridge the gap between theoretical knowledge and practical application. Learners often struggle with setting up development environments, receiving immediate feedback on their code, and finding structured, personalized learning paths.
 
-**GenSpark** solves this by providing:
+**Glinto** solves this by providing:
 - **Zero-Setup Environment**: An in-browser Integrated Development Environment (IDE) enabling users to code instantly on any device.
 - **AI-Powered Tutoring**: A personalized AI tutor (Gemini) that offers real-time hints, explains complex code, and generates custom quizzes.
 - **Structured Learning Tracks**: Gamified curriculum for C, C++, Java, Python, and Web Development.

@@ -2,8 +2,8 @@ import { createClient } from '@supabase/supabase-js';
 import fs from 'fs';
 import path from 'path';
 
-const PROJECT_URL = 'https://aoiagnnkhaswpmhbobhd.supabase.co';
-const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFvaWFnbm5raGFzd3BtaGJvYmhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY3ODU0MTUsImV4cCI6MjA4MjM2MTQxNX0.ZYGTcqoIp8SPMCMO_6VQa9pmj_dqoHv6qrsK8DXD3ls';
+const PROJECT_URL = 'https://ljejqqkkacqravcpruac.supabase.co';
+const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqZWpxcWtrYWNxcmF2Y3BydWFjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwMzkyODcsImV4cCI6MjA4NzYxNTI4N30.bK8kNlpBhNdi4TVzqSzeCCdjXrqO2Rb4KScM0e6_JOw';
 const TARGET_EMAIL = 'genspark007@gmail.com';
 
 const supabase = createClient(PROJECT_URL, ANON_KEY);

@@ -9,7 +9,7 @@ When someone clicks "Allow", you can send them a message immediately.
 3.  Name it: "Welcome New Students".
 4.  **Trigger**: Select "User joined".
 5.  **Step 1**: Add a "Send Push" step.
-6.  Type your message: "Welcome to GenSpark! 🚀 Ready to code today?"
+6.  Type your message: "Welcome to Glinto! 🚀 Ready to code today?"
 7.  Click **Publish**.
 
 ## 2. "We Miss You" Reminders (After 24 hours)

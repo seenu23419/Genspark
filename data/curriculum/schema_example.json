@@ -15,8 +15,8 @@
         ],
         "content": "# Welcome to C Programming\n\nC is a powerful general-purpose programming language...",
         "syntax": "printf(\"Hello World\");",
-        "fullProgram": "#include <stdio.h>\n\nint main() {\n    printf(\"Hello GenSpark!\");\n    return 0;\n}",
-        "expectedOutput": "Hello GenSpark!",
+        "fullProgram": "#include <stdio.h>\n\nint main() {\n    printf(\"Hello Glinto!\");\n    return 0;\n}",
+        "expectedOutput": "Hello Glinto!",
         "quizQuestions": [
           {
             "id": 1,

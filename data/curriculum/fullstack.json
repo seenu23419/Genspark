@@ -50,7 +50,7 @@
           "Routing",
           "Middlewares"
         ],
-        "content": "Node.js allows us to run JavaScript on the server. Express is the most popular framework for building web servers.\n\n## 1. Basic Server\n```javascript\nconst express = require('express');\nconst app = express();\n\napp.get('/', (req, res) => {\n  res.send('Hello GenSpark!');\n});\n\napp.listen(3000);\n```\n\n## 2. Middlewares\nFunctions that have access to the request and response objects. Used for logging, authentication, and parsing data.",
+        "content": "Node.js allows us to run JavaScript on the server. Express is the most popular framework for building web servers.\n\n## 1. Basic Server\n```javascript\nconst express = require('express');\nconst app = express();\n\napp.get('/', (req, res) => {\n  res.send('Hello Glinto!');\n});\n\napp.listen(3000);\n```\n\n## 2. Middlewares\nFunctions that have access to the request and response objects. Used for logging, authentication, and parsing data.",
         "fullProgram": "const express = require('express');\nconst app = express();\n\napp.get('/api/greet', (req, res) => {\n    res.json({ message: 'Welcome to the Fullstack Lab!' });\n});\n\nconsole.log('Server running on port 3000');",
         "expectedOutput": "A JSON response when visiting the /api/greet endpoint.",
         "quizQuestions": [
@@ -298,7 +298,7 @@
           "App Architecture",
           "Graduation"
         ],
-        "content": "**Congratulations, Fullstack Developer!** You have mastered the entire stack, from database schemas to frontend animations.\n\n## Final Evaluation:\n- **Fullstack Logic**: Data flow between client and server.\n- **Performance**: State management and API optimization.\n- **Security**: Auth patterns and data protection.\n- **DevOps**: Deployment strategies and observability.\n\n## The Grand Prize:\n- Complete this final module to unlock the **GenSpark Fullstack Hero Status** and showcase your portfolio piece to the world.",
+        "content": "**Congratulations, Fullstack Developer!** You have mastered the entire stack, from database schemas to frontend animations.\n\n## Final Evaluation:\n- **Fullstack Logic**: Data flow between client and server.\n- **Performance**: State management and API optimization.\n- **Security**: Auth patterns and data protection.\n- **DevOps**: Deployment strategies and observability.\n\n## The Grand Prize:\n- Complete this final module to unlock the **Glinto Fullstack Hero Status** and showcase your portfolio piece to the world.",
         "fullProgram": "/**\n * Final Graduation Script: App Health Dashboard\n * Demonstrates: React Hooks + API Fetching + Clean UI\n */\nimport React, { useEffect, useState } from 'react';\n\nconst Dashboard = () => {\n    const [status, setStatus] = useState('Checking...');\n\n    useEffect(() => {\n        fetch('/api/health')\n            .then(res => res.json())\n            .then(data => setStatus(data.status))\n            .catch(() => setStatus('Offline'));\n    }, []);\n\n    return (\n        <div className=\"dashboard\">\n            <h1>System Status: {status}</h1>\n            <p>Congratulations on your journey!</p>\n        </div>\n    );\n};",
         "expectedOutput": "A complete, functional dashboard connected to a live backend.",
         "quizQuestions": [

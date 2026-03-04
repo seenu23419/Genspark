@@ -92,7 +92,13 @@ const Signup: React.FC = () => {
 
       navigate('/', { replace: true });
     } catch (err: any) {
-      const errorMsg = err.message || 'Failed to create account';
+      let errorMsg = err.message || 'Failed to create account';
+
+      // Proactive ISP Block Detection
+      if (errorMsg.includes('Failed to fetch') || errorMsg.includes('timeout')) {
+        errorMsg = "Connection to Supabase timed out. Your ISP (Jio/Airtel) might be blocking the database. Please try using a VPN or change your DNS to 8.8.8.8 (Google DNS) to fix this instantly.";
+      }
+
       setError(errorMsg);
       console.error('Signup error:', err);
     } finally {
@@ -105,9 +111,19 @@ const Signup: React.FC = () => {
     setError(null);
 
     try {
-      await signInWithGoogle();
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Connecting to Google is taking longer than usual. Please check your connection.')), 15000)
+      );
+
+      await Promise.race([signInWithGoogle(), timeoutPromise]);
     } catch (err: any) {
-      const errorMsg = err.message?.replace('AuthApiError: ', '') || 'Google signup failed';
+      let errorMsg = err.message || 'Google signup failed';
+
+      // Proactive ISP Block Detection
+      if (errorMsg.includes('Failed to fetch') || errorMsg.includes('timeout') || errorMsg.includes('longer than usual')) {
+        errorMsg = "Network timeout. Your ISP (Jio/Airtel) might be blocking Supabase. Please try a VPN or change your DNS to 8.8.8.8 (Google DNS).";
+      }
+
       setError(errorMsg);
       console.error('Google signup error:', err);
     } finally {
@@ -116,26 +132,27 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black overflow-y-auto">
+    <div className="fixed inset-0 bg-slate-950 overflow-y-auto">
 
 
       {/* Main content - Logo first, brand-forward */}
       <div className="min-h-full flex flex-col items-center justify-center px-5 py-8">
 
-        {/* Logo - Centered with gap */}
-        <div className="mt-2 mb-2 animate-in fade-in zoom-in duration-700 ease-out">
+        {/* Logo - Minimal Layout */}
+        <div className="scale-90 md:scale-100">
           <img
-            src="/icons/logo.png"
-            alt="GenSpark"
-            className="w-36 h-36 md:w-40 md:h-40 object-contain drop-shadow-2xl"
+            src="/icons/logo_premium.png"
+            alt="Glinto"
+            className="w-auto object-contain"
+            style={{ height: '80px' }}
             draggable={false}
           />
         </div>
 
-        {/* Typography Hierarchy - Balanced */}
-        <div className="text-center mb-8 w-full space-y-1">
-          <h1 className="text-xl font-bold text-white tracking-tight">Create your account</h1>
-          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em]">Start your coding journey</p>
+        {/* Typography Hierarchy - Zero top gap */}
+        <div className="text-center mt-0 mb-6 w-full">
+          <h1 className="text-xl font-bold text-white tracking-tight leading-none">Create your account</h1>
+          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] mt-1">Start your coding journey</p>
         </div>
 
         {/* Error message */}
@@ -153,8 +170,8 @@ const Signup: React.FC = () => {
             <label htmlFor="name" className="text-xs font-bold text-slate-300 uppercase tracking-widest block mb-1.5 ml-1">
               Full Name
             </label>
-            <div className="relative">
-              <User size={18} className="absolute left-3 top-3 text-slate-500 pointer-events-none" />
+            <div className="relative group">
+              <User size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-blue-500 transition-colors z-10" />
               <input
                 id="name"
                 type="text"
@@ -163,7 +180,7 @@ const Signup: React.FC = () => {
                 placeholder="John Doe"
                 autoComplete="name"
                 disabled={isLoading || isGoogleLoading}
-                className="w-full pl-11 pr-4 py-3 bg-white/5 border border-slate-800/60 rounded-xl text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-600/40 focus:border-indigo-500 focus:bg-black focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/[0.08] rounded-xl text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-slate-950 focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
           </div>
@@ -174,7 +191,7 @@ const Signup: React.FC = () => {
               Email
             </label>
             <div className="relative group">
-              <Mail size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-400 transition-colors z-10" />
+              <Mail size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-blue-500 transition-colors z-10" />
               <input
                 id="email"
                 type="email"
@@ -183,7 +200,7 @@ const Signup: React.FC = () => {
                 placeholder="you@example.com"
                 autoComplete="email"
                 disabled={isLoading || isGoogleLoading}
-                className="w-full pl-11 pr-4 py-3 bg-white/5 border border-slate-800/60 rounded-xl text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-600/40 focus:border-indigo-500 focus:bg-black focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/[0.08] rounded-xl text-white text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-slate-950 focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
           </div>
@@ -194,7 +211,7 @@ const Signup: React.FC = () => {
               Password
             </label>
             <div className="relative group">
-              <Lock size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-400 transition-colors z-10" />
+              <Lock size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-blue-500 transition-colors z-10" />
               <input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
@@ -203,7 +220,7 @@ const Signup: React.FC = () => {
                 placeholder="••••••••"
                 autoComplete="new-password"
                 disabled={isLoading || isGoogleLoading}
-                className="w-full pl-11 pr-11 py-3 bg-white/5 border border-slate-800 rounded-xl text-white text-sm placeholder:text-slate-600 focus:ring-2 focus:ring-indigo-700/80 focus:border-indigo-600 focus:bg-black focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                className="w-full pl-11 pr-11 py-3 bg-white/5 border border-white/[0.08] rounded-xl text-white text-sm placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-slate-950 focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               />
               <button
                 type="button"
@@ -233,17 +250,26 @@ const Signup: React.FC = () => {
               Confirm Password
             </label>
             <div className="relative group">
-              <Lock size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-400 transition-colors z-10" />
+              <Lock size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-blue-500 transition-colors z-10" />
               <input
                 id="confirm"
-                type={showPassword ? 'text' : 'password'}
+                type={showConfirm ? 'text' : 'password'}
                 value={confirmPassword}
                 onChange={handleConfirmChange}
                 placeholder="••••••••"
                 autoComplete="new-password"
                 disabled={isLoading || isGoogleLoading}
-                className="w-full pl-11 pr-4 py-3 bg-white/5 border border-slate-800 rounded-xl text-white text-sm placeholder:text-slate-600 focus:ring-2 focus:ring-indigo-700/80 focus:border-indigo-600 focus:bg-black focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                className="w-full pl-11 pr-11 py-3 bg-white/5 border border-white/[0.08] rounded-xl text-white text-sm placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-slate-950 focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               />
+              <button
+                type="button"
+                onClick={() => setShowConfirm(!showConfirm)}
+                disabled={isLoading || isGoogleLoading}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
+                aria-label={showConfirm ? 'Hide password' : 'Show password'}
+              >
+                {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
             {password && confirmPassword && (
               <p className={`text-xs mt-1 flex items-center gap-1 ${isPasswordMatch ? 'text-green-400' : 'text-red-400'}`}>
@@ -263,7 +289,7 @@ const Signup: React.FC = () => {
           <button
             type="submit"
             disabled={!isFormValid || isLoading || isGoogleLoading}
-            className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 disabled:bg-slate-800 disabled:text-slate-600 disabled:cursor-not-allowed text-white text-base font-extrabold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/10"
+            className="w-full py-3.5 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 disabled:bg-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed text-white text-base font-bold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 border border-white/5"
           >
             {isLoading ? (
               <>
@@ -278,9 +304,9 @@ const Signup: React.FC = () => {
 
         {/* Divider */}
         <div className="w-full max-w-xs flex items-center gap-3 my-5">
-          <div className="flex-1 h-px bg-slate-600" />
+          <div className="flex-1 h-px bg-white/[0.08]" />
           <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Or</span>
-          <div className="flex-1 h-px bg-slate-600" />
+          <div className="flex-1 h-px bg-white/[0.08]" />
         </div>
 
         {/* Google signup button */}
@@ -288,7 +314,7 @@ const Signup: React.FC = () => {
           type="button"
           onClick={handleGoogleSignup}
           disabled={isLoading || isGoogleLoading}
-          className="w-full max-w-xs py-3 bg-white/5 border border-slate-800 hover:border-slate-700 hover:bg-white/10 rounded-full text-slate-200 text-sm font-semibold flex items-center justify-center gap-3 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full max-w-xs py-3 bg-white/5 border border-white/[0.08] hover:border-slate-700 hover:bg-white/10 rounded-full text-slate-200 text-sm font-semibold flex items-center justify-center gap-3 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isGoogleLoading ? (
             <>

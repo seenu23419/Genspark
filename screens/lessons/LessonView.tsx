@@ -23,7 +23,9 @@ import { useCurriculum } from '../../contexts/CurriculumContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { Lesson } from '../../types';
 import { offlineService } from '../../services/offlineService';
+import BannerAd from '../../components/BannerAd';
 import './lessons.css';
+
 
 interface LessonViewProps {
     lesson?: Lesson;
@@ -193,7 +195,7 @@ const LessonView: React.FC<LessonViewProps> = ({
     const isGlobalLoading = Object.values(loading).some(v => v);
     if (!lesson && isGlobalLoading) {
         return (
-            <div className="min-h-screen bg-slate-100 dark:bg-black flex flex-col items-center justify-center p-6 text-center transition-colors duration-300">
+            <div className="min-h-screen bg-white dark:bg-slate-950 flex flex-col items-center justify-center p-6 text-center transition-colors duration-300">
                 <Loader2 className="animate-spin text-indigo-500 mb-4" size={48} />
                 <h2 className="text-xl font-bold text-white mb-2">Loading Lesson Content</h2>
                 <p className="text-slate-500 text-sm">Preparing interactive workspace...</p>
@@ -203,11 +205,11 @@ const LessonView: React.FC<LessonViewProps> = ({
 
     if (!lesson) {
         return (
-            <div className="min-h-screen bg-slate-100 dark:bg-black flex flex-col items-center justify-center p-4 sm:p-6 text-center transition-colors duration-300">
+            <div className="min-h-screen bg-white dark:bg-slate-950 flex flex-col items-center justify-center p-4 sm:p-6 text-center transition-colors duration-300">
                 <AlertCircle size={48} className="text-slate-700 mb-4" />
                 <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2">Lesson Not Found</h2>
                 <p className="text-slate-500 text-sm mb-6">We couldn't locate the lesson content. It might still be loading or missing.</p>
-                <button onClick={() => navigate(-1)} className="px-4 py-2 md:px-6 md:py-3 bg-indigo-600 hover:bg-indigo-500 rounded-xl text-white font-bold transition-colors text-sm md:text-base">
+                <button onClick={() => navigate(-1)} className="px-4 py-2 md:px-6 md:py-3 bg-blue-600 hover:bg-blue-500 rounded-xl text-white font-bold transition-colors text-sm md:text-base">
                     Go Back
                 </button>
             </div>
@@ -218,13 +220,13 @@ const LessonView: React.FC<LessonViewProps> = ({
 
     return (
         <div
-            className="min-h-screen bg-slate-100 dark:bg-black flex flex-col text-slate-700 dark:text-slate-200 selection:bg-indigo-500/30 transition-colors duration-300 overflow-x-hidden"
+            className="min-h-screen bg-white dark:bg-slate-950 flex flex-col text-slate-700 dark:text-slate-200 selection:bg-blue-500/30 transition-colors duration-300 overflow-x-hidden"
             style={{ touchAction: 'pan-y' }}
         >
 
             {/* Header - Material Design 56dp */}
-            <header className="sticky top-0 z-30 bg-slate-100/80 dark:bg-black/80 backdrop-blur-xl border-b border-slate-300 dark:border-white/5 px-4 py-3 md:px-6 h-14 transition-colors duration-300">
-                <div className="max-w-5xl mx-auto flex items-center justify-between gap-2">
+            <header className="sticky top-0 z-30 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200 dark:border-white/[0.08] px-4 py-3 md:px-6 h-14 transition-colors duration-300">
+                <div className="flex items-center justify-between gap-2 w-full">
                     <button
                         onClick={handleBack}
                         className="p-2 -ml-2 text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-all flex items-center gap-2 group shrink-0 h-12 w-12 justify-center"
@@ -232,13 +234,13 @@ const LessonView: React.FC<LessonViewProps> = ({
                         <ArrowLeft size={24} className="group-hover:-translate-x-1 transition-transform" strokeWidth={1.5} />
                     </button>
 
-                    <h1 className="text-sm md:text-base font-bold text-slate-700 dark:text-white truncate flex-1 px-2">
+                    <h1 className="text-base md:text-lg font-bold text-slate-900 dark:text-white truncate flex-1 px-2 italic uppercase tracking-tight">
                         {lesson.title}
                     </h1>
 
-                    <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-lg shrink-0">
-                        <BookOpen size={16} className="text-indigo-400" />
-                        <span className="text-xs font-semibold text-indigo-300 uppercase">Lesson</span>
+                    <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-lg shrink-0">
+                        <BookOpen size={16} className="text-blue-500" />
+                        <span className="text-xs font-semibold text-blue-400 uppercase">Lesson</span>
                     </div>
                 </div>
             </header>
@@ -251,14 +253,14 @@ const LessonView: React.FC<LessonViewProps> = ({
 
 
                         {lesson.difficultyLevel && (
-                            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+                            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-500">
                                 <Activity size={16} />
-                                <span className="text-xs font-semibold uppercase">{lesson.difficultyLevel}</span>
+                                <span className="text-xs font-bold uppercase">{lesson.difficultyLevel}</span>
                             </div>
                         )}
 
                         {lesson.topics?.slice(0, 2).map((topic, i) => (
-                            <span key={i} className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-white/5 text-slate-600 dark:text-slate-400 text-xs font-semibold">
+                            <span key={i} className="px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-white/[0.08] text-slate-500 dark:text-slate-400 text-xs font-bold">
                                 {topic}
                             </span>
                         ))}
@@ -269,21 +271,22 @@ const LessonView: React.FC<LessonViewProps> = ({
                 <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
                 {/* Markdown Content - Optimized for mobile scanning with better spacing and bullet points */}
-                <article className="lesson-content prose dark:prose-invert prose-sm max-w-none
+                <article className="lesson-content prose dark:prose-invert prose-base max-w-none
           prose prose-slate dark:prose-invert max-w-none
-          prose-headings:font-black prose-headings:tracking-tight prose-headings:text-slate-700 dark:prose-headings:text-white
-          prose-p:text-slate-500 dark:prose-p:text-slate-300 prose-p:leading-relaxed prose-p:text-sm md:prose-p:text-base
-          prose-code:text-indigo-600 dark:prose-code:text-indigo-300 prose-strong:text-slate-700 dark:prose-strong:text-white prose-strong:font-bold
-          prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:mt-10 prose-h1:mb-5
-          prose-h2:text-xl md:prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
-          prose-h3:text-lg md:prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
-          prose-ul:my-3 prose-li:my-1.5 prose-li:text-sm md:prose-li:text-base
-          prose-blockquote:border-indigo-500 prose-blockquote:bg-slate-200/50 dark:prose-blockquote:bg-indigo-500/5 prose-blockquote:italic prose-blockquote:my-4
-          [&_pre]:!p-3 sm:[&_pre]:!p-4 md:[&_pre]:!p-5 [&_pre]:!my-5
-          [&_code]:text-[12px] sm:[&_code]:text-xs md:[&_code]:text-sm">
+          prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-slate-900 dark:prose-headings:text-white
+          prose-p:text-slate-600 dark:prose-p:text-slate-300 prose-p:leading-relaxed prose-p:text-lg md:prose-p:text-xl
+          prose-code:text-blue-600 dark:prose-code:text-blue-400 prose-strong:text-slate-900 dark:prose-strong:text-white prose-strong:font-bold
+          prose-h1:text-3xl md:prose-h1:text-5xl prose-h1:mt-12 prose-h1:mb-6
+          prose-h2:text-2xl md:prose-h2:text-4xl prose-h2:mt-10 prose-h2:mb-5
+          prose-h3:text-xl md:prose-h3:text-3xl prose-h3:mt-8 prose-h3:mb-4
+          prose-ul:my-4 prose-li:my-2 prose-li:text-lg md:prose-li:text-xl
+          prose-blockquote:border-blue-500 prose-blockquote:bg-blue-50/50 dark:prose-blockquote:bg-blue-500/5 prose-blockquote:italic prose-blockquote:my-6
+          [&_pre]:!p-4 sm:[&_pre]:!p-5 md:[&_pre]:!p-6 [&_pre]:!my-6
+          [&_code]:text-[14px] sm:[&_code]:text-sm md:[&_code]:text-base">
                     <ReactMarkdown
                         remarkPlugins={[remarkGfm]}
                         components={{
+
                             code({ node, inline, className, children, ...props }: any) {
                                 const match = /language-(\w+)/.exec(className || '');
                                 const content = String(children).replace(/\n$/, '');
@@ -335,7 +338,7 @@ const LessonView: React.FC<LessonViewProps> = ({
                                                 </div>
                                                 <div className="lesson-code-label">SYNTAX</div>
                                             </div>
-                                            <pre className="p-6 bg-slate-50 dark:bg-[#0f1016] text-indigo-900 dark:text-indigo-300 font-mono text-sm leading-relaxed overflow-x-auto whitespace-pre border-t border-slate-200 dark:border-transparent">
+                                            <pre className="p-6 bg-slate-50 dark:bg-[#0f1016] text-blue-900 dark:text-blue-400 font-mono text-sm leading-relaxed overflow-x-auto whitespace-pre border-t border-slate-200 dark:border-transparent">
                                                 {content}
                                             </pre>
                                         </div>
@@ -406,65 +409,85 @@ const LessonView: React.FC<LessonViewProps> = ({
                                     </code>
                                 );
                             },
-                            h1: ({ node, ...props }) => <h1 className="lesson-section" {...props}><div className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white mt-12 mb-6">{props.children}</div></h1>,
+                            h1: ({ node, ...props }) => <h1 className="lesson-section" {...props}><div className="text-4xl sm:text-5xl font-black text-blue-600 dark:text-blue-400 mt-14 mb-8">{props.children}</div></h1>,
                             h2: ({ node, ...props }) => (
                                 <h2 className="lesson-section" {...props}>
-                                    <div className="text-3xl sm:text-4xl font-black text-indigo-600 dark:text-indigo-400 mt-12 mb-6 pb-4 border-b-2 border-indigo-500/30 tracking-tight leading-tight">
+                                    <div className="text-3xl sm:text-4xl font-bold text-blue-600 dark:text-blue-400 mt-14 mb-8 pb-4 border-b border-slate-200 dark:border-white/[0.08] tracking-tight leading-tight">
                                         {props.children}
                                     </div>
                                 </h2>
                             ),
                             h3: ({ node, ...props }) => (
                                 <h3 className="lesson-header-h3" {...props}>
-                                    <div className="text-xl sm:text-2xl font-extrabold text-purple-600 dark:text-purple-300 mt-8 mb-4">
+                                    <div className="text-2xl sm:text-3xl font-bold text-blue-500 dark:text-blue-400 mt-10 mb-6">
                                         {props.children}
                                     </div>
                                 </h3>
                             ),
-                            p: ({ node, ...props }) => <p className="lesson-paragraph" {...props} />,
-                            ul: ({ node, ...props }) => <ul className="lesson-valid-list" {...props} />,
-                            ol: ({ node, ...props }) => <ol className="lesson-ordered-list" {...props} />,
-                            li: ({ node, ...props }) => <li className="leading-relaxed text-slate-600 dark:text-slate-300" {...props} />,
+                            p: ({ node, ...props }) => <p className="lesson-paragraph text-lg md:text-xl leading-relaxed" {...props} />,
+                            ul: ({ node, ...props }) => <ul className="lesson-valid-list space-y-3" {...props} />,
+                            ol: ({ node, ...props }) => <ol className="lesson-ordered-list space-y-3" {...props} />,
+                            li: ({ node, ...props }) => <li className="leading-relaxed text-slate-700 dark:text-slate-200 text-lg md:text-xl font-medium" {...props} />,
                             blockquote: ({ node, ...props }) => (
-                                <div className="my-8 flex gap-4 bg-indigo-50/50 dark:bg-indigo-500/10 p-6 rounded-2xl border border-indigo-200 dark:border-indigo-400/30 shadow-sm">
-                                    <div className="shrink-0 w-1.5 rounded-full bg-indigo-500 dark:bg-indigo-400 shadow-sm shadow-indigo-500/50" />
+                                <div className="my-8 flex gap-4 bg-blue-50/50 dark:bg-blue-500/5 p-6 rounded-2xl border border-blue-200 dark:border-white/[0.08]">
+                                    <div className="shrink-0 w-1 rounded-full bg-blue-500" />
                                     <blockquote className="text-slate-700 dark:text-slate-300 italic leading-relaxed" {...props} />
                                 </div>
                             ),
                             hr: () => <div className="lesson-divider" />,
                             table: ({ node, ...props }: any) => (
-                                <div className="overflow-x-auto my-6 border border-slate-200 dark:border-slate-700 rounded-xl scrollbar-hide bg-white/50 dark:bg-white/5">
-                                    <table className="min-w-full text-left text-xs sm:text-sm" {...props} />
+                                <div className="lesson-table-wrapper overflow-x-auto">
+                                    <table className="lesson-table" style={{ minWidth: '600px' }} {...props} />
                                 </div>
                             ),
-                            thead: ({ node, ...props }: any) => <thead className="bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white font-bold" {...props} />,
-                            tbody: ({ node, ...props }: any) => <tbody className="divide-y divide-slate-200 dark:divide-slate-700" {...props} />,
-                            tr: ({ node, ...props }: any) => <tr className="transition-colors hover:bg-slate-50/50 dark:hover:bg-white/5" {...props} />,
-                            th: ({ node, ...props }: any) => <th className="px-3 py-3 sm:px-6 sm:py-4 font-semibold whitespace-normal sm:whitespace-nowrap align-bottom border-b border-r last:border-r-0 border-slate-200 dark:border-slate-700" {...props} />,
-                            td: ({ node, ...props }: any) => <td className="px-3 py-3 sm:px-6 sm:py-4 align-top text-slate-700 dark:text-slate-200 min-w-[80px] border-r last:border-r-0 border-slate-200 dark:border-slate-700" {...props} />,
+                            thead: ({ node, ...props }: any) => <thead className="lesson-table-header" {...props} />,
+                            tbody: ({ node, ...props }: any) => <tbody {...props} />,
+                            tr: ({ node, ...props }: any) => <tr className="lesson-table-row" {...props} />,
+                            th: ({ node, ...props }: any) => <th {...props} />,
+                            td: ({ node, ...props }: any) => <td className="lesson-table-cell" {...props} />,
+                            img: ({ node, src, alt, ...props }: any) => (
+                                <span className="block my-6 text-center">
+                                    <img
+                                        src={src}
+                                        alt={alt}
+                                        className="inline-block max-w-3xl w-full rounded-xl shadow-md"
+                                        style={{ display: 'inline-block', maxHeight: '560px', objectFit: 'contain' }}
+                                        {...props}
+                                    />
+                                    {alt && (
+                                        <span className="block text-center text-xs text-slate-500 dark:text-slate-400 mt-2 italic">
+                                            {alt}
+                                        </span>
+                                    )}
+                                </span>
+                            ),
                         }}
+
                     >
                         {lesson.content}
                     </ReactMarkdown>
                 </article>
 
+                <BannerAd slot="lesson-bottom-banner" />
+
                 {/* Completion Marker - Triggers button reveal when scrolled to */}
                 <div id="content-end-marker" className="h-4" />
 
+
                 {/* Completion Milestone - Subtle indicator now */}
-                <div className="bg-slate-200/50 border border-slate-300 dark:bg-indigo-500/5 dark:border-indigo-400/30 rounded-3xl p-6 mt-12 text-center select-none">
+                <div className="bg-slate-50 dark:bg-[#1e293b] border border-slate-200 dark:border-white/[0.08] rounded-3xl p-8 mt-12 text-center select-none">
                     {quizCompleted ? (
-                        <div className="text-emerald-400">
+                        <div className="text-emerald-500">
                             <CheckCircle2 className="mx-auto mb-3" size={32} />
-                            <h4 className="font-black text-white text-lg mb-1">Lesson Mastered</h4>
-                            <p className="text-slate-400 text-sm max-w-sm mx-auto">
+                            <h4 className="font-bold text-slate-900 dark:text-white text-lg mb-1">Lesson Mastered</h4>
+                            <p className="text-slate-500 dark:text-slate-400 text-sm max-w-sm mx-auto">
                                 {hasQuiz ? "You've aced the quiz. Moving on to the next topic!" : "You've completed this lesson. Well done!"}
                             </p>
                         </div>
                     ) : (
                         <>
-                            <BookOpen className="mx-auto text-indigo-400/50 mb-3" size={32} />
-                            <h4 className="font-black text-slate-900 dark:text-white text-lg mb-1">Knowledge Acquired</h4>
+                            <BookOpen className="mx-auto text-blue-500/40 mb-3" size={32} />
+                            <h4 className="font-bold text-slate-900 dark:text-white text-lg mb-1">Knowledge Acquired</h4>
                             <p className="text-slate-500 dark:text-slate-400 text-sm max-w-sm mx-auto">
                                 {hasQuiz ? "You've completed the reading. Ready to test your understanding?" : "You've reached the end of the lesson. Ready to proceed?"}
                             </p>
@@ -478,7 +501,7 @@ const LessonView: React.FC<LessonViewProps> = ({
                         <button
                             onClick={handleNextLesson}
                             style={{ touchAction: 'manipulation' }}
-                            className="w-full h-16 bg-emerald-600 hover:bg-emerald-500 border border-emerald-400/30 text-white rounded-3xl font-black uppercase tracking-[0.2em] text-sm shadow-xl shadow-emerald-600/20 transition-all flex items-center justify-center gap-3"
+                            className="w-full h-16 bg-emerald-600 hover:bg-emerald-500 border border-emerald-400/20 text-white rounded-3xl font-bold uppercase tracking-[0.2em] text-sm transition-all flex items-center justify-center gap-3"
                         >
                             <span>Go to Next Lesson</span>
                             <ArrowRight size={20} />
@@ -487,7 +510,7 @@ const LessonView: React.FC<LessonViewProps> = ({
                         <button
                             onClick={handleStartQuiz}
                             style={{ touchAction: 'manipulation' }}
-                            className="w-full h-16 bg-indigo-600 hover:bg-indigo-500 border border-indigo-400/30 text-white rounded-3xl font-black uppercase tracking-[0.2em] text-sm shadow-xl shadow-indigo-600/20 transition-all flex items-center justify-center gap-3"
+                            className="w-full h-16 bg-blue-600 hover:bg-blue-500 border border-white/5 text-white rounded-3xl font-bold uppercase tracking-[0.2em] text-sm transition-all flex items-center justify-center gap-3"
                         >
                             {lesson.id === 'c36' ? (
                                 <>
@@ -506,7 +529,7 @@ const LessonView: React.FC<LessonViewProps> = ({
                             onClick={handleCompleteWithoutQuiz}
                             disabled={isFinishing}
                             style={{ touchAction: 'manipulation' }}
-                            className="w-full h-16 bg-indigo-600 hover:bg-indigo-500 border border-indigo-400/30 text-white rounded-3xl font-black uppercase tracking-[0.2em] text-sm shadow-xl shadow-indigo-600/20 transition-all flex items-center justify-center gap-3"
+                            className="w-full h-16 bg-blue-600 hover:bg-blue-500 border border-white/5 text-white rounded-3xl font-bold uppercase tracking-[0.2em] text-sm transition-all flex items-center justify-center gap-3"
                         >
                             {isFinishing ? (
                                 <>

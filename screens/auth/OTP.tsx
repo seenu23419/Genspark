@@ -87,7 +87,7 @@ const OTP: React.FC<OTPProps> = ({ email, onVerify }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#000000] flex items-center justify-center p-6 relative">
+    <div className="min-h-screen bg-[#0f172a] flex items-center justify-center p-6 relative">
       <div className="max-w-md w-full text-center space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
         <div className="space-y-4">
           <div className="w-20 h-20 bg-emerald-500/10 rounded-[2rem] flex items-center justify-center mx-auto text-emerald-500 mb-6">
@@ -119,7 +119,7 @@ const OTP: React.FC<OTPProps> = ({ email, onVerify }) => {
               onChange={(e) => handleChange(e.target, index)}
               onKeyDown={(e) => handleBackspace(e, index)}
               disabled={isVerifying}
-              className={`w-12 h-16 md:w-14 md:h-20 bg-white/5 border-2 rounded-2xl text-3xl font-black text-white text-center transition-all focus:outline-none ${isVerifying ? 'opacity-50 border-slate-800' : 'border-slate-800 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 focus:bg-black'
+              className={`w-12 h-16 md:w-14 md:h-20 bg-white/5 border-2 rounded-2xl text-3xl font-black text-white text-center transition-all focus:outline-none ${isVerifying ? 'opacity-50 border-slate-800' : 'border-slate-800 focus:border-blue-500 focus:ring-4 focus:ring-500/20 focus:bg-slate-900'
                 }`}
             />
           ))}
@@ -129,7 +129,7 @@ const OTP: React.FC<OTPProps> = ({ email, onVerify }) => {
           <button
             onClick={() => handleVerification(otp)}
             disabled={isVerifying || otp.join('').length < 6}
-            className="w-full py-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-black text-lg transition-all active:scale-[0.98] disabled:opacity-50 shadow-xl shadow-indigo-600/20 flex items-center justify-center gap-3"
+            className="w-full py-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-black text-lg transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3"
           >
             {isVerifying ? (
               <>

@@ -10,9 +10,10 @@ export interface ExecutionResult {
     time: string | null;
     memory: number | null;
     status: { id: number; description: string };
+    input?: string; // Optional for debugging
 }
 
-class GenSparkCompilerService {
+class GlintoCompilerServiceImpl {
     async executeCode(language: string, sourceCode: string, userId?: string, stdin: string = ""): Promise<ExecutionResult> {
         try {
             console.log(`[Compiler] Using ExecutionService for ${language}`);
@@ -71,6 +72,7 @@ class GenSparkCompilerService {
         status: "PASSED" | "FAILED" | "PARTIAL";
         stderr?: string | null;
         compile_output?: string | null;
+        message?: string | null;
         results: Array<{
             passed: boolean;
             stdout?: string | null;
@@ -85,6 +87,7 @@ class GenSparkCompilerService {
         const failedIndices: number[] = [];
         let aggregateStderr: string | null = null;
         let aggregateCompileOutput: string | null = null;
+        let aggregateMessage: string | null = null;
 
         const normalizeOutput = (str: string) =>
             (str || '').replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim();
@@ -111,6 +114,11 @@ class GenSparkCompilerService {
                         failedIndices.push(i);
                         if (!aggregateStderr && res.stderr) aggregateStderr = res.stderr;
                         if (!aggregateCompileOutput && res.compile_output) aggregateCompileOutput = res.compile_output;
+                        if (!aggregateMessage && res.message) aggregateMessage = res.message;
+                        // Fallback: If no dedicated error output but failed status, capture message
+                        if (!aggregateStderr && !aggregateCompileOutput && res.status.id !== 3) {
+                            aggregateStderr = res.message || res.status.description;
+                        }
                     }
 
                     results[i] = {
@@ -153,6 +161,7 @@ class GenSparkCompilerService {
             status,
             stderr: aggregateStderr,
             compile_output: aggregateCompileOutput,
+            message: aggregateMessage,
             results
         };
     }
@@ -163,17 +172,17 @@ class GenSparkCompilerService {
                 return `#include <stdio.h>
 
 int main() {
-    printf("Hello from GenSpark C IDE!\\n");
+    printf("Hello from Glinto C IDE!\\n");
     return 0;
 }`;
             case 'java':
                 return `public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello from GenSpark Java IDE!");
+        System.out.println("Hello from Glinto Java IDE!");
     }
 }`;
             case 'python':
-                return `print("Hello from GenSpark Python IDE!")
+                return `print("Hello from Glinto Python IDE!")
 
 # Try some numbers
 for i in range(5):
@@ -182,17 +191,19 @@ for i in range(5):
                 return `#include <iostream>
 
 int main() {
-    std::cout << "Hello from GenSpark C++ IDE!" << std::endl;
+    std::cout << "Hello from Glinto C++ IDE!" << std::endl;
     return 0;
 }`;
             case 'javascript':
-                return `console.log("Hello from GenSpark JavaScript IDE!");`;
+                return `console.log("Hello from Glinto JavaScript IDE!");`;
             case 'sql':
-                return `-- Example SQL\nCREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT);\nINSERT INTO users (name) VALUES ('GenSpark');\nSELECT * FROM users;`;
+                return `-- Example SQL\nCREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT);\nINSERT INTO users (name) VALUES ('Glinto');\nSELECT * FROM users;`;
             default:
                 return `// Start coding in ${lang}...`;
         }
     }
 }
 
-export const genSparkCompilerService = new GenSparkCompilerService();
+const instance = new GlintoCompilerServiceImpl();
+export const GlintoCompilerService = instance;
+export const glintoCompilerService = instance;

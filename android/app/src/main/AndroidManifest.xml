@@ -23,7 +23,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="com.genspark.app" />
+                <data android:scheme="com.glinto.app" />
             </intent-filter>
 
             <intent-filter android:autoVerify="true">
@@ -31,7 +31,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                    android:scheme="genspark"
+                    android:scheme="Glinto"
                     android:host="auth" />
             </intent-filter>
         </activity>
@@ -43,7 +43,13 @@
             android:grantUriPermissions="true">
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" />
         </provider>
+
+        <!-- AdMob App ID -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
     </application>
+
 
     <!-- Permissions -->
 

@@ -220,7 +220,7 @@ const CertificatesSection = ({ userId, userName, className = '' }) => {
             {certificates.length > 0 && (
                 <div className="certificates-footer">
                     <p className="verify-info">
-                        📋 Verify any certificate at <code>genspark.app/verify/[certificate-number]</code>
+                        📋 Verify any certificate at <code>GenSpark.app/verify/[certificate-number]</code>
                     </p>
                 </div>
             )}
@@ -297,26 +297,26 @@ export default CertificatesSection;
  *             </header>
  * 
  *             <main>
- *                 {/* Other profile sections */}
+ *                 // Other profile sections
  * 
- *                 <CertificatesSection
- *                     userId={user?.id}
- *                     userName={user?.user_metadata?.full_name || user?.email}
+ * <CertificatesSection
+ * userId={ user?.id }
+ * userName={ user?.user_metadata?.full_name || user?.email }
  *                 />
- *             </main>
- *         </div>
+    *             </main >
+ *         </div >
  *     );
  * }
  * 
  * FEATURES:
  * ✅ Display all earned certificates
- * ✅ Preview certificates in modal
- * ✅ Download certificates as PDF
- * ✅ Share certificate verification links
- * ✅ Empty state messaging
- * ✅ Loading and error states
- * ✅ Responsive grid layout
- * ✅ Mobile-friendly
- * ✅ Copy-to-clipboard functionality
- * ✅ Certificate verification info
- */
+    * ✅ Preview certificates in modal
+        * ✅ Download certificates as PDF
+            * ✅ Share certificate verification links
+                * ✅ Empty state messaging
+                    * ✅ Loading and error states
+                        * ✅ Responsive grid layout
+                            * ✅ Mobile - friendly
+                                * ✅ Copy - to - clipboard functionality
+                                    * ✅ Certificate verification info
+                                        */

@@ -38,7 +38,7 @@ class AuthService {
 
     if (isNative) {
       // Use the scheme defined in AndroidManifest.xml
-      redirectUrl = 'genspark://auth';
+      redirectUrl = 'Glinto://auth';
     } else {
       console.log("⚠️ [AuthService] Not native platform, utilizing origin:", redirectUrl);
     }
@@ -122,12 +122,24 @@ class AuthService {
       name: cleanName
     });
 
+    // Split name into first/last for the database trigger
+    const nameParts = cleanName.split(' ');
+    const firstName = nameParts[0] || 'User';
+    const lastName = nameParts.slice(1).join(' ') || '';
+
     // Attempt Sign Up
     const { data, error } = await supabaseDB.supabase.auth.signUp({
       email: cleanEmail,
       password,
       options: {
-        data: { full_name: cleanName }
+        data: {
+          full_name: cleanName,
+          name: cleanName,
+          first_name: firstName,
+          last_name: lastName,
+          avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${cleanEmail}`,
+          avatar_url: `https://api.dicebear.com/7.x/avataaars/svg?seed=${cleanEmail}`
+        }
       }
     });
 
@@ -243,7 +255,7 @@ class AuthService {
       // FETCH PROFILE OPTIMIZATION:
       // We check if we have a valid backup in localStorage for an INSTANT return
       if (typeof localStorage !== 'undefined') {
-        const backup = localStorage.getItem('genspark_user_backup');
+        const backup = localStorage.getItem('Glinto_user_backup');
         if (backup) {
           try {
             const parsed = JSON.parse(backup);

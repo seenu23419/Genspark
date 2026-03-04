@@ -15,8 +15,8 @@ export interface ChatMessage {
 }
 
 const STORAGE_KEYS = {
-    SESSIONS: 'genspark_chat_sessions',
-    MESSAGES: 'genspark_chat_messages',
+    SESSIONS: 'Glinto_chat_sessions',
+    MESSAGES: 'Glinto_chat_messages',
 };
 
 class ChatService {
@@ -145,3 +145,4 @@ class ChatService {
 }
 
 export const chatService = new ChatService();
+

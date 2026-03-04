@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useImperativeHandle, forwardRef } from 'react';
 import Editor, { Monaco } from '@monaco-editor/react';
-import { genSparkCompilerService } from '../../services/compilerService';
+import { GlintoCompilerService } from '../../services/compilerService';
 
 export interface CompilerRef {
     runCode: () => Promise<void>;
@@ -41,7 +41,7 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
     // Update Monaco theme whenever isDarkMode changes
     useEffect(() => {
         if (monacoRef.current) {
-            monacoRef.current.editor.setTheme(isDarkMode ? 'genspark-dark' : 'vs');
+            monacoRef.current.editor.setTheme(isDarkMode ? 'Glinto-dark' : 'vs');
         }
     }, [isDarkMode]);
 
@@ -60,9 +60,12 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
     }, [initialCode]);
 
     const runCode = async () => {
+        console.log(`[Compiler] runCode invoked for ${language}`);
         try {
             const currentCode = editorRef.current?.getValue() || '';
-            const result = await genSparkCompilerService.executeCode(language, currentCode);
+            console.log(`[Compiler] Executing code (Length: ${currentCode.length})`);
+            const result = await GlintoCompilerService.executeCode(language, currentCode);
+            console.log(`[Compiler] Execution result received:`, result.status);
             onRun({
                 ...result,
                 accepted: result.status.id === 3,
@@ -70,6 +73,7 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
                 language
             });
         } catch (error: any) {
+            console.error(`[Compiler] Execution error:`, error);
             onRun({
                 stdout: null,
                 stderr: error.message || 'Compiler error',
@@ -98,7 +102,7 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
         runTests: async (tests: any[]) => {
             try {
                 const currentCode = editorRef.current?.getValue() || '';
-                const resultSummary = await genSparkCompilerService.runTests(language, currentCode, tests);
+                const resultSummary = await GlintoCompilerService.runTests(language, currentCode, tests);
 
                 onRun({
                     ...resultSummary,
@@ -107,6 +111,7 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
                     accepted: resultSummary.status === "PASSED",
                     stderr: resultSummary.stderr,
                     compile_output: resultSummary.compile_output,
+                    message: resultSummary.message,
                     status: {
                         id: resultSummary.status === "PASSED" ? 3 : 4,
                         description: resultSummary.status === "PASSED" ? 'Accepted' : 'Tests Failed'
@@ -125,11 +130,12 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
     }));
 
     const handleEditorDidMount = (editor: any, monaco: Monaco) => {
+        console.log("[Compiler] Monaco Editor Mounted");
         editorRef.current = editor;
         monacoRef.current = monaco;
 
         // Define custom dark theme
-        monaco.editor.defineTheme('genspark-dark', {
+        monaco.editor.defineTheme('Glinto-dark', {
             base: 'vs-dark',
             inherit: true,
             rules: [],
@@ -137,7 +143,7 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
         });
 
         // Initial theme set
-        monaco.editor.setTheme(isDarkMode ? 'genspark-dark' : 'vs');
+        monaco.editor.setTheme(isDarkMode ? 'Glinto-dark' : 'vs');
 
         // BLOCK COPY/PASTE
         const blockPaste = (e: any) => {
@@ -231,16 +237,21 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
     };
 
     return (
-        <div className="w-full h-full min-h-0">
+        <div className="h-full w-full bg-white dark:bg-[#0f172a] transition-colors duration-300 relative">
             <Editor
                 height="100%"
+                width="100%"
+                loading={<div className="h-full w-full flex flex-col items-center justify-center bg-[#0d0d15] text-indigo-400 space-y-4">
+                    <div className="w-12 h-12 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin"></div>
+                    <span className="text-xs font-black uppercase tracking-widest animate-pulse">Initializing IDE...</span>
+                </div>}
                 language={language === 'c' || language === 'cpp' ? 'cpp' : language}
                 defaultValue={initialCode}
                 onChange={(val) => {
                     onCodeChange?.(val || '');
                 }}
                 onMount={handleEditorDidMount}
-                theme={isDarkMode ? 'genspark-dark' : 'vs'}
+                theme={isDarkMode ? 'Glinto-dark' : 'vs'}
                 options={{
                     fontSize: window.innerWidth < 768 ? 16 : 14,
                     minimap: { enabled: false },
@@ -282,3 +293,4 @@ const Compiler = React.memo(forwardRef<CompilerRef, CompilerProps>(({
 }));
 
 export default Compiler;
+

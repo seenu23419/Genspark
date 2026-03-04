@@ -20,9 +20,9 @@ export default defineConfig(({ mode }) => {
       //   registerType: 'prompt',
       //   includeAssets: ['favicon.ico', 'icons/*'],
       //   manifest: {
-      //     name: 'GenSpark',
-      //     short_name: 'GenSpark',
-      //     description: 'Master coding with GenSpark',
+      //     name: 'Glinto',
+      //     short_name: 'Glinto',
+      //     description: 'Master coding with Glinto',
       //     theme_color: '#0a0b14',
       //     background_color: '#0a0b14',
       //     display: 'standalone',

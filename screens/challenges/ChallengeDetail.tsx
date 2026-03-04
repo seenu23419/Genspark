@@ -1,120 +1,79 @@
-
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Play, Info, CheckCircle2, Star } from 'lucide-react';
 import { CHALLENGES } from '../../constants';
-import { Challenge } from '../../types';
+import CodingWorkspace from '../practice/CodingWorkspace';
+import { useAuth } from '../../contexts/AuthContext';
 
-interface ChallengeDetailProps {
-  challenge?: Challenge | null;
-  onSolve?: () => void;
-  onBack?: () => void;
-}
-
-const ChallengeDetail: React.FC<ChallengeDetailProps> = ({ challenge: propChallenge, onSolve: propOnSolve, onBack: propOnBack }) => {
+const ChallengeDetail: React.FC = () => {
   const { challengeId } = useParams();
   const navigate = useNavigate();
+  const { refreshProfile } = useAuth();
 
-  const challenge = propChallenge || CHALLENGES.find(c => c.id === challengeId);
+  const challenge = useMemo(() => {
+    // 1. Search static challenges first
+    const staticChallenge = CHALLENGES.find(c => c.id === challengeId);
+    if (staticChallenge) return staticChallenge;
 
-  const handleBack = () => {
-    if (propOnBack) propOnBack();
-    else navigate('/challenges');
-  };
-
-  const handleSolve = () => {
-    if (propOnSolve) propOnSolve();
-    else navigate('/compiler'); // Usually challenges lead to compiler
-  };
+    // 2. Fallback to community challenges in localStorage
+    try {
+      const local = JSON.parse(localStorage.getItem('user_created_challenges') || '[]');
+      return local.find((c: any) => c.id === challengeId);
+    } catch (e) {
+      return null;
+    }
+  }, [challengeId]);
 
   if (!challenge) {
     return (
-      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 text-center">
-        <h2 className="text-2xl font-bold text-white mb-4">Challenge Not Found</h2>
-        <button onClick={handleBack} className="text-indigo-400 hover:text-white transition-colors flex items-center gap-2">
-          <ArrowLeft size={20} /> Back to Challenges
+      <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex flex-col items-center justify-center p-6 text-center">
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Arena Entry Not Found</h2>
+        <button onClick={() => navigate('/challenges')} className="px-6 py-2 bg-indigo-600 rounded-xl text-white font-bold">
+          Return to Arenas
         </button>
       </div>
     );
   }
 
+  // Find next challenge for sequential flow (arenas are simple IDs)
+  const currentIdx = CHALLENGES.indexOf(challenge);
+  const nextChallenge = currentIdx !== -1 && currentIdx + 1 < CHALLENGES.length ? CHALLENGES[currentIdx + 1] : null;
+
   return (
-    <div className="h-full bg-slate-950 flex flex-col">
-      <header className="p-4 border-b border-slate-800 bg-slate-900 flex items-center gap-4">
-        <button onClick={handleBack} className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl">
-          <ArrowLeft size={20} />
-        </button>
-        <h2 className="text-lg font-bold text-white">Challenge Description</h2>
-      </header>
-
-      <div className="flex-1 overflow-y-auto p-6 md:p-10">
-        <div className="max-w-4xl mx-auto space-y-10">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h1 className="text-4xl font-black text-white">{challenge.title}</h1>
-              <div className="flex items-center gap-2 px-4 py-2 bg-indigo-500/10 text-indigo-400 rounded-2xl font-bold">
-                <Star size={18} fill="currentColor" />
-                {challenge.xp} XP
-              </div>
-            </div>
-            <div className="flex items-center gap-4 text-sm font-bold">
-              <span className={`px-3 py-1 rounded-full uppercase tracking-widest ${challenge.difficulty === 'Easy' ? 'bg-emerald-400/10 text-emerald-400' :
-                challenge.difficulty === 'Medium' ? 'bg-yellow-400/10 text-yellow-400' : 'bg-red-400/10 text-red-400'
-                }`}>
-                {challenge.difficulty}
-              </span>
-              <span className="text-slate-500">•</span>
-              <span className="text-slate-500">1.2k Submissions</span>
-            </div>
-          </div>
-
-          <section className="space-y-4">
-            <h3 className="text-xl font-bold text-white flex items-center gap-2">
-              <Info className="text-indigo-400" size={20} />
-              Problem Statement
-            </h3>
-            <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl text-slate-300 leading-relaxed">
-              {challenge.description}
-            </div>
-          </section>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <section className="space-y-4">
-              <h3 className="text-lg font-bold text-white">Input Format</h3>
-              <div className="bg-slate-900 border border-slate-800 p-5 rounded-3xl text-slate-400 font-mono text-sm">
-                {challenge.inputFormat}
-              </div>
-            </section>
-            <section className="space-y-4">
-              <h3 className="text-lg font-bold text-white">Output Format</h3>
-              <div className="bg-slate-900 border border-slate-800 p-5 rounded-3xl text-slate-400 font-mono text-sm">
-                {challenge.outputFormat}
-              </div>
-            </section>
-          </div>
-
-          <section className="space-y-4">
-            <h3 className="text-lg font-bold text-white">Constraints</h3>
-            <div className="bg-slate-900 border border-slate-800 p-5 rounded-3xl flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center flex-shrink-0 text-slate-400">
-                <CheckCircle2 size={16} />
-              </div>
-              <p className="text-slate-400 font-mono text-sm pt-1">{challenge.constraints}</p>
-            </div>
-          </section>
-
-          <div className="pt-10 sticky bottom-0 bg-slate-950 pb-10">
-            <button
-              onClick={handleSolve}
-              className="w-full py-5 bg-indigo-600 text-white rounded-3xl font-bold text-xl flex items-center justify-center gap-4 hover:bg-indigo-500 transition-all shadow-2xl shadow-indigo-600/20 active:scale-95"
-            >
-              <Play size={24} fill="currentColor" />
-              Solve in Editor
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <CodingWorkspace
+      problem={{
+        id: challenge.id,
+        title: challenge.title,
+        description: challenge.description,
+        difficulty: (challenge.difficulty || 'Easy').toLowerCase() as any,
+        concept: (challenge as any).isUserCreated ? 'COMMUNITY ARENA' : 'CORE ARENA',
+        inputFormat: (challenge as any).inputFormat || 'Standard Input',
+        outputFormat: (challenge as any).outputFormat || 'Standard Output',
+        constraints: (challenge as any).constraints || 'N/A',
+        initialCode: (challenge as any).starterCode || '#include <stdio.h>\n\nint main() {\n    return 0;\n}',
+        starter_codes: (challenge as any).starterCode ? {
+          'c': (challenge as any).starterCode,
+          'java': '// Not configured for this arena',
+          'python': '# Not configured for this arena'
+        } : {
+          'c': '#include <stdio.h>\n\nint main() {\n    // Solve challenge here\n    return 0;\n}',
+          'java': 'public class Solution {\n    public static void main(String[] args) {\n        // Solve challenge here\n    }\n}',
+          'python': '# Solve challenge here\nimport sys\n\npass'
+        },
+        testCases: (challenge as any).testCases || []
+      } as any}
+      status="NOT_STARTED"
+      onBack={() => navigate('/challenges')}
+      onComplete={async () => {
+        console.log("[Arena] Challenge completed!");
+        await refreshProfile();
+        setTimeout(() => navigate('/challenges'), 1500);
+      }}
+      onNext={nextChallenge ? () => navigate(`/challenge/${nextChallenge.id}`) : undefined}
+      hasNextProblem={!!nextChallenge}
+      nextProblemTitle={nextChallenge?.title}
+      topicTitle="Glinto Arenas"
+      topicId="arenas"
+    />
   );
 };
 

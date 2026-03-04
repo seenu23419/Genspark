@@ -69,23 +69,23 @@ const Onboarding: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#050714] flex flex-col items-center justify-center p-6 relative overflow-hidden">
+        <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 relative overflow-hidden">
             {/* Ambient Background */}
             <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-500/10 rounded-full blur-[120px]" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-500/10 rounded-full blur-[120px]" />
+                <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-500/5 rounded-full blur-[120px]" />
+                <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-500/10 rounded-full blur-[120px]" />
             </div>
 
             <div className="max-w-md w-full relative z-10 animate-in fade-in zoom-in duration-500">
-                <div className="bg-[#0d1117]/80 backdrop-blur-xl border border-white/5 p-8 md:p-10 rounded-[2.5rem] shadow-2xl flex flex-col space-y-8">
+                <div className="bg-[#0d1117]/80 backdrop-blur-xl border border-white/5 p-8 md:p-10 rounded-[2.5rem] flex flex-col space-y-8">
 
                     {/* Header */}
                     <div className="text-center space-y-3">
-                        <div className="w-16 h-16 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-indigo-500/20">
+                        <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
                             <UserIcon className="text-white" size={32} />
                         </div>
                         <h2 className="text-3xl font-bold text-white tracking-tight">Set up your profile</h2>
-                        <p className="text-[10px] text-indigo-400 font-bold opacity-80 bg-indigo-500/10 py-0.5 px-2 rounded-full inline-block">APP VERSION: 3.5</p>
+                        <p className="text-[10px] text-blue-400 font-bold opacity-80 bg-blue-500/10 py-0.5 px-2 rounded-full inline-block">GET STARTED</p>
                         <div className="space-y-1">
                             <p className="text-slate-400 text-sm leading-relaxed">
                                 Used for certificates and your profile.
@@ -114,7 +114,7 @@ const Onboarding: React.FC = () => {
                                         value={firstName}
                                         onChange={(e) => setFirstName(capitalize(e.target.value))}
                                         placeholder="e.g. Alex"
-                                        className={`w-full px-5 py-4 bg-[#010409] border ${firstNameError ? 'border-red-500/50' : 'border-white/10 group-hover:border-white/20'} rounded-2xl focus:ring-2 focus:ring-indigo-500/30 focus:outline-none focus:border-indigo-500/50 text-white transition-all font-medium placeholder:text-slate-700`}
+                                        className={`w-full px-5 py-4 bg-slate-950 border ${firstNameError ? 'border-red-500/50' : 'border-white/[0.08] group-hover:border-white/20'} rounded-2xl focus:ring-2 focus:ring-blue-500/20 focus:outline-none focus:border-blue-500/50 text-white transition-all font-medium placeholder:text-slate-700`}
                                     />
                                     {firstNameError && (
                                         <p className="text-[10px] text-red-400 mt-1.5 ml-1 font-medium animate-in slide-in-from-top-1">
@@ -131,7 +131,7 @@ const Onboarding: React.FC = () => {
                                     value={lastName}
                                     onChange={(e) => setLastName(capitalize(e.target.value))}
                                     placeholder="e.g. Smith"
-                                    className="w-full px-5 py-4 bg-[#010409] border border-white/10 hover:border-white/20 rounded-2xl focus:ring-2 focus:ring-indigo-500/30 focus:outline-none focus:border-indigo-500/50 text-white transition-all font-medium placeholder:text-slate-700"
+                                    className="w-full px-5 py-4 bg-slate-950 border border-white/[0.08] hover:border-white/20 rounded-2xl focus:ring-2 focus:ring-blue-500/20 focus:outline-none focus:border-blue-500/50 text-white transition-all font-medium placeholder:text-slate-700"
                                 />
                             </div>
                         </div>
@@ -141,11 +141,11 @@ const Onboarding: React.FC = () => {
                             <button
                                 onClick={() => handleAction(false)}
                                 disabled={loading || !isValid}
-                                className="w-full h-14 bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 disabled:text-slate-500 text-white rounded-2xl font-bold text-base transition-all active:scale-[0.98] shadow-lg shadow-indigo-600/10 flex items-center justify-center gap-2 group"
+                                className="w-full h-14 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-800 disabled:text-slate-500 text-white rounded-2xl font-bold text-base transition-all active:scale-[0.98] flex items-center justify-center gap-2 group"
                             >
                                 {loading ? <Loader2 size={18} className="animate-spin" /> : (
                                     <>
-                                        Start Learning [V4.0]
+                                        Finish Setup
                                         <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                                     </>
                                 )}

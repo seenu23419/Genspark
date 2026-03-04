@@ -8,8 +8,21 @@
         "id": "j1",
         "title": "1. Introduction to Java",
         "duration": "20 mins",
-        "content": "> **Java Mastery:** Understanding the mechanics of Introduction to Java.\\n\\n---\\n\\n## 📖 Theoretical Foundation\\n\\nIntroduction to Java is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\\n\\n### Key Key points\\n- **Performance**: Java bytecode runs on the JVM for platform independence.\\n- **Safety**: Strong typing and memory management.\\n- **Scalability**: Designed for enterprise-level applications.\\n\\n\\n\\n---\\n\\n## 💻 Java Practical Example\\n\\n```java\\n// Basic Introduction to Java example\\npublic class Example {\\n    public static void main(String[] args) {\\n        System.out.println(\\\"Exploring Introduction to Java...\\\");\\n    }\\n}\\n```\\n\\n---\\n\\n## 📊 Complexity & Impact\\n\\n- **Performance Impact**: Operations in Introduction to Java are optimized by the JIT (Just-In-Time) compiler.\\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\\n\\n---\\n\\n## 🏁 Summary\\nMastering Introduction to Java is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "> **Java Mastery:** Understanding the mechanics of Introduction to Java.\\n\\n---\\n\\n## 📖 Theoretical Foundation\\n\\nIntroduction to Java is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\\n\\n### Key Key points\\n- **Performance**: Java bytecode runs on the JVM for platform independence.\\n- **Safety**: Strong typing and memory management.\\n- **Scalability**: Designed for enterprise-level applications.\\n\\n\\n\\n---\\n\\n## 💻 Java Practical Example\\n\\n```java\\n// Basic Introduction to Java example\\npublic class Example {\\n    public static void main(String[] args) {\\n        System.out.println(\\\"Exploring Introduction to Java...\\\");\\n    }\\n}\\n```\\n\\n---\\n\\n## 📊 Complexity & Impact\\n\\n- **Performance Impact**: Operations in Introduction to Java are optimized by the JIT (Just-In-Time) compiler.\\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\\n\\n---\\n\\n## 🏁 Summary\\nMastering Introduction to Java is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Introduction to Java?",
@@ -74,8 +87,21 @@
         "id": "j2",
         "title": "2. Installing Java & First Program",
         "duration": "20 mins",
-        "content": "# ☕ 2. Installing Java & First Program\n\n> **Java Mastery:** Understanding the mechanics of Installing Java & First Program.\n\n---\n\n## 📖 Theoretical Foundation\n\nInstalling Java & First Program is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Installing Java & First Program example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Installing Java & First Program...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Installing Java & First Program are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Installing Java & First Program is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 2. Installing Java & First Program\n\n> **Java Mastery:** Understanding the mechanics of Installing Java & First Program.\n\n---\n\n## 📖 Theoretical Foundation\n\nInstalling Java & First Program is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Installing Java & First Program example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Installing Java & First Program...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Installing Java & First Program are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Installing Java & First Program is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Installing Java & First Program?",
@@ -140,8 +166,21 @@
         "id": "j3",
         "title": "3. Variables & Data Types",
         "duration": "20 mins",
-        "content": "# ☕ 3. Variables & Data Types\n\n> **Java Mastery:** Understanding the mechanics of Variables & Data Types.\n\n---\n\n## 📖 Theoretical Foundation\n\nVariables & Data Types is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Variables & Data Types example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Variables & Data Types...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Variables & Data Types are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Variables & Data Types is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 3. Variables & Data Types\n\n> **Java Mastery:** Understanding the mechanics of Variables & Data Types.\n\n---\n\n## 📖 Theoretical Foundation\n\nVariables & Data Types is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Variables & Data Types example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Variables & Data Types...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Variables & Data Types are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Variables & Data Types is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Variables & Data Types?",
@@ -206,8 +245,21 @@
         "id": "j4",
         "title": "4. Keywords & Identifiers",
         "duration": "20 mins",
-        "content": "# ☕ 4. Keywords & Identifiers\n\n> **Java Mastery:** Understanding the mechanics of Keywords & Identifiers.\n\n---\n\n## 📖 Theoretical Foundation\n\nKeywords & Identifiers is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Keywords & Identifiers example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Keywords & Identifiers...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Keywords & Identifiers are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Keywords & Identifiers is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 4. Keywords & Identifiers\n\n> **Java Mastery:** Understanding the mechanics of Keywords & Identifiers.\n\n---\n\n## 📖 Theoretical Foundation\n\nKeywords & Identifiers is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Keywords & Identifiers example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Keywords & Identifiers...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Keywords & Identifiers are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Keywords & Identifiers is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Keywords & Identifiers?",
@@ -272,8 +324,21 @@
         "id": "j5",
         "title": "5. Input & Output (Scanner, BufferedReader)",
         "duration": "20 mins",
-        "content": "# ☕ 5. Input & Output (Scanner, BufferedReader)\n\n> **Java Mastery:** Understanding the mechanics of Input & Output (Scanner, BufferedReader).\n\n---\n\n## 📖 Theoretical Foundation\n\nInput & Output (Scanner, BufferedReader) is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Input & Output (Scanner, BufferedReader) example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Input & Output (Scanner, BufferedReader)...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Input & Output (Scanner, BufferedReader) are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Input & Output (Scanner, BufferedReader) is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 5. Input & Output (Scanner, BufferedReader)\n\n> **Java Mastery:** Understanding the mechanics of Input & Output (Scanner, BufferedReader).\n\n---\n\n## 📖 Theoretical Foundation\n\nInput & Output (Scanner, BufferedReader) is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Input & Output (Scanner, BufferedReader) example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Input & Output (Scanner, BufferedReader)...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Input & Output (Scanner, BufferedReader) are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Input & Output (Scanner, BufferedReader) is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Input & Output (Scanner, BufferedReader)?",
@@ -338,8 +403,21 @@
         "id": "j6",
         "title": "6. Operators in Java",
         "duration": "20 mins",
-        "content": "# ☕ 6. Operators in Java\n\n> **Java Mastery:** Understanding the mechanics of Operators in Java.\n\n---\n\n## 📖 Theoretical Foundation\n\nOperators in Java is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Operators in Java example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Operators in Java...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Operators in Java are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Operators in Java is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 6. Operators in Java\n\n> **Java Mastery:** Understanding the mechanics of Operators in Java.\n\n---\n\n## 📖 Theoretical Foundation\n\nOperators in Java is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Operators in Java example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Operators in Java...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Operators in Java are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Operators in Java is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Operators in Java?",
@@ -404,8 +482,21 @@
         "id": "j7",
         "title": "7. Type Casting (Implicit & Explicit)",
         "duration": "20 mins",
-        "content": "# ☕ 7. Type Casting (Implicit & Explicit)\n\n> **Java Mastery:** Understanding the mechanics of Type Casting (Implicit & Explicit).\n\n---\n\n## 📖 Theoretical Foundation\n\nType Casting (Implicit & Explicit) is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Type Casting (Implicit & Explicit) example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Type Casting (Implicit & Explicit)...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Type Casting (Implicit & Explicit) are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Type Casting (Implicit & Explicit) is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 7. Type Casting (Implicit & Explicit)\n\n> **Java Mastery:** Understanding the mechanics of Type Casting (Implicit & Explicit).\n\n---\n\n## 📖 Theoretical Foundation\n\nType Casting (Implicit & Explicit) is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Type Casting (Implicit & Explicit) example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Type Casting (Implicit & Explicit)...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Type Casting (Implicit & Explicit) are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Type Casting (Implicit & Explicit) is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Type Casting (Implicit & Explicit)?",
@@ -466,7 +557,9 @@
           }
         ]
       }
-    ]
+    ],
+    "isLocked": true,
+    "status": "Updating Soon"
   },
   {
     "id": "java-l2",
@@ -477,8 +570,21 @@
         "id": "j8",
         "title": "8. if, else if, else",
         "duration": "20 mins",
-        "content": "# ☕ 8. if, else if, else\n\n> **Java Mastery:** Understanding the mechanics of if, else if, else.\n\n---\n\n## 📖 Theoretical Foundation\n\nif, else if, else is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic if, else if, else example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring if, else if, else...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in if, else if, else are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering if, else if, else is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 8. if, else if, else\n\n> **Java Mastery:** Understanding the mechanics of if, else if, else.\n\n---\n\n## 📖 Theoretical Foundation\n\nif, else if, else is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic if, else if, else example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring if, else if, else...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in if, else if, else are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering if, else if, else is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of if, else if, else?",
@@ -543,8 +649,21 @@
         "id": "j9",
         "title": "9. switch Statement",
         "duration": "20 mins",
-        "content": "# ☕ 9. switch Statement\n\n> **Java Mastery:** Understanding the mechanics of switch Statement.\n\n---\n\n## 📖 Theoretical Foundation\n\nswitch Statement is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic switch Statement example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring switch Statement...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in switch Statement are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering switch Statement is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 9. switch Statement\n\n> **Java Mastery:** Understanding the mechanics of switch Statement.\n\n---\n\n## 📖 Theoretical Foundation\n\nswitch Statement is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic switch Statement example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring switch Statement...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in switch Statement are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering switch Statement is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of switch Statement?",
@@ -609,8 +728,21 @@
         "id": "j10",
         "title": "10. for Loop",
         "duration": "20 mins",
-        "content": "# ☕ 10. for Loop\n\n> **Java Mastery:** Understanding the mechanics of for Loop.\n\n---\n\n## 📖 Theoretical Foundation\n\nfor Loop is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic for Loop example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring for Loop...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in for Loop are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering for Loop is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 10. for Loop\n\n> **Java Mastery:** Understanding the mechanics of for Loop.\n\n---\n\n## 📖 Theoretical Foundation\n\nfor Loop is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic for Loop example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring for Loop...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in for Loop are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering for Loop is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of for Loop?",
@@ -675,8 +807,21 @@
         "id": "j11",
         "title": "11. while Loop",
         "duration": "20 mins",
-        "content": "# ☕ 11. while Loop\n\n> **Java Mastery:** Understanding the mechanics of while Loop.\n\n---\n\n## 📖 Theoretical Foundation\n\nwhile Loop is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic while Loop example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring while Loop...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in while Loop are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering while Loop is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 11. while Loop\n\n> **Java Mastery:** Understanding the mechanics of while Loop.\n\n---\n\n## 📖 Theoretical Foundation\n\nwhile Loop is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic while Loop example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring while Loop...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in while Loop are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering while Loop is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of while Loop?",
@@ -741,8 +886,21 @@
         "id": "j12",
         "title": "12. do-while Loop",
         "duration": "20 mins",
-        "content": "# ☕ 12. do-while Loop\n\n> **Java Mastery:** Understanding the mechanics of do-while Loop.\n\n---\n\n## 📖 Theoretical Foundation\n\ndo-while Loop is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic do-while Loop example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring do-while Loop...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in do-while Loop are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering do-while Loop is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 12. do-while Loop\n\n> **Java Mastery:** Understanding the mechanics of do-while Loop.\n\n---\n\n## 📖 Theoretical Foundation\n\ndo-while Loop is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic do-while Loop example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring do-while Loop...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in do-while Loop are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering do-while Loop is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of do-while Loop?",
@@ -807,8 +965,21 @@
         "id": "j13",
         "title": "13. break, continue",
         "duration": "20 mins",
-        "content": "# ☕ 13. break, continue\n\n> **Java Mastery:** Understanding the mechanics of break, continue.\n\n---\n\n## 📖 Theoretical Foundation\n\nbreak, continue is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic break, continue example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring break, continue...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in break, continue are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering break, continue is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 13. break, continue\n\n> **Java Mastery:** Understanding the mechanics of break, continue.\n\n---\n\n## 📖 Theoretical Foundation\n\nbreak, continue is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic break, continue example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring break, continue...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in break, continue are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering break, continue is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of break, continue?",
@@ -869,7 +1040,9 @@
           }
         ]
       }
-    ]
+    ],
+    "isLocked": true,
+    "status": "Updating Soon"
   },
   {
     "id": "java-l3",
@@ -880,8 +1053,21 @@
         "id": "j14",
         "title": "14. Arrays (1D & 2D)",
         "duration": "20 mins",
-        "content": "# ☕ 14. Arrays (1D & 2D)\n\n> **Java Mastery:** Understanding the mechanics of Arrays (1D & 2D).\n\n---\n\n## 📖 Theoretical Foundation\n\nArrays (1D & 2D) is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Arrays (1D & 2D) example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Arrays (1D & 2D)...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Arrays (1D & 2D) are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Arrays (1D & 2D) is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 14. Arrays (1D & 2D)\n\n> **Java Mastery:** Understanding the mechanics of Arrays (1D & 2D).\n\n---\n\n## 📖 Theoretical Foundation\n\nArrays (1D & 2D) is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Arrays (1D & 2D) example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Arrays (1D & 2D)...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Arrays (1D & 2D) are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Arrays (1D & 2D) is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Arrays (1D & 2D)?",
@@ -946,8 +1132,21 @@
         "id": "j15",
         "title": "15. Strings (String, StringBuilder, StringBuffer)",
         "duration": "20 mins",
-        "content": "# ☕ 15. Strings (String, StringBuilder, StringBuffer)\n\n> **Java Mastery:** Understanding the mechanics of Strings (String, StringBuilder, StringBuffer).\n\n---\n\n## 📖 Theoretical Foundation\n\nStrings (String, StringBuilder, StringBuffer) is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Strings (String, StringBuilder, StringBuffer) example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Strings (String, StringBuilder, StringBuffer)...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Strings (String, StringBuilder, StringBuffer) are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Strings (String, StringBuilder, StringBuffer) is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 15. Strings (String, StringBuilder, StringBuffer)\n\n> **Java Mastery:** Understanding the mechanics of Strings (String, StringBuilder, StringBuffer).\n\n---\n\n## 📖 Theoretical Foundation\n\nStrings (String, StringBuilder, StringBuffer) is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Strings (String, StringBuilder, StringBuffer) example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Strings (String, StringBuilder, StringBuffer)...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Strings (String, StringBuilder, StringBuffer) are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Strings (String, StringBuilder, StringBuffer) is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Strings (String, StringBuilder, StringBuffer)?",
@@ -1012,8 +1211,21 @@
         "id": "j16",
         "title": "16. Wrapper Classes",
         "duration": "20 mins",
-        "content": "# ☕ 16. Wrapper Classes\n\n> **Java Mastery:** Understanding the mechanics of Wrapper Classes.\n\n---\n\n## 📖 Theoretical Foundation\n\nWrapper Classes is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Wrapper Classes example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Wrapper Classes...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Wrapper Classes are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Wrapper Classes is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 16. Wrapper Classes\n\n> **Java Mastery:** Understanding the mechanics of Wrapper Classes.\n\n---\n\n## 📖 Theoretical Foundation\n\nWrapper Classes is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Wrapper Classes example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Wrapper Classes...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Wrapper Classes are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Wrapper Classes is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Wrapper Classes?",
@@ -1078,8 +1290,21 @@
         "id": "j17",
         "title": "17. Command Line Arguments",
         "duration": "20 mins",
-        "content": "# ☕ 17. Command Line Arguments\n\n> **Java Mastery:** Understanding the mechanics of Command Line Arguments.\n\n---\n\n## 📖 Theoretical Foundation\n\nCommand Line Arguments is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Command Line Arguments example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Command Line Arguments...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Command Line Arguments are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Command Line Arguments is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 17. Command Line Arguments\n\n> **Java Mastery:** Understanding the mechanics of Command Line Arguments.\n\n---\n\n## 📖 Theoretical Foundation\n\nCommand Line Arguments is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Command Line Arguments example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Command Line Arguments...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Command Line Arguments are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Command Line Arguments is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Command Line Arguments?",
@@ -1144,8 +1369,21 @@
         "id": "j18",
         "title": "18. Heap vs Stack Memory basics",
         "duration": "20 mins",
-        "content": "# ☕ 18. Heap vs Stack Memory basics\n\n> **Java Mastery:** Understanding the mechanics of Heap vs Stack Memory basics.\n\n---\n\n## 📖 Theoretical Foundation\n\nJava manages memory in two primary areas: the **Stack** and the **Heap**. The Stack is used for static memory allocation and execution of a thread, while the Heap is used for dynamic memory allocation of Java objects.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n> [!IMPORTANT]\n> Understanding this is crucial for avoiding MemoryLeaks and Overflow errors.\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Stack vs Heap example\npublic class MemoryTest {\n    public static void main(String[] args) {\n        int x = 10; // Stored in Stack\n        MemoryTest obj = new MemoryTest(); // 'obj' reference in Stack, instance in Heap\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Heap vs Stack Memory basics are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Heap vs Stack Memory basics is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 18. Heap vs Stack Memory basics\n\n> **Java Mastery:** Understanding the mechanics of Heap vs Stack Memory basics.\n\n---\n\n## 📖 Theoretical Foundation\n\nJava manages memory in two primary areas: the **Stack** and the **Heap**. The Stack is used for static memory allocation and execution of a thread, while the Heap is used for dynamic memory allocation of Java objects.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n> [!IMPORTANT]\n> Understanding this is crucial for avoiding MemoryLeaks and Overflow errors.\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Stack vs Heap example\npublic class MemoryTest {\n    public static void main(String[] args) {\n        int x = 10; // Stored in Stack\n        MemoryTest obj = new MemoryTest(); // 'obj' reference in Stack, instance in Heap\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Heap vs Stack Memory basics are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Heap vs Stack Memory basics is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Heap vs Stack Memory basics?",
@@ -1206,7 +1444,9 @@
           }
         ]
       }
-    ]
+    ],
+    "isLocked": true,
+    "status": "Updating Soon"
   },
   {
     "id": "java-l4",
@@ -1217,8 +1457,21 @@
         "id": "j19",
         "title": "19. Methods in Java",
         "duration": "20 mins",
-        "content": "# ☕ 19. Methods in Java\n\n> **Java Mastery:** Understanding the mechanics of Methods in Java.\n\n---\n\n## 📖 Theoretical Foundation\n\nMethods in Java is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Methods in Java example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Methods in Java...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Methods in Java are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Methods in Java is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 19. Methods in Java\n\n> **Java Mastery:** Understanding the mechanics of Methods in Java.\n\n---\n\n## 📖 Theoretical Foundation\n\nMethods in Java is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Methods in Java example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Methods in Java...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Methods in Java are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Methods in Java is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Methods in Java?",
@@ -1283,8 +1536,21 @@
         "id": "j20",
         "title": "20. Method Overloading",
         "duration": "20 mins",
-        "content": "# ☕ 20. Method Overloading\n\n> **Java Mastery:** Understanding the mechanics of Method Overloading.\n\n---\n\n## 📖 Theoretical Foundation\n\nMethod Overloading is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Method Overloading example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Method Overloading...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Method Overloading are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Method Overloading is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "# ☕ 20. Method Overloading\n\n> **Java Mastery:** Understanding the mechanics of Method Overloading.\n\n---\n\n## 📖 Theoretical Foundation\n\nMethod Overloading is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Method Overloading example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Method Overloading...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Method Overloading are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Method Overloading is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Method Overloading?",
@@ -1349,8 +1615,21 @@
         "id": "j21",
         "title": "21. Parameters & Return Types",
         "duration": "20 mins",
-        "content": "# ☕ 21. Parameters & Return Types\n\n> **Java Mastery:** Understanding the mechanics of Parameters & Return Types.\n\n---\n\n## 📖 Theoretical Foundation\n\nParameters & Return Types is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Parameters & Return Types example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Parameters & Return Types...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Parameters & Return Types are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Parameters & Return Types is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Parameters & Return Types?",
@@ -1415,8 +1694,21 @@
         "id": "j22",
         "title": "22. Variable Scope",
         "duration": "20 mins",
-        "content": "# ☕ 22. Variable Scope\n\n> **Java Mastery:** Understanding the mechanics of Variable Scope.\n\n---\n\n## 📖 Theoretical Foundation\n\nVariable Scope is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Variable Scope example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Variable Scope...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Variable Scope are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Variable Scope is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Variable Scope?",
@@ -1481,8 +1773,21 @@
         "id": "j23",
         "title": "23. Packages",
         "duration": "20 mins",
-        "content": "# ☕ 23. Packages\n\n> **Java Mastery:** Understanding the mechanics of Packages.\n\n---\n\n## 📖 Theoretical Foundation\n\nPackages is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Packages example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Packages...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Packages are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Packages is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Packages?",
@@ -1547,8 +1852,21 @@
         "id": "j24",
         "title": "24. Access Modifiers",
         "duration": "20 mins",
-        "content": "# ☕ 24. Access Modifiers\n\n> **Java Mastery:** Understanding the mechanics of Access Modifiers.\n\n---\n\n## 📖 Theoretical Foundation\n\nAccess Modifiers is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Access Modifiers example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Access Modifiers...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Access Modifiers are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Access Modifiers is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Access Modifiers?",
@@ -1609,7 +1927,9 @@
           }
         ]
       }
-    ]
+    ],
+    "isLocked": true,
+    "status": "Updating Soon"
   },
   {
     "id": "java-l5",
@@ -1620,8 +1940,21 @@
         "id": "j25",
         "title": "25. OOP Principles",
         "duration": "20 mins",
-        "content": "# ☕ 25. OOP Principles\n\n> **Java Mastery:** Understanding the mechanics of OOP Principles.\n\n---\n\n## 📖 Theoretical Foundation\n\nObject-Oriented Programming (OOP) is a paradigm based on 'objects'. The four main pillars are **Encapsulation**, **Inheritance**, **Polymorphism**, and **Abstraction**.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// OOP Preview\nclass Animal {}\nclass Dog extends Animal {} // Inheritance\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in OOP Principles are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering OOP Principles is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of OOP Principles?",
@@ -1686,8 +2019,21 @@
         "id": "j26",
         "title": "26. Classes & Objects",
         "duration": "20 mins",
-        "content": "# ☕ 26. Classes & Objects\n\n> **Java Mastery:** Understanding the mechanics of Classes & Objects.\n\n---\n\n## 📖 Theoretical Foundation\n\nClasses & Objects is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Classes & Objects example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Classes & Objects...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Classes & Objects are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Classes & Objects is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Classes & Objects?",
@@ -1752,8 +2098,21 @@
         "id": "j27",
         "title": "27. Constructors",
         "duration": "20 mins",
-        "content": "# ☕ 27. Constructors\n\n> **Java Mastery:** Understanding the mechanics of Constructors.\n\n---\n\n## 📖 Theoretical Foundation\n\nConstructors is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Constructors example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Constructors...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Constructors are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Constructors is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Constructors?",
@@ -1818,8 +2177,21 @@
         "id": "j28",
         "title": "28. this keyword",
         "duration": "20 mins",
-        "content": "# ☕ 28. this keyword\n\n> **Java Mastery:** Understanding the mechanics of this keyword.\n\n---\n\n## 📖 Theoretical Foundation\n\nthis keyword is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic this keyword example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring this keyword...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in this keyword are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering this keyword is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of this keyword?",
@@ -1884,8 +2256,21 @@
         "id": "j29",
         "title": "29. Inheritance",
         "duration": "20 mins",
-        "content": "# ☕ 29. Inheritance\n\n> **Java Mastery:** Understanding the mechanics of Inheritance.\n\n---\n\n## 📖 Theoretical Foundation\n\nInheritance is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Inheritance example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Inheritance...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Inheritance are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Inheritance is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Inheritance?",
@@ -1950,8 +2335,21 @@
         "id": "j30",
         "title": "30. Method Overriding",
         "duration": "20 mins",
-        "content": "# ☕ 30. Method Overriding\n\n> **Java Mastery:** Understanding the mechanics of Method Overriding.\n\n---\n\n## 📖 Theoretical Foundation\n\nMethod Overriding is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Method Overriding example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Method Overriding...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Method Overriding are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Method Overriding is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Method Overriding?",
@@ -2016,8 +2414,21 @@
         "id": "j31",
         "title": "31. Polymorphism",
         "duration": "20 mins",
-        "content": "# ☕ 31. Polymorphism\n\n> **Java Mastery:** Understanding the mechanics of Polymorphism.\n\n---\n\n## 📖 Theoretical Foundation\n\nPolymorphism is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Polymorphism example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Polymorphism...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Polymorphism are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Polymorphism is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Polymorphism?",
@@ -2082,8 +2493,21 @@
         "id": "j32",
         "title": "32. Encapsulation",
         "duration": "20 mins",
-        "content": "# ☕ 32. Encapsulation\n\n> **Java Mastery:** Understanding the mechanics of Encapsulation.\n\n---\n\n## 📖 Theoretical Foundation\n\nEncapsulation is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Encapsulation example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Encapsulation...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Encapsulation are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Encapsulation is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Encapsulation?",
@@ -2148,8 +2572,21 @@
         "id": "j33",
         "title": "33. Abstraction",
         "duration": "20 mins",
-        "content": "# ☕ 33. Abstraction\n\n> **Java Mastery:** Understanding the mechanics of Abstraction.\n\n---\n\n## 📖 Theoretical Foundation\n\nAbstraction is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Abstraction example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Abstraction...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Abstraction are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Abstraction is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Abstraction?",
@@ -2214,8 +2651,21 @@
         "id": "j34",
         "title": "34. super keyword",
         "duration": "20 mins",
-        "content": "# ☕ 34. super keyword\n\n> **Java Mastery:** Understanding the mechanics of super keyword.\n\n---\n\n## 📖 Theoretical Foundation\n\nsuper keyword is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic super keyword example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring super keyword...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in super keyword are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering super keyword is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of super keyword?",
@@ -2276,7 +2726,9 @@
           }
         ]
       }
-    ]
+    ],
+    "isLocked": true,
+    "status": "Updating Soon"
   },
   {
     "id": "java-l6",
@@ -2287,8 +2739,21 @@
         "id": "j35",
         "title": "35. Exception Handling (try-catch-finally)",
         "duration": "20 mins",
-        "content": "# ☕ 35. Exception Handling (try-catch-finally)\n\n> **Java Mastery:** Understanding the mechanics of Exception Handling (try-catch-finally).\n\n---\n\n## 📖 Theoretical Foundation\n\nException Handling (try-catch-finally) is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Exception Handling (try-catch-finally) example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Exception Handling (try-catch-finally)...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Exception Handling (try-catch-finally) are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Exception Handling (try-catch-finally) is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Exception Handling (try-catch-finally)?",
@@ -2353,8 +2818,21 @@
         "id": "j36",
         "title": "36. Multiple catch blocks",
         "duration": "20 mins",
-        "content": "# ☕ 36. Multiple catch blocks\n\n> **Java Mastery:** Understanding the mechanics of Multiple catch blocks.\n\n---\n\n## 📖 Theoretical Foundation\n\nMultiple catch blocks is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Multiple catch blocks example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Multiple catch blocks...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Multiple catch blocks are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Multiple catch blocks is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Multiple catch blocks?",
@@ -2419,8 +2897,21 @@
         "id": "j37",
         "title": "37. throw vs throws",
         "duration": "20 mins",
-        "content": "# ☕ 37. throw vs throws\n\n> **Java Mastery:** Understanding the mechanics of throw vs throws.\n\n---\n\n## 📖 Theoretical Foundation\n\nthrow vs throws is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic throw vs throws example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring throw vs throws...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in throw vs throws are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering throw vs throws is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of throw vs throws?",
@@ -2485,8 +2976,21 @@
         "id": "j38",
         "title": "38. Custom Exceptions",
         "duration": "20 mins",
-        "content": "# ☕ 38. Custom Exceptions\n\n> **Java Mastery:** Understanding the mechanics of Custom Exceptions.\n\n---\n\n## 📖 Theoretical Foundation\n\nCustom Exceptions is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Custom Exceptions example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Custom Exceptions...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Custom Exceptions are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Custom Exceptions is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Custom Exceptions?",
@@ -2551,8 +3055,21 @@
         "id": "j39",
         "title": "39. File Handling (File, FileReader, FileWriter)",
         "duration": "20 mins",
-        "content": "# ☕ 39. File Handling (File, FileReader, FileWriter)\n\n> **Java Mastery:** Understanding the mechanics of File Handling (File, FileReader, FileWriter).\n\n---\n\n## 📖 Theoretical Foundation\n\nFile Handling (File, FileReader, FileWriter) is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic File Handling (File, FileReader, FileWriter) example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring File Handling (File, FileReader, FileWriter)...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in File Handling (File, FileReader, FileWriter) are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering File Handling (File, FileReader, FileWriter) is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of File Handling (File, FileReader, FileWriter)?",
@@ -2613,7 +3130,9 @@
           }
         ]
       }
-    ]
+    ],
+    "isLocked": true,
+    "status": "Updating Soon"
   },
   {
     "id": "java-l7",
@@ -2624,8 +3143,21 @@
         "id": "j40",
         "title": "40. Collections Framework",
         "duration": "20 mins",
-        "content": "# ☕ 40. Collections Framework\n\n> **Java Mastery:** Understanding the mechanics of Collections Framework.\n\n---\n\n## 📖 Theoretical Foundation\n\nCollections Framework is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Collections Framework example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Collections Framework...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Collections Framework are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Collections Framework is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Collections Framework?",
@@ -2690,8 +3222,21 @@
         "id": "j41",
         "title": "41. List, Set, Map",
         "duration": "20 mins",
-        "content": "# ☕ 41. List, Set, Map\n\n> **Java Mastery:** Understanding the mechanics of List, Set, Map.\n\n---\n\n## 📖 Theoretical Foundation\n\nList, Set, Map is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic List, Set, Map example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring List, Set, Map...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in List, Set, Map are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering List, Set, Map is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of List, Set, Map?",
@@ -2756,8 +3301,21 @@
         "id": "j42",
         "title": "42. Comparable & Comparator",
         "duration": "20 mins",
-        "content": "# ☕ 42. Comparable & Comparator\n\n> **Java Mastery:** Understanding the mechanics of Comparable & Comparator.\n\n---\n\n## 📖 Theoretical Foundation\n\nComparable & Comparator is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Comparable & Comparator example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Comparable & Comparator...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Comparable & Comparator are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Comparable & Comparator is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Comparable & Comparator?",
@@ -2822,8 +3380,21 @@
         "id": "j43",
         "title": "43. Iterator & ListIterator",
         "duration": "20 mins",
-        "content": "# ☕ 43. Iterator & ListIterator\n\n> **Java Mastery:** Understanding the mechanics of Iterator & ListIterator.\n\n---\n\n## 📖 Theoretical Foundation\n\nIterator & ListIterator is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Iterator & ListIterator example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Iterator & ListIterator...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Iterator & ListIterator are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Iterator & ListIterator is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Iterator & ListIterator?",
@@ -2888,8 +3459,21 @@
         "id": "j44",
         "title": "44. Generics",
         "duration": "20 mins",
-        "content": "# ☕ 44. Generics\n\n> **Java Mastery:** Understanding the mechanics of Generics.\n\n---\n\n## 📖 Theoretical Foundation\n\nGenerics is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Generics example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Generics...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Generics are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Generics is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Generics?",
@@ -2954,8 +3538,21 @@
         "id": "j45",
         "title": "45. Autoboxing & Unboxing",
         "duration": "20 mins",
-        "content": "# ☕ 45. Autoboxing & Unboxing\n\n> **Java Mastery:** Understanding the mechanics of Autoboxing & Unboxing.\n\n---\n\n## 📖 Theoretical Foundation\n\nAutoboxing & Unboxing is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Autoboxing & Unboxing example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Autoboxing & Unboxing...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Autoboxing & Unboxing are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Autoboxing & Unboxing is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Autoboxing & Unboxing?",
@@ -3020,8 +3617,21 @@
         "id": "j46",
         "title": "46. Immutable Classes",
         "duration": "20 mins",
-        "content": "# ☕ 46. Immutable Classes\n\n> **Java Mastery:** Understanding the mechanics of Immutable Classes.\n\n---\n\n## 📖 Theoretical Foundation\n\nAn immutable class is one whose state cannot be changed after it is created. The `String` class is the most famous example of an immutable class in Java.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// How to create an immutable class\npublic final class MyImmutable {\n    private final int value;\n    public MyImmutable(int value) { this.value = value; }\n    public int getValue() { return value; }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Immutable Classes are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Immutable Classes is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Immutable Classes?",
@@ -3082,7 +3692,9 @@
           }
         ]
       }
-    ]
+    ],
+    "isLocked": true,
+    "status": "Updating Soon"
   },
   {
     "id": "java-l8",
@@ -3093,8 +3705,21 @@
         "id": "j47",
         "title": "47. Multithreading Basics",
         "duration": "20 mins",
-        "content": "# ☕ 47. Multithreading Basics\n\n> **Java Mastery:** Understanding the mechanics of Multithreading Basics.\n\n---\n\n## 📖 Theoretical Foundation\n\nMultithreading Basics is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Multithreading Basics example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Multithreading Basics...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Multithreading Basics are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Multithreading Basics is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Multithreading Basics?",
@@ -3159,8 +3784,21 @@
         "id": "j48",
         "title": "48. Thread Class & Runnable",
         "duration": "20 mins",
-        "content": "# ☕ 48. Thread Class & Runnable\n\n> **Java Mastery:** Understanding the mechanics of Thread Class & Runnable.\n\n---\n\n## 📖 Theoretical Foundation\n\nThread Class & Runnable is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Thread Class & Runnable example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Thread Class & Runnable...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Thread Class & Runnable are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Thread Class & Runnable is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Thread Class & Runnable?",
@@ -3225,8 +3863,21 @@
         "id": "j49",
         "title": "49. Thread Lifecycle",
         "duration": "20 mins",
-        "content": "# ☕ 49. Thread Lifecycle\n\n> **Java Mastery:** Understanding the mechanics of Thread Lifecycle.\n\n---\n\n## 📖 Theoretical Foundation\n\nThread Lifecycle is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Thread Lifecycle example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Thread Lifecycle...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Thread Lifecycle are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Thread Lifecycle is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Thread Lifecycle?",
@@ -3291,8 +3942,21 @@
         "id": "j50",
         "title": "50. Synchronization",
         "duration": "20 mins",
-        "content": "# ☕ 50. Synchronization\n\n> **Java Mastery:** Understanding the mechanics of Synchronization.\n\n---\n\n## 📖 Theoretical Foundation\n\nSynchronization is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Synchronization example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Synchronization...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Synchronization are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Synchronization is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Synchronization?",
@@ -3357,8 +4021,21 @@
         "id": "j51",
         "title": "51. Deadlock",
         "duration": "20 mins",
-        "content": "# ☕ 51. Deadlock\n\n> **Java Mastery:** Understanding the mechanics of Deadlock.\n\n---\n\n## 📖 Theoretical Foundation\n\nDeadlock is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Deadlock example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Deadlock...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Deadlock are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Deadlock is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Deadlock?",
@@ -3423,8 +4100,21 @@
         "id": "j52",
         "title": "52. JVM Architecture & Garbage Collection",
         "duration": "20 mins",
-        "content": "# ☕ 52. JVM Architecture & Garbage Collection\n\n> **Java Mastery:** Understanding the mechanics of JVM Architecture & Garbage Collection.\n\n---\n\n## 📖 Theoretical Foundation\n\nJVM Architecture & Garbage Collection is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic JVM Architecture & Garbage Collection example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring JVM Architecture & Garbage Collection...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in JVM Architecture & Garbage Collection are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering JVM Architecture & Garbage Collection is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of JVM Architecture & Garbage Collection?",
@@ -3485,7 +4175,9 @@
           }
         ]
       }
-    ]
+    ],
+    "isLocked": true,
+    "status": "Updating Soon"
   },
   {
     "id": "java-l9",
@@ -3496,8 +4188,21 @@
         "id": "j53",
         "title": "53. JDBC (Database Connectivity)",
         "duration": "20 mins",
-        "content": "# ☕ 53. JDBC (Database Connectivity)\n\n> **Java Mastery:** Understanding the mechanics of JDBC (Database Connectivity).\n\n---\n\n## 📖 Theoretical Foundation\n\nJDBC (Database Connectivity) is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic JDBC (Database Connectivity) example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring JDBC (Database Connectivity)...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in JDBC (Database Connectivity) are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering JDBC (Database Connectivity) is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of JDBC (Database Connectivity)?",
@@ -3562,8 +4267,21 @@
         "id": "j54",
         "title": "54. Basic SQL for Java",
         "duration": "20 mins",
-        "content": "# ☕ 54. Basic SQL for Java\n\n> **Java Mastery:** Understanding the mechanics of Basic SQL for Java.\n\n---\n\n## 📖 Theoretical Foundation\n\nBasic SQL for Java is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Basic SQL for Java example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Basic SQL for Java...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Basic SQL for Java are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Basic SQL for Java is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Basic SQL for Java?",
@@ -3628,8 +4346,21 @@
         "id": "j55",
         "title": "55. Java 8 Features (Lambda, Stream API)",
         "duration": "20 mins",
-        "content": "# ☕ 55. Java 8 Features (Lambda, Stream API)\n\n> **Java Mastery:** Understanding the mechanics of Java 8 Features (Lambda, Stream API).\n\n---\n\n## 📖 Theoretical Foundation\n\nJava 8 Features (Lambda, Stream API) is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Java 8 Features (Lambda, Stream API) example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Java 8 Features (Lambda, Stream API)...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Java 8 Features (Lambda, Stream API) are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Java 8 Features (Lambda, Stream API) is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Java 8 Features (Lambda, Stream API)?",
@@ -3694,8 +4425,21 @@
         "id": "j56",
         "title": "56. Date & Time API",
         "duration": "20 mins",
-        "content": "# ☕ 56. Date & Time API\n\n> **Java Mastery:** Understanding the mechanics of Date & Time API.\n\n---\n\n## 📖 Theoretical Foundation\n\nDate & Time API is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Date & Time API example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Date & Time API...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Date & Time API are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Date & Time API is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Date & Time API?",
@@ -3760,8 +4504,21 @@
         "id": "j57",
         "title": "57. Basic Project (Console/Mini App)",
         "duration": "20 mins",
-        "content": "# ☕ 57. Basic Project (Console/Mini App)\n\n> **Java Mastery:** Understanding the mechanics of Basic Project (Console/Mini App).\n\n---\n\n## 📖 Theoretical Foundation\n\nBasic Project (Console/Mini App) is a core part of Java programming. It focuses on how developers can write efficient, maintainable, and robust code within the Java ecosystem.\n\n### Key Key points\n- **Performance**: Java bytecode runs on the JVM for platform independence.\n- **Safety**: Strong typing and memory management.\n- **Scalability**: Designed for enterprise-level applications.\n\n\n\n---\n\n## 💻 Java Practical Example\n\n```java\n// Basic Basic Project (Console/Mini App) example\npublic class Example {\n    public static void main(String[] args) {\n        System.out.println(\"Exploring Basic Project (Console/Mini App)...\");\n    }\n}\n```\n\n---\n\n## 📊 Complexity & Impact\n\n- **Performance Impact**: Operations in Basic Project (Console/Mini App) are optimized by the JIT (Just-In-Time) compiler.\n- **Memory Footprint**: Java's garbage collector automatically handles object cleanup.\n\n---\n\n## 🏁 Summary\nMastering Basic Project (Console/Mini App) is a giant step towards becoming a professional Java developer. Practice this daily to build strong muscle memory!",
+        "content": "### 🚧 Content Under Maintenance\n\nThis lesson is being updated to our new **Masterclass Standard**. It will be back online soon with step-by-step visuals and deep-dive technical traces!\n\n**Stay tuned!**",
         "quizQuestions": [
+          {
+            "id": 1,
+            "text": "This level is currently being updated. Are you excited for the new Masterclass content?",
+            "options": [
+              "Yes!",
+              "Absolutely!"
+            ],
+            "correctAnswer": 0,
+            "explanation": "We are working hard to bring you the best learning experience."
+          }
+        ],
+        "backupContent": "This lesson will update soon",
+        "backupQuiz": [
           {
             "id": 1,
             "text": "What is a primary characteristic of Basic Project (Console/Mini App)?",
@@ -3822,6 +4579,8 @@
           }
         ]
       }
-    ]
+    ],
+    "isLocked": true,
+    "status": "Updating Soon"
   }
 ]

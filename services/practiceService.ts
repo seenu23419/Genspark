@@ -46,7 +46,7 @@ export interface PracticeContent {
 }
 
 const BASE_URL = import.meta.env.VITE_PRACTICE_BASE_URL || '';
-const STORAGE_KEY = 'genspark_practice_cache';
+const STORAGE_KEY = 'Glinto_practice_cache';
 
 class PracticeService {
     private cache: PracticeContent | null = null;
@@ -128,3 +128,4 @@ class PracticeService {
 }
 
 export const practiceService = new PracticeService();
+

@@ -130,7 +130,7 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
             {
                 id: 'intro-4',
                 title: 'Print Multiple Lines',
-                description: 'Write a program that prints three separate lines: "GenSpark", "Coding", and "Platform".',
+                description: 'Write a program that prints three separate lines: "Glinto", "Coding", and "Platform".',
                 inputFormat: 'None',
                 outputFormat: 'Print three lines.',
                 constraints: 'None',
@@ -139,17 +139,17 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                     'c': '#include <stdio.h>\n\nint main() {\n\n    return 0;\n}',
                     'cpp': '#include <iostream>\n\nint main() {\n\n    return 0;\n}',
                     'java': 'public class Main {\n    public static void main(String[] args) {\n\n    }\n}',
-                    'python': 'print("GenSpark")\nprint("Coding")\nprint("Platform")',
-                    'javascript': 'console.log("GenSpark");\nconsole.log("Coding");\nconsole.log("Platform");'
+                    'python': 'print("Glinto")\nprint("Coding")\nprint("Platform")',
+                    'javascript': 'console.log("Glinto");\nconsole.log("Coding");\nconsole.log("Platform");'
                 },
                 hint: 'Use printf() with \\n for new lines.',
-                solution: '#include <stdio.h>\n\nint main() {\n    printf("GenSpark\\n");\n    printf("Coding\\n");\n    printf("Platform\\n");\n    return 0;\n}',
+                solution: '#include <stdio.h>\n\nint main() {\n    printf("Glinto\\n");\n    printf("Coding\\n");\n    printf("Platform\\n");\n    return 0;\n}',
                 difficulty: 'easy',
                 concept: 'Output Formatting',
                 language: 'C',
                 test_cases: [
-                    { expected_output: 'GenSpark\nCoding\nPlatform\n' },
-                    { expected_output: 'GenSpark\nCoding\nPlatform\n' }
+                    { expected_output: 'Glinto\nCoding\nPlatform\n' },
+                    { expected_output: 'Glinto\nCoding\nPlatform\n' }
                 ],
                 explanation: 'The newline character (\\n) is used to move the cursor to the beginning of the next line.',
                 estimatedTime: 2,
@@ -758,11 +758,11 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                     'javascript': 'function myLen(s) {\n\n}'
                 },
                 hint: 'While s[i] is not \'\\0\', increment i.',
-                solution: '#include <stdio.h>\n\nint myLen(char *s) {\n    int i = 0;\n    while(s[i] != \'\\0\') i++;\n    return i;\n}\n\nint main() {\n    printf("%d", myLen("GenSpark"));\n    return 0;\n}',
+                solution: '#include <stdio.h>\n\nint myLen(char *s) {\n    int i = 0;\n    while(s[i] != \'\\0\') i++;\n    return i;\n}\n\nint main() {\n    printf("%d", myLen("Glinto"));\n    return 0;\n}',
                 difficulty: 'medium',
                 concept: 'Strings + Loops',
                 test_cases: [
-                    { stdin: 'GenSpark', expected_output: '8' },
+                    { stdin: 'Glinto', expected_output: '8' },
                     { stdin: 'Coding', expected_output: '6' },
                     { stdin: 'hello', expected_output: '5' }
                 ],
@@ -844,7 +844,7 @@ export const PRACTICE_TOPICS: PracticeTopic[] = [
                 concept: 'Strings',
                 test_cases: [
                     { stdin: 'Hello World', expected_output: 'HelloWorld' },
-                    { stdin: 'Gen Spark', expected_output: 'GenSpark' }
+                    { stdin: 'Gen Spark', expected_output: 'Glinto' }
                 ],
                 explanation: 'Concatenation simply means putting strings end-to-end.',
                 estimatedTime: 2,

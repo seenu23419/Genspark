@@ -16,7 +16,7 @@ export type Screen =
   | 'QUIZ'
   | 'QUIZ_RESULT'
   | 'CHALLENGES'
-  | 'CHALLENGE_DETAIL'
+  | 'LEADERBOARD'
   | 'PROFILE'
   | 'SETTINGS'
   | 'PROGRESS'
@@ -24,7 +24,8 @@ export type Screen =
   | 'LESSONS'
   | 'LESSON_VIEW'
   | 'SUBSCRIPTION'
-  | 'BILLING';
+  | 'BILLING'
+  | 'CONTACT';
 
 // Added missing fields to User interface to support authentication and subscription tracking
 export interface User {
@@ -46,10 +47,25 @@ export interface User {
   lastLessonId?: string;
   lastLanguageId?: string;
   streak?: number;
+  xp?: number;
+  points?: number;
   lastActiveAt?: string; // ISO string
   activity_log?: string[]; // Array of YYYY-MM-DD strings
   activity_history?: ActivityItem[]; // Detailed log of actions
   isPro?: boolean;
+  subscriptionStatus?: 'FREE' | 'PREMIUM_ACTIVE' | 'PREMIUM_EXPIRED';
+  subscriptionEndDate?: string; // ISO string
+  bio?: string;
+  role?: string;
+  location?: string;
+  skills?: string[];
+  username?: string;
+  joinedDate?: string;
+  github?: string;
+  linkedin?: string;
+  website?: string;
+  education?: string;
+  experience?: string;
 }
 
 export interface ActivityItem {
@@ -71,6 +87,8 @@ export interface Language {
   icon: string;
   level: string;
   stats: string;
+  color?: string;
+  description?: string;
 }
 
 export interface ChatMessage {
@@ -166,5 +184,28 @@ export interface Certificate {
   certificate_id: string;
   created_at?: string;
   users?: { name?: string; email?: string }; // Supabase join result
+}
+
+export interface Subscription {
+  id: string;
+  user_id: string;
+  plan: 'FREE' | 'PREMIUM';
+  status: 'FREE' | 'PREMIUM_ACTIVE' | 'PREMIUM_EXPIRED';
+  start_date: string;
+  end_date: string;
+  razorpay_subscription_id?: string;
+  created_at: string;
+}
+
+export interface Payment {
+  id: string;
+  user_id: string;
+  amount: number;
+  currency: string;
+  status: 'pending' | 'completed' | 'failed';
+  razorpay_payment_id: string;
+  razorpay_subscription_id?: string;
+  verified: boolean;
+  created_at: string;
 }
 

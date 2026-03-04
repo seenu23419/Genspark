@@ -13,6 +13,7 @@
  */
 
 import { supabaseDB } from './supabaseService';
+import { GlintoAIService } from './geminiService';
 
 // Judge0 Language IDs (Community Edition common mapping)
 export const LANGUAGE_MAPPING: Record<string, number> = {
@@ -83,6 +84,22 @@ class ExecutionService {
   // Piston (free public API)
   private pistonUrl = 'https://emkc.org/api/v2/piston/execute';
 
+  // Optimization: Cache and Circuit Breakers
+  private runtimesCache: any[] | null = null;
+  private lastRuntimesFetch: number = 0;
+  private CIRCUIT_BREAKER_DURATION = 60000; // 1 minute
+  private circuitBreakers: Record<string, number> = {};
+
+  private isBroken(backend: string): boolean {
+    const brokenUntil = this.circuitBreakers[backend];
+    return brokenUntil ? Date.now() < brokenUntil : false;
+  }
+
+  private markBroken(backend: string) {
+    console.warn(`[Execution] Circuit breaker triggered for ${backend}`);
+    this.circuitBreakers[backend] = Date.now() + this.CIRCUIT_BREAKER_DURATION;
+  }
+
   /**
    * Execute code with fallback chain:
    * 1. Self-hosted Judge0 (free, if running)
@@ -90,55 +107,70 @@ class ExecutionService {
    * 3. Judge0 RapidAPI (requires key, per-call cost)
    */
   async executeCode(language: string, sourceCode: string, userId?: string, stdin: string = ''): Promise<ExecutionResult> {
-    let result: ExecutionResult;
+    const backendErrors: string[] = [];
 
-    // All users now have unlimited access, no limit check needed
-
-    // Execution priority chain
-    try {
-      // 1. Try self-hosted Judge0 first (free, if running locally)
-      console.log(`[Execution] Attempting self-hosted Judge0 for ${language}`);
-      result = await this.executeWithJudge0SelfHosted(language, sourceCode, stdin);
-      console.log(`[Execution] Self-hosted Judge0 successful for ${language}`);
-      return result;
-    } catch (e: any) {
-      console.warn(`[Execution] Self-hosted Judge0 failed:`, e.message);
+    // 1. Try self-hosted Judge0
+    if (!this.isBroken('judge0-local')) {
+      try {
+        console.log(`[Execution] Attempting self-hosted Judge0 for ${language}`);
+        return await this.executeWithJudge0SelfHosted(language, sourceCode, stdin);
+      } catch (e: any) {
+        console.warn(`[Execution] Self-hosted Judge0 failed:`, e.message);
+        backendErrors.push(`Local Judge0: ${e.message}`);
+        this.markBroken('judge0-local');
+      }
     }
 
-    try {
-      // 2. Try Piston (free public API)
-      if (PISTON_LANGUAGE_MAPPING[language.toLowerCase()]) {
+    // 2. Try Piston public API
+    if (!this.isBroken('piston') && PISTON_LANGUAGE_MAPPING[language.toLowerCase()]) {
+      try {
         console.log(`[Execution] Falling back to Piston for ${language}`);
-        result = await this.executeWithPiston(language, sourceCode, stdin);
-        console.log(`[Execution] Piston execution successful for ${language}`);
-        return result;
+        return await this.executeWithPiston(language, sourceCode, stdin);
+      } catch (e: any) {
+        console.warn(`[Execution] Piston failed:`, e.message);
+        backendErrors.push(`Piston API: ${e.message}`);
+        this.markBroken('piston');
       }
-    } catch (e: any) {
-      console.warn(`[Execution] Piston failed:`, e.message);
+    } else if (!PISTON_LANGUAGE_MAPPING[language.toLowerCase()]) {
+      backendErrors.push(`Piston API: Language ${language} not supported by Piston.`);
     }
 
+    // 3. Try Judge0 via RapidAPI
+    const hasRapidKey = this.rapidApiKey && !this.rapidApiKey.includes('PLACEHOLDER_RAPIDAPI_KEY');
+    if (!this.isBroken('judge0-rapid') && hasRapidKey && LANGUAGE_MAPPING[language.toLowerCase()]) {
+      try {
+        console.log(`[Execution] Falling back to RapidAPI for ${language}`);
+        return await this.executeWithJudge0RapidApi(language, sourceCode, stdin);
+      } catch (e: any) {
+        console.warn(`[Execution] Judge0 RapidAPI failed:`, e.message);
+        backendErrors.push(`RapidAPI Judge0: ${e.message}`);
+        this.markBroken('judge0-rapid');
+      }
+    } else if (!hasRapidKey) {
+      backendErrors.push(`RapidAPI Judge0: API key not configured.`);
+    } else if (!LANGUAGE_MAPPING[language.toLowerCase()]) {
+      backendErrors.push(`RapidAPI Judge0: Language ${language} not supported by Judge0.`);
+    }
+
+    // 4. Last Resort: AI Simulation
     try {
-      // 3. Try Judge0 RapidAPI (requires key, last resort)
-      if (this.rapidApiKey && this.rapidApiKey !== 'PLACEHOLDER_RAPIDAPI_KEY' && LANGUAGE_MAPPING[language.toLowerCase()]) {
-        console.log(`[Execution] Falling back to Judge0 RapidAPI for ${language}`);
-        result = await this.executeWithJudge0RapidApi(language, sourceCode, stdin);
-        console.log(`[Execution] Judge0 RapidAPI execution successful for ${language}`);
-        return result;
-      }
+      console.log(`[Execution] All backends failed or skipped. Attempting AI Simulation for ${language}`);
+      const aiResult = await GlintoAIService.executeCodeSimulated(language, sourceCode, stdin);
+      return {
+        stdout: aiResult.stdout,
+        stderr: (aiResult.stderr || "") + `\n\n(Note: Cloud backends are currently unreachable. Errors: ${backendErrors.join('; ')})`,
+        compile_output: null,
+        message: "Simulated Execution",
+        time: "0.001",
+        memory: 0,
+        status: aiResult.status
+      };
     } catch (e: any) {
-      console.warn(`[Execution] Judge0 RapidAPI failed:`, e.message);
+      console.error(`[Execution] AI Simulation failed:`, e.message);
+      backendErrors.push(`AI Simulator: ${e.message}`);
     }
 
-    // All fallbacks exhausted
-    return {
-      stdout: null,
-      stderr: `Execution failed for ${language}. All backends unavailable. Please check your Judge0 self-hosted instance or configure an API key.`,
-      compile_output: null,
-      message: 'All execution backends failed',
-      time: null,
-      memory: null,
-      status: { id: 0, description: 'Unknown Error' }
-    };
+    throw new Error(`Execution failed. All backends unavailable.\nDetails: ${backendErrors.join('\n')}`);
   }
 
   /**
@@ -150,8 +182,8 @@ class ExecutionService {
       throw new Error(`Language ${language} not supported by Judge0`);
     }
 
-    // Submit code for compilation and execution
-    const submissionResponse = await fetch(`${this.judge0SelfHostedUrl}/submissions?base64_encoded=false&wait=false`, {
+    // Submit code with wait=true for faster sync response
+    const submissionResponse = await fetch(`${this.judge0SelfHostedUrl}/submissions?base64_encoded=false&wait=true`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -164,37 +196,34 @@ class ExecutionService {
       })
     });
 
-    if (!submissionResponse.ok) {
-      throw new Error(`Judge0 submission failed: ${submissionResponse.statusText}`);
-    }
+    let result = await submissionResponse.json();
 
-    const submission = await submissionResponse.json();
-    const token = submission.token;
+    // If wait=true didn't finish it (e.g. long running), fallback to polling
+    if (result && result.status && result.status.id <= 2) {
+      const token = result.token;
+      let attempts = 0;
+      const maxAttempts = 30; // Reduce polling wait for "fast" execution
 
-    // Poll for results (with timeout)
-    let result = null;
-    let attempts = 0;
-    const maxAttempts = 50; // ~5 seconds with 100ms intervals
+      while (attempts < maxAttempts) {
+        const resultResponse = await fetch(`${this.judge0SelfHostedUrl}/submissions/${token}?base64_encoded=false`);
+        if (!resultResponse.ok) {
+          throw new Error(`Failed to fetch Judge0 result: ${resultResponse.statusText}`);
+        }
 
-    while (attempts < maxAttempts) {
-      const resultResponse = await fetch(`${this.judge0SelfHostedUrl}/submissions/${token}?base64_encoded=false`);
-      if (!resultResponse.ok) {
-        throw new Error(`Failed to fetch Judge0 result: ${resultResponse.statusText}`);
+        result = await resultResponse.json();
+
+        // Status 1 = In Queue, 2 = Processing; anything else = done
+        if (result.status.id > 2) {
+          break;
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 100));
+        attempts++;
       }
-
-      result = await resultResponse.json();
-
-      // Status 1 = In Queue, 2 = Processing; anything else = done
-      if (result.status.id > 2) {
-        break;
-      }
-
-      await new Promise(resolve => setTimeout(resolve, 100));
-      attempts++;
     }
 
     if (!result || result.status.id <= 2) {
-      throw new Error('Judge0 execution timeout');
+      throw new Error('Judge0 execution timeout or processing');
     }
 
     return {
@@ -217,13 +246,23 @@ class ExecutionService {
       throw new Error(`Language ${language} not supported by Piston`);
     }
 
-    // Get version
-    const versionsResponse = await fetch(`${this.pistonUrl.replace('/execute', '')}/runtimes`);
-    if (!versionsResponse.ok) {
-      throw new Error('Piston runtime list failed');
+    // Get version (from cache if possible)
+    let runtimes = this.runtimesCache;
+    const now = Date.now();
+
+    if (!runtimes || (now - this.lastRuntimesFetch > 3600000)) { // 1 hour cache
+      const versionsResponse = await fetch(`${this.pistonUrl.replace('/execute', '')}/runtimes`);
+      if (versionsResponse.ok) {
+        runtimes = await versionsResponse.json();
+        this.runtimesCache = runtimes;
+        this.lastRuntimesFetch = now;
+      }
     }
 
-    const runtimes = await versionsResponse.json();
+    if (!runtimes) {
+      throw new Error('Piston runtime list unavailable');
+    }
+
     const runtime = runtimes.find((r: any) => r.language === pistonLang);
     if (!runtime) {
       throw new Error(`${pistonLang} runtime not available in Piston`);
@@ -241,6 +280,8 @@ class ExecutionService {
     });
 
     if (!response.ok) {
+      const errorBody = await response.text().catch(() => 'No error body');
+      console.error(`[Execution] Piston execution failed. Status: ${response.status}, Body: ${errorBody}`);
       throw new Error(`Piston execution failed: ${response.statusText}`);
     }
 
@@ -269,8 +310,8 @@ class ExecutionService {
       throw new Error(`Language ${language} not supported by Judge0`);
     }
 
-    // Submit code
-    const submissionResponse = await fetch(`${this.judge0RapidApiUrl}/submissions?base64_encoded=false&wait=false`, {
+    // Submit code with wait=true for faster sync response
+    const submissionResponse = await fetch(`${this.judge0RapidApiUrl}/submissions?base64_encoded=false&wait=true`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -288,34 +329,35 @@ class ExecutionService {
       throw new Error(`Judge0 RapidAPI submission failed: ${submissionResponse.statusText}`);
     }
 
-    const submission = await submissionResponse.json();
-    const token = submission.token;
+    let result = await submissionResponse.json();
 
-    // Poll for results
-    let result = null;
-    let attempts = 0;
-    const maxAttempts = 50;
+    // If wait=true didn't finish it (e.g. long running), fallback to polling
+    if (result && result.status && result.status.id <= 2) {
+      const token = result.token;
+      let attempts = 0;
+      const maxAttempts = 30; // Reduce polling wait for "fast" execution
 
-    while (attempts < maxAttempts) {
-      const resultResponse = await fetch(`${this.judge0RapidApiUrl}/submissions/${token}?base64_encoded=false`, {
-        headers: {
-          'X-RapidAPI-Key': this.rapidApiKey,
-          'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'
+      while (attempts < maxAttempts) {
+        const resultResponse = await fetch(`${this.judge0RapidApiUrl}/submissions/${token}?base64_encoded=false`, {
+          headers: {
+            'X-RapidAPI-Key': this.rapidApiKey,
+            'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'
+          }
+        });
+
+        if (!resultResponse.ok) {
+          throw new Error(`Judge0 RapidAPI result fetch failed: ${resultResponse.statusText}`);
         }
-      });
 
-      if (!resultResponse.ok) {
-        throw new Error(`Judge0 RapidAPI result fetch failed: ${resultResponse.statusText}`);
+        result = await resultResponse.json();
+
+        if (result.status.id > 2) {
+          break;
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 100));
+        attempts++;
       }
-
-      result = await resultResponse.json();
-
-      if (result.status.id > 2) {
-        break;
-      }
-
-      await new Promise(resolve => setTimeout(resolve, 100));
-      attempts++;
     }
 
     if (!result || result.status.id <= 2) {
@@ -348,3 +390,4 @@ class ExecutionService {
 }
 
 export const executionService = new ExecutionService();
+

@@ -1,4 +1,4 @@
-# How to Add Push Notifications to GenSpark
+# How to Add Push Notifications to Glinto
 
 To add "app-like" push notifications (e.g., "New Lesson Unlocked", "Daily Reminder"), you need a **Push Notification Provider**.
 
@@ -9,7 +9,7 @@ We recommend **OneSignal** because it is free for up to 10k users, specialized f
 2.  Create a newly "App / Website".
 3.  Select **Web Push**.
 4.  Choose **Custom Code** (since we are building a custom React app).
-5.  Enter your site URL (e.g., `https://genspark.vercel.app`) - or `http://localhost:3000` for testing (requires enabling "Local Testing" in OneSignal).
+5.  Enter your site URL (e.g., `https://Glinto.vercel.app`) - or `http://localhost:3000` for testing (requires enabling "Local Testing" in OneSignal).
 6.  **Important**: Save the **App ID** they give you.
 
 ## Step 2: Install the Library

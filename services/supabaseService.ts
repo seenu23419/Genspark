@@ -28,13 +28,13 @@ class SupabaseService {
     const envKey = getEnv('VITE_SUPABASE_ANON_KEY');
 
     // Check LocalStorage for manual override (demos/internal testing only)
-    const localKey = typeof localStorage !== 'undefined' ? localStorage.getItem('GENSPARK_SUPABASE_KEY') : null;
+    const localKey = typeof localStorage !== 'undefined' ? localStorage.getItem('Glinto_SUPABASE_KEY') : null;
 
     this.supabaseUrl = envUrl;
     const supabaseKey = envKey || localKey;
 
     if (!envUrl || !supabaseKey) {
-      console.error("❌ GenSpark: Supabase Configuration Missing! Please check your .env file.");
+      console.error("❌ Glinto: Supabase Configuration Missing! Please check your .env file.");
       this.isConfigured = false;
       // Initialize with placeholders to prevent crash, but operations will fail
       this.supabase = createClient('https://placeholder.supabase.co', 'placeholder');
@@ -49,7 +49,7 @@ class SupabaseService {
    */
   public updateKey(newKey: string) {
     if (!newKey) return;
-    localStorage.setItem('GENSPARK_SUPABASE_KEY', newKey);
+    localStorage.setItem('Glinto_SUPABASE_KEY', newKey);
     this.supabase = createClient(this.supabaseUrl, newKey);
     this.isConfigured = true;
   }
@@ -149,11 +149,23 @@ class SupabaseService {
       provider: 'email', // simplified for UI
       onboardingCompleted: profile.onboarding_completed || false,
       streak: profile.streak || 0,
+      xp: profile.xp || 0,
       lastActiveAt: profile.last_active_at,
       lastLanguageId: profile.last_language_id,
       lastLessonId: profile.last_lesson_id,
       activity_log: profile.activity_log || [],
-      activity_history: profile.activity_history || [] // Simplified: no merging during login for performance
+      activity_history: profile.activity_history || [], // Simplified: no merging during login for performance
+      bio: profile.bio,
+      role: profile.role,
+      location: profile.location,
+      skills: profile.skills || [],
+      username: profile.username || profile.email?.split('@')[0],
+      github: profile.github,
+      linkedin: profile.linkedin,
+      website: profile.website,
+      education: profile.education,
+      experience: profile.experience,
+      joinedDate: profile.created_at
     };
   }
 
@@ -170,7 +182,7 @@ class SupabaseService {
     // Tier 2: COMPAT (Remove complex activity logs/streaks)
     // Tier 3: SAFE (Absolute minimum for auth + basic profile)
 
-    const FULL_SELECT = 'id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, activity_log, activity_history, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id';
+    const FULL_SELECT = 'id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, xp, last_active_at, activity_log, activity_history, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id';
     const COMPAT_SELECT = 'id, email, name, first_name, last_name, avatar, is_pro, onboarding_completed, created_at, completed_lesson_ids, unlocked_lesson_ids';
     const SAFE_SELECT = 'id, email, name, first_name, last_name, avatar, onboarding_completed, created_at';
     const TINY_SELECT = 'id, email, name, onboarding_completed';
@@ -182,7 +194,7 @@ class SupabaseService {
       if (userId) {
         // FAST CACHE LOOKUP: If we had a recent fetch, return it immediately
         if (typeof localStorage !== 'undefined') {
-          const cached = localStorage.getItem('genspark_user_backup');
+          const cached = localStorage.getItem('Glinto_user_backup');
           if (cached) {
             try {
               const parsed = JSON.parse(cached);
@@ -330,7 +342,7 @@ class SupabaseService {
         onboarding_completed: false, // Always false for new users
         created_at: userData.createdAt || new Date()
       })
-      .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, last_active_at, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id');
+      .select('id, email, name, first_name, last_name, avatar, is_pro, subscription_tier, onboarding_completed, streak, xp, last_active_at, completed_lesson_ids, unlocked_lesson_ids, created_at, last_language_id, last_lesson_id');
 
     let { data: profile, error } = await profileRequest.single();
 
@@ -395,9 +407,20 @@ class SupabaseService {
     if (updates.completedLessonIds) profileUpdates.completed_lesson_ids = updates.completedLessonIds;
     if (updates.unlockedLessonIds) profileUpdates.unlocked_lesson_ids = updates.unlockedLessonIds;
     if (updates.streak !== undefined) profileUpdates.streak = updates.streak;
+    if (updates.xp !== undefined) profileUpdates.xp = updates.xp;
     if (updates.lastActiveAt !== undefined) profileUpdates.last_active_at = updates.lastActiveAt;
     if (updates.activity_log !== undefined) profileUpdates.activity_log = updates.activity_log;
     if (updates.activity_history !== undefined) profileUpdates.activity_history = updates.activity_history;
+    if (updates.bio !== undefined) profileUpdates.bio = updates.bio;
+    if (updates.role !== undefined) profileUpdates.role = updates.role;
+    if (updates.location !== undefined) profileUpdates.location = updates.location;
+    if (updates.skills !== undefined) profileUpdates.skills = updates.skills;
+    if (updates.username !== undefined) profileUpdates.username = updates.username;
+    if (updates.github !== undefined) profileUpdates.github = updates.github;
+    if (updates.linkedin !== undefined) profileUpdates.linkedin = updates.linkedin;
+    if (updates.website !== undefined) profileUpdates.website = updates.website;
+    if (updates.education !== undefined) profileUpdates.education = updates.education;
+    if (updates.experience !== undefined) profileUpdates.experience = updates.experience;
 
     // Resume Reliability
     if (updates.lastLessonId) profileUpdates.last_lesson_id = updates.lastLessonId;
@@ -681,7 +704,13 @@ class SupabaseService {
     }
 
     if (solved && (!existing || existing.status !== 'completed')) {
-      await this.awardXP(20, `practice_${challengeId}`);
+      // XP Logic: Easy=5, Medium=10, Hard=20
+      // We look up the challenge XP from constants if available, or use a heuristic
+      const { CHALLENGES } = await import('../constants');
+      const challenge = CHALLENGES.find(c => c.id === challengeId);
+      const xpToAward = challenge?.xp || 5;
+
+      await this.awardXP(xpToAward, `practice_${challengeId}`);
 
       // Update streak and activity log
       try {
@@ -691,8 +720,8 @@ class SupabaseService {
           if (mappedUser) {
             const activityUpdates = StreakService.getActivityUpdates(mappedUser, {
               type: 'practice',
-              title: `Solved Challenge: ${challengeId}`,
-              xp: 20,
+              title: `Solved Challenge: ${challenge?.title || challengeId}`,
+              xp: xpToAward,
               executionTime,
               language,
               itemId: challengeId
@@ -1070,3 +1099,5 @@ class SupabaseService {
 }
 
 export const supabaseDB = new SupabaseService();
+export const supabase = supabaseDB.supabase;
+

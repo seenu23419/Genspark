@@ -29,7 +29,7 @@ finalApp.get('/api/health', (req, res) => {
   res.json({
     status: 'active',
     architecture: 'Supabase-Client-Side',
-    message: 'GenSpark backend is operating in stateless mode. All data is handled by Supabase.'
+    message: 'Glinto backend is operating in stateless mode. All data is handled by Supabase.'
   });
 });
 
@@ -169,9 +169,10 @@ finalApp.post('/api/execute', execLimiter, async (req, res) => {
 
 if (process.env.NODE_ENV !== 'production') {
   finalApp.listen(PORT, () => {
-    logger.info(`🚀 GenSpark Stateless Server running on port ${PORT}`);
+    logger.info(`🚀 Glinto Stateless Server running on port ${PORT}`);
   });
 }
 
 export default finalApp;
+
 

@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "metadata": {
     "last_updated": "2026-01-14",
-    "description": "GenSpark comprehensive coding practice problems with 38 problems across 9 topics",
+    "description": "Glinto comprehensive coding practice problems with 38 problems across 9 topics",
     "total_problems": 38,
     "total_topics": 9
   },
@@ -74,14 +74,14 @@
               "title": "Print Multiple Lines",
               "difficulty": "easy",
               "concept": "Output Formatting",
-              "description": "Write a program that prints three lines: GenSpark, Coding, Platform",
+              "description": "Write a program that prints three lines: Glinto, Coding, Platform",
               "starter_codes": {
                 "c": "#include <stdio.h>\n\nint main() {\n    // Print three lines here\n    return 0;\n}"
               },
               "test_cases": [
                 {
                   "stdin": "",
-                  "expected_output": "GenSpark\nCoding\nPlatform\n"
+                  "expected_output": "Glinto\nCoding\nPlatform\n"
                 }
               ]
             },
@@ -442,7 +442,7 @@
               "concept": "Strings + Loops",
               "description": "Write a manual function to find the length of a string (don't use strlen).",
               "starter_codes": {
-                "c": "#include <stdio.h>\n\nint myLen(char *s) {\n    // Loop until null terminator\n    return 0;\n}\n\nint main() {\n    printf(\"%d\", myLen(\"GenSpark\"));\n    return 0;\n}"
+                "c": "#include <stdio.h>\n\nint myLen(char *s) {\n    // Loop until null terminator\n    return 0;\n}\n\nint main() {\n    printf(\"%d\", myLen(\"Glinto\"));\n    return 0;\n}"
               },
               "test_cases": [
                 {

@@ -36,15 +36,22 @@ export const CurriculumProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
         try {
             const fetchedData = await curriculumService.fetchCurriculum(langId);
-            if (fetchedData && fetchedData.length > 0) {
+
+            // Critical Safety: Only update remoteData if we actually got a valid, non-empty set of modules
+            if (fetchedData && Array.isArray(fetchedData) && fetchedData.length > 0) {
+                console.log(`[Curriculum] Successfully updated ${langId} from remote source.`);
                 setRemoteData(prev => ({ ...prev, [langId]: fetchedData }));
+            } else {
+                console.log(`[Curriculum] No valid remote updates for ${langId}, sticking with local data.`);
             }
             setLoading(prev => ({ ...prev, [langId]: false }));
         } catch (err: any) {
+            console.error(`[Curriculum] Failed to update ${langId}:`, err);
             setLoading(prev => ({ ...prev, [langId]: false }));
-            setError(prev => ({ ...prev, [langId]: err.message || 'Failed to load curriculum' }));
+            // We don't set a hard error here because the user still has local data to use!
         }
     }, []);
+
 
     const getLesson = useCallback((lessonId: string) => {
         for (const langId in data) {

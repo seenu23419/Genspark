@@ -16,7 +16,7 @@
           "Tags"
         ],
         "content": "Every web page starts with a specific blueprint. HTML (HyperText Markup Language) defines the **structure** of your content.\n\n## 1. The Core Setup\n```html\n<!DOCTYPE html> <!-- Tells browser this is HTML5 -->\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>My Website</title>\n</head>\n<body>\n  <!-- Content goes here -->\n</body>\n</html>\n```\n\n## 2. Key Tags\n- `<h1>` to `<h6>`: Headings (SEO important!)\n- `<p>`: Paragraphs\n- `<a>`: Links (Anchor tags)\n- `<img>`: Images (Requires `src` and `alt` attributes)",
-        "fullProgram": "<!DOCTYPE html>\n<html>\n<head>\n    <title>GenSpark Portfolio</title>\n</head>\n<body>\n    <h1>Arjun's Portfolio</h1>\n    <p>Welcome to my professional web journey.</p>\n    <a href=\"#\">View My Projects</a>\n</body>\n</html>",
+        "fullProgram": "<!DOCTYPE html>\n<html>\n<head>\n    <title>Glinto Portfolio</title>\n</head>\n<body>\n    <h1>Arjun's Portfolio</h1>\n    <p>Welcome to my professional web journey.</p>\n    <a href=\"#\">View My Projects</a>\n</body>\n</html>",
         "expectedOutput": "A page with a large heading, a paragraph, and a link.",
         "quizQuestions": [
           {
@@ -262,7 +262,7 @@
           "ARIA"
         ],
         "content": "# Accessible Forms\n\nForms are how users interact with your app. They must be usable by everyone, including screen reader users.\n\n## 1. Essential Form Tags\n- `<label>`: Always link to an input using the `for` attribute.\n- `<fieldset>` & `<legend>`: Group related inputs.\n- `required`: Built-in HTML validation.\n\n## 2. ARIA Roles\nAccessible Rich Internet Applications (ARIA) provide extra context.\n`aria-label=\"Close menu\"` on a button with only an icon.",
-        "fullProgram": "<!-- Accessible Signup Form -->\n<form>\n    <label for=\"email\">Email Address:</label>\n    <input type=\"email\" id=\"email\" name=\"email\" required>\n    \n    <label for=\"pass\">Password:</label>\n    <input type=\"password\" id=\"pass\" name=\"pass\" minlength=\"8\">\n    \n    <button type=\"submit\">Join GenSpark</button>\n</form>",
+        "fullProgram": "<!-- Accessible Signup Form -->\n<form>\n    <label for=\"email\">Email Address:</label>\n    <input type=\"email\" id=\"email\" name=\"email\" required>\n    \n    <label for=\"pass\">Password:</label>\n    <input type=\"password\" id=\"pass\" name=\"pass\" minlength=\"8\">\n    \n    <button type=\"submit\">Join Glinto</button>\n</form>",
         "expectedOutput": "A clean, functional form that works well with keyboards and screen readers.",
         "quizQuestions": [
           {
@@ -295,7 +295,7 @@
           "Final Exam",
           "Final Assessment"
         ],
-        "content": "# Final Web Assessment\n\n**Welcome, Designer!** You have mastered the pillars of the web: Structure (HTML) and Style (CSS). This final exam will verify your expertise.\n\n## Assessment Content:\n- **Structure**: Semantic tags, Forms, SEO best practices.\n- **Layout**: Flexbox, CSS Grid, and responsive strategies.\n- **Style**: Selectors, specificity, variables, and units (rem/em).\n- **User Experience**: Accessibility (ARIA), transitions, and animation logic.\n\n## Graduation Track:\n- Complete the quiz below with 100% accuracy to earn the **GenSpark Web Professional Status**.",
+        "content": "# Final Web Assessment\n\n**Welcome, Designer!** You have mastered the pillars of the web: Structure (HTML) and Style (CSS). This final exam will verify your expertise.\n\n## Assessment Content:\n- **Structure**: Semantic tags, Forms, SEO best practices.\n- **Layout**: Flexbox, CSS Grid, and responsive strategies.\n- **Style**: Selectors, specificity, variables, and units (rem/em).\n- **User Experience**: Accessibility (ARIA), transitions, and animation logic.\n\n## Graduation Track:\n- Complete the quiz below with 100% accuracy to earn the **Glinto Web Professional Status**.",
         "fullProgram": "<!-- Final Project Mockup: Glassmorphism Hero Section -->\n<div class=\"hero\">\n    <div class=\"glass-card\">\n        <h1>Design the Future</h1>\n        <p>Web Development Masterclass.</p>\n        <button>Get Started</button>\n    </div>\n</div>\n\n<style>\n.hero {\n    height: 100vh;\n    background: linear-gradient(45deg, #4158D0, #C850C0);\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n.glass-card {\n    background: rgba(255, 255, 255, 0.1);\n    backdrop-filter: blur(10px);\n    padding: 3rem;\n    border-radius: 20px;\n    border: 1px solid rgba(255, 255, 255, 0.2);\n    color: white;\n    text-align: center;\n}\n</style>",
         "expectedOutput": "A beautiful hero section with a frosted-glass card effect.",
         "quizQuestions": [

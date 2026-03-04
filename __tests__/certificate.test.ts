@@ -103,7 +103,7 @@ describe('Certificate Generator', () => {
         mentorName: undefined
       };
       const svg = generateCertificateSVG(data);
-      expect(svg).toContain('GenSpark Team');
+      expect(svg).toContain('Glinto Team');
     });
   });
 

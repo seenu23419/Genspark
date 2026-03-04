@@ -17,11 +17,12 @@ import Home from './screens/home/Home';
 import LearnHub from './screens/learn/LearnHub';
 import PracticeHub from './screens/practice/PracticeHub';
 import CodingProblemWrapper from './screens/practice/CodingProblemWrapper';
-// Profile component removed in favor of direct Settings navigation
+import Profile from './screens/profile/Profile';
 const ForgotPassword = lazy(() => import('./screens/auth/ForgotPassword'));
 const OTP = lazy(() => import('./screens/auth/OTP'));
-const ChallengesList = lazy(() => import('./screens/challenges/ChallengesList'));
+import ChallengesList from './screens/challenges/ChallengesList';
 const ChallengeDetail = lazy(() => import('./screens/challenges/ChallengeDetail'));
+const CreateChallenge = lazy(() => import('./screens/challenges/CreateChallenge'));
 const Settings = lazy(() => import('./screens/profile/Settings'));
 const LessonView = lazy(() => import('./screens/lessons/LessonView'));
 const SubscriptionPlan = lazy(() => import('./screens/subscription/SubscriptionPlan'));
@@ -31,10 +32,11 @@ const DiagnosticTool = lazy(() => import('./screens/admin/DiagnosticTool'));
 const CourseTrack = lazy(() => import('./screens/learn/CourseTrack'));
 const StreaksActivity = lazy(() => import('./screens/profile/StreaksActivity'));
 const LearningHistory = lazy(() => import('./screens/profile/LearningHistory'));
-const LearningProfile = lazy(() => import('./screens/profile/LearningProfile'));
-const PracticeHistory = lazy(() => import('./screens/practice/PracticeHistory'));
+const Submissions = lazy(() => import('./screens/practice/Submissions'));
 const PrivacyPolicy = lazy(() => import('./screens/legal/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./screens/legal/TermsOfService'));
+const Contact = lazy(() => import('./screens/legal/Contact'));
+const Leaderboard = lazy(() => import('./screens/leaderboard/Leaderboard'));
 
 // Query Client for React Query
 const queryClient = new QueryClient();
@@ -42,7 +44,7 @@ const queryClient = new QueryClient();
 // Loading Fallback
 // Minimal Loading Fallback
 const ScreenLoader = () => (
-  <div className="fixed inset-0 bg-[#0a0b14] z-[9999] flex flex-col items-center justify-center gap-4">
+  <div className="fixed inset-0 min-h-screen bg-white dark:bg-[#111827] text-slate-900 dark:text-white transition-colors duration-300 z-[9999] flex flex-col items-center justify-center gap-4">
     <Loader2 className="text-indigo-500 animate-spin" size={40} />
     <p className="text-indigo-200/50 text-xs font-black uppercase tracking-[0.2em] animate-pulse">Initializing...</p>
   </div>
@@ -67,10 +69,12 @@ const ProtectedRoute = () => {
   else if (path.startsWith('/practice')) screen = 'PRACTICE';
   else if (path.startsWith('/profile') || path.startsWith('/settings') || path.startsWith('/progress')) screen = 'PROFILE';
   else if (path.startsWith('/lessons') || path.startsWith('/lesson') || path.startsWith('/quiz')) screen = 'LEARN';
-  else if (path.startsWith('/challenge')) screen = 'PRACTICE';
+  else if (path.startsWith('/challenge')) screen = 'CHALLENGES';
+  else if (path.startsWith('/leaderboard')) screen = 'LEADERBOARD';
+  else if (path === '/contact') screen = 'CONTACT';
   else if (path === '/') screen = 'HOME';
 
-  const isFullScreen = path.startsWith('/practice/problem/');
+  const isFullScreen = path.startsWith('/practice/problem/') || path.startsWith('/challenge/');
 
   return (
     <>
@@ -126,20 +130,23 @@ const router = createBrowserRouter([
       { path: "learn", element: <LearnHub /> },
       { path: "track/:langId", element: <CourseTrack /> },
       { path: "practice/problem/:problemId", element: <CodingProblemWrapper /> },
+      { path: "practice/history", element: <Submissions /> },
       { path: "practice/*", element: <PracticeHub /> },
-      { path: "practice/history", element: <PracticeHistory /> },
-      { path: "profile", element: <Navigate to="/settings" replace /> },
-      { path: "profile-stats", element: <LearningProfile /> },
+      { path: "profile", element: <Profile /> },
       { path: "profile/streaks", element: <StreaksActivity /> },
       { path: "profile/history", element: <LearningHistory /> },
       { path: "settings", element: <Settings /> },
+      { path: "contact", element: <Contact /> },
 
       // Secondary / Detail Routes (Accessed from main tabs)
       { path: "lesson/:lessonId", element: <LessonView /> },
       { path: "quiz/:quizId", element: <Quiz /> },
       { path: "challenge/:challengeId", element: <ChallengeDetail /> },
+      { path: "challenge/create", element: <CreateChallenge /> },
       { path: "subscription", element: <SubscriptionPlan /> },
       { path: "diagnostic", element: <DiagnosticTool /> },
+      { path: "challenges", element: <ChallengesList /> },
+      { path: "leaderboard", element: <Leaderboard /> },
     ]
   },
   {

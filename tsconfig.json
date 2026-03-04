@@ -41,6 +41,8 @@
     "supabase",
     "dist",
     "**/__tests__",
-    "server.ts"
+    "server.ts",
+    "temp_old_*.tsx",
+    "temp_old_*.ts"
   ]
 }

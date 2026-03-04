@@ -101,30 +101,25 @@ const Home: React.FC = () => {
     if (!user) return null;
 
     return (
-        <div className="min-h-screen bg-slate-100 dark:bg-black text-slate-900 dark:text-white pb-24 font-sans selection:bg-indigo-500/30 transition-colors duration-300">
-            {/* Minimal background glow */}
+        <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-200 pb-24 font-sans selection:bg-blue-500/30 transition-colors duration-300">
+            {/* Professional Global Header */}
 
-            <div className="relative z-10 max-w-6xl mx-auto px-6 pt-6">
-
-                {/* Date */}
-                <p className="text-slate-700 dark:text-slate-400 text-xs font-semibold uppercase tracking-wider mb-6">
-                    {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
-                </p>
-
-                <div className="space-y-1 mb-8">
-                    <h2 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight uppercase italic">
-                        Welcome back, {user?.name?.split(' ')[0] || 'Explorer'}
+            <div className="relative z-10 max-w-7xl mx-auto px-6 pt-8">
+                {/* 2. WELCOME SECTION - Improved */}
+                <div className="mb-6">
+                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mb-2">
+                        Welcome back, {user.firstName || 'Developer'}
                     </h2>
-                    <p className="text-slate-700 dark:text-slate-400 text-base font-medium">
+                    <p className="text-slate-500 text-base">
                         {isPathCompleted ? 'Congratulations! You have mastered this path.' : 'Your learning journey continues today.'}
                     </p>
                 </div>
 
                 {/* 7. LANGUAGE PATH INDICATOR - Premium Redesign */}
-                <section className="mb-10 p-6 bg-slate-200/30 dark:bg-slate-950/60 border-[3px] border-slate-400 dark:border-white/20 dark:ring-1 dark:ring-white/5 rounded-2xl relative overflow-hidden hover:border-indigo-500/70 transition-all duration-500 shadow-sm">
-                    <div className="flex items-center gap-2 mb-6">
-                        <Zap size={18} className="text-indigo-600 dark:text-indigo-400" />
-                        <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider">Learning Path</h3>
+                <section className="mb-6 p-4 card-base relative overflow-hidden transition-all duration-500">
+                    <div className="flex items-center gap-2 mb-4">
+                        <Activity size={18} className="text-blue-500" />
+                        <h3 className="text-sm font-bold text-slate-900 dark:text-slate-200">Learning Path</h3>
                     </div>
 
                     <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide">
@@ -135,9 +130,9 @@ const Home: React.FC = () => {
                                     e.stopPropagation();
                                     handlePathSelect(lang.id);
                                 }}
-                                className={`flex-shrink-0 px-6 py-3 rounded-xl text-sm font-black transition-all duration-300 border-[3px] ${selectedPathId === lang.id
-                                    ? 'bg-indigo-600 border-indigo-400 text-white'
-                                    : 'bg-slate-50 dark:bg-slate-900/80 border-slate-400 dark:border-slate-600 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 hover:border-slate-500 dark:hover:border-slate-500'
+                                className={`flex-shrink-0 px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 border ${selectedPathId === lang.id
+                                    ? 'bg-blue-600 border-blue-400 text-white card-active'
+                                    : 'bg-white dark:bg-slate-800/50 border-slate-200 dark:border-white/[0.08] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50'
                                     }`}
                             >
                                 {lang.name}
@@ -150,51 +145,46 @@ const Home: React.FC = () => {
                 <section className="mb-6">
                     <div
                         onClick={(e) => {
-                            // Robust check: don't navigate to track if a link or button was clicked inside the card
                             const target = e.target as HTMLElement;
                             if (target.closest('a') || target.closest('button')) return;
-
-                            console.log("[NAV DEBUG] Card Background Clicked -> Navigating to track:", selectedPathId);
                             navigate(`/track/${selectedPathId}`);
                         }}
-                        className={`relative overflow-hidden rounded-2xl border-[3px] backdrop-blur-xl transition-all duration-500 group cursor-pointer ${isPathCompleted
-                            ? 'bg-slate-50 dark:bg-black/40 border-emerald-400 dark:border-emerald-500/50 hover:border-emerald-500'
-                            : 'bg-slate-50 dark:bg-black/40 border-indigo-400 dark:border-indigo-500/50 hover:border-indigo-500'
+                        className={`card-base relative overflow-hidden group cursor-pointer ${isPathCompleted
+                            ? 'card-success'
+                            : 'card-active'
                             }`}>
-                        <div className="p-6 md:p-8 relative z-10">
+                        <div className="p-4 md:p-6 relative z-10">
                             <div className="flex items-start justify-between mb-4">
                                 <div>
-                                    <p className={`text-xs font-black uppercase tracking-wider mb-2 ${isPathCompleted ? 'text-emerald-600 dark:text-emerald-300' : 'text-indigo-600 dark:text-indigo-300'}`}>
+                                    <p className={`text-[10px] font-black uppercase tracking-widest mb-2 ${isPathCompleted ? 'text-emerald-500' : 'text-blue-500'}`}>
                                         {isPathCompleted ? 'Path Mastered' : (completedCount === 0 ? 'Start Your Journey' : 'Continue Learning')}
                                     </p>
                                     <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-1">
                                         {isPathCompleted ? `${currentPath?.name} Mastered!` : (currentLesson?.title || 'Introduction to C')}
                                     </h3>
-                                    <p className="text-sm text-slate-700 dark:text-slate-400">
+                                    <p className="text-sm text-slate-500 dark:text-slate-400">
                                         {currentPath?.name} • {isPathCompleted ? `All ${totalLessons} Lessons Completed` : `Lesson ${completedCount + 1} of ${totalLessons}`}
                                     </p>
                                 </div>
-                                <div className="flex items-center justify-center relative w-24 h-24 md:w-28 md:h-28 shrink-0 ml-4 mt-6 group/progress">
-                                    <svg className="w-full h-full transform -rotate-90 drop-shadow-xl" viewBox="0 0 100 100">
-                                        {/* Outer Glow Background */}
+                                <div className="flex items-center justify-center relative w-24 h-24 md:w-28 md:h-28 shrink-0 ml-4 mt-2">
+                                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                                         <circle
                                             cx="50"
                                             cy="50"
                                             r="45"
                                             fill="none"
                                             stroke="currentColor"
-                                            strokeWidth="8"
+                                            strokeWidth="6"
                                             className="text-slate-200 dark:text-white/5"
                                         />
 
-                                        {/* Progress Ring */}
                                         <circle
                                             cx="50"
                                             cy="50"
                                             r="45"
                                             fill="none"
                                             stroke="url(#progressGradient)"
-                                            strokeWidth="8"
+                                            strokeWidth="6"
                                             strokeLinecap="round"
                                             strokeDasharray={`${283 * (completedCount / totalLessons)}, 283`}
                                             className="transition-all duration-1000 ease-out"
@@ -202,45 +192,27 @@ const Home: React.FC = () => {
 
                                         <defs>
                                             <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                                <stop offset="0%" stopColor="#4f46e5" /> {/* Indigo */}
-                                                <stop offset="100%" stopColor="#06b6d4" /> {/* Cyan */}
+                                                <stop offset="0%" stopColor="#3b82f6" />
+                                                <stop offset="100%" stopColor="#22d3ee" />
                                             </linearGradient>
                                         </defs>
-
-                                        {/* Center Fill (Subtle) */}
-                                        <circle
-                                            cx="50"
-                                            cy="50"
-                                            r="35"
-                                            className="fill-white/10 dark:fill-white/5"
-                                        />
                                     </svg>
 
-                                    {/* Percentage Center */}
                                     <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                        <span className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tighter">
+                                        <span className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-white tracking-tighter">
                                             {Math.round((completedCount / totalLessons) * 100) || 0}
-                                            <span className="text-xs ml-0.5 text-indigo-600 dark:text-indigo-500 font-bold">%</span>
+                                            <span className="text-xs ml-0.5 text-blue-400 font-bold">%</span>
                                         </span>
-                                        <span className="text-[8px] md:text-[10px] font-black uppercase tracking-tighter text-slate-700 dark:text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Progress</span>
                                     </div>
-
-                                    {/* Active Pulse (Only if in progress) */}
-                                    {!isPathCompleted && completedCount > 0 && (
-                                        <div className="absolute inset-0 rounded-full border-4 border-indigo-500/20 animate-ping pointer-events-none" />
-                                    )}
                                 </div>
                             </div>
 
                             <Link
                                 to={isPathCompleted ? '/profile/history' : `/lesson/${currentLesson?.id || modules[0]?.lessons[0]?.id || (selectedPathId + '1')}`}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    console.log(`[NAV DEBUG] Link Clicked. LessonID: ${currentLesson?.id}`);
-                                }}
-                                className={`w-full md:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold transition-all duration-200 shadow-lg relative z-20 ${isPathCompleted
-                                    ? 'bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white shadow-emerald-500/20'
-                                    : 'bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white shadow-indigo-500/20'
+                                onClick={(e) => e.stopPropagation()}
+                                className={`w-full md:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold transition-all duration-200 relative z-20 ${isPathCompleted
+                                    ? 'bg-emerald-600 hover:bg-emerald-500 text-white'
+                                    : 'bg-blue-600 hover:bg-blue-500 text-white'
                                     }`}
                             >
                                 {isPathCompleted ? <Trophy size={18} /> : <Play size={18} className="fill-current" />}
@@ -250,59 +222,54 @@ const Home: React.FC = () => {
                     </div>
                 </section>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                {/* 5. PROGRESS SNAPSHOT - Interactive */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                     <button
                         onClick={() => navigate('/profile/streaks')}
-                        className="relative p-5 bg-white dark:bg-slate-900/60 backdrop-blur-sm border border-slate-200 dark:border-white/20 rounded-2xl hover:border-indigo-500/50 transition-all duration-500 group overflow-hidden text-left shadow-sm"
+                        className="card-base p-5 group text-left"
                     >
-                        <div className="absolute inset-0 bg-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-500 rounded-full shadow-[0_0_15px_rgba(99,102,241,0.5)]"></div>
                         <div className="flex items-center justify-between relative z-10">
-                            <div className="ml-3">
-                                <div className="text-sm text-slate-500 dark:text-slate-300 font-bold mb-2 flex items-center gap-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-200 transition-colors">
-                                    <Activity size={16} className="text-indigo-600 dark:text-indigo-400" />
+                            <div>
+                                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-2 flex items-center gap-2 transition-colors">
+                                    <Flame size={14} className="text-blue-500" />
                                     Current Streak
                                 </div>
-                                <div className="text-3xl font-black text-slate-900 dark:text-white transition-colors duration-300">{user?.streak || 0} days</div>
+                                <div className="text-3xl font-bold text-slate-900 dark:text-white tracking-tighter">{user?.streak || 0} days</div>
                             </div>
-                            <ChevronRight size={20} className="text-slate-400 group-hover:text-white transition-colors" />
+                            <ChevronRight size={18} className="text-slate-500 group-hover:text-blue-500 transition-colors" />
                         </div>
                     </button>
 
                     <button
                         onClick={() => navigate('/profile/history')}
-                        className="relative p-5 bg-white dark:bg-slate-900/60 backdrop-blur-sm border border-slate-200 dark:border-white/20 rounded-2xl hover:border-rose-500/50 transition-all duration-500 group overflow-hidden text-left shadow-sm"
+                        className="card-base p-5 group text-left"
                     >
-                        <div className="absolute inset-0 bg-rose-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-rose-500 rounded-full shadow-[0_0_15px_rgba(244,63,94,0.5)]"></div>
                         <div className="flex items-center justify-between relative z-10">
-                            <div className="ml-3 flex-1">
-                                <div className="text-sm text-slate-500 dark:text-slate-300 font-bold mb-2 flex items-center gap-2 group-hover:text-rose-600 dark:group-hover:text-rose-200 transition-colors">
-                                    <Award size={16} className="text-rose-600 dark:text-rose-400" />
+                            <div className="flex-1">
+                                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-2 flex items-center gap-2 transition-colors">
+                                    <Award size={14} className="text-blue-500" />
                                     Lessons Completed
                                 </div>
-                                <div className="text-3xl font-black text-slate-900 dark:text-white mb-2 transition-colors duration-300">{completedCount} / {totalLessons}</div>
-                                <div className="w-full bg-slate-800/80 rounded-full h-1.5 overflow-hidden">
-                                    <div className="bg-rose-500 h-1.5 rounded-full transition-all duration-500" style={{ width: `${totalLessons > 0 ? (completedCount / totalLessons) * 100 : 0}%` }}></div>
+                                <div className="text-3xl font-bold text-slate-900 dark:text-white tracking-tighter mb-2">{completedCount} <span className="text-xs text-slate-500 font-normal">of {totalLessons}</span></div>
+                                <div className="w-full bg-slate-100 dark:bg-white/5 rounded-full h-1">
+                                    <div className="bg-progress-gradient h-1 rounded-full transition-all duration-500" style={{ width: `${totalLessons > 0 ? (completedCount / totalLessons) * 100 : 0}%` }}></div>
                                 </div>
                             </div>
-                            <ChevronRight size={20} className="text-slate-400 group-hover:text-white transition-colors" />
+                            <ChevronRight size={18} className="text-slate-500 group-hover:text-blue-500 transition-colors" />
                         </div>
                     </button>
 
                     <button
                         onClick={() => navigate('/practice/history')}
-                        className="relative p-5 bg-white dark:bg-slate-900/60 backdrop-blur-sm border border-slate-200 dark:border-white/20 rounded-2xl hover:border-amber-500/50 transition-all duration-500 group overflow-hidden text-left shadow-sm"
+                        className="card-base p-5 group text-left"
                     >
-                        <div className="absolute inset-0 bg-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500 rounded-full shadow-[0_0_15px_rgba(245,158,11,0.5)]"></div>
                         <div className="flex items-center justify-between relative z-10">
-                            <div className="ml-3 flex-1">
-                                <div className="text-sm text-slate-500 dark:text-slate-300 font-bold mb-2 flex items-center gap-2 group-hover:text-amber-600 dark:group-hover:text-amber-200 transition-colors">
-                                    <Terminal size={16} className="text-amber-600 dark:text-amber-400" />
+                            <div className="flex-1">
+                                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-2 flex items-center gap-2 transition-colors">
+                                    <Terminal size={14} className="text-blue-500" />
                                     Practice Solved
                                 </div>
-                                <div className="text-3xl font-black text-slate-900 dark:text-white mb-2 transition-colors duration-300">
+                                <div className="text-3xl font-bold text-slate-900 dark:text-white tracking-tighter mb-2">
                                     {Math.max(
                                         Object.values(progress || {}).filter(p => p && (p.status === 'completed' || p.status === 'COMPLETED')).length,
                                         (() => {
@@ -315,14 +282,14 @@ const Home: React.FC = () => {
                                         })()
                                     )}
                                 </div>
-                                <div className="w-full bg-slate-800/80 rounded-full h-1.5 overflow-hidden">
+                                <div className="w-full bg-slate-100 dark:bg-white/5 rounded-full h-1">
                                     <div
-                                        className="bg-amber-500 h-1.5 rounded-full transition-all duration-500"
+                                        className="bg-progress-gradient h-1 rounded-full transition-all duration-500"
                                         style={{ width: `${Math.min(100, (Object.values(progress || {}).filter(p => p && (p.status === 'completed' || p.status === 'COMPLETED')).length / 20) * 100)}%` }}
                                     ></div>
                                 </div>
                             </div>
-                            <ChevronRight size={20} className="text-slate-400 group-hover:text-white transition-colors" />
+                            <ChevronRight size={18} className="text-slate-500 group-hover:text-blue-500 transition-colors" />
                         </div>
                     </button>
                 </div>

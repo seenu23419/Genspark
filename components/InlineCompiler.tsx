@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Share2, Play, RotateCcw, Download, Maximize2, Minimize2, Copy, Check, Terminal as TerminalIcon, Code2, Cpu, Settings, X, Loader2, Info, Bot, Sparkles, Save, ChevronUp, ChevronDown } from 'lucide-react';
-import { genSparkCompilerService } from '../services/compilerService';
+import { glintoCompilerService } from '../services/compilerService';
 import { supabaseDB } from '../services/supabaseService'; // Import Supabase Service
 import { useAuth } from '../contexts/AuthContext';
-import { genSparkAIService } from '../services/geminiService';
+import { glintoAIService } from '../services/geminiService';
 import { useCodeRunner } from '../hooks/useCodeRunner'; // Import the new hook
 import { LANGUAGES } from '../constants';
 import ReactMarkdown from 'react-markdown';
@@ -21,7 +21,7 @@ interface InlineCompilerProps {
 
 const InlineCompiler: React.FC<InlineCompilerProps> = ({ initialCode, language, context, onSuccess }) => {
     const { user } = useAuth();
-    const [code, setCode] = useState(initialCode || genSparkCompilerService.getTemplate(language));
+    const [code, setCode] = useState(initialCode || glintoCompilerService.getTemplate(language));
     const [output, setOutput] = useState<{ type: 'log' | 'info' | 'error' | 'success', text: string }[]>([]);
 
     // Legacy running state (for server-side languages)
@@ -121,7 +121,7 @@ const InlineCompiler: React.FC<InlineCompilerProps> = ({ initialCode, language, 
         setOutput([{ type: 'info', text: `Compiling & Executing on Cloud Runner... (Attempt ${attempt}/${MAX_RETRIES})` }]);
 
         try {
-            const result = await genSparkCompilerService.executeCode(language, code, user?._id);
+            const result = await glintoCompilerService.executeCode(language, code, user?._id);
 
             const newLogs: { type: 'log' | 'info' | 'error' | 'success', text: string }[] = [];
 
@@ -152,18 +152,16 @@ const InlineCompiler: React.FC<InlineCompilerProps> = ({ initialCode, language, 
                 if (onSuccess) onSuccess();
             } else {
                 newLogs.push({ type: 'error', text: `Status: ${result.status.description}` });
-                if (result.message) newLogs.push({ type: 'error', text: result.message });
-                
-                // Add retry button if available
-                if (attempt < MAX_RETRIES) {
-                    newLogs.push({ 
-                        type: 'info', 
-                        text: `Failed. Click "Run Code" again to retry (${attempt}/${MAX_RETRIES})` 
-                    });
+                if (result.message) newLogs.push({ type: 'error', text: `Message: ${result.message}` });
+
+                // If it's a critical failure and we have no output, suggest checking connection
+                if (newLogs.length === 0 || (newLogs.length === 1 && result.status.id === 13)) {
+                    newLogs.push({ type: 'info', text: 'System found no direct error logs. This might be a backend connection issue.' });
                 }
             }
 
             setOutput(newLogs);
+            setIsServerRunning(false);
 
         } catch (error: any) {
             console.error('Execution error:', error);
@@ -173,27 +171,26 @@ const InlineCompiler: React.FC<InlineCompilerProps> = ({ initialCode, language, 
 
             // Retry logic
             if (attempt < MAX_RETRIES) {
-                newLogs.push({ 
-                    type: 'info', 
-                    text: `Retrying... (${attempt}/${MAX_RETRIES})` 
+                newLogs.push({
+                    type: 'info',
+                    text: `Retrying... (${attempt}/${MAX_RETRIES})`
                 });
                 setOutput(newLogs);
                 setRetryCount(attempt);
-                
+
                 // Auto-retry after delay
                 setTimeout(() => {
                     runCode(attempt + 1);
                 }, 1500);
                 return;
             } else {
-                newLogs.push({ 
-                    type: 'error', 
-                    text: 'All retry attempts failed. Please check your code or internet connection.' 
+                newLogs.push({
+                    type: 'error',
+                    text: 'All retry attempts failed. Please check your code or internet connection.'
                 });
             }
 
             setOutput(newLogs);
-        } finally {
             setIsServerRunning(false);
         }
     };
@@ -221,7 +218,7 @@ const InlineCompiler: React.FC<InlineCompilerProps> = ({ initialCode, language, 
         Focus on helping me understand.
       `;
 
-            const stream = genSparkAIService.generateChatStream(prompt, user?.isPro || false);
+            const stream = glintoAIService.generateChatStream(prompt, user?.isPro || false);
             for await (const chunk of stream) {
                 setAiResponse(prev => prev + chunk);
             }
@@ -241,7 +238,7 @@ const InlineCompiler: React.FC<InlineCompilerProps> = ({ initialCode, language, 
 
         try {
             // Use Client-Side Service directly (No Edge Function deployment needed)
-            const result = await genSparkAIService.fixCode(language, code, lastError || "Code is not working as expected.");
+            const result = await glintoAIService.fixCode(language, code, lastError || "Code is not working as expected.");
             setFixedCode(result as any);
         } catch (e) {
             setFixedCode(JSON.stringify({ explanation: "Failed to connect to AI Fixer.", fixedCode: "", tips: "" }) as any);
@@ -414,13 +411,13 @@ const InlineCompiler: React.FC<InlineCompilerProps> = ({ initialCode, language, 
                         <ChevronDown size={16} />
                     </button>
                     <button
-                        onClick={() => setCode(initialCode || genSparkCompilerService.getTemplate(language))}
+                        onClick={() => setCode(initialCode || glintoCompilerService.getTemplate(language))}
                         className="p-2 text-slate-500 hover:text-white hover:bg-slate-800 rounded-lg transition-all"
                     >
                         <RotateCcw size={16} />
                     </button>
                     <button
-                        onClick={runCode}
+                        onClick={() => runCode()}
                         disabled={isRunning}
                         className="flex items-center gap-2 px-5 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 text-white rounded-xl font-black text-xs transition-all active:scale-95 shadow-lg shadow-indigo-600/20"
                     >

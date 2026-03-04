@@ -10,7 +10,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { genSparkAIService, MediaPart } from '../../services/geminiService';
+import { GlintoAIService, MediaPart } from '../../services/geminiService';
 import { supabaseDB } from '../../services/supabaseService';
 import { ChatMessage, User, ChatSession } from '../../types';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -200,7 +200,7 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
          setAttachment(null);
          setPreviewUrl(null);
 
-         const stream = genSparkAIService.generateChatStream(
+         const stream = GlintoAIService.generateChatStream(
             textToSend,
             user?.isPro || false,
             history,
@@ -279,12 +279,11 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
    };
 
    return (
-      <div className="flex h-screen bg-black overflow-hidden font-sans text-white transition-colors duration-300">
+      <div className="flex h-screen bg-[#0f172a] overflow-hidden font-sans text-white transition-colors duration-300">
 
          {/* Sidebar - App Themed Style */}
          <aside className={`
-            ${isMobile ? 'absolute inset-y-0 left-0 z-50 w-[280px]' : 'relative w-[280px]'} 
-            bg-slate-950/80 backdrop-blur-3xl flex flex-col transition-all duration-300 ease-in-out shrink-0 border-r border-white/5
+            ${isMobile ? 'absolute inset-y-0 left-0 z-50 w-[280px]' : 'relative w-[280px]'}             bg-[#0f172a]/80 backdrop-blur-3xl flex flex-col transition-all duration-300 ease-in-out shrink-0 border-r border-white/[0.08]
             ${!isSidebarOpen && !isMobile ? '-ml-[280px]' : ''}
             ${isMobile && !isSidebarOpen ? '-translate-x-full' : 'translate-x-0'}
          `}>
@@ -292,7 +291,7 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
             <div className="p-4 flex items-center gap-3">
                <button
                   onClick={handleNewChat}
-                  className="flex-1 flex items-center justify-between px-4 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm transition-all group shadow-xl shadow-indigo-600/20 active:scale-95"
+                  className="flex-1 flex items-center justify-between px-4 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm transition-all group active:scale-95"
                >
                   <div className="flex items-center gap-3">
                      <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center border border-white/20">
@@ -327,7 +326,7 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                      <div
                         key={session.id}
                         className={`group flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm transition-all cursor-pointer ${currentSessionId === session.id
-                           ? 'bg-slate-800 text-white shadow-sm ring-1 ring-slate-700'
+                           ? 'bg-slate-800 text-white ring-1 ring-slate-700'
                            : 'text-slate-600 dark:text-slate-300 hover:bg-slate-800/50 hover:text-white dark:hover:text-white'
                            }`}
                         onClick={() => loadSession(session.id)}
@@ -351,10 +350,10 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
             {/* User Profile / Pro Badge */}
             <div className="p-3 mt-auto border-t border-slate-200 dark:border-slate-800">
                {user?.isPro && (
-                  <div className="mb-2 p-3 bg-gradient-to-br from-indigo-50 dark:from-indigo-950/30 to-white dark:to-slate-900 rounded-xl border border-indigo-200 dark:border-indigo-500/20 shadow-sm">
+                  <div className="mb-2 p-3 bg-gradient-to-br from-indigo-50 dark:from-indigo-950/30 to-white dark:to-slate-900 rounded-xl border border-indigo-200 dark:border-indigo-500/20">
                      <div className="flex items-center gap-2 text-xs font-black text-amber-600 dark:text-yellow-500 mb-1 uppercase tracking-wider">
                         <Crown size={12} fill="currentColor" />
-                        GENSPARK PRO
+                        Glinto PRO
                      </div>
                      <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400">Unlimited high-reasoning tokens active.</p>
                   </div>
@@ -378,7 +377,7 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
          <div className="flex-1 flex flex-col h-full min-w-0 relative">
 
             {/* Header */}
-            <header className="flex items-center justify-between px-4 h-16 md:h-20 sticky top-0 z-30 bg-black/80 backdrop-blur-xl border-b border-white/5 shrink-0">
+            <header className="flex items-center justify-between px-4 h-16 md:h-20 sticky top-0 z-30 bg-[#0f172a]/80 backdrop-blur-xl border-b border-white/[0.08] shrink-0">
                <div className="flex items-center gap-2 md:gap-4">
                   {/* Toggle Sidebar - Visible on Desktop/Mobile */}
                   <button
@@ -399,11 +398,11 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
             </header>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto no-scrollbar bg-black">
+            <div className="flex-1 overflow-y-auto no-scrollbar bg-[#0f172a]">
                <div className="max-w-3xl mx-auto px-4 py-12 md:py-20">
                   {messages.length === 0 && (
                      <div className="h-full flex flex-col items-center justify-center text-center animate-in fade-in duration-700">
-                        <div className="w-16 h-16 md:w-20 md:h-20 bg-slate-900 rounded-[2rem] flex items-center justify-center mb-8 shadow-2xl border border-white/10 ring-1 ring-white/5">
+                        <div className="w-16 h-16 md:w-20 md:h-20 bg-slate-900 rounded-[2rem] flex items-center justify-center mb-8 border border-white/10 ring-1 ring-white/5">
                            <Bot className="w-8 h-8 md:w-10 md:h-10 text-indigo-400" />
                         </div>
                         <h2 className="text-3xl md:text-5xl font-black text-white mb-4 uppercase italic tracking-tighter">How can I help you?</h2>
@@ -419,7 +418,7 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                               <button
                                  key={suggestion}
                                  onClick={() => handleSend(suggestion)}
-                                 className="p-5 md:p-6 rounded-[1.5rem] border border-white/5 bg-slate-900/40 hover:bg-slate-900/80 hover:border-indigo-500/50 text-left transition-all hover:-translate-y-1 active:scale-[0.98] shadow-2xl"
+                                 className="p-5 md:p-6 rounded-[1.5rem] border border-white/5 bg-slate-900/40 hover:bg-slate-900/80 hover:border-indigo-500/50 text-left transition-all hover:-translate-y-1 active:scale-[0.98]"
                                  style={{ animationDelay: `${idx * 100}ms` }}
                               >
                                  <span className="font-black text-slate-300 text-[10px] md:text-xs uppercase tracking-[0.2em]">{suggestion}</span>
@@ -435,7 +434,7 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                         className={`py-6 md:py-10 flex gap-4 md:gap-8 group ${m.role === 'user' ? 'flex-row-reverse' : 'flex-row'} animate-in fade-in slide-in-from-bottom-4 duration-500`}
                      >
                         <div className="shrink-0 pt-1">
-                           <div className={`w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center overflow-hidden shadow-2xl border ${m.role === 'user' ? 'bg-indigo-600 border-indigo-400/20' : 'bg-slate-900 border-white/10'}`}>
+                           <div className={`w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center overflow-hidden border ${m.role === 'user' ? 'bg-indigo-600 border-indigo-400/20' : 'bg-slate-900 border-white/10'}`}>
                               {m.role === 'user' ? (
                                  <UserIcon size={18} className="text-white" />
                               ) : (
@@ -447,7 +446,7 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                            <div className="font-black text-[10px] md:text-xs text-slate-500 flex items-center gap-2 justify-inherit px-1 uppercase tracking-[0.2em] italic">
                               {m.role === 'user' ? 'Protocol: User' : 'Genesis Engine'}
                            </div>
-                           <div className={`markdown-content prose prose-invert max-w-none text-sm md:text-base leading-relaxed inline-block ${m.role === 'user' ? 'bg-indigo-600/10 border border-indigo-500/20 p-5 md:p-6 rounded-[2rem] rounded-tr-none text-indigo-50 shadow-2xl' : 'p-2'}`}>
+                           <div className={`markdown-content prose prose-invert max-w-none text-sm md:text-base leading-relaxed inline-block ${m.role === 'user' ? 'bg-indigo-600/10 border border-indigo-500/20 p-5 md:p-6 rounded-[2rem] rounded-tr-none text-indigo-50' : 'p-2'}`}>
                               {m.content ? (
                                  <ReactMarkdown
                                     remarkPlugins={[remarkGfm]}
@@ -456,10 +455,10 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                                           const match = /language-(\w+)/.exec(className || '');
                                           if (!inline && match) {
                                              return (
-                                                <div className="relative my-6 rounded-3xl overflow-hidden border border-white/5 bg-slate-950 text-left shadow-2xl">
+                                                <div className="relative my-6 rounded-3xl overflow-hidden border border-white/5 bg-slate-950 text-left">
                                                    <div className="absolute top-4 right-4 z-10 px-3 py-1 rounded-full bg-white/5 text-[10px] font-black font-mono text-slate-400 uppercase tracking-widest">{match[1]}</div>
                                                    <div className="absolute top-4 left-4 z-10">
-                                                      <button onClick={() => navigator.clipboard.writeText(String(children).replace(/\n$/, ''))} className="flex items-center gap-2 px-3 py-1 bg-slate-900 border border-white/5 rounded-xl text-slate-300 text-[10px] font-black uppercase tracking-widest shadow-2xl transition-all active:scale-95 hover:text-white hover:border-indigo-500/30">
+                                                      <button onClick={() => navigator.clipboard.writeText(String(children).replace(/\n$/, ''))} className="flex items-center gap-2 px-3 py-1 bg-slate-900 border border-white/5 rounded-xl text-slate-300 text-[10px] font-black uppercase tracking-widest transition-all active:scale-95 hover:text-white hover:border-indigo-500/30">
                                                          <Copy size={12} />
                                                          Copy
                                                       </button>
@@ -503,12 +502,12 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
             </div>
 
             {/* Input Wrapper */}
-            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black via-black/95 to-transparent pb-8 px-2 md:px-4">
+            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-[#0f172a] via-[#0f172a]/95 to-transparent pb-8 px-2 md:px-4">
                <div className="max-w-3xl mx-auto relative">
 
                   {/* Preview Area */}
                   {previewUrl && (
-                     <div className="mb-4 flex items-center gap-4 p-3 bg-slate-900/90 backdrop-blur-xl rounded-2xl border border-white/10 w-fit animate-in slide-in-from-bottom-2 shadow-2xl">
+                     <div className="mb-4 flex items-center gap-4 p-3 bg-slate-900/90 backdrop-blur-xl rounded-2xl border border-white/10 w-fit animate-in slide-in-from-bottom-2">
                         <img src={previewUrl} className="w-16 h-16 rounded-xl bg-black object-cover border border-white/5" alt="Preview" />
                         <button onClick={() => { setAttachment(null); setPreviewUrl(null); }} className="p-2 hover:bg-white/10 rounded-full text-slate-400 hover:text-white transition-all">
                            <X size={16} />
@@ -517,7 +516,7 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                   )}
 
                   {/* Input Box */}
-                  <div className="relative bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2rem] p-4 shadow-2xl focus-within:border-indigo-500/50 focus-within:ring-2 focus-within:ring-indigo-500/10 transition-all">
+                  <div className="relative bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2rem] p-4 focus-within:border-indigo-500/50 focus-within:ring-2 focus-within:ring-indigo-500/10 transition-all">
                      <textarea
                         rows={1}
                         value={input}
@@ -540,7 +539,7 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                         <button
                            onClick={() => handleSend()}
                            disabled={(!input.trim() && !attachment) || isLoading}
-                           className={`p-3 rounded-2xl transition-all ${(input.trim() || attachment) && !isLoading ? 'bg-indigo-600 text-white shadow-xl shadow-indigo-600/30 hover:bg-indigo-500 scale-100' : 'text-slate-700 bg-slate-800/50'
+                           className={`p-3 rounded-2xl transition-all ${(input.trim() || attachment) && !isLoading ? 'bg-indigo-600 text-white hover:bg-indigo-500 scale-100' : 'text-slate-700 bg-slate-800/50'
                               }`}
                         >
                            <Send size={20} className={isLoading ? 'animate-pulse' : ''} />
@@ -548,7 +547,7 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
                      </div>
                   </div>
                   <p className="text-center mt-4 text-[10px] font-black text-slate-600 uppercase tracking-[0.2em]">
-                     Quantum Neural Network Active • GenSpark Alpha
+                     Quantum Neural Network Active • Glinto Alpha
                   </p>
                </div>
             </div>
@@ -560,3 +559,4 @@ const AIChat: React.FC<AIChatProps> = ({ user: propUser, onBack }) => {
 };
 
 export default AIChat;
+

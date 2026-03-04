@@ -36,7 +36,7 @@ const PremiumGuard: React.FC<PremiumGuardProps> = ({
       </h3>
       
       <p className="text-slate-400 mb-6">
-        Unlock {featureName} and more premium features with GenSpark Premium.
+        Unlock {featureName} and more premium features with Glinto Premium.
       </p>
       
       {showUpgradeButton && (

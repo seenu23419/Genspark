@@ -46,7 +46,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // Redundant Backup: Load immediately from localStorage to prevent flash
         if (typeof localStorage !== 'undefined') {
             try {
-                const backup = localStorage.getItem('genspark_user_backup');
+                const backup = localStorage.getItem('Glinto_user_backup');
                 return backup ? JSON.parse(backup) : null;
             } catch (e) { return null; }
         }
@@ -151,7 +151,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // 1. Min Splash Timer (Drastically reduced for instant feel if data is ready)
         const splashTimer = setTimeout(() => {
             if (mounted) setMinSplashDone(true);
-        }, 2000); // 2s duration for a premium "logo page" experience
+        }, 2000); // 2s duration for a premium, smooth logo reveal
 
         // 2. Initial Session Check - Faster lookup
         const initSession = async () => {
@@ -265,10 +265,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     useEffect(() => {
         if (user) {
-            localStorage.setItem('genspark_user_backup', JSON.stringify(user));
-            localStorage.setItem('genspark_returning_user', 'true');
+            localStorage.setItem('Glinto_user_backup', JSON.stringify(user));
+            localStorage.setItem('Glinto_returning_user', 'true');
         } else if (!loading) {
-            localStorage.removeItem('genspark_user_backup');
+            localStorage.removeItem('Glinto_user_backup');
         }
     }, [user, loading]);
 
@@ -287,7 +287,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 console.warn("AuthContext: Sign out error/timeout:", error);
             } finally {
                 localStorage.clear();
-                localStorage.removeItem('genspark_user_backup');
+                localStorage.removeItem('Glinto_user_backup');
                 sessionStorage.clear();
                 setUser(null);
                 setInitializing(false);

@@ -6,7 +6,7 @@ const TermsOfService: React.FC = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-[#0a0b14] text-slate-300 py-12 px-6">
+        <div className="min-h-screen bg-white dark:bg-[#0f172a] transition-colors duration-300 text-slate-300 py-12 px-6">
             <div className="max-w-3xl mx-auto space-y-8">
                 {/* Header */}
                 <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
@@ -33,7 +33,7 @@ const TermsOfService: React.FC = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-bold text-white border-l-2 border-indigo-500 pl-3">1. Acceptance of Terms</h2>
                         <p>
-                            By accessing or using GenSpark ("the Service"), you agree to be bound by these Terms of Service and all applicable laws.
+                            By accessing or using Glinto ("the Service"), you agree to be bound by these Terms of Service and all applicable laws.
                             If you do not agree to these terms, you must immediately cease all use of the Service.
                         </p>
                     </section>
@@ -41,7 +41,7 @@ const TermsOfService: React.FC = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-bold text-white border-l-2 border-indigo-500 pl-3">2. User Accounts & Security</h2>
                         <p>
-                            You are responsible for safeguarding the credentials used to access the Service. GenSpark cannot and will not be liable for any loss or damage
+                            You are responsible for safeguarding the credentials used to access the Service. Glinto cannot and will not be liable for any loss or damage
                             arising from your failure to comply with the above. We reserve the right to refuse service, terminate accounts, or remove content at our sole discretion.
                         </p>
                     </section>
@@ -57,8 +57,8 @@ const TermsOfService: React.FC = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-bold text-white border-l-2 border-indigo-500 pl-3">4. Intellectual Property</h2>
                         <p>
-                            GenSpark and its original content, features, and functionality are owned by GenSpark. Users retain ownership of the code snippets they produce
-                            using the Service but grant GenSpark a worldwide, non-exclusive, royalty-free license to store, execute, and display such snippets for Service operation.
+                            Glinto and its original content, features, and functionality are owned by Glinto. Users retain ownership of the code snippets they produce
+                            using the Service but grant Glinto a worldwide, non-exclusive, royalty-free license to store, execute, and display such snippets for Service operation.
                         </p>
                     </section>
 
@@ -68,7 +68,7 @@ const TermsOfService: React.FC = () => {
                         </h2>
                         <p className="font-medium text-slate-300">
                             THE SERVICE IS PROVIDED WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,
-                            IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT. GENSPARK DOES NOT WARRANT
+                            IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT. Glinto DOES NOT WARRANT
                             THAT THE SERVICE WILL BE UNINTERRUPTED, SECURE, OR ERROR-FREE.
                         </p>
                     </section>
@@ -78,7 +78,7 @@ const TermsOfService: React.FC = () => {
                             Limitation of Liability
                         </h2>
                         <p className="font-medium text-slate-300">
-                            IN NO EVENT SHALL GENSPARK BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR PUNITIVE DAMAGES,
+                            IN NO EVENT SHALL Glinto BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR PUNITIVE DAMAGES,
                             INCLUDING WITHOUT LIMITATION, LOSS OF PROFITS, DATA, USE, OR OTHER INTANGIBLE LOSSES, ARISING OUT OF YOUR ACCESS TO
                             OR USE OF THE SERVICE.
                         </p>
@@ -86,7 +86,7 @@ const TermsOfService: React.FC = () => {
 
                     <section className="space-y-3 pt-6 border-t border-slate-800">
                         <p className="text-xs text-slate-500 font-bold italic">
-                            GenSpark operates in compliance with standard industry regulations. For inquiries regarding these terms, please contact legal@genspark.app.
+                            Glinto operates in compliance with standard industry regulations. For inquiries regarding these terms, please contact legal@Glinto.app.
                         </p>
                     </section>
                 </div>
@@ -96,3 +96,4 @@ const TermsOfService: React.FC = () => {
 };
 
 export default TermsOfService;
+

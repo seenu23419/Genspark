@@ -74,7 +74,7 @@ const SubscriptionPlan: React.FC = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#0a0b14] flex items-center justify-center p-6">
+      <div className="min-h-screen bg-white dark:bg-[#0f172a] transition-colors duration-300 flex items-center justify-center p-6">
         <div className="text-center text-white">
           <p>Please log in to access subscription options.</p>
         </div>
@@ -97,7 +97,7 @@ const SubscriptionPlan: React.FC = () => {
             Choose Your Plan
           </h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            Unlock the full power of GenSpark with premium features designed to accelerate your coding journey.
+            Unlock the full power of Glinto with premium features designed to accelerate your coding journey.
           </p>
         </div>
 
@@ -115,7 +115,7 @@ const SubscriptionPlan: React.FC = () => {
 
         <div className="grid md:grid-cols-2 gap-8">
           {/* Free Plan */}
-          <div className={`bg-slate-900/40 backdrop-blur-2xl border ${currentPlan === 'FREE' ? 'border-indigo-500/50 ring-2 ring-indigo-500/20' : 'border-white/10'} rounded-[2rem] p-8 shadow-2xl transition-all`}>
+          <div className={`card-base p-8 transition-all ${currentPlan === 'FREE' ? 'card-active' : ''}`}>
             <div className="text-center mb-8">
               <h2 className="text-2xl font-black text-white mb-2">Free Plan</h2>
               <div className="text-4xl font-black text-white mb-1">₹0</div>
@@ -161,7 +161,7 @@ const SubscriptionPlan: React.FC = () => {
           </div>
 
           {/* Premium Plan */}
-          <div className={`bg-gradient-to-br from-indigo-900/30 to-purple-900/30 backdrop-blur-2xl border ${currentPlan === 'PREMIUM' ? 'border-indigo-500/50 ring-2 ring-indigo-500/20' : 'border-white/10'} rounded-[2rem] p-8 shadow-2xl transition-all relative overflow-hidden`}>
+          <div className={`card-base p-8 transition-all relative overflow-hidden ${currentPlan === 'PREMIUM' ? 'card-active' : ''}`}>
             {currentPlan === 'PREMIUM' && (
               <div className="absolute top-4 right-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-1 rounded-full text-xs font-bold">
                 ACTIVE
@@ -173,7 +173,7 @@ const SubscriptionPlan: React.FC = () => {
                 <Star className="text-yellow-400" size={16} />
                 PREMIUM
               </div>
-              <h2 className="text-2xl font-black text-white mb-2">GenSpark Premium</h2>
+              <h2 className="text-2xl font-black text-white mb-2">Glinto Premium</h2>
               <div className="text-4xl font-black text-white mb-1">₹49</div>
               <div className="text-slate-300 text-sm font-medium">per month</div>
               <div className="text-slate-500 text-xs mt-2">Auto-renewable • Cancel anytime</div>
@@ -215,7 +215,7 @@ const SubscriptionPlan: React.FC = () => {
                 <button
                   onClick={handleCancel}
                   disabled={loading}
-                  className="w-full h-14 bg-red-600 hover:bg-red-500 text-white rounded-2xl font-black text-lg transition-all active:scale-[0.98] shadow-lg disabled:opacity-50"
+                  className="w-full h-14 bg-red-600 hover:bg-red-500 text-white rounded-2xl font-black text-lg transition-all active:scale-[0.98] disabled:opacity-50"
                 >
                   {loading ? <Loader2 className="animate-spin mx-auto" /> : 'Cancel Subscription'}
                 </button>
@@ -223,7 +223,7 @@ const SubscriptionPlan: React.FC = () => {
                 <button
                   onClick={handleSubscribe}
                   disabled={loading}
-                  className="w-full h-14 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-2xl font-black text-lg transition-all active:scale-[0.98] shadow-xl shadow-indigo-600/20 flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="w-full h-14 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-2xl font-black text-lg transition-all active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   {loading ? (
                     <Loader2 className="animate-spin" />

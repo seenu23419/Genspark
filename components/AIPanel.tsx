@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Sparkles, Bot, Loader2, User } from 'lucide-react';
-import { genSparkAIService } from '../services/geminiService';
+import { glintoAIService } from '../services/geminiService';
 import { ChatMessage } from '../types';
 
 interface AIPanelProps {
@@ -45,12 +45,12 @@ const AIPanel: React.FC<AIPanelProps> = ({ context, mentorMode = false }) => {
 
             // Add mentor mode context if enabled
             const systemPrompt = mentorMode
-              ? `You are a coding mentor. Help users learn by explaining concepts, not by providing solutions. 
+                ? `You are a coding mentor. Help users learn by explaining concepts, not by providing solutions. 
                  Never give full code. Ask guiding questions. Encourage independent thinking.
                  Output plain text only, no markdown or code blocks.`
-              : '';
+                : '';
 
-            const stream = genSparkAIService.generateChatStream(
+            const stream = glintoAIService.generateChatStream(
                 (systemPrompt ? systemPrompt + '\n\n' : '') + input + (context ? `\n\nContext: I am currently on the ${context} screen.` : ''),
                 false,
                 history
@@ -88,7 +88,7 @@ const AIPanel: React.FC<AIPanelProps> = ({ context, mentorMode = false }) => {
                         <p className="text-sm text-slate-300">
                             {context
                                 ? `I'm here to help with your work on the ${context}. Ask me to explain concepts, check code, or give hints!`
-                                : "I'm your GenSpark AI tutor. How can I help you learn today?"}
+                                : "I'm your Glinto AI tutor. How can I help you learn today?"}
                         </p>
                     </div>
                 )}
@@ -111,7 +111,7 @@ const AIPanel: React.FC<AIPanelProps> = ({ context, mentorMode = false }) => {
                             <Loader2 size={14} className="animate-spin text-indigo-400" />
                         </div>
                         <div className="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/50 text-slate-400 text-xs animate-pulse">
-                            GenSpark is thinking...
+                            Glinto is thinking...
                         </div>
                     </div>
                 )}
@@ -143,3 +143,4 @@ const AIPanel: React.FC<AIPanelProps> = ({ context, mentorMode = false }) => {
 };
 
 export default AIPanel;
+

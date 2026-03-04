@@ -392,7 +392,7 @@
       "id": "strings-6",
       "topicId": "strings",
       "title": "Convert to Uppercase",
-      "description": "Convert all lowercase letters in S to uppercase and print.\n\nInput Format\n```\nS\n```\n\nOutput Format\n```\nUPPERCASE\n```\n\nConstraints\n• 1 ≤ |S| ≤ 1000\n\nSample Input 1\n```\nhello\n```\n\nSample Output 1\n```\nHELLO\n```\n\nSample Input 2\n```\nGenSpark\n```\n\nSample Output 2\n```\nGENSPARK\n```\n\nExplanation\nEach lowercase letter's ASCII = uppercase + 32.",
+      "description": "Convert all lowercase letters in S to uppercase and print.\n\nInput Format\n```\nS\n```\n\nOutput Format\n```\nUPPERCASE\n```\n\nConstraints\n• 1 ≤ |S| ≤ 1000\n\nSample Input 1\n```\nhello\n```\n\nSample Output 1\n```\nHELLO\n```\n\nSample Input 2\n```\nGenSpark\n```\n\nSample Output 2\n```\nGenSpark\n```\n\nExplanation\nEach lowercase letter's ASCII = uppercase + 32.",
       "difficulty": "easy",
       "estimatedTime": 3,
       "concept": "Strings",
@@ -411,7 +411,7 @@
         },
         {
           "stdin": "GenSpark",
-          "expected_output": "GENSPARK"
+          "expected_output": "GenSpark"
         },
         {
           "stdin": "HELLO",

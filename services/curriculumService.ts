@@ -1,7 +1,7 @@
 import { LessonModule } from '../types';
 import { CURRICULUM as LOCAL_CURRICULUM } from '../constants';
 
-const BASE_URL = import.meta.env.VITE_CURRICULUM_BASE_URL || 'https://aoiagnnkhaswpmhbobhd.supabase.co/storage/v1/object/public/curriculum';
+const BASE_URL = import.meta.env.VITE_CURRICULUM_BASE_URL;
 
 export interface CurriculumData {
     modules: LessonModule[];
@@ -43,19 +43,33 @@ export const curriculumService = {
             const response = await fetch(url);
 
             if (!response.ok) {
-                throw new Error(`Failed to fetch curriculum for ${langId}: ${response.statusText}`);
+                console.warn(`[Curriculum] Failed to fetch remote curriculum for ${langId}, falling back to local.`);
+                return [];
             }
 
             const data = await response.json();
+            const remoteModules = this.mapResponseToCurriculum(data, langId);
 
-            // Adaptation layer if the remote JSON structure differs from our internal types
-            // The user requested: topic, lesson id, title, theory, syntax, code block, expected output, difficulty level
-            // We'll map these fields to our LessonModule and Lesson interfaces.
+            // Safety check: Don't override if remote data is significantly smaller than local data
+            const localModules = (LOCAL_CURRICULUM as any)[langId] || [];
+            if (remoteModules.length === 0 && localModules.length > 0) {
+                console.warn(`[Curriculum] Remote data for ${langId} is empty, using local data.`);
+                return [];
+            }
 
-            return this.mapResponseToCurriculum(data, langId);
+            // Optional: More aggressive check could compare lesson counts
+            const remoteLessonCount = remoteModules.reduce((acc, m) => acc + m.lessons.length, 0);
+            const localLessonCount = localModules.reduce((acc, m: any) => acc + m.lessons.length, 0);
+
+            if (remoteLessonCount < localLessonCount * 0.5) { // If remote is less than 50% of local
+                console.warn(`[Curriculum] Remote data for ${langId} seems incomplete (${remoteLessonCount} vs ${localLessonCount} lessons). Ignoring remote.`);
+                return [];
+            }
+
+            return remoteModules;
         } catch (error) {
-            console.error('Curriculum Fetch Error:', error);
-            throw error;
+            console.error('Curriculum Fetch Error (falling back to local):', error);
+            return []; // Return empty so context uses local data
         }
     },
 

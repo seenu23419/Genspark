@@ -27,14 +27,14 @@ export const useCertificate = (userId) => {
 
     /**
      * Generate unique certificate number
-     * Format: GENSPARK-{COURSE}-{YEAR}-{RANDOM}
-     * Example: GENSPARK-JAVASCRIPT-2024-X7K9L2
+     * Format: GenSpark-{COURSE}-{YEAR}-{RANDOM}
+     * Example: GenSpark-JAVASCRIPT-2024-X7K9L2
      */
     const generateCertificateNumber = (courseId) => {
         const year = new Date().getFullYear();
         const randomPart = Math.random().toString(36).substring(2, 8).toUpperCase();
         const courseCode = courseId.toUpperCase().substring(0, 12);
-        return `GENSPARK-${courseCode}-${year}-${randomPart}`;
+        return `GenSpark-${courseCode}-${year}-${randomPart}`;
     };
 
     /**

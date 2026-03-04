@@ -1,11 +1,13 @@
 import React, { useMemo, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Lock, Play, CheckCircle, Clock, Loader2, AlertCircle, Sparkles, ChevronDown, Trophy, Medal, Target, Award, BookOpen, Search, Zap } from 'lucide-react';
+import { ArrowLeft, Lock, Play, CheckCircle, Clock, Loader2, AlertCircle, Sparkles, ChevronDown, Trophy, Medal, Target, Award, BookOpen, Search, Activity, ChevronRight } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCurriculum } from '../../contexts/CurriculumContext';
 import { LANGUAGES } from '../../constants';
-import { Language, Lesson } from '../../types';
+import { Language, Lesson, Certificate } from '../../types';
 import { usePractice } from '../../contexts/PracticeContext';
+import { certificateService } from '../../services/certificateService';
+import { CertificateModal } from '../../components/CertificateModal';
 import { supabaseDB } from '../../services/supabaseService';
 
 // Level descriptions - provide emotional context and guide
@@ -15,7 +17,7 @@ const LEVEL_DESCRIPTIONS: { [key: string]: string } = {
   'Intermediates': 'Deepen your core knowledge',
   'Advanced': 'Explore complex professional patterns',
   'Real-world Projects': 'Apply what you\'ve learned to real apps',
-  'Final Assessment': 'The final milestone. Verify your mastery.',
+  'Final Certification': 'The final milestone. Verify your mastery.',
 
   // JavaScript
   'JavaScript Basics': 'Enter the world of dynamic web logic',
@@ -26,7 +28,7 @@ const LEVEL_DESCRIPTIONS: { [key: string]: string } = {
   'Classes & Object-Oriented JS': 'Master blueprint-based programming and design',
   'Functional Programming & Advanced Patterns': 'Write cleaner, more predictable code',
   'Modules & Modern Tooling': 'Structure large-scale applications',
-  'Final JS Assessment': 'Verify your JavaScript mastery.',
+  'Final JS Certification': 'Verify your JavaScript mastery and claim your reward.',
 
   // Python
   'Python Foundations': 'Start your journey with the world\'s most popular language',
@@ -37,7 +39,7 @@ const LEVEL_DESCRIPTIONS: { [key: string]: string } = {
   'Object-Oriented Programming (OOP)': 'Master classes, inheritance, and encapsulation',
   'Advanced Python Features': 'Decorators, generators, and magic methods',
   'Web Scraping & APIs': 'Extract data from the web and connect to services',
-  'Python Mastery': 'Verify your Python expertise.',
+  'Python Certification': 'Verify your Python expertise and claim your reward.',
 
   // Java
   'Java Basics (Zero Level)': 'Enter the world of enterprise development',
@@ -48,7 +50,7 @@ const LEVEL_DESCRIPTIONS: { [key: string]: string } = {
   'OOP Pillar 3 & 4 (Advanced)': 'Master abstraction and professional patterns',
   'Collections Framework': 'Handle complex data structures efficiently',
   'Modern Java & Concurrency': 'Master functional style and multithreading',
-  'Final Java Assessment': 'Prove your mastery.',
+  'Final Java Certification': 'Prove your mastery and claim your reward.',
 
   // C++
   'C++ Foundations': 'Master the basics of high-performance coding',
@@ -58,7 +60,7 @@ const LEVEL_DESCRIPTIONS: { [key: string]: string } = {
   'Modern C++ & Smart Pointers': 'Master memory safety and RAII patterns',
   'Advanced Memory & Move Semantics': 'Zero-cost abstractions and extreme efficiency',
   'Concurrency & Multithreading': 'Build high-performance parallel systems',
-  'Final C++ Assessment': 'The ultimate systems programming milestone.',
+  'Final C++ Certification': 'The ultimate systems programming milestone.',
 
   // DSA
   'Fundamentals & Complexity': 'Learn to analyze and optimize your code',
@@ -69,7 +71,7 @@ const LEVEL_DESCRIPTIONS: { [key: string]: string } = {
   'Advanced Graphs & Segment Trees': 'Master connectivity and range queries',
   'Greedy Algorithms & Bitwise': 'Exploit patterns for extreme efficiency',
   'Advanced Strings & Tries': 'Master pattern matching and dictionaries',
-  'Final DSA Assessment': 'The ultimate test of algorithmic mastery.',
+  'Final DSA Certification': 'The ultimate test of algorithmic mastery.',
 
   // HTML/CSS
   'Semantic HTML5': 'Build the skeleton of the web with modern standards',
@@ -91,7 +93,7 @@ const LEVEL_DESCRIPTIONS: { [key: string]: string } = {
   'Subqueries & CTEs': 'Write advanced and nested logical queries',
   'Database Normalization': 'Optimize storage and reduce redundancy',
   'Transactions & Performance': 'Handle critical operations and scale',
-  'Final Database Assessment': 'Prove your SQL Grandmaster status.',
+  'Final Database Certification': 'Prove your SQL Grandmaster status.',
 
   // Fullstack
   'Modern Frontend (React)': 'Build dynamic user interfaces with components',
@@ -124,23 +126,21 @@ const CourseTrack: React.FC = () => {
 
   // 1. State declarations
   const [expandedLevels, setExpandedLevels] = useState<Record<number, boolean>>({});
-  const [expandedAssignments, setExpandedAssignments] = useState<Record<number, boolean>>({});
+  const [showCertModal, setShowCertModal] = useState(false);
+  const [isClaiming, setIsClaiming] = useState(false);
 
   // 2. Computed values
   const language = useMemo(() => LANGUAGES.find(l => l.id === langId), [langId]);
-  const completedLessonIds = useMemo(() => {
-    const ids = user?.completedLessonIds || [];
-    console.log("[CourseTrack] User:", user?._id, "Completed IDs:", ids.length, ids);
-    return ids;
-  }, [user]);
+  const completedLessonIds = useMemo(() => user?.completedLessonIds || [], [user]);
 
   const modules = useMemo(() => {
     if (!language) return [];
     return (curriculumData[language.id] || []) as any[];
   }, [language, curriculumData]);
 
-  // All levels are now unlocked for all languages
-  const isLevelUnlocked = (levelIndex: number): boolean => {
+  // All levels are unlocked for all languages (including C)
+  // To re-enable locking for C, restore the original completion check below
+  const isLevelUnlocked = (_levelIndex: number): boolean => {
     return true;
   };
 
@@ -152,7 +152,7 @@ const CourseTrack: React.FC = () => {
       const problems = module?.problems || [];
 
       const hasIncompleteLesson = lessons.some((l: Lesson) => l && !completedLessonIds.includes(l.id));
-      const hasIncompleteProblem = ['c', 'dsa'].includes(langId || '') && problems.some((p: any) => getProblemStatus(p.id) !== 'COMPLETED');
+      const hasIncompleteProblem = langId === 'c' && problems.some((p: any) => getProblemStatus(p.id) !== 'COMPLETED');
 
       if (hasIncompleteLesson || hasIncompleteProblem) return mIdx;
     }
@@ -189,13 +189,36 @@ const CourseTrack: React.FC = () => {
     }));
   };
 
-  const toggleAssignments = (index: number) => {
-    setExpandedAssignments(prev => ({
-      ...prev,
-      [index]: !prev[index]
-    }));
-  };
+  const handleClaimCertificate = async () => {
+    if (!user || !language || modules.length === 0) return;
+    setIsClaiming(true);
+    try {
+      const courseId = language.id;
+      const courseName = language.name + ' Programming';
 
+      // Dynamically find the last lesson ID of the last module
+      const lastModule = modules[modules.length - 1];
+      const lessons = lastModule.lessons || [];
+      const finalLessonId = lessons.length > 0 ? lessons[lessons.length - 1].id : '';
+
+      const cert = await certificateService.generateCertificateForCourse(user._id, courseId, courseName, finalLessonId);
+      if (cert) {
+        setShowCertModal(true);
+        // Tag OneSignal to trigger "Congratulations" automation
+        try {
+          const OneSignal = (window as any).OneSignal;
+          if (OneSignal) {
+            OneSignal.User.addTag("certificate_claimed", "true");
+          }
+        } catch (e) { }
+      }
+      else alert("Requirement not met. You must complete the final certification exam to claim your certificate.");
+    } catch (e) {
+      alert('Failed to generate certificate. Please try again later.');
+    } finally {
+      setIsClaiming(false);
+    }
+  };
 
   const handleLessonClick = (lesson: Lesson, levelIndex: number) => {
     if (!isLevelUnlocked(levelIndex)) return;
@@ -205,10 +228,10 @@ const CourseTrack: React.FC = () => {
   // 5. Render States
   if (loading[langId || ''] && modules.length === 0) {
     return (
-      <div className="min-h-screen bg-slate-100 dark:bg-black flex flex-col items-center justify-center p-6 transition-colors duration-300">
+      <div className="min-h-screen bg-white dark:bg-slate-950 flex flex-col items-center justify-center p-6">
         <div className="relative w-12 h-12 flex items-center justify-center">
-          <div className="absolute inset-0 rounded-full border-4 border-indigo-500/10" />
-          <Loader2 className="animate-spin text-indigo-500/60" size={40} />
+          <div className="absolute inset-0 rounded-full border-4 border-blue-500/10" />
+          <Loader2 className="animate-spin text-blue-500/60" size={40} />
         </div>
       </div>
     );
@@ -216,10 +239,10 @@ const CourseTrack: React.FC = () => {
 
   if (!language || (error[langId || ''] && modules.length === 0)) {
     return (
-      <div className="min-h-screen bg-slate-100 dark:bg-black flex flex-col items-center justify-center p-6 text-center transition-colors duration-300">
-        <AlertCircle size={48} className="text-red-500/50 mb-4" />
-        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2 font-black uppercase tracking-widest text-[10px]">Track Not Found</h2>
-        <button onClick={() => navigate('/')} className="px-6 py-2 bg-indigo-600 text-white rounded-lg mt-4 font-bold text-sm">Go Back</button>
+      <div className="min-h-screen bg-white dark:bg-slate-950 flex flex-col items-center justify-center p-6 text-center">
+        <AlertCircle size={48} className="text-slate-200 dark:text-white/10 mb-4" />
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2 uppercase tracking-widest text-[10px]">Track Not Found</h2>
+        <button onClick={() => navigate('/')} className="px-6 py-2 bg-blue-600 text-white rounded-lg mt-4 font-bold text-sm">Go Back</button>
       </div>
     );
   }
@@ -231,89 +254,81 @@ const CourseTrack: React.FC = () => {
   const progressPercent = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
 
   return (
-    <div
-      className="relative min-h-screen bg-slate-100 dark:bg-black transition-colors duration-300 overflow-x-hidden"
-      style={{ touchAction: 'pan-y' }}
-    >
-      {/* Constrained background glow for mobile */}
+    <div className="relative min-h-screen bg-white dark:bg-slate-950 transition-colors duration-300">
+      <div className="absolute top-0 left-1/2 w-[1200px] h-[800px] bg-blue-500/[0.02] blur-[150px] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
-      <header className="sticky top-0 z-40 bg-slate-100/95 dark:bg-black/95 backdrop-blur-sm border-b border-slate-300 dark:border-white/5 px-6 py-4 transition-colors duration-300">
-        <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
-          <button
-            onClick={() => navigate('/')}
-            className="p-2 -ml-2 text-slate-400 hover:text-white rounded-lg transition-all active:scale-95"
-            style={{ touchAction: 'manipulation' }}
-          >
+      <header className="sticky top-0 z-40 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200 dark:border-white/[0.08] px-6 md:px-12 py-4">
+        <div className="w-full flex items-center justify-between gap-4">
+          <button onClick={() => navigate('/')} className="p-2 -ml-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-lg">
             <ArrowLeft size={24} />
           </button>
           <div className="flex items-center gap-3 min-w-0 flex-1">
-            <div className="w-8 h-8 rounded-lg bg-slate-200 dark:bg-white/5 p-1 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-white/5 p-1 flex items-center justify-center border border-slate-200 dark:border-white/[0.08]">
               <img src={language.icon} alt={language.name} className="w-full h-full object-contain" />
             </div>
-            <h1 className="text-lg md:text-xl font-black text-slate-900 dark:text-white truncate">{language.name} Track</h1>
+            <h1 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white shrink-0">{language.name} Track</h1>
           </div>
-          <div className="flex items-center gap-2 shrink-0">
-            <div className="w-12 h-12 rounded-lg bg-slate-50 dark:bg-slate-900 border-2 border-slate-400 dark:border-slate-700 flex flex-col items-center justify-center shadow-sm">
-              <span className="text-sm font-black text-emerald-400">{progressPercent}%</span>
-              <span className="text-[8px] text-slate-500 uppercase tracking-tighter">Done</span>
+          <div className="flex items-center gap-3 shrink-0">
+            <div className="w-12 h-12 rounded-lg bg-slate-50 dark:bg-[#1e293b] border border-slate-200 dark:border-white/[0.08] flex flex-col items-center justify-center">
+              <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">{progressPercent}%</span>
+              <span className="text-[8px] text-slate-500 dark:text-slate-500 uppercase tracking-tighter">Done</span>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="relative z-10 px-6 py-12 md:py-16 max-w-4xl mx-auto pb-32 font-sans">
+      <main className="relative z-10 px-6 py-10 md:py-12 max-w-5xl mx-auto pb-32 font-sans">
         {/* Progress Bar (Mobile) */}
         {progressPercent < 100 && (
-          <div className="md:hidden mb-8">
-            <div className="flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">
-              <span>Overall Progress</span>
-              <span>{progressPercent}%</span>
+          <div className="md:hidden mb-6">
+            <div className="flex items-center justify-between text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">
+              <span>Path Progress</span>
+              <span className="text-blue-400">{progressPercent}%</span>
             </div>
-            <div className="h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-              <div className="h-full bg-emerald-500 transition-all duration-1000" style={{ width: `${progressPercent}%` }} />
+            <div className="h-1.5 bg-white/5 rounded-full overflow-hidden border border-white/5">
+              <div className="h-full bg-progress-gradient transition-all duration-1000" style={{ width: `${progressPercent}% ` }} />
             </div>
           </div>
         )}
 
         {/* Stages */}
-        <div className="space-y-4">
+        <div className="space-y-3">
           {modules.map((module, levelIndex) => {
             const lessons = module.lessons || [];
             const isExpanded = !!expandedLevels[levelIndex];
-            const isCertLevel = module.title.includes('Final Assessment') || module.title.includes('Mastery');
             const isCurrentLevel = levelIndex === currentLevelIndex;
             const isCompletedLevel = lessons.every((l: Lesson) => completedLessonIds.includes(l.id));
             const completedInLevel = lessons.filter((l: Lesson) => completedLessonIds.includes(l.id)).length;
 
             return (
-              <section key={module.id} className="border-b border-slate-800/40 last:border-b-0 pb-6 last:pb-0">
+              <section key={module.id} className="relative">
                 <button
                   onClick={() => toggleLevel(levelIndex)}
-                  style={{ touchAction: 'manipulation' }}
-                  className={`w-full group flex items-start justify-between gap-4 p-5 rounded-xl transition-all ${isCurrentLevel
-                    ? 'bg-indigo-600/15 border-2 border-indigo-500 shadow-[0_0_20px_rgba(79,70,229,0.15)]'
-                    : 'bg-slate-50 dark:bg-slate-900/40 border-2 border-slate-200 dark:border-white/10 hover:bg-slate-200 dark:hover:bg-slate-900/60 hover:border-indigo-500 dark:hover:border-indigo-500/80 shadow-sm hover:shadow-xl hover:ring-1 hover:ring-indigo-500/30'
+                  className={`w-full group flex items-start justify-between gap-4 p-4 transition-all ${isCurrentLevel
+                    ? 'card-active'
+                    : isCompletedLevel ? 'card-success' : 'card-base'
                     }`}
                 >
                   <div className="flex items-start gap-4 flex-1 min-w-0 text-left">
-                    <div className={`w-1.5 h-8 rounded-full shrink-0 ${isCurrentLevel ? 'bg-indigo-500' : isCompletedLevel ? 'bg-emerald-500' : 'bg-slate-700'}`} />
+                    <div className={`w-1 h-8 rounded-full shrink-0 ${isCurrentLevel ? 'bg-blue-500' : isCompletedLevel ? 'bg-emerald-500' : 'bg-slate-700'}`} />
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap mb-1">
-                        <h2 className={`text-lg md:text-xl font-bold ${isCurrentLevel ? 'text-white' : 'text-slate-200'}`}>{module.title}</h2>
-                        {isCurrentLevel && <span className="text-[10px] bg-indigo-500 text-white px-2 py-0.5 rounded-full font-black uppercase">Current</span>}
-                        {isCompletedLevel && <span className="text-[10px] bg-emerald-500 text-white px-2 py-0.5 rounded-full font-black uppercase">Done</span>}
+                        <h2 className={`text-base md:text-lg font-bold ${isCurrentLevel ? 'text-blue-500 dark:text-blue-400' : 'text-slate-700 dark:text-slate-200'}`}>{module.title}</h2>
+                        {isCurrentLevel && <span className="text-[9px] bg-blue-600 text-white px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Current</span>}
+                        {isCompletedLevel && <span className="text-[9px] bg-emerald-600 text-white px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Done</span>}
                       </div>
-                      <p className="text-sm text-slate-400 font-medium">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 font-medium italic mb-2">
                         {(() => {
                           const cleanedTitle = module.title.split(':').pop()?.trim() || module.title;
                           return LEVEL_DESCRIPTIONS[cleanedTitle] || `${lessons.length} lessons`;
                         })()}
                       </p>
+
                       {module.problems && module.problems.length > 0 && (
-                        <div className="flex items-center gap-1.5 mt-2">
-                          <div className="px-1.5 py-0.5 rounded bg-indigo-500/10 border-2 border-indigo-500/50 flex items-center gap-1">
-                            <Target size={10} className="text-indigo-400" />
-                            <span className="text-[9px] text-indigo-300 font-bold uppercase tracking-tight">
+                        <div className="flex items-center gap-1.5">
+                          <div className="px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 flex items-center gap-1.5">
+                            <Target size={10} className="text-blue-400" />
+                            <span className="text-[9px] text-blue-400 font-bold uppercase tracking-tight">
                               {module.problems.filter((p: any) => getProblemStatus(p.id) === 'COMPLETED').length}/{module.problems.length} Assignments
                             </span>
                           </div>
@@ -322,13 +337,14 @@ const CourseTrack: React.FC = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-3 shrink-0 mt-1">
-                    {!isLevelUnlocked(levelIndex) && <Lock size={16} className="text-slate-600" />}
-                    <span className="text-xs font-bold text-slate-500">{completedInLevel}/{lessons.length}</span>
+                    {!isLevelUnlocked(levelIndex) && <Lock size={14} className="text-slate-600" />}
+                    <span className="text-[10px] font-bold text-slate-500">{completedInLevel}/{lessons.length}</span>
+                    <ChevronDown size={16} className={`text-slate-600 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
                   </div>
                 </button>
 
                 {isExpanded && (
-                  <div className="mt-4 pl-4 space-y-2">
+                  <div className="mt-2 ml-4 pl-4 border-l border-white/5 space-y-1.5 py-2">
                     {lessons.map((lesson: any, lessonIndex: number) => {
                       const isCompleted = completedLessonIds.includes(lesson.id);
                       const isFirstIncomplete = !isCompleted && lessonIndex === lessons.findIndex((l: any) => !completedLessonIds.includes(l.id));
@@ -338,81 +354,77 @@ const CourseTrack: React.FC = () => {
                           key={lesson.id}
                           disabled={!isLevelUnlocked(levelIndex)}
                           onClick={() => handleLessonClick(lesson, levelIndex)}
-                          style={{ touchAction: 'manipulation' }}
-                          className={`w-full flex items-center justify-between p-4 rounded-xl transition-all border-2 ${isCompleted ? 'bg-emerald-500/10 border-emerald-500/50' :
-                            isFirstIncomplete ? 'bg-indigo-600/10 border-indigo-500/60' :
-                              'border-slate-300 dark:border-slate-700 hover:bg-slate-800/30'
-                            } ${!isLevelUnlocked(levelIndex) ? 'opacity-50 grayscale cursor-not-allowed' : ''}`}
+                          className={`w-full flex items-center justify-between p-2.5 rounded-lg transition-all ${isCompleted ? 'bg-emerald-500/5' :
+                            isFirstIncomplete ? 'bg-blue-500/5 border border-blue-500/10' :
+                              'hover:bg-white/5'
+                            } ${!isLevelUnlocked(levelIndex) ? 'opacity-40 grayscale cursor-not-allowed' : ''}`}
                         >
-                          <div className="flex items-center gap-4 min-w-0">
-                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${isCompleted ? 'bg-emerald-500/10 text-emerald-400' : isFirstIncomplete ? 'bg-indigo-500/20 text-indigo-400' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-500'}`}>
-                              {!isLevelUnlocked(levelIndex) ? <Lock size={20} /> : isCompleted ? <CheckCircle size={20} /> : <BookOpen size={20} />}
+                          <div className="flex items-center gap-3 min-w-0">
+                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${isCompleted ? 'bg-emerald-500/10 text-emerald-400' : isFirstIncomplete ? 'bg-blue-500/10 text-blue-400' : 'bg-white/5 text-slate-500'}`}>
+                              {!isLevelUnlocked(levelIndex) ? <Lock size={16} /> : isCompleted ? <CheckCircle size={16} /> : <BookOpen size={16} />}
                             </div>
-                            <div className="text-left font-medium min-w-0">
-                              <p className={`text-sm md:text-base truncate ${isCompleted ? 'text-slate-400' : 'text-slate-900 dark:text-white'}`}>{lesson.title}</p>
+                            <div className="text-left min-w-0">
+                              <p className={`text-sm font-bold truncate ${isCompleted ? 'text-slate-500 dark:text-slate-400' : 'text-slate-700 dark:text-slate-200'}`}>{lesson.title}</p>
                             </div>
                           </div>
-                          {isFirstIncomplete && isLevelUnlocked(levelIndex) && <Zap size={16} className="text-indigo-400 shrink-0 fill-indigo-400" />}
+                          {isFirstIncomplete && isLevelUnlocked(levelIndex) && <Sparkles size={14} className="text-blue-400 shrink-0" />}
                         </button>
                       );
                     })}
 
-                    {/* Level Assignments Section - Dropdown Layout */}
+                    {/* Level Assignments Phase */}
                     {module.problems && module.problems.length > 0 && (
-                      <div className="mt-4 pl-4 space-y-2">
-                        <button
-                          onClick={() => toggleAssignments(levelIndex)}
-                          className="w-full flex items-center justify-between p-4 rounded-xl transition-all border-2 border-slate-300 dark:border-slate-700 hover:bg-slate-800/30"
-                        >
-                          <div className="flex items-center gap-4 min-w-0">
-                            <div className="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center shrink-0">
-                              <Trophy className="text-indigo-500" size={20} />
-                            </div>
-                            <div className="text-left font-medium min-w-0">
-                              <p className="text-sm md:text-base truncate text-slate-900 dark:text-white">Assignments</p>
-                            </div>
-                          </div>
-                          <ChevronDown
-                            size={20}
-                            className={`text-slate-400 shrink-0 transition-transform duration-300 ${expandedAssignments[levelIndex] ? 'rotate-180' : ''}`}
-                          />
-                        </button>
+                      <div className="mt-6 mb-4">
+                        <div className="flex items-center gap-2 px-2 mb-4">
+                          <Activity size={12} className="text-blue-500" />
+                          <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Lab Phase</span>
+                          <div className="h-[1px] flex-1 bg-white/5" />
+                        </div>
 
-                        <div className={`overflow-hidden transition-all duration-500 ${expandedAssignments[levelIndex] ? 'max-h-[1000px] mt-4 opacity-100' : 'max-h-0 opacity-0'}`}>
-                          <div className="space-y-3">
-                            {module.problems.map((prob: any, idx: number) => {
-                              const status = getProblemStatus(prob.id);
-                              const isCompleted = status === 'COMPLETED';
-                              // Determine if this is the next available one
-                              const activeProb = module.problems.find((p: any) => getProblemStatus(p.id) !== 'COMPLETED');
-                              const isActive = activeProb?.id === prob.id;
-                              const isUnlocked = levelIndex <= currentLevelIndex && (isActive || isCompleted || (!activeProb && isCompleted));
+                        <div className="space-y-2">
+                          {module.problems.map((prob: any) => {
+                            const pStatus = getProblemStatus(prob.id);
+                            const isCompleted = pStatus === 'COMPLETED';
+                            const isUnlocked = levelIndex <= currentLevelIndex;
 
-                              return (
-                                <button
-                                  key={prob.id}
-                                  disabled={!isUnlocked}
-                                  onClick={() => navigate(`/practice/problem/${prob.id}`)}
-                                  className={`w-full flex items-center justify-between p-4 rounded-xl transition-all border-2 ${isCompleted
-                                    ? 'bg-emerald-500/10 border-emerald-500/50'
-                                    : isActive
-                                      ? 'bg-indigo-600/10 border-indigo-500/60'
-                                      : 'border-slate-300 dark:border-slate-700 hover:bg-slate-800/30'
-                                    } ${!isUnlocked ? 'opacity-50 grayscale cursor-not-allowed' : ''}`}
-                                >
-                                  <div className="flex items-center gap-4 text-left">
-                                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${isCompleted ? 'bg-emerald-500/10 text-emerald-400' : isActive ? 'bg-indigo-500/20 text-indigo-400' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-500'}`}>
-                                      {isCompleted ? <CheckCircle size={20} /> : isActive ? <Target size={20} /> : <Lock size={20} />}
-                                    </div>
-                                    <div className="text-left font-medium min-w-0">
-                                      <p className={`text-sm md:text-base truncate ${isCompleted ? 'text-slate-400' : 'text-slate-900 dark:text-white'}`}>{prob.title}</p>
-                                    </div>
+                            return (
+                              <button
+                                key={prob.id}
+                                disabled={!isUnlocked}
+                                onClick={() => navigate(`/practice/problem/${prob.id}`)}
+                                className={`w-full group flex items-center justify-between p-3 transition-all ${isCompleted
+                                  ? 'card-success'
+                                  : isUnlocked
+                                    ? 'card-base hover:card-active'
+                                    : 'card-base opacity-40'
+                                  }`}
+                              >
+                                <div className="flex items-center gap-3 min-w-0">
+                                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${isCompleted
+                                    ? 'bg-emerald-500/10 text-emerald-400'
+                                    : isUnlocked
+                                      ? 'bg-blue-600/10 text-blue-400'
+                                      : 'bg-white/5 text-slate-700'
+                                    }`}>
+                                    {isCompleted ? <CheckCircle size={20} /> : isUnlocked ? <Target size={20} /> : <Lock size={20} />}
                                   </div>
-                                  {isActive && <Zap size={16} className="text-indigo-400 shrink-0 fill-indigo-400" />}
-                                </button>
-                              );
-                            })}
-                          </div>
+                                  <div className="text-left overflow-hidden">
+                                    <div className="flex items-center gap-2">
+                                      <h4 className={`font-bold text-sm ${isUnlocked ? 'text-slate-700 dark:text-slate-200' : 'text-slate-400 dark:text-slate-600'}`}>{prob.title}</h4>
+                                      <span className={`text-[8px] px-1.5 py-0.5 rounded font-bold uppercase ${prob.difficulty === 'easy' ? 'text-emerald-600' :
+                                        prob.difficulty === 'medium' ? 'text-amber-600' :
+                                          'text-rose-600'
+                                        }`}>lab</span>
+                                    </div>
+                                    <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Technical Assignment • Required</p>
+                                  </div>
+                                </div>
+                                {isUnlocked && !isCompleted && (
+                                  <ChevronRight size={16} className="text-blue-500 group-hover:translate-x-1 transition-transform" />
+                                )}
+                              </button>
+                            );
+                          })}
                         </div>
                       </div>
                     )}
@@ -422,9 +434,9 @@ const CourseTrack: React.FC = () => {
             );
           })}
         </div>
-
-        {/* Certificate Section */}
       </main>
+
+      {user && language && <CertificateModal isOpen={showCertModal} onClose={() => setShowCertModal(false)} userId={user._id} courseId={language.id} courseName={language.name} />}
     </div>
   );
 };

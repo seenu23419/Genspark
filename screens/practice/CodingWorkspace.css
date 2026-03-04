@@ -6,8 +6,8 @@
 
 /* Custom scrollbar for pro panels */
 .no-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
 }
 
 .no-scrollbar::-webkit-scrollbar-track {
@@ -15,30 +15,28 @@
 }
 
 .no-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
   border-radius: 10px;
 }
 
 .no-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.2);
+  background: rgba(99, 102, 241, 0.2);
 }
 
 :root {
-  --practice-bg: #f8fafc;
-  /* slate-50 */
+  --practice-bg: #ffffff;
   --panel-header-bg: rgba(255, 255, 255, 0.8);
   --panel-border: rgba(0, 0, 0, 0.05);
   --tab-active: #1e293b;
-  /* slate-800 */
   --toolbar-bg: #ffffff;
 }
 
 .dark {
-  --practice-bg: #0a0b14;
-  --panel-header-bg: rgba(15, 23, 42, 0.5);
+  --practice-bg: #050505;
+  --panel-header-bg: rgba(255, 255, 255, 0.02);
   --panel-border: rgba(255, 255, 255, 0.05);
   --tab-active: #ffffff;
-  --toolbar-bg: #0f172a;
+  --toolbar-bg: #0a0a0a;
 }
 
 /* Base Practice UI */
@@ -47,48 +45,16 @@
   transition: background 0.3s ease;
 }
 
-/* 3-COLUMN DESKTOP GRID */
-@media (min-width: 1024px) {
-  .ide-container {
-    display: grid;
-    grid-template-columns: 350px 1fr 400px;
-    height: calc(100vh - 56px);
-    /* Header compensated */
-    overflow: hidden;
-  }
-
-  .ide-col-left {
-    border-right: 1px solid var(--panel-border);
-    background: var(--practice-bg);
-    display: flex;
-    flex-direction: column;
-  }
-
-  .ide-col-center {
-    background: var(--practice-bg);
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    border-right: 1px solid var(--panel-border);
-  }
-
-  .ide-col-right {
-    background: var(--practice-bg);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-}
-
 /* Pro Desktop Sidebar Styles */
 .pro-panel-header {
-  height: 40px;
+  height: 44px;
   background: var(--panel-header-bg);
+  backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--panel-border);
   display: flex;
   align-items: center;
-  padding: 0 12px;
-  gap: 4px;
+  padding: 0 16px;
+  gap: 8px;
   flex-shrink: 0;
 }
 
@@ -96,15 +62,15 @@
   height: 100%;
   padding: 0 12px;
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #64748b;
+  letter-spacing: 0.15em;
+  color: #475569;
   position: relative;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -122,17 +88,19 @@
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 12px;
+  right: 12px;
   height: 2px;
   background: #6366f1;
-  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.6);
+  border-radius: 2px 2px 0 0;
 }
 
 /* Editor Specific Styles */
 .editor-toolbar {
-  height: 44px;
+  height: 48px;
   background: var(--toolbar-bg);
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--panel-border);
   display: flex;
   align-items: center;
@@ -143,14 +111,15 @@
 
 /* Pro Buttons */
 .btn-run-pro {
-  background: rgba(99, 102, 241, 0.1);
-  border: 1px solid rgba(99, 102, 241, 0.2);
+  background: rgba(99, 102, 241, 0.05);
+  border: 1px solid rgba(99, 102, 241, 0.1);
   color: #818cf8;
-  padding: 6px 14px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 800;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 900;
   text-transform: uppercase;
+  letter-spacing: 0.1em;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -158,73 +127,128 @@
 }
 
 .btn-run-pro:hover:not(:disabled) {
-  background: rgba(99, 102, 241, 0.2);
-  border-color: rgba(99, 102, 241, 0.4);
+  background: rgba(99, 102, 241, 0.1);
+  border-color: rgba(99, 102, 241, 0.3);
+  transform: translateY(-1px);
 }
 
 .btn-submit-pro {
   background: #6366f1;
   color: #fff;
-  padding: 6px 18px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 800;
+  padding: 8px 20px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 900;
   text-transform: uppercase;
-  transition: all 0.2s;
+  letter-spacing: 0.1em;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
 }
 
 .btn-submit-pro:hover:not(:disabled) {
   background: #4f46e5;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
 }
 
 .btn-icon-pro {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
-  color: #64748b;
+  border-radius: 10px;
+  color: #475569;
   transition: all 0.2s;
-  background: transparent;
-  border: none;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   cursor: pointer;
 }
 
 .btn-icon-pro:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.05);
   color: #fff;
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 /* AI Feedback Styles */
 .ai-section-item {
   border-left: 2px solid #6366f1;
-  padding-left: 12px;
+  padding-left: 16px;
 }
 
 .ai-status-card {
-  background: rgba(16, 185, 129, 0.05);
-  border: 1px solid rgba(16, 185, 129, 0.1);
-  padding: 16px;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
 }
 
 .ai-error-card {
-  background: rgba(244, 63, 94, 0.05);
+  background: rgba(244, 63, 94, 0.03);
   border: 1px solid rgba(244, 63, 94, 0.1);
-  padding: 16px;
-  border-radius: 12px;
 }
 
 .kbd-hint {
   font-family: inherit;
-  font-size: 10px;
+  font-size: 9px;
+  color: #64748b;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Console Panel Transitions */
+.console-panel {
+  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.description-panel {
+  width: 450px;
+  max-width: 45%;
+}
+
+@media (min-width: 1280px) {
+  .description-panel {
+    width: 550px;
+  }
+}
+
+/* LeetCode Style Tabs */
+.console-tab-active {
+  color: #6366f1;
+  border-bottom: 2px solid #6366f1;
+}
+
+.console-tab-inactive {
+  color: #64748b;
+  border-bottom: 2px solid transparent;
+}
+
+.console-tab-inactive:hover {
   color: #475569;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+}
+
+.dark .console-tab-inactive:hover {
+  color: #cbd5e1;
 }

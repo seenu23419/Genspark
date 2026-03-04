@@ -6,7 +6,7 @@ const PrivacyPolicy: React.FC = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-[#0a0b14] text-slate-300 py-12 px-6">
+        <div className="min-h-screen bg-white dark:bg-[#0f172a] transition-colors duration-300 text-slate-300 py-12 px-6">
             <div className="max-w-3xl mx-auto space-y-8">
                 {/* Header */}
                 <div className="flex items-center gap-4 border-b border-slate-800 pb-6">
@@ -41,7 +41,7 @@ const PrivacyPolicy: React.FC = () => {
                     <section className="space-y-3">
                         <h2 className="text-lg font-bold text-white border-l-2 border-indigo-500 pl-3">2. AI-Powered Learning Assistance</h2>
                         <p>
-                            GenSpark integrates advanced AI models (including Google Gemini) to provide real-time code explanations and debugging assistance.
+                            Glinto integrates advanced AI models (including Google Gemini) to provide real-time code explanations and debugging assistance.
                             When you request AI help, the Service sends your current code snippet and lesson context to these third-party providers.
                             No personally identifiable information (PII) is shared with AI providers for training or marketing purposes.
                         </p>
@@ -73,8 +73,8 @@ const PrivacyPolicy: React.FC = () => {
 
                     <section className="space-y-3 pt-6 border-t border-slate-800">
                         <p className="text-xs text-slate-500 font-bold italic">
-                            By using GenSpark, you acknowledge and agree to the transparency measures outlined in this policy.
-                            For data requests, contact support@genspark.app.
+                            By using Glinto, you acknowledge and agree to the transparency measures outlined in this policy.
+                            For data requests, contact support@Glinto.app.
                         </p>
                     </section>
                 </div>
@@ -84,3 +84,4 @@ const PrivacyPolicy: React.FC = () => {
 };
 
 export default PrivacyPolicy;
+

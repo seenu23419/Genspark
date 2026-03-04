@@ -3,9 +3,9 @@ import BadgeModal from '../../components/BadgeModal';
 import { useNavigate } from 'react-router-dom';
 
 const BADGE_INFO: Array<{ id: string; title: string; description: string }> = [
-  { id: 'Bronze Coder', title: 'Bronze Coder', description: 'Earned 200 XP from practice challenges.' },
-  { id: 'Silver Coder', title: 'Silver Coder', description: 'Earned 500 XP from practice challenges.' },
-  { id: 'Gold Coder', title: 'Gold Coder', description: 'Earned 1200 XP from practice challenges.' },
+  { id: 'Bronze Coder', title: 'Bronze Coder', description: 'Earned 200 Points from practice challenges.' },
+  { id: 'Silver Coder', title: 'Silver Coder', description: 'Earned 500 Points from practice challenges.' },
+  { id: 'Gold Coder', title: 'Gold Coder', description: 'Earned 1200 Points from practice challenges.' },
 ];
 
 const BadgesPage: React.FC = () => {

@@ -22,10 +22,10 @@ const CertificateVerify: React.FC = () => {
       try {
         setLoading(true);
         setError(null);
-        
+
         // Verify the certificate
         const cert = await certificateService.verifyCertificate(certificateId);
-        
+
         if (!cert) {
           setError('Certificate not found or invalid');
         } else {
@@ -62,8 +62,8 @@ const CertificateVerify: React.FC = () => {
           </div>
           <h2 className="text-2xl font-black text-white mb-2">Certificate Not Found</h2>
           <p className="text-slate-400 mb-6">{error}</p>
-          <a 
-            href="/" 
+          <a
+            href="/"
             className="inline-block px-6 py-3 bg-indigo-600 text-white rounded-2xl font-black hover:bg-indigo-500 transition-all"
           >
             Back to Home
@@ -82,8 +82,8 @@ const CertificateVerify: React.FC = () => {
           </div>
           <h2 className="text-2xl font-black text-white mb-2">Invalid Certificate</h2>
           <p className="text-slate-400 mb-6">The certificate you're looking for doesn't exist.</p>
-          <a 
-            href="/" 
+          <a
+            href="/"
             className="inline-block px-6 py-3 bg-indigo-600 text-white rounded-2xl font-black hover:bg-indigo-500 transition-all"
           >
             Back to Home
@@ -112,15 +112,15 @@ const CertificateVerify: React.FC = () => {
         </div>
 
         {/* Certificate Card */}
-        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <div className="bg-white rounded-3xl overflow-hidden">
           <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-8 text-center text-white">
             <div className="flex justify-center mb-4">
               <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
                 <GraduationCap size={32} />
               </div>
             </div>
-            <h2 className="text-2xl font-black">GenSpark Academy</h2>
-            <p className="text-indigo-200 font-medium">Verified by GenSpark</p>
+            <h2 className="text-2xl font-black">Glinto Academy</h2>
+            <p className="text-indigo-200 font-medium">Verified by Glinto</p>
           </div>
 
           <div className="p-12">
@@ -163,17 +163,17 @@ const CertificateVerify: React.FC = () => {
           <div className="bg-slate-50 p-6 text-center border-t">
             <p className="text-slate-600 text-sm">
               This certificate is valid and can be verified at{' '}
-              <span className="font-bold text-indigo-600">genspark.vercel.app/verify/{certificate.certificate_id}</span>
+              <span className="font-bold text-indigo-600">Glinto.vercel.app/verify/{certificate.certificate_id}</span>
             </p>
           </div>
         </div>
 
         <div className="text-center mt-8">
-          <a 
-            href="/" 
+          <a
+            href="/"
             className="inline-block px-6 py-3 bg-indigo-600 text-white rounded-2xl font-black hover:bg-indigo-500 transition-all"
           >
-            Back to GenSpark
+            Back to Glinto
           </a>
         </div>
       </div>

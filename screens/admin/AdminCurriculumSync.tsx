@@ -83,8 +83,8 @@ const AdminCurriculumSync: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-black text-green-400 font-mono p-10">
-            <div className="max-w-2xl mx-auto border border-green-800 p-8 rounded-xl bg-slate-900/50">
+        <div className="min-h-screen bg-[#0f172a] text-green-400 font-mono p-10">
+            <div className="max-w-2xl mx-auto border border-white/[0.08] p-8 rounded-xl bg-white/[0.02]">
                 <div className="flex items-center gap-4 mb-8">
                     <Database size={32} />
                     <h1 className="text-2xl font-bold uppercase tracking-widest">Curriculum DB Sync</h1>

@@ -5,7 +5,7 @@ interface LessonCache {
     timestamp: number;
 }
 
-const CACHE_KEY_PREFIX = 'genspark_lesson_';
+const CACHE_KEY_PREFIX = 'Glinto_lesson_';
 const CACHE_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 export const offlineService = {
@@ -60,3 +60,4 @@ export const offlineService = {
         };
     }
 };
+

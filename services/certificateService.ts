@@ -242,7 +242,7 @@ class CertificateService {
       }
 
       // Create certificate
-      const certificate = await this.createCertificate(userId, courseId, courseName, 'GenSpark Mentor');
+      const certificate = await this.createCertificate(userId, courseId, courseName, 'Glinto Mentor');
 
       return certificate;
     } catch (error) {

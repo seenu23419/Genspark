@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Loader2, User, AlertCircle, Info, BookOpen } from 'lucide-react';
-import { genSparkAIService } from '../services/geminiService';
+import { glintoAIService } from '../services/geminiService';
 import { ChatMessage } from '../types';
 
 interface AIExplanationPanelProps {
@@ -89,7 +89,7 @@ Output plain text only, no code blocks.
         parts: [{ text: m.content }]
       }));
 
-      const stream = genSparkAIService.generateChatStream(
+      const stream = glintoAIService.generateChatStream(
         input + '\n\n' + mentorContext,
         false,
         history
